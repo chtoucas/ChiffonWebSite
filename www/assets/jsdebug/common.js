@@ -12,8 +12,6 @@
           var $hover = $this.find('.hover');
           if ($hover.length == 0) {
             $this.append('<div class=hover><div class=overlay></div><div class=info><span>Voir toute la collection ></span></div></div>');
-              // <img src="assets/img/ui/' + $this.attr('rel') + '.png" />
-            //$this.append('<div class=overlay><img src="assets/css/img/' + $this.attr('rel') + '.png" /><span>Voir toute la collection ></span></div>');
             $hover = $this.find('.hover');
           }
           $hover.show();

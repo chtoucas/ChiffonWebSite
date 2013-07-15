@@ -6,12 +6,30 @@
    ========================================================================== */
 
 @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+  /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* 940 = 4 * 220 + 3 * 20 */
+@media (min-width: 700px) and (max-width: 940px) {
+  /* 3 columns */
+  BODY { width: 700px; }
+  #navWho LI { width: 160px; }
+  #mosaic LI.col14, #mosaic LI.col24 { margin-right: 20px; }
+  #mosaic LI.col13, #mosaic LI.col22, #mosaic LI.col31, #mosaic LI.col43 { margin-right: 0; }
+}
+
+/* 700 = 3 * 220 + 2 * 20 */
+@media (max-width: 700px) {
+  /* 2 columns */
+  BODY { width: 460px; }
+  #navWho { background: none; }
+  #navMain UL { height: 40px; padding-left: 0; text-align: left; }
+  #navMain LI { margin: 13px 10px 0 0; }
+  #navWho { height: auto; }
+    #navWho LI { margin: 12px auto; width: 230px; }
+  #mosaic LI.col12, #mosaic LI.col22, #mosaic LI.col32, #mosaic LI.col42 { margin-right: 0; }
 }
