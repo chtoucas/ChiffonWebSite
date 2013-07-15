@@ -9,15 +9,16 @@
         var $this = $(this);
 
         $this.on('mouseover', function() {
-          var $overlay = $this.find('.overlay');
-          if ($overlay.length == 0) {
-            //$this.append('<div class=overlay><span>Voir toute la collection ></span></div>');
-            $this.append('<div class=overlay><img src="assets/css/img/' + $this.attr('rel') + '.png" /><span>Voir toute la collection ></span></div>');
-            $overlay = $this.find('.overlay');
+          var $hover = $this.find('.hover');
+          if ($hover.length == 0) {
+            $this.append('<div class=hover><div class=overlay></div><div class=info><span>Voir toute la collection ></span></div></div>');
+              // <img src="assets/img/ui/' + $this.attr('rel') + '.png" />
+            //$this.append('<div class=overlay><img src="assets/css/img/' + $this.attr('rel') + '.png" /><span>Voir toute la collection ></span></div>');
+            $hover = $this.find('.hover');
           }
-          $overlay.show();
+          $hover.show();
         }).on('mouseout', function() {
-          $this.find('.overlay').hide();
+          $this.find('.hover').hide();
         });
       });
     });
@@ -37,7 +38,7 @@
       $('#home #mosaic A').overlay();
 
       // Contact
-      $('#contact .member A').overlay();
+      //$('#contact .member A').overlay();
     }
   }
   ;
