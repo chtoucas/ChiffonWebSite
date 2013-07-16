@@ -14,6 +14,7 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
  * ============================================================================================== */
 
 .overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: url('img/overlay.png'); opacity: .7; }
+.strike { background: no-repeat center center url('img/strike.png'); }
 
 /* Flattened navigation list: NAV > UL > LI > A */
 
@@ -56,7 +57,7 @@ H1 { margin: 0 auto; text-align: center; font-size: 18px; font-weight: normal; t
 #navMain { position: relative; border-bottom: solid 2px #999; font-size: 11px; font-weight: bold; text-transform: uppercase; }
   #navMain UL { height: 58px; margin: 0 auto; text-align: center; }
   #navMain LI { display: inline-block; margin: 22px 10px 0 0; }
-    #navMain LI.current A { color: red; }
+  #navMain .current A { color: red; }
   #navMain #navNewsletter { position: absolute; right: 0; margin-right: 0; }
 
 FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-variant: small-caps; border-top: solid 2px #ccc; }
@@ -64,8 +65,8 @@ FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-v
 
 /* Menu - Members */
 
-#navWho { height: 66px; border-bottom: solid 2px #999; font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-style: italic; }
-#navWho { background: no-repeat center center url('img/who.png'); }
+#navWho { border-bottom: solid 2px #999; font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-style: italic; }
+  #navWho UL { height: 66px; }
   #navWho LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
   #navWho A { padding: 0 .5em; background: #fff; }
   #navWho .last { margin-right: 0; }
@@ -75,7 +76,7 @@ FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-v
 
 .mosaic { margin: 23px 0 3px 0; padding: 0; list-style-type: none; }
   .mosaic LI { position: relative; float: left; margin-right: 20px; margin-bottom: 20px; }
-    .mosaic LI.col14, .mosaic LI.col24, .mosaic LI.col34, .mosaic LI.col44 { margin-right: 0; }
+  .mosaic .col14, .mosaic .col24, .mosaic .col34, .mosaic .col44 { margin-right: 0; }
   .mosaic A { display: block; width: 220px; height: 160px; background: url('img/thumb/default.png'); }
   .mosaic IMG { width: 220px; height: 160px; }
 
@@ -84,13 +85,13 @@ FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-v
 
 #contact { margin-bottom: 2em; font-family: Georgia,'Times New Roman',serif; text-align: center; color: #999; }
   #contact H2 { margin-top: 15px; margin-bottom: 0; font-weight: normal; }
-  #contact H3 { width: 100%; margin: 0; padding: 1em 0; font-weight: normal; background: no-repeat center center url('img/who.png'); font-size: 18px; font-style: italic; border-top: solid 2px #999; border-bottom: solid 2px #999; }
+  #contact H3 { width: 100%; margin: 0; padding: 1em 0; font-weight: normal; font-size: 18px; font-style: italic; border-top: solid 2px #999; border-bottom: solid 2px #999; }
     #contact H3 A { padding: 0 .5em; background: #fff; color: #999; }
-  #contact LI.img { position: relative; margin-bottom: 1em; }
-  #contact LI.email { padding: 1em 0; border-top: 1px solid #999; border-bottom: 1px solid #999; }
-    #contact LI.email A { text-decoration: underline; font-style: italic; }
-  #contact LI.web { margin-top: 1em; text-align: right; }
-    #contact LI.web A { color: #999; }
+  #contact .img { position: relative; margin-bottom: 1em; }
+  #contact .email { padding: 1em 0; border-top: 1px solid #999; border-bottom: 1px solid #999; }
+    #contact .email A { text-decoration: underline; font-style: italic; }
+  #contact .web { margin-top: 1em; text-align: right; }
+    #contact .web A { color: #999; }
   #contact H2 { font-style: italic; font-weight: normal; font-size: 25px; }
   #contact UL { padding: 0; list-style-type: none; }
   #contact #collective { text-decoration: underline; font-style: italic; font-size: 20px; }
@@ -104,8 +105,8 @@ FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-v
   #member #description > P { margin-top: 0; }
 
 /* 3-columns mosaic */
-#member #mosaic { width: 720px; }
-  #member #mosaic LI { margin-right: 20px; }
+#member .mosaic { width: 720px; }
+  #member .mosaic LI { margin-right: 20px; }
 
 #member #categories UL { margin: 0; padding: 0; font-size: 13px; }
 #member #categories A { padding: .5em 0; width: 100%; text-transform: uppercase; border-top: 1px solid #999; }

@@ -18,7 +18,7 @@ if (!Array.prototype.map) {
   var scripts = [
         'vendor/jquery-1.10.2.js'
       , 'vendor/jquery.cookie-1.3.1.js'
-      , 'vendor/h5bp.console.js'
+      , 'vendor/h5bp.console-4.2.0.js'
       , 'chiffon.js'
     ]
     .map(function(file) { return 'assets/jsdebug/' + file; });
