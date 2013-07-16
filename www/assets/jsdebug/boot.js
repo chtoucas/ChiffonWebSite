@@ -16,10 +16,10 @@ if (!Array.prototype.map) {
 
 (function(window) {
   var scripts = [
-        'vendor/jquery-1.9.1.min.js'
-      , 'vendor/jquery.cookie.js'
-      , 'console.js'
-      , 'common.js'
+        'vendor/jquery-1.10.2.js'
+      , 'vendor/jquery.cookie-1.3.1.js'
+      , 'vendor/h5bp.console.js'
+      , 'chiffon.js'
     ]
     .map(function(file) { return 'assets/jsdebug/' + file; });
 

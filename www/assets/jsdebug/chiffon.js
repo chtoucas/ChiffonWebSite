@@ -1,5 +1,8 @@
 ;
 
+// TODO:
+// - ajouter html5shiv.js
+//
 (function(window, $) {
   var $fn = $.fn;
 
@@ -8,14 +11,14 @@
       $(this).each(function() {
         var $this = $(this);
 
-        $this.on('mouseover', function() {
+        $this.mouseover(function() {
           var $hover = $this.find('.hover');
           if ($hover.length == 0) {
             $this.append('<div class=hover><div class=overlay></div><div class=info><span>Voir toute la collection ></span></div></div>');
             $hover = $this.find('.hover');
           }
           $hover.show();
-        }).on('mouseout', function() {
+        }).mouseout(function() {
           $this.find('.hover').hide();
         });
       });
@@ -33,7 +36,7 @@
       });
 
       // Home
-      $('#home #mosaic A').overlay();
+      $('.mosaic A').overlay();
 
       // Contact
       //$('#contact .member A').overlay();
