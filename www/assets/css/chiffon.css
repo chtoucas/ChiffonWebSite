@@ -4,97 +4,118 @@
  * - no margin for paragraph in sidebar
  */
 
-/* Default settings
+/* Helpers
+ * ============================================================================================== */
+
+.right { float: right; }
+.left { float: left; }
+.clear { clear: both; }
+
+.hide { display: none; }
+
+/* Inlined list: UL > LI > A */
+
+UL.inline LI { float: left; }
+UL.inline A { display: inline-block; }
+
+/* Centered list: UL > LI */
+
+UL.center { text-align: center; }
+  UL.center LI { display: inline-block; }
+
+/* Resets
+ * ============================================================================================== */
+
+UL { margin: 0; padding: 0; }
+
+/* Global policy
  * ============================================================================================== */
 
 A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
   A:hover, A:focus { color: #ccc; text-decoration: none; text-shadow: 0 0 10px rgba(255, 255, 255, .25); }
 
-/* Reusable motives
+/* Reusable rules
  * ============================================================================================== */
 
-.overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: url('img/overlay.png'); opacity: .7; }
-.strike { background: no-repeat center center url('img/strike.png'); }
+.grey { color: #999; }
+.red { color: #f00; }
 
-/* Flattened navigation list: NAV > UL > LI > A */
+.serif { font-family: Georgia, "Times New Roman", serif; font-size: 12px; }
 
-/* NAV.flat { width: 100%; }*/
-NAV.flat UL { margin: 0; padding: 0; }
-NAV.flat LI { float: left; }
-NAV.flat A { display: inline-block; }
+.overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: url("img/overlay.png"); opacity: .7; }
 
-/* Mosaic */
+/* Heading */
+
+.strike { border-top: solid 2px #999; border-bottom: solid 2px #999; background: no-repeat center center url("img/strike.png"); }
+
+/* Vignettes */
 
 .hover { display: none; }
 .info { position: absolute; left: 0; top: 0; width: 220px; height: 160px; }
-  .info SPAN { display: block; position: absolute; right: 11px; bottom: 7px; color: #fff; font-size: 12px; font-weight: 600; }
+  .info SPAN { display: block; position: absolute; right: 11px; bottom: 10px; color: #fff; font-weight: bold; }
 
-A[rel=cl] .info { background: url('img/thumb/cl.png'); }
-A[rel=cm] .info { background: url('img/thumb/cm.png'); }
-A[rel=lr] .info { background: url('img/thumb/lr.png'); }
-A[rel=vd] .info { background: url('img/thumb/vd.png'); }
+A[rel=cl] .info { background: url("img/thumb/cl.png"); }
+A[rel=cm] .info { background: url("img/thumb/cm.png"); }
+A[rel=lr] .info { background: url("img/thumb/lr.png"); }
+A[rel=vd] .info { background: url("img/thumb/vd.png"); }
 
-/* Default layout
- * ============================================================================================== */
-
-BODY { width: 940px; margin: 0 auto; font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 300; }
-
-HEADER { padding-top: 19px; }
-
-/* Main title */
-
-H1 { margin: 0 auto; text-align: center; font-size: 18px; font-weight: normal; text-transform: uppercase; }
-  H1 EM { font-style: normal; font-weight: bold; }
-
-/* Menu - Lang */
-
-#navLang { border-bottom: solid 2px #000; font-size: 11px; font-weight: bold; }
-  #navLang UL { float: right; margin-bottom: 6px; }
-  #navLang LI { padding-left: 5px; color: #999; }
-
-/* Menu - Main */
-
-#navMain { position: relative; border-bottom: solid 2px #999; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-  #navMain UL { height: 58px; margin: 0 auto; text-align: center; }
-  #navMain LI { display: inline-block; margin: 22px 10px 0 0; }
-  #navMain .current A { color: red; }
-  #navMain #navNewsletter { position: absolute; right: 0; margin-right: 0; }
-
-FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-variant: small-caps; border-top: solid 2px #ccc; }
-  FOOTER P { margin: 20px 0 0; }
-
-/* Menu - Members */
-
-#navWho { border-bottom: solid 2px #999; font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-style: italic; }
-  #navWho UL { height: 66px; }
-  #navWho LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
-  #navWho A { padding: 0 .5em; background: #fff; }
-  #navWho .last { margin-right: 0; }
-
-/* Page - Home
- * ============================================================================================== */
+/* Mosaic */
 
 .mosaic { margin: 23px 0 3px 0; padding: 0; list-style-type: none; }
   .mosaic LI { position: relative; float: left; margin-right: 20px; margin-bottom: 20px; }
   .mosaic .col14, .mosaic .col24, .mosaic .col34, .mosaic .col44 { margin-right: 0; }
-  .mosaic A { display: block; width: 220px; height: 160px; background: url('img/thumb/default.png'); }
+  .mosaic A { display: block; width: 220px; height: 160px; background: url("img/thumb/default.png"); }
   .mosaic IMG { width: 220px; height: 160px; }
+
+/* Default layout
+ * ============================================================================================== */
+
+BODY { width: 940px; margin: 0 auto; font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-size: 10px; }
+
+HEADER { padding-top: 19px; }
+
+FOOTER { margin-bottom: 20px; border-top: solid 2px #ccc; text-transform: uppercase; font-variant: small-caps; }
+  FOOTER P { margin: 20px 0 0; }
+
+/* Main title */
+
+H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: uppercase; font-size: 1.8em; }
+  H1 EM { font-style: normal; font-weight: bold; }
+
+/* Menu - Lang chooser */
+
+#navLang { border-bottom: solid 2px #000; }
+  #navLang UL { margin-bottom: 6px; font-weight: bold; }
+  #navLang LI { padding-left: 5px; color: #999; }
+
+/* Menu - Main */
+
+#navMain UL { position: relative; height: 58px; text-transform: uppercase; }
+#navMain LI { margin: 22px 10px 0 0; }
+#navMain .right { position: absolute; right: 0; margin-right: 0; }
+
+/* Menu - Members */
+
+#navMembers UL { height: 66px; font-size: 1.8em; font-style: italic; }
+#navMembers LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
+#navMembers A { padding: 0 .5em; background: #fff; }
+#navMembers .last { margin-right: 0; }
 
 /* Page - Contact
  * ============================================================================================== */
 
-#contact { margin-bottom: 2em; font-family: Georgia,'Times New Roman',serif; text-align: center; color: #999; }
+#contact { margin-bottom: 2em; text-align: center; }
   #contact H2 { margin-top: 15px; margin-bottom: 0; font-weight: normal; }
-  #contact H3 { width: 100%; margin: 0; padding: 1em 0; font-weight: normal; font-size: 18px; font-style: italic; border-top: solid 2px #999; border-bottom: solid 2px #999; }
+  #contact H3 { width: 100%; margin: 0; padding: 1em 0; font-weight: normal; font-size: 1.5em; font-style: italic; }
     #contact H3 A { padding: 0 .5em; background: #fff; color: #999; }
   #contact .img { position: relative; margin-bottom: 1em; }
   #contact .email { padding: 1em 0; border-top: 1px solid #999; border-bottom: 1px solid #999; }
     #contact .email A { text-decoration: underline; font-style: italic; }
   #contact .web { margin-top: 1em; text-align: right; }
     #contact .web A { color: #999; }
-  #contact H2 { font-style: italic; font-weight: normal; font-size: 25px; }
+  #contact H2 { font-style: italic; font-weight: normal; font-size: 2.0833333333em; }
   #contact UL { padding: 0; list-style-type: none; }
-  #contact #collective { text-decoration: underline; font-style: italic; font-size: 20px; }
+  #contact #collective { text-decoration: underline; font-style: italic; font-size: 1.6666666667em; }
   #contact #members LI { float: left; width: 220px; margin-right: 20px; }
     #contact #members LI:last-child { margin-right: 0; }
 
@@ -108,7 +129,7 @@ FOOTER { margin-bottom: 20px; font-size: 10px; text-transform: uppercase; font-v
 #member .mosaic { width: 720px; }
   #member .mosaic LI { margin-right: 20px; }
 
-#member #categories UL { margin: 0; padding: 0; font-size: 13px; }
+#member #categories UL { margin: 0; padding: 0; font-size: 1.2em; }
 #member #categories A { padding: .5em 0; width: 100%; text-transform: uppercase; border-top: 1px solid #999; }
 #member #categories { border-bottom: 1px solid #999; margin-bottom: 2em; }
   #member #categories A:hover { background-color: red; color: #fff; padding-left: .4em; }
