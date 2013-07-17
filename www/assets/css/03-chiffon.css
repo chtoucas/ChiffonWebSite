@@ -25,17 +25,18 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 
 /* Vignettes */
 
-.vignette { position: relative; display: block; width: 220px; height: 160px; background: url("img/vignettes/default.png"); transition: all .2s ease-in-out; }
+.vignette { position: relative; display: block; width: 220px; height: 160px; background: url("img/vignette.png"); transition: all .2s ease-in-out; }
   .vignette IMG { width: 220px; height: 160px; }
   .vignette SPAN { display: none; position: absolute; right: 11px; bottom: 10px; color: #fff; font-weight: bold; }
   .vignette .watermark { left: 0; position: absolute; top: 0; width: 100%; height: 100%; }
   .vignette:hover { box-shadow: 1px 1px 10px rgba(0,0,0,0.25); }
     .vignette:hover SPAN, .vignette:hover .overlay { display: block; }
 
-.cl:hover .watermark { background: url("img/vignettes/cl.png"); }
-.cm:hover .watermark { background: url("img/vignettes/cm.png"); }
-.lr:hover .watermark { background: url("img/vignettes/lr.png"); }
-.vd:hover .watermark { background: url("img/vignettes/vd.png"); }
+/* TODO: Use the correct images */
+.cl:hover .watermark { background: url("img/watermarks/cl.png"); }
+.cm:hover .watermark { background: url("img/watermarks/cm.jpg"); }
+.lr:hover .watermark { background: url("img/watermarks/lr.jpg"); }
+.vd:hover .watermark { background: url("img/watermarks/vd.jpg"); }
 
 /* Mosaic */
 
