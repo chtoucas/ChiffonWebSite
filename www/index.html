@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
+<!--[if lt IE 9]> <html class="no-js" lang=fr> <![endif]-->
+<!--[if gt IE 9]><!-->
 <html lang=fr>
+<!--<![endif]-->
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,40 +12,43 @@
  <meta name=keywords content="XXX" />
  <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
  <meta name=robots content="index, follow" />
- <meta name=viewport content="width=device-width" />
+ <meta name=viewport content="width=device-width, initial-scale=1" />
  <!--
  <base href="/"/>
  <link rel=canonical href="http://127.0.0.1:8080/"/>
  -->
  <link rel=stylesheet href="assets/css/normalize-1.1.2.css" />
- <link rel=stylesheet href="assets/css/h5bp-4.2.0.css" />
- <link rel=stylesheet href="assets/css/h5bp.helpers-4.2.0.css" />
- <link rel=stylesheet href="assets/css/chiffon.css" />
- <link rel=stylesheet href="assets/css/chiffon.responsive.css" />
- <link rel=stylesheet href="assets/css/h5bp.print-4.2.0.css" media=print />
- <!-- Temporary fix -->
+ <link rel=stylesheet href="assets/css/01-chiffon.base.css" />
+ <link rel=stylesheet href="assets/css/02-chiffon.helpers.css" />
+ <link rel=stylesheet href="assets/css/03-chiffon.css" />
+ <link rel=stylesheet href="assets/css/04-chiffon.responsive.css" />
+ <link rel=stylesheet href="assets/css/05-chiffon.print.css" media=print />
+ <!-- Temporary HTML5 fix for IE -->
  <script>document.createElement("header"); document.createElement("nav"); document.createElement("footer");</script>
 </head>
-<body>
+<body class=home>
+ <!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
  <header>
   <h1>Le collectif <em>Pour quel motif, Simone ?</em> présente sa collection <em>AH14/15</em></h1>
-  <nav id=navLang class=clearfix>
+  <nav id=nav-lang class=clr>
    <ul class="inline right">
     <li>EN</li>
     <li class=sep>/</li>
     <li><a href="#">FR</a></li>
    </ul>
   </nav>
-  <nav id=navMain class=clearfix>
+  <nav id=nav-main class=clr>
    <ul class=center>
-    <li><a href="#" class=red>Home</a></li>
+    <li><a href="#" id=nav-home>Home</a></li>
     <li class=sep>/</li>
-    <li><a href="#">Blog</a></li>
+    <li><a href="#" id=nav-blog target=_blank>Blog</a></li>
     <li class=sep>/</li>
-    <li><a href="#">Info</a></li>
+    <li><a href="#" id=nav-info>Info</a></li>
     <li class=sep>/</li>
-    <li><a href="#">Contact</a></li>
-    <li class=right><a href="#">Newsletter</a></li>
+    <li><a href="#" id=nav-contact>Contact</a></li>
+    <li class=right><a href="#" id=navNewsletter>Newsletter</a></li>
    </ul>
   </nav>
  </header>
@@ -50,54 +56,54 @@
   Page - Home
   -->
  <div class=content>
-  <nav id=navMembers class=clearfix>
+  <nav id=nav-members class=clr>
    <ul class="serif strike inline">
-    <li><a href="#">Chicamancha</a></li>
-    <li><a href="#">Viviane Devaux</a></li>
-    <li><a href="#">Christine Légeret</a></li>
-    <li class=last><a href="#">Laure Roussel</a></li>
+    <li><a href="#" id=nav-members-cm>Chicamancha</a></li>
+    <li><a href="#" id=nav-members-vd>Viviane Devaux</a></li>
+    <li><a href="#" id=nav-members-cl>Christine Légeret</a></li>
+    <li class=last><a href="#" id=nav-members-lr>Laure Roussel</a></li>
    </ul>
   </nav>
-  <ul class="mosaic clearfix">
-   <li class=col11><a href="#" rel=vd>
-    <img src="assets/img/vd/motif1.jpg" alt="" /></a></li>
-   <li class=col12><a href="#" rel=cm>
+  <ul class="mosaic len-100 clr">
+   <li><a href="#" class="vignette vd">
+    <img src="assets/img/vd/motif.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif1.jpg" alt="" /></a></li>
-   <li class=col13><a href="#" rel=cl>
+   <li><a href="#" class="vignette cl">
     <img src="assets/img/cl/motif1.jpg" alt="" /></a></li>
-   <li class=col14><a href="#" rel=lr>
+   <li><a href="#" class="vignette lr">
     <img src="assets/img/lr/motif1.jpg" alt="" /></a></li>
-   <li class=col21><a href="#" rel=cm>
+   <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif2.jpg" alt="" /></a></li>
-   <li class=col22><a href="#" rel=cl>
+   <li><a href="#" class="vignette cl">
     <img src="assets/img/cl/motif2.jpg" alt="" /></a></li>
-   <li class=col23><a href="#" rel=vd>
+   <li><a href="#" class="vignette vd">
     <img src="assets/img/vd/motif2.jpg" alt="" /></a></li>
-   <li class=col24><a href="#" rel=lr>
+   <li><a href="#" class="vignette lr">
     <img src="assets/img/lr/motif2.jpg" alt="" /></a></li>
-   <li class=col31><a href="#" rel=cl>
+   <li><a href="#" class="vignette cl">
     <img src="assets/img/cl/motif3.jpg" alt="" /></a></li>
-   <li class=col32><a href="#" rel=lr>
+   <li><a href="#" class="vignette lr">
     <img src="assets/img/lr/motif3.jpg" alt="" /></a></li>
-   <li class=col33><a href="#" rel=vd>
+   <li><a href="#" class="vignette vd">
     <img src="assets/img/vd/motif3.jpg" alt="" /></a></li>
-   <li class=col34><a href="#" rel=cm>
+   <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif3.jpg" alt="" /></a></li>
-   <li class=col41><a href="#" rel=lr>
+   <li><a href="#" class="vignette lr">
     <img src="assets/img/lr/motif4.jpg" alt="" /></a></li>
-   <li class=col42><a href="#" rel=vd>
+   <li><a href="#" class="vignette vd">
     <img src="assets/img/vd/motif4.jpg" alt="" /></a></li>
-   <li class=col43><a href="#" rel=cm>
+   <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif4.jpg" alt="" /></a></li>
-   <li class=col44><a href="#" rel=cl>
+   <li><a href="#" class="vignette cl">
     <img src="assets/img/cl/motif4.jpg" alt="" /></a></li>
   </ul>
  </div>
  <!--
   Page - Member
   -->
- <!--  <div id=member class="content clearfix">
-  <nav class="strike inline clearfix">
+ <!--  <div id=member class="content clr">
+  <nav class="strike inline clr">
    <ul>
     <li><a href="#">Chicamancha</a></li>
     <li><a href="#">Viviane Devaux</a></li>
@@ -124,37 +130,37 @@
    </nav>
    <p><a href="#">petroleumblue@gmail.com</a> </p>
   </div>
-  <ul class="mosaic clearfix">
-   <li class=col11><a href="#">
+  <ul class="mosaic clr">
+   <li><a href="#">
     <img src="assets/img/vd/motif1.jpg" alt="" /></a></li>
-   <li class=col12><a href="#">
+   <li><a href="#">
     <img src="assets/img/cm/motif1.jpg" alt="" /></a></li>
-   <li class=col13><a href="#">
+   <li><a href="#">
     <img src="assets/img/cl/motif1.jpg" alt="" /></a></li>
-   <li class=col14><a href="#">
+   <li><a href="#">
     <img src="assets/img/lr/motif1.jpg" alt="" /></a></li>
-   <li class=col21><a href="#">
+   <li><a href="#">
     <img src="assets/img/cm/motif2.jpg" alt="" /></a></li>
-   <li class=col22><a href="#">
+   <li><a href="#">
     <img src="assets/img/cl/motif2.jpg" alt="" /></a></li>
-   <li class=col23><a href="#">
+   <li><a href="#">
     <img src="assets/img/vd/motif2.jpg" alt="" /></a></li>
-   <li class=col24><a href="#">
+   <li><a href="#">
     <img src="assets/img/lr/motif2.jpg" alt="" /></a></li>
-   <li class=col31><a href="#">
+   <li><a href="#">
     <img src="assets/img/cl/motif3.jpg" alt="" /></a></li>
-   <li class=col32><a href="#">
+   <li><a href="#">
     <img src="assets/img/lr/motif3.jpg" alt="" /></a></li>
-   <li class=col33><a href="#">
+   <li><a href="#">
     <img src="assets/img/vd/motif3.jpg" alt="" /></a></li>
-   <li class=col34><a href="#">
+   <li><a href="#">
     <img src="assets/img/cm/motif3.jpg" alt="" /></a></li>
   </ul>
  </div> -->
  <!--
   Page - Contact
   -->
- <!--<div id=contact class="content serif grey clearfix">
+ <!--<div id=contact class="content serif grey clr">
   <h2>Vous souhaitez contactez le collectif ?</h2>
   <p><a id=collective href="#">pourquelmotifsimone@gmail.com</a></p>
   <h2>ou un membre du collectif ?</h2>
@@ -207,5 +213,16 @@
  </footer>
  <script src="assets/jsdebug/vendor/yepnope-1.5.4.js"></script>
  <script src="assets/jsdebug/boot.js"></script>
+ <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+ <!--<script>
+  (function(b, o, i, l, e, r) {
+   b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+   function() { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
+   e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+   e.src = '//www.google-analytics.com/analytics.js';
+   r.parentNode.insertBefore(e, r)
+  }(window, document, 'script', 'ga'));
+  ga('create', 'UA-XXXXX-X'); ga('send', 'pageview');
+ </script>-->
 </body>
 </html>
