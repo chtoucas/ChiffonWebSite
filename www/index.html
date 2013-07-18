@@ -1,8 +1,5 @@
 ﻿<!DOCTYPE html>
-<!--[if lt IE 9]> <html class="no-js" lang=fr> <![endif]-->
-<!--[if gt IE 9]><!-->
 <html lang=fr>
-<!--<![endif]-->
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,10 +23,7 @@
  <!-- Temporary HTML5 fix for IE -->
  <script>document.createElement("header"); document.createElement("nav"); document.createElement("footer");</script>
 </head>
-<body class=home>
- <!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
+<body id=home>
  <header>
   <h1>Le collectif <em>Pour quel motif, Simone ?</em> présente sa collection <em>AH14/15</em></h1>
   <nav id=nav-lang class=clr>
@@ -64,7 +58,7 @@
     <li class=last><a href="#" id=nav-members-lr>Laure Roussel</a></li>
    </ul>
   </nav>
-  <ul class="mosaic len-100 clr">
+  <ul class="mosaic shadow len-100 clr">
    <li><a href="#" class="vignette vd">
     <img src="assets/img/vd/motif.jpg" alt="" /></a></li>
    <li><a href="#" class="vignette cm">
@@ -211,8 +205,12 @@
   </p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- <script src="assets/jsdebug/vendor/yepnope-1.5.4.js"></script>
- <script src="assets/jsdebug/boot.js"></script>
+ <script src="assets/jsdebug/vendor/yepnope-1.5.4.min.js"></script>
+ <script>yepnope(['assets/jsdebug/config.js', 'assets/jsdebug/boot.js'])</script>
+ <!--
+ <script src="//s.narvalo.org/pqms/js/yepnope-1.5.4.min.js"></script>
+ <script>yepnope(['//s.narvalo.org/pqms/js/boot-1.0.js'])</script>
+  -->
  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
  <!--<script>
   (function(b, o, i, l, e, r) {

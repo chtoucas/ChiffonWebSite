@@ -2,53 +2,80 @@
 
 // TODO:
 // - ajouter html5shiv.js
-//
-(function(root, $) {
-  "use strict";
+// - ajouter es5-shim.js
+//    https://github.com/kriskowal/es5-shim/
+
+var Chiffon = (function(window, $) {
+  'use strict';
 
   var
     // Dependencies
     $fn = $.fn
 
-    // Global objects
-    , Window = root
+    // Chiffon object
+    , self = { UI: {} }
 
-    // Private properties
-    , _defaultLocale = "fr"
+    , UI = self.UI
 
-    // Private methods
+    , _defaultLocale = 'fr'
+
     // L10N
     , _ = function(string) { return string.toLocaleString(); }
   ;
 
+  /* jQuery plugins.
+   * ======================================================================= */
+
   $fn.watermark = function(watermark) {
     return this.each(function() {
-      $(this).append('<div class=overlay></div><div class=watermark><span>' + watermark + '</span>');
+      $(this).append(
+        '<div class=overlay></div><div class=watermark><span>'
+        + _(watermark)
+        + '</span>');
     });
   };
 
-  var Chiffon = {};
 
-  // Layout
-  Chiffon.main = function() {
+  /* Chiffon
+   * ======================================================================= */
+
+  self.main = function() {
     $(function() {
-      String.locale = $("html").attr("lang") || _defaultLocale;
+      self.init();
 
-      // Open external links in a new window.
-      $('a[rel=external]').click(function() {
-        Window.open(this.href);
-        return false;
-      });
+      // Page key.
+      var key = $('body').attr('id');
+
+      if (UI.hasOwnProperty(key)) {
+        UI[key]();
+      }
     });
   };
 
-  // Home page
-  Chiffon.home = function() {
-    Chiffon.main();
+  self.init = function() {
+    // Initialize the correct locale.
+    String.locale = $('html').attr('lang') || _defaultLocale;
 
-    $('.vignette').watermark(_("%home.watermark"));
+    // Open external links in a new window.
+    $('a[rel=external]').click(function() {
+      window.open(this.href);
+      return false;
+    });
   };
 
-  Window.Chiffon = Chiffon;
+  /* Chiffon.UI
+   * ======================================================================= */
+
+  UI.home = function() {
+    $('.vignette').watermark('%home.watermark');
+    $('.mosaic').removeClass('shadow');
+  };
+
+  UI.member = function() {
+    $('.vignette').watermark('%member.watermark');
+    $('.mosaic').removeClass('shadow');
+  };
+
+  return self;
 
 })(this, jQuery);

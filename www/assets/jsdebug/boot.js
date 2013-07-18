@@ -14,28 +14,53 @@ if (!Array.prototype.map) {
   };
 }
 
-(function(window) {
-  var scripts = [
-    'vendor/jquery.cookie-1.3.1.js'
-    , 'vendor/l10n-2013-04-18.js'
-    , 'localization.js'
-    , 'chiffon.js'
-  ].map(function(file) { return 'assets/jsdebug/' + file; });
+var versionize = (function(window, config) {
+  var postfix = '-' + config.version + '.js';
+
+  return function(src) {
+    return src + postfix;
+  };
+})(this, config);
+
+var realpath = (function(window, config) {
+  var baseUrl = config.baseUrl + (config.debug ? 'jsdebug/' : 'js/');
+
+  return function(src) {
+    return baseUrl + src;
+  };
+})(this, config);
+
+(function(window, config) {
+  'use strict';
+
+  var scripts = config.debug
+    ? [
+      'vendor/jquery.cookie-1.3.1.js'
+      , 'vendor/l10n-2013.04.18.min.js'
+      , 'localization.js'
+      , 'chiffon.js'
+    ]
+    : [
+      'vendor'
+      , 'chiffon'
+    ].map(versionize);
 
   yepnope([{
     // Google Analytics.
-    test: window._gaq || false
+    // FIXME
+    test: config.googleAnalytics
     , yep: '//www.google-analytics.com/ga.js'
   }, {
+    // jQuery or Zepto.
     test: '__proto__' in {}
-    , yep: 'assets/jsdebug/vendor/zepto-1.0.1.js'
-    , nope: 'assets/jsdebug/vendor/jquery-1.10.2.js'
+    , yep: realpath('vendor/zepto-1.0.1.min.js')
+    , nope: realpath('vendor/jquery-1.10.2.min.js')
     , callback: function(url, result, key) {
       if (!window.jQuery) { window.jQuery = window.Zepto; }
     }
   }, {
     // Main.
-    load: scripts
-    , complete: function() { Chiffon.home(); }
+    load: scripts.map(realpath)
+    , complete: function() { Chiffon.main(); }
   }]);
-})(this);
+})(this, config);

@@ -79,6 +79,7 @@
     <Content Include="www\assets\img\vd\motif2.jpg" />
     <Content Include="www\assets\img\vd\motif3.jpg" />
     <Content Include="www\assets\img\vd\motif4.jpg" />
+    <Content Include="www\assets\jsdebug\config.js" />
     <Content Include="www\assets\jsdebug\boot.js" />
     <Content Include="www\assets\jsdebug\localization.js" />
     <Content Include="www\assets\jsdebug\chiffon.js" />
@@ -87,9 +88,9 @@
     <Content Include="www\assets\jsdebug\vendor\jquery-2.0.3.js" />
     <Content Include="www\assets\jsdebug\vendor\jquery-migrate-1.2.1.js" />
     <Content Include="www\assets\jsdebug\vendor\jquery.cookie-1.3.1.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery.validate-1.11.1.js" />
+    <Content Include="www\assets\jsdebug\vendor\jquery.validate-1.11.1\jquery.validate.js" />
     <Content Include="www\assets\jsdebug\vendor\jquery.validate-1.11.1\additional-methods.js" />
-    <Content Include="www\assets\jsdebug\vendor\l10n-2013-04-18.js" />
+    <Content Include="www\assets\jsdebug\vendor\l10n-2013.04.18.js" />
     <Content Include="www\assets\jsdebug\vendor\yepnope-1.5.4.js" />
     <Content Include="www\assets\jsdebug\vendor\zepto-1.0.1.js" />
     <Content Include="www\crossdomain.xml" />
