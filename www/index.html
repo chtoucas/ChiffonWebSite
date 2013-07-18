@@ -42,13 +42,11 @@
     <li><a href="#" id=nav-info>Info</a></li>
     <li class=sep>/</li>
     <li><a href="#" id=nav-contact>Contact</a></li>
-    <li class=right><a href="#" id=navNewsletter>Newsletter</a></li>
+    <li class=right><a href="newsletter.html" id=nav-newsletter rel=modal>Newsletter</a></li>
    </ul>
   </nav>
  </header>
- <!--
-  Page - Home
-  -->
+ <!-- Page - Home -->
  <div class=content>
   <nav id=nav-members class=clr>
    <ul class="serif strike inline">
@@ -59,7 +57,7 @@
    </ul>
   </nav>
   <ul class="mosaic shadow len-100 clr">
-   <li><a href="#" class="vignette vd">
+   <li><a href="register.html" rel=modal class="vignette vd">
     <img src="assets/img/vd/motif.jpg" alt="" /></a></li>
    <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif1.jpg" alt="" /></a></li>
@@ -93,9 +91,7 @@
     <img src="assets/img/cl/motif4.jpg" alt="" /></a></li>
   </ul>
  </div>
- <!--
-  Page - Member
-  -->
+ <!-- Page - Member -->
  <!--  <div id=member class="content clr">
   <nav class="strike inline clr">
    <ul>
@@ -151,10 +147,8 @@
     <img src="assets/img/cm/motif3.jpg" alt="" /></a></li>
   </ul>
  </div> -->
- <!--
-  Page - Contact
-  -->
- <!--<div id=contact class="content serif grey clr">
+ <!-- Page - Contact -->
+ <!--<div class="content serif grey clr">
   <h2>Vous souhaitez contactez le collectif ?</h2>
   <p><a id=collective href="#">pourquelmotifsimone@gmail.com</a></p>
   <h2>ou un membre du collectif ?</h2>
@@ -205,22 +199,13 @@
   </p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- <script src="assets/jsdebug/vendor/yepnope-1.5.4.min.js"></script>
- <script>yepnope(['assets/jsdebug/config.js', 'assets/jsdebug/boot.js'])</script>
- <!--
- <script src="//s.narvalo.org/pqms/js/yepnope-1.5.4.min.js"></script>
- <script>yepnope(['//s.narvalo.org/pqms/js/boot-1.0.js'])</script>
-  -->
- <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
- <!--<script>
-  (function(b, o, i, l, e, r) {
-   b.GoogleAnalyticsObject = l; b[l] || (b[l] =
-   function() { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
-   e = o.createElement(i); r = o.getElementsByTagName(i)[0];
-   e.src = '//www.google-analytics.com/analytics.js';
-   r.parentNode.insertBefore(e, r)
-  }(window, document, 'script', 'ga'));
-  ga('create', 'UA-XXXXX-X'); ga('send', 'pageview');
- </script>-->
+ <script src="assets/js/yepnope-1.5.4.min.js"></script>
+ <script>
+  // TODO: Google Analytics.
+  (function(b) {
+   b = 'assets/jsdebug/';
+   yepnope({ load: b + 'kern.js', complete: function() { Kern.boot(1, b, 'home'); } });
+  })();
+ </script>
 </body>
 </html>

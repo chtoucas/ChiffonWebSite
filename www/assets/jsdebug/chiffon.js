@@ -13,9 +13,11 @@ var Chiffon = (function(window, $) {
     $fn = $.fn
 
     // Chiffon object
-    , self = { UI: {} }
+    , self = { UI: {}, User: {} }
 
     , UI = self.UI
+
+    , User = self.User
 
     , _defaultLocale = 'fr'
 
@@ -39,15 +41,12 @@ var Chiffon = (function(window, $) {
   /* Chiffon
    * ======================================================================= */
 
-  self.main = function() {
+  self.main = function(route, opts) {
     $(function() {
       self.init();
 
-      // Page key.
-      var key = $('body').attr('id');
-
-      if (UI.hasOwnProperty(key)) {
-        UI[key]();
+      if (UI.hasOwnProperty(route)) {
+        UI[route](opts);
       }
     });
   };
@@ -57,11 +56,44 @@ var Chiffon = (function(window, $) {
     String.locale = $('html').attr('lang') || _defaultLocale;
 
     // Open external links in a new window.
-    $('a[rel=external]').click(function() {
+    $('A[rel=external]').click(function() {
       window.open(this.href);
       return false;
     });
+
+    // Global overlay.
+    var $overlay = $('<div class=overlay></div>')
+    $overlay.appendTo('body');
+
+    if (User.anonymous) {
+      //var $modal = $('<div class="modal register"></div>');
+
+      //$.get('modal/register.html', function(data) { $modal.html(data); });
+
+      //$modal.appendTo('body');
+
+      $('A[rel=modal]').click(function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+        var $modal = $('<div class="modal register"></div>');
+        $.get($this.attr('href'), function(data) { window.___ = $(data).find('h1'); });
+        $modal.appendTo('body')
+        return;
+
+        $modal.show();
+        $modal.css('margin-top', -$modal.height() / 2);
+        $modal.css('margin-left', -$modal.width() / 2);
+        $overlay.show();
+      });
+    }
   };
+
+  /* Chiffon.User
+   * ======================================================================= */
+
+  // FIXME
+  User.anonymous = true;
 
   /* Chiffon.UI
    * ======================================================================= */
@@ -74,6 +106,7 @@ var Chiffon = (function(window, $) {
   UI.member = function() {
     $('.vignette').watermark('%member.watermark');
     $('.mosaic').removeClass('shadow');
+
   };
 
   return self;

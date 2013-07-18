@@ -79,8 +79,7 @@
     <Content Include="www\assets\img\vd\motif2.jpg" />
     <Content Include="www\assets\img\vd\motif3.jpg" />
     <Content Include="www\assets\img\vd\motif4.jpg" />
-    <Content Include="www\assets\jsdebug\config.js" />
-    <Content Include="www\assets\jsdebug\boot.js" />
+    <Content Include="www\assets\jsdebug\kern.js" />
     <Content Include="www\assets\jsdebug\localization.js" />
     <Content Include="www\assets\jsdebug\chiffon.js" />
     <Content Include="www\assets\jsdebug\vendor\h5bp.console-4.2.0.js" />
@@ -93,10 +92,12 @@
     <Content Include="www\assets\jsdebug\vendor\l10n-2013.04.18.js" />
     <Content Include="www\assets\jsdebug\vendor\yepnope-1.5.4.js" />
     <Content Include="www\assets\jsdebug\vendor\zepto-1.0.1.js" />
+    <Content Include="www\assets\js\yepnope-1.5.4.min.js" />
     <Content Include="www\crossdomain.xml" />
     <Content Include="www\favicon.ico" />
     <Content Include="www\humans.txt" />
     <Content Include="www\index.html" />
+    <Content Include="www\register.html" />
     <Content Include="www\robots.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="www\assets\js\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
