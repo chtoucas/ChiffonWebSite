@@ -32,9 +32,14 @@ var Chiffon = (function(window, $) {
   /* Chiffon
    * ======================================================================= */
 
-  self.defaultLocale = 'fr';
+  self.settings = {
+    defaultLocale: 'fr'
+    , ajaxTimeout: 3000
+  };
 
   self.main = function(route, opts) {
+    //opts = $.extend({}, self.settings, opts);
+
     self.init();
 
     if (self.routes.hasOwnProperty(route)) {
@@ -44,7 +49,7 @@ var Chiffon = (function(window, $) {
 
   self.init = function() {
     // Initialize the correct locale.
-    String.locale = $('html').attr('lang') || self.defaultLocale;
+    String.locale = $('html').attr('lang') || self.settings.defaultLocale;
 
     // Open external links in a new window.
     $('A[rel=external]').click(function() {
@@ -53,8 +58,8 @@ var Chiffon = (function(window, $) {
     });
 
     // Configure Ajax.
-    self.ajax.setup();
-    self.ui.ajaxStatus();
+    self.ajaxSetup();
+    self.ajaxStatus();
 
     // Global overlay.
     var $overlay = $('<div class=overlay></div>')
@@ -89,45 +94,19 @@ var Chiffon = (function(window, $) {
     }
   };
 
-  /* Chiffon.ajax
+  /* Ajax
    * ======================================================================= */
 
-  self.ajax = { timeout: 3000 };
-
-  self.ajax.setup = function() {
+  self.ajaxSetup = function() {
     $.ajaxSetup({
-      timeout: Ajax.timeout
+      timeout: self.settings.ajaxTimeout
       , async: true
       , cache: true
     });
   };
 
-  /* Chiffon.user
-   * ======================================================================= */
-
-  // FIXME
-  self.user = { anonymous: true };
-
-  /* Chiffon.routes
-   * ======================================================================= */
-
-  self.routes = { };
-
-  self.routes.home = function() {
-    $('.vignette').watermark('%home.watermark');
-    $('.mosaic').removeClass('shadow');
-  };
-
-  self.routes.member = function() {
-    $('.vignette').watermark('%member.watermark');
-    $('.mosaic').removeClass('shadow');
-  };
-
-  /* Chiffon.ui
-   * ======================================================================= */
-
   // Create & configure the ajax status placeholder.
-  self.ui.ajaxStatus = function() {
+  self.ajaxStatus = function() {
     var $status = $('<div id=ajax_status></div>')
       , error = false;
 
@@ -155,6 +134,27 @@ var Chiffon = (function(window, $) {
         .show()
         .fadeOut(5000);
     });
+  };
+
+  /* User
+   * ======================================================================= */
+
+  // FIXME
+  self.user = { anonymous: true };
+
+  /* Routes
+   * ======================================================================= */
+
+  self.routes = {};
+
+  self.routes.home = function() {
+    $('.vignette').watermark('%home.watermark');
+    $('.mosaic').removeClass('shadow');
+  };
+
+  self.routes.member = function() {
+    $('.vignette').watermark('%member.watermark');
+    $('.mosaic').removeClass('shadow');
   };
 
   return self;
