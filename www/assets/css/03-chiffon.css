@@ -37,9 +37,9 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 
 /* TODO: Use the correct images */
 .cl:hover .watermark { background: url("img/watermarks/cl.png"); }
-.cm:hover .watermark { background: url("img/watermarks/cm.jpg"); }
-.lr:hover .watermark { background: url("img/watermarks/lr.jpg"); }
-.vd:hover .watermark { background: url("img/watermarks/vd.jpg"); }
+.cm:hover .watermark { background: url("img/watermarks/cm.png"); }
+.lr:hover .watermark { background: url("img/watermarks/lr.png"); }
+.vd:hover .watermark { background: url("img/watermarks/vd.png"); }
 
 /* Mosaic */
 

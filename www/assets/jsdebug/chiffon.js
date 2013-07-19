@@ -5,19 +5,21 @@
 // - ajouter es5-shim.js
 //    https://github.com/kriskowal/es5-shim/
 
-var Chiffon = (function(window, $) {
+var Chiffon = (function(window, $, undef) {
   'use strict';
 
   var
     // Namespace
+    chiffon = window.Chiffon || {}
 
-    self = {}
+    //
+    , _connected = undef !== $.cookie('auth')
 
     // L10N
     , _ = function(string) { return string.toLocaleString(); }
   ;
 
-  /* jQuery.fn
+  /* jQuery plugins
    * ======================================================================= */
 
   $.fn.watermark = function(watermark) {
@@ -29,43 +31,71 @@ var Chiffon = (function(window, $) {
     });
   };
 
-  /* Chiffon
+  /* Chiffon object
    * ======================================================================= */
 
-  self.settings = {
-    defaultLocale: 'fr'
-    , ajaxTimeout: 3000
+  chiffon.make = function(options) {
+    options = $.extend({}, chiffon.make.defaults, options);
+
+    // Pick up the right locale.
+    String.locale = $('html').attr('lang') || options.defaultLocale;
+
+    // Configure Ajax.
+    $.ajaxSetup({
+      timeout: options.ajaxTimeout
+      , async: true
+      , cache: true
+    });
+
+    return chiffon;
   };
 
-  self.main = function(route, opts) {
-    //opts = $.extend({}, self.settings, opts);
+  chiffon.make.defaults = {
+    defaultLocale: 'fr'
+    , ajaxTimeout: 3000
+  }
 
-    self.init();
+  chiffon.handle = function(route, options) {
+    chiffon.ui.init();
 
-    if (self.routes.hasOwnProperty(route)) {
-      self.routes[route](opts);
+    if (chiffon.routes.hasOwnProperty(route)) {
+      chiffon.routes[route](options);
     }
   };
 
-  self.init = function() {
-    // Initialize the correct locale.
-    String.locale = $('html').attr('lang') || self.settings.defaultLocale;
+  chiffon.visitor = {
+    connected: _connected
+    , anonymous: !_connected
 
+    , logOn: function() {
+      throw 'Not Implemented';
+    }
+
+    , logOff: function() {
+      this.connected = false;
+      this.anonymous = true;
+    }
+  };
+
+  /* UI
+   * ======================================================================= */
+
+  chiffon.ui = {};
+
+  chiffon.ui.init = function() {
     // Open external links in a new window.
     $('A[rel=external]').click(function() {
       window.open(this.href);
       return false;
     });
 
-    // Configure Ajax.
-    self.ajaxSetup();
-    self.ajaxStatus();
+    chiffon.ui.ajaxStatus();
 
     // Global overlay.
     var $overlay = $('<div class=overlay></div>')
     $overlay.appendTo('BODY');
 
-    if (self.user.anonymous) {
+    if (chiffon.visitor.anonymous) {
       //var $modal = $('<div class="modal register"></div>');
       //$.get('modal/register.html', function(data) { $modal.html(data); });
       //$modal.appendTo('BODY');
@@ -94,19 +124,8 @@ var Chiffon = (function(window, $) {
     }
   };
 
-  /* Ajax
-   * ======================================================================= */
-
-  self.ajaxSetup = function() {
-    $.ajaxSetup({
-      timeout: self.settings.ajaxTimeout
-      , async: true
-      , cache: true
-    });
-  };
-
   // Create & configure the ajax status placeholder.
-  self.ajaxStatus = function() {
+  chiffon.ui.ajaxStatus = function() {
     var $status = $('<div id=ajax_status></div>')
       , error = false;
 
@@ -136,27 +155,21 @@ var Chiffon = (function(window, $) {
     });
   };
 
-  /* User
-   * ======================================================================= */
-
-  // FIXME
-  self.user = { anonymous: true };
-
   /* Routes
    * ======================================================================= */
 
-  self.routes = {};
+  chiffon.routes = {};
 
-  self.routes.home = function() {
+  chiffon.routes.home = function() {
     $('.vignette').watermark('%home.watermark');
     $('.mosaic').removeClass('shadow');
   };
 
-  self.routes.member = function() {
+  chiffon.routes.member = function() {
     $('.vignette').watermark('%member.watermark');
     $('.mosaic').removeClass('shadow');
   };
 
-  return self;
+  return chiffon;
 
 })(this, jQuery);
