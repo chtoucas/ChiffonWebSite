@@ -48,8 +48,8 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 
 /* "Grid" */
 
-.len-100 { width: 960px; /* body.width(940px) + LI.margin-right(20px) */ }
-.len-75 { width: 740px; /* 3/4 * body.width(940px) + LI.margin-right(20px) */ }
+.len_100 { width: 960px; /* body.width(940px) + LI.margin-right(20px) */ }
+.len_75 { width: 740px; /* 3/4 * body.width(940px) + LI.margin-right(20px) */ }
 
 /* Default layout
  * ============================================================================================== */
@@ -68,33 +68,39 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 
 /* Menu - Lang chooser */
 
-#nav-lang { border-bottom: solid 2px #000; }
-  #nav-lang UL { margin-bottom: 6px; font-weight: bold; }
-  #nav-lang LI { padding-left: 5px; color: #999; }
+#nav_lang { border-bottom: solid 2px #000; }
+  #nav_lang UL { margin-bottom: 6px; font-weight: bold; }
+  #nav_lang LI { padding-left: 5px; color: #999; }
 
 /* Menu - Main */
 
-#nav-main UL { position: relative; height: 58px; text-transform: uppercase; }
-#nav-main LI { margin: 22px 10px 0 0; }
-#nav-main .right { position: absolute; right: 0; margin-right: 0; }
+#nav_main UL { position: relative; height: 58px; text-transform: uppercase; }
+#nav_main LI { margin: 22px 10px 0 0; }
+#nav_main .right { position: absolute; right: 0; margin-right: 0; }
 
 /* Menu - Members */
 
-#nav-members UL { height: 66px; font-size: 1.8em; font-style: italic; }
-#nav-members LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
-#nav-members A { padding: 0 .5em; background: #fff; }
-#nav-members .last { margin-right: 0; }
+#nav_members UL { height: 66px; font-size: 1.8em; font-style: italic; }
+#nav_members LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
+#nav_members A { padding: 0 .5em; background: #fff; }
+#nav_members .last { margin-right: 0; }
 
 /* Menu - Highlight current page */
 
-BODY#home #nav-home,
-BODY#info #nav-info,
-BODY#contact #nav-contact,
-BODY#newsletter #nav-newsletter,
-BODY#member.cl #nav-members-cl,
-BODY#member.cm #nav-members-cm,
-BODY#member.vd #nav-members-vd,
-BODY#member.lr #nav-members-lr { color: #f00; }
+BODY#home #nav_home,
+BODY#info #nav_info,
+BODY#contact #nav_contact,
+BODY#newsletter #nav_newsletter,
+BODY#member.cl #nav_members_cl,
+BODY#member.cm #nav_members_cm,
+BODY#member.vd #nav_members_vd,
+BODY#member.lr #nav_members_lr { color: #f00; }
+
+/* Ajax status */
+
+/* XXX */
+#ajax_status { background-color: #fef087; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px #ccc; display: none; font-size: 1.1em; font-weight: 700; padding: .3em 1em; position: fixed; right: 45%; top: 0; z-index: 1000; }
+  #ajax_status.error { background-color: red; color: white; }
 
 /* Modal - Register
  * ============================================================================================== */

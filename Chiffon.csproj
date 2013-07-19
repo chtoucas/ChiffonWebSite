@@ -101,6 +101,8 @@
     <Content Include="www\robots.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="README.md" />
+    <Content Include="NOTES.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

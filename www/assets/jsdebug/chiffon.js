@@ -9,26 +9,18 @@ var Chiffon = (function(window, $) {
   'use strict';
 
   var
-    // Dependencies
-    $fn = $.fn
+    // Namespace
 
-    // Chiffon object
-    , self = { UI: {}, User: {} }
-
-    , UI = self.UI
-
-    , User = self.User
-
-    , _defaultLocale = 'fr'
+    self = {}
 
     // L10N
     , _ = function(string) { return string.toLocaleString(); }
   ;
 
-  /* jQuery plugins.
+  /* jQuery.fn
    * ======================================================================= */
 
-  $fn.watermark = function(watermark) {
+  $.fn.watermark = function(watermark) {
     return this.each(function() {
       $(this).append(
         '<div class=overlay></div><div class=watermark><span>'
@@ -37,23 +29,22 @@ var Chiffon = (function(window, $) {
     });
   };
 
-
   /* Chiffon
    * ======================================================================= */
 
-  self.main = function(route, opts) {
-    $(function() {
-      self.init();
+  self.defaultLocale = 'fr';
 
-      if (UI.hasOwnProperty(route)) {
-        UI[route](opts);
-      }
-    });
+  self.main = function(route, opts) {
+    self.init();
+
+    if (self.routes.hasOwnProperty(route)) {
+      self.routes[route](opts);
+    }
   };
 
   self.init = function() {
     // Initialize the correct locale.
-    String.locale = $('html').attr('lang') || _defaultLocale;
+    String.locale = $('html').attr('lang') || self.defaultLocale;
 
     // Open external links in a new window.
     $('A[rel=external]').click(function() {
@@ -61,52 +52,109 @@ var Chiffon = (function(window, $) {
       return false;
     });
 
+    // Configure Ajax.
+    self.ajax.setup();
+    self.ui.ajaxStatus();
+
     // Global overlay.
     var $overlay = $('<div class=overlay></div>')
-    $overlay.appendTo('body');
+    $overlay.appendTo('BODY');
 
-    if (User.anonymous) {
+    if (self.user.anonymous) {
       //var $modal = $('<div class="modal register"></div>');
-
       //$.get('modal/register.html', function(data) { $modal.html(data); });
-
-      //$modal.appendTo('body');
+      //$modal.appendTo('BODY');
 
       $('A[rel=modal]').click(function(e) {
         e.preventDefault();
 
-        var $this = $(this);
-        var $modal = $('<div class="modal register"></div>');
-        $.get($this.attr('href'), function(data) { window.___ = $(data).find('h1'); });
-        $modal.appendTo('body')
-        return;
+        //var $this = $(this);
 
-        $modal.show();
-        $modal.css('margin-top', -$modal.height() / 2);
-        $modal.css('margin-left', -$modal.width() / 2);
-        $overlay.show();
+        // TODO: Use the Deferred jqXHR?
+        $.ajax({
+          type: 'GET'
+          , global: false
+          , dataType: 'html'
+          , url: this.href
+          , success: function(data) {
+            console.log($('#content', data).length);
+          }
+        });
+
+        //$modal.show();
+        //$modal.css('margin-top', -$modal.height() / 2);
+        //$modal.css('margin-left', -$modal.width() / 2);
+        //$overlay.show();
       });
     }
   };
 
-  /* Chiffon.User
+  /* Chiffon.ajax
+   * ======================================================================= */
+
+  self.ajax = { timeout: 3000 };
+
+  self.ajax.setup = function() {
+    $.ajaxSetup({
+      timeout: Ajax.timeout
+      , async: true
+      , cache: true
+    });
+  };
+
+  /* Chiffon.user
    * ======================================================================= */
 
   // FIXME
-  User.anonymous = true;
+  self.user = { anonymous: true };
 
-  /* Chiffon.UI
+  /* Chiffon.routes
    * ======================================================================= */
 
-  UI.home = function() {
+  self.routes = { };
+
+  self.routes.home = function() {
     $('.vignette').watermark('%home.watermark');
     $('.mosaic').removeClass('shadow');
   };
 
-  UI.member = function() {
+  self.routes.member = function() {
     $('.vignette').watermark('%member.watermark');
     $('.mosaic').removeClass('shadow');
+  };
 
+  /* Chiffon.ui
+   * ======================================================================= */
+
+  // Create & configure the ajax status placeholder.
+  self.ui.ajaxStatus = function() {
+    var $status = $('<div id=ajax_status></div>')
+      , error = false;
+
+    $status.appendTo('BODY');
+
+    $(document).ajaxStart(function() {
+      $status
+        .removeClass('error')
+        .text(_('%ajax.loading'))
+        .show();
+    }).ajaxStop(function() {
+      if (error) {
+        error = false;
+      } else {
+        //$status.text(_('%ajax.done')).fadeOut('slow');
+        $status.fadeOut('slow');
+      }
+    }).ajaxError(function(e, req) {
+      var message = _(0 == req.status ? '%ajax.temp_error' : '%ajax.fatal_error');
+
+      error = true;
+      $status
+        .text(message)
+        .addClass('error')
+        .show()
+        .fadeOut(5000);
+    });
   };
 
   return self;

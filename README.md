@@ -1,4 +1,4 @@
 ChiffonWebSite
 ==============
 
-WebSite for a designer collective
+WebSite for a designer collective.
