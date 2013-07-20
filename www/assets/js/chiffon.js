@@ -9,10 +9,23 @@
   'use strict';
 
   var
-    //
-    _connected = undef !== $.cookie('auth')
+    connected = undef !== $.cookie('auth')
 
-    // L10N
+    , visitor = {
+      connected: connected
+      , anonymous: !connected
+
+      , logOn: function() {
+        throw 'Not Implemented';
+      }
+
+      , logOff: function() {
+        this.connected = false;
+        this.anonymous = true;
+      }
+    }
+
+     // L10N
     , _ = function(string) { return string.toLocaleString(); }
   ;
 
@@ -70,20 +83,6 @@
     }
   };
 
-  chiffon.visitor = {
-    connected: _connected
-    , anonymous: !_connected
-
-    , logOn: function() {
-      throw 'Not Implemented';
-    }
-
-    , logOff: function() {
-      this.connected = false;
-      this.anonymous = true;
-    }
-  };
-
   /* UI
    * ======================================================================= */
 
@@ -97,18 +96,17 @@
     });
 
     chiffon.ui.ajaxStatus();
+    chiffon.ui.overlay.init();
 
-    // Global overlay.
-    var $overlay = $('<div class=overlay></div>')
-    $overlay.appendTo('BODY');
+    if (visitor.anonymous) {
+      makeModal('register');
 
-    if (chiffon.visitor.anonymous) {
-      //var $modal = $('<div class="modal register"></div>');
       //$.get('modal/register.html', function(data) { $modal.html(data); });
       //$modal.appendTo('BODY');
 
       $('A[rel=modal]').click(function(e) {
         e.preventDefault();
+        chiffon.ui.modal.register.show();
 
         //var $this = $(this);
 
@@ -119,17 +117,50 @@
           , dataType: 'html'
           , url: this.href
           , success: function(data) {
-            console.log($('#content', data).length);
+            //console.log($('#content', data).length);
+            chiffon.ui.overlay.show();
           }
         });
 
-        //$modal.show();
-        //$modal.css('margin-top', -$modal.height() / 2);
-        //$modal.css('margin-left', -$modal.width() / 2);
-        //$overlay.show();
+
       });
     }
   };
+
+  function makeModal(name) {
+    var $modal = $('<div class="modal register"></div>');
+    $modal.appendTo('BODY');
+
+    chiffon.ui.modal[name] = {
+      show: function() {
+        $modal.show();
+        $modal.css('margin-top', -$modal.height() / 2);
+        $modal.css('margin-left', -$modal.width() / 2);
+      }
+    };
+  };
+
+  chiffon.ui.modal = {};
+
+  chiffon.ui.overlay = (function() {
+    var $overlay = $('<div class=overlay></div>')
+
+    return {
+      init: function() {
+        $overlay.appendTo('BODY');
+        $overlay.height(screen.height);
+        $overlay.width(screen.width);
+      }
+
+      , show: function() {
+        $overlay.fadeIn();
+      }
+
+      , hide: function() {
+        $overlay.hide();
+      }
+    };
+  })();
 
   // Create & configure the ajax status placeholder.
   chiffon.ui.ajaxStatus = function() {

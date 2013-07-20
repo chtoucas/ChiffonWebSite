@@ -47,6 +47,8 @@ var getChiffon = (function(window) {
     return that;
   }
 
+  chiffon.realurl = function(src) { return chiffon.baseUrl + src; };
+
   chiffon.main = function(fn, options) {
     var that = this
       , fmap = that.fmap

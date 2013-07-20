@@ -50,7 +50,6 @@
     <Content Include="www\assets\css\02-chiffon.helpers.css" />
     <Content Include="www\assets\css\05-chiffon.print.css" />
     <Content Include="www\assets\css\img\arrow.png" />
-    <Content Include="www\assets\css\img\overlay.png" />
     <Content Include="www\assets\css\img\watermarks\cl.png" />
     <Content Include="www\assets\css\img\watermarks\cm.png" />
     <Content Include="www\assets\css\img\watermarks\lr.png" />
