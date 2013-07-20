@@ -58,7 +58,7 @@
   </nav>
   <ul class="mosaic shadow len_100 clr">
    <li><a href="register.html" rel=modal class="vignette vd">
-    <img src="assets/img/vd/motif.jpg" alt="" /></a></li>
+    <img src="assets/img/vd/motif1.jpg" alt="" /></a></li>
    <li><a href="#" class="vignette cm">
     <img src="assets/img/cm/motif1.jpg" alt="" /></a></li>
    <li><a href="#" class="vignette cl">
@@ -92,13 +92,13 @@
   </ul>
  </div>
  <!-- Page - Member -->
- <!--  <div id=member class="content clr">
-  <nav class="strike inline clr">
-   <ul>
-    <li><a href="#">Chicamancha</a></li>
-    <li><a href="#">Viviane Devaux</a></li>
-    <li><a href="#">Christine Légeret</a></li>
-    <li class=last><a href="#">Laure Roussel</a></li>
+ <!--  <div id=content class=clr>
+  <nav id=nav_members class=clr>
+   <ul class="serif strike inline">
+    <li><a href="#" id=nav_members_cm>Chicamancha</a></li>
+    <li><a href="#" id=nav_members_vd>Viviane Devaux</a></li>
+    <li><a href="#" id=nav_members_cl>Christine Légeret</a></li>
+    <li class=last><a href="#" id=nav_members_lr>Laure Roussel</a></li>
    </ul>
   </nav>
   <div id=description>
@@ -122,29 +122,13 @@
   </div>
   <ul class="mosaic clr">
    <li><a href="#">
-    <img src="assets/img/vd/motif1.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/cm/motif1.jpg" alt="" /></a></li>
-   <li><a href="#">
     <img src="assets/img/cl/motif1.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/lr/motif1.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/cm/motif2.jpg" alt="" /></a></li>
    <li><a href="#">
     <img src="assets/img/cl/motif2.jpg" alt="" /></a></li>
    <li><a href="#">
-    <img src="assets/img/vd/motif2.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/lr/motif2.jpg" alt="" /></a></li>
-   <li><a href="#">
     <img src="assets/img/cl/motif3.jpg" alt="" /></a></li>
    <li><a href="#">
-    <img src="assets/img/lr/motif3.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/vd/motif3.jpg" alt="" /></a></li>
-   <li><a href="#">
-    <img src="assets/img/cm/motif3.jpg" alt="" /></a></li>
+    <img src="assets/img/cl/motif4.jpg" alt="" /></a></li>
   </ul>
  </div> -->
  <!-- Page - Contact -->
@@ -199,13 +183,19 @@
   </p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- <script src="assets/js/yepnope-1.5.4.min.js"></script>
+ <script src="assets/js/vendor/yepnope-1.5.4.min.js"></script>
  <script>
   // TODO: Google Analytics.
-  (function(b) {
-   b = 'assets/jsdebug/';
-   yepnope({ load: b + 'kern.js', complete: function() { Kern.boot(1, b, 'home'); } });
-  })();
+  (function(w, b, c) {
+   b = 'assets/js/';
+   yepnope({
+    load: b + 'boot.js',
+    complete: function() {
+     c = w.chiffon = getChiffon(1, b);
+     c.main(function(_) { _.handle('home'); });
+    }
+   });
+  })(this);
  </script>
 </body>
 </html>

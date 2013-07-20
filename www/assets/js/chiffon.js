@@ -5,15 +5,12 @@
 // - ajouter es5-shim.js
 //    https://github.com/kriskowal/es5-shim/
 
-var Chiffon = (function(window, $, undef) {
+(function(window, $, chiffon, undef) {
   'use strict';
 
   var
-    // Namespace
-    chiffon = window.Chiffon || {}
-
     //
-    , _connected = undef !== $.cookie('auth')
+    _connected = undef !== $.cookie('auth')
 
     // L10N
     , _ = function(string) { return string.toLocaleString(); }
@@ -34,32 +31,42 @@ var Chiffon = (function(window, $, undef) {
   /* Chiffon object
    * ======================================================================= */
 
-  chiffon.make = function(options) {
-    options = $.extend({}, chiffon.make.defaults, options);
+  chiffon.config = function(options) {
+    options = $.extend({}, chiffon.config.defaults, options);
 
-    // Pick up the right locale.
-    String.locale = $('html').attr('lang') || options.defaultLocale;
+    // Pick up the locale from the HTML declaration and if not found use the default locale.
+    chiffon.locale($('html').attr('lang') || options.defaultLocale);
 
     // Configure Ajax.
-    $.ajaxSetup({
-      timeout: options.ajaxTimeout
-      , async: true
-      , cache: true
-    });
+    chiffon.ajaxSetup(options.ajaxTimeout);
 
     return chiffon;
   };
 
-  chiffon.make.defaults = {
-    defaultLocale: 'fr'
-    , ajaxTimeout: 3000
+  chiffon.config.defaults = {
+    ajaxTimeout: 3000
+    , defaultLocale: 'fr'
   }
 
-  chiffon.handle = function(route, options) {
+  // Configure L10N.
+  chiffon.locale = function(locale) {
+    String.locale = locale;
+  };
+
+  // Configure jQuery ajax.
+  chiffon.ajaxSetup = function(timeout) {
+    $.ajaxSetup({
+      timeout: timeout
+      , async: true
+      , cache: true
+    });
+  };
+
+  chiffon.handle = function(route, params) {
     chiffon.ui.init();
 
     if (chiffon.routes.hasOwnProperty(route)) {
-      chiffon.routes[route](options);
+      chiffon.routes[route](params);
     }
   };
 
@@ -155,21 +162,24 @@ var Chiffon = (function(window, $, undef) {
     });
   };
 
+  chiffon.ui.mosaic = function(watermark) {
+    $('.mosaic').removeClass('shadow');
+    $('.vignette').watermark(watermark);
+  };
+
   /* Routes
    * ======================================================================= */
 
   chiffon.routes = {};
 
   chiffon.routes.home = function() {
-    $('.vignette').watermark('%home.watermark');
-    $('.mosaic').removeClass('shadow');
+    chiffon.ui.mosaic('%home.watermark');
   };
 
   chiffon.routes.member = function() {
-    $('.vignette').watermark('%member.watermark');
-    $('.mosaic').removeClass('shadow');
+    chiffon.ui.mosaic('%member.watermark');
   };
 
   return chiffon;
 
-})(this, jQuery);
+})(this, jQuery, chiffon);

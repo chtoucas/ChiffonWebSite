@@ -49,16 +49,13 @@
     <Content Include="www\assets\css\01-chiffon.base.css" />
     <Content Include="www\assets\css\02-chiffon.helpers.css" />
     <Content Include="www\assets\css\05-chiffon.print.css" />
-    <Content Include="www\assets\css\h5bp-9ec546569b80c9efb34a763d194e94bfdf14e06b.css" />
     <Content Include="www\assets\css\img\arrow.png" />
     <Content Include="www\assets\css\img\overlay.png" />
     <Content Include="www\assets\css\img\watermarks\cl.png" />
-    <Content Include="www\assets\css\img\vignette.png" />
     <Content Include="www\assets\css\img\watermarks\cm.png" />
     <Content Include="www\assets\css\img\watermarks\lr.png" />
     <Content Include="www\assets\css\img\watermarks\vd.png" />
     <Content Include="www\assets\css\img\strike.png" />
-    <Content Include="www\assets\css\h5bp-4.2.0.css" />
     <Content Include="www\assets\css\03-chiffon.css" />
     <Content Include="www\assets\css\04-chiffon.responsive.css" />
     <Content Include="www\assets\css\normalize-1.1.2.css" />
@@ -78,20 +75,14 @@
     <Content Include="www\assets\img\vd\motif2.jpg" />
     <Content Include="www\assets\img\vd\motif3.jpg" />
     <Content Include="www\assets\img\vd\motif4.jpg" />
-    <Content Include="www\assets\jsdebug\kern.js" />
-    <Content Include="www\assets\jsdebug\localization.js" />
-    <Content Include="www\assets\jsdebug\chiffon.js" />
-    <Content Include="www\assets\jsdebug\vendor\h5bp.console-4.2.0.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery-1.10.2.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery-2.0.3.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery-migrate-1.2.1.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery.cookie-1.3.1.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery.validate-1.11.1\jquery.validate.js" />
-    <Content Include="www\assets\jsdebug\vendor\jquery.validate-1.11.1\additional-methods.js" />
-    <Content Include="www\assets\jsdebug\vendor\l10n-2013.04.18.js" />
-    <Content Include="www\assets\jsdebug\vendor\yepnope-1.5.4.js" />
-    <Content Include="www\assets\jsdebug\vendor\zepto-1.0.1.js" />
-    <Content Include="www\assets\js\yepnope-1.5.4.min.js" />
+    <Content Include="www\assets\js\boot.js" />
+    <Content Include="www\assets\js\localization.js" />
+    <Content Include="www\assets\js\chiffon.js" />
+    <Content Include="www\assets\js\vendor\jquery-1.10.2.js" />
+    <Content Include="www\assets\js\vendor\jquery-2.0.3.js" />
+    <Content Include="www\assets\js\vendor\jquery.cookie-1.3.1.js" />
+    <Content Include="www\assets\js\vendor\l10n-2013.04.18.js" />
+    <Content Include="www\assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="www\crossdomain.xml" />
     <Content Include="www\favicon.ico" />
     <Content Include="www\humans.txt" />
@@ -108,7 +99,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="www\assets\css\normalize-2.1.2.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
