@@ -1,6 +1,5 @@
 /*
  * TODO:
- * - line-break in title
  * - no margin for paragraph in sidebar
  */
 
@@ -70,7 +69,7 @@ FOOTER { margin-bottom: 20px; border-top: solid 2px #ccc; text-transform: upperc
 /* Main title */
 
 H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: uppercase; font-size: 1.8em; }
-  H1 EM { font-style: normal; font-weight: bold; }
+  H1 EM, H1 STRONG { font-style: normal; font-weight: bold; }
 
 /* Menu - Lang chooser */
 

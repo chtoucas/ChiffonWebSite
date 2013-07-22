@@ -3,7 +3,7 @@
 @media (min-width: 700px) and (max-width: 940px) {
   /* 3 columns */
   BODY { width: 700px; }
-  H1 EM:first-child { display: block; }
+  H1 EM:first-child, H1 STRONG:first-child { display: block; }
   #nav_who LI { width: 160px; }
   .len_100 { width: 720px; /* body.width(700px) + LI.margin-right(20px) */ }
   .len_75 { width: 480px; /* 2/3 * body.width(700px) + LI.margin-right(20px) */ }
@@ -13,7 +13,7 @@
 @media (max-width: 700px) {
   /* 2 columns */
   BODY { width: 460px; }
-  H1 EM { display: block; }
+  H1 EM:first-child, H1 STRONG { display: block; }
   #nav_who { background: none; }
   #nav_main UL { height: 40px; padding-left: 0; text-align: left; }
   #nav_main LI { margin: 13px 10px 0 0; }
