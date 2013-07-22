@@ -4,7 +4,7 @@
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
- <title>Pour quel motif, Simone ?</title>
+ <title>@ViewBag.Title</title>
  <meta name=description content="XXX" />
  <meta name=keywords content="XXX" />
  <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
@@ -46,50 +46,8 @@
    </ul>
   </nav>
  </header>
- <!-- Page - Home -->
  <div id=content>
-  <nav id=nav_members class=clr>
-   <ul class="serif strike inline">
-    <li><a href="/chicamancha" id=nav_members_cm>Chicamancha</a></li>
-    <li><a href="/viviane-devaux" id=nav_members_vd>Viviane Devaux</a></li>
-    <li><a href="/christine-legeret" id=nav_members_cl>Christine Légeret</a></li>
-    <li class=last><a href="/laure-roussel" id=nav_members_lr>Laure Roussel</a></li>
-   </ul>
-  </nav>
-  <ul class="mosaic shadow len_100 clr">
-   <li><a href="register.html" rel=modal class="vignette vd">
-    <img src="media/viviane-devaux/motif1.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cm">
-    <img src="media/chicamancha/motif1.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cl">
-    <img src="media/christine-legeret/motif1.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette lr">
-    <img src="media/laure-roussel/motif1.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cm">
-    <img src="media/chicamancha/motif2.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cl">
-    <img src="media/christine-legeret/motif2.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette vd">
-    <img src="media/viviane-devaux/motif2.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette lr">
-    <img src="media/laure-roussel/motif2.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cl">
-    <img src="media/christine-legeret/motif3.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette lr">
-    <img src="media/laure-roussel/motif3.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette vd">
-    <img src="media/viviane-devaux/motif3.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cm">
-    <img src="media/chicamancha/motif3.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette lr">
-    <img src="media/laure-roussel/motif4.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette vd">
-    <img src="media/viviane-devaux/motif4.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cm">
-    <img src="media/chicamancha/motif4.jpg" alt="" /></a></li>
-   <li><a href="#" class="vignette cl">
-    <img src="media/christine-legeret/motif4.jpg" alt="" /></a></li>
-  </ul>
+  @RenderBody()
  </div>
  <footer class=grey>
   <p id=legal>

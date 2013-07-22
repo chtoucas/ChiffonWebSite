@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang=fr>
+<head>
+ <meta charset="utf-8" />
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <title>@ViewBag.Title</title>
+ <meta name=description content="XXX" />
+ <meta name=keywords content="XXX" />
+ <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
+ <meta name=robots content="index, follow" />
+ <meta name=viewport content="width=device-width, initial-scale=1" />
+ <!--
+ <base href="/"/>
+ <link rel=canonical href="http://127.0.0.1:8080/"/>
+ -->
+ <link rel=stylesheet href="assets/css/normalize-1.1.2.css" />
+ <link rel=stylesheet href="assets/css/01-chiffon.base.css" />
+ <link rel=stylesheet href="assets/css/02-chiffon.helpers.css" />
+ <link rel=stylesheet href="assets/css/03-chiffon.css" />
+ <link rel=stylesheet href="assets/css/04-chiffon.responsive.css" />
+ <link rel=stylesheet href="assets/css/05-chiffon.print.css" media=print />
+ <!-- HTML5 fix for IE -->
+ <!-- <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>-->
+</head>
+<body id=home>
+ <header>
+  <h1>Le collectif <strong>Pour quel motif, Simone ?</strong> présente sa collection <em>AH14/15</em></h1>
+  <nav id=nav_lang class=clr>
+   <ul class="inline right">
+    <li>EN</li>
+    <li class=sep>/</li>
+    <li><a href="#">FR</a></li>
+   </ul>
+  </nav>
+  <nav id=nav_main class=clr>
+   <ul class=center>
+    <li><a href="/" id=nav_home>Home</a></li>
+    <li class=sep>/</li>
+    <li><a href="/blog" id=nav_blog target=_blank>Blog</a></li>
+    <li class=sep>/</li>
+    <li><a href="/informations" id=nav_info>Info</a></li>
+    <li class=sep>/</li>
+    <li><a href="/contact" id=nav_contact>Contact</a></li>
+    <li class=right><a href="/newsletter" id=nav_newsletter rel=modal>Newsletter</a></li>
+   </ul>
+  </nav>
+ </header>
+ <div id=content> 
+  <nav id=nav_members class=clr>
+   <ul class="serif strike inline">
+    <li><a href="/chicamancha" id=nav_members_cm>Chicamancha</a></li>
+    <li><a href="/viviane-devaux" id=nav_members_vd>Viviane Devaux</a></li>
+    <li><a href="/christine-legeret" id=nav_members_cl>Christine Légeret</a></li>
+    <li class=last><a href="/laure-roussel" id=nav_members_lr>Laure Roussel</a></li>
+   </ul>
+  </nav>
+  <ul class="mosaic shadow len_100 clr">
+   <li><a href="register.html" rel=modal class="vignette vd">
+    <img src="assets/img/viviane-devaux/motif1_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cm">
+    <img src="assets/img/chicamancha/motif1_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cl">
+    <img src="assets/img/christine-legeret/motif1_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette lr">
+    <img src="assets/img/laure-roussel/motif1_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cm">
+    <img src="assets/img/chicamancha/motif2_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cl">
+    <img src="assets/img/christine-legeret/motif2_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette vd">
+    <img src="assets/img/viviane-devaux/motif2_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette lr">
+    <img src="assets/img/laure-roussel/motif2_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cl">
+    <img src="assets/img/christine-legeret/motif3_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette lr">
+    <img src="assets/img/laure-roussel/motif3_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette vd">
+    <img src="assets/img/viviane-devaux/motif3_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cm">
+    <img src="assets/img/chicamancha/motif3_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette lr">
+    <img src="assets/img/laure-roussel/motif4_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette vd">
+    <img src="assets/img/viviane-devaux/motif4_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cm">
+    <img src="assets/img/chicamancha/motif4_apercu.jpg" alt="" /></a></li>
+   <li><a href="#" class="vignette cl">
+    <img src="assets/img/christine-legeret/motif4_apercu.jpg" alt="" /></a></li>
+  </ul>
+ </div>
+ <footer class=grey>
+  <p id=legal>
+   Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations
+   et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute
+   image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.
+  </p>
+  <p id=copyright>© Pour quel motif, Simone ? 2013</p>
+ </footer>
+ <script src="assets/js/vendor/yepnope-1.5.4.min.js"></script>
+ <script>
+  // TODO: Google Analytics.
+  (function(w, b, c) {
+   b = 'assets/js/';
+   yepnope({
+    load: b + 'boot.js',
+    complete: function() {
+     c = w.chiffon = getChiffon(1, b);
+     c.main(function(_) { _.handle('home'); });
+    }
+   });
+  })(this);
+ </script>
+</body>
+</html>
