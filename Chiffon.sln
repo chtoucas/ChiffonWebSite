@@ -1,13 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Web
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite.UI", "src\Chiffon.WebSite.UI\Chiffon.WebSite.UI.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}"
 	ProjectSection(SolutionItems) = preProject
 		NOTES.md = NOTES.md
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DC52B7-302B-4B39-974D-90AFDE3E2087}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite.UI", "src\Chiffon.WebSite.UI\Chiffon.WebSite.UI.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
