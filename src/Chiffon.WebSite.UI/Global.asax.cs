@@ -5,14 +5,14 @@
     //using System.Web.Optimization;
     using System.Web.Routing;
 
-    // Remarque : pour obtenir des instructions sur l'activation du mode classique IIS6 ou IIS7, 
+    // Remarque : pour obtenir des instructions sur l'activation du mode classique IIS6 ou IIS7,
     // visitez http://go.microsoft.com/?LinkId=9394801
 
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            //AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
