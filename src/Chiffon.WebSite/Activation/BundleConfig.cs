@@ -1,8 +1,8 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
-namespace Chiffon.WebSite.UI
+﻿namespace Chiffon.WebSite.Activation
 {
+    using System.Web;
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         // Pour plus d'informations sur Bundling, accédez à l'adresse http://go.microsoft.com/fwlink/?LinkId=254725

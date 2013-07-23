@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DC52
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite.UI", "src\Chiffon.WebSite.UI\Chiffon.WebSite.UI.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Chiffon.WebSite.FSharp", "src\Chiffon.WebSite.FSharp\Chiffon.WebSite.FSharp.fsproj", "{BCE4FBCC-3636-4ADD-AF87-B30474E1CE7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite", "src\Chiffon.WebSite\Chiffon.WebSite.csproj", "{07E1C8B2-9255-4124-A4A5-15A53C271D9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE4FBCC-3636-4ADD-AF87-B30474E1CE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE4FBCC-3636-4ADD-AF87-B30474E1CE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE4FBCC-3636-4ADD-AF87-B30474E1CE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE4FBCC-3636-4ADD-AF87-B30474E1CE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

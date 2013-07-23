@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chiffon.WebSite.UI</RootNamespace>
+    <RootNamespace>Chiffon.WebSite</RootNamespace>
     <AssemblyName>Chiffon.WebSite.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
@@ -118,10 +118,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,7 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -181,7 +176,17 @@
     <Content Include="Views\Shared\_MemberMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chiffon.WebSite.FSharp\Chiffon.WebSite.FSharp.fsproj">
+      <Project>{bce4fbcc-3636-4add-af87-b30474e1ce7d}</Project>
+      <Name>Chiffon.WebSite.FSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chiffon.WebSite\Chiffon.WebSite.csproj">
+      <Project>{07e1c8b2-9255-4124-a4a5-15a53c271d9f}</Project>
+      <Name>Chiffon.WebSite</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -212,7 +217,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.7\tools\Microsoft.Bcl.Build.targets" />-->
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.7\tools\Microsoft.Bcl.Build.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
