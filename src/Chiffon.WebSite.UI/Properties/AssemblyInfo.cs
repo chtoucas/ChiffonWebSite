@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Chiffon.WebSite;
+using WebActivatorEx;
 
 [assembly: AssemblyTitle("Chiffon.WebSite.UI")]
 [assembly: AssemblyDescription("")]
@@ -17,3 +18,11 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+
+// WARNING: cet attribut ne peut être utilisé qu'une fois par assemblée.
+//[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+
+[assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+[assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
+[assembly: ApplicationShutdownMethod(typeof(AppActivator), "Shutdown")]

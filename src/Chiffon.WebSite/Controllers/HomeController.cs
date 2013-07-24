@@ -7,19 +7,19 @@
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
         [HttpGet]
         public ActionResult About()
         {
-            return View();
+            return View("~/Views/Home/About.cshtml");
         }
 
         [HttpGet]
         public ActionResult Contact()
         {
-            return View();
+            return View("~/Views/Home/Contact.cshtml");
         }
     }
 }
