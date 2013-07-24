@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Chiffon.WebSite.MvcApplication" Language="C#" %>
+﻿<%@ Application Inherits="Chiffon.WebSite.Global" Language="C#" %>

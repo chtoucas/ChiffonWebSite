@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.WebSite.Activation
 {
+    using System;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Narvalo;
@@ -14,7 +15,7 @@
 
             routes.MapRoute(
                 name: "Home",
-                url: "",
+                url: String.Empty,
                 defaults: new { controller = "Home", action = "Index" }
             );
 
@@ -33,25 +34,25 @@
             routes.MapRoute(
                 name: "Chicamancha",
                 url: "chicamancha",
-                defaults: new { controller = "Member", action = "Index" }
+                defaults: new { controller = "Member", action = "Index", id = 1 }
             );
 
             routes.MapRoute(
                 name: "VivianeDevaux",
                 url: "viviane-devaux",
-                defaults: new { controller = "Member", action = "Index" }
+                defaults: new { controller = "Member", action = "Index", id = 2 }
             );
 
             routes.MapRoute(
                 name: " ChristineLégeret",
                 url: "christine-légeret",
-                defaults: new { controller = "Member", action = "Index" }
+                defaults: new { controller = "Member", action = "Index", id = 3 }
             );
 
             routes.MapRoute(
                 name: "LaureRoussel",
                 url: "laure-roussel",
-                defaults: new { controller = "Member", action = "Index" }
+                defaults: new { controller = "Member", action = "Index", id = 4 }
             );
 
             //routes.MapRoute(

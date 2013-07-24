@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Activation\FilterConfig.cs" />
     <Compile Include="Activation\RouteConfig.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
