@@ -175,10 +175,6 @@
     <Content Include="Views\Member\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chiffon.WebSite.FSharp\Chiffon.WebSite.FSharp.fsproj">
-      <Project>{bce4fbcc-3636-4add-af87-b30474e1ce7d}</Project>
-      <Name>Chiffon.WebSite.FSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Chiffon.WebSite\Chiffon.WebSite.csproj">
       <Project>{07e1c8b2-9255-4124-a4a5-15a53c271d9f}</Project>
       <Name>Chiffon.WebSite</Name>

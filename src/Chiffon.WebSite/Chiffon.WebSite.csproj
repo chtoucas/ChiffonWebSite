@@ -76,6 +76,8 @@
   <ItemGroup>
     <Compile Include="Activation\FilterConfig.cs" />
     <Compile Include="Activation\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
