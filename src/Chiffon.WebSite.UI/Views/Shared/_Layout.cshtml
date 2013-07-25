@@ -10,20 +10,18 @@
  <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
  <meta name=robots content="index, follow" />
  <meta name=viewport content="width=device-width, initial-scale=1" />
- <!--
- <base href="/"/>
- <link rel=canonical href="http://127.0.0.1:8080/"/>
- -->
+ @*<base href="/"/>
+ <link rel=canonical href="http://127.0.0.1:8080/"/>*@
  <link rel=stylesheet href="assets/css/normalize-1.1.2.css" />
  <link rel=stylesheet href="assets/css/01-chiffon.base.css" />
  <link rel=stylesheet href="assets/css/02-chiffon.helpers.css" />
  <link rel=stylesheet href="assets/css/03-chiffon.css" />
  <link rel=stylesheet href="assets/css/04-chiffon.responsive.css" />
  <link rel=stylesheet href="assets/css/05-chiffon.print.css" media=print />
- <!-- HTML5 fix for IE -->
- <!-- <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>-->
+ @*HTML5 fix for IE*@
+ @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
 </head>
-<body id=@ViewBag.Id>
+<body id="@ViewBag.Id">
  <header>
   <h1>Le collectif <strong>Pour quel motif, Simone ?</strong> présente sa collection <em>AH14/15</em></h1>
   <nav id=nav_lang class=clr>
@@ -59,7 +57,7 @@
  </footer>
  <script src="assets/js/vendor/yepnope-1.5.4.min.js"></script>
  <script>
-  // TODO: Google Analytics.
+  /* TODO: Google Analytics. */
   (function(w, b, c) {
    b = 'assets/js/';
    yepnope({

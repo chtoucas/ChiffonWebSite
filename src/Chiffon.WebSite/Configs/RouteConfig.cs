@@ -12,7 +12,6 @@
         {
             Requires.NotNull(routes, "routes");
 
-            // Elmah reporting page
             routes.IgnoreRoute("elmah.axd");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 

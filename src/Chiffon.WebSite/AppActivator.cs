@@ -21,7 +21,7 @@
 
             PreStartMiniProfiler_();
 
-            // Configuration du conteneur d'injection de dépendances.
+            // Configuration d'Autofac.
             var builder = new ContainerBuilder();
             builder.RegisterModule(new CrossCuttingsModule());
             builder.RegisterModule(new InfrastructureModule());
@@ -42,6 +42,8 @@
             ;
         }
 
+        #region Méthodes privées
+
         [Conditional("PROFILE")]
         static void PreStartMiniProfiler_()
         {
@@ -59,5 +61,7 @@
                 ViewEngines.Engines.Add(new ProfilingViewEngine(item));
             }
         }
+
+        #endregion
     }
 }

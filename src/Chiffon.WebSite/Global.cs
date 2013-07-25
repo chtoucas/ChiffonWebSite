@@ -8,8 +8,8 @@
     using System.Web.Mvc;
     //using System.Web.Optimization;
     using System.Web.Routing;
-    using Chiffon.WebSite.Configs;
     using Chiffon.WebSite.Resources;
+    using Chiffon.WebSite.Configs;
     using Narvalo;
     using Narvalo.Diagnostics;
     using Narvalo.Web;
