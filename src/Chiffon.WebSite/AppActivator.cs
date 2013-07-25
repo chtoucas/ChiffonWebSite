@@ -7,7 +7,7 @@
     using Autofac.Integration.Mvc;
     using Chiffon.WebSite.Configs;
     using Narvalo.Web;
-    using StackExchange.Profiling.MVCHelpers;
+    //using StackExchange.Profiling.MVCHelpers;
 
     public static class AppActivator
     {
@@ -19,7 +19,7 @@
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();
 
-            PreStartMiniProfiler_();
+            //PreStartMiniProfiler_();
 
             // Configuration d'Autofac.
             var builder = new ContainerBuilder();
@@ -31,7 +31,7 @@
 
         public static void PostStart()
         {
-            PostStartMiniProfiler_();
+            //PostStartMiniProfiler_();
         }
 
         /// <summary>
@@ -42,26 +42,26 @@
             ;
         }
 
-        #region Méthodes privées
+        //#region Méthodes privées
 
-        [Conditional("PROFILE")]
-        static void PreStartMiniProfiler_()
-        {
-            MiniProfilerModule.SelfRegister();
-        }
+        //[Conditional("PROFILE")]
+        //static void PreStartMiniProfiler_()
+        //{
+        //    MiniProfilerModule.SelfRegister();
+        //}
 
-        [Conditional("PROFILE")]
-        static void PostStartMiniProfiler_()
-        {
-            // Intercept ViewEngines to profile all partial views and regular views.
-            // If you prefer to insert your profiling blocks manually you can comment this out
-            var copy = ViewEngines.Engines.ToList();
-            ViewEngines.Engines.Clear();
-            foreach (var item in copy) {
-                ViewEngines.Engines.Add(new ProfilingViewEngine(item));
-            }
-        }
+        //[Conditional("PROFILE")]
+        //static void PostStartMiniProfiler_()
+        //{
+        //    // Intercept ViewEngines to profile all partial views and regular views.
+        //    // If you prefer to insert your profiling blocks manually you can comment this out
+        //    var copy = ViewEngines.Engines.ToList();
+        //    ViewEngines.Engines.Clear();
+        //    foreach (var item in copy) {
+        //        ViewEngines.Engines.Add(new ProfilingViewEngine(item));
+        //    }
+        //}
 
-        #endregion
+        //#endregion
     }
 }
