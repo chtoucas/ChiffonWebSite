@@ -2,22 +2,22 @@
 {
     using System.Web.Mvc;
 
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
         [HttpGet]
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View("~/Views/Home/Index.cshtml");
         }
 
         [HttpGet]
-        public ActionResult About()
+        public virtual ActionResult About()
         {
             return View("~/Views/Home/About.cshtml");
         }
 
         [HttpGet]
-        public ActionResult Contact()
+        public virtual ActionResult Contact()
         {
             return View("~/Views/Home/Contact.cshtml");
         }

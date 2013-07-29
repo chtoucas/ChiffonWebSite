@@ -95,5 +95,32 @@ namespace Chiffon.WebSite.Resources {
                 return ResourceManager.GetString("Global_UnknownError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        internal static string LogOnModel_PasswordIsRequired {
+            get {
+                return ResourceManager.GetString("LogOnModel_PasswordIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        internal static string LogOnModel_PersistentIsNotBoolean {
+            get {
+                return ResourceManager.GetString("LogOnModel_PersistentIsNotBoolean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        internal static string LogOnModel_TargetUrlIsNotUri {
+            get {
+                return ResourceManager.GetString("LogOnModel_TargetUrlIsNotUri", resourceCulture);
+            }
+        }
     }
 }

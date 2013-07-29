@@ -129,4 +129,13 @@
   <data name="Global_UnknownError" xml:space="preserve">
     <value>XXX</value>
   </data>
+  <data name="LogOnModel_PasswordIsRequired" xml:space="preserve">
+    <value>XXX</value>
+  </data>
+  <data name="LogOnModel_PersistentIsNotBoolean" xml:space="preserve">
+    <value>XXX</value>
+  </data>
+  <data name="LogOnModel_TargetUrlIsNotUri" xml:space="preserve">
+    <value>XXX</value>
+  </data>
 </root>

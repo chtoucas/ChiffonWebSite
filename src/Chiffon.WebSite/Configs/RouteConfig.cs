@@ -13,6 +13,7 @@
             Requires.NotNull(routes, "routes");
 
             routes.IgnoreRoute("elmah.axd");
+            routes.IgnoreRoute("glimpse.axd");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // HomeController.

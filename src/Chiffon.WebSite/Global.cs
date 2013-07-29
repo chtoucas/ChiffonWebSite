@@ -125,7 +125,7 @@
 
             Log_(LoggerLevel.Informational, () => { return SR.Global_Starting; });
 
-            // Remove the header "X-AspNetMvc-Version".
+            // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
 
             // 6. Authentification. (FIXME)
