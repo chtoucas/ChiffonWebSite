@@ -1,19 +1,18 @@
-﻿namespace Chiffon.WebSite.CrossCuttings
+﻿namespace Chiffon.CrossCuttings
 {
     using System;
-    using log4net;
     using Narvalo.Diagnostics;
 
-    public static class DefaultLoggerFactory
+    public class DefaultLoggerFactory : ILoggerFactory
     {
-        public static ILogger CreateLogger(Type type)
+        public ILogger CreateLogger(Type type)
         {
-            return new Log4NetProxy(LogManager.GetLogger(type));
+            return new NoopLogger(type.Name);
         }
 
-        public static ILogger CreateLogger(string name)
+        public ILogger CreateLogger(string name)
         {
-            return new Log4NetProxy(LogManager.GetLogger(name));
+            return new NoopLogger(name);
         }
     }
 }

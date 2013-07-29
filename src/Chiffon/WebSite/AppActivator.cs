@@ -14,7 +14,7 @@
         public static void PreStart()
         {
             // Configuration de log4net.
-            log4net.Config.XmlConfigurator.Configure();
+            //log4net.Config.XmlConfigurator.Configure();
 
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();

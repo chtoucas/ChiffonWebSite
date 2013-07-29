@@ -1,10 +1,9 @@
 ﻿namespace Chiffon.WebSite.Configs
 {
     using Autofac;
+    using Chiffon.CrossCuttings;
     using Narvalo;
     using Narvalo.Diagnostics;
-    using Narvalo.Log4Net;
-    //using Chiffon.CrossCuttings.Configuration;
 
     internal class CrossCuttingsModule : Module
     {
@@ -17,7 +16,7 @@
             //builder.Register(_ => ChiffonConfigurationSection.GetSection())
             //    .As<ChiffonConfigurationSection>().SingleInstance();
 
-            builder.Register(_ => new Log4NetFactory())
+            builder.Register(_ => new DefaultLoggerFactory())
                 .As<ILoggerFactory>().SingleInstance();
         }
     }
