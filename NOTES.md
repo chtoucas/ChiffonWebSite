@@ -6,6 +6,13 @@ TODO
 * DIV'itism
 
 
+RavenDB
+=======
+
+* http://geekswithblogs.net/Patware/archive/2012/08/16/150448.aspx
+* http://msdn.microsoft.com/en-us/magazine/hh547101.aspx
+
+
 Si possible, remappez app.config de l'assembly "System.Web.WebPages.Razor, Culture=neutral, PublicKeyToken=31bf3856ad364e35" de la version "1.0.0.0" [C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.WebPages.Razor.dll] vers la version "2.0.0.0" [C:\Opt\Home\github\ChiffonWebSite\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll] pour résoudre le conflit et ne plus recevoir l'avertissement.
   Si possible, remappez app.config de l'assembly "System.Web.Razor, Culture=neutral, PublicKeyToken=31bf3856ad364e35" de la version "1.0.0.0" [C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.Razor.dll] vers la version "2.0.0.0" [C:\Opt\Home\github\ChiffonWebSite\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll] pour résoudre le conflit et ne plus recevoir l'avertissement.
   Si possible, remappez app.config de l'assembly "System.Web.WebPages.Deployment, Culture=neutral, PublicKeyToken=31bf3856ad364e35" de la version "1.0.0.0" [C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.WebPages.Deployment.dll] vers la version "2.0.0.0" [C:\Opt\Home\github\ChiffonWebSite\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll] pour résoudre le conflit et ne plus recevoir l'avertissement.
