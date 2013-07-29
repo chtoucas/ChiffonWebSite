@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DC52
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite.UI", "src\Chiffon.WebSite.UI\Chiffon.WebSite.UI.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite", "src\Chiffon.WebSite\Chiffon.WebSite.csproj", "{07E1C8B2-9255-4124-A4A5-15A53C271D9F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspMvc", "src\AspMvc\AspMvc.csproj", "{6B283718-C8BE-4B17-8B7C-1C3840FEB1B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chiffon.csproj", "{A518FE89-66C4-44A7-9C08-4C3CF61EE1AB}"
@@ -32,10 +30,6 @@ Global
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07E1C8B2-9255-4124-A4A5-15A53C271D9F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B283718-C8BE-4B17-8B7C-1C3840FEB1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B283718-C8BE-4B17-8B7C-1C3840FEB1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B283718-C8BE-4B17-8B7C-1C3840FEB1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
