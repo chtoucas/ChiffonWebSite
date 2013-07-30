@@ -1,4 +1,4 @@
-﻿namespace Pacr.CrossCuttings.Configuration
+﻿namespace Chiffon.CrossCuttings.Configuration
 {
     using System.Configuration;
     using Narvalo.Configuration;

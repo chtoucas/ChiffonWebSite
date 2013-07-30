@@ -105,6 +105,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BuildingBlocks\" />
+    <Folder Include="Persistence\" />
     <Folder Include="WebSite\Api\" />
     <Folder Include="WebSite\ViewModels\" />
   </ItemGroup>
