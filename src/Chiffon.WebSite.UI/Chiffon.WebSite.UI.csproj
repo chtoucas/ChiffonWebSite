@@ -207,16 +207,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Debug\_JS.cshtml" />
+    <Content Include="Views\Asset\Debug\JavaScript.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Debug\_CSS.cshtml" />
+    <Content Include="Views\Asset\Debug\Stylesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Release\_CSS.cshtml" />
+    <Content Include="Views\Asset\Release\Stylesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Release\_JS.cshtml" />
+    <Content Include="Views\Asset\Release\JavaScript.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

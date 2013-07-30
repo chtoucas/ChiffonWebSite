@@ -94,6 +94,7 @@
     <Compile Include="WebSite\Configs\InfrastructureModule.cs" />
     <Compile Include="WebSite\Configs\RouteConfig.cs" />
     <Compile Include="WebSite\Controllers\AccountController.cs" />
+    <Compile Include="WebSite\Controllers\AssetController.cs" />
     <Compile Include="WebSite\Controllers\HomeController.cs" />
     <Compile Include="WebSite\Controllers\MemberController.cs" />
     <Compile Include="WebSite\GlimpseSecurityPolicy.cs" />

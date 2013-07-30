@@ -12,7 +12,7 @@
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>
  <link rel=canonical href="http://127.0.0.1:8080/"/>*@
- @Html.Partial("_StyleSheets")
+ @{Html.RenderAction("CommonStylesheet", "Asset");}
  @*HTML5 fix for IE*@
  @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
 </head>
@@ -50,6 +50,6 @@
   </p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- @Html.Partial("_JavaScript")
+ @{Html.RenderAction("CommonJavaScript", "Asset");}
 </body>
 </html>

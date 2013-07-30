@@ -23,7 +23,6 @@ AntiXSS
 Ability to remove the versioning for the AssetProvider
 
 
-
 http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
 http://stackoverflow.com/questions/372865/path-combine-for-urls
 http://stackoverflow.com/questions/4925468/combine-relative-baseuri-with-relative-path

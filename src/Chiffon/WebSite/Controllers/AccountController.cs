@@ -2,11 +2,11 @@
 {
     using System.Web.Mvc;
 
-    public partial class AccountController : Controller
+    public class AccountController : Controller
     {
         [AllowAnonymous]
         [HttpGet]
-        public virtual ActionResult Register()
+        public ActionResult Register()
         {
             return View("~/Views/Account/Register.cshtml");
         }

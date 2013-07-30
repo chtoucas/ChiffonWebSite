@@ -2,10 +2,10 @@
 {
     using System.Web.Mvc;
 
-    public partial class MemberController : Controller
+    public class MemberController : Controller
     {
         [HttpGet]
-        public virtual ActionResult Index(string key)
+        public ActionResult Index(string key)
         {
             return View("~/Views/Member/Index.cshtml");
         }
