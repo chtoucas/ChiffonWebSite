@@ -12,12 +12,7 @@
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>
  <link rel=canonical href="http://127.0.0.1:8080/"/>*@
- <link rel=stylesheet href="assets/css/normalize-1.1.2.css" />
- <link rel=stylesheet href="assets/css/01-chiffon.base.css" />
- <link rel=stylesheet href="assets/css/02-chiffon.helpers.css" />
- <link rel=stylesheet href="assets/css/03-chiffon.css" />
- <link rel=stylesheet href="assets/css/04-chiffon.responsive.css" />
- <link rel=stylesheet href="assets/css/05-chiffon.print.css" media=print />
+ @Html.Partial("_StyleSheets")
  @*HTML5 fix for IE*@
  @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
 </head>
@@ -55,19 +50,6 @@
   </p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- <script src="assets/js/vendor/yepnope-1.5.4.min.js"></script>
- <script>
-  /* TODO: Google Analytics. */
-  (function(w, b, c) {
-   b = 'assets/js/';
-   yepnope({
-    load: b + 'boot.js',
-    complete: function() {
-     c = w.chiffon = getChiffon(1, b);
-     c.main(function(_) { _.handle('home'); });
-    }
-   });
-  })(this);
- </script>
+ @Html.Partial("_JavaScript")
 </body>
 </html>

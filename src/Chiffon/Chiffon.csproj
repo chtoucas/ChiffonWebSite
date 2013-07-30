@@ -87,6 +87,8 @@
     <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSite\AppActivator.cs" />
+    <Compile Include="WebSite\ChiffonWebViewPage.cs" />
+    <Compile Include="WebSite\ChiffonWebViewPage`1.cs" />
     <Compile Include="WebSite\Configs\CrossCuttingsModule.cs" />
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
     <Compile Include="WebSite\Configs\InfrastructureModule.cs" />
