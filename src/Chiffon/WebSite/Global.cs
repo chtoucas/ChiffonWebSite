@@ -8,7 +8,7 @@
     using System.Web.Mvc;
     //using System.Web.Optimization;
     using System.Web.Routing;
-    using Chiffon.CrossCuttings;
+    using Chiffon.Crosscuttings;
     using Chiffon.WebSite.Configs;
     using Chiffon.WebSite.Resources;
     using Narvalo;

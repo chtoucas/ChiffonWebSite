@@ -1,4 +1,4 @@
-﻿namespace Chiffon.CrossCuttings
+﻿namespace Chiffon.Crosscuttings
 {
     using System;
     using System.Collections.Generic;
@@ -9,15 +9,15 @@
 
     public class ChiffonConfig
     {
-        const string DebugScriptKey_ = "Chiffon/DebugScript";
-        const string DebugStyleKey_ = "Chiffon/DebugStyle";
+        const string DebugCssKey_ = "Chiffon/DebugCss";
+        const string DebugJsKey_ = "Chiffon/DebugJs";
         const string DisplayNameKey_ = "Chiffon/DisplayName";
         const string HostKey_ = "Chiffon/Host";
         const string PortKey_ = "Chiffon/Port";
 
         Uri _assetBaseUrl = new Uri("/assets", UriKind.Relative);
-        bool _debugScript = false;
-        bool _debugStyle = false;
+        bool _debugCss = false;
+        bool _debugJs = false;
         string _displayName = "Pour quel motif Simone ?";
         int _port = 80;
         string _host;
@@ -30,8 +30,8 @@
         }
 
         public Uri AssetBaseUrl { get { return _assetBaseUrl; } }
-        public bool DebugScript { get { return _debugScript; } }
-        public bool DebugStyle { get { return _debugStyle; } }
+        public bool DebugCss { get { return _debugCss; } }
+        public bool DebugJs { get { return _debugJs; } }
         public string DisplayName { get { return _displayName; } }
         public string Host { get { return _host; } }
         public int Port { get { return _port; } }
@@ -63,16 +63,16 @@
                     .ValueOrThrow(() => new ConfigurationErrorsException("Chiffon/AssetBaseUrl"));
             }
 
-            var debugScriptStr = settings[DebugScriptKey_];
-            if (!String.IsNullOrEmpty(debugScriptStr)) {
-                _debugScript = MayParse.ToBoolean(debugScriptStr, BooleanStyles.Literal)
-                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugScriptKey_));
+            var debugJsStr = settings[DebugJsKey_];
+            if (!String.IsNullOrEmpty(debugJsStr)) {
+                _debugJs = MayParse.ToBoolean(debugJsStr, BooleanStyles.Literal)
+                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugJsKey_));
             }
 
-            var debugStyleStr = settings[DebugStyleKey_];
-            if (!String.IsNullOrEmpty(debugStyleStr)) {
-                _debugStyle = MayParse.ToBoolean(debugStyleStr, BooleanStyles.Literal)
-                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugStyleKey_));
+            var debugCssStr = settings[DebugCssKey_];
+            if (!String.IsNullOrEmpty(debugCssStr)) {
+                _debugCss = MayParse.ToBoolean(debugCssStr, BooleanStyles.Literal)
+                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugCssKey_));
             }
 
             var displayName = settings[DisplayNameKey_];

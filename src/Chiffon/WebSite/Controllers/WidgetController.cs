@@ -1,7 +1,8 @@
 ﻿namespace Chiffon.WebSite.Controllers
 {
+    using System;
     using System.Web.Mvc;
-    using Chiffon.CrossCuttings;
+    using Chiffon.Crosscuttings;
 
     // TODO: Add output cache.
     public class WidgetController : Controller
@@ -20,17 +21,19 @@
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
         public PartialViewResult CommonJavaScript()
         {
-            return _config.DebugScript
+            return _config.DebugJs
                 ? PartialView("~/Views/Widget/Debug/JavaScript.cshtml")
                 : PartialView("~/Views/Widget/Release/JavaScript.cshtml");
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
         public PartialViewResult CommonStylesheet()
         {
-            return _config.DebugStyle
+            return _config.DebugCss
                 ? PartialView("~/Views/Widget/Debug/Stylesheet.cshtml")
                 : PartialView("~/Views/Widget/Release/Stylesheet.cshtml");
         }

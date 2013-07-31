@@ -11,11 +11,11 @@
             return View("~/Views/Account/Register.cshtml");
         }
 
-        //[AllowAnonymous]
-        //[ChildActionOnly]
-        //public ActionResult ModalRegister()
-        //{
-        //    return PartialView("~/Views/Account/_Register.cshtml");
-        //}
+        [AllowAnonymous]
+        [ChildActionOnly]
+        public ActionResult ModalRegister()
+        {
+            return PartialView("~/Views/Account/Register.cshtml");
+        }
     }
 }

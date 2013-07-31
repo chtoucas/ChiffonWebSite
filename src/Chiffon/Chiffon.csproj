@@ -32,11 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AntiXssLibrary">
+      <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.1.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\..\packages\Autofac.Mvc4.3.1.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -81,10 +87,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossCuttings\ChiffonConfig.cs" />
-    <Compile Include="CrossCuttings\NoopLoggerFactory.cs" />
-    <Compile Include="CrossCuttings\Logger.cs" />
-    <Compile Include="CrossCuttings\LoggingZones.cs" />
+    <Compile Include="Crosscuttings\ChiffonConfig.cs" />
+    <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
+    <Compile Include="Crosscuttings\Logger.cs" />
+    <Compile Include="Crosscuttings\LoggingZones.cs" />
     <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
@@ -94,13 +100,10 @@
     <Compile Include="WebSite\ChiffonWebViewPage.cs" />
     <Compile Include="WebSite\ChiffonWebViewPage`1.cs" />
     <Compile Include="WebSite\Configs\DependencyConfig.cs" />
-    <Compile Include="WebSite\Configs\CrossCuttingsModule.cs">
+    <Compile Include="Crosscuttings\AutofacModule.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
-    <Compile Include="WebSite\Configs\InfrastructureModule.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="WebSite\Configs\RouteConfig.cs" />
     <Compile Include="WebSite\Controllers\AccountController.cs" />
     <Compile Include="WebSite\Controllers\HomeController.cs" />
@@ -140,6 +143,9 @@
       <Project>{7b564b3c-cccc-43ca-94b6-d375aa40f085}</Project>
       <Name>Narvalo %28Narvalo\Narvalo%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

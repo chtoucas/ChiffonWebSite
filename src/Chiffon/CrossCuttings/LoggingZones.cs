@@ -1,4 +1,4 @@
-﻿namespace Chiffon.CrossCuttings
+﻿namespace Chiffon.Crosscuttings
 {
     using System;
     using Narvalo.Diagnostics;

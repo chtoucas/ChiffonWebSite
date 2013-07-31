@@ -22,6 +22,8 @@ Custom MemberShip/Role
 AntiXSS
 Ability to remove the versioning for the AssetProvider
 
+PreCompilation
+https://github.com/sayedihashimi/slow-cheetah/issues/50
 
 http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
 http://stackoverflow.com/questions/372865/path-combine-for-urls

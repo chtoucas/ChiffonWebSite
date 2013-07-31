@@ -23,6 +23,9 @@
             routes.MapRoute("About", "informations", new { controller = "Home", action = "About" });
             routes.MapRoute("Contact", "contact", new { controller = "Home", action = "Contact" });
 
+            // AccountController.
+            routes.MapRoute("Register", "inscription", new { controller = "Account", action = "Register" });
+
             // MemberController.
             routes.MapRoute("Chicamancha", "chicamancha/{action}", new { controller = "Member", action = "Index", key = "cm" });
             routes.MapRoute("VivianeDevaux", "viviane-devaux/{action}", new { controller = "Member", action = "Index", key = "vd" });
@@ -57,8 +60,7 @@
                                 controller = controller.Substring(0, controller.Length - 10);
 
                             string name = String.Format("ChildAction/{0}/{1}", controller, action);
-                            var constraints = new
-                            {
+                            var constraints = new {
                                 controller = controller,
                                 action = action
                             };

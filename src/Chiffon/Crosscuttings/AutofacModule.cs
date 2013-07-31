@@ -1,14 +1,13 @@
-﻿namespace Chiffon.WebSite.Configs
+﻿namespace Chiffon.Crosscuttings
 {
     using Autofac;
-    using Chiffon.CrossCuttings;
     using Narvalo;
 
-    internal class CrossCuttingsModule : Module
+    public class AutofacModule : Module
     {
         readonly ChiffonConfig _config;
 
-        public CrossCuttingsModule(ChiffonConfig config)
+        public AutofacModule(ChiffonConfig config)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -20,7 +19,12 @@
         {
             Requires.NotNull(builder, "builder");
 
+            // Crosscuttings
             builder.Register(_ => _config).As<ChiffonConfig>().SingleInstance();
+
+            //builder.Register(
+            //    _ => new DefaultSiteMapFactory(_.Resolve<PacrConfigurationSection>().WebSite.BaseUrl)
+            //    ).As<ISiteMapFactory>().SingleInstance();
         }
     }
 }
