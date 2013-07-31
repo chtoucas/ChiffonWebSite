@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang=fr>
+<head>
+ <meta charset="utf-8" />
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <title>@ViewBag.Title</title>
+ <meta name=description content="@ViewBag.Description" />
+ <meta name=keywords content="@ViewBag.Keywords" />
+ <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
+ <meta name=robots content="index, follow" />
+ <meta name=viewport content="width=device-width, initial-scale=1" />
+ @*<base href="/"/>
+ <link rel=canonical href="http://127.0.0.1:8080/"/>*@
+ @{Html.RenderAction("CommonStylesheet", "Widget");}
+ @*HTML5 fix for IE*@
+ @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
+</head>
+<body id="@ViewBag.Id">
+ <header>
+  <h1>Le collectif <strong>Pour quel motif, Simone ?</strong> présente sa collection <em>AH14/15</em></h1>
+  <nav id=nav_lang class=clr>
+   <ul class="inline right">
+    <li>EN</li>
+    <li class=sep>/</li>
+    <li><a href="#">FR</a></li>
+   </ul>
+  </nav>
+  <nav id=nav_main class=clr>
+   <ul class=center>
+    <li><a href="/" id=nav_home>Home</a></li>
+    <li class=sep>/</li>
+    <li><a href="/blog" id=nav_blog target=_blank>Blog</a></li>
+    <li class=sep>/</li>
+    <li><a href="/informations" id=nav_info>Info</a></li>
+    <li class=sep>/</li>
+    <li><a href="/contact" id=nav_contact>Contact</a></li>
+    <li class=right><a href="/newsletter" id=nav_newsletter rel=modal>Newsletter</a></li>
+   </ul>
+  </nav>
+ </header>
+ <div id=content>
+  @RenderBody()
+ </div>
+ <footer class=grey>
+  <p id=legal>
+   Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations
+   et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute
+   image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.
+  </p>
+  <p id=copyright>© Pour quel motif, Simone ? 2013</p>
+ </footer>
+ @{Html.RenderAction("CommonJavaScript", "Widget");}
+</body>
+</html>

@@ -87,10 +87,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crosscuttings\ChiffonConfig.cs" />
-    <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
-    <Compile Include="Crosscuttings\Logger.cs" />
-    <Compile Include="Crosscuttings\LoggingZones.cs" />
+    <Compile Include="Crosscuttings_\AutofacModule.cs" />
+    <Compile Include="Crosscuttings_\ChiffonConfig.cs" />
+    <Compile Include="Crosscuttings_\Logger.cs" />
+    <Compile Include="Crosscuttings_\NoopLoggerFactory.cs" />
     <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
@@ -100,9 +100,6 @@
     <Compile Include="WebSite\ChiffonWebViewPage.cs" />
     <Compile Include="WebSite\ChiffonWebViewPage`1.cs" />
     <Compile Include="WebSite\Configs\DependencyConfig.cs" />
-    <Compile Include="Crosscuttings\AutofacModule.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
     <Compile Include="WebSite\Configs\RouteConfig.cs" />
     <Compile Include="WebSite\Controllers\AccountController.cs" />
