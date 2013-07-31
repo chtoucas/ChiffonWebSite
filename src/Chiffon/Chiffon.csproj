@@ -114,9 +114,8 @@
     <Compile Include="WebSite\Controllers\WidgetController.cs" />
     <Compile Include="WebSite\GlimpseSecurityPolicy.cs" />
     <Compile Include="WebSite\Global.cs" />
-    <Compile Include="WebSite\Handlers\LogOnQuery.cs" />
-    <Compile Include="WebSite\Handlers\LogOnQueryBinder.cs" />
     <Compile Include="WebSite\Handlers\PatternHandler.cs" />
+    <Compile Include="WebSite\Handlers\PatternPreviewHandler.cs" />
     <Compile Include="WebSite\Resources\SR.Designer.cs">
       <DependentUpon>SR.resx</DependentUpon>
       <AutoGen>True</AutoGen>

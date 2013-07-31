@@ -6,12 +6,14 @@
     using Narvalo.Web;
 
     [Serializable]
-    public class PatternQuery
+    public class PatternPreviewQuery
     {
+        public static readonly string HeightKey = "height";
         public static readonly string IdKey = "id";
+        public static readonly string WidthKey = "width";
     }
 
-    public class PatternHandler : IHttpHandler
+    public class PatternPreviewHandler : IHttpHandler
     {
         const int HoursInCache_ = 1;
 
@@ -26,8 +28,14 @@
         {
             var query = context.Request.QueryString;
 
-            var reference = query.MayGetValue(PatternQuery.IdKey);
+            var reference = query.MayGetValue(PatternPreviewQuery.IdKey);
             if (reference.IsNone) { ; }
+
+            var width = query.MayGetValue(PatternPreviewQuery.WidthKey);
+            if (width.IsNone) { ; }
+
+            var height = query.MayGetValue(PatternPreviewQuery.HeightKey);
+            if (height.IsNone) { ; }
 
             // TODO
             string path = @"J:\home\github\ChiffonWebSite\src\Chiffon.WebSite\patterns\viviane-devaux\motif1_apercu.jpg";

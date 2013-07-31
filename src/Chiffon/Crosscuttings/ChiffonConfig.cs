@@ -13,13 +13,15 @@
         const string DebugJsKey_ = "Chiffon/DebugJs";
         const string DisplayNameKey_ = "Chiffon/DisplayName";
         const string HostKey_ = "Chiffon/Host";
+        const string PatternDirectoryKey_ = "Chiffon/PatternDirectory";
         const string PortKey_ = "Chiffon/Port";
 
         bool _debugCss = false;
         bool _debugJs = false;
         string _displayName = "Pour quel motif Simone ?";
-        int _port = 80;
         string _host;
+        string _patternDirectory;
+        int _port = 80;
 
         ChiffonConfig()
         {
@@ -28,6 +30,7 @@
                 .AllKeys.Select(k => Tuple.Create(k, ConfigurationManager.AppSettings[k])));
         }
 
+        public string PatternDirectory { get { return _patternDirectory; } }
         public bool DebugCss { get { return _debugCss; } }
         public bool DebugJs { get { return _debugJs; } }
         public string DisplayName { get { return _displayName; } }
@@ -77,6 +80,12 @@
                 throw new ConfigurationErrorsException(HostKey_);
             }
             _host = host;
+
+            var patternDirectory = settings[PatternDirectoryKey_];
+            if (String.IsNullOrWhiteSpace(patternDirectory)) {
+                throw new ConfigurationErrorsException(PatternDirectoryKey_);
+            }
+            _patternDirectory = patternDirectory;
 
             var port = settings[PortKey_];
             if (!String.IsNullOrEmpty(port)) {
