@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -87,14 +88,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crosscuttings_\AutofacModule.cs" />
-    <Compile Include="Crosscuttings_\ChiffonConfig.cs" />
-    <Compile Include="Crosscuttings_\Logger.cs" />
-    <Compile Include="Crosscuttings_\NoopLoggerFactory.cs" />
+    <Compile Include="Crosscuttings\AutofacModule.cs" />
+    <Compile Include="Crosscuttings\ChiffonConfig.cs" />
+    <Compile Include="Crosscuttings\Logger.cs" />
+    <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
     <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
+    <Compile Include="Infrastructure\Assets\ChiffonAssetFileBase.cs" />
+    <Compile Include="Infrastructure\Assets\ChiffonAssetProvider.cs" />
+    <Compile Include="Infrastructure\Assets\ChiffonImageFile.cs" />
+    <Compile Include="Infrastructure\Assets\ChiffonScriptFile.cs" />
+    <Compile Include="Infrastructure\Assets\ChiffonStyleFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSite\AppActivator.cs" />
     <Compile Include="WebSite\ChiffonWebViewPage.cs" />
@@ -110,6 +116,7 @@
     <Compile Include="WebSite\Global.cs" />
     <Compile Include="WebSite\Handlers\LogOnQuery.cs" />
     <Compile Include="WebSite\Handlers\LogOnQueryBinder.cs" />
+    <Compile Include="WebSite\Handlers\PatternHandler.cs" />
     <Compile Include="WebSite\Resources\SR.Designer.cs">
       <DependentUpon>SR.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -117,8 +124,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BuildingBlocks\" />
-    <Folder Include="Persistence\" />
     <Folder Include="WebSite\Api\" />
     <Folder Include="WebSite\ViewModels\" />
   </ItemGroup>

@@ -28,3 +28,8 @@ https://github.com/sayedihashimi/slow-cheetah/issues/50
 http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
 http://stackoverflow.com/questions/372865/path-combine-for-urls
 http://stackoverflow.com/questions/4925468/combine-relative-baseuri-with-relative-path
+
+Rewrite
+=======
+
+Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\

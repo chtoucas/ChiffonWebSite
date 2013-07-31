@@ -15,7 +15,6 @@
         const string HostKey_ = "Chiffon/Host";
         const string PortKey_ = "Chiffon/Port";
 
-        Uri _assetBaseUrl = new Uri("/assets", UriKind.Relative);
         bool _debugCss = false;
         bool _debugJs = false;
         string _displayName = "Pour quel motif Simone ?";
@@ -29,7 +28,6 @@
                 .AllKeys.Select(k => Tuple.Create(k, ConfigurationManager.AppSettings[k])));
         }
 
-        public Uri AssetBaseUrl { get { return _assetBaseUrl; } }
         public bool DebugCss { get { return _debugCss; } }
         public bool DebugJs { get { return _debugJs; } }
         public string DisplayName { get { return _displayName; } }
@@ -57,21 +55,15 @@
 
         void Initialize_(NameValueCollection settings)
         {
-            var assetBaseUrl = settings["Chiffon/AssetBaseUrl"];
-            if (!String.IsNullOrWhiteSpace(assetBaseUrl)) {
-                _assetBaseUrl = MayParse.ToUri(assetBaseUrl, UriKind.RelativeOrAbsolute)
-                    .ValueOrThrow(() => new ConfigurationErrorsException("Chiffon/AssetBaseUrl"));
-            }
-
-            var debugJsStr = settings[DebugJsKey_];
-            if (!String.IsNullOrEmpty(debugJsStr)) {
-                _debugJs = MayParse.ToBoolean(debugJsStr, BooleanStyles.Literal)
+            var debugJs = settings[DebugJsKey_];
+            if (!String.IsNullOrEmpty(debugJs)) {
+                _debugJs = MayParse.ToBoolean(debugJs, BooleanStyles.Literal)
                     .ValueOrThrow(() => new ConfigurationErrorsException(DebugJsKey_));
             }
 
-            var debugCssStr = settings[DebugCssKey_];
-            if (!String.IsNullOrEmpty(debugCssStr)) {
-                _debugCss = MayParse.ToBoolean(debugCssStr, BooleanStyles.Literal)
+            var debugCss = settings[DebugCssKey_];
+            if (!String.IsNullOrEmpty(debugCss)) {
+                _debugCss = MayParse.ToBoolean(debugCss, BooleanStyles.Literal)
                     .ValueOrThrow(() => new ConfigurationErrorsException(DebugCssKey_));
             }
 
@@ -86,9 +78,9 @@
             }
             _host = host;
 
-            var portStr = settings[PortKey_];
-            if (!String.IsNullOrEmpty(portStr)) {
-                _port = MayParse.ToInt32(portStr)
+            var port = settings[PortKey_];
+            if (!String.IsNullOrEmpty(port)) {
+                _port = MayParse.ToInt32(port)
                     .ValueOrThrow(() => new ConfigurationErrorsException(PortKey_));
             }
         }

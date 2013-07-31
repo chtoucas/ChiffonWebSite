@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -210,7 +211,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
+    <Folder Include="assets\img\" />
     <Folder Include="Configurations\" />
+    <Folder Include="patterns\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
