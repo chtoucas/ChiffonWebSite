@@ -2,12 +2,11 @@
 {
     using System;
     using Narvalo.Diagnostics;
-    using Narvalo.Log4Net;
 
     public static class LoggingZones
     {
-        static Lazy<ILogger> ApplicationLogger_
-            = new Lazy<ILogger>(() => Logger.Create("Application"));
+        //static Lazy<ILogger> ApplicationLogger_
+        //    = new Lazy<ILogger>(() => Logger.Create("Application"));
         static Lazy<ILogger> CrossCuttingsLogger_
             = new Lazy<ILogger>(() => Logger.Create("CrossCuttings"));
         static Lazy<ILogger> InfrastructureLogger_
@@ -15,10 +14,10 @@
         static Lazy<ILogger> PersistenceLogger_
             = new Lazy<ILogger>(() => Logger.Create("Persistence"));
 
-        public static ILogger Application
-        {
-            get { return ApplicationLogger_.Value; }
-        }
+        //public static ILogger Application
+        //{
+        //    get { return ApplicationLogger_.Value; }
+        //}
 
         public static ILogger CrossCuttings
         {

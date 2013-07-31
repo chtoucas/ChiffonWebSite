@@ -1,11 +1,6 @@
 ﻿namespace Chiffon.WebSite
 {
-    using System.Diagnostics;
-    using System.Linq;
     using System.Web.Mvc;
-    using Autofac;
-    using Autofac.Integration.Mvc;
-    using Chiffon.WebSite.Configs;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 
@@ -19,14 +14,10 @@
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();
 
+            // Supprime l'en-tête "X-AspNetMvc-Version".
+            MvcHandler.DisableMvcResponseHeader = true;
+
             //PreStartMiniProfiler_();
-
-            // Configuration d'Autofac.
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new CrossCuttingsModule());
-            builder.RegisterModule(new InfrastructureModule());
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
 
         public static void PostStart()

@@ -8,8 +8,9 @@
     using System.Web.Mvc;
     //using System.Web.Optimization;
     using System.Web.Routing;
-    using Chiffon.WebSite.Resources;
+    using Chiffon.CrossCuttings;
     using Chiffon.WebSite.Configs;
+    using Chiffon.WebSite.Resources;
     using Narvalo;
     using Narvalo.Diagnostics;
     using Narvalo.Web;
@@ -63,7 +64,7 @@
     {
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        static ILogger Logger_;
+        static ILogger Logger_ = Logger.Create(typeof(Global));
 
         public Global()
             : base()
@@ -73,33 +74,33 @@
             Error += Application_Error;
         }
 
-//        /// <summary>
-//        /// Retourne la Version de l'assemblée Chiffon.WebSite.
-//        /// </summary>
-//        public static string Version
-//        {
-//            get { return AssemblyVersion_; }
-//        }
+        //        /// <summary>
+        //        /// Retourne la Version de l'assemblée Chiffon.WebSite.
+        //        /// </summary>
+        //        public static string Version
+        //        {
+        //            get { return AssemblyVersion_; }
+        //        }
 
-//        /// <summary>
-//        /// Retourne true si l'assemblée Chiffon.WebSite a été compilée en mode Debug.
-//        /// </summary>
-//        /// <remarks>
-//        /// Pour savoir si les pages AspNet ont été compilées en mode Debug, il faut plutôt
-//        /// utiliser <c>HttpContext.Current.IsDebuggingEnable</c>.
-//        /// </remarks>
-//        public static bool Debug
-//        {
-//            // WARNING: tout ce qui n'est pas Debug est assimilé à Release.
-//            get
-//            {
-//#if DEBUG
-//                return true;
-//#else
-//                return false;
-//#endif
-//            }
-//        }
+        //        /// <summary>
+        //        /// Retourne true si l'assemblée Chiffon.WebSite a été compilée en mode Debug.
+        //        /// </summary>
+        //        /// <remarks>
+        //        /// Pour savoir si les pages AspNet ont été compilées en mode Debug, il faut plutôt
+        //        /// utiliser <c>HttpContext.Current.IsDebuggingEnable</c>.
+        //        /// </remarks>
+        //        public static bool Debug
+        //        {
+        //            // WARNING: tout ce qui n'est pas Debug est assimilé à Release.
+        //            get
+        //            {
+        //#if DEBUG
+        //                return true;
+        //#else
+        //                return false;
+        //#endif
+        //            }
+        //        }
 
         #region Méthodes spéciales appelées une seule fois dans toute la durée de vie du domaine d'application.
 
@@ -121,26 +122,16 @@
         /// <param name="e"></param>
         protected void Application_Start()
         {
-            Logger_ = DependencyResolver.Current.GetService<ILoggerFactory>().CreateLogger(typeof(Global));
-
             Log_(LoggerLevel.Informational, () => { return SR.Global_Starting; });
 
-            // Supprime l'en-tête "X-AspNetMvc-Version".
-            MvcHandler.DisableMvcResponseHeader = true;
-
-            // 6. Authentification. (FIXME)
-            //AuthConfig.Start();
-
-            // 1. Areas.
-            //AreaRegistration.RegisterAllAreas();
-            // 3. Filters.
+            // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            // 4. Routes.
+            // Routes.
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            // 5. Optimisation.
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
-            // 2. WebApi.
+            // WebApi.
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
+            // Injection de dépendances.
+            DependencyConfig.RegisterDependencies(ChiffonConfig.Create());
         }
 
         /// <summary>

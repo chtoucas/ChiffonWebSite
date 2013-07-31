@@ -2,11 +2,10 @@
 {
     using System;
     using Narvalo.Diagnostics;
-    using Narvalo.Log4Net;
 
     public static class Logger
     {
-        static ILoggerFactory Factory_ = new Log4NetFactory();
+        static ILoggerFactory Factory_ = new NoopLoggerFactory();
 
         public static ILogger Create(Type type)
         {

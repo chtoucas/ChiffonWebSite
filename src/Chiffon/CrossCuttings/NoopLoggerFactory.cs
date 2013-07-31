@@ -3,7 +3,7 @@
     using System;
     using Narvalo.Diagnostics;
 
-    public class DefaultLoggerFactory : ILoggerFactory
+    public class NoopLoggerFactory : ILoggerFactory
     {
         public ILogger CreateLogger(Type type)
         {

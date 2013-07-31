@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Web" />
@@ -80,7 +81,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossCuttings\DefaultLoggerFactory.cs" />
+    <Compile Include="CrossCuttings\ChiffonConfig.cs" />
+    <Compile Include="CrossCuttings\NoopLoggerFactory.cs" />
+    <Compile Include="CrossCuttings\Logger.cs" />
+    <Compile Include="CrossCuttings\LoggingZones.cs" />
     <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
@@ -89,14 +93,19 @@
     <Compile Include="WebSite\AppActivator.cs" />
     <Compile Include="WebSite\ChiffonWebViewPage.cs" />
     <Compile Include="WebSite\ChiffonWebViewPage`1.cs" />
-    <Compile Include="WebSite\Configs\CrossCuttingsModule.cs" />
+    <Compile Include="WebSite\Configs\DependencyConfig.cs" />
+    <Compile Include="WebSite\Configs\CrossCuttingsModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
-    <Compile Include="WebSite\Configs\InfrastructureModule.cs" />
+    <Compile Include="WebSite\Configs\InfrastructureModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WebSite\Configs\RouteConfig.cs" />
     <Compile Include="WebSite\Controllers\AccountController.cs" />
-    <Compile Include="WebSite\Controllers\AssetController.cs" />
     <Compile Include="WebSite\Controllers\HomeController.cs" />
     <Compile Include="WebSite\Controllers\MemberController.cs" />
+    <Compile Include="WebSite\Controllers\WidgetController.cs" />
     <Compile Include="WebSite\GlimpseSecurityPolicy.cs" />
     <Compile Include="WebSite\Global.cs" />
     <Compile Include="WebSite\Handlers\LogOnQuery.cs" />
