@@ -1,52 +1,50 @@
 ﻿namespace Chiffon.WebSite.Handlers
 {
-    using System;
+    using System.IO;
     using System.Web;
-    using Narvalo.Collections;
+    using System.Web.Mvc;
+    using System.Web.SessionState;
+    using Chiffon.Crosscuttings;
+    using Narvalo;
+    using Narvalo.Fx;
     using Narvalo.Web;
 
-    [Serializable]
-    public class PatternPreviewQuery
+    public class PatternPreviewHandler : HttpHandlerBase<PatternPreviewQuery>, IRequiresSessionState
     {
-        public static readonly string HeightKey = "height";
-        public static readonly string IdKey = "id";
-        public static readonly string WidthKey = "width";
-    }
+        const int MinutesInCache_ = 30;
 
-    public class PatternPreviewHandler : IHttpHandler
-    {
-        const int HoursInCache_ = 1;
+        readonly ChiffonConfig _config;
 
-        #region IHttpHandler
+        //public PatternPreviewHandler(ChiffonConfig config)
+        //    : base()
+        //{
+        //    Requires.NotNull(config, "config");
 
-        public bool IsReusable
+        //    _config = config;
+        //}
+
+        public PatternPreviewHandler()
+            : base()
         {
-            get { return true; }
+            _config = DependencyResolver.Current.GetService<ChiffonConfig>();
         }
 
-        public void ProcessRequest(HttpContext context)
+        protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
+
+        protected override Outcome<PatternPreviewQuery> Bind(HttpRequest request)
         {
-            var query = context.Request.QueryString;
+            return new PatternPreviewQueryBinder().Bind(request);
+        }
 
-            var reference = query.MayGetValue(PatternPreviewQuery.IdKey);
-            if (reference.IsNone) { ; }
+        protected override void ProcessRequestCore(HttpContext context, PatternPreviewQuery query)
+        {
+            string path = Path.Combine(_config.PatternDirectory, @"\viviane-devaux\motif1_apercu.jpg");
 
-            var width = query.MayGetValue(PatternPreviewQuery.WidthKey);
-            if (width.IsNone) { ; }
-
-            var height = query.MayGetValue(PatternPreviewQuery.HeightKey);
-            if (height.IsNone) { ; }
-
-            // TODO
-            string path = @"J:\home\github\ChiffonWebSite\src\Chiffon.WebSite\patterns\viviane-devaux\motif1_apercu.jpg";
-
-            // Deliver the thumbnail.
+            // Deliver the preview.
             context.Response.Clear();
-            context.Response.PubliclyCacheFor(0, HoursInCache_, 0);
+            context.Response.PubliclyCacheFor(0, 0, MinutesInCache_);
             context.Response.ContentType = "image/jpeg";
             context.Response.TransmitFile(path);
         }
-
-        #endregion
     }
 }

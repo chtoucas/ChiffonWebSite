@@ -212,8 +212,6 @@
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
     <Folder Include="assets\img\" />
-    <Folder Include="Configurations\" />
-    <Folder Include="patterns\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

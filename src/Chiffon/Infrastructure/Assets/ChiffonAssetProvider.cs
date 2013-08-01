@@ -8,13 +8,13 @@
 
     public class ChiffonAssetProvider : AssetProviderBase
     {
-        const string BaseUrlKey_ = "baseUrl";
+        const string BaseUriKey_ = "baseUri";
 
-        Uri _baseUrl;
+        Uri _baseUri;
 
         public ChiffonAssetProvider() : base() { }
 
-        public Uri BaseUrl { get { return _baseUrl; } }
+        public Uri BaseUri { get { return _baseUri; } }
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -31,18 +31,16 @@
 
             base.Initialize(name, config);
 
-            // TODO vérifier que les champs sont valides.
-
-            // Initialisation du champs _baseUrl.
-            string baseUrlValue = config[BaseUrlKey_];
-            if (String.IsNullOrEmpty(baseUrlValue)) {
+            // Initialisation du champs _baseUri.
+            string baseUri = config[BaseUriKey_];
+            if (String.IsNullOrEmpty(baseUri)) {
                 throw new ProviderException("XXX");
             }
             else {
-                _baseUrl = MayParse.ToUri(baseUrlValue, UriKind.RelativeOrAbsolute)
+                _baseUri = MayParse.ToUri(baseUri, UriKind.RelativeOrAbsolute)
                     .ValueOrThrow(() => new ProviderException("XXX"));
             }
-            config.Remove(BaseUrlKey_);
+            config.Remove(BaseUriKey_);
 
             // FIXME: On vérifie qu'il n'y a pas de champs inconnu restant.
             config.Remove("description");
@@ -57,17 +55,17 @@
 
         public override AssetFile GetImage(string relativePath)
         {
-            return new ChiffonImageFile(_baseUrl, relativePath);
+            return new ChiffonImageFile(_baseUri, relativePath);
         }
 
         public override AssetFile GetScript(string relativePath)
         {
-            return new ChiffonScriptFile(_baseUrl, relativePath);
+            return new ChiffonScriptFile(_baseUri, relativePath);
         }
 
         public override AssetFile GetStyle(string relativePath)
         {
-            return new ChiffonStyleFile(_baseUrl, relativePath);
+            return new ChiffonStyleFile(_baseUri, relativePath);
         }
     }
 }
