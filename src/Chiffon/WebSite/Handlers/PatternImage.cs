@@ -4,10 +4,8 @@ namespace Chiffon.WebSite.Handlers
     using System.ComponentModel.DataAnnotations;
 
     [Serializable]
-    public class PatternQuery
+    public class PatternImage
     {
-        public static readonly string IdKey = "id";
-
         int _id;
 
         [Required(ErrorMessage = "Id is required.")]

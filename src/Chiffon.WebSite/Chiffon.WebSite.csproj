@@ -232,7 +232,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\Narvalo.NET\src\Narvalo\Narvalo.csproj">
       <Project>{7b564b3c-cccc-43ca-94b6-d375aa40f085}</Project>
-      <Name>Narvalo %28Narvalo\Narvalo%29</Name>
+      <Name>Narvalo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chiffon\Chiffon.csproj">
       <Project>{a518fe89-66c4-44a7-9c08-4c3cf61ee1ab}</Project>

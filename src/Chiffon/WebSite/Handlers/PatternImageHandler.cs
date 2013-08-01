@@ -6,16 +6,17 @@
     using System.Web.SessionState;
     using Chiffon.Crosscuttings;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Fx;
     using Narvalo.Web;
 
-    public class PatternHandler : HttpHandlerBase<PatternQuery>, IRequiresSessionState
+    public class PatternImageHandler : HttpHandlerBase<PatternImage>, IRequiresSessionState
     {
         const int MinutesInCache_ = 30;
 
         readonly ChiffonConfig _config;
 
-        public PatternHandler(ChiffonConfig config)
+        public PatternImageHandler(ChiffonConfig config)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -25,12 +26,17 @@
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
-        protected override Outcome<PatternQuery> Bind(HttpRequest request)
+        protected override Outcome<PatternImage> Bind(HttpRequest request)
         {
-            return new PatternQueryBinder().Bind(request);
+            var id = request.QueryString.MayParseValue("id", _ => MayParse.ToInt32(_));
+            if (id.IsNone) { return Outcome<PatternImage>.Failure(Error.Create("Id")); }
+
+            var query = new PatternImage { Id = id.Value };
+
+            return Outcome<PatternImage>.Success(query);
         }
 
-        protected override void ProcessRequestCore(HttpContext context, PatternQuery query)
+        protected override void ProcessRequestCore(HttpContext context, PatternImage query)
         {
             string path = Path.Combine(_config.PatternDirectory, @"viviane-devaux\motif5.jpg");
 

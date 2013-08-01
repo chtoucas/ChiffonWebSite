@@ -26,11 +26,13 @@
 
         static void RegisterHttpHandlers_(ContainerBuilder builder, RouteCollection routes)
         {
-            routes.Add(new Route("Pattern.ashx", new AutofacRouteHandler<PatternHandler>()));
-            builder.Register(_ => new PatternHandler(_.Resolve<ChiffonConfig>())).AsSelf().InstancePerHttpRequest();
+            routes.Add(new Route("PatternImage.ashx", new AutofacRouteHandler<PatternImageHandler>()));
+            builder.Register(_ => new PatternImageHandler(_.Resolve<ChiffonConfig>()))
+                .AsSelf().SingleInstance(); // XXX: Maybe InstancePerHttpRequest
 
             routes.Add(new Route("PatternPreview.ashx", new AutofacRouteHandler<PatternPreviewHandler>()));
-            builder.Register(_ => new PatternPreviewHandler(_.Resolve<ChiffonConfig>())).AsSelf().InstancePerHttpRequest();
+            builder.Register(_ => new PatternPreviewHandler(_.Resolve<ChiffonConfig>()))
+                .AsSelf().SingleInstance();
         }
 
         // Cf. https://groups.google.com/forum/#!msg/autofac/BkY4s4tusUc/micDCB0YiN8J

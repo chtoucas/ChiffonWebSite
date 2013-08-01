@@ -4,12 +4,8 @@
     using System.ComponentModel.DataAnnotations;
 
     [Serializable]
-    public class PatternPreviewQuery
+    public class PatternPreview
     {
-        public static readonly string HeightKey = "height";
-        public static readonly string IdKey = "id";
-        public static readonly string WidthKey = "width";
-
         int _height;
         int _id;
         int _width;

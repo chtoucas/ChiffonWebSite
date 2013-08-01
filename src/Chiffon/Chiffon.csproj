@@ -112,12 +112,10 @@
     <Compile Include="WebSite\Controllers\WidgetController.cs" />
     <Compile Include="WebSite\GlimpseSecurityPolicy.cs" />
     <Compile Include="WebSite\Global.cs" />
-    <Compile Include="WebSite\Handlers\PatternQueryBinder.cs" />
-    <Compile Include="WebSite\Handlers\PatternHandler.cs" />
+    <Compile Include="WebSite\Handlers\PatternImageHandler.cs" />
     <Compile Include="WebSite\Handlers\PatternPreviewHandler.cs" />
-    <Compile Include="WebSite\Handlers\PatternPreviewQuery.cs" />
-    <Compile Include="WebSite\Handlers\PatternPreviewQueryBinder.cs" />
-    <Compile Include="WebSite\Handlers\PatternQuery.cs" />
+    <Compile Include="WebSite\Handlers\PatternPreview.cs" />
+    <Compile Include="WebSite\Handlers\PatternImage.cs" />
     <Compile Include="WebSite\Resources\SR.Designer.cs">
       <DependentUpon>SR.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -141,7 +139,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\Narvalo.NET\src\Narvalo\Narvalo.csproj">
       <Project>{7b564b3c-cccc-43ca-94b6-d375aa40f085}</Project>
-      <Name>Narvalo %28Narvalo\Narvalo%29</Name>
+      <Name>Narvalo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,11 @@
     using System.Web.SessionState;
     using Chiffon.Crosscuttings;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Fx;
     using Narvalo.Web;
 
-    public class PatternPreviewHandler : HttpHandlerBase<PatternPreviewQuery>, IRequiresSessionState
+    public class PatternPreviewHandler : HttpHandlerBase<PatternPreview>, IRequiresSessionState
     {
         const int MinutesInCache_ = 30;
 
@@ -25,12 +26,39 @@
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
-        protected override Outcome<PatternPreviewQuery> Bind(HttpRequest request)
+        protected override Outcome<PatternPreview> Bind(HttpRequest request)
         {
-            return new PatternPreviewQueryBinder().Bind(request);
+            var nvc = request.QueryString;
+
+            // > Paramètres obligatoires <
+
+            var id = nvc.MayParseValue("id", _ => MayParse.ToInt32(_));
+            if (id.IsNone) {
+                return Outcome<PatternPreview>.Failure("XXX");
+            }
+
+            var width = nvc.MayParseValue("width", _ => MayParse.ToInt32(_));
+            if (width.IsNone) {
+                return Outcome<PatternPreview>.Failure("XXX");
+            }
+
+            var height = nvc.MayParseValue("height", _ => MayParse.ToInt32(_));
+            if (height.IsNone) {
+                return Outcome<PatternPreview>.Failure("XXX");
+            }
+
+            // > Création du modèle <
+
+            var query = new PatternPreview {
+                Height = height.Value,
+                Id = id.Value,
+                Width = width.Value,
+            };
+
+            return Outcome<PatternPreview>.Success(query);
         }
 
-        protected override void ProcessRequestCore(HttpContext context, PatternPreviewQuery query)
+        protected override void ProcessRequestCore(HttpContext context, PatternPreview query)
         {
             string path = Path.Combine(_config.PatternDirectory, @"viviane-devaux\motif1_apercu.jpg");
 

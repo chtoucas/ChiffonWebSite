@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo", "..\Narvalo.NET\s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Web", "..\Narvalo.NET\src\Narvalo.Web\Narvalo.Web.csproj", "{56E3969F-5066-4702-A670-4C35FBD97201}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Narvalo", "Narvalo", "{9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Packages__", "__Packages__", "{9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite", "src\Chiffon.WebSite\Chiffon.WebSite.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
