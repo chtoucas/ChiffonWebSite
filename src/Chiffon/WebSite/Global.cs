@@ -131,7 +131,7 @@
             // WebApi.
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
             // Injection de dépendances.
-            DependencyConfig.RegisterDependencies(ChiffonConfig.Create());
+            DependencyConfig.RegisterDependencies(ChiffonConfig.Create(), RouteTable.Routes);
         }
 
         /// <summary>

@@ -15,18 +15,12 @@
 
         readonly ChiffonConfig _config;
 
-        //public PatternPreviewHandler(ChiffonConfig config)
-        //    : base()
-        //{
-        //    Requires.NotNull(config, "config");
-
-        //    _config = config;
-        //}
-
-        public PatternPreviewHandler()
+        public PatternPreviewHandler(ChiffonConfig config)
             : base()
         {
-            _config = DependencyResolver.Current.GetService<ChiffonConfig>();
+            Requires.NotNull(config, "config");
+
+            _config = config;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
@@ -38,11 +32,10 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternPreviewQuery query)
         {
-            string path = Path.Combine(_config.PatternDirectory, @"\viviane-devaux\motif1_apercu.jpg");
+            string path = Path.Combine(_config.PatternDirectory, @"viviane-devaux\motif1_apercu.jpg");
 
-            // Deliver the preview.
             context.Response.Clear();
-            context.Response.PubliclyCacheFor(0, 0, MinutesInCache_);
+            context.Response.PrivatelyCacheFor(0, 0, MinutesInCache_);
             context.Response.ContentType = "image/jpeg";
             context.Response.TransmitFile(path);
         }

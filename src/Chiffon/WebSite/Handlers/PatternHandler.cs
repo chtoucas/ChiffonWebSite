@@ -1,44 +1,43 @@
 ﻿namespace Chiffon.WebSite.Handlers
 {
-    using System;
+    using System.IO;
     using System.Web;
-    using Narvalo.Collections;
+    using System.Web.Mvc;
+    using System.Web.SessionState;
+    using Chiffon.Crosscuttings;
+    using Narvalo;
+    using Narvalo.Fx;
     using Narvalo.Web;
 
-    [Serializable]
-    public class PatternQuery
+    public class PatternHandler : HttpHandlerBase<PatternQuery>, IRequiresSessionState
     {
-        public static readonly string IdKey = "id";
-    }
+        const int MinutesInCache_ = 30;
 
-    public class PatternHandler : IHttpHandler
-    {
-        const int HoursInCache_ = 1;
+        readonly ChiffonConfig _config;
 
-        #region IHttpHandler
-
-        public bool IsReusable
+        public PatternHandler(ChiffonConfig config)
+            : base()
         {
-            get { return true; }
+            Requires.NotNull(config, "config");
+
+            _config = config;
         }
 
-        public void ProcessRequest(HttpContext context)
+        protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
+
+        protected override Outcome<PatternQuery> Bind(HttpRequest request)
         {
-            var query = context.Request.QueryString;
+            return new PatternQueryBinder().Bind(request);
+        }
 
-            var reference = query.MayGetValue(PatternQuery.IdKey);
-            if (reference.IsNone) { ; }
+        protected override void ProcessRequestCore(HttpContext context, PatternQuery query)
+        {
+            string path = Path.Combine(_config.PatternDirectory, @"viviane-devaux\motif5.jpg");
 
-            // TODO
-            string path = @"J:\home\github\ChiffonWebSite\src\Chiffon.WebSite\patterns\viviane-devaux\motif1_apercu.jpg";
-
-            // Deliver the thumbnail.
             context.Response.Clear();
-            context.Response.PubliclyCacheFor(0, HoursInCache_, 0);
+            context.Response.PrivatelyCacheFor(0, 0, MinutesInCache_);
             context.Response.ContentType = "image/jpeg";
             context.Response.TransmitFile(path);
         }
-
-        #endregion
     }
 }

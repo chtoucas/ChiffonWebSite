@@ -6,8 +6,6 @@
     using System.Web.SessionState;
     using Narvalo.Fx;
     using Narvalo.Web;
-    //using Pacr.BuildingBlocks.Membership;
-    //using Pacr.Infrastructure.Addressing;
 
     public class LogOnHandler : HttpHandlerBase<LogOnQuery>, IRequiresSessionState
     {

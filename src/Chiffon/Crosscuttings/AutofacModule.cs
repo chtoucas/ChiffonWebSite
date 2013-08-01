@@ -20,7 +20,7 @@
             Requires.NotNull(builder, "builder");
 
             // Crosscuttings
-            builder.Register(_ => _config).As<ChiffonConfig>().SingleInstance();
+            builder.Register(_ => _config).AsSelf().SingleInstance();
 
             //builder.Register(
             //    _ => new DefaultSiteMapFactory(_.Resolve<PacrConfigurationSection>().WebSite.BaseUrl)

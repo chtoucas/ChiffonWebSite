@@ -17,17 +17,17 @@
 
             var id = query.MayParseValue(PatternPreviewQuery.IdKey, _ => MayParse.ToInt32(_));
             if (id.IsNone) {
-                return Outcome<PatternPreviewQuery>.Failure(Error.Create("XXX"));
+                return Outcome<PatternPreviewQuery>.Failure("XXX");
             }
 
             var width = query.MayParseValue(PatternPreviewQuery.WidthKey, _ => MayParse.ToInt32(_));
             if (width.IsNone) {
-                return Outcome<PatternPreviewQuery>.Failure(Error.Create("XXX"));
+                return Outcome<PatternPreviewQuery>.Failure("XXX");
             }
 
             var height = query.MayParseValue(PatternPreviewQuery.HeightKey, _ => MayParse.ToInt32(_));
             if (height.IsNone) {
-                return Outcome<PatternPreviewQuery>.Failure(Error.Create("XXX"));
+                return Outcome<PatternPreviewQuery>.Failure("XXX");
             }
 
             // > Création du modèle <
