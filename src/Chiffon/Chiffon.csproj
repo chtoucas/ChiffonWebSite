@@ -96,11 +96,8 @@
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
-    <Compile Include="Infrastructure\Assets\ChiffonAssetFileBase.cs" />
-    <Compile Include="Infrastructure\Assets\ChiffonAssetProvider.cs" />
-    <Compile Include="Infrastructure\Assets\ChiffonImageFile.cs" />
-    <Compile Include="Infrastructure\Assets\ChiffonScriptFile.cs" />
-    <Compile Include="Infrastructure\Assets\ChiffonStyleFile.cs" />
+    <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
+    <Compile Include="Infrastructure\LocalAssetProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSite\AppActivator.cs" />
     <Compile Include="WebSite\Configs\DependencyConfig.cs" />

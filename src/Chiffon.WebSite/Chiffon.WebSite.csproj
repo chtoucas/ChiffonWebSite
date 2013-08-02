@@ -214,7 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
-    <Folder Include="assets\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -261,7 +260,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\LocalPackage.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

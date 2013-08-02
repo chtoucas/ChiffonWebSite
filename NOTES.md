@@ -1,7 +1,6 @@
 TODO
 ====
 
-* Optimize Web.config for statics' delivery.
 * Custom build for Zepto with effects.
 * DIV'itism
 
@@ -16,11 +15,9 @@ RavenDB
 QUICK
 
 Custom Configuration -> Debug & al
-Cache a partial view -> using a ChildAction and Debug/Release output
 Custom ViewPageBase
 Custom MemberShip/Role
 AntiXSS
-Ability to remove the versioning for the AssetProvider
 
 PreCompilation
 https://github.com/sayedihashimi/slow-cheetah/issues/50
