@@ -5,15 +5,16 @@
     using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
+    using Chiffon.Resources;
     using Narvalo;
 
     public class ChiffonConfig
     {
-        const string BaseUriKey_ = "Chiffon/BaseUri";
-        const string DebugCssKey_ = "Chiffon/DebugCss";
-        const string DebugJsKey_ = "Chiffon/DebugJs";
-        const string DisplayNameKey_ = "Chiffon/DisplayName";
-        const string PatternDirectoryKey_ = "Chiffon/PatternDirectory";
+        const string BaseUriKey_ = "chiffon.baseUri";
+        const string DebugCssKey_ = "chiffon.debugCss";
+        const string DebugJsKey_ = "chiffon.debugJs";
+        const string DisplayNameKey_ = "chiffon.displayName";
+        const string PatternDirectoryKey_ = "chiffon.patternDirectory";
 
         Uri _baseUri;
         bool _debugCss = false;
@@ -45,7 +46,7 @@
                 = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var setting in values) {
-                if (setting.Item1.StartsWith("Chiffon/", StringComparison.InvariantCultureIgnoreCase)) {
+                if (setting.Item1.StartsWith("chiffon.", StringComparison.InvariantCultureIgnoreCase)) {
                     settings[setting.Item1] = setting.Item2;
                 }
             }
@@ -59,15 +60,14 @@
 
             var baseUri = settings[BaseUriKey_];
             if (String.IsNullOrWhiteSpace(baseUri)) {
-                throw new ConfigurationErrorsException(BaseUriKey_);
+                throw NewException_(SR.ChiffonConfig_MissingBaseUri, BaseUriKey_);
             }
             _baseUri = MayParse.ToUri(baseUri, UriKind.Absolute)
-                .ValueOrThrow(() => new ConfigurationErrorsException(BaseUriKey_));
-
+                .ValueOrThrow(() => NewException_(SR.ChiffonConfig_InvalidBaseUri, BaseUriKey_));
 
             var patternDirectory = settings[PatternDirectoryKey_];
             if (String.IsNullOrWhiteSpace(patternDirectory)) {
-                throw new ConfigurationErrorsException(PatternDirectoryKey_);
+                throw NewException_(SR.ChiffonConfig_MissingPatternDirectory, PatternDirectoryKey_);
             }
             // TODO: validate this, absolute and well-formed.
             _patternDirectory = patternDirectory;
@@ -77,19 +77,24 @@
             var debugJs = settings[DebugJsKey_];
             if (!String.IsNullOrEmpty(debugJs)) {
                 _debugJs = MayParse.ToBoolean(debugJs, BooleanStyles.Literal)
-                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugJsKey_));
+                    .ValueOrThrow(() => NewException_(SR.ChiffonConfig_InvalidDebugJs, DebugJsKey_));
             }
 
             var debugCss = settings[DebugCssKey_];
             if (!String.IsNullOrEmpty(debugCss)) {
                 _debugCss = MayParse.ToBoolean(debugCss, BooleanStyles.Literal)
-                    .ValueOrThrow(() => new ConfigurationErrorsException(DebugCssKey_));
+                    .ValueOrThrow(() => NewException_(SR.ChiffonConfig_InvalidDebugCss, DebugCssKey_));
             }
 
             var displayName = settings[DisplayNameKey_];
             if (!String.IsNullOrWhiteSpace(displayName)) {
                 _displayName = displayName;
             }
+        }
+
+        static Exception NewException_(string messageFormat, string key)
+        {
+            return ExceptionFactory.ConfigurationErrors(messageFormat, key);
         }
     }
 }

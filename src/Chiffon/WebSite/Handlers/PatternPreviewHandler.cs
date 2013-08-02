@@ -1,10 +1,12 @@
 ﻿namespace Chiffon.WebSite.Handlers
 {
-    using System.IO;
+    using System.Net;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Chiffon.Application;
     using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
@@ -12,16 +14,17 @@
 
     public class PatternPreviewHandler : HttpHandlerBase<PatternPreview>, IRequiresSessionState
     {
-        const int MinutesInCache_ = 30;
-
         readonly ChiffonConfig _config;
+        readonly IPatternService _service;
 
-        public PatternPreviewHandler(ChiffonConfig config)
+        public PatternPreviewHandler(ChiffonConfig config, IPatternService service)
             : base()
         {
             Requires.NotNull(config, "config");
+            Requires.NotNull(service, "service");
 
             _config = config;
+            _service = service;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
@@ -32,8 +35,18 @@
 
             // > Paramètres obligatoires <
 
-            var id = nvc.MayParseValue("id", _ => MayParse.ToInt32(_));
+            var height = nvc.MayParseValue("height", _ => MayParse.ToInt32(_));
+            if (height.IsNone) {
+                return Outcome<PatternPreview>.Failure("XXX");
+            }
+
+            var id = nvc.MayGetValue("id");
             if (id.IsNone) {
+                return Outcome<PatternPreview>.Failure("XXX");
+            }
+
+            var memberKey = nvc.MayGetValue("member");
+            if (memberKey.IsNone) {
                 return Outcome<PatternPreview>.Failure("XXX");
             }
 
@@ -42,16 +55,12 @@
                 return Outcome<PatternPreview>.Failure("XXX");
             }
 
-            var height = nvc.MayParseValue("height", _ => MayParse.ToInt32(_));
-            if (height.IsNone) {
-                return Outcome<PatternPreview>.Failure("XXX");
-            }
-
             // > Création du modèle <
 
             var query = new PatternPreview {
                 Height = height.Value,
                 Id = id.Value,
+                MemberKey = memberKey.Value,
                 Width = width.Value,
             };
 
@@ -60,12 +69,33 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternPreview query)
         {
-            string path = Path.Combine(_config.PatternDirectory, @"viviane-devaux\motif1_apercu.jpg");
+            var result = _service.FindPattern(query.Id, query.MemberKey);
+            if (result.IsNone) {
+                context.Response.SetStatusCode(HttpStatusCode.NotFound);
+                return;
+            }
+            var dto = result.Value;
+            var pattern = dto.Pattern;
+            var member = dto.Member;
+
+            var fileSystem = new PatternFileSystem(_config);
+            var filePath = fileSystem.GetPath(pattern, member, new PatternSize(query.Width, query.Height));
+
+            if (filePath.IsNone) {
+                context.Response.SetStatusCode(HttpStatusCode.NotFound);
+                return;
+            }
 
             context.Response.Clear();
-            context.Response.PrivatelyCacheFor(0, 0, MinutesInCache_);
-            context.Response.ContentType = "image/jpeg";
-            context.Response.TransmitFile(path);
+            // On instruit le client de cacher le motif.
+            if (pattern.IsPublic) {
+                context.Response.PubliclyCacheFor(1, 0, 0);
+            }
+            else {
+                context.Response.PrivatelyCacheFor(0, 0, 30);
+            }
+            context.Response.ContentType = PatternFileSystem.MimeType;
+            context.Response.TransmitFile(filePath.Value);
         }
     }
 }

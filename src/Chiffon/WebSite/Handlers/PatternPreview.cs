@@ -1,30 +1,32 @@
 ﻿namespace Chiffon.WebSite.Handlers
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    using Chiffon.Entities;
 
-    [Serializable]
     public class PatternPreview
     {
         int _height;
-        int _id;
+        string _id;
         int _width;
+        string _memberKey;
 
-        [Required(ErrorMessage = "Height is required.")]
+        public string MemberKey
+        {
+            get { return _memberKey; }
+            set { _memberKey = value; }
+        }
+
         public int Height
         {
             get { return _height; }
             set { _height = value; }
         }
 
-        [Required(ErrorMessage = "Id is required.")]
-        public int Id
+        public string Id
         {
             get { return _id; }
             set { _id = value; }
         }
 
-        [Required(ErrorMessage = "Height is required.")]
         public int Width
         {
             get { return _width; }

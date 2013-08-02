@@ -5,6 +5,7 @@
     using System.Web.Routing;
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Chiffon.Application;
     using Chiffon.Crosscuttings;
     using Chiffon.WebSite.Handlers;
 
@@ -14,7 +15,10 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new AutofacModule(config));
+            builder.RegisterModule(new CrosscuttingsModule(config));
+            builder.RegisterModule(new PersistenceModule());
+            builder.RegisterModule(new ApplicationModule());
+
             builder.RegisterControllers(typeof(Global).Assembly);
 
             RegisterHttpHandlers_(builder, routes);
@@ -31,7 +35,8 @@
                 .AsSelf().SingleInstance(); // XXX: Maybe InstancePerHttpRequest
 
             routes.Add(new Route("PatternPreview.ashx", new AutofacRouteHandler<PatternPreviewHandler>()));
-            builder.Register(_ => new PatternPreviewHandler(_.Resolve<ChiffonConfig>()))
+            builder.Register(_ => new PatternPreviewHandler(
+                _.Resolve<ChiffonConfig>(), _.Resolve<IPatternService>()))
                 .AsSelf().SingleInstance();
         }
 

@@ -3,11 +3,11 @@
     using Autofac;
     using Narvalo;
 
-    public class AutofacModule : Module
+    public class CrosscuttingsModule : Module
     {
         readonly ChiffonConfig _config;
 
-        public AutofacModule(ChiffonConfig config)
+        public CrosscuttingsModule(ChiffonConfig config)
             : base()
         {
             Requires.NotNull(config, "config");

@@ -88,17 +88,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crosscuttings\AutofacModule.cs" />
+    <Compile Include="Crosscuttings\ApplicationModule.cs" />
+    <Compile Include="Crosscuttings\CrosscuttingsModule.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
+    <Compile Include="Crosscuttings\PersistenceModule.cs" />
     <Compile Include="Crosscuttings\Logger.cs" />
     <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
+    <Compile Include="Entities\IMemberRepository.cs" />
+    <Compile Include="Entities\IPatternRepository.cs" />
+    <Compile Include="Application\IPatternService.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\MemberId.cs" />
+    <Compile Include="Entities\Pattern.cs" />
+    <Compile Include="Application\PatternServiceImpl.cs" />
+    <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
+    <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
+    <Compile Include="Persistence\InMemory\MemberRepositoryImpl.cs" />
+    <Compile Include="Persistence\InMemory\PatternRepositoryImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\SR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
     <Compile Include="WebSite\AppActivator.cs" />
     <Compile Include="WebSite\Configs\DependencyConfig.cs" />
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
@@ -121,6 +139,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Resources\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="WebSite\Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
