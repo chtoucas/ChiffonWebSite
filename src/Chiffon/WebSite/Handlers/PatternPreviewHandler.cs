@@ -33,34 +33,22 @@
         {
             var nvc = request.QueryString;
 
-            // > Paramètres obligatoires <
+            var designerKey = nvc.MayGetValue("designer");
+            if (designerKey.IsNone) { return MissingOrInvalidParameterOutcome("designer"); }
 
             var height = nvc.MayParseValue("height", _ => MayParse.ToInt32(_));
-            if (height.IsNone) {
-                return Outcome<PatternPreview>.Failure("XXX");
-            }
+            if (height.IsNone) { return MissingOrInvalidParameterOutcome("height"); }
 
-            var id = nvc.MayGetValue("id");
-            if (id.IsNone) {
-                return Outcome<PatternPreview>.Failure("XXX");
-            }
-
-            var memberKey = nvc.MayGetValue("member");
-            if (memberKey.IsNone) {
-                return Outcome<PatternPreview>.Failure("XXX");
-            }
+            var reference = nvc.MayGetValue("ref");
+            if (reference.IsNone) { return MissingOrInvalidParameterOutcome("ref"); }
 
             var width = nvc.MayParseValue("width", _ => MayParse.ToInt32(_));
-            if (width.IsNone) {
-                return Outcome<PatternPreview>.Failure("XXX");
-            }
-
-            // > Création du modèle <
+            if (width.IsNone) { return MissingOrInvalidParameterOutcome("width"); }
 
             var query = new PatternPreview {
+                DesignerUrlKey = designerKey.Value,
                 Height = height.Value,
-                Id = id.Value,
-                MemberKey = memberKey.Value,
+                Reference = reference.Value,
                 Width = width.Value,
             };
 
@@ -69,33 +57,31 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternPreview query)
         {
-            var result = _service.FindPattern(query.Id, query.MemberKey);
+            var result = _service.FindPatternFile(query.Reference, query.DesignerUrlKey);
             if (result.IsNone) {
                 context.Response.SetStatusCode(HttpStatusCode.NotFound);
                 return;
             }
-            var dto = result.Value;
-            var pattern = dto.Pattern;
-            var member = dto.Member;
+
+            var file = result.Value;
 
             var fileSystem = new PatternFileSystem(_config);
-            var filePath = fileSystem.GetPath(pattern, member, new PatternSize(query.Width, query.Height));
+            var filePath = fileSystem.GetPath(file, new PatternSize(query.Width, query.Height));
 
             if (filePath.IsNone) {
                 context.Response.SetStatusCode(HttpStatusCode.NotFound);
-                return;
-            }
-
-            context.Response.Clear();
-            // On instruit le client de cacher le motif.
-            if (pattern.IsPublic) {
-                context.Response.PubliclyCacheFor(1, 0, 0);
             }
             else {
-                context.Response.PrivatelyCacheFor(0, 0, 30);
+                context.Response.Clear();
+                if (file.IsPublic) {
+                    context.Response.PubliclyCacheFor(1, 0, 0);
+                }
+                else {
+                    context.Response.PrivatelyCacheFor(0, 0, 30);
+                }
+                context.Response.ContentType = PatternFile.MimeType;
+                context.Response.TransmitFile(filePath.Value);
             }
-            context.Response.ContentType = PatternFileSystem.MimeType;
-            context.Response.TransmitFile(filePath.Value);
         }
     }
 }

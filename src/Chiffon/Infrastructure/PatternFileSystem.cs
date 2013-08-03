@@ -5,14 +5,11 @@
     using System.Globalization;
     using System.IO;
     using Chiffon.Crosscuttings;
-    using Chiffon.Entities;
-    //using Narvalo.Collections;
+    using Narvalo.Collections;
     using Narvalo.Fx;
 
     public class PatternFileSystem
     {
-        public const string MimeType = "image/jpeg";
-
         static Dictionary<PatternSize, string> SizeNames_ = new Dictionary<PatternSize, string>() {
             { new PatternSize(200, 160), "apercu"}
         };
@@ -24,21 +21,36 @@
             _config = config;
         }
 
-        public string GetPath(Pattern pattern, Member member)
+        public string GetPath(PatternFile pattern)
         {
-            return String.Format(CultureInfo.InvariantCulture, "motif-{0}.jpg", pattern.Id);
+            return GetAbsolutePath_(pattern.Directory, GetFilename_(pattern.Reference));
         }
 
-        public Maybe<string> GetPath(Pattern pattern, Member member, PatternSize size)
+        public Maybe<string> GetPath(PatternFile pattern, PatternSize size)
         {
-            throw new NotImplementedException();
-            //var sizeName = SizeNames_.MayGetValue(size);
-            //return String.Format(CultureInfo.InvariantCulture, "motif-{0}_{1}.jpg", pattern.Id, sizeName.Value);
+            return SizeNames_
+                .MayGetValue(size)
+                .Map(_ => GetFilename_(pattern.Reference, _))
+                .Map(_ => GetAbsolutePath_(pattern.Directory, _));
         }
 
-        string GetFilePath_(string directory, string fileName)
+        #region > Méthodes privées <
+
+        string GetAbsolutePath_(string directory, string fileName)
         {
             return Path.Combine(_config.PatternDirectory, directory, fileName);
         }
+
+        string GetFilename_(string reference)
+        {
+            return String.Format(CultureInfo.InvariantCulture, "motif-{0}.jpg", reference);
+        }
+
+        string GetFilename_(string reference, string sizeName)
+        {
+            return String.Format(CultureInfo.InvariantCulture, "motif-{0}_{1}.jpg", reference, sizeName);
+        }
+
+        #endregion
     }
 }

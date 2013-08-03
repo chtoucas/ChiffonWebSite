@@ -1,15 +1,15 @@
-﻿namespace Chiffon.Entities
+﻿namespace Chiffon.Domain
 {
     using System;
     using Narvalo;
     using Narvalo.Fx;
 
     [Serializable]
-    public struct MemberId : IEquatable<MemberId>
+    public struct DesignerId : IEquatable<DesignerId>
     {
         readonly int _id;
 
-        public MemberId(int id)
+        public DesignerId(int id)
         {
             _id = id;
         }
@@ -21,30 +21,30 @@
 
         #region IEquatable<MemberId>
 
-        public bool Equals(MemberId other)
+        public bool Equals(DesignerId other)
         {
             return _id == other._id;
         }
 
         #endregion
 
-        public static bool operator ==(MemberId left, MemberId right)
+        public static bool operator ==(DesignerId left, DesignerId right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(MemberId left, MemberId right)
+        public static bool operator !=(DesignerId left, DesignerId right)
         {
             return !left.Equals(right);
         }
 
         public override bool Equals(object obj)
         {
-            if (!(obj is MemberId)) {
+            if (!(obj is DesignerId)) {
                 return false;
             }
 
-            return Equals((MemberId)obj);
+            return Equals((DesignerId)obj);
         }
 
         public override int GetHashCode()

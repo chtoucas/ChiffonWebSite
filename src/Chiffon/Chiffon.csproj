@@ -94,22 +94,22 @@
     <Compile Include="Crosscuttings\PersistenceModule.cs" />
     <Compile Include="Crosscuttings\Logger.cs" />
     <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
-    <Compile Include="Entities\IMemberRepository.cs" />
-    <Compile Include="Entities\IPatternRepository.cs" />
+    <Compile Include="Domain\DesignerFilters.cs" />
+    <Compile Include="Domain\IDesignerRepository.cs" />
+    <Compile Include="Domain\IPatternRepository.cs" />
     <Compile Include="Application\IPatternService.cs" />
-    <Compile Include="Entities\Member.cs" />
-    <Compile Include="Entities\MemberId.cs" />
-    <Compile Include="Entities\Pattern.cs" />
+    <Compile Include="Domain\Designer.cs" />
+    <Compile Include="Domain\DesignerId.cs" />
+    <Compile Include="Domain\Pattern.cs" />
     <Compile Include="Application\PatternServiceImpl.cs" />
+    <Compile Include="Domain\PatternFilters.cs" />
+    <Compile Include="Domain\PatternId.cs" />
+    <Compile Include="Infrastructure\PatternFile.cs" />
     <Compile Include="Infrastructure\PatternSize.cs" />
-    <Compile Include="Infrastructure\Addressing\AddrConstants.cs" />
-    <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
-    <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
-    <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
     <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
-    <Compile Include="Persistence\InMemory\MemberRepositoryImpl.cs" />
+    <Compile Include="Persistence\InMemory\DesignerRepositoryImpl.cs" />
     <Compile Include="Persistence\InMemory\PatternRepositoryImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SR.Designer.cs">
@@ -137,7 +137,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Persistence\SqlLite\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>

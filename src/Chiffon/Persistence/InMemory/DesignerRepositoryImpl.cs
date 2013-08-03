@@ -2,37 +2,39 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
+    using Narvalo.Collections;
+    using Narvalo.Fx;
 
-    public class MemberRepositoryImpl : IMemberRepository
+    public class DesignerRepositoryImpl : IDesignerRepository
     {
-        static IEnumerable<Member> Members_
+        static IEnumerable<Designer> Designers_
         {
             get
             {
-                yield return new Member {
-                    MemberId = new MemberId(1),
+                yield return new Designer {
+                    DesignerId = new DesignerId(1),
                     DisplayName = "Chicamancha",
                     PatternDirectory = "chicamancha",
                     UrlKey = "chicamancha",
                 };
 
-                yield return new Member {
-                    MemberId = new MemberId(2),
+                yield return new Designer {
+                    DesignerId = new DesignerId(2),
                     DisplayName = "Viviane Devaux",
                     PatternDirectory = "viviane-devaux",
                     UrlKey = "viviane-devaux",
                 };
 
-                yield return new Member {
-                    MemberId = new MemberId(3),
+                yield return new Designer {
+                    DesignerId = new DesignerId(3),
                     DisplayName = "Christine Légeret",
                     PatternDirectory = "christine-legeret",
                     UrlKey = "christine-legeret",
                 };
 
-                yield return new Member {
-                    MemberId = new MemberId(4),
+                yield return new Designer {
+                    DesignerId = new DesignerId(4),
                     DisplayName = "Laure Roussel",
                     PatternDirectory = "laure-roussel",
                     UrlKey = "laure-roussel",
@@ -40,16 +42,16 @@
             }
         }
 
-        #region IMemberRepository
+        #region IDesignerRepository
 
-        public IEnumerable<Member> GetAll()
+        public IEnumerable<Designer> GetAll()
         {
-            return Members_;
+            return Designers_;
         }
 
-        public Member GetMember(MemberId memberId)
+        public Maybe<Designer> GetDesigner(DesignerId designerId)
         {
-            return (from _ in Members_ where _.MemberId == memberId select _).Single();
+            return (from _ in Designers_ where _.DesignerId == designerId select _).SingleOrNone();
         }
 
         #endregion

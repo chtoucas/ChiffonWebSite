@@ -1,38 +1,51 @@
 ﻿namespace Chiffon.Application
 {
     using System.Linq;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
+    using Chiffon.Infrastructure;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Fx;
 
     public class PatternServiceImpl : IPatternService
     {
         readonly IPatternRepository _patternRepository;
-        readonly IMemberRepository _memberRepository;
+        readonly IDesignerRepository _designerRepository;
 
         public PatternServiceImpl(
             IPatternRepository patternRepository,
-            IMemberRepository memberRepository)
+            IDesignerRepository designerRepository)
             : base()
         {
             Requires.NotNull(patternRepository, "patternRepository");
-            Requires.NotNull(memberRepository, "memberRepository");
+            Requires.NotNull(designerRepository, "designerRepository");
 
             _patternRepository = patternRepository;
-            _memberRepository = memberRepository;
+            _designerRepository = designerRepository;
         }
 
-        public Maybe<FindPatternDto> FindPattern(string id, string memberKey)
+        public Maybe<PatternFile> FindPatternFile(string reference, string designerUrlKey)
         {
-            var q = from m in _memberRepository.GetAll()
-                    let p = _patternRepository.GetPattern(id)
-                    where m.UrlKey == memberKey && m.MemberId == p.MemberId
-                    select new FindPatternDto {
-                        Member = m,
-                        Pattern = p
+            // select
+            //  D.pattern_directory as directory
+            //  , P.is_public       as is_public
+            //  , P.reference       as reference
+            // from Patterns as P
+            //  inner join Designers as D on P.designer_id = D.id
+            // where P.reference = reference
+            //  and D.urlKey = designer_key
+
+            var q = from p in _patternRepository.GetAll()
+                    join d in _designerRepository.GetAll() on p.DesignerId equals d.DesignerId
+                    where p.Reference == reference
+                        && d.UrlKey == designerUrlKey
+                    select new PatternFile { 
+                        Directory = d.PatternDirectory, 
+                        IsPublic = p.IsPublic,
+                        Reference = p.Reference 
                     };
 
-            return Maybe.Create(q.SingleOrDefault());
+            return q.SingleOrNone();
         }
     }
 }
