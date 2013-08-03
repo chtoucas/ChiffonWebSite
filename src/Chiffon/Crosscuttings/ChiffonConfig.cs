@@ -54,6 +54,7 @@
             Initialize_(settings);
         }
 
+        // TODO: cf. PatternImageHandler for a simple way of doing things.
         void Initialize_(NameValueCollection settings)
         {
             // > Paramètres obligatoires <

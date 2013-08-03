@@ -5,9 +5,9 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Chiffon.Services;
     using Chiffon.Crosscuttings;
     using Chiffon.Infrastructure;
+    using Chiffon.WebSite.Services;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;

@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Services
+﻿namespace Chiffon.WebSite.Services
 {
     using Chiffon.Infrastructure;
     using Narvalo.Fx;

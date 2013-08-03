@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Crosscuttings
 {
     using Autofac;
-    using Chiffon.Domain;
+    using Chiffon.Entities;
     using Chiffon.Persistence.InMemory;
     using Narvalo;
 

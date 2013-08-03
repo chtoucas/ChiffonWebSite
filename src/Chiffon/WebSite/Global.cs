@@ -8,6 +8,8 @@
     using System.Web.Mvc;
     //using System.Web.Optimization;
     using System.Web.Routing;
+    using Autofac;
+    using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
     using Chiffon.WebSite.Configs;
     using Chiffon.WebSite.Resources;
@@ -124,6 +126,8 @@
         {
             Log_(LoggerLevel.Informational, () => { return SR.Global_Starting; });
 
+            var config = ChiffonConfig.Create();
+
             // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             // Routes.
@@ -131,7 +135,11 @@
             // WebApi.
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
             // Injection de dépendances.
-            DependencyConfig.RegisterDependencies(ChiffonConfig.Create(), RouteTable.Routes);
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new ChiffonModule(config));
+            var container = builder.Build();
+
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
 
         /// <summary>

@@ -1,14 +1,46 @@
-﻿namespace Chiffon.Persistence.InMemory
+﻿namespace Chiffon.Entities
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using Chiffon.Domain;
-    using Narvalo.Collections;
-    using Narvalo.Fx;
 
-    public class PatternRepositoryImpl : IPatternRepository
+    public class InMemoryDataContext : IDataContext
     {
-        static IEnumerable<Pattern> Patterns_
+        #region IDataContext
+
+        public IEnumerable<Designer> Designers
+        {
+            get
+            {
+                yield return new Designer {
+                    DesignerId = new DesignerId(1),
+                    DisplayName = "Chicamancha",
+                    PatternDirectory = "chicamancha",
+                    UrlKey = "chicamancha",
+                };
+
+                yield return new Designer {
+                    DesignerId = new DesignerId(2),
+                    DisplayName = "Viviane Devaux",
+                    PatternDirectory = "viviane-devaux",
+                    UrlKey = "viviane-devaux",
+                };
+
+                yield return new Designer {
+                    DesignerId = new DesignerId(3),
+                    DisplayName = "Christine Légeret",
+                    PatternDirectory = "christine-legeret",
+                    UrlKey = "christine-legeret",
+                };
+
+                yield return new Designer {
+                    DesignerId = new DesignerId(4),
+                    DisplayName = "Laure Roussel",
+                    PatternDirectory = "laure-roussel",
+                    UrlKey = "laure-roussel",
+                };
+            }
+        }
+
+        public IEnumerable<Pattern> Patterns
         {
             get
             {
@@ -77,18 +109,6 @@
                     PatternId = new PatternId(new DesignerId(4), "4"),
                 };
             }
-        }
-
-        #region IPatternRepository
-
-        public IEnumerable<Pattern> GetAll()
-        {
-            return Patterns_;
-        }
-
-        public Maybe<Pattern> MayGetPattern(PatternId patternId)
-        {
-            return (from _ in Patterns_ where _.PatternId == patternId select _).SingleOrNone();
         }
 
         #endregion

@@ -27,7 +27,7 @@
                 case PatternSize.Original:
                     return new Original { Directory = directory, Reference = reference };
                 default:
-                    throw new ArgumentException("XXX");
+                    throw new ArgumentException();
             }
         }
 

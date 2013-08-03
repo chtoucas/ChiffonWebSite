@@ -1,26 +1,21 @@
-﻿namespace Chiffon.Services
+﻿namespace Chiffon.WebSite.Services
 {
     using System.Linq;
-    using Chiffon.Domain;
+    using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
 
     public class PatternServiceImpl : IPatternService
     {
-        readonly IPatternRepository _patternRepository;
-        readonly IDesignerRepository _designerRepository;
+        readonly IDataContext _dataContext;
 
-        public PatternServiceImpl(
-            IPatternRepository patternRepository,
-            IDesignerRepository designerRepository)
+        public PatternServiceImpl(IDataContext dataContext)
             : base()
         {
-            Requires.NotNull(patternRepository, "patternRepository");
-            Requires.NotNull(designerRepository, "designerRepository");
+            Requires.NotNull(dataContext, "dataContext");
 
-            _patternRepository = patternRepository;
-            _designerRepository = designerRepository;
+            _dataContext = dataContext;
         }
 
         public Maybe<PatternService_MayFindPatternFileResult> MayFindPatternFile(
@@ -36,15 +31,15 @@
             //  and (@public_only = 'false' or P.is_public)
             //  and D.urlkey = @designer_urlkey
 
-            var q = from p in _patternRepository.GetAll()
-                    join d in _designerRepository.GetAll() on p.DesignerId equals d.DesignerId
+            var q = from p in _dataContext.Patterns
+                    join d in _dataContext.Designers on p.DesignerId equals d.DesignerId
                     where p.Reference == reference
                         && (!publicOnly || p.IsPublic)
                         && d.UrlKey == designerUrlKey
-                    select new PatternService_MayFindPatternFileResult { 
-                        Directory = d.PatternDirectory, 
+                    select new PatternService_MayFindPatternFileResult {
+                        Directory = d.PatternDirectory,
                         IsPublic = p.IsPublic,
-                        Reference = p.Reference 
+                        Reference = p.Reference
                     };
 
             return q.SingleOrNone();
