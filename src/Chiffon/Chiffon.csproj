@@ -110,7 +110,7 @@
     <Compile Include="Services\PatternServiceImpl.cs" />
     <Compile Include="Domain\PatternFilters.cs" />
     <Compile Include="Domain\PatternId.cs" />
-    <Compile Include="Infrastructure\PatternFile.cs" />
+    <Compile Include="Infrastructure\PatternImage.cs" />
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />

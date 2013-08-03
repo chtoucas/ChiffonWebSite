@@ -13,17 +13,17 @@
             _config = config;
         }
 
-        public void Delete(PatternFile file)
+        public void Delete(PatternImage image)
         {
             throw new NotImplementedException();
         }
 
-        public string GetPath(PatternFile file)
+        public string GetPath(PatternImage image)
         {
-            return Path.Combine(_config.PatternDirectory, file.RelativePath);
+            return Path.Combine(_config.PatternDirectory, image.RelativePath);
         }
 
-        public void Save(PatternFile file)
+        public void Save(PatternImage image)
         {
             throw new NotImplementedException();
         }

@@ -74,7 +74,7 @@
             }
 
             var result = result_.Value;
-            var filePath = _fileSystem.GetPath(PatternFile.Create(result.Directory, result.Reference, query.Size));
+            var imagePath = _fileSystem.GetPath(PatternImage.Create(result.Directory, result.Reference, query.Size));
 
             response.Clear();
             if (result.IsPublic) {
@@ -83,8 +83,8 @@
             else {
                 response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
             }
-            response.ContentType = PatternFile.MimeType;
-            response.TransmitFile(filePath);
+            response.ContentType = PatternImage.MimeType;
+            response.TransmitFile(imagePath);
         }
     }
 }

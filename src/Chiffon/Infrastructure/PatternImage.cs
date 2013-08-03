@@ -5,11 +5,11 @@
     using System.Globalization;
     using System.IO;
 
-    public abstract class PatternFile
+    public abstract class PatternImage
     {
         public const string MimeType = "image/jpeg";
 
-        protected PatternFile() { }
+        protected PatternImage() { }
 
         public string Directory { get; private set; }
         public string Reference { get; private set; }
@@ -19,7 +19,7 @@
         public abstract string Filename { get; }
         public abstract PatternSize Size { get; }
 
-        public static PatternFile Create(string directory, string reference, PatternSize size)
+        public static PatternImage Create(string directory, string reference, PatternSize size)
         {
             switch (size) {
                 case PatternSize.Preview:
@@ -31,7 +31,7 @@
             }
         }
 
-        class Original : PatternFile
+        class Original : PatternImage
         {
             string _filename;
 
@@ -51,7 +51,7 @@
             public override PatternSize Size { get { return PatternSize.Original; } }
         }
 
-        class Preview : PatternFile
+        class Preview : PatternImage
         {
             static Dictionary<PatternSize, string> SizeNames_ = new Dictionary<PatternSize, string>() {
                 { PatternSize.Preview, "apercu"}
