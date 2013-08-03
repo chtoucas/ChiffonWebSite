@@ -1,10 +1,10 @@
 ﻿namespace Chiffon.Crosscuttings
 {
     using Autofac;
-    using Chiffon.Application;
+    using Chiffon.Services;
     using Narvalo;
 
-    public class ApplicationModule : Module
+    public class ServicesModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

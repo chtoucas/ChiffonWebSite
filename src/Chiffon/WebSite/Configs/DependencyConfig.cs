@@ -5,8 +5,8 @@
     using System.Web.Routing;
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Application;
     using Chiffon.Crosscuttings;
+    using Chiffon.Services;
     using Chiffon.WebSite.Handlers;
 
     public static class DependencyConfig
@@ -17,7 +17,7 @@
 
             builder.RegisterModule(new CrosscuttingsModule(config));
             builder.RegisterModule(new PersistenceModule());
-            builder.RegisterModule(new ApplicationModule());
+            builder.RegisterModule(new ServicesModule());
 
             builder.RegisterControllers(typeof(Global).Assembly);
 
@@ -31,13 +31,9 @@
         static void RegisterHttpHandlers_(ContainerBuilder builder, RouteCollection routes)
         {
             routes.Add(new Route("PatternImage.ashx", new AutofacRouteHandler<PatternImageHandler>()));
-            builder.Register(_ => new PatternImageHandler(_.Resolve<ChiffonConfig>()))
+            builder.Register(
+                    _ => new PatternImageHandler(_.Resolve<ChiffonConfig>(), _.Resolve<IPatternService>()))
                 .AsSelf().SingleInstance(); // XXX: Maybe InstancePerHttpRequest
-
-            routes.Add(new Route("PatternPreview.ashx", new AutofacRouteHandler<PatternPreviewHandler>()));
-            builder.Register(_ => new PatternPreviewHandler(
-                _.Resolve<ChiffonConfig>(), _.Resolve<IPatternService>()))
-                .AsSelf().SingleInstance();
         }
 
         // Cf. https://groups.google.com/forum/#!msg/autofac/BkY4s4tusUc/micDCB0YiN8J

@@ -6,6 +6,6 @@
     public interface IPatternRepository
     {
         IEnumerable<Pattern> GetAll();
-        Maybe<Pattern> GetPattern(PatternId patternId);
+        Maybe<Pattern> MayGetPattern(PatternId patternId);
     }
 }

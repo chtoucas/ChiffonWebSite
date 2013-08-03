@@ -6,6 +6,6 @@
     public interface IDesignerRepository
     {
         IEnumerable<Designer> GetAll();
-        Maybe<Designer> GetDesigner(DesignerId designerId);
+        Maybe<Designer> MayGetDesigner(DesignerId designerId);
     }
 }

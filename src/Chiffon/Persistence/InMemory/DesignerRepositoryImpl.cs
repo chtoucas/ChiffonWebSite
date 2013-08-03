@@ -49,7 +49,7 @@
             return Designers_;
         }
 
-        public Maybe<Designer> GetDesigner(DesignerId designerId)
+        public Maybe<Designer> MayGetDesigner(DesignerId designerId)
         {
             return (from _ in Designers_ where _.DesignerId == designerId select _).SingleOrNone();
         }

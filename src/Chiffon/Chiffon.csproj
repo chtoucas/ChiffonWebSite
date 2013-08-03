@@ -42,6 +42,12 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\..\packages\Autofac.Mvc4.3.1.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions">
+      <HintPath>..\..\packages\DapperExtensions.1.4.1\lib\net40\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlSanitizationLibrary">
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
@@ -88,7 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crosscuttings\ApplicationModule.cs" />
+    <Compile Include="Crosscuttings\ServicesModule.cs" />
     <Compile Include="Crosscuttings\CrosscuttingsModule.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
     <Compile Include="Crosscuttings\PersistenceModule.cs" />
@@ -97,11 +103,11 @@
     <Compile Include="Domain\DesignerFilters.cs" />
     <Compile Include="Domain\IDesignerRepository.cs" />
     <Compile Include="Domain\IPatternRepository.cs" />
-    <Compile Include="Application\IPatternService.cs" />
+    <Compile Include="Services\IPatternService.cs" />
     <Compile Include="Domain\Designer.cs" />
     <Compile Include="Domain\DesignerId.cs" />
     <Compile Include="Domain\Pattern.cs" />
-    <Compile Include="Application\PatternServiceImpl.cs" />
+    <Compile Include="Services\PatternServiceImpl.cs" />
     <Compile Include="Domain\PatternFilters.cs" />
     <Compile Include="Domain\PatternId.cs" />
     <Compile Include="Infrastructure\PatternFile.cs" />
@@ -128,9 +134,7 @@
     <Compile Include="WebSite\GlimpseSecurityPolicy.cs" />
     <Compile Include="WebSite\Global.cs" />
     <Compile Include="WebSite\Handlers\PatternImageHandler.cs" />
-    <Compile Include="WebSite\Handlers\PatternPreviewHandler.cs" />
-    <Compile Include="WebSite\Handlers\PatternPreview.cs" />
-    <Compile Include="WebSite\Handlers\PatternImage.cs" />
+    <Compile Include="WebSite\Handlers\PatternImageQuery.cs" />
     <Compile Include="WebSite\Resources\SR.Designer.cs">
       <DependentUpon>SR.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -138,7 +142,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Persistence\SqlLite\" />
+    <Folder Include="Persistence\SqlServerCe\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SR.resx">
