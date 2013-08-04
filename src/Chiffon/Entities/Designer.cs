@@ -5,7 +5,14 @@
     [Serializable]
     public class Designer
     {
-        public DesignerId DesignerId { get; set; }
+        readonly DesignerId _designerId;
+
+        public Designer(DesignerId designerId)
+        {
+            _designerId = designerId;
+        }
+
+        public DesignerId DesignerId { get { return _designerId; } }
 
         public string DisplayName { get; set; }
 

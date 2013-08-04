@@ -14,10 +14,9 @@
             _height = height;
         }
 
-        public int Width { get { return _width; } }
-        public int Height { get { return _height; } }
-
         public double AspectRatio { get { return _width / _height; } }
+        public int Height { get { return _height; } }
+        public int Width { get { return _width; } }
 
         #region IEquatable<PatternImageSize>
 

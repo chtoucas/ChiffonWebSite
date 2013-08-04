@@ -133,7 +133,8 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             // WebApi.
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
-            // Injection de dépendances.
+
+            // Résolution des dépendances.
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ChiffonModule(config));
             var container = builder.Build();

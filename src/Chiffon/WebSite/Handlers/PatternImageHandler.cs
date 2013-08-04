@@ -7,7 +7,7 @@
     using System.Web.SessionState;
     using Chiffon.Crosscuttings;
     using Chiffon.Infrastructure;
-    using Chiffon.WebSite.Services;
+    using Chiffon.Persistence;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
@@ -22,9 +22,9 @@
 
         readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
-        readonly IPatternService _service;
+        readonly IQueryService _service;
 
-        public PatternImageHandler(ChiffonConfig config, IPatternService service)
+        public PatternImageHandler(ChiffonConfig config, IQueryService service)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -65,14 +65,15 @@
             var response = context.Response;
 
             // FIXME: Ajouter le filtre "publique ou non".
-            var result_ = _service.MayFindPatternFile(query.Reference, query.DesignerKey, true /* publicOnly */);
+            var result_ = _service.MayGetPattern(query.Reference, query.DesignerKey, true /* publicOnly */);
             if (result_.IsNone) {
                 response.SetStatusCode(HttpStatusCode.NotFound);
                 return;
             }
 
             var result = result_.Value;
-            var imagePath = _fileSystem.GetPath(PatternImage.Create(result.Directory, result.Reference, query.Size));
+            var imagePath = _fileSystem.GetPath(
+                PatternImage.Create(result.Directory, result.Reference, query.Size));
 
             response.Clear();
             if (result.IsPublic) {

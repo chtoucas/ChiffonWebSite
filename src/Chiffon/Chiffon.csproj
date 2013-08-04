@@ -98,8 +98,8 @@
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\RouteCollection%24.cs" />
     <Compile Include="Entities\Category.cs" />
-    <Compile Include="Entities\IDataContext.cs" />
-    <Compile Include="Entities\InMemoryDataContext.cs" />
+    <Compile Include="Persistence\IDataContext.cs" />
+    <Compile Include="Persistence\InMemoryDataContext.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
     <Compile Include="Crosscuttings\Logger.cs" />
     <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
@@ -107,11 +107,12 @@
     <Compile Include="Common\UrlNormalizer.cs" />
     <Compile Include="Infrastructure\PatternImageSize.cs" />
     <Compile Include="Infrastructure\PatternSize%24.cs" />
-    <Compile Include="WebSite\Services\IPatternService.cs" />
+    <Compile Include="Persistence\IQueryService.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Entities\DesignerId.cs" />
     <Compile Include="Entities\Pattern.cs" />
-    <Compile Include="WebSite\Services\PatternServiceImpl.cs" />
+    <Compile Include="Persistence\QueryResults.cs" />
+    <Compile Include="Persistence\QueryService.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Infrastructure\PatternImage.cs" />
     <Compile Include="Infrastructure\PatternSize.cs" />

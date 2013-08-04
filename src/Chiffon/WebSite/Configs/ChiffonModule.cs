@@ -3,9 +3,8 @@
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
-    using Chiffon.Entities;
+    using Chiffon.Persistence;
     using Chiffon.WebSite.Handlers;
-    using Chiffon.WebSite.Services;
     using Narvalo;
 
     public class ChiffonModule : Module
@@ -26,13 +25,13 @@
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
             builder.RegisterType<InMemoryDataContext>().As<IDataContext>().SingleInstance();
-            builder.RegisterType<PatternServiceImpl>().As<IPatternService>().InstancePerHttpRequest();
+            builder.RegisterType<QueryService>().As<IQueryService>().SingleInstance();
 
             builder.RegisterControllers(typeof(Global).Assembly);
 
             builder.Register(
-                    _ => new PatternImageHandler(_.Resolve<ChiffonConfig>(), _.Resolve<IPatternService>()))
-                .AsSelf().InstancePerHttpRequest();
+                    _ => new PatternImageHandler(_.Resolve<ChiffonConfig>(), _.Resolve<IQueryService>()))
+                .AsSelf().SingleInstance();
         }
     }
 }
