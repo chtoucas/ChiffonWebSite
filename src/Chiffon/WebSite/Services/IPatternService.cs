@@ -6,7 +6,7 @@
     public interface IPatternService
     {
         Maybe<PatternService_MayFindPatternFileResult> MayFindPatternFile(
-            string reference, string designerUrlKey, bool publicOnly);
+            string reference, string designerKey, bool publicOnly);
     }
 
     public class PatternService_MayFindPatternFileResult

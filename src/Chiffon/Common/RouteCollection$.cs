@@ -6,7 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    // http://www.make-awesome.com/2012/07/perfectionist-routing-in-asp-net-mvc/
+    // Cf. http://www.make-awesome.com/2012/07/perfectionist-routing-in-asp-net-mvc/
     public static class RouteCollectionExtensions
     {
         public static void MapChildOnlyActionRoutesFrom(this RouteCollection routes, Assembly assembly)

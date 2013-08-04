@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Specialized;
     using System.Web;
-    using Chiffon.Resources;
     using Narvalo;
     using Narvalo.Web.UI.Assets;
 
@@ -21,7 +20,7 @@
 
             if (String.IsNullOrEmpty(config["description"])) {
                 config.Remove("description");
-                config.Add("description", SR.LocalAssetProvider_Description);
+                config.Add("description", "Chiffon local asset provider.");
             }
 
             base.Initialize(name, config);

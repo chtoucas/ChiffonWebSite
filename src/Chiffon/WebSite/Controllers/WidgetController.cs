@@ -4,7 +4,6 @@
     using System.Web.Mvc;
     using Chiffon.Crosscuttings;
 
-    // TODO: Add output cache.
     public class WidgetController : Controller
     {
         readonly ChiffonConfig _config;

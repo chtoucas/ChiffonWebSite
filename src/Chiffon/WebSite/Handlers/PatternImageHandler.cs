@@ -15,8 +15,6 @@
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
     {
-        const int MinutesInCache_ = 30;
-
         // Mise en cache pour une journée.
         static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
         // Mise en cache pour 30 minutes.
@@ -44,17 +42,17 @@
         {
             var nvc = request.QueryString;
 
-            var designerUrlKey = nvc.MayGetValue("designer");
-            if (designerUrlKey.IsNone) { return MissingOrInvalidParameterOutcome("designer"); }
+            var designerKey = nvc.MayGetValue("designer").Filter(_ => _.Length > 1);
+            if (designerKey.IsNone) { return BindingFailure("designer"); }
 
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
-            if (size.IsNone) { return MissingOrInvalidParameterOutcome("size"); }
+            if (size.IsNone) { return BindingFailure("size"); }
 
-            var reference = nvc.MayGetValue("ref");
-            if (reference.IsNone) { return MissingOrInvalidParameterOutcome("ref"); }
+            var reference = nvc.MayGetValue("ref").Filter(_ => _.Length > 1);
+            if (reference.IsNone) { return BindingFailure("ref"); }
 
             var query = new PatternImageQuery {
-                DesignerUrlKey = designerUrlKey.Value,
+                DesignerKey = designerKey.Value,
                 Reference = reference.Value,
                 Size = size.Value,
             };
@@ -67,7 +65,7 @@
             var response = context.Response;
 
             // FIXME: Ajouter le filtre "publique ou non".
-            var result_ = _service.MayFindPatternFile(query.Reference, query.DesignerUrlKey, true /* publicOnly */);
+            var result_ = _service.MayFindPatternFile(query.Reference, query.DesignerKey, true /* publicOnly */);
             if (result_.IsNone) {
                 response.SetStatusCode(HttpStatusCode.NotFound);
                 return;

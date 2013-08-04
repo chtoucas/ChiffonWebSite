@@ -19,7 +19,7 @@
         }
 
         public Maybe<PatternService_MayFindPatternFileResult> MayFindPatternFile(
-            string reference, string designerUrlKey, bool publicOnly)
+            string reference, string designerKey, bool publicOnly)
         {
             // select
             //  D.pattern_directory as directory
@@ -35,9 +35,9 @@
                     join d in _dataContext.Designers on p.DesignerId equals d.DesignerId
                     where p.Reference == reference
                         && (!publicOnly || p.IsPublic)
-                        && d.UrlKey == designerUrlKey
+                        && d.Key == designerKey
                     select new PatternService_MayFindPatternFileResult {
-                        Directory = d.PatternDirectory,
+                        Directory = d.Key,
                         IsPublic = p.IsPublic,
                         Reference = p.Reference
                     };

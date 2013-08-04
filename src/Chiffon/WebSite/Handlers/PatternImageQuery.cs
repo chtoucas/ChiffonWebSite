@@ -4,7 +4,7 @@ namespace Chiffon.WebSite.Handlers
 
     public class PatternImageQuery
     {
-        public string DesignerUrlKey { get; set; }
+        public string DesignerKey { get; set; }
 
         public string Reference { get; set; }
 

@@ -9,12 +9,23 @@
     {
         public const string MimeType = "image/jpeg";
 
+        string _relativePath;
+
         protected PatternImage() { }
 
         public string Directory { get; private set; }
         public string Reference { get; private set; }
 
-        public string RelativePath { get { return Path.Combine(Directory, Filename); } }
+        public string RelativePath
+        {
+            get
+            {
+                if (_relativePath == null) {
+                    _relativePath = Path.Combine(Directory, Filename); 
+                }
+                return _relativePath;
+            }
+        }
 
         public abstract string Filename { get; }
         public abstract PatternSize Size { get; }

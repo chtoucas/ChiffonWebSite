@@ -4,14 +4,12 @@
     using System.Collections.Specialized;
     using System.Configuration.Provider;
     using System.Web;
-    using Chiffon.Resources;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Web.UI.Assets;
 
     public class RemoteAssetProvider : AssetProviderBase
     {
-        const string BaseUriKey_ = "baseUri";
-
         Uri _baseUri;
 
         public RemoteAssetProvider() : base() { }
@@ -26,19 +24,15 @@
 
             if (String.IsNullOrEmpty(config["description"])) {
                 config.Remove("description");
-                config.Add("description", SR.RemoteAssetProvider_Description);
+                config.Add("description", "Chiffon remote asset provider.");
             }
 
             base.Initialize(name, config);
 
             // Initialisation du champs baseUri.
-            string baseUriValue = config[BaseUriKey_];
-            if (String.IsNullOrEmpty(baseUriValue)) {
-                throw new ProviderException(SR.RemoteAssetProvider_BaseUriIsNotAbsolute);
-            }
-            _baseUri = MayParse.ToUri(baseUriValue, UriKind.Absolute)
-               .ValueOrThrow(() => new ProviderException(SR.RemoteAssetProvider_BaseUriIsNotAbsolute));
-            config.Remove(BaseUriKey_);
+            _baseUri = config.MayParseValue("baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
+                .ValueOrThrow(() => new ProviderException("Missing or invalid config 'baseUri'."));
+            config.Remove("baseUri");
         }
 
         public override Uri GetImage(string relativePath)

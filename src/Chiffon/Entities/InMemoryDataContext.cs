@@ -13,29 +13,25 @@
                 yield return new Designer {
                     DesignerId = new DesignerId(1),
                     DisplayName = "Chicamancha",
-                    PatternDirectory = "chicamancha",
-                    UrlKey = "chicamancha",
+                    Key = "chicamancha",
                 };
 
                 yield return new Designer {
                     DesignerId = new DesignerId(2),
                     DisplayName = "Viviane Devaux",
-                    PatternDirectory = "viviane-devaux",
-                    UrlKey = "viviane-devaux",
+                    Key = "viviane-devaux",
                 };
 
                 yield return new Designer {
                     DesignerId = new DesignerId(3),
                     DisplayName = "Christine Légeret",
-                    PatternDirectory = "christine-legeret",
-                    UrlKey = "christine-legeret",
+                    Key = "christine-legeret",
                 };
 
                 yield return new Designer {
                     DesignerId = new DesignerId(4),
                     DisplayName = "Laure Roussel",
-                    PatternDirectory = "laure-roussel",
-                    UrlKey = "laure-roussel",
+                    Key = "laure-roussel",
                 };
             }
         }

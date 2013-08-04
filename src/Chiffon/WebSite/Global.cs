@@ -12,7 +12,6 @@
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
     using Chiffon.WebSite.Configs;
-    using Chiffon.WebSite.Resources;
     using Narvalo;
     using Narvalo.Diagnostics;
     using Narvalo.Web;
@@ -124,7 +123,7 @@
         /// <param name="e"></param>
         protected void Application_Start()
         {
-            Log_(LoggerLevel.Informational, () => { return SR.Global_Starting; });
+            Log_(LoggerLevel.Informational, () => { return "Application starting."; });
 
             var config = ChiffonConfig.Create();
 
@@ -149,7 +148,7 @@
         /// <param name="e"></param>
         protected void Application_End(object sender, EventArgs e)
         {
-            Log_(LoggerLevel.Informational, () => { return SR.Global_Ending; });
+            Log_(LoggerLevel.Informational, () => { return "Application ending."; });
         }
 
         #endregion
@@ -189,7 +188,7 @@
         /// <param name="e"></param>
         protected void Application_Disposed(object sender, EventArgs e)
         {
-            Log_(LoggerLevel.Informational, () => { return SR.Global_Disposed; });
+            Log_(LoggerLevel.Informational, () => { return "Application disposed."; });
         }
 
         /// <summary>
@@ -206,7 +205,7 @@
             var ex = server.GetLastError();
             if (ex == null) {
                 // En théorie, cela ne devrait jamais se produire.
-                Log_(LoggerLevel.Critical, () => SR.Global_UnknownError);
+                Log_(LoggerLevel.Critical, () => "An unknown error occured.");
                 return;
             }
 
