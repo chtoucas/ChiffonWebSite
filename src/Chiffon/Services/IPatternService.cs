@@ -6,7 +6,7 @@
 
     public interface IPatternService
     {
-        IEnumerable<Pattern> GetPatternsOnDisplay();
+        IEnumerable<Pattern> GetShowcasedPatterns();
         Maybe<Pattern> MayGetPattern(PatternId patternId);
     }
 }

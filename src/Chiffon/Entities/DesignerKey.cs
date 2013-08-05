@@ -1,16 +1,15 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
-    using Narvalo;
     using Narvalo.Fx;
 
     [Serializable]
     public struct DesignerKey : IEquatable<DesignerKey>
     {
         public static readonly DesignerKey Chicamancha = new DesignerKey("chicamancha");
-        public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
         public static readonly DesignerKey ChristineLegeret = new DesignerKey("christine-legeret");
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
+        public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
         readonly string _key;
 

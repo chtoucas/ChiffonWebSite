@@ -1,13 +1,13 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using Narvalo;
 
     public abstract class PatternImage
     {
-        public const string MimeType = "image/jpeg";
+        const string JpegMimeType_ = "image/jpeg";
 
         string _relativePath;
 
@@ -21,24 +21,28 @@
             get
             {
                 if (_relativePath == null) {
-                    _relativePath = Path.Combine(Directory, Filename); 
+                    _relativePath = Path.Combine(Directory, Filename);
                 }
                 return _relativePath;
             }
         }
 
         public abstract string Filename { get; }
+        public abstract string MimeType { get; }
         public abstract PatternSize Size { get; }
 
         public static PatternImage Create(string directory, string reference, PatternSize size)
         {
+            Requires.NotNullOrEmpty(directory, "directory");
+            Requires.NotNullOrEmpty(reference, "reference");
+
             switch (size) {
                 case PatternSize.Preview:
-                    return new Preview(size) { Directory = directory, Reference = reference };
+                    return new Preview { Directory = directory, Reference = reference };
                 case PatternSize.Original:
                     return new Original { Directory = directory, Reference = reference };
                 default:
-                    throw new ArgumentException();
+                    throw new InvalidOperationException();
             }
         }
 
@@ -59,38 +63,29 @@
                 }
             }
 
+            public override string MimeType { get { return JpegMimeType_; } }
             public override PatternSize Size { get { return PatternSize.Original; } }
         }
 
         class Preview : PatternImage
         {
-            static Dictionary<PatternSize, string> SizeNames_ = new Dictionary<PatternSize, string>() {
-                { PatternSize.Preview, "apercu"}
-            };
-
-            readonly PatternSize _size;
-
             string _filename;
 
-            public Preview(PatternSize sizeVersion)
-                : base()
-            {
-                _size = sizeVersion;
-            }
+            public Preview() : base() { }
 
             public override string Filename
             {
                 get
                 {
                     if (_filename == null) {
-                        _filename = String.Format(CultureInfo.InvariantCulture,
-                            "motif-{0}_{1}.jpg", Reference, SizeNames_[Size]);
+                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}_apercu.jpg", Reference);
                     }
                     return _filename;
                 }
             }
 
-            public override PatternSize Size { get { return _size; } }
+            public override string MimeType { get { return JpegMimeType_; } }
+            public override PatternSize Size { get { return PatternSize.Preview; } }
         }
     }
 }

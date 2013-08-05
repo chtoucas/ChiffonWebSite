@@ -16,9 +16,11 @@
         /// Cette propriété va être utilisée pour trois choses :
         /// - clé d'identification unique ;
         /// - nom du répertoire dans lequel les motifs vont être stockés ;
-        /// - clé d'identification dans les URLs.
+        /// - filtre d'identification dans les URLs.
         /// </summary>
         public DesignerKey Key { get { return _designerKey; } }
+
+        public string Presentation { get; set; }
 
         public string DisplayName { get; set; }
     }

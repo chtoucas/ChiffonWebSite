@@ -49,8 +49,8 @@
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
             if (size.IsNone) { return BindingFailure("size"); }
 
-            var reference = nvc.MayGetValue("ref").Filter(_ => _.Length > 1);
-            if (reference.IsNone) { return BindingFailure("ref"); }
+            var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 1);
+            if (reference.IsNone) { return BindingFailure("reference"); }
 
             var query = new PatternImageQuery {
                 DesignerKey = designerKey.Value,
@@ -65,6 +65,7 @@
         {
             var response = context.Response;
 
+            // FIXME:
             bool isAuth = true;
 
             var result_ = _service.MayGetPattern(new PatternId(query.DesignerKey, query.Reference));
@@ -74,15 +75,17 @@
             }
 
             var pattern = result_.Value;
-            bool isPublic = query.Size == PatternSize.Preview && pattern.OnDisplay;
+            var visibility = pattern.GetVisibility(query.Size);
+            var isPublic = visibility == PatternVisibility.Public;
+            var isVisible = isPublic || (isAuth && visibility == PatternVisibility.Members);
 
-            if (!(isAuth || isPublic)) {
+            if (!isVisible) {
                 response.SetStatusCode(HttpStatusCode.Unauthorized);
                 return;
             }
 
-            var imagePath = _fileSystem.GetPath(
-                PatternImage.Create(pattern.DesignerKey.ToString(), pattern.Reference, query.Size));
+            var image = pattern.GetImage(query.Size);
+            var imagePath = _fileSystem.GetPath(image);
 
             response.Clear();
             if (isPublic) {
@@ -91,7 +94,7 @@
             else {
                 response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
             }
-            response.ContentType = PatternImage.MimeType;
+            response.ContentType = image.MimeType;
             response.TransmitFile(imagePath);
         }
     }

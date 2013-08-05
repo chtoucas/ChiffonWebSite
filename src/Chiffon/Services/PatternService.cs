@@ -7,11 +7,11 @@
     using Narvalo.Collections;
     using Narvalo.Fx;
 
-    public class PaternService : IPatternService
+    public class PatternService : IPatternService
     {
         readonly IDataContext _dataContext;
 
-        public PaternService(IDataContext dataContext)
+        public PatternService(IDataContext dataContext)
             : base()
         {
             Requires.NotNull(dataContext, "dataContext");
@@ -19,10 +19,10 @@
             _dataContext = dataContext;
         }
 
-        public IEnumerable<Pattern> GetPatternsOnDisplay()
+        public IEnumerable<Pattern> GetShowcasedPatterns()
         {
             return from p in _dataContext.Patterns
-                   where p.OnDisplay
+                   where p.Showcased
                    select p;
         }
 

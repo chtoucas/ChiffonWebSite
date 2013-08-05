@@ -25,7 +25,7 @@
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
             builder.RegisterType<InMemoryDataContext>().As<IDataContext>().SingleInstance();
-            builder.RegisterType<PaternService>().As<IPatternService>().SingleInstance();
+            builder.RegisterType<PatternService>().As<IPatternService>().SingleInstance();
 
             builder.RegisterControllers(typeof(Global).Assembly);
 

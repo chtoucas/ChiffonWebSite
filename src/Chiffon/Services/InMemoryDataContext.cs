@@ -65,24 +65,24 @@
 
         #endregion
 
-        static Pattern CreateForChicamancha_(string reference, bool onDisplay = false)
+        static Pattern CreateForChicamancha_(string reference, bool showcased = false, bool published = true)
         {
-            return new Pattern(new PatternId(DesignerKey.Chicamancha, reference)) { OnDisplay = onDisplay };
+            return new Pattern(new PatternId(DesignerKey.Chicamancha, reference), published) { Showcased = showcased };
         }
 
-        static Pattern CreateForVivianeDevaux_(string reference, bool onDisplay = false)
+        static Pattern CreateForVivianeDevaux_(string reference, bool showcased = false, bool published = true)
         {
-            return new Pattern(new PatternId(DesignerKey.VivianeDevaux, reference)) { OnDisplay = onDisplay };
+            return new Pattern(new PatternId(DesignerKey.VivianeDevaux, reference), published) { Showcased = showcased };
         }
 
-        static Pattern CreateForChristineLegeret_(string reference, bool onDisplay = false)
+        static Pattern CreateForChristineLegeret_(string reference, bool showcased = false, bool published = true)
         {
-            return new Pattern(new PatternId(DesignerKey.ChristineLegeret, reference)) { OnDisplay = onDisplay };
+            return new Pattern(new PatternId(DesignerKey.ChristineLegeret, reference), published) { Showcased = showcased };
         }
 
-        static Pattern CreateForLaureRoussel_(string reference, bool onDisplay = false)
+        static Pattern CreateForLaureRoussel_(string reference, bool showcased = false, bool published = true)
         {
-            return new Pattern(new PatternId(DesignerKey.LaureRoussel, reference)) { OnDisplay = onDisplay };
+            return new Pattern(new PatternId(DesignerKey.LaureRoussel, reference), published) { Showcased = showcased };
         }
     }
 }
