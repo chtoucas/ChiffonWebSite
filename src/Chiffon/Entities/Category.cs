@@ -5,7 +5,7 @@
     [Serializable]
     public class Category
     {
-        public DesignerId DesignerId { get; set; }
+        public DesignerKey DesignerId { get; set; }
 
         public int Id { get; set; }
 

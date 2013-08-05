@@ -7,23 +7,23 @@
     [Serializable]
     public struct PatternId : IEquatable<PatternId>
     {
-        readonly DesignerId _designerId;
+        readonly DesignerKey _designerKey;
         readonly string _reference;
 
-        public PatternId(DesignerId designerId, string reference)
+        public PatternId(DesignerKey designerKey, string reference)
         {
-            _designerId = designerId;
+            _designerKey = designerKey;
             _reference = reference;
         }
 
-        public DesignerId DesignerId { get { return _designerId; } }
+        public DesignerKey DesignerKey { get { return _designerKey; } }
         public string Reference { get { return _reference; } }
 
         #region IEquatable<PatternId>
 
         public bool Equals(PatternId other)
         {
-            return _designerId == other._designerId && _reference == other._reference;
+            return _designerKey == other._designerKey && _reference == other._reference;
         }
 
         #endregion
@@ -49,7 +49,7 @@
 
         public override int GetHashCode()
         {
-            return _designerId.GetHashCode() ^ _reference.GetHashCode();
+            return _designerKey.GetHashCode() ^ _reference.GetHashCode();
         }
     }
 }

@@ -1,39 +1,30 @@
-﻿namespace Chiffon.Persistence
+﻿namespace Chiffon.Services
 {
     using System.Collections.Generic;
     using Chiffon.Entities;
 
     public class InMemoryDataContext : IDataContext
     {
-        static readonly DesignerId ChicamanchaId_ = new DesignerId(1);
-        static readonly DesignerId VivianeDevauxId_ = new DesignerId(2);
-        static readonly DesignerId ChristineLegeretId_ = new DesignerId(3);
-        static readonly DesignerId LaureRousselId_ = new DesignerId(4);
-
         #region IDataContext
 
         public IEnumerable<Designer> Designers
         {
             get
             {
-                yield return new Designer(ChicamanchaId_) {
+                yield return new Designer(DesignerKey.Chicamancha) {
                     DisplayName = "Chicamancha",
-                    Key = "chicamancha",
                 };
 
-                yield return new Designer(VivianeDevauxId_) {
+                yield return new Designer(DesignerKey.VivianeDevaux) {
                     DisplayName = "Viviane Devaux",
-                    Key = "viviane-devaux",
                 };
 
-                yield return new Designer(ChristineLegeretId_) {
+                yield return new Designer(DesignerKey.ChristineLegeret) {
                     DisplayName = "Christine Légeret",
-                    Key = "christine-legeret",
                 };
 
-                yield return new Designer(LaureRousselId_) {
+                yield return new Designer(DesignerKey.LaureRoussel) {
                     DisplayName = "Laure Roussel",
-                    Key = "laure-roussel",
                 };
             }
         }
@@ -74,24 +65,24 @@
 
         #endregion
 
-        static Pattern CreateForChicamancha_(string reference, bool isPublic = false)
+        static Pattern CreateForChicamancha_(string reference, bool onDisplay = false)
         {
-            return new Pattern(new PatternId(ChicamanchaId_, reference)) { IsPrivate = !isPublic };
+            return new Pattern(new PatternId(DesignerKey.Chicamancha, reference)) { OnDisplay = onDisplay };
         }
 
-        static Pattern CreateForVivianeDevaux_(string reference, bool isPublic = false)
+        static Pattern CreateForVivianeDevaux_(string reference, bool onDisplay = false)
         {
-            return new Pattern(new PatternId(VivianeDevauxId_, reference)) { IsPrivate = !isPublic };
+            return new Pattern(new PatternId(DesignerKey.VivianeDevaux, reference)) { OnDisplay = onDisplay };
         }
 
-        static Pattern CreateForChristineLegeret_(string reference, bool isPublic = false)
+        static Pattern CreateForChristineLegeret_(string reference, bool onDisplay = false)
         {
-            return new Pattern(new PatternId(ChristineLegeretId_, reference)) { IsPrivate = !isPublic };
+            return new Pattern(new PatternId(DesignerKey.ChristineLegeret, reference)) { OnDisplay = onDisplay };
         }
 
-        static Pattern CreateForLaureRoussel_(string reference, bool isPublic = false)
+        static Pattern CreateForLaureRoussel_(string reference, bool onDisplay = false)
         {
-            return new Pattern(new PatternId(LaureRousselId_, reference)) { IsPrivate = !isPublic };
+            return new Pattern(new PatternId(DesignerKey.LaureRoussel, reference)) { OnDisplay = onDisplay };
         }
     }
 }

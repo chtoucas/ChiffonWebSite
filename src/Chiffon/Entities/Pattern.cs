@@ -7,18 +7,16 @@
     {
         readonly PatternId _patternId;
 
-        bool _isPrivate = true;
+        bool _onDisplay = true;
 
         public Pattern(PatternId patternId)
         {
             _patternId = patternId;
         }
 
-        public DesignerId DesignerId { get { return PatternId.DesignerId; } }
+        public DesignerKey DesignerKey { get { return PatternId.DesignerKey; } }
 
-        public bool IsPrivate { get { return _isPrivate; } set { _isPrivate = value; } }
-
-        public bool IsPublic { get { return !_isPrivate; } }
+        public bool OnDisplay { get { return _onDisplay; } set { _onDisplay = value; } }
 
         public PatternId PatternId { get { return _patternId; } }
 

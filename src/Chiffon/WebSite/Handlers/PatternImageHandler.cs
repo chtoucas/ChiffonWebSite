@@ -6,8 +6,9 @@
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Chiffon.Crosscuttings;
+    using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Persistence;
+    using Chiffon.Services;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
@@ -22,9 +23,9 @@
 
         readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
-        readonly IQueryService _service;
+        readonly IPatternService _service;
 
-        public PatternImageHandler(ChiffonConfig config, IQueryService service)
+        public PatternImageHandler(ChiffonConfig config, IPatternService service)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -42,7 +43,7 @@
         {
             var nvc = request.QueryString;
 
-            var designerKey = nvc.MayGetValue("designer").Filter(_ => _.Length > 1);
+            var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.Parse(_));
             if (designerKey.IsNone) { return BindingFailure("designer"); }
 
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
@@ -64,19 +65,27 @@
         {
             var response = context.Response;
 
-            // FIXME: Ajouter le filtre "publique ou non".
-            var result_ = _service.MayGetPattern(query.Reference, query.DesignerKey, true /* publicOnly */);
+            bool isAuth = true;
+
+            var result_ = _service.MayGetPattern(new PatternId(query.DesignerKey, query.Reference));
             if (result_.IsNone) {
                 response.SetStatusCode(HttpStatusCode.NotFound);
                 return;
             }
 
-            var result = result_.Value;
+            var pattern = result_.Value;
+            bool isPublic = query.Size == PatternSize.Preview && pattern.OnDisplay;
+
+            if (!(isAuth || isPublic)) {
+                response.SetStatusCode(HttpStatusCode.Unauthorized);
+                return;
+            }
+
             var imagePath = _fileSystem.GetPath(
-                PatternImage.Create(result.Directory, result.Reference, query.Size));
+                PatternImage.Create(pattern.DesignerKey.ToString(), pattern.Reference, query.Size));
 
             response.Clear();
-            if (result.IsPublic) {
+            if (isPublic) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);
             }
             else {

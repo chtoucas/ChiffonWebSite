@@ -5,22 +5,21 @@
     [Serializable]
     public class Designer
     {
-        readonly DesignerId _designerId;
+        readonly DesignerKey _designerKey;
 
-        public Designer(DesignerId designerId)
+        public Designer(DesignerKey designerKey)
         {
-            _designerId = designerId;
+            _designerKey = designerKey;
         }
 
-        public DesignerId DesignerId { get { return _designerId; } }
-
-        public string DisplayName { get; set; }
-
         /// <summary>
-        /// Cette propriété va être utilisée pour deux choses :
+        /// Cette propriété va être utilisée pour trois choses :
+        /// - clé d'identification unique ;
         /// - nom du répertoire dans lequel les motifs vont être stockés ;
         /// - clé d'identification dans les URLs.
         /// </summary>
-        public string Key { get; set; }
+        public DesignerKey Key { get { return _designerKey; } }
+
+        public string DisplayName { get; set; }
     }
 }
