@@ -2,42 +2,7 @@
 {
     using System;
     using Chiffon.Infrastructure;
-
-    public enum PatternVisibility
-    {
-        None = 0,
-        Members = 1,
-        Public = 2,
-    }
-
-    public static class PatternExtensions
-    {
-        //public static bool IsPublic(this Pattern pattern, PatternSize size)
-        //{
-        //    return size == PatternSize.Preview
-        //        && pattern.Published
-        //        && (pattern.Preferred || pattern.Showcased);
-        //}
-
-        public static PatternVisibility GetVisibility(this Pattern pattern, PatternSize size)
-        {
-            if (pattern.Published) {
-                switch (size) {
-                    case PatternSize.Original:
-                        return PatternVisibility.Members;
-                    case PatternSize.Preview:
-                        return (pattern.Preferred || pattern.Showcased)
-                            ? PatternVisibility.Public
-                            : PatternVisibility.Members;
-                    default:
-                        throw new InvalidOperationException("XXX");
-                }
-            }
-            else {
-                return PatternVisibility.None;
-            }
-        }
-    }
+    using Narvalo;
 
     [Serializable]
     public class Pattern
@@ -64,7 +29,7 @@
             set
             {
                 if (!_published) {
-                    throw new InvalidOperationException("XXX");
+                    throw new InvalidOperationException("You must published the pattern before.");
                 }
                 _preferred = value;
             }
@@ -80,7 +45,7 @@
             set
             {
                 if (!_published) {
-                    throw new InvalidOperationException("XXX");
+                    throw new InvalidOperationException("You must published the pattern before.");
                 }
                 _showcased = value;
             }
@@ -89,6 +54,26 @@
         public PatternImage GetImage(PatternSize size)
         {
             return PatternImage.Create(DesignerKey.ToString(), Reference, size);
+        }
+
+        public PatternVisibility GetVisibility(PatternSize size)
+        {
+            if (Published) {
+                switch (size) {
+                    case PatternSize.Original:
+                        return PatternVisibility.Members;
+                    case PatternSize.Preview:
+                        return (Preferred || Showcased)
+                            ? PatternVisibility.Public
+                            : PatternVisibility.Members;
+                    default:
+                        throw ExceptionFactory.NotSupported(
+                            "The pattern size '{0}' is not yet handled.", size.ToString());
+                }
+            }
+            else {
+                return PatternVisibility.None;
+            }
         }
     }
 }

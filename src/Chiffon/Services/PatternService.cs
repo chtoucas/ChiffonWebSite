@@ -1,8 +1,10 @@
 ﻿namespace Chiffon.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Chiffon.Entities;
+    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
@@ -33,6 +35,12 @@
                     select p;
 
             return q.SingleOrNone();
+        }
+
+        public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(PatternId patternId, PatternSize size)
+        {
+            return MayGetPattern(patternId)
+                .Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
     }
 }

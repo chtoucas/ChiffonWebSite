@@ -120,6 +120,7 @@
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSite\AppActivator.cs" />
+    <Compile Include="Entities\PatternVisibility.cs" />
     <Compile Include="WebSite\Configs\ChiffonModule.cs" />
     <Compile Include="WebSite\Configs\FilterConfig.cs" />
     <Compile Include="WebSite\Configs\RouteConfig.cs" />

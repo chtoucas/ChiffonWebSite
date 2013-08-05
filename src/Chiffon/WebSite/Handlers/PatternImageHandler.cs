@@ -21,7 +21,6 @@
         // Mise en cache pour 30 minutes.
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
-        readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
         readonly IPatternService _service;
 
@@ -31,10 +30,9 @@
             Requires.NotNull(config, "config");
             Requires.NotNull(service, "service");
 
-            _config = config;
             _service = service;
 
-            _fileSystem = new PatternFileSystem(_config);
+            _fileSystem = new PatternFileSystem(config);
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
@@ -68,34 +66,34 @@
             // FIXME:
             bool isAuth = true;
 
-            var result_ = _service.MayGetPattern(new PatternId(query.DesignerKey, query.Reference));
+            var result_ = _service.MayGetImage(new PatternId(query.DesignerKey, query.Reference), query.Size);
             if (result_.IsNone) {
-                response.SetStatusCode(HttpStatusCode.NotFound);
-                return;
+                response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var pattern = result_.Value;
-            var visibility = pattern.GetVisibility(query.Size);
-            var isPublic = visibility == PatternVisibility.Public;
-            var isVisible = isPublic || (isAuth && visibility == PatternVisibility.Members);
+            var result = result_.Value;
+            PatternVisibility visibility = result.Item1;
+            PatternImage image = result.Item2;
 
-            if (!isVisible) {
-                response.SetStatusCode(HttpStatusCode.Unauthorized);
-                return;
+            switch (visibility) {
+                case PatternVisibility.Members:
+                    if (!isAuth) { response.SetStatusCode(HttpStatusCode.Unauthorized); return; }
+                    break;
+                case PatternVisibility.None:
+                    response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var image = pattern.GetImage(query.Size);
             var imagePath = _fileSystem.GetPath(image);
 
             response.Clear();
-            if (isPublic) {
+            if (visibility == PatternVisibility.Public) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);
             }
             else {
                 response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
             }
             response.ContentType = image.MimeType;
-            response.TransmitFile(imagePath);
+            response.TransmitFile(_fileSystem.GetPath(image));
         }
     }
 }
