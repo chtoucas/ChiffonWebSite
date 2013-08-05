@@ -5,10 +5,10 @@
     [Serializable]
     public class Category
     {
-        public DesignerKey DesignerId { get; set; }
-
-        public int Id { get; set; }
+        public DesignerKey DesignerKey { get; set; }
 
         public string DisplayName { get; set; }
+
+        public int Id { get; set; }
     }
 }

@@ -39,7 +39,7 @@
             }
         }
 
-        #region IEquatable<MemberId>
+        #region IEquatable<DesignerKey>
 
         public bool Equals(DesignerKey other)
         {

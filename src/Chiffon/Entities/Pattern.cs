@@ -10,8 +10,8 @@
         readonly PatternId _patternId;
 
         bool _preferred = false;
-        bool _published = true;
         bool _showcased = false;
+        bool _published;
 
         public Pattern(PatternId patternId, bool published)
         {
@@ -58,12 +58,12 @@
 
         public PatternVisibility GetVisibility(PatternSize size)
         {
-            if (Published) {
+            if (_published) {
                 switch (size) {
                     case PatternSize.Original:
                         return PatternVisibility.Members;
                     case PatternSize.Preview:
-                        return (Preferred || Showcased)
+                        return (_preferred || _showcased)
                             ? PatternVisibility.Public
                             : PatternVisibility.Members;
                     default:
