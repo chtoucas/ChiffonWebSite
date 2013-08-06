@@ -66,7 +66,7 @@
             // FIXME:
             bool isAuth = true;
 
-            var result_ = _service.MayGetImage(new PatternId(query.DesignerKey, query.Reference), query.Size);
+            var result_ = _service.MayGetImage(query.DesignerKey, query.Reference, query.Size);
             if (result_.IsNone) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
@@ -79,11 +79,12 @@
                 case PatternVisibility.Members:
                     if (!isAuth) { response.SetStatusCode(HttpStatusCode.Unauthorized); return; }
                     break;
+                case PatternVisibility.Public:
+                    break;
                 case PatternVisibility.None:
+                default:
                     response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
-
-            var imagePath = _fileSystem.GetPath(image);
 
             response.Clear();
             if (visibility == PatternVisibility.Public) {

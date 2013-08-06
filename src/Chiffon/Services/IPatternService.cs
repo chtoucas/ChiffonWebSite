@@ -9,7 +9,8 @@
     public interface IPatternService
     {
         IEnumerable<Pattern> GetShowcasedPatterns();
-        Maybe<Pattern> MayGetPattern(PatternId patternId);
-        Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(PatternId patternId, PatternSize size);
+
+        Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
+            DesignerKey designerKey, string reference, PatternSize size);
     }
 }

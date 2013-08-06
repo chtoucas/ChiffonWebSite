@@ -28,18 +28,14 @@
                    select p;
         }
 
-        public Maybe<Pattern> MayGetPattern(PatternId patternId)
+        public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
+            DesignerKey designerKey, string reference, PatternSize size)
         {
             var q = from p in _dataContext.Patterns
-                    where p.PatternId == patternId
+                    where p.DesignerKey == designerKey && p.Reference == reference
                     select p;
 
-            return q.SingleOrNone();
-        }
-
-        public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(PatternId patternId, PatternSize size)
-        {
-            return MayGetPattern(patternId)
+            return q.SingleOrNone()
                 .Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
     }

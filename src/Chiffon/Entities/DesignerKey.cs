@@ -11,7 +11,7 @@
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
-        readonly string _key;
+        string _key;
 
         DesignerKey(string key)
         {

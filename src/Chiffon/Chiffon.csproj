@@ -55,6 +55,9 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="NodaTime">
+      <HintPath>..\..\packages\NodaTime.1.1.0\lib\net35-Client\NodaTime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -98,6 +101,8 @@
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\RouteCollection%24.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\CategoryKey.cs" />
+    <Compile Include="Entities\Visit.cs" />
     <Compile Include="Services\IDataContext.cs" />
     <Compile Include="Services\InMemoryDataContext.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
