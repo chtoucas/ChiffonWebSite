@@ -4,8 +4,8 @@
 
     public class SiteMapBuilder
     {
-        private static readonly SiteMapBuilder _Instance = new SiteMapBuilder();
-        private Func<ISiteMapFactory> _factoryThunk = () => null;
+        static readonly SiteMapBuilder _Instance = new SiteMapBuilder();
+        Func<ISiteMapFactory> _factoryThunk = () => null;
 
         public SiteMapBuilder()
         {

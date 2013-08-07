@@ -3,9 +3,8 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Chiffon.Services;
     using Narvalo.Web;
-    using Pacr.BuildingBlocks.Membership;
-    using Pacr.Infrastructure.Addressing;
 
     public class LogOffHandler : HttpHandlerBase, IRequiresSessionState
     {
@@ -21,15 +20,9 @@
 
         protected override void ProcessRequestCore(HttpContext context)
         {
-            //var httpUser = HttpUser.Restore(context, MemberService);
+            //var map = SiteMapBuilder.Current.GetSiteMapFactory().CreateMap(MemberId.Anonymous);
 
-            //if (httpUser.IsAuthenticated) {
-            //    httpUser.LogOff();
-            //}
-
-            var map = SiteMapBuilder.Current.GetSiteMapFactory().CreateMap(MemberId.Anonymous);
-
-            context.Response.Redirect(map.Home().AbsoluteUri);
+            //context.Response.Redirect(map.Home().AbsoluteUri);
         }
     }
 }

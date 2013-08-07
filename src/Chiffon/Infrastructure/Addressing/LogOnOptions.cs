@@ -7,17 +7,9 @@
 
     public class LogOnOptions
     {
-        public static readonly string CreatePersistentCookieKey = "persistent";
         public static readonly string TargetUrlKey = "target";
 
-        bool _createPersistentCookie;
         Uri _targetUrl;
-
-        public bool CreatePersistentCookie
-        {
-            get { return _createPersistentCookie; }
-            set { _createPersistentCookie = value; }
-        }
 
         public Uri TargetUrl
         {
@@ -35,9 +27,6 @@
         {
             var nvc = new NameValueCollection();
 
-            if (_createPersistentCookie) {
-                nvc.Add(CreatePersistentCookieKey, "1");
-            }
             if (_targetUrl != null) {
                 nvc.Add(TargetUrlKey, TargetUrl.ToString());
             }

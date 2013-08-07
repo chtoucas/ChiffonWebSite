@@ -6,7 +6,7 @@
 
     public class DefaultSiteMapFactory : ISiteMapFactory
     {
-        private readonly Uri _baseUri;
+        readonly Uri _baseUri;
 
 //        public DefaultSiteMapFactory(WebSiteSettings settings)
 //            : this(settings.BaseUrl) { }

@@ -35,8 +35,7 @@
                     where p.DesignerKey == designerKey && p.Reference == reference
                     select p;
 
-            return q.SingleOrNone()
-                .Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+            return q.SingleOrNone().Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
     }
 }

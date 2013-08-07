@@ -42,6 +42,6 @@
 
         public MailAddress EmailAddress { get; set; }
 
-        public Uri WebSiteUrl { get; set; }
+        public Uri Url { get; set; }
     }
 }

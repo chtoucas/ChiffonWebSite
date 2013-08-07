@@ -5,7 +5,7 @@
 
     public class DefaultMemberSiteMap : DefaultSiteMap, ISiteMap
     {
-        private readonly MemberId _memberId;
+        readonly MemberId _memberId;
 
         internal DefaultMemberSiteMap(MemberId memberId, Uri baseUrl)
             : base(baseUrl)

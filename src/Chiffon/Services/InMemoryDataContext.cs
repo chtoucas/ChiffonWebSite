@@ -17,34 +17,34 @@
             {
                 yield return new Designer(DesignerKey.Chicamancha) {
                     DisplayName = "Chicamancha",
-                    EmailAddress = new MailAddress("chicamancha@hotmail.com"),
+                    EmailAddress = new MailAddress("chicamancha@pourquelmotifsimone.com"),
                     PreferredPatternReference = "1",
                     Presentation = LoremIpsum_,
-                    WebSiteUrl = new Uri("http://www.chicamancha.com"),
+                    Url = new Uri("http://www.chicamancha.com"),
                 };
 
                 yield return new Designer(DesignerKey.VivianeDevaux) {
                     DisplayName = "Viviane Devaux",
-                    EmailAddress = new MailAddress("viviane.vdx@gmail.com"),
+                    EmailAddress = new MailAddress("viviane.devaux@pourquelmotifsimone.com"),
                     PreferredPatternReference = "1",
                     Presentation = LoremIpsum_,
-                    WebSiteUrl = new Uri("http://www.vivianedevaux.com"),
+                    Url = new Uri("http://www.vivianedevaux.com"),
                 };
 
                 yield return new Designer(DesignerKey.ChristineLegeret) {
                     DisplayName = "Christine Légeret",
-                    EmailAddress = new MailAddress("christinelegeret@gmail.com"),
+                    EmailAddress = new MailAddress("christine.legeret@pourquelmotifsimone.com"),
                     PreferredPatternReference = "1",
                     Presentation = LoremIpsum_,
-                    WebSiteUrl = new Uri("http://www.christinelegeret.com"),
+                    Url = new Uri("http://www.christinelegeret.com"),
                 };
 
                 yield return new Designer(DesignerKey.LaureRoussel) {
                     DisplayName = "Laure Roussel",
-                    EmailAddress = new MailAddress("laureroussel@gmail.com"),
+                    EmailAddress = new MailAddress("laure.roussel@pourquelmotifsimone.com"),
                     PreferredPatternReference = "1",
                     Presentation = LoremIpsum_,
-                    WebSiteUrl = new Uri("http://www.laureroussel.com"),
+                    Url = new Uri("http://www.laureroussel.com"),
                 };
             }
         }

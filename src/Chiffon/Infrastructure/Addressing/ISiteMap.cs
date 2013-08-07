@@ -4,11 +4,9 @@
 
     public interface ISiteMap
     {
-        Uri Home();
-
         Uri LogOn();
 
-        Uri LogOn(LogOnOptions options);
+        Uri LogOn(Uri targetUrl);
 
         Uri MakeAbsoluteUri(Uri targetUrl);
     }
