@@ -32,7 +32,7 @@
             set
             {
                 if (!Published) {
-                    throw new InvalidOperationException("You must published the pattern before.");
+                    throw new InvalidOperationException("First, you must publish the pattern.");
                 }
                 _preferred = value;
             }
@@ -43,8 +43,8 @@
             get { return _published; }
             set
             {
-                if (Locked) {
-                    throw new InvalidOperationException("You must unlocked the pattern before.");
+                if (Locked && !value) {
+                    throw new InvalidOperationException("First, you must unlock the pattern.");
                 }
                 _published = value;
             }
@@ -58,7 +58,7 @@
             set
             {
                 if (!Published) {
-                    throw new InvalidOperationException("You must published the pattern before.");
+                    throw new InvalidOperationException("First, you must publish the pattern.");
                 }
                 _showcased = value;
             }

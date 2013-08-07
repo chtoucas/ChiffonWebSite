@@ -100,6 +100,8 @@
   <ItemGroup>
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\RouteCollection%24.cs" />
+    <Compile Include="Crosscuttings\ChiffonConnectionStrings.cs" />
+    <Compile Include="Infrastructure\SqlHelper.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\CategoryKey.cs" />
     <Compile Include="Entities\MemberKey.cs" />
@@ -107,9 +109,7 @@
     <Compile Include="Infrastructure\Addressing\Constants.cs" />
     <Compile Include="Infrastructure\Addressing\SiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
-    <Compile Include="Services\IDataContext.cs" />
     <Compile Include="Services\IMemberService.cs" />
-    <Compile Include="Services\InMemoryDataContext.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
     <Compile Include="Crosscuttings\Logger.cs" />
     <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />

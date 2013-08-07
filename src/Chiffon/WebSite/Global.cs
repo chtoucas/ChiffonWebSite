@@ -125,8 +125,6 @@
         {
             Log_(LoggerLevel.Informational, () => { return "Application starting."; });
 
-            var config = ChiffonConfig.Create();
-
             // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             // Routes.
@@ -136,7 +134,7 @@
 
             // Résolution des dépendances.
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new ChiffonModule(config));
+            builder.RegisterModule(new ChiffonModule());
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

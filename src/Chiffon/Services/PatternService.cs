@@ -2,40 +2,92 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Data;
+    using System.Data.SqlClient;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;
-    using Narvalo.Collections;
+    using Narvalo.Data;
     using Narvalo.Fx;
 
     public class PatternService : IPatternService
     {
-        readonly IDataContext _dataContext;
+        readonly SqlHelper _sqlHelper;
 
-        public PatternService(IDataContext dataContext)
+        public PatternService(SqlHelper sqlHelper)
             : base()
         {
-            Requires.NotNull(dataContext, "dataContext");
+            Requires.NotNull(sqlHelper, "sqlHelper");
 
-            _dataContext = dataContext;
+            _sqlHelper = sqlHelper;
         }
 
         public IEnumerable<Pattern> GetShowcasedPatterns()
         {
-            return from p in _dataContext.Patterns
-                   where p.Showcased
-                   select p;
+            var patterns = new List<Pattern>();
+
+            using (var cnx = _sqlHelper.CreateConnection()) {
+                using (var cmd = new SqlCommand()) {
+                    cmd.CommandText = "usp_GetShowcasedPatterns";
+                    cmd.Connection = cnx;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cnx.Open();
+
+                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
+                        while (rdr.Read()) {
+                            var designerKey = DesignerKey.Parse(rdr.GetStringColumn("DesignerKey"))
+                                .ValueOrThrow(() => new Exception("XXX"));
+                            var reference = rdr.GetStringColumn("Reference");
+
+                            var pattern = new Pattern(new PatternId(designerKey, reference)) {
+                                CreationTime = rdr.GetDateTimeColumn("CreationTime"),
+                                Preferred = rdr.GetBooleanColumn("Preferred"),
+                                Published = rdr.GetBooleanColumn("Published"),
+                                Showcased = true,
+                            };
+
+                            patterns.Add(pattern);
+                        }
+                    }
+                }
+            }
+
+            return patterns;
         }
 
         public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
             DesignerKey designerKey, string reference, PatternSize size)
         {
-            var q = from p in _dataContext.Patterns
-                    where p.DesignerKey == designerKey && p.Reference == reference
-                    select p;
+            var result = Maybe<Pattern>.None;
 
-            return q.SingleOrNone().Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+            using (var cnx = _sqlHelper.CreateConnection()) {
+                using (var cmd = new SqlCommand()) {
+                    cmd.CommandText = "usp_GetPattern";
+                    cmd.Connection = cnx;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameterCollection p = cmd.Parameters;
+                    p.Add("@reference", SqlDbType.NVarChar).Value = reference;
+                    p.Add("@designer_id", SqlDbType.NVarChar).Value = designerKey.Key;
+
+                    cnx.Open();
+
+                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
+                        if (rdr.Read()) {
+                            var pattern = new Pattern(new PatternId(designerKey, reference)) {
+                                CreationTime = rdr.GetDateTimeColumn("CreationTime"),
+                                Preferred = rdr.GetBooleanColumn("Preferred"),
+                                Published = rdr.GetBooleanColumn("Published"),
+                                Showcased = rdr.GetBooleanColumn("Showcased"),
+                            };
+                            result = Maybe.Create(pattern);
+                        }
+                    }
+                }
+            }
+
+            return result.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
     }
 }

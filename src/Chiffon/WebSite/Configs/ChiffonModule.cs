@@ -3,28 +3,27 @@
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
     using Chiffon.Services;
     using Chiffon.WebSite.Handlers;
     using Narvalo;
 
     public class ChiffonModule : Module
     {
-        readonly ChiffonConfig _config;
-
-        public ChiffonModule(ChiffonConfig config)
-        {
-            Requires.NotNull(config, "config");
-
-            _config = config;
-        }
+        public ChiffonModule() { }
 
         protected override void Load(ContainerBuilder builder)
         {
             Requires.NotNull(builder, "builder");
 
-            builder.Register(_ => _config).AsSelf().SingleInstance();
+            var config = ChiffonConfig.Create();
+            var connectionStrings = new ChiffonConnectionStrings();
 
-            builder.RegisterType<InMemoryDataContext>().As<IDataContext>().SingleInstance();
+            builder.Register(_ => config).AsSelf().SingleInstance();
+            builder.Register(c => connectionStrings).AsSelf().SingleInstance();
+
+            builder.Register(c => new SqlHelper(connectionStrings)).AsSelf().SingleInstance();
+
             builder.RegisterType<PatternService>().As<IPatternService>().SingleInstance();
 
             builder.RegisterControllers(typeof(Global).Assembly);
