@@ -36,14 +36,14 @@
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         while (rdr.Read()) {
-                            var designerKey = DesignerKey.Parse(rdr.GetStringColumn("DesignerKey"))
+                            var designerKey = DesignerKey.Parse(rdr.GetStringColumn("designer"))
                                 .ValueOrThrow(() => new Exception("XXX"));
-                            var reference = rdr.GetStringColumn("Reference");
+                            var reference = rdr.GetStringColumn("reference");
 
                             var pattern = new Pattern(new PatternId(designerKey, reference)) {
-                                CreationTime = rdr.GetDateTimeColumn("CreationTime"),
-                                Preferred = rdr.GetBooleanColumn("Preferred"),
-                                Published = rdr.GetBooleanColumn("Published"),
+                                CreationTime = rdr.GetDateTimeColumn("creation_time"),
+                                Preferred = rdr.GetBooleanColumn("preferred"),
+                                Published = true,
                                 Showcased = true,
                             };
 
@@ -69,17 +69,17 @@
 
                     SqlParameterCollection p = cmd.Parameters;
                     p.Add("@reference", SqlDbType.NVarChar).Value = reference;
-                    p.Add("@designer_id", SqlDbType.NVarChar).Value = designerKey.Key;
+                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Key;
 
                     cnx.Open();
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         if (rdr.Read()) {
                             var pattern = new Pattern(new PatternId(designerKey, reference)) {
-                                CreationTime = rdr.GetDateTimeColumn("CreationTime"),
-                                Preferred = rdr.GetBooleanColumn("Preferred"),
-                                Published = rdr.GetBooleanColumn("Published"),
-                                Showcased = rdr.GetBooleanColumn("Showcased"),
+                                //CreationTime = rdr.GetDateTimeColumn("creation_time"),
+                                Preferred = rdr.GetBooleanColumn("preferred"),
+                                Published = rdr.GetBooleanColumn("online"),
+                                Showcased = rdr.GetBooleanColumn("showcased"),
                             };
                             result = Maybe.Create(pattern);
                         }

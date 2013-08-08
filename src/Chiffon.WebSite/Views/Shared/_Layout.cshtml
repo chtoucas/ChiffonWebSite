@@ -28,14 +28,14 @@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
-    <li><a href="/" id=nav_home>Home</a></li>
+    <li>@Html.ActionLink("Home", "Index", "Home", null, new { id = "nav_home" })</li>
     <li class=sep>/</li>
-    <li><a href="/blog" id=nav_blog target=_blank>Blog</a></li>
+    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog target=_blank>Blog</a></li>
     <li class=sep>/</li>
-    <li><a href="/informations" id=nav_info>Info</a></li>
+    <li>@Html.ActionLink("Info", "About", "Home", null, new { id = "nav_info" })</li>
     <li class=sep>/</li>
-    <li><a href="/contact" id=nav_contact>Contact</a></li>
-    <li class=right><a href="/newsletter" id=nav_newsletter rel=modal>Newsletter</a></li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { id = "nav_contact" })</li>
+    <li class=right>@Html.ActionLink("Newsletter", "Newsletter", "Home", null, new { id = "nav_newsletter" })</li>
    </ul>
   </nav>
  </header>

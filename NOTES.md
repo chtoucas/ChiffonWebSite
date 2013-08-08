@@ -19,6 +19,9 @@ Custom ViewPageBase
 Custom MemberShip/Role
 AntiXSS
 
+http://imageresizing.net/docs/best-practices
+http://mvcauthorization.codeplex.com/
+
 PreCompilation
 https://github.com/sayedihashimi/slow-cheetah/issues/50
 

@@ -21,5 +21,11 @@
         {
             return View("~/Views/Home/Contact.cshtml");
         }
+
+        [HttpGet]
+        public ActionResult Newsletter()
+        {
+            return View("~/Views/Home/Contact.cshtml");
+        }
     }
 }
