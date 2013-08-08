@@ -10,7 +10,7 @@
     {
         IEnumerable<Pattern> GetShowcasedPatterns();
 
-        Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
-            DesignerKey designerKey, string reference, PatternSize size);
+        //Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
+        //    DesignerKey designerKey, string reference, PatternSize size);
     }
 }

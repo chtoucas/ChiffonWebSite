@@ -56,38 +56,38 @@
             return patterns;
         }
 
-        public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
-            DesignerKey designerKey, string reference, PatternSize size)
-        {
-            var result = Maybe<Pattern>.None;
+        //public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
+        //    DesignerKey designerKey, string reference, PatternSize size)
+        //{
+        //    var result = Maybe<Pattern>.None;
 
-            using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_GetPattern";
-                    cmd.Connection = cnx;
-                    cmd.CommandType = CommandType.StoredProcedure;
+        //    using (var cnx = _sqlHelper.CreateConnection()) {
+        //        using (var cmd = new SqlCommand()) {
+        //            cmd.CommandText = "usp_GetPattern";
+        //            cmd.Connection = cnx;
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@reference", SqlDbType.NVarChar).Value = reference;
-                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Key;
+        //            SqlParameterCollection p = cmd.Parameters;
+        //            p.Add("@reference", SqlDbType.NVarChar).Value = reference;
+        //            p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Key;
 
-                    cnx.Open();
+        //            cnx.Open();
 
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        if (rdr.Read()) {
-                            var pattern = new Pattern(new PatternId(designerKey, reference)) {
-                                //CreationTime = rdr.GetDateTimeColumn("creation_time"),
-                                Preferred = rdr.GetBooleanColumn("preferred"),
-                                Published = rdr.GetBooleanColumn("online"),
-                                Showcased = rdr.GetBooleanColumn("showcased"),
-                            };
-                            result = Maybe.Create(pattern);
-                        }
-                    }
-                }
-            }
+        //            using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
+        //                if (rdr.Read()) {
+        //                    var pattern = new Pattern(new PatternId(designerKey, reference)) {
+        //                        //CreationTime = rdr.GetDateTimeColumn("creation_time"),
+        //                        Preferred = rdr.GetBooleanColumn("preferred"),
+        //                        Published = rdr.GetBooleanColumn("online"),
+        //                        Showcased = rdr.GetBooleanColumn("showcased"),
+        //                    };
+        //                    result = Maybe.Create(pattern);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return result.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
-        }
+        //    return result.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+        //}
     }
 }
