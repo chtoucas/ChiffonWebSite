@@ -1,66 +1,87 @@
 ﻿namespace Chiffon.Crosscuttings
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
+    using System.Globalization;
     using System.Linq;
     using Narvalo;
     using Narvalo.Collections;
 
     public class ChiffonConfig
     {
-        ChiffonConfig()
+        const string SettingPrefix_ = "chiffon.";
+        const string SqlConnectionStringName_ = "SqlServer";
+
+        bool _debugCss = false;
+        bool _debugJs = false;
+
+        public Uri BaseUri { get; set; }
+        public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
+        public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
+        public string PatternDirectory { get; set; }
+        public string SqlConnectionString { get; set; }
+
+        public static ChiffonConfig FromConfiguration()
         {
-            LoadAndInitialize_(
-                ConfigurationManager.AppSettings
-                .AllKeys.Select(k => Tuple.Create(k, ConfigurationManager.AppSettings[k])));
+            return (new ChiffonConfig()).Load();
         }
 
-        public Uri BaseUri { get; private set; }
-        public bool DebugCss { get; private set; }
-        public bool DebugJs { get; private set; }
-        public string PatternDirectory { get; private set; }
-
-        public static ChiffonConfig Create()
+        public ChiffonConfig Load()
         {
-            return new ChiffonConfig();
+            LoadSettings_(ConfigurationManager.AppSettings);
+            LoadConnectionStrings_(ConfigurationManager.ConnectionStrings);
+
+            return this;
         }
 
-        void LoadAndInitialize_(IEnumerable<Tuple<string, string>> values)
+        void LoadSettings_(NameValueCollection settings)
         {
-            NameValueCollection settings
-                = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
+            var chiffonKeys = settings.AllKeys
+                .Where(_ => _.StartsWith(SettingPrefix_, StringComparison.InvariantCultureIgnoreCase));
 
-            foreach (var setting in values) {
-                if (setting.Item1.StartsWith("chiffon.", StringComparison.InvariantCultureIgnoreCase)) {
-                    settings[setting.Item1] = setting.Item2;
-                }
+            var chiffonSettings = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
+
+            foreach (var key in chiffonKeys) {
+                chiffonSettings[key] = settings[key];
             }
 
-            Initialize_(settings);
+            Initialize_(chiffonSettings);
         }
 
-        // TODO: cf. PatternImageHandler for a simple way of doing things.
-        void Initialize_(NameValueCollection settings)
+        void LoadConnectionStrings_(ConnectionStringSettingsCollection connections)
+        {
+            ConnectionStringSettings connection = connections[SqlConnectionStringName_];
+
+            if (connection == null) {
+                throw new ConfigurationErrorsException(
+                    String.Format(CultureInfo.InvariantCulture,
+                        "The {0} connection is not defined in your config file!",
+                        SqlConnectionStringName_));
+            }
+
+            SqlConnectionString = connection.ConnectionString;
+        }
+
+        void Initialize_(NameValueCollection nvc)
         {
             // > Paramètres obligatoires <
 
-            BaseUri = settings.MayParseValue("chiffon.baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
+            BaseUri = nvc.MayParseValue("chiffon.baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon.baseUri'."));
 
-            // TODO: validate this, absolute and well-formed.
-            PatternDirectory = settings.MayGetValue("chiffon.patternDirectory")
+            // TODO: validate this? Absolute and well-formed.
+            PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon.patternDirectory'."));
 
             // > Paramètres optionels <
 
-            DebugJs = settings.MayParseValue("chiffon.debugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugJs = nvc.MayParseValue("chiffon.debugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
-            DebugCss = settings.MayParseValue("chiffon.debugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugCss = nvc.MayParseValue("chiffon.debugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
         }
     }

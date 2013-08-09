@@ -5,14 +5,14 @@
 
     public class DbHelper
     {
-        readonly ChiffonConnectionStrings _connectionStrings;
+        readonly ChiffonConfig _config;
 
-        public DbHelper(ChiffonConnectionStrings connectionStrings)
+        public DbHelper(ChiffonConfig config)
         {
-            _connectionStrings = connectionStrings;
+            _config = config;
         }
 
-        protected string ConnectionString { get { return _connectionStrings.ConnectionString; } }
+        protected string ConnectionString { get { return _config.SqlConnectionString; } }
 
         public SqlConnection CreateConnection()
         {

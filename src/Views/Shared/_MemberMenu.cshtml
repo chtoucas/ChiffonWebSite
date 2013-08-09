@@ -1,8 +1,10 @@
-﻿<nav id=nav_members class=clr>
+﻿@using Chiffon.Entities
+
+<nav id=nav_members class=clr>
  <ul class="serif strike inline">
-  <li><a href="@Url.SecureAction("Index", "Member", new { designer = "chicamancha" })" id=nav_members_cm>Chicamancha</a></li>
-  <li><a href="@Url.SecureAction("Index", "Member", new { designer = "viviane-devaux" })" id=nav_members_vd>Viviane Devaux</a></li>
-  <li><a href="@Url.SecureAction("Index", "Member", new { designer = "christine-legeret" })" id=nav_members_cl>Christine Légeret</a></li>
-  <li class=last><a href="@Url.SecureAction("Index", "Member", new { designer = "laure-roussel" })" id=nav_members_lr>Laure Roussel</a></li>
+  <li><a href="@Url.Member(DesignerKey.Chicamancha)" id=nav_members_cm rel="@ViewBag.ModalClass">Chicamancha</a></li>
+  <li><a href="@Url.Member(DesignerKey.VivianeDevaux)" id=nav_members_vd rel="@ViewBag.ModalClass">Viviane Devaux</a></li>
+  <li><a href="@Url.Member(DesignerKey.ChristineLégeret)" id=nav_members_cl rel="@ViewBag.ModalClass">Christine Légeret</a></li>
+  <li class=last><a href="@Url.Member(DesignerKey.LaureRoussel)" id=nav_members_lr rel="@ViewBag.ModalClass">Laure Roussel</a></li>
  </ul>
 </nav>

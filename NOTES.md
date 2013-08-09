@@ -21,6 +21,7 @@ AntiXSS
 
 http://imageresizing.net/docs/best-practices
 http://mvcauthorization.codeplex.com/
+http://www.asp.net/mvc/overview/getting-started/aspnet-mvc-content-map#global
 
 PreCompilation
 https://github.com/sayedihashimi/slow-cheetah/issues/50
@@ -28,6 +29,13 @@ https://github.com/sayedihashimi/slow-cheetah/issues/50
 http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
 http://stackoverflow.com/questions/372865/path-combine-for-urls
 http://stackoverflow.com/questions/4925468/combine-relative-baseuri-with-relative-path
+
+ErrorLog
+http://blog.leansentry.com/2013/07/the-server-logs-you-need-to-know-to-fix-any-iis-aspnet-error/
+
+I18N
+http://www.asp.net/mvc/overview/internationalization
+http://afana.me/post/aspnet-mvc-internationalization.aspx
 
 Rewrite
 =======

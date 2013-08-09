@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Chiffon.ViewModels.PatternPreviewViewModel>
+
+<ul class="mosaic shadow len_100 clr">
+ @foreach (var preview in @Model) {
+  <li><a href="@Url.Pattern(preview.DesignerKey, preview.Reference)" rel="@ViewBag.ModalClass" class="vignette @preview.CssClass">
+   <img src="@Url.PatternPreview(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /></a></li>
+ }
+</ul>

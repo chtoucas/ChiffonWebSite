@@ -7,7 +7,7 @@
     public struct DesignerKey : IEquatable<DesignerKey>
     {
         public static readonly DesignerKey Chicamancha = new DesignerKey("chicamancha");
-        public static readonly DesignerKey ChristineLegeret = new DesignerKey("christine-legeret");
+        public static readonly DesignerKey ChristineLégeret = new DesignerKey("christine-legeret");
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
@@ -31,7 +31,7 @@
                 case "viviane-devaux":
                     return Maybe.Create(VivianeDevaux);
                 case "christine-legeret":
-                    return Maybe.Create(ChristineLegeret);
+                    return Maybe.Create(ChristineLégeret);
                 case "laure-roussel":
                     return Maybe.Create(LaureRoussel);
                 default:

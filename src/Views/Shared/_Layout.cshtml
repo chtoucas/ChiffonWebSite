@@ -16,7 +16,7 @@
  @*HTML5 fix for IE*@
  @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
 </head>
-<body id="@ViewBag.Id">
+<body id="@ViewBag.BodyId">
  <header>
   <h1>Le collectif <strong>Pour quel motif, Simone ?</strong> présente sa collection <em>AH14/15</em></h1>
   <nav id=nav_lang class=clr>
@@ -28,14 +28,14 @@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
-    <li><a href="@Url.Action("Index", "Home")" id=nav_home>Home</a></li>
+    <li><a href="@Url.Action("Index", MVC.Home.Name)" id=nav_home>Home</a></li>
     <li class=sep>/</li>
     <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog target=_blank>Blog</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.Action("About", "Home")" id=nav_info>Info</a></li>
+    <li><a href="@Url.Action("About", MVC.Home.Name)" id=nav_info>Info</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.Action("Contact", "Home")" id=nav_contact>Contact</a></li>
-    <li class=right><a href="@Url.Action("Newsletter", "Home")" id=nav_newsletter>Newsletter</a></li>
+    <li><a href="@Url.Action("Contact", MVC.Home.Name)" id=nav_contact>Contact</a></li>
+    <li class=right><a href="@Url.Action("Newsletter", MVC.Home.Name)" id=nav_newsletter>Newsletter</a></li>
    </ul>
   </nav>
  </header>

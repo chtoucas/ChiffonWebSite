@@ -4,7 +4,7 @@
     using System.Web.Mvc;
     using Chiffon.Crosscuttings;
 
-    public class WidgetController : Controller
+    public partial class WidgetController : Controller
     {
         readonly ChiffonConfig _config;
 
@@ -14,14 +14,14 @@
         }
 
         [ChildActionOnly]
-        public PartialViewResult MemberMenu()
+        public virtual PartialViewResult MemberMenu()
         {
             return PartialView("~/Views/Shared/_MemberMenu.cshtml");
         }
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public PartialViewResult CommonJavaScript()
+        public virtual PartialViewResult CommonJavaScript()
         {
             return _config.DebugJs
                 ? PartialView("~/Views/Widget/Debug/JavaScript.cshtml")
@@ -30,7 +30,7 @@
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public PartialViewResult CommonStylesheet()
+        public virtual PartialViewResult CommonStylesheet()
         {
             return _config.DebugCss
                 ? PartialView("~/Views/Widget/Debug/Stylesheet.cshtml")

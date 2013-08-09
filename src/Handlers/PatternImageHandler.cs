@@ -3,8 +3,10 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Globalization;
     using System.Net;
     using System.Web;
+    using System.Web.Caching;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Chiffon.Crosscuttings;
@@ -18,6 +20,9 @@
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
     {
+        const int CacheExpirationInMinutes_ = 30;
+
+        static object Lock_ = new Object();
         // Mise en cache pour une journée.
         static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
         // Mise en cache pour 30 minutes.
@@ -65,7 +70,7 @@
         {
             var response = context.Response;
 
-            var result_ = MayGetImage(query.DesignerKey, query.Reference, query.Size);
+            var result_ = MayGetImage_(context, query.DesignerKey, query.Reference, query.Size);
             if (result_.IsNone) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
@@ -98,15 +103,47 @@
             response.TransmitFile(_fileSystem.GetPath(image));
         }
 
+        string GetCacheKey_(DesignerKey designerKey, string reference)
+        {
+            return String.Format(CultureInfo.InvariantCulture, "image_{0}_{1}", designerKey.ToString(), reference);
+        }
 
-        public Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage(
-            DesignerKey designerKey, string reference, PatternSize size)
+        Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage_(
+            HttpContext context, DesignerKey designerKey, string reference, PatternSize size)
+        {
+            var pattern = Maybe<Pattern>.None;
+
+            var cache = context.Cache;
+            var cacheKey = GetCacheKey_(designerKey, reference);
+            var cacheValue = cache[cacheKey] as Pattern;
+
+            if (cacheValue == null) {
+                pattern = LoadPattern_(designerKey, reference);
+
+                if (pattern.IsSome) {
+                    lock (Lock_) {
+                        if (cache[cacheKey] == null) {
+                            cache.Add(cacheKey, pattern.Value, null, 
+                                DateTime.Now.AddMinutes(CacheExpirationInMinutes_),
+                                Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                        }
+                    }
+                }
+            }
+            else {
+                pattern = Maybe.Create(cacheValue);
+            }
+
+            return pattern.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+        }
+
+        Maybe<Pattern> LoadPattern_(DesignerKey designerKey, string reference)
         {
             var result = Maybe<Pattern>.None;
 
             using (var cnx = _dbHelper.CreateConnection()) {
                 using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_GetPattern";
+                    cmd.CommandText = "usp_getPattern";
                     cmd.Connection = cnx;
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -124,13 +161,14 @@
                                 Published = rdr.GetBooleanColumn("online"),
                                 Showcased = rdr.GetBooleanColumn("showcased"),
                             };
+
                             result = Maybe.Create(pattern);
                         }
                     }
                 }
             }
 
-            return result.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+            return result;
         }
     }
 }
