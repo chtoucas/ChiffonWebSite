@@ -49,6 +49,8 @@
                 }
             }
 
+            MarkForIndexation();
+
             return View(ViewName.Home.Index, model);
         }
 
@@ -56,6 +58,8 @@
         [BodyId("about")]
         public virtual ActionResult About()
         {
+            MarkForIndexation();
+
             return View(ViewName.Home.About);
         }
 
@@ -63,6 +67,8 @@
         [BodyId("contact")]
         public virtual ActionResult Contact()
         {
+            MarkForIndexation();
+
             return View(ViewName.Home.Contact);
         }
 
@@ -70,6 +76,8 @@
         [BodyId("newsletter")]
         public virtual ActionResult Newsletter()
         {
+            MarkForIndexation();
+
             return View(ViewName.Home.Newsletter);
         }
     }

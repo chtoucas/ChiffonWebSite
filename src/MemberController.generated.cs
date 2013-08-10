@@ -22,13 +22,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace Chiffon.Controllers
 {
-    public partial class MemberController
+    public partial class DesignerController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public MemberController() { }
+        public DesignerController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected MemberController(Dummy d) { }
+        protected DesignerController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -52,7 +52,7 @@ namespace Chiffon.Controllers
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public MemberController Actions { get { return MVC.Member; } }
+        public DesignerController Actions { get { return MVC.Member; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
@@ -101,7 +101,7 @@ namespace Chiffon.Controllers
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_MemberController : Chiffon.Controllers.MemberController
+    public partial class T4MVC_MemberController : Chiffon.Controllers.DesignerController
     {
         public T4MVC_MemberController() : base(Dummy.Instance) { }
 

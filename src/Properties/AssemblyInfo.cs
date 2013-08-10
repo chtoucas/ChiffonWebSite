@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using Chiffon;
 using WebActivatorEx;
@@ -11,6 +12,7 @@ using WebActivatorEx;
 [assembly: AssemblyCopyright("Copyright © 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("fr-FR")]
 
 [assembly: ComVisible(false)]
 

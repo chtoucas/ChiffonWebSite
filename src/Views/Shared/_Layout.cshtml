@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang=fr>
+<html lang="@ViewBag.Language">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,7 +8,7 @@
  <meta name=description content="@ViewBag.Description" />
  <meta name=keywords content="@ViewBag.Keywords" />
  <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
- <meta name=robots content="index, follow" />
+ <meta name=robots content="@ViewBag.Robots" />
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>
  <link rel=canonical href="http://127.0.0.1:8080/"/>*@
@@ -28,9 +28,9 @@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
-    <li><a href="@Url.Action("Index", MVC.Home.Name)" id=nav_home>Home</a></li>
+    <li><a href="@Url.Action("Index", MVC.Home.Name)" id=nav_home>@Chiffon.Resources.Views.Shared.Home</a></li>
     <li class=sep>/</li>
-    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog target=_blank>Blog</a></li>
+    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>Blog</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.Action("About", MVC.Home.Name)" id=nav_info>Info</a></li>
     <li class=sep>/</li>
@@ -43,11 +43,7 @@
   @RenderBody()
  </div>
  <footer class=grey>
-  <p id=legal>
-   Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations
-   et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute
-   image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.
-  </p>
+  <p id=legal>@Html.Raw(@Chiffon.Resources.Views.Shared.Disclaimer)</p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
  @{Html.RenderAction("CommonJavaScript", "Widget");}

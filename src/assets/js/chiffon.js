@@ -106,7 +106,8 @@
 
       $('A[rel=modal]').click(function(e) {
         e.preventDefault();
-        chiffon.ui.modal.register.show();
+        console.log(0);
+        //chiffon.ui.modal.register.show();
 
         //var $this = $(this);
 
@@ -118,11 +119,10 @@
           , url: this.href
           , success: function(data) {
             //console.log($('#content', data).length);
-            chiffon.ui.overlay.show();
+            console.log(data);
+            //chiffon.ui.overlay.show();
           }
         });
-
-
       });
     }
   };

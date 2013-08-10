@@ -2,8 +2,11 @@
 {
     using System;
     using System.Globalization;
+    using System.Web;
+    using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Entities;
+    using Chiffon.Resources;
 
     public class PatternPreviewViewModel
     {
@@ -13,12 +16,12 @@
 
         public string CssClass { get { return CssUtility.Designer(DesignerKey); } }
 
-        public string Description
+        public IHtmlString Description
         {
             get
             {
-                return String.Format(CultureInfo.CurrentCulture, 
-                    "Motif textile, référence n°{0}, par {1}", Reference, DesignerName);
+                return MvcHtmlString.Create(String.Format(CultureInfo.CurrentCulture,
+                    SR.PatternDescriptionFormat, Reference, DesignerName));
             }
         }
 

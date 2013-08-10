@@ -34,8 +34,19 @@ ErrorLog
 http://blog.leansentry.com/2013/07/the-server-logs-you-need-to-know-to-fix-any-iis-aspnet-error/
 
 I18N
+https://github.com/Code52/aspnet-internationalization
 http://www.asp.net/mvc/overview/internationalization
 http://afana.me/post/aspnet-mvc-internationalization.aspx
+http://blogs.msdn.com/b/ddietric/archive/2008/02/05/yacvcp-yet-another-currentculture-vs-currentuiculture-post.aspx
+http://odetocode.com/Blogs/scott/archive/2009/07/16/resource-files-and-asp-net-mvc-projects.aspx
+http://www.hanselman.com/blog/GlobalizationInternationalizationAndLocalizationInASPNETMVC3JavaScriptAndJQueryPart1.aspx
+http://rdonfack.developpez.com/tutoriels/dotnet/internationalisation-application-asp-net-mvc-3-razor/
+http://stackoverflow.com/questions/1875368/best-practice-for-asp-net-mvc-resource-files
+Atributes... https://gist.github.com/anurse/4036121
+http://stackoverflow.com/questions/3924861/stop-the-tag-builder-escaping-single-quotes-asp-net-mvc-2
+
+SEO
+http://stackoverflow.com/questions/4263568/asp-net-mvc-strategy-for-including-seo-information-such-as-meta-keywords-and-d
 
 Rewrite
 =======

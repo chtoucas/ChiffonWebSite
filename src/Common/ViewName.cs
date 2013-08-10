@@ -9,21 +9,25 @@
                 Index = "~/Views/Home/Index.cshtml",
                 About = "~/Views/Home/About.cshtml",
                 Contact = "~/Views/Home/Contact.cshtml",
-                Newsletter = "~/Views/Home/Newsletter.cshtml";
+                Newsletter = "~/Views/Home/Newsletter.cshtml"
+                ;
         }
 
         // AccountController.
         public static class Account
         {
             public const string
-                Register = "~/Views/Account/Register.cshtml";
+                Register = "~/Views/Account/Register.cshtml"
+                ;
         }
 
-        // MemberController.
-        public static class Member
+        // DesignerController.
+        public static class Designer
         {
             public const string
-                Index = "~/Views/Member/Register.cshtml";
+                Index = "~/Views/Member/Index.cshtml",
+                Pattern = "~/Views/Member/Pattern.cshtml"
+                ;
         }
 
         // Shared views.
@@ -31,7 +35,8 @@
         {
             public const string
                 MemberMenu = "~/Views/Shared/_MemberMenu.cshtml",
-                PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml";
+                PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml"
+                ;
         }
     }
 }

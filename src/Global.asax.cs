@@ -1,14 +1,15 @@
 ﻿namespace Chiffon
 {
     using System;
+    using System.Globalization;
     using System.Net;
+    using System.Threading;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Diagnostics;
     using Narvalo.Web;
@@ -63,6 +64,8 @@
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         static ILogger Logger_ = Logger.Create(typeof(Global));
+        //static CultureInfo DefaultCultureInfo = new CultureInfo("fr-FR");
+        static CultureInfo EnglishCultureInfo = new CultureInfo("en-US");
 
         public Global()
             : base()
@@ -160,14 +163,24 @@
 
         #region Événements
 
-        //protected void Application_BeginRequest(object sender, EventArgs e)
-        //{
-        //    using (var fakePage = new Page()) {
-        //        var ignored = fakePage.Server;
-        //        fakePage.Culture = "auto:fr-FR";
-        //        fakePage.UICulture = "auto:fr-FR";
-        //    }
-        //}
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var app = (HttpApplication)sender;
+
+            if (app.Request.Url.Host == "en.pourquelmotifsimone.com") {
+                Thread.CurrentThread.CurrentUICulture = EnglishCultureInfo;
+                Thread.CurrentThread.CurrentCulture = EnglishCultureInfo;
+            }
+            //else {
+            //    SelectCulture_("fr-FR");
+            //}
+
+            //using (var fakePage = new Page()) {
+            //    var ignored = fakePage.Server;
+            //    fakePage.Culture = "auto:fr-FR";
+            //    fakePage.UICulture = "auto:fr-FR";
+            //}
+        }
 
         //protected void Application_EndRequest(object sender, EventArgs e)
         //{
@@ -250,6 +263,15 @@
                 Logger_.Log(level, messageFactory);
             }
         }
+
+        //static void SelectCulture_(string cultureName)
+        //{
+        //    var cultureInfo = new CultureInfo(cultureName);
+
+        //    Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        //    // Pour le formattage des dates & co.
+        //    Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureInfo.Name);
+        //}
 
         static void SetResponseStatus_(HttpApplication app, HttpStatusCode statusCode)
         {

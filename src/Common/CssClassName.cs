@@ -6,8 +6,7 @@
             Chicamancha = "cm",
             VivianeDevaux = "vd",
             LaureRoussel = "lr",
-            ChristineLégeret = "cl",
-            
-            Modal = "modal";
+            ChristineLégeret = "cl"
+            ;
     }
 }
