@@ -86,14 +86,5 @@ namespace Chiffon.Resources {
                 return ResourceManager.GetString("PatternDescriptionFormat", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
     }
 }

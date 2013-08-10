@@ -4,7 +4,6 @@
     using System.Security.Principal;
     using System.Threading;
     using System.Web.Mvc;
-    using Chiffon.Common;
     using Chiffon.Resources;
 
     public abstract class BaseController : Controller
@@ -20,7 +19,7 @@
         {
             base.OnActionExecuted(filterContext);
 
-            ViewBag.Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;;
+            ViewBag.Language = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;;
             ViewBag.RegisterLink = Identity.IsAuthenticated ? String.Empty : "modal nofollow";
 
             // > SEO <

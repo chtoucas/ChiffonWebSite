@@ -169,7 +169,9 @@
     <Compile Include="Common\BodyIdAttribute.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
-    <Compile Include="Common\RawAttributeHttpEncoder.cs" />
+    <Compile Include="Common\RawHttpEncoder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
     <Compile Include="Common\ViewName.cs" />
@@ -233,15 +235,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Views\Shared.en-US.Designer.cs">
-      <DependentUpon>Shared.en-US.resx</DependentUpon>
+    <Compile Include="Resources\SharedVR.en-US.Designer.cs">
+      <DependentUpon>SharedVR.en-US.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\Views\Shared.Designer.cs">
+    <Compile Include="Resources\SharedVR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Shared.resx</DependentUpon>
+      <DependentUpon>SharedVR.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="SharedController.generated.cs">
@@ -360,13 +362,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Views\Shared.en-US.resx">
+    <EmbeddedResource Include="Resources\SharedVR.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Shared.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>SharedVR.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Views\Shared.resx">
+    <EmbeddedResource Include="Resources\SharedVR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Shared.Designer.cs</LastGenOutput>
+      <LastGenOutput>SharedVR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

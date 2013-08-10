@@ -104,12 +104,11 @@
       //$.get('modal/register.html', function(data) { $modal.html(data); });
       //$modal.appendTo('BODY');
 
-      $('A[rel=modal]').click(function(e) {
+      // FIXME: contient modal pas =.
+      $('A[rel~=modal]').click(function(e) {
         e.preventDefault();
-        console.log(0);
-        //chiffon.ui.modal.register.show();
 
-        //var $this = $(this);
+        chiffon.ui.modal.register.show();
 
         // TODO: Use the Deferred jqXHR?
         $.ajax({
@@ -118,9 +117,9 @@
           , dataType: 'html'
           , url: this.href
           , success: function(data) {
-            //console.log($('#content', data).length);
-            console.log(data);
-            //chiffon.ui.overlay.show();
+            var response = $('<html />').html(data);
+            $('.register').html(response.find('#content').html());
+            chiffon.ui.overlay.show();
           }
         });
       });

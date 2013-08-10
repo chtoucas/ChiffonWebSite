@@ -63,9 +63,9 @@
     {
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        static readonly CultureInfo EnglishCultureInfo_ = new CultureInfo("en-US");
+
         static ILogger Logger_ = Logger.Create(typeof(Global));
-        //static CultureInfo DefaultCultureInfo = new CultureInfo("fr-FR");
-        static CultureInfo EnglishCultureInfo = new CultureInfo("en-US");
 
         public Global()
             : base()
@@ -167,28 +167,13 @@
         {
             var app = (HttpApplication)sender;
 
-            if (app.Request.Url.Host == "en.pourquelmotifsimone.com") {
-                Thread.CurrentThread.CurrentUICulture = EnglishCultureInfo;
-                Thread.CurrentThread.CurrentCulture = EnglishCultureInfo;
+            if (app.Request.Url.Host.StartsWith("en.")) {
+                // Culture utilisée par ResourceManager.
+                Thread.CurrentThread.CurrentUICulture = EnglishCultureInfo_;
+                // Culture utilisée par System.Globalization.
+                Thread.CurrentThread.CurrentCulture = EnglishCultureInfo_;
             }
-            //else {
-            //    SelectCulture_("fr-FR");
-            //}
-
-            //using (var fakePage = new Page()) {
-            //    var ignored = fakePage.Server;
-            //    fakePage.Culture = "auto:fr-FR";
-            //    fakePage.UICulture = "auto:fr-FR";
-            //}
         }
-
-        //protected void Application_EndRequest(object sender, EventArgs e)
-        //{
-        //    // Dispose Request specific Autofac container
-        //    ContainerProvider.EndRequestLifetime();
-        //    // or
-        //    ContainerProvider.DisposeRequestContainer();
-        //}
 
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
@@ -263,15 +248,6 @@
                 Logger_.Log(level, messageFactory);
             }
         }
-
-        //static void SelectCulture_(string cultureName)
-        //{
-        //    var cultureInfo = new CultureInfo(cultureName);
-
-        //    Thread.CurrentThread.CurrentUICulture = cultureInfo;
-        //    // Pour le formattage des dates & co.
-        //    Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureInfo.Name);
-        //}
 
         static void SetResponseStatus_(HttpApplication app, HttpStatusCode statusCode)
         {

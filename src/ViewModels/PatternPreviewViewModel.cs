@@ -3,7 +3,6 @@
     using System;
     using System.Globalization;
     using System.Web;
-    using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Resources;
@@ -20,7 +19,7 @@
         {
             get
             {
-                return MvcHtmlString.Create(String.Format(CultureInfo.CurrentCulture,
+                return new HtmlString(String.Format(CultureInfo.CurrentCulture,
                     SR.PatternDescriptionFormat, Reference, DesignerName));
             }
         }

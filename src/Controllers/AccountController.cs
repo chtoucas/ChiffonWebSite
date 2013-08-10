@@ -14,6 +14,7 @@
 
         [AllowAnonymous]
         [ChildActionOnly]
+        [HttpGet]
         public virtual ActionResult ModalRegister()
         {
             return PartialView(ViewName.Account.Register);

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chiffon.Resources.Views {
+namespace Chiffon.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Chiffon.Resources.Views {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Shared {
+    public class SharedVR {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Shared() {
+        internal SharedVR() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Chiffon.Resources.Views {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chiffon.Resources.Views.Shared", typeof(Shared).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chiffon.Resources.SharedVR", typeof(SharedVR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,24 +61,6 @@ namespace Chiffon.Resources.Views {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blog.
-        /// </summary>
-        public static string Blog {
-            get {
-                return ResourceManager.GetString("Blog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Contact.
-        /// </summary>
-        public static string Contact {
-            get {
-                return ResourceManager.GetString("Contact", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite..
         /// </summary>
         public static string Disclaimer {
@@ -88,29 +70,56 @@ namespace Chiffon.Resources.Views {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Blog.
+        /// </summary>
+        public static string MainNav_Blog {
+            get {
+                return ResourceManager.GetString("MainNav_Blog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Contact.
+        /// </summary>
+        public static string MainNav_Contact {
+            get {
+                return ResourceManager.GetString("MainNav_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Accueil.
         /// </summary>
-        public static string Home {
+        public static string MainNav_Home {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("MainNav_Home", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Info.
         /// </summary>
-        public static string Info {
+        public static string MainNav_Info {
             get {
-                return ResourceManager.GetString("Info", resourceCulture);
+                return ResourceManager.GetString("MainNav_Info", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Newsletter.
         /// </summary>
-        public static string Newsletter {
+        public static string MainNav_Newsletter {
             get {
-                return ResourceManager.GetString("Newsletter", resourceCulture);
+                return ResourceManager.GetString("MainNav_Newsletter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Le collectif &lt;strong&gt;Pour quel motif, Simone ?&lt;/strong&gt; présente sa collection &lt;em&gt;AH14/15&lt;/em&gt;.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }
