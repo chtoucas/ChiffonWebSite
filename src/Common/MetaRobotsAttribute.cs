@@ -3,11 +3,11 @@
     using System.Web.Mvc;
     using Narvalo;
 
-    public sealed class BodyIdAttribute : ActionFilterAttribute
+    public sealed class MetaRobotsAttribute : ActionFilterAttribute
     {
         readonly string _value;
 
-        public BodyIdAttribute(string value)
+        public MetaRobotsAttribute(string value)
         {
             Requires.NotNullOrEmpty(value, "value");
 
@@ -18,7 +18,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.Controller.ViewData["BodyId"] = Value;
+            filterContext.Controller.ViewData["Robots"] = "index, follow";
         }
     }
 }

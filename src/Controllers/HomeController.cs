@@ -24,6 +24,7 @@
 
         [HttpGet]
         [BodyId("home")]
+        [MetaRobots(IndexAndFollow)]
         public virtual ActionResult Index()
         {
             var model = new List<PatternPreviewViewModel>();
@@ -49,36 +50,35 @@
                 }
             }
 
-            MarkForIndexation();
+            // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
+            // Cf. http://blog.muonlab.com/2011/11/27/simplistic-canonical-linking-in-asp-net-mvc/
+            ViewBag.CanonicalLink = Url.Action("Index", MVC.Home.Name, null /* routeValues */, "http", null);
 
-            return View(ViewName.Home.Index, model);
+            return View(ViewPath.Home.Index, model);
         }
 
         [HttpGet]
         [BodyId("about")]
+        [MetaRobots(IndexAndFollow)]
         public virtual ActionResult About()
         {
-            MarkForIndexation();
-
-            return View(ViewName.Home.About);
+            return View(ViewPath.Home.About);
         }
 
         [HttpGet]
         [BodyId("contact")]
+        [MetaRobots(IndexAndFollow)]
         public virtual ActionResult Contact()
         {
-            MarkForIndexation();
-
-            return View(ViewName.Home.Contact);
+            return View(ViewPath.Home.Contact);
         }
 
         [HttpGet]
         [BodyId("newsletter")]
+        [MetaRobots(IndexAndFollow)]
         public virtual ActionResult Newsletter()
         {
-            MarkForIndexation();
-
-            return View(ViewName.Home.Newsletter);
+            return View(ViewPath.Home.Newsletter);
         }
     }
 }

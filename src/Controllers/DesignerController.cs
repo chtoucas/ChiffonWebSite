@@ -16,13 +16,13 @@
         [HttpGet]
         public virtual ActionResult Index(string designer)
         {
-            return View(ViewName.Designer.Index);
+            return View(ViewPath.Designer.Index);
         }
 
         [HttpGet]
         public virtual ActionResult Pattern(string designer, string reference)
         {
-            return View(ViewName.Designer.Pattern);
+            return View(ViewPath.Designer.Pattern);
         }
     }
 }

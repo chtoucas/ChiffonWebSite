@@ -8,6 +8,8 @@
 
     public abstract class BaseController : Controller
     {
+        protected const string IndexAndFollow = "index, follow";
+
         const string DefaultMetaRobots_ = "noindex, nofollow";
 
         protected IIdentity Identity
@@ -15,6 +17,7 @@
             get { return User.Identity; }
         }
 
+        // TODO: log !
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             base.OnActionExecuted(filterContext);
@@ -36,11 +39,6 @@
             if (String.IsNullOrEmpty(ViewBag.Robots)) {
                 ViewBag.Robots = DefaultMetaRobots_;
             }
-        }
-
-        protected void MarkForIndexation()
-        {
-            ViewBag.Robots = "index, follow";
         }
     }
 }

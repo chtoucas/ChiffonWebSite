@@ -60,9 +60,6 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Elmah.Mvc">
-      <HintPath>..\packages\Elmah.MVC.2.1.1\lib\net40\Elmah.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Glimpse.AspNet">
       <HintPath>..\packages\Glimpse.AspNet.1.4.0\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -169,15 +166,22 @@
     <Compile Include="Common\BodyIdAttribute.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
+    <Compile Include="Common\MetaRobotsAttribute.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
-    <Compile Include="Common\ViewName.cs" />
+    <Compile Include="Common\ViewPath.cs" />
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Crosscuttings\Logger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Crosscuttings\NoopLoggerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -187,8 +191,6 @@
     <Compile Include="Common\JpegResizer.cs" />
     <Compile Include="Common\UrlNormalizer.cs" />
     <Compile Include="Crosscuttings\ChiffonConfig.cs" />
-    <Compile Include="Crosscuttings\Logger.cs" />
-    <Compile Include="Crosscuttings\NoopLoggerFactory.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\CategoryKey.cs" />
     <Compile Include="Entities\Designer.cs" />

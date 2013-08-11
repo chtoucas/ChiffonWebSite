@@ -10,8 +10,8 @@
  <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
  <meta name=robots content="@ViewBag.Robots" />
  <meta name=viewport content="width=device-width, initial-scale=1" />
- @*<base href="/"/>
- <link rel=canonical href="http://127.0.0.1:8080/"/>*@
+ @*<base href="/"/>*@
+ <link rel=canonical href="@ViewBag.CanonicalLink"/>
  @{Html.RenderAction("CommonStylesheet", "Widget");}
  @*HTML5 fix for IE*@
  @* <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@

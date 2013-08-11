@@ -9,7 +9,7 @@
         [HttpGet]
         public virtual ActionResult Register()
         {
-            return View(ViewName.Account.Register);
+            return View(ViewPath.Account.Register);
         }
 
         [AllowAnonymous]
@@ -17,7 +17,7 @@
         [HttpGet]
         public virtual ActionResult ModalRegister()
         {
-            return PartialView(ViewName.Account.Register);
+            return PartialView(ViewPath.Account.Register);
         }
     }
 }

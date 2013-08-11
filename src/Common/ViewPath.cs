@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Common
 {
-    public static class ViewName
+    public static class ViewPath
     {
         // HomeController
         public static class Home

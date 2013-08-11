@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Common
 {
     using System;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Chiffon.Entities;
@@ -43,5 +44,25 @@
             }
         }
 
+        //public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
+        //{
+        //    return self.Action(actionName, controllerName, routeValues, self.RequestContext.HttpContext.Request.Url.Scheme);
+        //}
+
+        //public static string AbsoluteContent(this UrlHelper self, string path)
+        //{
+        //    Uri uri = new Uri(path, UriKind.RelativeOrAbsolute);
+
+        //    //If the URI is not already absolute, rebuild it based on the current request.
+        //    if (!uri.IsAbsoluteUri) {
+        //        Uri requestUrl = self.RequestContext.HttpContext.Request.Url;
+        //        UriBuilder builder = new UriBuilder(requestUrl.Scheme, requestUrl.Host, requestUrl.Port);
+
+        //        builder.Path = VirtualPathUtility.ToAbsolute(path);
+        //        uri = builder.Uri;
+        //    }
+
+        //    return uri.ToString();
+        //}
     }
 }
