@@ -10,9 +10,8 @@
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
-    using Narvalo;
-    using Narvalo.Diagnostics;
     using Narvalo.Web;
+    using Serilog;
 
     /// <summary>
     /// Au cours de son cycle de vie, l'application déclenche des événements que vous pouvez 
@@ -65,7 +64,7 @@
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         static readonly CultureInfo EnglishCultureInfo_ = new CultureInfo("en-US");
 
-        static ILogger Logger_ = Logger.Create(typeof(Global));
+        static ILogger Logger_;
 
         public Global()
             : base()
@@ -123,7 +122,9 @@
         /// <param name="e"></param>
         protected void Application_Start()
         {
-            Log_(LoggerLevel.Informational, () => { return "Application starting."; });
+            Logger_ = Log.ForContext<Global>();
+
+            Logger_.Information("Application starting.");
 
             // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -147,7 +148,7 @@
         /// <param name="e"></param>
         protected void Application_End(object sender, EventArgs e)
         {
-            Log_(LoggerLevel.Informational, () => { return "Application ending."; });
+            Logger_.Information("Application ending.");
         }
 
         #endregion
@@ -182,7 +183,7 @@
         /// <param name="e"></param>
         protected void Application_Disposed(object sender, EventArgs e)
         {
-            Log_(LoggerLevel.Informational, () => { return "Application disposed."; });
+            Logger_.Information("Application disposed.");
         }
 
         /// <summary>
@@ -199,7 +200,7 @@
             var ex = server.GetLastError();
             if (ex == null) {
                 // En théorie, cela ne devrait jamais se produire.
-                Log_(LoggerLevel.Critical, () => "An unknown error occured.");
+                Log.Fatal("XXX");
                 return;
             }
 
@@ -207,47 +208,31 @@
 
             switch (err) {
                 case UnhandledErrorType.InvalidViewState:
-                    Log_(LoggerLevel.Warning, ex);
+                    Logger_.Warning(ex, "XXX");
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.ServiceUnavailable);
                     break;
 
                 case UnhandledErrorType.PotentiallyDangerousForm:
                 case UnhandledErrorType.PotentiallyDangerousPath:
-                    Log_(LoggerLevel.Warning, ex);
+                    Logger_.Warning(ex, "XXX");
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.NotFound);
                     break;
 
                 case UnhandledErrorType.NotFound:
                     // NB: on laisse IIS prendre en charge ce type d'erreur.
-                    Log_(LoggerLevel.Debug, ex);
+                    Logger_.Debug(ex, "XXX");
                     break;
 
                 case UnhandledErrorType.Unknown:
                 default:
-                    Log_(LoggerLevel.Critical, ex);
+                    Logger_.Fatal(ex, "XXX");
                     break;
             }
         }
 
         #endregion
-
-        static void Log_(LoggerLevel level, Exception ex)
-        {
-            if (Logger_ != null) {
-                Logger_.Log(level, ex);
-            }
-        }
-
-        static void Log_(LoggerLevel level, Func<string> messageFactory)
-        {
-            Requires.NotNull(messageFactory, "messageFactory");
-
-            if (Logger_ != null) {
-                Logger_.Log(level, messageFactory);
-            }
-        }
 
         static void SetResponseStatus_(HttpApplication app, HttpStatusCode statusCode)
         {

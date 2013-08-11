@@ -85,6 +85,12 @@
     <Reference Include="NodaTime">
       <HintPath>..\packages\NodaTime.1.1.0\lib\net35-Client\NodaTime.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog">
+      <HintPath>..\packages\Serilog.0.8.5\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx">
+      <HintPath>..\packages\Serilog.0.8.5\lib\net45\Serilog.FullNetFx.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -163,25 +169,21 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Common\BodyIdAttribute.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
-    <Compile Include="Common\MetaRobotsAttribute.cs" />
+    <Compile Include="Common\HtmlAttribute.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\RobotsDirectiveBuilder.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
+    <Compile Include="Common\SeoPolicyAttribute.cs" />
     <Compile Include="Common\ViewPath.cs" />
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Crosscuttings\Logger.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Crosscuttings\NoopLoggerFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Common\ControllerBase%24.cs" />
+    <Compile Include="Crosscuttings\LogConfigurator.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -305,6 +307,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\Logs\" />
     <Folder Include="Filters\" />
   </ItemGroup>

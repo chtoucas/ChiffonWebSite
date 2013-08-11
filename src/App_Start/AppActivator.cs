@@ -1,6 +1,7 @@
 ﻿namespace Chiffon
 {
     using System.Web.Mvc;
+    using Chiffon.Crosscuttings;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 
@@ -8,8 +9,8 @@
     {
         public static void PreStart()
         {
-            // Configuration de log4net.
-            //log4net.Config.XmlConfigurator.Configure();
+            // Configuration du logger.
+            LogConfigurator.Configure();
 
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();

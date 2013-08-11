@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using Chiffon.Common;
 
-    public partial class AccountController : BaseController
+    public partial class AccountController : Controller
     {
         [AllowAnonymous]
         [HttpGet]

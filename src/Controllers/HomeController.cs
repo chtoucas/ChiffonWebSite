@@ -11,7 +11,8 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public partial class HomeController : BaseController
+    [SeoPolicy(RobotsDirective = "index, follow")]
+    public partial class HomeController : Controller
     {
         DbHelper _dbHelper;
 
@@ -23,8 +24,7 @@
         }
 
         [HttpGet]
-        [BodyId("home")]
-        [MetaRobots(IndexAndFollow)]
+        [Html("home")]
         public virtual ActionResult Index()
         {
             var model = new List<PatternPreviewViewModel>();
@@ -51,31 +51,28 @@
             }
 
             // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
-            // Cf. http://blog.muonlab.com/2011/11/27/simplistic-canonical-linking-in-asp-net-mvc/
+            // & https://github.com/schourode/canonicalize
             ViewBag.CanonicalLink = Url.Action("Index", MVC.Home.Name, null /* routeValues */, "http", null);
 
             return View(ViewPath.Home.Index, model);
         }
 
         [HttpGet]
-        [BodyId("about")]
-        [MetaRobots(IndexAndFollow)]
+        [Html("about")]
         public virtual ActionResult About()
         {
             return View(ViewPath.Home.About);
         }
 
         [HttpGet]
-        [BodyId("contact")]
-        [MetaRobots(IndexAndFollow)]
+        [Html("contact")]
         public virtual ActionResult Contact()
         {
             return View(ViewPath.Home.Contact);
         }
 
         [HttpGet]
-        [BodyId("newsletter")]
-        [MetaRobots(IndexAndFollow)]
+        [Html("newsletter")]
         public virtual ActionResult Newsletter()
         {
             return View(ViewPath.Home.Newsletter);

@@ -11,7 +11,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public partial class DesignerController : BaseController
+    public partial class DesignerController : Controller
     {
         [HttpGet]
         public virtual ActionResult Index(string designer)
