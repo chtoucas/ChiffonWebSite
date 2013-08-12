@@ -16,13 +16,19 @@
         [HttpGet]
         public virtual ActionResult Index(string designer)
         {
-            return View(ViewPath.Designer.Index);
+            return View(ViewPath.Index);
         }
 
         [HttpGet]
         public virtual ActionResult Pattern(string designer, string reference)
         {
-            return View(ViewPath.Designer.Pattern);
+            return View(ViewPath.Pattern);
+        }
+
+        static class ViewPath
+        {
+            public const string Index = "~/Views/Member/Index.cshtml";
+            public const string Pattern = "~/Views/Member/Pattern.cshtml";
         }
     }
 }

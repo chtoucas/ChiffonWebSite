@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using System;
     using System.Collections.Generic;

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
-    using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
 
     public partial class WidgetController : Controller
     {
@@ -35,6 +35,12 @@
             return _config.DebugCss
                 ? PartialView("~/Views/Widget/Debug/Stylesheet.cshtml")
                 : PartialView("~/Views/Widget/Release/Stylesheet.cshtml");
+        }
+
+        static class ViewPath
+        {
+            public const string MemberMenu = "~/Views/Shared/_MemberMenu.cshtml";
+            public const string PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml";
         }
     }
 }

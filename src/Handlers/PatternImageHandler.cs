@@ -9,7 +9,6 @@
     using System.Web.Caching;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Chiffon.Crosscuttings;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;

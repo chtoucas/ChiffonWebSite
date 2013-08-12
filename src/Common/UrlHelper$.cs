@@ -42,8 +42,13 @@
                 return originalUrl;
             }
             else {
-                return self.Action(MVC.Account.ActionNames.Register, MVC.Account.Name, new { returnUrl = originalUrl });
+                return self.Action(MVC.Account.Register(returnUrl: originalUrl));
             }
+        }
+
+        public static string Current(this UrlHelper self)
+        {
+            return self.RequestContext.HttpContext.Request.RawUrl;
         }
 
         public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, object routeValues)

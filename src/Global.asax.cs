@@ -7,9 +7,6 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Autofac;
-    using Autofac.Integration.Mvc;
-    using Chiffon.Crosscuttings;
     using Narvalo.Web;
     using Serilog;
 
@@ -63,8 +60,6 @@
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         static readonly CultureInfo EnglishCultureInfo_ = new CultureInfo("en-US");
-
-        static ILogger Logger_;
 
         //public Global()
         //    : base()
@@ -122,9 +117,7 @@
         /// <param name="e"></param>
         protected void Application_Start()
         {
-            Logger_ = Log.ForContext<Global>();
-
-            Logger_.Information("Application starting.");
+            Log.Information("Application starting.");
 
             // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -141,7 +134,7 @@
         /// <param name="e"></param>
         protected void Application_End(object sender, EventArgs e)
         {
-            Logger_.Information("Application ending.");
+            Log.Information("Application ending.");
         }
 
         #endregion
@@ -176,7 +169,7 @@
         /// <param name="e"></param>
         protected void Application_Disposed(object sender, EventArgs e)
         {
-            Logger_.Information("Application disposed.");
+            Log.Information("Application disposed.");
         }
 
         /// <summary>
@@ -200,26 +193,26 @@
 
             switch (err) {
                 case UnhandledErrorType.InvalidViewState:
-                    Logger_.Warning(ex, ex.Message);
+                    Log.Warning(ex, ex.Message);
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.ServiceUnavailable);
                     break;
 
                 case UnhandledErrorType.PotentiallyDangerousForm:
                 case UnhandledErrorType.PotentiallyDangerousPath:
-                    Logger_.Warning(ex, ex.Message);
+                    Log.Warning(ex, ex.Message);
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.NotFound);
                     break;
 
                 case UnhandledErrorType.NotFound:
                     // NB: on laisse IIS prendre en charge ce type d'erreur.
-                    Logger_.Debug(ex, ex.Message);
+                    Log.Debug(ex, ex.Message);
                     break;
 
                 case UnhandledErrorType.Unknown:
                 default:
-                    Logger_.Fatal(ex, ex.Message);
+                    Log.Fatal(ex, ex.Message);
                     break;
             }
         }

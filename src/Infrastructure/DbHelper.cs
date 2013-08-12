@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System.Data.SqlClient;
-    using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
 
     public class DbHelper
     {

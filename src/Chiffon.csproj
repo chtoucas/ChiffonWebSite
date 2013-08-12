@@ -179,21 +179,20 @@
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
     <Compile Include="Common\SeoPolicyAttribute.cs" />
-    <Compile Include="Common\ViewPath.cs" />
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Common\ControllerBase%24.cs" />
-    <Compile Include="Crosscuttings\DevelopmentLogService.cs" />
-    <Compile Include="Crosscuttings\HttpRequestEnricher.cs" />
-    <Compile Include="Crosscuttings\ILogService.cs" />
-    <Compile Include="Crosscuttings\LogConfigurator.cs" />
-    <Compile Include="Crosscuttings\ProductionLogService.cs" />
-    <Compile Include="Crosscuttings\ChiffonModule.cs" />
+    <Compile Include="Infrastructure\DevelopmentLogService.cs" />
+    <Compile Include="Infrastructure\HttpRequestEnricher.cs" />
+    <Compile Include="Infrastructure\ILogService.cs" />
+    <Compile Include="Infrastructure\LogConfigurator.cs" />
+    <Compile Include="Infrastructure\ProductionLogService.cs" />
+    <Compile Include="Infrastructure\ChiffonModule.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\JpegResizer.cs" />
-    <Compile Include="Crosscuttings\ChiffonConfig.cs" />
-    <Compile Include="Crosscuttings\SqlServerSink.cs" />
+    <Compile Include="Infrastructure\ChiffonConfig.cs" />
+    <Compile Include="Infrastructure\SqlServerSink.cs" />
     <Compile Include="DesignerController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -206,7 +205,7 @@
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
     <Compile Include="Entities\Visit.cs" />
-    <Compile Include="Crosscuttings\GlimpseSecurityPolicy.cs" />
+    <Compile Include="Infrastructure\GlimpseSecurityPolicy.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Controllers\AccountController.cs" />

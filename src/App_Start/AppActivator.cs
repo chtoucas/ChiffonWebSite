@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 
@@ -14,15 +14,15 @@
             // Chargement de la configuration.
             var config = ChiffonConfig.FromConfiguration();
 
-            // Résolution des dépendances.
+            // Résolution des dépendances (Autofac).
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ChiffonModule(config));
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            // Configuration du logger.
-            LogConfigurator.Configure(config);
+            // Configuration du logger (Serilog).
+            (new LogConfigurator(config)).Configure();
 
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();

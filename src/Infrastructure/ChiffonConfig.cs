@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using System;
     using System.Collections.Specialized;
@@ -20,7 +20,7 @@
         //public Uri BaseUri { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
-        public string LogConfig { get; set; }
+        public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
         public string PatternDirectory { get; set; }
         public string SqlConnectionString { get; set; }
@@ -79,9 +79,9 @@
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon.patternDirectory'."));
 
-            LogConfig = nvc.MayGetValue("chiffon.logConfig")
+            LogProfile = nvc.MayGetValue("chiffon.logProfile")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.logConfig'."));
+                    "Missing or invalid config 'chiffon.logProfile'."));
 
             LogMinimumLevel = nvc.MayParseValue("chiffon.logMinimumLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
                 .ValueOrThrow(() => new ConfigurationErrorsException(

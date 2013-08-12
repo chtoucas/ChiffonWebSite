@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using Autofac;
     using Autofac.Integration.Mvc;

@@ -1,14 +1,19 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using System.ComponentModel.Composition.Hosting;
+    using Narvalo;
     using Serilog;
     //using Serilog.Web;
 
-    public static class LogConfigurator
+    public class LogConfigurator
     {
-        public static void Configure(ChiffonConfig config)
+        readonly ChiffonConfig _config;
+
+        public LogConfigurator(ChiffonConfig config)
         {
-            ConfigureSerilog_(config);
+            Requires.NotNull(config, "config");
+
+            _config = config;
         }
 
         // Configuration de Serilog.
@@ -16,7 +21,7 @@
         // à l'exécution. Pistes à explorer :
         // - utiliser les facilités offertes par App_Code, vraiment pas sûr que cela marche ;
         // - utiliser MEF.
-        static void ConfigureSerilog_(ChiffonConfig config)
+        public void Configure()
         {
             // Si Serilog.Web est installé, ajouter la ligne suivante :
             //ApplicationLifecycleModule.IsEnabled = false;
@@ -25,15 +30,15 @@
 
             using (var catalog = new AssemblyCatalog(typeof(Global).Assembly)) {
                 using (var container = new CompositionContainer(catalog)) {
-                    svc = container.GetExportedValue<ILogService>(config.LogConfig);
+                    svc = container.GetExportedValue<ILogService>(_config.LogProfile);
                 }
             }
 
-            Log.Logger = svc.GetLogger(config.LogMinimumLevel);
+            Log.Logger = svc.GetLogger(_config.LogMinimumLevel);
         }
 
         //// Configuration de log4net.
-        //static void ConfigureLog4net_()
+        //public void Configure()
         //{
         //    log4net.Config.XmlConfigurator.Configure();
         //}

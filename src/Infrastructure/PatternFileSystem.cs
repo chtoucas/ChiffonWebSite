@@ -2,7 +2,7 @@
 {
     using System;
     using System.IO;
-    using Chiffon.Crosscuttings;
+    using Chiffon.Infrastructure;
 
     public class PatternFileSystem
     {

@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using Serilog;
     using Serilog.Events;

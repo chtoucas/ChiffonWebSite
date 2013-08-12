@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Crosscuttings
+﻿namespace Chiffon.Infrastructure
 {
     using System.ComponentModel.Composition;
     using Serilog;
