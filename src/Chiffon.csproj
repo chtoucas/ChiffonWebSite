@@ -92,6 +92,7 @@
       <HintPath>..\packages\Serilog.0.8.5\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
@@ -183,7 +184,11 @@
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Common\ControllerBase%24.cs" />
-    <Compile Include="Crosscuttings\LogConfigurator.cs" />
+    <Compile Include="Crosscuttings\Logging\DevelLoggerFactory.cs" />
+    <Compile Include="Crosscuttings\Logging\ILoggerFactory.cs" />
+    <Compile Include="Crosscuttings\Logging\LogConfigurator.cs" />
+    <Compile Include="Crosscuttings\Logging\LoggerConfiguration%24.cs" />
+    <Compile Include="Crosscuttings\Logging\ProdLoggerFactory.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

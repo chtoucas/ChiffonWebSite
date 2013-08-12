@@ -7,6 +7,7 @@
     using System.Linq;
     using Narvalo;
     using Narvalo.Collections;
+    using Serilog.Events;
 
     public class ChiffonConfig
     {
@@ -19,6 +20,8 @@
         public Uri BaseUri { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
+        public LogEventLevel LoggerLevel { get; set; }
+        public string LoggerName { get; set; }
         public string PatternDirectory { get; set; }
         public string SqlConnectionString { get; set; }
 
@@ -75,6 +78,14 @@
             PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon.patternDirectory'."));
+
+            LoggerName = nvc.MayGetValue("chiffon.loggerName")
+                .ValueOrThrow(() => new ConfigurationErrorsException(
+                    "Missing or invalid config 'chiffon.loggerName'."));
+
+            LoggerLevel = nvc.MayParseValue("chiffon.loggerLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
+                .ValueOrThrow(() => new ConfigurationErrorsException(
+                    "Missing or invalid config 'chiffon.loggerLevel'."));
 
             // > Paramètres optionels <
 

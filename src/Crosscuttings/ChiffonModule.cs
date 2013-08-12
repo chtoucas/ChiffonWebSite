@@ -8,21 +8,27 @@
 
     public class ChiffonModule : Module
     {
-        public ChiffonModule() { }
+        readonly ChiffonConfig _config;
+
+        public ChiffonModule(ChiffonConfig config)
+        {
+            Requires.NotNull(config, "config");
+
+            _config = config;
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
             Requires.NotNull(builder, "builder");
 
-            var config = ChiffonConfig.FromConfiguration();
-            var dbHelper = new DbHelper(config);
+            var dbHelper = new DbHelper(_config);
 
-            builder.Register(_ => config).AsSelf().SingleInstance();
+            builder.Register(_ => _config).AsSelf().SingleInstance();
             builder.Register(_ => dbHelper).AsSelf().SingleInstance();
 
             builder.RegisterControllers(typeof(Global).Assembly);
 
-            builder.Register(_ => new PatternImageHandler(config, dbHelper)).AsSelf().SingleInstance();
+            builder.Register(_ => new PatternImageHandler(_config, dbHelper)).AsSelf().SingleInstance();
         }
     }
 }

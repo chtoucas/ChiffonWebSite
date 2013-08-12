@@ -132,13 +132,6 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             // WebApi.
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
-
-            // Résolution des dépendances.
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new ChiffonModule());
-            var container = builder.Build();
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
 
         /// <summary>
@@ -200,7 +193,6 @@
             var ex = server.GetLastError();
             if (ex == null) {
                 // En théorie, cela ne devrait jamais se produire.
-                Log.Fatal("XXX");
                 return;
             }
 
@@ -208,26 +200,26 @@
 
             switch (err) {
                 case UnhandledErrorType.InvalidViewState:
-                    Logger_.Warning(ex, "XXX");
+                    Logger_.Warning(ex, ex.Message);
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.ServiceUnavailable);
                     break;
 
                 case UnhandledErrorType.PotentiallyDangerousForm:
                 case UnhandledErrorType.PotentiallyDangerousPath:
-                    Logger_.Warning(ex, "XXX");
+                    Logger_.Warning(ex, ex.Message);
                     server.ClearError();
                     SetResponseStatus_(app, HttpStatusCode.NotFound);
                     break;
 
                 case UnhandledErrorType.NotFound:
                     // NB: on laisse IIS prendre en charge ce type d'erreur.
-                    Logger_.Debug(ex, "XXX");
+                    Logger_.Debug(ex, ex.Message);
                     break;
 
                 case UnhandledErrorType.Unknown:
                 default:
-                    Logger_.Fatal(ex, "XXX");
+                    Logger_.Fatal(ex, ex.Message);
                     break;
             }
         }

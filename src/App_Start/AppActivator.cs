@@ -1,7 +1,10 @@
 ﻿namespace Chiffon
 {
     using System.Web.Mvc;
+    using Autofac;
+    using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
+    using Chiffon.Crosscuttings.Logging;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 
@@ -9,8 +12,18 @@
     {
         public static void PreStart()
         {
+            // Chargement de la configuration.
+            var config = ChiffonConfig.FromConfiguration();
+
+            // Résolution des dépendances.
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new ChiffonModule(config));
+            var container = builder.Build();
+
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
             // Configuration du logger.
-            LogConfigurator.Configure();
+            LogConfigurator.Configure(config);
 
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();
