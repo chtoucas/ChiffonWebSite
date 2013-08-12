@@ -178,6 +178,10 @@
     <Compile Include="Common\RobotsDirectiveBuilder.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
+    <Compile Include="Common\Routing\RouteCollection%24.cs" />
+    <Compile Include="Common\Routing\RouteValueTranslation.cs" />
+    <Compile Include="Common\Routing\RouteValueTranslator.cs" />
+    <Compile Include="Common\Routing\LocalizedRoute.cs" />
     <Compile Include="Common\SeoPolicyAttribute.cs" />
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
@@ -346,6 +350,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\Routing\README.md" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <Content Include="Views\Shared\_PatternPreviewsGrid.cshtml" />
     <Content Include="Views\Home\Newsletter.cshtml" />

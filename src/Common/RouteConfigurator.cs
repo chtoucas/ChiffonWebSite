@@ -1,6 +1,8 @@
 ﻿namespace Chiffon.Common
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Chiffon.Handlers;
@@ -32,7 +34,20 @@
             _routes.MapRoute(RouteName.Newsletter, "newsletter", new { controller = MVC.Home.Name, action = "Newsletter" });
 
             // AccountController.
-            _routes.MapRoute(RouteName.Register, "inscription", new { controller = MVC.Account.Name, action = "Register" });
+            //var englishCultureInfo_ = CultureInfo.GetCultureInfo("en-US");
+            //var frenchCultureInfo_ = CultureInfo.GetCultureInfo("fr-FR");
+
+            //var translationProvider = new DictionaryRouteValueTranslationProvider(
+            //    new List<RouteValueTranslation> {
+            //        new RouteValueTranslation(englishCultureInfo_, RouteName.Register, "register"),
+            //        new RouteValueTranslation(frenchCultureInfo_, RouteName.Register, "inscription"),
+            //    }
+            //);
+
+            _routes.MapRoute(RouteName.Register, "inscription",
+                new { controller = MVC.Account.Name, action = "Register" }
+                //, new { controller = translationProvider, action = translationProvider }
+                );
 
             // DesignerController.
             _routes.MapRoute(RouteName.Chicamancha, "chicamancha", new { controller = MVC.Designer.Name, action = "Index", designer = "chicamancha" });

@@ -42,7 +42,8 @@
                 return originalUrl;
             }
             else {
-                return self.Action(MVC.Account.Register(returnUrl: originalUrl));
+                //return self.Action(MVC.Account.Register(returnUrl: originalUrl));
+                return self.Action(MVC.Account.ActionNames.Register, MVC.Account.Name, new { returnUrl = originalUrl });
             }
         }
 

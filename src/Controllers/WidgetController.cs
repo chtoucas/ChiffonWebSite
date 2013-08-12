@@ -16,7 +16,7 @@
         [ChildActionOnly]
         public virtual PartialViewResult MemberMenu()
         {
-            return PartialView("~/Views/Shared/_MemberMenu.cshtml");
+            return PartialView(ViewPath.MemberMenu);
         }
 
         [ChildActionOnly]
@@ -37,7 +37,7 @@
                 : PartialView("~/Views/Widget/Release/Stylesheet.cshtml");
         }
 
-        static class ViewPath
+        public static class ViewPath
         {
             public const string MemberMenu = "~/Views/Shared/_MemberMenu.cshtml";
             public const string PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml";
