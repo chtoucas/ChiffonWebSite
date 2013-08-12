@@ -44,6 +44,18 @@ namespace Chiffon.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Register()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ModalRegister()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ModalRegister);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AccountController Actions { get { return MVC.Account; } }
@@ -72,6 +84,22 @@ namespace Chiffon.Controllers
         }
 
 
+        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Register
+        {
+            public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_ModalRegister s_params_ModalRegister = new ActionParamsClass_ModalRegister();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ModalRegister ModalRegisterParams { get { return s_params_ModalRegister; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ModalRegister
+        {
+            public readonly string returnUrl = "returnUrl";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -93,21 +121,23 @@ namespace Chiffon.Controllers
     {
         public T4MVC_AccountController() : base(Dummy.Instance) { }
 
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl);
 
-        public override System.Web.Mvc.ActionResult Register()
+        public override System.Web.Mvc.ActionResult Register(string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            RegisterOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            RegisterOverride(callInfo, returnUrl);
             return callInfo;
         }
 
-        partial void ModalRegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void ModalRegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl);
 
-        public override System.Web.Mvc.ActionResult ModalRegister()
+        public override System.Web.Mvc.ActionResult ModalRegister(string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ModalRegister);
-            ModalRegisterOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            ModalRegisterOverride(callInfo, returnUrl);
             return callInfo;
         }
 

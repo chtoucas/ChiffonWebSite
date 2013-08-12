@@ -25,8 +25,8 @@ using T4MVC;
 public static class MVC
 {
     public static Chiffon.Controllers.AccountController Account = new Chiffon.Controllers.T4MVC_AccountController();
+    public static Chiffon.Controllers.DesignerController Designer = new Chiffon.Controllers.T4MVC_DesignerController();
     public static Chiffon.Controllers.HomeController Home = new Chiffon.Controllers.T4MVC_HomeController();
-    public static Chiffon.Controllers.DesignerController Member = new Chiffon.Controllers.T4MVC_MemberController();
     public static Chiffon.Controllers.WidgetController Widget = new Chiffon.Controllers.T4MVC_WidgetController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

@@ -8,14 +8,14 @@
 
     public static class UrlHelperExtensions
     {
-        public static string Member(this UrlHelper self, DesignerKey designerKey)
+        public static string Designer(this UrlHelper self, DesignerKey designerKey)
         {
-            return SecureAction(self, "Index", MVC.Member.Name, new { designer = designerKey.ToString() });
+            return SecureAction(self, MVC.Designer.ActionNames.Index, MVC.Designer.Name, new { designer = designerKey.ToString() });
         }
 
         public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
         {
-            return SecureAction(self, "Pattern", MVC.Member.Name, new { designer = designerKey.ToString(), reference = reference });
+            return SecureAction(self, MVC.Designer.ActionNames.Pattern, MVC.Designer.Name, new { designer = designerKey.ToString(), reference = reference });
         }
 
         public static string PatternPreview(this UrlHelper self, DesignerKey designerKey, string reference)
@@ -36,18 +36,27 @@
 
         public static string SecureAction(this UrlHelper self, string actionName, string controllerName, RouteValueDictionary routeValues)
         {
+            var originalUrl = self.Action(actionName, controllerName, routeValues);
+
             if (self.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
-                return self.Action(actionName, controllerName, routeValues);
+                return originalUrl;
             }
             else {
-                return self.Action(MVC.Account.Register());
+                return self.Action(MVC.Account.ActionNames.Register, MVC.Account.Name, new { returnUrl = originalUrl });
             }
         }
 
-        //public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
-        //{
-        //    return self.Action(actionName, controllerName, routeValues, self.RequestContext.HttpContext.Request.Url.Scheme);
-        //}
+        public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
+        {
+            var scheme = self.RequestContext.HttpContext.Request.Url.Scheme;
+            return self.Action(actionName, controllerName, routeValues, scheme);
+        }
+
+        public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, RouteValueDictionary routeValues)
+        {
+            var scheme = self.RequestContext.HttpContext.Request.Url.Scheme;
+            return self.Action(actionName, controllerName, routeValues, scheme);
+        }
 
         //public static string AbsoluteContent(this UrlHelper self, string path)
         //{

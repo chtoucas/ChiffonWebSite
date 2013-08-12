@@ -66,13 +66,13 @@
 
         static ILogger Logger_;
 
-        public Global()
-            : base()
-        {
-            // FIXME: est-ce vraiment nécessaire ?
-            Disposed += Application_Disposed;
-            Error += Application_Error;
-        }
+        //public Global()
+        //    : base()
+        //{
+        //    // FIXME: est-ce vraiment nécessaire ?
+        //    Disposed += Application_Disposed;
+        //    Error += Application_Error;
+        //}
 
         //        /// <summary>
         //        /// Retourne la Version de l'assemblée Chiffon.

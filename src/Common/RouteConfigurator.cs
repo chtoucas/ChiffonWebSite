@@ -34,11 +34,16 @@
             // AccountController.
             _routes.MapRoute(RouteName.Register, "inscription", new { controller = MVC.Account.Name, action = "Register" });
 
-            // MemberController.
-            _routes.MapRoute(RouteName.Chicamancha, "chicamancha/{action}", new { controller = MVC.Member.Name, action = "Index", designer = "chicamancha" });
-            _routes.MapRoute(RouteName.VivianeDevaux, "viviane-devaux/{action}", new { controller = MVC.Member.Name, action = "Index", designer = "viviane-devaux" });
-            _routes.MapRoute(RouteName.ChristineLégeret, "christine-legeret/{action}", new { controller = MVC.Member.Name, action = "Index", designer = "christine-legeret" });
-            _routes.MapRoute(RouteName.LaureRoussel, "laure-roussel/{action}", new { controller = MVC.Member.Name, action = "Index", designer = "laure-roussel" });
+            // DesignerController.
+            _routes.MapRoute(RouteName.Chicamancha, "chicamancha", new { controller = MVC.Designer.Name, action = "Index", designer = "chicamancha" });
+            _routes.MapRoute(RouteName.VivianeDevaux, "viviane-devaux", new { controller = MVC.Designer.Name, action = "Index", designer = "viviane-devaux" });
+            _routes.MapRoute(RouteName.ChristineLégeret, "christine-legeret", new { controller = MVC.Designer.Name, action = "Index", designer = "christine-legeret" });
+            _routes.MapRoute(RouteName.LaureRoussel, "laure-roussel", new { controller = MVC.Designer.Name, action = "Index", designer = "laure-roussel" });
+
+            _routes.MapRoute(RouteName.ChicamanchaPattern, "chicamancha/{reference}", new { controller = MVC.Designer.Name, action = "Pattern", designer = "chicamancha" });
+            _routes.MapRoute(RouteName.VivianeDevauxPattern, "viviane-devaux/{reference}", new { controller = MVC.Designer.Name, action = "Pattern", designer = "viviane-devaux" });
+            _routes.MapRoute(RouteName.ChristineLégeretPattern, "christine-legeret/{reference}", new { controller = MVC.Designer.Name, action = "Pattern", designer = "christine-legeret" });
+            _routes.MapRoute(RouteName.LaureRousselPattern, "laure-roussel/{reference}", new { controller = MVC.Designer.Name, action = "Pattern", designer = "laure-roussel" });
 
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 

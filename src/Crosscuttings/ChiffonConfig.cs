@@ -17,11 +17,11 @@
         bool _debugCss = false;
         bool _debugJs = false;
 
-        public Uri BaseUri { get; set; }
+        //public Uri BaseUri { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
-        public LogEventLevel LoggerLevel { get; set; }
-        public string LoggerName { get; set; }
+        public string LogConfig { get; set; }
+        public LogEventLevel LogMinimumLevel { get; set; }
         public string PatternDirectory { get; set; }
         public string SqlConnectionString { get; set; }
 
@@ -70,22 +70,22 @@
         {
             // > Paramètres obligatoires <
 
-            BaseUri = nvc.MayParseValue("chiffon.baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
-                .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.baseUri'."));
+            //BaseUri = nvc.MayParseValue("chiffon.baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
+            //    .ValueOrThrow(() => new ConfigurationErrorsException(
+            //        "Missing or invalid config 'chiffon.baseUri'."));
 
             // TODO: validate this? Absolute and well-formed.
             PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon.patternDirectory'."));
 
-            LoggerName = nvc.MayGetValue("chiffon.loggerName")
+            LogConfig = nvc.MayGetValue("chiffon.logConfig")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.loggerName'."));
+                    "Missing or invalid config 'chiffon.logConfig'."));
 
-            LoggerLevel = nvc.MayParseValue("chiffon.loggerLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
+            LogMinimumLevel = nvc.MayParseValue("chiffon.logMinimumLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.loggerLevel'."));
+                    "Missing or invalid config 'chiffon.logMinimumLevel'."));
 
             // > Paramètres optionels <
 

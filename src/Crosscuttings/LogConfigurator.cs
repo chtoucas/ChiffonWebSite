@@ -1,6 +1,5 @@
-﻿namespace Chiffon.Crosscuttings.Logging
+﻿namespace Chiffon.Crosscuttings
 {
-    using System.ComponentModel.Composition;
     using System.ComponentModel.Composition.Hosting;
     using Serilog;
     //using Serilog.Web;
@@ -21,24 +20,22 @@
         {
             // Si Serilog.Web est installé, ajouter la ligne suivante :
             //ApplicationLifecycleModule.IsEnabled = false;
-            
-            ILoggerFactory factory;
+
+            ILogService svc;
 
             using (var catalog = new AssemblyCatalog(typeof(Global).Assembly)) {
                 using (var container = new CompositionContainer(catalog)) {
-                    container.ComposeExportedValue<ChiffonConfig>("Config", config);
-
-                    factory = container.GetExportedValue<ILoggerFactory>(config.LoggerName);
+                    svc = container.GetExportedValue<ILogService>(config.LogConfig);
                 }
             }
 
-            Log.Logger = factory.CreateLogger();
+            Log.Logger = svc.GetLogger(config.LogMinimumLevel);
         }
 
-        // Configuration de log4net.
-        static void ConfigureLog4net_()
-        {
-            //log4net.Config.XmlConfigurator.Configure();
-        }
+        //// Configuration de log4net.
+        //static void ConfigureLog4net_()
+        //{
+        //    log4net.Config.XmlConfigurator.Configure();
+        //}
     }
 }

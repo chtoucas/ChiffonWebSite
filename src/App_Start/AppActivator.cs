@@ -4,7 +4,6 @@
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Crosscuttings;
-    using Chiffon.Crosscuttings.Logging;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 

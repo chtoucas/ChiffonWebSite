@@ -18,9 +18,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var viewData = filterContext.Controller.ViewData;
-
-            viewData["MetaRobots"] = RobotsDirective;
+            filterContext.Controller.ViewData["MetaRobots"] = RobotsDirective;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -28,6 +26,8 @@
             var viewBag = filterContext.Controller.ViewBag;
             var viewData = filterContext.Controller.ViewData;
 
+            // TODO: ajouter l'en-tête Canonical ?
+            // TODO: ajouter dynamiquement la balise meta ?
             __CheckCanonicalLink(filterContext);
 
             if (String.IsNullOrEmpty(viewBag.MetaDescription)) {
@@ -49,7 +49,7 @@
         {
             if (filterContext.HttpContext.IsDebuggingEnabled) {
                 if (String.IsNullOrEmpty(filterContext.Controller.ViewBag.CanonicalLink)) {
-                    __Log("No canonical liken given.");
+                    __Log("No canonical link given.");
                 }
             }
         }

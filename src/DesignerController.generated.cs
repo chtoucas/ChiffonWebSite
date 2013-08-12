@@ -50,15 +50,21 @@ namespace Chiffon.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Pattern()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Pattern);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public DesignerController Actions { get { return MVC.Member; } }
+        public DesignerController Actions { get { return MVC.Designer; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Member";
+        public readonly string Name = "Designer";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Member";
+        public const string NameConst = "Designer";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -67,12 +73,14 @@ namespace Chiffon.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Pattern = "Pattern";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Pattern = "Pattern";
         }
 
 
@@ -83,6 +91,15 @@ namespace Chiffon.Controllers
         public class ActionParamsClass_Index
         {
             public readonly string designer = "designer";
+        }
+        static readonly ActionParamsClass_Pattern s_params_Pattern = new ActionParamsClass_Pattern();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Pattern PatternParams { get { return s_params_Pattern; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Pattern
+        {
+            public readonly string designer = "designer";
+            public readonly string reference = "reference";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -96,14 +113,14 @@ namespace Chiffon.Controllers
             {
                 public readonly string Index = "Index";
             }
-            public readonly string Index = "~/Views/Member/Index.cshtml";
+            public readonly string Index = "~/Views/Designer/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_MemberController : Chiffon.Controllers.DesignerController
+    public partial class T4MVC_DesignerController : Chiffon.Controllers.DesignerController
     {
-        public T4MVC_MemberController() : base(Dummy.Instance) { }
+        public T4MVC_DesignerController() : base(Dummy.Instance) { }
 
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string designer);
 
@@ -112,6 +129,17 @@ namespace Chiffon.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "designer", designer);
             IndexOverride(callInfo, designer);
+            return callInfo;
+        }
+
+        partial void PatternOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string designer, string reference);
+
+        public override System.Web.Mvc.ActionResult Pattern(string designer, string reference)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Pattern);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "designer", designer);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "reference", reference);
+            PatternOverride(callInfo, designer, reference);
             return callInfo;
         }
 
