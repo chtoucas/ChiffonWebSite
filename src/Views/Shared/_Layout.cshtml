@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Chiffon.Common
+
+<!DOCTYPE html>
 <html lang="@ViewBag.Language">
 <head>
  <meta charset="utf-8" />
@@ -28,14 +30,14 @@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
-    <li><a href="@Url.Action("Index", "Home")" id=nav_home>@SharedVR.MainNav_Home</a></li>
+    <li><a href="@Url.RouteUrl(ViewName.Home.Index)" id=nav_home>@SharedVR.MainNav_Home</a></li>
     <li class=sep>/</li>
     <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@SharedVR.MainNav_Blog</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.Action("About", "Home")" id=nav_info>@SharedVR.MainNav_Info</a></li>
+    <li><a href="@Url.RouteUrl(ViewName.Home.About)" id=nav_info>@SharedVR.MainNav_Info</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.Action("Contact", "Home")" id=nav_contact>@SharedVR.MainNav_Contact</a></li>
-    <li class=right><a href="@Url.Action("Newsletter", "Home")" id=nav_newsletter>@SharedVR.MainNav_Newsletter</a></li>
+    <li><a href="@Url.RouteUrl(ViewName.Home.Contact)" id=nav_contact>@SharedVR.MainNav_Contact</a></li>
+    <li class=right><a href="@Url.RouteUrl(ViewName.Home.Newsletter)" id=nav_newsletter>@SharedVR.MainNav_Newsletter</a></li>
    </ul>
   </nav>
  </header>

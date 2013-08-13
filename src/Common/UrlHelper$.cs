@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Chiffon.Common;
     using Chiffon.Entities;
 
     public static class UrlHelperExtensions
@@ -41,7 +42,7 @@
                 return originalUrl;
             }
             else {
-                return self.Action("Register", "Account", new { returnUrl = originalUrl });
+                return self.RouteUrl(ViewName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 
