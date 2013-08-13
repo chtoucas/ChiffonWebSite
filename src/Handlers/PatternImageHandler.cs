@@ -23,7 +23,7 @@
 
         static object Lock_ = new Object();
         // Mise en cache pour une journée.
-        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
+        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(365, 0, 0, 0);
         // Mise en cache pour 30 minutes.
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
@@ -91,6 +91,7 @@
                     response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
+            // TODO: http://markusgreuel.net/blog/website-performance-with-asp-net-part4-use-cache-headers
             response.Clear();
             if (visibility == PatternVisibility.Public) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);

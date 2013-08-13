@@ -10,12 +10,12 @@
     {
         public static string Designer(this UrlHelper self, DesignerKey designerKey)
         {
-            return SecureAction(self, MVC.Designer.ActionNames.Index, MVC.Designer.Name, new { designer = designerKey.ToString() });
+            return SecureAction(self, "Index", "Designer", new { designer = designerKey.ToString() });
         }
 
         public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
         {
-            return SecureAction(self, MVC.Designer.ActionNames.Pattern, MVC.Designer.Name, new { designer = designerKey.ToString(), reference = reference });
+            return SecureAction(self, "Pattern", "Designer", new { designer = designerKey.ToString(), reference = reference });
         }
 
         public static string PatternPreview(this UrlHelper self, DesignerKey designerKey, string reference)
@@ -27,7 +27,6 @@
         {
             return self.Content(String.Format("~/{0}/motif-{1}.jpg", designerKey, reference));
         }
-
 
         public static string SecureAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
         {
@@ -42,8 +41,7 @@
                 return originalUrl;
             }
             else {
-                //return self.Action(MVC.Account.Register(returnUrl: originalUrl));
-                return self.Action(MVC.Account.ActionNames.Register, MVC.Account.Name, new { returnUrl = originalUrl });
+                return self.Action("Register", "Account", new { returnUrl = originalUrl });
             }
         }
 

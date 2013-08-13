@@ -150,6 +150,7 @@
 
         #region Événements
 
+        // WARNING: Cette méthode ne convient pas avec les contrôleurs asynchrones car on change de Thread.
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             var app = (HttpApplication)sender;

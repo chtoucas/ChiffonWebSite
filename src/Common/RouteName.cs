@@ -10,6 +10,7 @@
 
         // AccountController.
         public const string Register = "Account/Register";
+        //public const string Register_EN = "Account/Register{en}";
 
         // MemberController.
         public const string Chicamancha = "Member/Chicamancha";

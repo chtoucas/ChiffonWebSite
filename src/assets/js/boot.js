@@ -31,7 +31,7 @@ var getChiffon = (function(window) {
     , release: {
       jquery: 'vendor/jquery-1.10.2.min.js'
       , jquery2: 'vendor/jquery-2.0.3.min.js'
-      , main: ['chiffon-1.0.min.js']
+      , main: ['_.min.js']
     }
   };
 

@@ -1,5 +1,6 @@
-﻿namespace Narvalo.Common
+﻿namespace Chiffon.Common
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
@@ -9,27 +10,27 @@
     {
         public static LocalizedRoute MapLocalizedRoute(this RouteCollection routes,
             string name, string url, object defaults, 
-            IDictionary<CultureInfo, RouteValueTranslator> translators)
+            IDictionary<CultureInfo, String> localizedUrls)
         {
             var route = new LocalizedRoute(
                 url,
                 new RouteValueDictionary(defaults),
                 new MvcRouteHandler(),
-                translators);
+                localizedUrls);
             routes.Add(name, route);
             return route;
         }
 
         public static LocalizedRoute MapLocalizedRoute(this RouteCollection routes,
             string name, string url, object defaults, object constraints,
-            IDictionary<CultureInfo, RouteValueTranslator> translators)
+            IDictionary<CultureInfo, String> localizedUrls)
         {
             var route = new LocalizedRoute(
                 url,
                 new RouteValueDictionary(defaults),
                 new RouteValueDictionary(constraints),
                 new MvcRouteHandler(),
-                translators);
+                localizedUrls);
             routes.Add(name, route);
             return route;
         }

@@ -4,41 +4,41 @@
     using System.Globalization;
     using System.Linq;
 
-    public class RouteValueTranslator
+    public class RouteValueLocalizer
     {
-        public RouteValueTranslator(IList<LocalizedRouteValue> translations)
+        public RouteValueLocalizer(IList<LocalizedRouteValue> translations)
         {
-            Translations = translations;
+            LocalizedValues = translations;
         }
 
-        public IList<LocalizedRouteValue> Translations { get; private set; }
+        public IList<LocalizedRouteValue> LocalizedValues { get; private set; }
 
         public LocalizedRouteValue TranslateToRouteValue(string translatedValue, CultureInfo cultureInfo)
         {
             LocalizedRouteValue translation = null;
 
             // Find translation in specified CultureInfo
-            translation = Translations.Where(
-                t => t.TranslatedValue == translatedValue
-                    && (t.CultureInfo.ToString() == cultureInfo.ToString()
-                        || t.CultureInfo.ToString().Substring(0, 2) == cultureInfo.ToString().Substring(0, 2)))
-                .OrderByDescending(t => t.CultureInfo)
+            translation = LocalizedValues.Where(
+                t => t.LocalizedValue == translatedValue
+                    && (t.Culture.ToString() == cultureInfo.ToString()
+                        || t.Culture.ToString().Substring(0, 2) == cultureInfo.ToString().Substring(0, 2)))
+                .OrderByDescending(t => t.Culture)
                 .FirstOrDefault();
             if (translation != null) {
                 return translation;
             }
 
             // Find translation without taking account on CultureInfo
-            translation = Translations.Where(t => t.TranslatedValue == translatedValue).FirstOrDefault();
+            translation = LocalizedValues.Where(t => t.LocalizedValue == translatedValue).FirstOrDefault();
             if (translation != null) {
                 return translation;
             }
 
             // Return the current values
             return new LocalizedRouteValue {
-                CultureInfo = cultureInfo,
+                Culture = cultureInfo,
                 RouteValue = translatedValue,
-                TranslatedValue = translatedValue
+                LocalizedValue = translatedValue
             };
         }
 
@@ -47,11 +47,11 @@
             LocalizedRouteValue translation = null;
 
             // Find translation in specified CultureInfo
-            translation = Translations.Where(
+            translation = LocalizedValues.Where(
                 t => t.RouteValue == routeValue
-                    && (t.CultureInfo.ToString() == cultureInfo.ToString()
-                        || t.CultureInfo.ToString().Substring(0, 2) == cultureInfo.ToString().Substring(0, 2)))
-                .OrderByDescending(t => t.CultureInfo)
+                    && (t.Culture.ToString() == cultureInfo.ToString()
+                        || t.Culture.ToString().Substring(0, 2) == cultureInfo.ToString().Substring(0, 2)))
+                .OrderByDescending(t => t.Culture)
                 .FirstOrDefault();
 
             if (translation != null) {
@@ -59,16 +59,16 @@
             }
 
             // Find translation without taking account on CultureInfo
-            translation = Translations.Where(t => t.RouteValue == routeValue).FirstOrDefault();
+            translation = LocalizedValues.Where(t => t.RouteValue == routeValue).FirstOrDefault();
             if (translation != null) {
                 return translation;
             }
 
             // Return the current values
             return new LocalizedRouteValue {
-                CultureInfo = cultureInfo,
+                Culture = cultureInfo,
                 RouteValue = routeValue,
-                TranslatedValue = routeValue
+                LocalizedValue = routeValue
             };
         }
     }

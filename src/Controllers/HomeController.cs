@@ -52,7 +52,7 @@
 
             // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
             // & https://github.com/schourode/canonicalize
-            ViewBag.CanonicalLink = Url.Action("Index", MVC.Home.Name, null /* routeValues */, "http", null);
+            ViewBag.CanonicalLink = Url.Action("Index", "Home", null /* routeValues */, "http", null);
 
             return View(ViewPath.Index, model);
         }
