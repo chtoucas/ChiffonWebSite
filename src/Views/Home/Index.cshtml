@@ -1,8 +1,7 @@
 ﻿@using Chiffon.Common
-@using Chiffon.Controllers
 @using Chiffon.ViewModels
 
 @model IEnumerable<PatternPreviewViewModel>
 
-@Html.Partial(WidgetController.ViewPath.MemberMenu)
-@Html.Partial(WidgetController.ViewPath.PatternPreviewsGrid, Model)
+@Html.Partial(ViewName.Widget.MemberMenu)
+@Html.Partial(ViewName.Widget.PatternPreviewsGrid, Model)

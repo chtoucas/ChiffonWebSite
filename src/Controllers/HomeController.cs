@@ -54,36 +54,28 @@
             // & https://github.com/schourode/canonicalize
             ViewBag.CanonicalLink = Url.Action("Index", "Home", null /* routeValues */, "http", null);
 
-            return View(ViewPath.Index, model);
+            return View(ViewName.Home.Index, model);
         }
 
         [HttpGet]
         [Html("about")]
         public virtual ActionResult About()
         {
-            return View(ViewPath.About);
+            return View(ViewName.Home.About);
         }
 
         [HttpGet]
         [Html("contact")]
         public virtual ActionResult Contact()
         {
-            return View(ViewPath.Contact);
+            return View(ViewName.Home.Contact);
         }
 
         [HttpGet]
         [Html("newsletter")]
         public virtual ActionResult Newsletter()
         {
-            return View(ViewPath.Newsletter);
-        }
-
-        static class ViewPath
-        {
-            public const string Index = "~/Views/Home/Index.cshtml";
-            public const string About = "~/Views/Home/About.cshtml";
-            public const string Contact = "~/Views/Home/Contact.cshtml";
-            public const string Newsletter = "~/Views/Home/Newsletter.cshtml";
+            return View(ViewName.Home.Newsletter);
         }
     }
 }

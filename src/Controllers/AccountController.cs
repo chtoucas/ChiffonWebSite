@@ -9,7 +9,7 @@
         [HttpGet]
         public virtual ActionResult Register(string returnUrl)
         {
-            return View(ViewPath.Register);
+            return View(ViewName.Account.Register);
         }
 
         [AllowAnonymous]
@@ -17,13 +17,7 @@
         [HttpGet]
         public virtual ActionResult ModalRegister(string returnUrl)
         {
-            return PartialView(ViewPath.Register);
-        }
-
-        // AccountController.
-        static class ViewPath
-        {
-            public const string Register = "~/Views/Account/Register.cshtml";
+            return PartialView(ViewName.Account.Register);
         }
     }
 }

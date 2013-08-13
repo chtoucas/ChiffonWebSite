@@ -2,25 +2,41 @@
 {
     public static class RouteName
     {
-        // HomeController
-        public const string Home = "Home/Index";
-        public const string About = "Home/About";
-        public const string Contact = "Home/Contact";
-        public const string Newsletter = "Home/Newsletter";
+        // HomeController.
+        public static class Home
+        {
+            public const string Index = "Home/Index";
+            public const string About = "Home/About";
+            public const string Contact = "Home/Contact";
+            public const string Newsletter = "Home/Newsletter";
+        }
 
         // AccountController.
-        public const string Register = "Account/Register";
-        //public const string Register_EN = "Account/Register{en}";
+        public static class Account
+        {
+            public const string Register = "Account/Register";
+        }
 
-        // MemberController.
-        public const string Chicamancha = "Member/Chicamancha";
-        public const string VivianeDevaux = "Member/VivianeDevaux";
-        public const string LaureRoussel = "Member/LaureRoussel";
-        public const string ChristineLégeret = "Member/ChristineLegeret";
-
-        public const string ChicamanchaPattern = "Member/Pattern/Chicamancha";
-        public const string VivianeDevauxPattern = "Member/Pattern/VivianeDevaux";
-        public const string LaureRousselPattern = "Member/Pattern/LaureRoussel";
-        public const string ChristineLégeretPattern = "Member/Pattern/ChristineLegeret";
+        // DesignerController.
+        public static class Chicamancha
+        {
+            public const string Index = "Member/Chicamancha";
+            public const string Pattern = "Member/Chicamancha/Pattern";
+        }
+        public static class VivianeDevaux
+        {
+            public const string Index = "Member/VivianeDevaux";
+            public const string Pattern = "Member/VivianeDevaux/Pattern";
+        }
+        public static class LaureRoussel
+        {
+            public const string Index = "Member/LaureRoussel";
+            public const string Pattern = "Member/LaureRoussel/Pattern";
+        }
+        public static class ChristineLégeret
+        {
+            public const string Index = "Member/ChristineLégeret";
+            public const string Pattern = "Member/ChristineLégeret/Pattern";
+        }
     }
 }

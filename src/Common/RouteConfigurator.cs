@@ -28,37 +28,36 @@
             _routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // HomeController.
-            _routes.MapRoute(RouteName.Home, String.Empty,
+            _routes.MapRoute(RouteName.Home.Index, String.Empty,
                 new { controller = "Home", action = "Index" });
-            _routes.MapRoute(RouteName.About, "informations", 
+            _routes.MapRoute(RouteName.Home.About, "informations",
                 new { controller = "Home", action = "About" });
-            _routes.MapRoute(RouteName.Contact, "contact",
+            _routes.MapRoute(RouteName.Home.Contact, "contact",
                 new { controller = "Home", action = "Contact" });
-            _routes.MapRoute(RouteName.Newsletter, "newsletter",
+            _routes.MapRoute(RouteName.Home.Newsletter, "newsletter",
                 new { controller = "Home", action = "Newsletter" });
 
             // AccountController.
-            _routes.MapRoute(RouteName.Register, "inscription", 
+            _routes.MapRoute(RouteName.Account.Register, "inscription",
                 new { controller = "Account", action = "Register" });
-            //_routes.MapRoute(RouteName.Register_EN, "register", new { controller = MVC.Account.Name, action = "Register" });
 
             // DesignerController.
-            _routes.MapRoute(RouteName.Chicamancha, "chicamancha",
+            _routes.MapRoute(RouteName.Chicamancha.Index, "chicamancha",
                 new { controller = "Designer", action = "Index", designer = "chicamancha" });
-            _routes.MapRoute(RouteName.VivianeDevaux, "viviane-devaux", 
+            _routes.MapRoute(RouteName.VivianeDevaux.Index, "viviane-devaux",
                 new { controller = "Designer", action = "Index", designer = "viviane-devaux" });
-            _routes.MapRoute(RouteName.ChristineLégeret, "christine-legeret",
+            _routes.MapRoute(RouteName.ChristineLégeret.Index, "christine-legeret",
                 new { controller = "Designer", action = "Index", designer = "christine-legeret" });
-            _routes.MapRoute(RouteName.LaureRoussel, "laure-roussel",
+            _routes.MapRoute(RouteName.LaureRoussel.Index, "laure-roussel",
                 new { controller = "Designer", action = "Index", designer = "laure-roussel" });
 
-            _routes.MapRoute(RouteName.ChicamanchaPattern, "chicamancha/{reference}",
+            _routes.MapRoute(RouteName.Chicamancha.Pattern, "chicamancha/{reference}",
                 new { controller = "Designer", action = "Pattern", designer = "chicamancha" });
-            _routes.MapRoute(RouteName.VivianeDevauxPattern, "viviane-devaux/{reference}",
+            _routes.MapRoute(RouteName.VivianeDevaux.Pattern, "viviane-devaux/{reference}",
                 new { controller = "Designer", action = "Pattern", designer = "viviane-devaux" });
-            _routes.MapRoute(RouteName.ChristineLégeretPattern, "christine-legeret/{reference}",
+            _routes.MapRoute(RouteName.ChristineLégeret.Pattern, "christine-legeret/{reference}",
                 new { controller = "Designer", action = "Pattern", designer = "christine-legeret" });
-            _routes.MapRoute(RouteName.LaureRousselPattern, "laure-roussel/{reference}",
+            _routes.MapRoute(RouteName.LaureRoussel.Pattern, "laure-roussel/{reference}",
                 new { controller = "Designer", action = "Pattern", designer = "laure-roussel" });
 
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);

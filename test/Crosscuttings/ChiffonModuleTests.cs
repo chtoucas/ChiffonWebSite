@@ -12,9 +12,9 @@
 
         public ChiffonModuleTests()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new ChiffonModule());
-            _container = builder.Build();
+            //var builder = new ContainerBuilder();
+            //builder.RegisterModule(new ChiffonModule());
+            //_container = builder.Build();
         }
 
         [Fact]

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using Chiffon.Common;
     using Chiffon.Infrastructure;
 
     public partial class WidgetController : Controller
@@ -16,7 +17,7 @@
         [ChildActionOnly]
         public virtual PartialViewResult MemberMenu()
         {
-            return PartialView(ViewPath.MemberMenu);
+            return PartialView(ViewName.Widget.MemberMenu);
         }
 
         [ChildActionOnly]
@@ -35,12 +36,6 @@
             return _config.DebugCss
                 ? PartialView("~/Views/Widget/Debug/Stylesheet.cshtml")
                 : PartialView("~/Views/Widget/Release/Stylesheet.cshtml");
-        }
-
-        public static class ViewPath
-        {
-            public const string MemberMenu = "~/Views/Shared/_MemberMenu.cshtml";
-            public const string PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml";
         }
     }
 }

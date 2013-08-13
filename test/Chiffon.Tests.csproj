@@ -73,7 +73,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\src\Chiffon.csproj">
       <Project>{0f446c2e-d766-428d-a567-724631f114a6}</Project>
