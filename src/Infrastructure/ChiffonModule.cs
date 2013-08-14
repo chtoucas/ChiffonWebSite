@@ -22,19 +22,15 @@
         {
             Requires.NotNull(builder, "builder");
 
-            var dbHelper = new DbHelper(_config);
-
             builder.Register(_ => _config).AsSelf().SingleInstance();
-            builder.Register(_ => dbHelper).AsSelf().SingleInstance();
+            builder.RegisterType<DbHelper>().AsSelf().SingleInstance();
             builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
 
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
             builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
 
-            var assembly = typeof(Global).Assembly;
-
-            builder.RegisterControllers(assembly);
-            builder.RegisterHandlers(assembly);
+            builder.RegisterControllers(typeof(Global).Assembly);
+            builder.RegisterHandlers(typeof(Global).Assembly);
 
             //builder.RegisterType<PatternImageHandler>().As<PatternImageHandler>().SingleInstance();
             //builder.RegisterType<LogOnHandler>().As<LogOnHandler>().SingleInstance();

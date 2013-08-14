@@ -26,6 +26,7 @@
 
             // Modules HTTP.
             HttpHeaderCleanupModule.SelfRegister();
+            ThreadCultureModule.SelfRegister();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;

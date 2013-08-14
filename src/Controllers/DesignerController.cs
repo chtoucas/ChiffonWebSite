@@ -3,13 +3,10 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure.Addressing;
 
     [Authorize]
     public class DesignerController : PageController
     {
-        public DesignerController(ISiteMapFactory sitemapFactory) : base(sitemapFactory) { }
-
         [HttpGet]
         public ActionResult Index(DesignerKey designer)
         {

@@ -1,23 +1,23 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
-    using System;
     using System.Globalization;
+    using System.Threading;
 
     public class DefaultSiteMapFactory : ISiteMapFactory
     {
-        // TODO: Utiliser un siteMap anglais.
+        //public ISiteMap CreateMap()
+        //{
+        //    return CreateMap(Thread.CurrentThread.CurrentUICulture);
+        //}
+
         public ISiteMap CreateMap(CultureInfo culture)
         {
-            Uri baseUri;
-
-            if (culture.TwoLetterISOLanguageName == "en") {
-                baseUri = new Uri("http://en.pourquelmotifsimone.com");
+            switch (culture.TwoLetterISOLanguageName) {
+                case "en":
+                    return new EnglishSiteMap();
+                default:
+                    return new DefaultSiteMap();
             }
-            else {
-                baseUri = new Uri("http://pourquelmotifsimone.com");
-            }
-
-            return new DefaultSiteMap(baseUri);
         }
     }
 }

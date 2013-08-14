@@ -1,27 +1,27 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
-    using System.Threading;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Common;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
     using Narvalo.Web;
+    using Narvalo.Web.Security;
 
     public class LogOnHandler : HttpHandlerBase<LogOnQuery>, IRequiresSessionState
     {
         readonly IMemberService _memberService;
-        readonly ISiteMapFactory _siteMapFactory;
+        readonly IFormsAuthenticationService _formsService;
 
-        public LogOnHandler(IMemberService memberService, ISiteMapFactory siteMapFactory)
+        public LogOnHandler(IMemberService memberService, IFormsAuthenticationService formsService)
             : base()
         {
             _memberService = memberService;
-            _siteMapFactory = siteMapFactory;
+            _formsService = formsService;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
@@ -33,8 +33,7 @@
             var token = form.MayGetValue("token").Filter(_ => _.Length > 0);
             if (token.IsNone) { return BindingFailure("token"); }
 
-            var targetUrl = form.MayGetValue("targeturl").Filter(_ => _.Length > 0)
-                .Bind(_ => MayParse.ToUri(_, UriKind.Relative));
+            var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayParse.ToUri(_, UriKind.Relative));
 
             var model = new LogOnQuery { TargetUrl = targetUrl, Token = token.Value };
 
@@ -43,18 +42,20 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            var succeed = _memberService.LogOn(query.Token, true /* createPersistentCookie */);
-            var siteMap = _siteMapFactory.CreateMap(Thread.CurrentThread.CurrentUICulture);
+            var succeed = _memberService.LogOn(query.Token, false /* createPersistentCookie */);
 
-            // TODO: Si TargetUrl a une valeur, alors on redirige vers une URL relative.
+            if (succeed) {
+                //_formsService.SignIn(
+            }
+
+            // XXX: Pas sûr que ne pas utiliser l'IoC pour le SiteMap soit une bonne idée.
+            var siteMap = SiteMapUtility.GetSiteMap(context);
+
             Uri nextUrl = succeed
-                ? siteMap.Home() // query.TargetUrl.ValueOrElse(siteMap.Home())
+                ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
                 : query.TargetUrl.Match(_ => siteMap.LogOn(_), siteMap.LogOn());
 
-            context.Response.Write(nextUrl.ToString());
-            //context.Response.Redirect(nextUrl.ToString());
-
-            //var map = SiteMapBuilder.Current.GetSiteMapFactory().CreateMap(memberId);
+            context.Response.Redirect(nextUrl.ToString());
         }
     }
 }

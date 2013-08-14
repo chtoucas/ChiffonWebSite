@@ -13,7 +13,12 @@
 
         public static string Designer(this UrlHelper self, DesignerKey designerKey)
         {
-            return SecureAction(self, "Index", "Designer", new { designer = designerKey.ToString() });
+            return SecureAction(self, "Index", "Designer", new { designer = designerKey });
+        }
+
+        public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
+        {
+            return SecureAction(self, "Pattern", "Designer", new { designer = designerKey, reference = reference });
         }
 
         public static string ChicamanchaUrl(this UrlHelper self)
@@ -36,19 +41,14 @@
             return SecureUrl(self, RouteName.LaureRoussel.Index, null /* routeValues */);
         }
 
-        public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
-        {
-            return SecureAction(self, "Pattern", "Designer", new { designer = designerKey.ToString(), reference = reference });
-        }
-
         #endregion
 
-        public static string PatternPreview(this UrlHelper self, DesignerKey designerKey, string reference)
+        public static string PreviewContent(this UrlHelper self, DesignerKey designerKey, string reference)
         {
             return self.Content(String.Format("~/{0}/motif-{1}_preview.jpg", designerKey, reference));
         }
 
-        public static string OriginalPattern(this UrlHelper self, DesignerKey designerKey, string reference)
+        public static string PatternContent(this UrlHelper self, DesignerKey designerKey, string reference)
         {
             return self.Content(String.Format("~/{0}/motif-{1}.jpg", designerKey, reference));
         }

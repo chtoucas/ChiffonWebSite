@@ -8,7 +8,6 @@
     using Chiffon.Common.Filters;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Data;
@@ -18,8 +17,7 @@
     {
         DbHelper _dbHelper;
 
-        public HomeController(ISiteMapFactory sitemapFactory, DbHelper dbHelper)
-            : base(sitemapFactory)
+        public HomeController(DbHelper dbHelper)
         {
             Requires.NotNull(dbHelper, "dbHelper");
 

@@ -70,9 +70,9 @@
 
         void Handlers_()
         {
-            _routes.Add(new Route("PatternImage.ashx", new AutofacRouteHandler<PatternImageHandler>()));
+            _routes.Add(new Route("motif", new AutofacRouteHandler<PatternImageHandler>()));
             _routes.Add(new Route("connecte", new AutofacRouteHandler<LogOnHandler>()));
-            _routes.Add(new Route("deconnecte", new AutofacRouteHandler<LogOffHandler>()));
+            _routes.Add(new Route("disconnecte", new AutofacRouteHandler<LogOffHandler>()));
         }
     }
 }

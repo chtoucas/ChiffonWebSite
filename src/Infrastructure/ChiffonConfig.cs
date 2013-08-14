@@ -17,7 +17,6 @@
         bool _debugCss = false;
         bool _debugJs = false;
 
-        //public Uri BaseUri { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
         public string LogProfile { get; set; }
@@ -69,10 +68,6 @@
         void Initialize_(NameValueCollection nvc)
         {
             // > Paramètres obligatoires <
-
-            //BaseUri = nvc.MayParseValue("chiffon.baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
-            //    .ValueOrThrow(() => new ConfigurationErrorsException(
-            //        "Missing or invalid config 'chiffon.baseUri'."));
 
             // TODO: validate this? Absolute and well-formed.
             PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")

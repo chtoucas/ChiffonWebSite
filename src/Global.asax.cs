@@ -1,9 +1,7 @@
 ﻿namespace Chiffon
 {
     using System;
-    using System.Globalization;
     using System.Net;
-    using System.Threading;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -59,8 +57,6 @@
     {
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        static readonly CultureInfo EnglishCulture_ = new CultureInfo("en-US");
-        static readonly CultureInfo EnglishUICulture_ = new CultureInfo("en");
 
         //public Global()
         //    : base()
@@ -120,12 +116,8 @@
         {
             Log.Information("Application starting.");
 
-            // Filters.
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            // Routes.
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            // WebApi.
-            //WebApiConfig.Register(GlobalConfiguration.Configuration);
         }
 
         /// <summary>
@@ -150,19 +142,6 @@
         //}
 
         #region Événements
-
-        // WARNING: Cette méthode ne convient pas avec les contrôleurs asynchrones car on change de Thread.
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            var app = (HttpApplication)sender;
-
-            if (app.Request.Url.Host.StartsWith("en.")) {
-                // Culture utilisée par ResourceManager.
-                Thread.CurrentThread.CurrentUICulture = EnglishUICulture_;
-                // Culture utilisée par System.Globalization.
-                Thread.CurrentThread.CurrentCulture = EnglishCulture_;
-            }
-        }
 
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
