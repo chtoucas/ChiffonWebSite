@@ -42,13 +42,13 @@
                 new { controller = "Account", action = "Register" });
 
             // DesignerController.
-            _routes.MapRoute(RouteName.Chicamancha.Index, "chicamancha",
+            _routes.MapRoute(RouteName.Chicamancha.Index, "chicamancha/",
                 new { controller = "Designer", action = "Index", designer = "chicamancha" });
-            _routes.MapRoute(RouteName.VivianeDevaux.Index, "viviane-devaux",
+            _routes.MapRoute(RouteName.VivianeDevaux.Index, "viviane-devaux/",
                 new { controller = "Designer", action = "Index", designer = "viviane-devaux" });
-            _routes.MapRoute(RouteName.ChristineLégeret.Index, "christine-legeret",
+            _routes.MapRoute(RouteName.ChristineLégeret.Index, "christine-legeret/",
                 new { controller = "Designer", action = "Index", designer = "christine-legeret" });
-            _routes.MapRoute(RouteName.LaureRoussel.Index, "laure-roussel",
+            _routes.MapRoute(RouteName.LaureRoussel.Index, "laure-roussel/",
                 new { controller = "Designer", action = "Index", designer = "laure-roussel" });
 
             _routes.MapRoute(RouteName.Chicamancha.Pattern, "chicamancha/{reference}",

@@ -20,23 +20,27 @@
         // DesignerController.
         public static class Chicamancha
         {
-            public const string Index = "Member/Chicamancha";
-            public const string Pattern = "Member/Chicamancha/Pattern";
+            public const string Index = "Chicamancha/";
+            public const string Pattern = "Chicamancha/Pattern";
+            public const string Category = "Chicamancha/Category";
         }
         public static class VivianeDevaux
         {
-            public const string Index = "Member/VivianeDevaux";
-            public const string Pattern = "Member/VivianeDevaux/Pattern";
+            public const string Index = "VivianeDevaux/";
+            public const string Pattern = "VivianeDevaux/Pattern";
+            public const string Category = "VivianeDevaux/Category";
         }
         public static class LaureRoussel
         {
-            public const string Index = "Member/LaureRoussel";
-            public const string Pattern = "Member/LaureRoussel/Pattern";
+            public const string Index = "LaureRoussel/";
+            public const string Pattern = "LaureRoussel/Pattern";
+            public const string Category = "LaureRoussel/Category";
         }
         public static class ChristineLégeret
         {
-            public const string Index = "Member/ChristineLégeret";
-            public const string Pattern = "Member/ChristineLégeret/Pattern";
+            public const string Index = "ChristineLégeret/";
+            public const string Pattern = "ChristineLégeret/Pattern";
+            public const string Category = "ChristineLégeret/Category";
         }
     }
 }

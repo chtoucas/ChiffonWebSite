@@ -9,15 +9,39 @@
 
     public static class UrlHelperExtensions
     {
+        #region Designer controller.
+
         public static string Designer(this UrlHelper self, DesignerKey designerKey)
         {
             return SecureAction(self, "Index", "Designer", new { designer = designerKey.ToString() });
+        }
+
+        public static string ChicamanchaUrl(this UrlHelper self)
+        {
+            return SecureUrl(self, RouteName.Chicamancha.Index, null /* routeValues */);
+        }
+
+        public static string VivianeDevauxUrl(this UrlHelper self)
+        {
+            return SecureUrl(self, RouteName.VivianeDevaux.Index, null /* routeValues */);
+        }
+
+        public static string ChristineLégeretUrl(this UrlHelper self)
+        {
+            return SecureUrl(self, RouteName.ChristineLégeret.Index, null /* routeValues */);
+        }
+
+        public static string LaureRousselUrl(this UrlHelper self)
+        {
+            return SecureUrl(self, RouteName.LaureRoussel.Index, null /* routeValues */);
         }
 
         public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
         {
             return SecureAction(self, "Pattern", "Designer", new { designer = designerKey.ToString(), reference = reference });
         }
+
+        #endregion
 
         public static string PatternPreview(this UrlHelper self, DesignerKey designerKey, string reference)
         {
@@ -42,7 +66,24 @@
                 return originalUrl;
             }
             else {
-                return self.RouteUrl(ViewName.Account.Register, new { returnUrl = originalUrl });
+                return self.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+            }
+        }
+
+        public static string SecureUrl(this UrlHelper self, string routeName, object routeValues)
+        {
+            return self.SecureUrl(routeName, new RouteValueDictionary(routeValues));
+        }
+
+        public static string SecureUrl(this UrlHelper self, string routeName, RouteValueDictionary routeValues)
+        {
+            var originalUrl = self.RouteUrl(routeName, routeValues);
+
+            if (self.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
+                return originalUrl;
+            }
+            else {
+                return self.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 

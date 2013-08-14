@@ -14,28 +14,28 @@
             _config = config;
         }
 
-        [ChildActionOnly]
-        public virtual PartialViewResult MemberMenu()
-        {
-            return PartialView(ViewName.Widget.MemberMenu);
-        }
+        //[ChildActionOnly]
+        //public PartialViewResult MemberMenu()
+        //{
+        //    return PartialView(ViewName.Widget.MemberMenu);
+        //}
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public virtual PartialViewResult CommonJavaScript()
+        public PartialViewResult CommonJavaScript()
         {
             return _config.DebugJs
-                ? PartialView("~/Views/Widget/Debug/JavaScript.cshtml")
-                : PartialView("~/Views/Widget/Release/JavaScript.cshtml");
+                ? PartialView(ViewName.Widget.CommonJavaScript_Debug)
+                : PartialView(ViewName.Widget.CommonJavaScript_Release);
         }
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public virtual PartialViewResult CommonStylesheet()
+        public PartialViewResult CommonStylesheet()
         {
             return _config.DebugCss
-                ? PartialView("~/Views/Widget/Debug/Stylesheet.cshtml")
-                : PartialView("~/Views/Widget/Release/Stylesheet.cshtml");
+                ? PartialView(ViewName.Widget.CommonStylesheet_Debug)
+                : PartialView(ViewName.Widget.CommonStylesheet_Release);
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿@using Chiffon.Entities
-
-<nav id=nav_members class=clr>
+﻿<nav id=nav_members class=clr>
  <ul class="serif strike inline">
-  <li><a href="@Url.Designer(DesignerKey.Chicamancha)" id=nav_members_cm rel="@ViewBag.RegisterLink">Chicamancha</a></li>
-  <li><a href="@Url.Designer(DesignerKey.VivianeDevaux)" id=nav_members_vd rel="@ViewBag.RegisterLink">Viviane Devaux</a></li>
-  <li><a href="@Url.Designer(DesignerKey.ChristineLégeret)" id=nav_members_cl rel="@ViewBag.RegisterLink">Christine Légeret</a></li>
-  <li class=last><a href="@Url.Designer(DesignerKey.LaureRoussel)" id=nav_members_lr rel="@ViewBag.RegisterLink">Laure Roussel</a></li>
+  <li><a href="@Url.ChicamanchaUrl()" id=nav_members_cm rel="@ViewBag.RegisterLink">Chicamancha</a></li>
+  <li><a href="@Url.VivianeDevauxUrl()" id=nav_members_vd rel="@ViewBag.RegisterLink">Viviane Devaux</a></li>
+  <li><a href="@Url.ChristineLégeretUrl()" id=nav_members_cl rel="@ViewBag.RegisterLink">Christine Légeret</a></li>
+  <li class=last><a href="@Url.LaureRousselUrl()" id=nav_members_lr rel="@ViewBag.RegisterLink">Laure Roussel</a></li>
  </ul>
 </nav>

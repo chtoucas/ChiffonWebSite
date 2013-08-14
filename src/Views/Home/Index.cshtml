@@ -1,7 +1,4 @@
-﻿@using Chiffon.Common
-@using Chiffon.ViewModels
+﻿@model IEnumerable<PatternPreviewViewModel>
 
-@model IEnumerable<PatternPreviewViewModel>
-
-@Html.Partial(ViewName.Widget.MemberMenu)
-@Html.Partial(ViewName.Widget.PatternPreviewsGrid, Model)
+@Html.Partial(ViewName.Shared.MemberMenu)
+@Html.Partial(ViewName.Shared.PatternPreviewsGrid, Model)

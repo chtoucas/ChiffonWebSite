@@ -22,14 +22,14 @@ namespace Chiffon.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SharedVR {
+    public class VR {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedVR() {
+        internal VR() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Chiffon.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chiffon.Resources.SharedVR", typeof(SharedVR).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chiffon.Resources.VR", typeof(VR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,63 +63,63 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite..
         /// </summary>
-        public static string Disclaimer {
+        public static string Layout_Disclaimer {
             get {
-                return ResourceManager.GetString("Disclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blog.
-        /// </summary>
-        public static string MainNav_Blog {
-            get {
-                return ResourceManager.GetString("MainNav_Blog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Contact.
-        /// </summary>
-        public static string MainNav_Contact {
-            get {
-                return ResourceManager.GetString("MainNav_Contact", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Accueil.
-        /// </summary>
-        public static string MainNav_Home {
-            get {
-                return ResourceManager.GetString("MainNav_Home", resourceCulture);
+                return ResourceManager.GetString("Layout_Disclaimer", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Info.
         /// </summary>
-        public static string MainNav_Info {
+        public static string Layout_Nav_About {
             get {
-                return ResourceManager.GetString("MainNav_Info", resourceCulture);
+                return ResourceManager.GetString("Layout_Nav_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Blog.
+        /// </summary>
+        public static string Layout_Nav_Blog {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Blog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Contact.
+        /// </summary>
+        public static string Layout_Nav_Contact {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Accueil.
+        /// </summary>
+        public static string Layout_Nav_Home {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Home", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Newsletter.
         /// </summary>
-        public static string MainNav_Newsletter {
+        public static string Layout_Nav_Newsletter {
             get {
-                return ResourceManager.GetString("MainNav_Newsletter", resourceCulture);
+                return ResourceManager.GetString("Layout_Nav_Newsletter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Le collectif &lt;strong&gt;Pour quel motif, Simone ?&lt;/strong&gt; présente sa collection &lt;em&gt;AH14/15&lt;/em&gt;.
         /// </summary>
-        public static string Title {
+        public static string Layout_Title {
             get {
-                return ResourceManager.GetString("Title", resourceCulture);
+                return ResourceManager.GetString("Layout_Title", resourceCulture);
             }
         }
     }

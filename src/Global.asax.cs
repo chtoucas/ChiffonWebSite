@@ -59,7 +59,8 @@
     {
         //static readonly string AssemblyVersion_
         //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        static readonly CultureInfo EnglishCultureInfo_ = new CultureInfo("en-US");
+        static readonly CultureInfo EnglishCulture_ = new CultureInfo("en-US");
+        static readonly CultureInfo EnglishUICulture_ = new CultureInfo("en");
 
         //public Global()
         //    : base()
@@ -157,9 +158,9 @@
 
             if (app.Request.Url.Host.StartsWith("en.")) {
                 // Culture utilisée par ResourceManager.
-                Thread.CurrentThread.CurrentUICulture = EnglishCultureInfo_;
+                Thread.CurrentThread.CurrentUICulture = EnglishUICulture_;
                 // Culture utilisée par System.Globalization.
-                Thread.CurrentThread.CurrentCulture = EnglishCultureInfo_;
+                Thread.CurrentThread.CurrentCulture = EnglishCulture_;
             }
         }
 

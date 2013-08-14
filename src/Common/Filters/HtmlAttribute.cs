@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon.Common.Filters
 {
     using System;
     using System.Threading;

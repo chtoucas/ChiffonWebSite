@@ -1,6 +1,4 @@
-﻿@using Chiffon.Common
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="@ViewBag.Language">
 <head>
  <meta charset="utf-8" />
@@ -20,7 +18,7 @@
 </head>
 <body id="@ViewBag.BodyId">
  <header>
-  <h1>@Html.Raw(SharedVR.Title)</h1>
+  <h1>@Html.Raw(VR.Layout_Title)</h1>
   <nav id=nav_lang class=clr>
    <ul class="inline right">
     <li>EN</li>
@@ -30,14 +28,14 @@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
-    <li><a href="@Url.RouteUrl(ViewName.Home.Index)" id=nav_home>@SharedVR.MainNav_Home</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
-    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@SharedVR.MainNav_Blog</a></li>
+    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(ViewName.Home.About)" id=nav_info>@SharedVR.MainNav_Info</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(ViewName.Home.Contact)" id=nav_contact>@SharedVR.MainNav_Contact</a></li>
-    <li class=right><a href="@Url.RouteUrl(ViewName.Home.Newsletter)" id=nav_newsletter>@SharedVR.MainNav_Newsletter</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
+    <li class=right><a href="@Url.RouteUrl(RouteName.Home.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>
    </ul>
   </nav>
  </header>
@@ -45,7 +43,7 @@
   @RenderBody()
  </div>
  <footer class=grey>
-  <p id=legal>@Html.Raw(SharedVR.Disclaimer)</p>
+  <p id=legal>@Html.Raw(VR.Layout_Disclaimer)</p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
  @{Html.RenderAction("CommonJavaScript", "Widget");}

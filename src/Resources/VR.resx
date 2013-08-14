@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Disclaimer" xml:space="preserve">
+  <data name="Layout_Disclaimer" xml:space="preserve">
     <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.</value>
   </data>
-  <data name="MainNav_Blog" xml:space="preserve">
-    <value>Blog</value>
-  </data>
-  <data name="MainNav_Contact" xml:space="preserve">
-    <value>Contact</value>
-  </data>
-  <data name="MainNav_Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="MainNav_Info" xml:space="preserve">
+  <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="MainNav_Newsletter" xml:space="preserve">
+  <data name="Layout_Nav_Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Layout_Nav_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Layout_Nav_Home" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>The collective &lt;strong&gt;Pour quel motif, Simone ?&lt;/strong&gt; presents its collection &lt;em&gt;AH14/15&lt;/em&gt;</value>
+  <data name="Layout_Title" xml:space="preserve">
+    <value>Le collectif &lt;strong&gt;Pour quel motif, Simone ?&lt;/strong&gt; présente sa collection &lt;em&gt;AH14/15&lt;/em&gt;</value>
   </data>
 </root>

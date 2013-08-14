@@ -7,7 +7,7 @@
     {
         [AllowAnonymous]
         [HttpGet]
-        public virtual ActionResult Register(string returnUrl)
+        public ActionResult Register(string returnUrl)
         {
             return View(ViewName.Account.Register);
         }
@@ -15,7 +15,7 @@
         [AllowAnonymous]
         [ChildActionOnly]
         [HttpGet]
-        public virtual ActionResult ModalRegister(string returnUrl)
+        public ActionResult ModalRegister(string returnUrl)
         {
             return PartialView(ViewName.Account.Register);
         }

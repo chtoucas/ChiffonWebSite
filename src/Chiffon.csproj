@@ -164,14 +164,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Common\HtmlAttribute.cs" />
+    <Compile Include="Common\Filters\HtmlAttribute.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\RobotsDirectiveBuilder.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
-    <Compile Include="Common\SeoPolicyAttribute.cs" />
+    <Compile Include="Common\Filters\SeoPolicyAttribute.cs" />
     <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Common\ControllerBase%24.cs" />
@@ -220,8 +220,8 @@
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Infrastructure\DbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\SR.en-US.Designer.cs">
-      <DependentUpon>SR.en-US.resx</DependentUpon>
+    <Compile Include="Resources\SR.en.Designer.cs">
+      <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -230,15 +230,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\SharedVR.en-US.Designer.cs">
-      <DependentUpon>SharedVR.en-US.resx</DependentUpon>
+    <Compile Include="Resources\VR.en.Designer.cs">
+      <DependentUpon>VR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\SharedVR.Designer.cs">
+    <Compile Include="Resources\VR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SharedVR.resx</DependentUpon>
+      <DependentUpon>VR.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="ViewModels\PatternPreviewViewModel.cs" />
@@ -309,10 +309,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Widget\Debug\JavaScript.cshtml" />
-    <Content Include="Views\Widget\Debug\Stylesheet.cshtml" />
-    <Content Include="Views\Widget\Release\JavaScript.cshtml" />
-    <Content Include="Views\Widget\Release\Stylesheet.cshtml" />
+    <Content Include="Views\Widget\JavaScript.Debug.cshtml" />
+    <Content Include="Views\Widget\Stylesheet.Debug.cshtml" />
+    <Content Include="Views\Widget\JavaScript.Release.cshtml" />
+    <Content Include="Views\Widget\Stylesheet.Release.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Register.cshtml" />
@@ -332,21 +332,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SR.en-US.resx">
+    <EmbeddedResource Include="Resources\SR.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SharedVR.en-US.resx">
+    <EmbeddedResource Include="Resources\VR.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SharedVR.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>VR.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SharedVR.resx">
+    <EmbeddedResource Include="Resources\VR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SharedVR.Designer.cs</LastGenOutput>
+      <LastGenOutput>VR.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
