@@ -26,6 +26,8 @@
             var viewBag = filterContext.Controller.ViewBag;
             var viewData = filterContext.Controller.ViewData;
 
+            //var rawUrl = filterContext.HttpContext.Request.RawUrl;
+
             // TODO: ajouter l'en-tête Canonical ?
             // TODO: ajouter dynamiquement la balise meta ?
             __CheckCanonicalLink(filterContext);

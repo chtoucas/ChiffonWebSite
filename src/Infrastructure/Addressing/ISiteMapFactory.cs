@@ -1,9 +1,9 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
-    using Chiffon.BuildingBlocks.Membership;
+    using System.Globalization;
 
     public interface ISiteMapFactory
     {
-        ISiteMap CreateMap(MemberId memberId);
+        ISiteMap CreateMap(CultureInfo culture);
     }
 }

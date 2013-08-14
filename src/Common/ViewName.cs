@@ -12,6 +12,7 @@
 
         public static class Account
         {
+            public const string Login = "~/Views/Account/Login.cshtml";
             public const string Register = "~/Views/Account/Register.cshtml";
         }
 

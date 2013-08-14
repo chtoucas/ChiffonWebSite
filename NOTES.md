@@ -52,3 +52,22 @@ Rewrite
 =======
 
 Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\
+
+
+
+
+http://stackoverflow.com/questions/7511318/pass-currentuiculture-to-async-task-in-asp-net-mvc-3-0
+http://stackoverflow.com/questions/1064271/asp-net-mvc-set-custom-iidentity-or-iprincipal
+http://stackoverflow.com/questions/8263845/is-this-custom-principal-in-base-controller-asp-net-mvc-3-terribly-inefficient
+http://stackoverflow.com/questions/6119206/what-are-good-candidates-for-base-controller-class-in-asp-net-mvc/6119341#6119341
+http://odetocode.com/blogs/scott/archive/2010/06/28/action-filter-versus-controller-base-class.aspx
+http://edn.embarcadero.com/article/38123
+http://www.wintellect.com/resources
+http://paceyourself.net/2010/07/30/fubu-htmltags-with-aspnet-mvc/
+http://lostechies.com/jimmybogard/2013/07/17/how-we-do-mvc-4-years-later/
+https://github.com/DarthFubuMVC/htmltags
+http://lostechies.com/jimmybogard/2013/08/13/conventional-html-in-asp-net-mvc-building-tags/
+https://github.com/Haacked/RouteMagic
+http://www.asp.net/mvc/tutorials/hands-on-labs/aspnet-mvc-4-custom-action-filters
+
+http://dancres.org/reading_list.html

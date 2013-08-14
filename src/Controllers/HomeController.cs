@@ -8,16 +8,18 @@
     using Chiffon.Common.Filters;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Data;
 
     [SeoPolicy(RobotsDirective = "index, follow")]
-    public partial class HomeController : Controller
+    public class HomeController : PageController
     {
         DbHelper _dbHelper;
 
-        public HomeController(DbHelper dbHelper)
+        public HomeController(ISiteMapFactory sitemapFactory, DbHelper dbHelper)
+            : base(sitemapFactory)
         {
             Requires.NotNull(dbHelper, "dbHelper");
 
@@ -25,7 +27,6 @@
         }
 
         [HttpGet]
-        [Html("home")]
         public ActionResult Index()
         {
             var model = new List<PatternPreviewViewModel>();
@@ -51,32 +52,32 @@
                 }
             }
 
-            // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
-            // & https://github.com/schourode/canonicalize
-            ViewBag.CanonicalLink 
-                = Url.RouteUrl(RouteName.Home.Index, null /* routeValues */, "http");
+            ViewBag.CanonicalLink = SiteMap.Home().ToString();
 
             return View(ViewName.Home.Index, model);
         }
 
         [HttpGet]
-        [Html("about")]
         public ActionResult About()
         {
+            ViewBag.CanonicalLink = SiteMap.About().ToString();
+
             return View(ViewName.Home.About);
         }
 
         [HttpGet]
-        [Html("contact")]
         public ActionResult Contact()
         {
+            ViewBag.CanonicalLink = SiteMap.Contact().ToString();
+
             return View(ViewName.Home.Contact);
         }
 
         [HttpGet]
-        [Html("newsletter")]
         public ActionResult Newsletter()
         {
+            ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
+
             return View(ViewName.Home.Newsletter);
         }
     }

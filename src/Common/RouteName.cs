@@ -15,6 +15,7 @@
         public static class Account
         {
             public const string Register = "Account/Register";
+            public const string Login = "Account/Login";
         }
 
         // DesignerController.

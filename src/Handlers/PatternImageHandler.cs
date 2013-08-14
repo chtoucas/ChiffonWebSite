@@ -53,7 +53,7 @@
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
             if (size.IsNone) { return BindingFailure("size"); }
 
-            var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 1);
+            var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 0);
             if (reference.IsNone) { return BindingFailure("reference"); }
 
             var query = new PatternImageQuery {

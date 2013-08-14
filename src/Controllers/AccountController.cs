@@ -3,8 +3,15 @@
     using System.Web.Mvc;
     using Chiffon.Common;
 
-    public partial class AccountController : Controller
+    public class AccountController : Controller
     {
+        public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+
+            return View(ViewName.Account.Login);
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Register(string returnUrl)

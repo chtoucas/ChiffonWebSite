@@ -2,9 +2,10 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Handlers;
-    using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Services;
     using Narvalo;
+    using Narvalo.Web.Security;
 
     public class ChiffonModule : Module
     {
@@ -25,10 +26,19 @@
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
             builder.Register(_ => dbHelper).AsSelf().SingleInstance();
+            builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
 
-            builder.RegisterControllers(typeof(Global).Assembly);
+            builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
+            builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
 
-            builder.Register(_ => new PatternImageHandler(_config, dbHelper)).AsSelf().SingleInstance();
+            var assembly = typeof(Global).Assembly;
+
+            builder.RegisterControllers(assembly);
+            builder.RegisterHandlers(assembly);
+
+            //builder.RegisterType<PatternImageHandler>().As<PatternImageHandler>().SingleInstance();
+            //builder.RegisterType<LogOnHandler>().As<LogOnHandler>().SingleInstance();
+            //builder.RegisterType<LogOffHandler>().As<LogOffHandler>().SingleInstance();
         }
     }
 }

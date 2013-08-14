@@ -5,7 +5,7 @@
     using Chiffon.Common;
     using Chiffon.Infrastructure;
 
-    public partial class WidgetController : Controller
+    public class WidgetController : Controller
     {
         readonly ChiffonConfig _config;
 
