@@ -5,16 +5,16 @@
 @Html.Partial("_MemberMenu")
 <div id=designer>
  <div id=description>
-  <p>@Model.Presentation</p>
+  <p>@Model.Designer.Presentation</p>
   <nav id=categories>
    <ul>
-    <li><a href="@Url.Designer(Model.DesignerKey)">@VR.Category_All (@Model.PatternCount)</a></li>
+    <li><a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternCount)</a></li>
     @foreach (var category in Model.Categories) {
-     <li><a href="@Url.Category(Model.DesignerKey, category.Reference)">@category.DisplayName (@category.PatternCount)</a></li>
+     <li><a href="@Url.Category(Model.Designer.Key, category.Reference)">@category.DisplayName (@category.PatternCount)</a></li>
     }
    </ul>
   </nav>
-  <p><a href="#">@Model.EmailAddress</a> </p>
+  <p><a href="#">@Model.Designer.EmailAddress</a> </p>
  </div>
  <ul class="mosaic clr">
   @foreach (var preview in @Model.Previews) {

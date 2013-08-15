@@ -2,7 +2,7 @@
 {
     public class DefaultSiteMapFactory : ISiteMapFactory
     {
-        public ISiteMap CreateMap(ChiffonEnvironmentBase environment)
+        public ISiteMap CreateMap(ChiffonEnvironment environment)
         {
             return new DefaultSiteMap(environment.BaseUri);
         }

@@ -36,13 +36,16 @@
         {
             var app = sender as HttpApplication;
 
-            var environment = ChiffonEnvironment.ResolveAndInitialize(app.Request);
-
             // FIXME: Explorer les librairies suivantes afin d'activer l'injection de dépendances
             // pour les modules HTTP.
             // MVC Turbine ?
             // HttpModuleMagic ?
-            var siteMap = DependencyResolver.Current.GetService<ISiteMapFactory>().CreateMap(environment);
+            var resolver = DependencyResolver.Current;
+            var config = resolver.GetService<ChiffonConfig>();
+            var siteMapFactory = resolver.GetService<ISiteMapFactory>();
+
+            var environment = ChiffonEnvironment.ResolveAndInitialize(config, app.Request);
+            var siteMap = siteMapFactory.CreateMap(environment);
 
             app.Context.SetSiteMap(siteMap);
         }

@@ -4,6 +4,6 @@
 
     public interface ISiteMapFactory
     {
-        ISiteMap CreateMap(ChiffonEnvironmentBase environment);
+        ISiteMap CreateMap(ChiffonEnvironment environment);
     }
 }

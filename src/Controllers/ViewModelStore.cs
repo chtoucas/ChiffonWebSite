@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
@@ -50,9 +51,7 @@
 
         public DesignerViewModel Designer(DesignerKey designer, string language)
         {
-            var model = new DesignerViewModel {
-                DesignerKey = designer,
-            };
+            var model = new DesignerViewModel();
 
             using (var cnx = _dbHelper.CreateConnection()) {
                 using (var cmd = new SqlCommand()) {
@@ -68,46 +67,15 @@
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         // Informations sur le designer.
-
-                        if (rdr.Read()) {
-                            model.DisplayName = rdr.GetStringColumn("display_name");
-                            model.EmailAddress = rdr.GetStringColumn("email_address");
-                            model.Presentation = rdr.GetStringColumn("presentation");
-                        }
+                        model.Designer = ReadDesigner_(rdr, designer);
 
                         // Catégories du designer (avec au moins un motif).
-
                         rdr.NextResult();
-
-                        var categories = new List<CategoryItem>();
-
-                        while (rdr.Read()) {
-                            var category = new CategoryItem {
-                                DisplayName = rdr.GetStringColumn("display_name"),
-                                PatternCount = rdr.GetInt32Column("pattern_count"),
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            categories.Add(category);
-                        }
-
-                        model.Categories = categories;
+                        model.Categories = ReadCategories_(rdr);
 
                         // Les motifs du designer.
-
                         rdr.NextResult();
-
-                        var previews = new List<PatternItem>();
-
-                        while (rdr.Read()) {
-                            var preview = new PatternItem {
-                                DesignerKey = designer,
-                                DesignerName = model.DisplayName,
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            previews.Add(preview);
-                        }
-
-                        model.Previews = previews;
+                        model.Previews = ReadPatterns_(rdr, designer, model.Designer.DisplayName);
                     }
                 }
             }
@@ -116,9 +84,7 @@
 
         public DesignerViewModel Category(DesignerKey designer, string categoryKey, string language)
         {
-            var model = new CategoryViewModel {
-                DesignerKey = designer,
-            };
+            var model = new CategoryViewModel();
 
             using (var cnx = _dbHelper.CreateConnection()) {
                 using (var cmd = new SqlCommand()) {
@@ -135,57 +101,25 @@
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         // Informations sur le designer.
-
-                        if (rdr.Read()) {
-                            model.DisplayName = rdr.GetStringColumn("display_name");
-                            model.EmailAddress = rdr.GetStringColumn("email_address");
-                            model.Presentation = rdr.GetStringColumn("presentation");
-                        }
+                        model.Designer = ReadDesigner_(rdr, designer);
 
                         // Catégories du designer (avec au moins un motif).
-
                         rdr.NextResult();
-
-                        var categories = new List<CategoryItem>();
-
-                        while (rdr.Read()) {
-                            var category = new CategoryItem {
-                                DisplayName = rdr.GetStringColumn("display_name"),
-                                PatternCount = rdr.GetInt32Column("pattern_count"),
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            categories.Add(category);
-                        }
-
-                        model.Categories = categories;
+                        model.Categories = ReadCategories_(rdr);
 
                         // Les motifs de la catégorie.
-
                         rdr.NextResult();
-
-                        var previews = new List<PatternItem>();
-
-                        while (rdr.Read()) {
-                            var preview = new PatternItem {
-                                DesignerKey = designer,
-                                DesignerName = model.DisplayName,
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            previews.Add(preview);
-                        }
-
-                        model.Previews = previews;
+                        model.Previews = ReadPatterns_(rdr, designer, model.Designer.DisplayName);
                     }
                 }
             }
+
             return model;
         }
 
         public PatternViewModel Pattern(DesignerKey designer, string reference, string language)
         {
-            var model = new PatternViewModel {
-                DesignerKey = designer,
-            };
+            var model = new PatternViewModel();
 
             using (var cnx = _dbHelper.CreateConnection()) {
                 using (var cmd = new SqlCommand()) {
@@ -202,63 +136,78 @@
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         // Informations sur le designer.
-
-                        if (rdr.Read()) {
-                            model.DisplayName = rdr.GetStringColumn("display_name");
-                            model.EmailAddress = rdr.GetStringColumn("email_address");
-                            model.Presentation = rdr.GetStringColumn("presentation");
-                        }
+                        model.Designer = ReadDesigner_(rdr, designer);
 
                         // Catégories du designer (avec au moins un motif).
-
                         rdr.NextResult();
-
-                        var categories = new List<CategoryItem>();
-
-                        while (rdr.Read()) {
-                            var category = new CategoryItem {
-                                DisplayName = rdr.GetStringColumn("display_name"),
-                                PatternCount = rdr.GetInt32Column("pattern_count"),
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            categories.Add(category);
-                        }
-
-                        model.Categories = categories;
+                        model.Categories = ReadCategories_(rdr);
 
                         // Détails sur le motif.
-
                         rdr.NextResult();
-
                         if (rdr.Read()) {
-                            model.Pattern = new PatternItem {
-                                DesignerKey = designer,
-                                DesignerName = model.DisplayName,
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
+                            model.Pattern = ReadPattern_(rdr, designer, model.Designer.DisplayName);
                         }
-                        
+
                         // Autres motifs dans la même catégorie.
-
                         rdr.NextResult();
-
-                        var previews = new List<PatternItem>();
-
-                        while (rdr.Read()) {
-                            var preview = new PatternItem {
-                                DesignerKey = designer,
-                                DesignerName = model.DisplayName,
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            previews.Add(preview);
-                        }
-
-                        model.Previews = previews;
+                        model.Previews = ReadPatterns_(rdr, designer, model.Designer.DisplayName);
                     }
                 }
             }
 
             return model;
+        }
+
+
+        static List<CategoryItem> ReadCategories_(SqlDataReader rdr)
+        {
+            var categories = new List<CategoryItem>();
+
+            while (rdr.Read()) {
+                var category = new CategoryItem {
+                    DisplayName = rdr.GetStringColumn("display_name"),
+                    PatternCount = rdr.GetInt32Column("pattern_count"),
+                    Reference = rdr.GetStringColumn("reference"),
+                };
+                categories.Add(category);
+            }
+
+            return categories;
+        }
+
+        static DesignerItem ReadDesigner_(SqlDataReader rdr, DesignerKey designer)
+        {
+            if (rdr.Read()) {
+                return new DesignerItem {
+                    Key = designer,
+                    DisplayName = rdr.GetStringColumn("display_name"),
+                    EmailAddress = rdr.GetStringColumn("email_address"),
+                    Presentation = rdr.GetStringColumn("presentation")
+                };
+            }
+            else {
+                throw new InvalidOperationException("XXX");
+            }
+        }
+
+        static PatternItem ReadPattern_(SqlDataReader rdr, DesignerKey designer, string displayName)
+        {
+            return new PatternItem {
+                DesignerKey = designer,
+                DesignerName = displayName,
+                Reference = rdr.GetStringColumn("reference"),
+            };
+        }
+
+        static List<PatternItem> ReadPatterns_(SqlDataReader rdr, DesignerKey designer, string displayName)
+        {
+            var patterns = new List<PatternItem>();
+
+            while (rdr.Read()) {
+                patterns.Add(ReadPattern_(rdr, designer, displayName));
+            }
+
+            return patterns;
         }
     }
 }

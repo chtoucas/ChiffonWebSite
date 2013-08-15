@@ -153,9 +153,6 @@
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
     <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
     <Compile Include="Infrastructure\ChiffonLanguage.cs" />
-    <Compile Include="Infrastructure\ChiffonEnvironmentBase.cs" />
-    <Compile Include="Infrastructure\DefaultChiffonEnvironment.cs" />
-    <Compile Include="Infrastructure\EnglishChiffonEnvironment.cs" />
     <Compile Include="Infrastructure\InitializeEnvironmentModule.cs" />
     <Compile Include="Common\Filters\HtmlFilter.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
@@ -240,6 +237,7 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="ViewModels\CategoryItem.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\DesignerItem.cs" />
     <Compile Include="ViewModels\PatternItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
