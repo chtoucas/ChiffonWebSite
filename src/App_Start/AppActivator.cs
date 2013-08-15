@@ -25,8 +25,8 @@
             (new LogConfigurator(config)).Configure();
 
             // Modules HTTP.
-            HttpHeaderCleanupModule.SelfRegister();
-            CultureResolverModule.SelfRegister();
+            HttpHeaderCleanupModule.Register();
+            InitializeEnvironmentModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;

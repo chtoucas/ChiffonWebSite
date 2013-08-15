@@ -34,7 +34,7 @@
         public static class Shared
         {
             public const string MemberMenu = "~/Views/Shared/_MemberMenu.cshtml";
-            public const string PatternPreviewsGrid = "~/Views/Shared/_PatternPreviewsGrid.cshtml";
+            public const string PreviewsGrid = "~/Views/Shared/_PreviewsGrid.cshtml";
         }
     }
 }

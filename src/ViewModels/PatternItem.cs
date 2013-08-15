@@ -7,7 +7,7 @@
     using Chiffon.Entities;
     using Chiffon.Resources;
 
-    public class PatternPreviewViewModel
+    public class PatternItem
     {
         public DesignerKey DesignerKey { get; set; }
         public string DesignerName { get; set; }

@@ -4,6 +4,6 @@
 
     public interface ISiteMapFactory
     {
-        ISiteMap CreateMap(CultureInfo culture);
+        ISiteMap CreateMap(ChiffonEnvironmentBase environment);
     }
 }

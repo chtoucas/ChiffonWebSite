@@ -16,6 +16,11 @@
             return SecureAction(self, "Index", "Designer", new { designer = designerKey });
         }
 
+        public static string Category(this UrlHelper self, DesignerKey designerKey, string category)
+        {
+            return SecureAction(self, "Category", "Designer", new { designer = designerKey, category = category });
+        }
+
         public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
         {
             return SecureAction(self, "Pattern", "Designer", new { designer = designerKey, reference = reference });

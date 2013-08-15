@@ -149,7 +149,14 @@
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\HttpContext%24.cs" />
-    <Compile Include="Infrastructure\CultureResolverModule.cs" />
+    <Compile Include="Controllers\ViewModelStore.cs" />
+    <Compile Include="Infrastructure\ChiffonCulture.cs" />
+    <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
+    <Compile Include="Infrastructure\ChiffonLanguage.cs" />
+    <Compile Include="Infrastructure\ChiffonEnvironmentBase.cs" />
+    <Compile Include="Infrastructure\DefaultChiffonEnvironment.cs" />
+    <Compile Include="Infrastructure\EnglishChiffonEnvironment.cs" />
+    <Compile Include="Infrastructure\InitializeEnvironmentModule.cs" />
     <Compile Include="Common\Filters\HtmlFilter.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
@@ -162,15 +169,10 @@
     <Compile Include="Common\ViewName.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Infrastructure\Addressing\Constants.cs" />
-    <Compile Include="Infrastructure\Addressing\SiteMapBase.cs" />
-    <Compile Include="Infrastructure\Addressing\EnglishSiteMap.cs" />
+    <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMapFactory.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
-    <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMapFactory.cs" />
-    <Compile Include="Infrastructure\Addressing\UriUtility.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Infrastructure\ContainerBuilder%24.cs" />
     <Compile Include="Infrastructure\DevelopmentLogService.cs" />
     <Compile Include="Infrastructure\HttpRequestEnricher.cs" />
@@ -236,7 +238,11 @@
     </Compile>
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\MemberService.cs" />
-    <Compile Include="ViewModels\PatternPreviewViewModel.cs" />
+    <Compile Include="ViewModels\CategoryItem.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\PatternItem.cs" />
+    <Compile Include="ViewModels\DesignerViewModel.cs" />
+    <Compile Include="ViewModels\PatternViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
@@ -317,10 +323,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
-    <Content Include="Views\Shared\_PatternPreviewsGrid.cshtml" />
+    <Content Include="Views\Shared\_PreviewsGrid.cshtml" />
     <Content Include="Views\Home\Newsletter.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
+    <Content Include="Views\Designer\Category.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

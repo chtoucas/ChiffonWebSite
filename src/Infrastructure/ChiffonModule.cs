@@ -3,6 +3,7 @@
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Controllers;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Web.Security;
@@ -28,6 +29,8 @@
 
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
             builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
+
+            builder.RegisterType<ViewModelStore>().AsSelf().SingleInstance();
 
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);

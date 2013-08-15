@@ -3,23 +3,20 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
+    using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
 
     [HtmlFilter]
     [SeoPolicy]
     public class PageController : Controller
     {
-        ISiteMap _siteMap;
+        protected string Language { get; private set; }
+        protected ISiteMap SiteMap { get; private set; }
 
-        protected ISiteMap SiteMap
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            get
-            {
-                if (_siteMap == null) {
-                    _siteMap = HttpContext.GetSiteMap();
-                }
-                return _siteMap;
-            }
+            Language = ChiffonEnvironment.Current.Culture.Language;
+            SiteMap = HttpContext.GetSiteMap();
         }
     }
 }

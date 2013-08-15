@@ -61,7 +61,25 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
+        /// </summary>
+        public static string Designer_Category_Description {
+            get {
+                return ResourceManager.GetString("Designer_Category_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
+        /// </summary>
+        public static string Designer_Category_Title {
+            get {
+                return ResourceManager.GetString("Designer_Category_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Designer_Index_Description {
             get {
@@ -70,7 +88,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Designer_Index_Title {
             get {
@@ -79,7 +97,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Designer_Pattern_Description {
             get {
@@ -88,7 +106,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Designer_Pattern_Title {
             get {
@@ -97,7 +115,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Home_About_Description {
             get {
@@ -106,7 +124,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Home_About_Title {
             get {
@@ -115,7 +133,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Home_Contact_Description {
             get {
@@ -124,7 +142,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Home_Contact_Title {
             get {
@@ -133,7 +151,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Home_Index_Description {
             get {
@@ -142,7 +160,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Home_Index_Title {
             get {
@@ -151,7 +169,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collective of textile designers..
         /// </summary>
         public static string Home_Newsletter_Description {
             get {
@@ -160,7 +178,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XXX.
+        ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ?.
         /// </summary>
         public static string Home_Newsletter_Title {
             get {

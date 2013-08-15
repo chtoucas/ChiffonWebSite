@@ -63,6 +63,15 @@
             _routes.MapRoute(RouteName.LaureRoussel.Pattern, "laure-roussel/{reference}",
                 new { controller = "Designer", action = "Pattern", designer = DesignerKey.LaureRoussel });
 
+            _routes.MapRoute(RouteName.Chicamancha.Category, "chicamancha/categories/{category}",
+                new { controller = "Designer", action = "Category", designer = DesignerKey.Chicamancha });
+            _routes.MapRoute(RouteName.VivianeDevaux.Category, "viviane-devaux/categories/{category}",
+                new { controller = "Designer", action = "Category", designer = DesignerKey.VivianeDevaux });
+            _routes.MapRoute(RouteName.ChristineLégeret.Category, "christine-legeret/categories/{category}",
+                new { controller = "Designer", action = "Category", designer = DesignerKey.ChristineLégeret });
+            _routes.MapRoute(RouteName.LaureRoussel.Category, "laure-roussel/categories/{category}",
+                new { controller = "Designer", action = "Category", designer = DesignerKey.LaureRoussel });
+
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 
             Handlers_();
