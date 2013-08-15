@@ -61,6 +61,114 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Designer_Index_Description {
+            get {
+                return ResourceManager.GetString("Designer_Index_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Designer_Index_Title {
+            get {
+                return ResourceManager.GetString("Designer_Index_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Designer_Pattern_Description {
+            get {
+                return ResourceManager.GetString("Designer_Pattern_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Designer_Pattern_Title {
+            get {
+                return ResourceManager.GetString("Designer_Pattern_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_About_Description {
+            get {
+                return ResourceManager.GetString("Home_About_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_About_Title {
+            get {
+                return ResourceManager.GetString("Home_About_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Contact_Description {
+            get {
+                return ResourceManager.GetString("Home_Contact_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Contact_Title {
+            get {
+                return ResourceManager.GetString("Home_Contact_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Index_Description {
+            get {
+                return ResourceManager.GetString("Home_Index_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Index_Title {
+            get {
+                return ResourceManager.GetString("Home_Index_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Newsletter_Description {
+            get {
+                return ResourceManager.GetString("Home_Newsletter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à XXX.
+        /// </summary>
+        public static string Home_Newsletter_Title {
+            get {
+                return ResourceManager.GetString("Home_Newsletter_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collectif de designers textiles..
         /// </summary>
         public static string MetaDescription {

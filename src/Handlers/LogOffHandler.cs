@@ -24,7 +24,7 @@
         {
             FormsAuthentication.SignOut();
 
-            var nextUrl = SiteMapUtility.GetSiteMap(context).Home();
+            var nextUrl = context.GetSiteMap().Home();
 
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }

@@ -1,8 +1,8 @@
 ﻿namespace Chiffon.Common.Filters
 {
     using System;
-    using System.Threading;
     using System.Web.Mvc;
+    using Chiffon.Infrastructure;
 
     public sealed class HtmlFilter : ActionFilterAttribute
     {
@@ -16,7 +16,7 @@
             var viewData = filterContext.Controller.ViewData;
             var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            viewData["Language"] = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName; ;
+            viewData["Language"] = ChiffonCulture.CurrentLanguage;
             viewData["RegisterLink"] = identity.IsAuthenticated ? String.Empty : "modal nofollow";
         }
 

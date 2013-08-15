@@ -49,7 +49,7 @@
             }
 
             // XXX: Pas sûr que ne pas utiliser l'IoC pour le SiteMap soit une bonne idée.
-            var siteMap = SiteMapUtility.GetSiteMap(context);
+            var siteMap = context.GetSiteMap();
 
             Uri nextUrl = succeed
                 ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())

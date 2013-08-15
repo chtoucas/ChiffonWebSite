@@ -26,8 +26,6 @@
             var viewBag = filterContext.Controller.ViewBag;
             var viewData = filterContext.Controller.ViewData;
 
-            //var rawUrl = filterContext.HttpContext.Request.RawUrl;
-
             // TODO: ajouter l'en-tête Canonical ?
             // TODO: ajouter dynamiquement la balise meta ?
             __CheckCanonicalLink(filterContext);
@@ -37,7 +35,6 @@
                 viewData["MetaDescription"] = SR.MetaDescription;
             }
             if (String.IsNullOrEmpty(viewBag.MetaKeywords)) {
-                __Log("No keywords given, using default.");
                 viewData["MetaKeywords"] = SR.MetaKeywords;
             }
             if (String.IsNullOrEmpty(viewBag.Title)) {
@@ -49,11 +46,11 @@
         [Conditional("DEBUG")]
         void __CheckCanonicalLink(ActionExecutedContext filterContext)
         {
-            if (filterContext.HttpContext.IsDebuggingEnabled) {
-                if (String.IsNullOrEmpty(filterContext.Controller.ViewBag.CanonicalLink)) {
-                    __Log("No canonical link given.");
-                }
+            //if (filterContext.HttpContext.IsDebuggingEnabled) {
+            if (String.IsNullOrEmpty(filterContext.Controller.ViewBag.CanonicalLink)) {
+                __Log("No canonical link given.");
             }
+            //}
         }
 
         [Conditional("DEBUG")]

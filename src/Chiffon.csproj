@@ -148,8 +148,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Common\SiteMapUtility.cs" />
-    <Compile Include="Infrastructure\ThreadCultureModule.cs" />
+    <Compile Include="Common\HttpContext%24.cs" />
+    <Compile Include="Infrastructure\CultureResolverModule.cs" />
     <Compile Include="Common\Filters\HtmlFilter.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
@@ -168,7 +168,6 @@
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMapFactory.cs" />
-    <Compile Include="Infrastructure\Addressing\LogOnOptions.cs" />
     <Compile Include="Infrastructure\Addressing\UriUtility.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -182,7 +181,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Infrastructure\ChiffonConfig.cs" />
-    <Compile Include="Infrastructure\SqlServerSink.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\CategoryKey.cs" />
     <Compile Include="Entities\Designer.cs" />

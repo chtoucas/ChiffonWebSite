@@ -16,25 +16,10 @@
             get
             {
                 if (_siteMap == null) {
-                    _siteMap = SiteMapUtility.GetSiteMap(HttpContext);
+                    _siteMap = HttpContext.GetSiteMap();
                 }
                 return _siteMap;
             }
         }
-
-        //public void SetTitle(string title)
-        //{
-        //    ViewBag.Title = title;
-        //}
-
-        //public void SetMetaDescription(string description)
-        //{
-        //    ViewBag.MetaDescription = description;
-        //}
-
-        //public void SetMetaKeywords(string keywords)
-        //{
-        //    ViewBag.MetaKeywords = keywords;
-        //}
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
     using System.Globalization;
-    using System.Threading;
 
     public class DefaultSiteMapFactory : ISiteMapFactory
     {

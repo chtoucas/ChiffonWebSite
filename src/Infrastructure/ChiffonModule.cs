@@ -31,10 +31,6 @@
 
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);
-
-            //builder.RegisterType<PatternImageHandler>().As<PatternImageHandler>().SingleInstance();
-            //builder.RegisterType<LogOnHandler>().As<LogOnHandler>().SingleInstance();
-            //builder.RegisterType<LogOffHandler>().As<LogOffHandler>().SingleInstance();
         }
     }
 }
