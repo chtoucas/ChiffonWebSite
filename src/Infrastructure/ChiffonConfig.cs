@@ -19,7 +19,6 @@
 
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
-        public string DomainName { get; set; }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
         public string PatternDirectory { get; set; }
@@ -69,10 +68,6 @@
         void Initialize_(NameValueCollection nvc)
         {
             // > Paramètres obligatoires <
-
-            DomainName = nvc.MayGetValue("chiffon.domainName")
-                .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.domainName'."));
 
             // TODO: validate this? Absolute and well-formed.
             PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")

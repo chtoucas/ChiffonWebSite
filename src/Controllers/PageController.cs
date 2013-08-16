@@ -5,17 +5,27 @@
     using Chiffon.Common.Filters;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Narvalo;
 
     [HtmlFilter]
     [SeoPolicy]
     public class PageController : Controller
     {
-        protected string Language { get; private set; }
+        readonly ChiffonEnvironment _environment;
+
+        public PageController(ChiffonEnvironment environment)
+        {
+            Requires.NotNull(environment, "environment");
+
+            _environment = environment;
+        }
+
+        protected ChiffonEnvironment Environment { get { return _environment; } }
+        protected string LanguageName { get { return Environment.Culture.LanguageName; } }
         protected ISiteMap SiteMap { get; private set; }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            Language = ChiffonEnvironment.Current.Culture.Language;
             SiteMap = HttpContext.GetSiteMap();
         }
     }

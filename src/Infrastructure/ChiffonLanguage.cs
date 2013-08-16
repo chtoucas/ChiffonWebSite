@@ -1,5 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
+    using System;
+
     public enum ChiffonLanguage
     {
         Default = 0,

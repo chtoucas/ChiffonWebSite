@@ -32,6 +32,8 @@
 
             builder.RegisterType<ViewModelStore>().AsSelf().SingleInstance();
 
+            builder.Register(_ => ChiffonEnvironment.Current).AsSelf().InstancePerHttpRequest();
+
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);
         }

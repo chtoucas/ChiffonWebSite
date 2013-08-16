@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
+    using Chiffon.Infrastructure;
     using Chiffon.Resources;
     using Narvalo;
 
@@ -11,7 +12,8 @@
     {
         readonly ViewModelStore _store;
 
-        public HomeController(ViewModelStore store)
+        public HomeController(ChiffonEnvironment environment, ViewModelStore store)
+            : base(environment)
         {
             Requires.NotNull(store, "store");
 

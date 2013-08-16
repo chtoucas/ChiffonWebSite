@@ -1,13 +1,20 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
-    using System.Globalization;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Web;
     using Narvalo;
+    using Narvalo.Collections;
 
     public class ChiffonEnvironment
     {
+        static readonly Dictionary<String, ChiffonLanguage> DomainLanguage_
+            = new Dictionary<string, ChiffonLanguage>() {
+                {"pourquelmotifsimone.com",    ChiffonLanguage.Default},
+                {"en.pourquelmotifsimone.com", ChiffonLanguage.English},
+            };
+
         static object Lock_ = new Object();
         static ChiffonEnvironment Current_;
 
@@ -33,31 +40,31 @@
             private set { lock (Lock_) { Current_ = value; } }
         }
 
-        public static ChiffonEnvironment ResolveAndInitialize(ChiffonConfig config, HttpRequest request)
+        public static ChiffonEnvironment ResolveAndInitialize(HttpRequest request)
         {
-            ChiffonCulture culture;
-            string domainName;
+            var info = ResolveDomain_(request);
+            var culture = ChiffonCulture.Create(info.Language);
 
-            if (request.Url.Host == config.DomainName) {
-                domainName = config.DomainName;
-                culture = ChiffonCulture.Create(ChiffonLanguage.Default);
-            }
-            else {
-                culture = ChiffonCulture.Create(ChiffonLanguage.English);
-                domainName = String.Format(CultureInfo.InvariantCulture,
-                    "{0}.{1}", culture.Language, config.DomainName);
-
+            if (info.Language != ChiffonLanguage.Default) {
                 InitializeCulture_(culture);
             }
 
-            var builder = new UriBuilder {
-                Scheme = Uri.UriSchemeHttp,
-                Host = domainName,
-            };
+            return (Current = new ChiffonEnvironment(culture, info.Uri));
+        }
 
-            Current = new ChiffonEnvironment(culture, builder.Uri);
+        class DomainInfo
+        {
+            public ChiffonLanguage Language { get; set; }
+            public Uri Uri { get; set; }
+        }
 
-            return Current;
+        static Uri GetBaseUri_(Uri uri)
+        {
+            return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
+
+            // return VirtualPathUtility.ToAbsolute("~/") -> "/";
+            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
         }
 
         static void InitializeCulture_(ChiffonCulture culture)
@@ -68,13 +75,30 @@
             Thread.CurrentThread.CurrentCulture = culture.Culture;
         }
 
-        //static Uri GetBaseUri_(HttpRequestBase request)
-        //{
-        //    return new Uri(request.Url.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
+        static DomainInfo ResolveDomain_(HttpRequest request)
+        {
+            var uri = GetBaseUri_(request.Url);
+            var language = uri.IsLoopback
+                ? ResolveLanguageFromQueryString_(request)
+                : ResolveLanguageFromHost_(uri);
 
-        //    // return VirtualPathUtility.ToAbsolute("~/");
-        //    // return new Uri(request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
-        //    // return new Uri(request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped));
-        //}
+            return new DomainInfo {
+                Language = language,
+                Uri = uri,
+            };
+        }
+
+        static ChiffonLanguage ResolveLanguageFromHost_(Uri uri)
+        {
+            return DomainLanguage_.MayGetValue(uri.Host)
+                .ValueOrThrow(() => new NotSupportedException());
+        }
+
+        static ChiffonLanguage ResolveLanguageFromQueryString_(HttpRequest request)
+        {
+            return request.QueryString
+                .MayParseValue("lang", _ => MayParse.ToEnum<ChiffonLanguage>(_))
+                .ValueOrElse(ChiffonLanguage.Default);
+        }
     }
 }

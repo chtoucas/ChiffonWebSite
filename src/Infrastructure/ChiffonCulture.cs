@@ -20,7 +20,7 @@
         public CultureInfo Culture { get { return _culture; } }
         public CultureInfo UICulture { get { return _uiCulture; } }
 
-        public string Language
+        public string LanguageName
         {
             get { return UICulture.TwoLetterISOLanguageName; }
         }

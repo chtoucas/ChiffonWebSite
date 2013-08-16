@@ -40,11 +40,9 @@
             // pour les modules HTTP.
             // MVC Turbine ?
             // HttpModuleMagic ?
-            var resolver = DependencyResolver.Current;
-            var config = resolver.GetService<ChiffonConfig>();
-            var siteMapFactory = resolver.GetService<ISiteMapFactory>();
+            var siteMapFactory = DependencyResolver.Current.GetService<ISiteMapFactory>();
 
-            var environment = ChiffonEnvironment.ResolveAndInitialize(config, app.Request);
+            var environment = ChiffonEnvironment.ResolveAndInitialize(app.Request);
             var siteMap = siteMapFactory.CreateMap(environment);
 
             app.Context.SetSiteMap(siteMap);

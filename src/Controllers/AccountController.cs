@@ -2,9 +2,12 @@
 {
     using System.Web.Mvc;
     using Chiffon.Common;
+    using Chiffon.Infrastructure;
 
     public class AccountController : PageController
     {
+        public AccountController(ChiffonEnvironment environment) : base(environment) { }
+
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;

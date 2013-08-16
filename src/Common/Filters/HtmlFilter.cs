@@ -16,7 +16,7 @@
             var viewData = filterContext.Controller.ViewData;
             var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            viewData["Language"] = ChiffonEnvironment.Current.Culture.Language;
+            viewData["Language"] = ChiffonEnvironment.Current.Culture.LanguageName;
             viewData["RegisterLink"] = identity.IsAuthenticated ? String.Empty : "modal nofollow";
         }
 
