@@ -19,7 +19,7 @@
 
         Uri Designer(DesignerKey designer);
         Uri DesignerCategory(DesignerKey designer, string category);
-        Uri DesignerPattern(DesignerKey designer, string reference);
+        Uri DesignerPattern(DesignerKey designer, string category, string reference);
 
         Uri MakeAbsoluteUri(string relativeUri);
         Uri MakeAbsoluteUri(Uri relativeUri);

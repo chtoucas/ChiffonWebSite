@@ -1,13 +1,13 @@
 ﻿namespace Chiffon.Infrastructure
 {
+    using System.Data;
     using System.Data.SqlClient;
-    using Chiffon.Infrastructure;
 
-    public class DbHelper
+    public class SqlHelper
     {
         readonly ChiffonConfig _config;
 
-        public DbHelper(ChiffonConfig config)
+        public SqlHelper(ChiffonConfig config)
         {
             _config = config;
         }
@@ -17,6 +17,11 @@
         public SqlConnection CreateConnection()
         {
             return new SqlConnection(ConnectionString);
+        }
+
+        public static SqlCommand CreateStoredProcedure(string name, SqlConnection connection)
+        {
+            return new SqlCommand(name, connection) { CommandType = CommandType.StoredProcedure };
         }
     }
 }

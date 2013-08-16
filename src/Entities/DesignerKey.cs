@@ -11,21 +11,21 @@
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
-        string _key;
+        string _value;
 
-        DesignerKey(string key)
+        DesignerKey(string value)
         {
-            _key = key;
+            _value = value;
         }
 
-        public string Key
+        public string Value
         {
-            get { return _key; }
+            get { return _value; }
         }
 
-        public static Maybe<DesignerKey> Parse(string key)
+        public static Maybe<DesignerKey> MayParse(string value)
         {
-            switch (key) {
+            switch (value) {
                 case "chicamancha":
                     return Maybe.Create(Chicamancha);
                 case "viviane-devaux":
@@ -39,11 +39,27 @@
             }
         }
 
+        public static DesignerKey Parse(string value)
+        {
+            switch (value) {
+                case "chicamancha":
+                    return Chicamancha;
+                case "viviane-devaux":
+                    return VivianeDevaux;
+                case "christine-legeret":
+                    return ChristineLégeret;
+                case "laure-roussel":
+                    return LaureRoussel;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
         #region IEquatable<DesignerKey>
 
         public bool Equals(DesignerKey other)
         {
-            return _key == other._key;
+            return _value == other._value;
         }
 
         #endregion
@@ -69,12 +85,12 @@
 
         public override int GetHashCode()
         {
-            return _key.GetHashCode();
+            return _value.GetHashCode();
         }
 
         public override string ToString()
         {
-            return _key;
+            return _value;
         }
     }
 }

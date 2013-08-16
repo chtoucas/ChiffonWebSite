@@ -12,20 +12,20 @@
     [SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
     {
-        readonly DbHelper _dbHelper;
+        readonly SqlHelper _sqlHelper;
 
-        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, DbHelper dbHelper)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, SqlHelper sqlHelper)
             : base(environment, siteMap)
         {
-            Requires.NotNull(dbHelper, "dbHelper");
+            Requires.NotNull(sqlHelper, "sqlHelper");
 
-            _dbHelper = dbHelper;
+            _sqlHelper = sqlHelper;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = new ListShowcasedPatternsQuery(_dbHelper).Execute();
+            var model = new ListShowcasedPatternsQuery(_sqlHelper).Execute();
 
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;

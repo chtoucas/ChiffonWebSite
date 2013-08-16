@@ -23,14 +23,14 @@
             Requires.NotNull(builder, "builder");
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
-            builder.RegisterType<DbHelper>().AsSelf().SingleInstance();
+            builder.RegisterType<SqlHelper>().AsSelf().SingleInstance();
 
-            // IMPORTANT: Cette classe est entièrement résolue à l'exécution.
+            // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
             // Cf. aussi les commentaires dans la classe ChiffonRuntime.
             builder.Register(_ => ChiffonRuntime.Environment).AsSelf().InstancePerHttpRequest();
 
             builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
-            // IMPORTANT: Cette classe est entièrement résolue à l'exécution.
+            // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
 
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();

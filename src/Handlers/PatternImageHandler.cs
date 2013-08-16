@@ -28,15 +28,15 @@
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
-        readonly DbHelper _dbHelper;
+        readonly SqlHelper _sqlHelper;
 
-        public PatternImageHandler(ChiffonConfig config, DbHelper dbHelper)
+        public PatternImageHandler(ChiffonConfig config, SqlHelper sqlHelper)
             : base()
         {
             Requires.NotNull(config, "config");
-            Requires.NotNull(dbHelper, "dbHelper");
+            Requires.NotNull(sqlHelper, "sqlHelper");
 
-            _dbHelper = dbHelper;
+            _sqlHelper = sqlHelper;
 
             _fileSystem = new PatternFileSystem(config);
         }
@@ -47,7 +47,7 @@
         {
             var nvc = request.QueryString;
 
-            var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.Parse(_));
+            var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
             if (designerKey.IsNone) { return BindingFailure("designer"); }
 
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
@@ -141,7 +141,7 @@
         {
             var result = Maybe<Pattern>.None;
 
-            using (var cnx = _dbHelper.CreateConnection()) {
+            using (var cnx = _sqlHelper.CreateConnection()) {
                 using (var cmd = new SqlCommand()) {
                     cmd.CommandText = "usp_getPattern";
                     cmd.Connection = cnx;
@@ -149,7 +149,7 @@
 
                     SqlParameterCollection p = cmd.Parameters;
                     p.Add("@reference", SqlDbType.NVarChar).Value = reference;
-                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Key;
+                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
 
                     cnx.Open();
 

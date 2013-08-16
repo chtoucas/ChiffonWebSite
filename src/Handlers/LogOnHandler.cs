@@ -18,7 +18,10 @@
         readonly IFormsAuthenticationService _formsService;
         readonly ISiteMap _siteMap;
 
-        public LogOnHandler(IMemberService memberService, IFormsAuthenticationService formsService, ISiteMap siteMap)
+        public LogOnHandler(
+            IMemberService memberService, 
+            IFormsAuthenticationService formsService, 
+            ISiteMap siteMap)
             : base()
         {
             Requires.NotNull(memberService, "memberService");

@@ -9,6 +9,7 @@
 
     public class PatternItem
     {
+        public string CategoryKey { get; set; }
         public DesignerKey DesignerKey { get; set; }
         public string DesignerName { get; set; }
         public string Reference { get; set; }

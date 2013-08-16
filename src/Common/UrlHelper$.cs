@@ -1,10 +1,8 @@
 ﻿namespace Chiffon.Common
 {
     using System;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Chiffon.Common;
     using Chiffon.Entities;
 
     public static class UrlHelperExtensions
@@ -13,17 +11,19 @@
 
         public static string Designer(this UrlHelper self, DesignerKey designerKey)
         {
-            return SecureAction(self, "Index", "Designer", new { designer = designerKey });
+            return SecureAction(self, "Index", "Designer", new { designerKey = designerKey });
         }
 
-        public static string Category(this UrlHelper self, DesignerKey designerKey, string category)
+        public static string Category(this UrlHelper self, DesignerKey designerKey, string categoryKey)
         {
-            return SecureAction(self, "Category", "Designer", new { designer = designerKey, category = category });
+            return SecureAction(self, "Category", "Designer",
+                new { designerKey = designerKey, categoryKey = categoryKey });
         }
 
-        public static string Pattern(this UrlHelper self, DesignerKey designerKey, string reference)
+        public static string Pattern(this UrlHelper self, DesignerKey designerKey, string categoryKey, string reference)
         {
-            return SecureAction(self, "Pattern", "Designer", new { designer = designerKey, reference = reference });
+            return SecureAction(self, "Pattern", "Designer",
+                new { designerKey = designerKey, categoryKey = categoryKey, reference = reference });
         }
 
         public static string ChicamanchaUrl(this UrlHelper self)

@@ -148,8 +148,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Controllers\Queries\GetCategoryQuery.cs" />
-    <Compile Include="Controllers\Queries\GetPatternQuery.cs" />
+    <Compile Include="Controllers\Queries\MayGetCategoryQuery.cs" />
+    <Compile Include="Controllers\Queries\MayGetPatternQuery.cs" />
     <Compile Include="Controllers\Queries\GetDesignerQuery.cs" />
     <Compile Include="Controllers\Queries\SqlDataReader%24.cs" />
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
@@ -184,15 +184,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Infrastructure\ChiffonConfig.cs" />
-    <Compile Include="Entities\Category.cs" />
-    <Compile Include="Entities\CategoryKey.cs" />
-    <Compile Include="Entities\Designer.cs" />
     <Compile Include="Entities\DesignerKey.cs" />
-    <Compile Include="Entities\MemberKey.cs" />
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
-    <Compile Include="Entities\Visit.cs" />
     <Compile Include="Infrastructure\GlimpseSecurityPolicy.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
@@ -215,7 +210,7 @@
     <Compile Include="Infrastructure\PatternSize%24.cs" />
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
-    <Compile Include="Infrastructure\DbHelper.cs" />
+    <Compile Include="Infrastructure\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\Queries\ListShowcasedPatternsQuery.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
@@ -245,7 +240,6 @@
     <Compile Include="ViewModels\DesignerItem.cs" />
     <Compile Include="ViewModels\PatternItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
-    <Compile Include="ViewModels\PatternViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
@@ -329,7 +323,6 @@
     <Content Include="Views\Shared\_PreviewsGrid.cshtml" />
     <Content Include="Views\Home\Newsletter.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

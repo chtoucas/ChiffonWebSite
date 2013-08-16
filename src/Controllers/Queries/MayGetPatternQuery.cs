@@ -7,26 +7,34 @@
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Fx;
 
-    public class GetDesignerQuery
+    public class MayGetPatternQuery
     {
         readonly SqlHelper _sqlHelper;
 
-        public GetDesignerQuery(SqlHelper sqlHelper)
+        public MayGetPatternQuery(SqlHelper sqlHelper)
         {
             Requires.NotNull(sqlHelper, "sqlHelper");
 
             _sqlHelper = sqlHelper;
         }
 
-        public DesignerViewModel Execute(DesignerKey designerKey, string languageName)
+        public Maybe<CategoryViewModel> Execute(
+            DesignerKey designerKey,
+            string categoryKey,
+            string reference,
+            string languageName)
         {
-            var model = new DesignerViewModel();
+
+            var model = new CategoryViewModel();
 
             using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.CreateStoredProcedure("usp_fo_getDesigner", cnx)) {
+                using (var cmd = SqlHelper.CreateStoredProcedure("usp_fo_getPattern", cnx)) {
                     SqlParameterCollection p = cmd.Parameters;
                     p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
+                    p.Add("@category", SqlDbType.NVarChar).Value = categoryKey;
+                    p.Add("@reference", SqlDbType.NVarChar).Value = reference;
                     p.Add("@language", SqlDbType.Char).Value = languageName;
 
                     cnx.Open();
@@ -48,17 +56,31 @@
 
                         rdr.NextResult();
 
-                        // Les motifs du designer.
-                        var previews = new List<PatternItem>();
-                        while (rdr.Read()) {
-                            previews.Add(rdr.GetPattern(designerKey, model.Designer.DisplayName));
+                        // Les motifs dans la catégorie avec le motif sélectionné en premier.
+                        var patterns = new List<PatternItem>();
+
+                        if (!rdr.Read()) {
+                            return Maybe<CategoryViewModel>.None;
                         }
-                        model.Previews = previews;
+
+                        patterns.Add(new PatternItem {
+                            CategoryKey = categoryKey,
+                            DesignerKey = designerKey,
+                            DesignerName = model.Designer.DisplayName,
+                            Reference = reference
+                        });
+
+                        rdr.NextResult();
+
+                        while (rdr.Read()) {
+                            patterns.Add(rdr.GetPattern(designerKey, categoryKey, model.Designer.DisplayName));
+                        }
+                        model.Patterns = patterns;
                     }
                 }
             }
 
-            return model;
+            return Maybe.Create(model);
         }
     }
 }

@@ -3,43 +3,32 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
-    using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
-    using Narvalo.Data;
 
     public class ListShowcasedPatternsQuery
     {
-        readonly DbHelper _dbHelper;
+        readonly SqlHelper _sqlHelper;
 
-        public ListShowcasedPatternsQuery(DbHelper dbHelper)
+        public ListShowcasedPatternsQuery(SqlHelper sqlHelper)
         {
-            Requires.NotNull(dbHelper, "dbHelper");
+            Requires.NotNull(sqlHelper, "sqlHelper");
 
-            _dbHelper = dbHelper;
+            _sqlHelper = sqlHelper;
         }
 
         public List<PatternItem> Execute()
         {
             var model = new List<PatternItem>();
 
-            using (var cnx = _dbHelper.CreateConnection()) {
-                using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_getShowcasedPatterns";
-                    cmd.Connection = cnx;
-                    cmd.CommandType = CommandType.StoredProcedure;
-
+            using (var cnx = _sqlHelper.CreateConnection()) {
+                using (var cmd = SqlHelper.CreateStoredProcedure("usp_fo_getShowcasedPatterns", cnx)) {
                     cnx.Open();
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         while (rdr.Read()) {
-                            var preview = new PatternItem {
-                                DesignerKey = DesignerKey.Parse(rdr.GetStringColumn("designer_id")).Value,
-                                DesignerName = rdr.GetStringColumn("designer_name"),
-                                Reference = rdr.GetStringColumn("reference"),
-                            };
-                            model.Add(preview);
+                            model.Add(rdr.GetPattern());
                         }
                     }
                 }

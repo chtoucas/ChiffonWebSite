@@ -10,7 +10,7 @@
    <ul>
     <li><a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternCount)</a></li>
     @foreach (var category in Model.Categories) {
-     <li><a href="@Url.Category(Model.Designer.Key, category.Reference)">@category.DisplayName (@category.PatternCount)</a></li>
+     <li><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternCount)</a></li>
     }
    </ul>
   </nav>
@@ -18,7 +18,7 @@
  </div>
  <ul class="mosaic clr">
   @foreach (var preview in @Model.Previews) {
-   <li><a href="@Url.Pattern(preview.DesignerKey, preview.Reference)" class="vignette @preview.CssClass">
+   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" class="vignette @preview.CssClass">
     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /></a></li>
   }
  </ul>

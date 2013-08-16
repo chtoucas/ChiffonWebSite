@@ -69,9 +69,9 @@
             return MakeAbsoluteUri(designer.ToString() + "/" + category);
         }
 
-        public Uri DesignerPattern(DesignerKey designer, string reference)
+        public Uri DesignerPattern(DesignerKey designer, string category, string reference)
         {
-            return MakeAbsoluteUri(designer.ToString() + "/" + reference);
+            return MakeAbsoluteUri(designer.ToString() + "/" + category + "/" + reference);
         }
 
         public Uri MakeAbsoluteUri(string relativeUri)
