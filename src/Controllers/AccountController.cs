@@ -3,10 +3,11 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
 
     public class AccountController : PageController
     {
-        public AccountController(ChiffonEnvironment environment) : base(environment) { }
+        public AccountController(ChiffonEnvironment environment, ISiteMap siteMap) : base(environment, siteMap) { }
 
         public ActionResult Login(string returnUrl)
         {

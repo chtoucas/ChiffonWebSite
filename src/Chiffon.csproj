@@ -148,12 +148,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Common\HttpContext%24.cs" />
-    <Compile Include="Controllers\ViewModelStore.cs" />
+    <Compile Include="Controllers\Queries\GetCategoryQuery.cs" />
+    <Compile Include="Controllers\Queries\GetPatternQuery.cs" />
+    <Compile Include="Controllers\Queries\GetDesignerQuery.cs" />
+    <Compile Include="Controllers\Queries\SqlDataReader%24.cs" />
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
-    <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
     <Compile Include="Infrastructure\ChiffonLanguage.cs" />
-    <Compile Include="Infrastructure\InitializeEnvironmentModule.cs" />
+    <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
+    <Compile Include="Infrastructure\ChiffonEnvironmentResolver.cs" />
+    <Compile Include="Infrastructure\ChiffonRuntime.cs" />
+    <Compile Include="Infrastructure\InitializeRuntimeModule.cs" />
     <Compile Include="Common\Filters\HtmlFilter.cs" />
     <Compile Include="Common\RawHttpEncoder.cs">
       <SubType>Code</SubType>
@@ -213,6 +217,7 @@
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Infrastructure\DbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\Queries\ListShowcasedPatternsQuery.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -54,6 +54,10 @@ Rewrite
 Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\
 
 
+            // FIXME: Explorer les librairies suivantes afin d'activer l'injection de dépendances
+            // pour les modules HTTP.
+            // MVC Turbine ?
+            // HttpModuleMagic ?
 
 
 http://stackoverflow.com/questions/7511318/pass-currentuiculture-to-async-task-in-asp-net-mvc-3-0

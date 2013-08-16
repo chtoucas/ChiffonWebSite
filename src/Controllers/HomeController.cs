@@ -3,27 +3,29 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
+    using Chiffon.Controllers.Queries;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Narvalo;
 
     [SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
     {
-        readonly ViewModelStore _store;
+        readonly DbHelper _dbHelper;
 
-        public HomeController(ChiffonEnvironment environment, ViewModelStore store)
-            : base(environment)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, DbHelper dbHelper)
+            : base(environment, siteMap)
         {
-            Requires.NotNull(store, "store");
+            Requires.NotNull(dbHelper, "dbHelper");
 
-            _store = store;
+            _dbHelper = dbHelper;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _store.Home();
+            var model = new ListShowcasedPatternsQuery(_dbHelper).Execute();
 
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;

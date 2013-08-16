@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Mvc;
-    using Chiffon.Infrastructure;
 
     public sealed class HtmlFilter : ActionFilterAttribute
     {
@@ -13,17 +12,18 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var viewData = filterContext.Controller.ViewData;
             var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            viewData["Language"] = ChiffonEnvironment.Current.Culture.LanguageName;
-            viewData["RegisterLink"] = identity.IsAuthenticated ? String.Empty : "modal nofollow";
+            filterContext.Controller.ViewData["RegisterLink"]
+                = identity.IsAuthenticated ? String.Empty : "modal nofollow";
         }
 
         static string GetBodyId_(ActionExecutingContext filterContext)
         {
-            var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            var actionName = filterContext.ActionDescriptor.ActionName;
+            var actionDescriptor = filterContext.ActionDescriptor;
+
+            var controllerName = actionDescriptor.ControllerDescriptor.ControllerName;
+            var actionName = actionDescriptor.ActionName;
 
             return (controllerName + "_" + actionName).ToLowerInvariant();
         }

@@ -2,28 +2,30 @@
 {
     using System.Web.Mvc;
     using Chiffon.Common;
+    using Chiffon.Controllers.Queries;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Narvalo;
 
     [Authorize]
     public class DesignerController : PageController
     {
-        readonly ViewModelStore _store;
+        readonly DbHelper _dbHelper;
 
-        public DesignerController(ChiffonEnvironment environment, ViewModelStore store)
-            : base(environment)
+        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, DbHelper dbHelper)
+            : base(environment, siteMap)
         {
-            Requires.NotNull(store, "store");
+            Requires.NotNull(dbHelper, "dbHelper");
 
-            _store = store;
+            _dbHelper = dbHelper;
         }
 
         [HttpGet]
         public ActionResult Index(DesignerKey designer)
         {
-            var model = _store.Designer(designer, LanguageName);
+            var model = new GetDesignerQuery(_dbHelper).Execute(designer, LanguageName);
 
             ViewBag.Title = SR.Designer_Index_Title;
             ViewBag.MetaDescription = SR.Designer_Index_Description;
@@ -35,7 +37,7 @@
         [HttpGet]
         public ActionResult Category(DesignerKey designer, string category)
         {
-            var model = _store.Category(designer, category, LanguageName);
+            var model = new GetCategoryQuery(_dbHelper).Execute(designer, category, LanguageName);
 
             ViewBag.Title = SR.Designer_Category_Title;
             ViewBag.MetaDescription = SR.Designer_Category_Description;
@@ -47,7 +49,7 @@
         [HttpGet]
         public ActionResult Pattern(DesignerKey designer, string reference)
         {
-            var model = _store.Pattern(designer, reference, LanguageName);
+            var model = new GetPatternQuery(_dbHelper).Execute(designer, reference, LanguageName);
           
             if (model.Pattern == null) {
                 return new HttpNotFoundResult("XXX");

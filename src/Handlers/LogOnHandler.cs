@@ -4,7 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Chiffon.Common;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Collections;
@@ -16,12 +16,18 @@
     {
         readonly IMemberService _memberService;
         readonly IFormsAuthenticationService _formsService;
+        readonly ISiteMap _siteMap;
 
-        public LogOnHandler(IMemberService memberService, IFormsAuthenticationService formsService)
+        public LogOnHandler(IMemberService memberService, IFormsAuthenticationService formsService, ISiteMap siteMap)
             : base()
         {
+            Requires.NotNull(memberService, "memberService");
+            Requires.NotNull(formsService, "formsService");
+            Requires.NotNull(siteMap, "siteMap");
+
             _memberService = memberService;
             _formsService = formsService;
+            _siteMap = siteMap;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
@@ -48,12 +54,9 @@
                 //_formsService.SignIn(
             }
 
-            // XXX: Pas sûr que ne pas utiliser l'IoC pour le SiteMap soit une bonne idée.
-            var siteMap = context.GetSiteMap();
-
             Uri nextUrl = succeed
-                ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
-                : query.TargetUrl.Match(_ => siteMap.LogOn(_), siteMap.LogOn());
+                ? query.TargetUrl.Match(_ => _siteMap.MakeAbsoluteUri(_), _siteMap.Home())
+                : query.TargetUrl.Match(_ => _siteMap.LogOn(_), _siteMap.LogOn());
 
             context.Response.Redirect(nextUrl.ToString());
         }
