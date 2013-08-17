@@ -2,6 +2,7 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Chiffon.Data;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;

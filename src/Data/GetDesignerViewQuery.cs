@@ -1,21 +1,19 @@
-﻿namespace Chiffon.Controllers.Queries
+﻿namespace Chiffon.Data
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
 
-    public class GetDesignerQuery
+    public class GetDesignerViewQuery
     {
         readonly SqlHelper _sqlHelper;
 
-        public GetDesignerQuery(SqlHelper sqlHelper)
+        public GetDesignerViewQuery(SqlHelper sqlHelper)
         {
             Requires.NotNull(sqlHelper, "sqlHelper");
-
             _sqlHelper = sqlHelper;
         }
 
@@ -24,10 +22,9 @@
             var model = new DesignerViewModel();
 
             using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.CreateStoredProcedure("usp_fo_getDesigner", cnx)) {
-                    SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
-                    p.Add("@language", SqlDbType.Char).Value = languageName;
+                using (var cmd = SqlHelper.StoredProcedure("usp_fo_getDesigner", cnx)) {
+                    cmd.AddParameter("@designer", SqlDbType.NVarChar, designerKey.Value);
+                    cmd.AddParameter("@language", SqlDbType.Char, languageName);
 
                     cnx.Open();
 

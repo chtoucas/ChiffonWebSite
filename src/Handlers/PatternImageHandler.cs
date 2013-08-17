@@ -1,19 +1,17 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
-    using System.Data;
-    using System.Data.SqlClient;
     using System.Globalization;
     using System.Net;
     using System.Web;
     using System.Web.Caching;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Chiffon.Data;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Collections;
-    using Narvalo.Data;
     using Narvalo.Fx;
     using Narvalo.Web;
 
@@ -118,7 +116,7 @@
             var cacheValue = cache[cacheKey] as Pattern;
 
             if (cacheValue == null) {
-                pattern = LoadPattern_(designerKey, reference);
+                pattern = new MayGetPatternQuery(_sqlHelper).Execute(designerKey, reference);
 
                 if (pattern.IsSome) {
                     lock (Lock_) {
@@ -137,38 +135,38 @@
             return pattern.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
 
-        Maybe<Pattern> LoadPattern_(DesignerKey designerKey, string reference)
-        {
-            var result = Maybe<Pattern>.None;
+        //Maybe<Pattern> LoadPattern_(DesignerKey designerKey, string reference)
+        //{
+        //    var result = Maybe<Pattern>.None;
 
-            using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_getPattern";
-                    cmd.Connection = cnx;
-                    cmd.CommandType = CommandType.StoredProcedure;
+        //    using (var cnx = _sqlHelper.CreateConnection()) {
+        //        using (var cmd = new SqlCommand()) {
+        //            cmd.CommandText = "usp_getPattern";
+        //            cmd.Connection = cnx;
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@reference", SqlDbType.NVarChar).Value = reference;
-                    p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
+        //            SqlParameterCollection p = cmd.Parameters;
+        //            p.Add("@reference", SqlDbType.NVarChar).Value = reference;
+        //            p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
 
-                    cnx.Open();
+        //            cnx.Open();
 
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        if (rdr.Read()) {
-                            var pattern = new Pattern(new PatternId(designerKey, reference)) {
-                                //CreationTime = rdr.GetDateTimeColumn("creation_time"),
-                                Preferred = rdr.GetBooleanColumn("preferred"),
-                                Published = rdr.GetBooleanColumn("online"),
-                                Showcased = rdr.GetBooleanColumn("showcased"),
-                            };
+        //            using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
+        //                if (rdr.Read()) {
+        //                    var pattern = new Pattern(new PatternId(designerKey, reference)) {
+        //                        //CreationTime = rdr.GetDateTimeColumn("creation_time"),
+        //                        Preferred = rdr.GetBooleanColumn("preferred"),
+        //                        Published = rdr.GetBooleanColumn("online"),
+        //                        Showcased = rdr.GetBooleanColumn("showcased"),
+        //                    };
 
-                            result = Maybe.Create(pattern);
-                        }
-                    }
-                }
-            }
+        //                    result = Maybe.Create(pattern);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

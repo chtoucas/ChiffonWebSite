@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
-    using Chiffon.Controllers.Queries;
+    using Chiffon.Data;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
@@ -25,7 +25,7 @@
         [HttpGet]
         public ActionResult Index()
         {
-            var model = new ListShowcasedPatternsQuery(_sqlHelper).Execute();
+            var model = new ListShowcasedPatternsViewQuery(_sqlHelper).Execute();
 
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;

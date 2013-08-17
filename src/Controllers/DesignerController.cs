@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Controllers.Queries;
+    using Chiffon.Data;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -27,7 +27,7 @@
         [HttpGet]
         public ActionResult Index(DesignerKey designerKey)
         {
-            DesignerViewModel model = new GetDesignerQuery(_sqlHelper).Execute(designerKey, LanguageName);
+            DesignerViewModel model = new GetDesignerViewQuery(_sqlHelper).Execute(designerKey, LanguageName);
 
             ViewBag.Title = SR.Designer_Index_Title;
             ViewBag.MetaDescription = SR.Designer_Index_Description;
@@ -40,7 +40,7 @@
         public ActionResult Category(DesignerKey designerKey, string categoryKey)
         {
             Maybe<CategoryViewModel> model
-                = new MayGetCategoryQuery(_sqlHelper).Execute(designerKey, categoryKey, LanguageName);
+                = new MayGetCategoryViewQuery(_sqlHelper).Execute(designerKey, categoryKey, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();
@@ -57,7 +57,7 @@
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
         {
             Maybe<CategoryViewModel> model
-                = new MayGetPatternQuery(_sqlHelper).Execute(designerKey, categoryKey, reference, LanguageName);
+                = new MayGetCategoryViewQuery(_sqlHelper).Execute(designerKey, categoryKey, reference, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();

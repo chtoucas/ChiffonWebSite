@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Controllers.Queries
+﻿namespace Chiffon.Data
 {
     using System.Data.SqlClient;
     using Chiffon.Entities;

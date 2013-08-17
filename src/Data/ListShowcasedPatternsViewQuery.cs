@@ -1,17 +1,15 @@
-﻿namespace Chiffon.Controllers.Queries
+﻿namespace Chiffon.Data
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
-    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
 
-    public class ListShowcasedPatternsQuery
+    public class ListShowcasedPatternsViewQuery
     {
         readonly SqlHelper _sqlHelper;
 
-        public ListShowcasedPatternsQuery(SqlHelper sqlHelper)
+        public ListShowcasedPatternsViewQuery(SqlHelper sqlHelper)
         {
             Requires.NotNull(sqlHelper, "sqlHelper");
 
@@ -23,7 +21,7 @@
             var model = new List<PatternItem>();
 
             using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.CreateStoredProcedure("usp_fo_getShowcasedPatterns", cnx)) {
+                using (var cmd = SqlHelper.StoredProcedure("usp_fo_getShowcasedPatterns", cnx)) {
                     cnx.Open();
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
