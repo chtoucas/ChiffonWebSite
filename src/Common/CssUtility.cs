@@ -5,7 +5,7 @@
 
     public static class CssUtility
     {
-        public static string Designer(DesignerKey self)
+        public static string DesignerClass(DesignerKey self)
         {
             if (self == DesignerKey.Chicamancha) {
                 return CssClassName.Chicamancha;

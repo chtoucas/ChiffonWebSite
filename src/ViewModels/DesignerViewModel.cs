@@ -5,9 +5,9 @@
 
     public class DesignerViewModel
     {
-        public DesignerItem Designer { get; set; }
-        public IEnumerable<CategoryItem> Categories { get; set; }
-        public IEnumerable<PatternItem> Previews { get; set; }
+        public DesignerViewItem Designer { get; set; }
+        public IEnumerable<CategoryViewItem> Categories { get; set; }
+        public IEnumerable<PatternViewItem> Previews { get; set; }
 
         public int PatternCount
         {

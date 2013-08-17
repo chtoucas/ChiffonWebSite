@@ -14,20 +14,20 @@
     [Authorize]
     public class DesignerController : PageController
     {
-        readonly DataContext _dataContext;
+        readonly ViewModelQueries _queries;
 
-        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, DataContext dataContext)
+        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, ViewModelQueries queries)
             : base(environment, siteMap)
         {
-            Requires.NotNull(dataContext, "dataContext");
+            Requires.NotNull(queries, "queries");
 
-            _dataContext = dataContext;
+            _queries = queries;
         }
 
         [HttpGet]
         public ActionResult Index(DesignerKey designerKey)
         {
-            DesignerViewModel model = _dataContext.GetDesignerView(designerKey, LanguageName);
+            DesignerViewModel model = _queries.GetDesignerViewModel(designerKey, LanguageName);
 
             ViewBag.Title = SR.Designer_Index_Title;
             ViewBag.MetaDescription = SR.Designer_Index_Description;
@@ -40,7 +40,7 @@
         public ActionResult Category(DesignerKey designerKey, string categoryKey)
         {
             Maybe<CategoryViewModel> model
-                = _dataContext.MayGetCategoryView(designerKey, categoryKey, LanguageName);
+                = _queries.MayGetCategoryViewModel(designerKey, categoryKey, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();
@@ -57,7 +57,7 @@
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
         {
             Maybe<CategoryViewModel> model
-                = _dataContext.MayGetPatternView(designerKey, categoryKey, reference, LanguageName);
+                = _queries.MayGetPatternViewModel(designerKey, categoryKey, reference, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();

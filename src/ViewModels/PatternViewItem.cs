@@ -7,14 +7,14 @@
     using Chiffon.Entities;
     using Chiffon.Resources;
 
-    public class PatternItem
+    public class PatternViewItem
     {
         public string CategoryKey { get; set; }
         public DesignerKey DesignerKey { get; set; }
         public string DesignerName { get; set; }
         public string Reference { get; set; }
 
-        public string CssClass { get { return CssUtility.Designer(DesignerKey); } }
+        public string CssClass { get { return CssUtility.DesignerClass(DesignerKey); } }
 
         public IHtmlString Description
         {

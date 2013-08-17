@@ -26,15 +26,15 @@
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
-        readonly DataContext _dataContext;
+        readonly IEntityQueries _queries;
 
-        public PatternImageHandler(ChiffonConfig config, DataContext dataContext)
+        public PatternImageHandler(ChiffonConfig config, IEntityQueries queries)
             : base()
         {
             Requires.NotNull(config, "config");
-            Requires.NotNull(dataContext, "dataContext");
+            Requires.NotNull(queries, "queries");
 
-            _dataContext = dataContext;
+            _queries = queries;
 
             _fileSystem = new PatternFileSystem(config);
         }
@@ -116,7 +116,7 @@
             var cacheValue = cache[cacheKey] as Pattern;
 
             if (cacheValue == null) {
-                pattern = _dataContext.MayGetPattern(designerKey, reference);
+                pattern = _queries.MayGetPattern(designerKey, reference);
 
                 if (pattern.IsSome) {
                     lock (Lock_) {
@@ -134,39 +134,5 @@
 
             return pattern.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
         }
-
-        //Maybe<Pattern> LoadPattern_(DesignerKey designerKey, string reference)
-        //{
-        //    var result = Maybe<Pattern>.None;
-
-        //    using (var cnx = _sqlHelper.CreateConnection()) {
-        //        using (var cmd = new SqlCommand()) {
-        //            cmd.CommandText = "usp_getPattern";
-        //            cmd.Connection = cnx;
-        //            cmd.CommandType = CommandType.StoredProcedure;
-
-        //            SqlParameterCollection p = cmd.Parameters;
-        //            p.Add("@reference", SqlDbType.NVarChar).Value = reference;
-        //            p.Add("@designer", SqlDbType.NVarChar).Value = designerKey.Value;
-
-        //            cnx.Open();
-
-        //            using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-        //                if (rdr.Read()) {
-        //                    var pattern = new Pattern(new PatternId(designerKey, reference)) {
-        //                        //CreationTime = rdr.GetDateTimeColumn("creation_time"),
-        //                        Preferred = rdr.GetBooleanColumn("preferred"),
-        //                        Published = rdr.GetBooleanColumn("online"),
-        //                        Showcased = rdr.GetBooleanColumn("showcased"),
-        //                    };
-
-        //                    result = Maybe.Create(pattern);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return result;
-        //}
     }
 }

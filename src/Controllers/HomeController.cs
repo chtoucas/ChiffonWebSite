@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
@@ -7,25 +8,26 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
+    using Chiffon.ViewModels;
     using Narvalo;
 
     [SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
     {
-        readonly DataContext _dataContext;
+        readonly ViewModelQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, DataContext dataContext)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, ViewModelQueries queries)
             : base(environment, siteMap)
         {
-            Requires.NotNull(dataContext, "dataContext");
+            Requires.NotNull(queries, "queries");
 
-            _dataContext = dataContext;
+            _queries = queries;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _dataContext.GetHomeView();
+            IEnumerable<PatternViewItem> model = _queries.GetHomeViewModel();
 
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;

@@ -2,7 +2,7 @@
 {
     using Chiffon.Entities;
 
-    public class DesignerItem
+    public class DesignerViewItem
     {
         public string DisplayName { get; set; }
         public string EmailAddress { get; set; }

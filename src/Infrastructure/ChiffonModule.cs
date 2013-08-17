@@ -23,8 +23,9 @@
         {
             Requires.NotNull(builder, "builder");
 
+            // > Infrastructure <
+
             builder.Register(_ => _config).AsSelf().SingleInstance();
-            builder.RegisterType<DataContext>().AsSelf().SingleInstance();
 
             // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
             // Cf. aussi les commentaires dans la classe ChiffonRuntime.
@@ -34,8 +35,19 @@
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
 
+            // > Data <
+
+            builder.RegisterType<EntityQueries>().As<IEntityQueries>().SingleInstance();
+            builder.RegisterType<ViewModelQueries>().As<IViewModelQueries>().SingleInstance();
+            // FIXME
+            //builder.RegisterType<WebQueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+
+            // > Services <
+
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
             builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
+
+            // > MVC <
 
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);

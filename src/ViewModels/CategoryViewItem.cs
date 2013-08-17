@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.ViewModels
 {
-    public class CategoryItem
+    public class CategoryViewItem
     {
         public string DisplayName { get; set; }
         public string Key { get; set; }
