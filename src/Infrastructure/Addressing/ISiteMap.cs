@@ -17,9 +17,9 @@
         Uri LogOn();
         Uri LogOn(Uri targetUrl);
 
-        Uri Designer(DesignerKey designer);
-        Uri DesignerCategory(DesignerKey designer, string category);
-        Uri DesignerPattern(DesignerKey designer, string category, string reference);
+        Uri Designer(DesignerKey designerKey);
+        Uri DesignerCategory(DesignerKey designerKey, string categoryKey);
+        Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference);
 
         Uri MakeAbsoluteUri(string relativeUri);
         Uri MakeAbsoluteUri(Uri relativeUri);

@@ -7,7 +7,7 @@
     {
         public DesignerViewItem Designer { get; set; }
         public IEnumerable<CategoryViewItem> Categories { get; set; }
-        public IEnumerable<PatternViewItem> Previews { get; set; }
+        public IEnumerable<PatternViewItem> Patterns { get; set; }
 
         public int PatternCount
         {

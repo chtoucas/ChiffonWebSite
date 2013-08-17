@@ -148,18 +148,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="Data\CachedViewModelQueries.cs" />
+    <Compile Include="Data\CachedQueries.cs" />
+    <Compile Include="Data\IQueries.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\IViewModelQueries.cs" />
-    <Compile Include="Data\EntityQueries.cs" />
-    <Compile Include="Data\IEntityQueries.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\DesignerQuery.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\DesignerPatternQuery.cs" />
-    <Compile Include="Data\ViewModelQueries.cs" />
-    <Compile Include="Data\SqlServer\EntityQueries\MayGetPatternQuery.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\DesignerCategoryQuery.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\DesignerIndexQuery.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\SqlDataReader%24.cs" />
+    <Compile Include="Data\Mapper.cs" />
+    <Compile Include="Data\SqlServer\ListPatternsQuery.cs" />
+    <Compile Include="Data\SqlServer\GetDesignerVMQuery.cs" />
+    <Compile Include="Data\Queries.cs" />
+    <Compile Include="Data\SqlServer\GetPatternQuery.cs" />
     <Compile Include="Data\SqlServer\StoredProcedure`1.cs" />
     <Compile Include="Data\WebQueryCache.cs" />
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
@@ -221,7 +217,7 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\SqlServer\ViewModelQueries\HomeIndexQuery.cs" />
+    <Compile Include="Data\SqlServer\GetHomeVMQuery.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -245,7 +241,6 @@
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="ViewModels\CategoryViewItem.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\DesignerViewItem.cs" />
     <Compile Include="ViewModels\PatternViewItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
@@ -386,8 +381,8 @@
       <CssFiles Include="$(StyleDir)\01-chiffon.base.css" />
       <CssFiles Include="$(StyleDir)\02-chiffon.helpers.css" />
       <CssFiles Include="$(StyleDir)\03-chiffon.css" />
-      <CssFiles Include="$(StyleDir)\04-chiffon.responsive.css" />
-      <CssFiles Include="$(StyleDir)\05-chiffon.print.css" />
+      <!--<CssFiles Include="$(StyleDir)\04-chiffon.responsive.css" />
+      <CssFiles Include="$(StyleDir)\05-chiffon.print.css" />-->
     </ItemGroup>
     <ItemGroup>
       <JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />

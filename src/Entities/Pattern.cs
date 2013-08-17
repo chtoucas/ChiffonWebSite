@@ -18,6 +18,8 @@
             _patternId = patternId;
         }
 
+        public string CategoryKey { get; set; }
+
         public DateTime CreationTime { get; set; }
 
         public DesignerKey DesignerKey { get { return PatternId.DesignerKey; } }

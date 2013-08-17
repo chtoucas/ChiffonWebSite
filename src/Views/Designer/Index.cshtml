@@ -17,7 +17,7 @@
   <p><a href="#">@Model.Designer.EmailAddress</a> </p>
  </div>
  <ul class="mosaic clr">
-  @foreach (var preview in @Model.Previews) {
+  @foreach (var preview in Model.Patterns) {
    <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" class="vignette @preview.CssClass">
     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /></a></li>
   }

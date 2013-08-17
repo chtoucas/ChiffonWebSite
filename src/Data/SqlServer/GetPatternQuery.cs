@@ -1,22 +1,25 @@
-﻿namespace Chiffon.Data.SqlServer.EntityQueries
+﻿namespace Chiffon.Data.SqlServer
 {
     using System.Data;
     using System.Data.SqlClient;
     using Chiffon.Entities;
     using Narvalo.Data;
-    using Narvalo.Fx;
 
-    public class MayGetPatternQuery : StoredProcedure<Maybe<Pattern>>
+    public class GetPatternQuery : StoredProcedure<Pattern>
     {
-        public MayGetPatternQuery(string connectionString)
-            : base(connectionString, "usp_GetPattern") { }
-
-        public DesignerKey DesignerKey { get; set; }
-        public string Reference { get; set; }
-
-        public override Maybe<Pattern> Execute()
+        public GetPatternQuery(string connectionString, DesignerKey designerKey, string reference)
+            : base(connectionString, "usp_GetPattern")
         {
-            var result = Maybe<Pattern>.None;
+            DesignerKey = designerKey;
+            Reference = reference;
+        }
+
+        public DesignerKey DesignerKey { get; private set; }
+        public string Reference { get; private set; }
+
+        public override Pattern Execute()
+        {
+            Pattern result = null;
 
             using (var connection = new SqlConnection(ConnectionString)) {
                 using (var cmd = CreateCommand(connection)) {
@@ -25,13 +28,14 @@
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
                         if (rdr.Read()) {
                             var pattern = new Pattern(new PatternId(DesignerKey, Reference)) {
-                                //CreationTime = rdr.GetDateTimeColumn("creation_time"),
+                                CategoryKey = rdr.GetString("category"),
+                                CreationTime = rdr.GetDateTime("creation_time"),
                                 Preferred = rdr.GetBoolean("preferred"),
-                                Published = rdr.GetBoolean("online"),
+                                Published = rdr.GetBoolean("published"),
                                 Showcased = rdr.GetBoolean("showcased"),
                             };
 
-                            result = Maybe.Create(pattern);
+                            result = pattern;
                         }
                     }
                 }
@@ -42,8 +46,8 @@
 
         protected override void PrepareCommand(SqlCommand command)
         {
-            command.AddParameter("@reference", SqlDbType.NVarChar, Reference);
             command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            command.AddParameter("@reference", SqlDbType.NVarChar, Reference);
         }
     }
 }

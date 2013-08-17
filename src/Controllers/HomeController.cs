@@ -14,9 +14,9 @@
     [SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
     {
-        readonly ViewModelQueries _queries;
+        readonly IQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, ViewModelQueries queries)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IQueries queries)
             : base(environment, siteMap)
         {
             Requires.NotNull(queries, "queries");

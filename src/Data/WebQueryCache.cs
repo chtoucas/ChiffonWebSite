@@ -13,6 +13,9 @@
 
         readonly HttpContextBase _context;
 
+        // NB: Constructeur pour Autofac.
+        public WebQueryCache() : this(new HttpContextWrapper(HttpContext.Current)) { }
+
         public WebQueryCache(HttpContextBase context)
         {
             Requires.NotNull(context, "context");
@@ -22,7 +25,7 @@
 
         public T GetOrInsert<T>(string cacheKey, Func<T> query) where T : class
         {
-            T result = null;
+            T result;
 
             var cache = _context.Cache;
             var cachedValue = cache[cacheKey];

@@ -37,10 +37,12 @@
 
             // > Data <
 
-            builder.RegisterType<EntityQueries>().As<IEntityQueries>().SingleInstance();
-            builder.RegisterType<ViewModelQueries>().As<IViewModelQueries>().SingleInstance();
-            // FIXME
-            //builder.RegisterType<WebQueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+#if DEBUG
+            builder.RegisterType<Queries>().As<IQueries>().SingleInstance();
+#else
+            builder.RegisterType<WebQueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+            builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
+#endif
 
             // > Services <
 
@@ -56,6 +58,13 @@
         static ISiteMap ResolveSiteMap_(IComponentContext context)
         {
             return context.Resolve<ISiteMapFactory>().CreateMap(context.Resolve<ChiffonEnvironment>());
+        }
+
+        static IQueries ResolveQueries_(IComponentContext context)
+        {
+            return new CachedQueries(
+                new Queries(context.Resolve<ChiffonConfig>()),
+                context.Resolve<IQueryCache>());
         }
     }
 }

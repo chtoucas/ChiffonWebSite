@@ -26,9 +26,9 @@
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
-        readonly IEntityQueries _queries;
+        readonly IQueries _queries;
 
-        public PatternImageHandler(ChiffonConfig config, IEntityQueries queries)
+        public PatternImageHandler(ChiffonConfig config, IQueries queries)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -67,12 +67,11 @@
         {
             var response = context.Response;
 
-            var result_ = MayGetImage_(context, query.DesignerKey, query.Reference, query.Size);
-            if (result_.IsNone) {
+            var result = GetImage_(context, query.DesignerKey, query.Reference, query.Size);
+            if (result == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var result = result_.Value;
             PatternVisibility visibility = result.Item1;
             PatternImage image = result.Item2;
 
@@ -106,33 +105,33 @@
             return String.Format(CultureInfo.InvariantCulture, "image_{0}_{1}", designerKey.ToString(), reference);
         }
 
-        Maybe<Tuple<PatternVisibility, PatternImage>> MayGetImage_(
+        Tuple<PatternVisibility, PatternImage> GetImage_(
             HttpContext context, DesignerKey designerKey, string reference, PatternSize size)
         {
-            var pattern = Maybe<Pattern>.None;
+            Pattern pattern;
 
             var cache = context.Cache;
             var cacheKey = GetCacheKey_(designerKey, reference);
             var cacheValue = cache[cacheKey] as Pattern;
 
             if (cacheValue == null) {
-                pattern = _queries.MayGetPattern(designerKey, reference);
+                pattern = _queries.GetPattern(designerKey, reference);
 
-                if (pattern.IsSome) {
-                    lock (Lock_) {
-                        if (cache[cacheKey] == null) {
-                            cache.Add(cacheKey, pattern.Value, null, 
-                                DateTime.Now.AddMinutes(CacheExpirationInMinutes_),
-                                Cache.NoSlidingExpiration, CacheItemPriority.High, null);
-                        }
+                if (pattern == null) { return null; }
+
+                lock (Lock_) {
+                    if (cache[cacheKey] == null) {
+                        cache.Add(cacheKey, pattern, null,
+                            DateTime.Now.AddMinutes(CacheExpirationInMinutes_),
+                            Cache.NoSlidingExpiration, CacheItemPriority.High, null);
                     }
                 }
             }
             else {
-                pattern = Maybe.Create(cacheValue);
+                pattern = cacheValue;
             }
 
-            return pattern.Map(_ => Tuple.Create(_.GetVisibility(size), _.GetImage(size)));
+            return Tuple.Create(pattern.GetVisibility(size), pattern.GetImage(size));
         }
     }
 }

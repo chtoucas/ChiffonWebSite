@@ -59,19 +59,19 @@
         public Uri Login() { return MakeAbsoluteUri("connexion"); }
         public Uri Register() { return MakeAbsoluteUri("informations"); }
 
-        public Uri Designer(DesignerKey designer)
+        public Uri Designer(DesignerKey designerKey)
         {
-            return MakeAbsoluteUri(designer.ToString() + "/");
+            return MakeAbsoluteUri(designerKey.ToString() + "/");
         }
 
-        public Uri DesignerCategory(DesignerKey designer, string category)
+        public Uri DesignerCategory(DesignerKey designerKey, string categoryKey)
         {
-            return MakeAbsoluteUri(designer.ToString() + "/" + category);
+            return MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey);
         }
 
-        public Uri DesignerPattern(DesignerKey designer, string category, string reference)
+        public Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference)
         {
-            return MakeAbsoluteUri(designer.ToString() + "/" + category + "/" + reference);
+            return MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey + "/" + reference);
         }
 
         public Uri MakeAbsoluteUri(string relativeUri)
