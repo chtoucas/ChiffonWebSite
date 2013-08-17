@@ -16,9 +16,11 @@
 
         bool _debugCss = false;
         bool _debugJs = false;
+        bool _enableCaching = false;
 
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
+        public bool EnableCaching { get { return _enableCaching; } set { _enableCaching = value; } }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
         public string PatternDirectory { get; set; }
@@ -88,6 +90,9 @@
                 .ValueOrElse(false);
 
             DebugCss = nvc.MayParseValue("chiffon.debugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+                .ValueOrElse(false);
+
+            EnableCaching = nvc.MayParseValue("chiffon.enableCaching", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
         }
     }

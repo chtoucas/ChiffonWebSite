@@ -1,41 +1,44 @@
-﻿namespace Chiffon.Data
+﻿namespace Chiffon.Infrastructure
 {
     using System;
     using System.Web;
     using System.Web.Caching;
     using Narvalo;
 
-    public class WebQueryCache : IQueryCache
+    public class ChiffonCacher : IChiffonCacher
     {
-        const int CacheExpirationInHours_ = 24;
+        const int CacheExpirationInHours_ = 1;
 
         static object Lock_ = new Object();
 
         readonly HttpContextBase _context;
 
         // NB: Constructeur pour Autofac.
-        public WebQueryCache() : this(new HttpContextWrapper(HttpContext.Current)) { }
+        // TODO: Je n'aime pas l'utilisation de HttpContext.Current, il faudra voir 
+        // comment injecter HttpContextBase via Autofac sans avoir à installer Autofac.Integration.Web.
+        public ChiffonCacher() : this(new HttpContextWrapper(HttpContext.Current)) { }
 
-        public WebQueryCache(HttpContextBase context)
+        public ChiffonCacher(HttpContextBase context)
         {
             Requires.NotNull(context, "context");
 
             _context = context;
         }
 
+        protected Cache Cache { get { return _context.Cache; } }
+
         public T GetOrInsert<T>(string cacheKey, Func<T> query) where T : class
         {
             T result;
 
-            var cache = _context.Cache;
-            var cachedValue = cache[cacheKey];
+            var cachedValue = Cache[cacheKey];
 
             if (cachedValue == null) {
                 result = query.Invoke();
 
                 lock (Lock_) {
-                    if (cache[cacheKey] == null) {
-                        cache.Add(cacheKey, result, null,
+                    if (Cache[cacheKey] == null) {
+                        Cache.Add(cacheKey, result, null,
                             DateTime.Now.AddHours(CacheExpirationInHours_),
                             Cache.NoSlidingExpiration, CacheItemPriority.High, null);
                     }

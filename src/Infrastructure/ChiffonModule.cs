@@ -35,14 +35,16 @@
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
 
+            builder.RegisterType<ChiffonCacher>().As<IChiffonCacher>().InstancePerHttpRequest();
+
             // > Data <
 
-#if DEBUG
-            builder.RegisterType<Queries>().As<IQueries>().SingleInstance();
-#else
-            builder.RegisterType<WebQueryCache>().As<IQueryCache>().InstancePerHttpRequest();
-            builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
-#endif
+            if (_config.EnableCaching) {
+                builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
+            }
+            else {
+                builder.RegisterType<Queries>().As<IQueries>().SingleInstance();
+            }
 
             // > Services <
 
@@ -64,7 +66,7 @@
         {
             return new CachedQueries(
                 new Queries(context.Resolve<ChiffonConfig>()),
-                context.Resolve<IQueryCache>());
+                context.Resolve<IChiffonCacher>());
         }
     }
 }

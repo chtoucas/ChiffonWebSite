@@ -1,10 +1,8 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
-    using System.Globalization;
     using System.Net;
     using System.Web;
-    using System.Web.Caching;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Chiffon.Data;
@@ -17,12 +15,7 @@
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
     {
-        const int CacheExpirationInMinutes_ = 30;
-
-        static object Lock_ = new Object();
-        // Mise en cache pour une journée.
-        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(365, 0, 0, 0);
-        // Mise en cache pour 30 minutes.
+        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(1, 0, 0);
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
@@ -38,6 +31,10 @@
 
             _fileSystem = new PatternFileSystem(config);
         }
+
+        // TODO: Pour le moment il n'est pas opportun de réutiliser cet Handler car IQueries 
+        // peut avoir des dépendances vis à vis de la requête en cours.
+        public override bool IsReusable { get { return false; } }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
@@ -67,13 +64,12 @@
         {
             var response = context.Response;
 
-            var result = GetImage_(context, query.DesignerKey, query.Reference, query.Size);
-            if (result == null) {
+            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference);
+            if (pattern == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            PatternVisibility visibility = result.Item1;
-            PatternImage image = result.Item2;
+            var visibility = pattern.GetVisibility(query.Size);
 
             bool isAuth = context.User.Identity.IsAuthenticated;
 
@@ -88,7 +84,9 @@
                     response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            // TODO: http://markusgreuel.net/blog/website-performance-with-asp-net-part4-use-cache-headers
+            var image = pattern.GetImage(query.Size);
+
+            // TODO: Il faut revoir les en-têtes de cache.
             response.Clear();
             if (visibility == PatternVisibility.Public) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);
@@ -98,40 +96,6 @@
             }
             response.ContentType = image.MimeType;
             response.TransmitFile(_fileSystem.GetPath(image));
-        }
-
-        string GetCacheKey_(DesignerKey designerKey, string reference)
-        {
-            return String.Format(CultureInfo.InvariantCulture, "image_{0}_{1}", designerKey.ToString(), reference);
-        }
-
-        Tuple<PatternVisibility, PatternImage> GetImage_(
-            HttpContext context, DesignerKey designerKey, string reference, PatternSize size)
-        {
-            Pattern pattern;
-
-            var cache = context.Cache;
-            var cacheKey = GetCacheKey_(designerKey, reference);
-            var cacheValue = cache[cacheKey] as Pattern;
-
-            if (cacheValue == null) {
-                pattern = _queries.GetPattern(designerKey, reference);
-
-                if (pattern == null) { return null; }
-
-                lock (Lock_) {
-                    if (cache[cacheKey] == null) {
-                        cache.Add(cacheKey, pattern, null,
-                            DateTime.Now.AddMinutes(CacheExpirationInMinutes_),
-                            Cache.NoSlidingExpiration, CacheItemPriority.High, null);
-                    }
-                }
-            }
-            else {
-                pattern = cacheValue;
-            }
-
-            return Tuple.Create(pattern.GetVisibility(size), pattern.GetImage(size));
         }
     }
 }
