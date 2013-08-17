@@ -24,7 +24,7 @@
             Requires.NotNull(builder, "builder");
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
-            builder.RegisterType<SqlHelper>().AsSelf().SingleInstance();
+            builder.RegisterType<DataContext>().AsSelf().SingleInstance();
 
             // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
             // Cf. aussi les commentaires dans la classe ChiffonRuntime.

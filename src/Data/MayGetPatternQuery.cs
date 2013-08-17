@@ -1,27 +1,21 @@
 ﻿namespace Chiffon.Data
 {
     using System.Data;
+    using System.Data.SqlClient;
     using Chiffon.Entities;
-    using Narvalo;
     using Narvalo.Data;
     using Narvalo.Fx;
 
-    public class MayGetPatternQuery
+    public class MayGetPatternQuery : BaseQuery
     {
-        readonly SqlHelper _sqlHelper;
-
-        public MayGetPatternQuery(SqlHelper sqlHelper)
-        {
-            Requires.NotNull(sqlHelper, "sqlHelper");
-            _sqlHelper = sqlHelper;
-        }
+        public MayGetPatternQuery(string connectionString) : base(connectionString) { }
 
         public Maybe<Pattern> Execute(DesignerKey designerKey, string reference)
         {
             var result = Maybe<Pattern>.None;
 
-            using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.StoredProcedure("usp_getPattern", cnx)) {
+            using (var cnx = new SqlConnection(ConnectionString)) {
+                using (var cmd = NewStoredProcedure("usp_getPattern", cnx)) {
                     cmd.AddParameter("@reference", SqlDbType.NVarChar, reference);
                     cmd.AddParameter("@designer", SqlDbType.NVarChar, designerKey.Value);
 

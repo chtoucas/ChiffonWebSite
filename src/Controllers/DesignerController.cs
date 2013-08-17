@@ -14,20 +14,20 @@
     [Authorize]
     public class DesignerController : PageController
     {
-        readonly SqlHelper _sqlHelper;
+        readonly DataContext _dataContext;
 
-        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, SqlHelper sqlHelper)
+        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, DataContext dataContext)
             : base(environment, siteMap)
         {
-            Requires.NotNull(sqlHelper, "sqlHelper");
+            Requires.NotNull(dataContext, "dataContext");
 
-            _sqlHelper = sqlHelper;
+            _dataContext = dataContext;
         }
 
         [HttpGet]
         public ActionResult Index(DesignerKey designerKey)
         {
-            DesignerViewModel model = new GetDesignerViewQuery(_sqlHelper).Execute(designerKey, LanguageName);
+            DesignerViewModel model = _dataContext.GetDesignerView(designerKey, LanguageName);
 
             ViewBag.Title = SR.Designer_Index_Title;
             ViewBag.MetaDescription = SR.Designer_Index_Description;
@@ -40,7 +40,7 @@
         public ActionResult Category(DesignerKey designerKey, string categoryKey)
         {
             Maybe<CategoryViewModel> model
-                = new MayGetCategoryViewQuery(_sqlHelper).Execute(designerKey, categoryKey, LanguageName);
+                = _dataContext.MayGetCategoryView(designerKey, categoryKey, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();
@@ -57,7 +57,7 @@
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
         {
             Maybe<CategoryViewModel> model
-                = new MayGetCategoryViewQuery(_sqlHelper).Execute(designerKey, categoryKey, reference, LanguageName);
+                = _dataContext.MayGetPatternView(designerKey, categoryKey, reference, LanguageName);
 
             if (model.IsNone) {
                 return new HttpNotFoundResult();

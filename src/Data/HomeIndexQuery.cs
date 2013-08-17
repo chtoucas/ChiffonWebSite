@@ -2,26 +2,19 @@
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.SqlClient;
     using Chiffon.ViewModels;
-    using Narvalo;
 
-    public class ListShowcasedPatternsViewQuery
+    public class HomeIndexQuery : BaseQuery
     {
-        readonly SqlHelper _sqlHelper;
-
-        public ListShowcasedPatternsViewQuery(SqlHelper sqlHelper)
-        {
-            Requires.NotNull(sqlHelper, "sqlHelper");
-
-            _sqlHelper = sqlHelper;
-        }
+        public HomeIndexQuery(string connectionString) : base(connectionString) { }
 
         public List<PatternItem> Execute()
         {
             var model = new List<PatternItem>();
 
-            using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.StoredProcedure("usp_fo_getShowcasedPatterns", cnx)) {
+            using (var cnx = new SqlConnection(ConnectionString)) {
+                using (var cmd = NewStoredProcedure("usp_fo_getShowcasedPatterns", cnx)) {
                     cnx.Open();
 
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {

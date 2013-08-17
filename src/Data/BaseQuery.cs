@@ -2,25 +2,22 @@
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Chiffon.Infrastructure;
+    using Narvalo;
 
-    public class SqlHelper
+    public class BaseQuery
     {
-        readonly ChiffonConfig _config;
+        readonly string _connectionString;
 
-        public SqlHelper(ChiffonConfig config)
+        public BaseQuery(string connectionString)
         {
-            _config = config;
+            Requires.NotNull(connectionString, "connectionString");
+
+            _connectionString = connectionString;
         }
 
-        protected string ConnectionString { get { return _config.SqlConnectionString; } }
+        protected string ConnectionString { get { return _connectionString; } }
 
-        public SqlConnection CreateConnection()
-        {
-            return new SqlConnection(ConnectionString);
-        }
-
-        public static SqlCommand StoredProcedure(string name, SqlConnection connection)
+        protected static SqlCommand NewStoredProcedure(string name, SqlConnection connection)
         {
             return new SqlCommand(name, connection) { CommandType = CommandType.StoredProcedure };
         }

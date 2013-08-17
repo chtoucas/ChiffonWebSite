@@ -2,28 +2,24 @@
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
-    using Narvalo;
+    using Narvalo.Fx;
 
-    public class GetDesignerViewQuery
+    public class DesignerCategoryQuery : BaseQuery
     {
-        readonly SqlHelper _sqlHelper;
+        public DesignerCategoryQuery(string connectionString) : base(connectionString) { }
 
-        public GetDesignerViewQuery(SqlHelper sqlHelper)
+        public Maybe<CategoryViewModel> Execute(DesignerKey designerKey, string categoryKey, string languageName)
         {
-            Requires.NotNull(sqlHelper, "sqlHelper");
-            _sqlHelper = sqlHelper;
-        }
+            var model = new CategoryViewModel();
 
-        public DesignerViewModel Execute(DesignerKey designerKey, string languageName)
-        {
-            var model = new DesignerViewModel();
-
-            using (var cnx = _sqlHelper.CreateConnection()) {
-                using (var cmd = SqlHelper.StoredProcedure("usp_fo_getDesigner", cnx)) {
+            using (var cnx = new SqlConnection(ConnectionString)) {
+                using (var cmd = NewStoredProcedure("usp_fo_getCategory", cnx)) {
                     cmd.AddParameter("@designer", SqlDbType.NVarChar, designerKey.Value);
+                    cmd.AddParameter("@category", SqlDbType.NVarChar, categoryKey);
                     cmd.AddParameter("@language", SqlDbType.Char, languageName);
 
                     cnx.Open();
@@ -45,17 +41,17 @@
 
                         rdr.NextResult();
 
-                        // Les motifs du designer.
-                        var previews = new List<PatternItem>();
+                        // Les motifs de la catégorie.
+                        var patterns = new List<PatternItem>();
                         while (rdr.Read()) {
-                            previews.Add(rdr.GetPattern(designerKey, model.Designer.DisplayName));
+                            patterns.Add(rdr.GetPattern(designerKey, categoryKey, model.Designer.DisplayName));
                         }
-                        model.Previews = previews;
+                        model.Patterns = patterns;
                     }
                 }
             }
 
-            return model;
+            return model.Patterns.Count() > 0 ? Maybe.Create(model) : Maybe<CategoryViewModel>.None;
         }
     }
 }

@@ -148,9 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="Data\BaseQuery.cs" />
+    <Compile Include="Data\DesignerPatternQuery.cs" />
+    <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\MayGetPatternQuery.cs" />
-    <Compile Include="Data\MayGetCategoryViewQuery.cs" />
-    <Compile Include="Data\GetDesignerViewQuery.cs" />
+    <Compile Include="Data\DesignerCategoryQuery.cs" />
+    <Compile Include="Data\DesignerIndexQuery.cs" />
     <Compile Include="Data\SqlDataReader%24.cs" />
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
     <Compile Include="Infrastructure\ChiffonLanguage.cs" />
@@ -211,9 +214,8 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Data\SqlCommand%24.cs" />
-    <Compile Include="Data\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\ListShowcasedPatternsViewQuery.cs" />
+    <Compile Include="Data\HomeIndexQuery.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>

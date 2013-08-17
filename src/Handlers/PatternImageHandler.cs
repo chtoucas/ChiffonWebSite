@@ -26,15 +26,15 @@
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
-        readonly SqlHelper _sqlHelper;
+        readonly DataContext _dataContext;
 
-        public PatternImageHandler(ChiffonConfig config, SqlHelper sqlHelper)
+        public PatternImageHandler(ChiffonConfig config, DataContext dataContext)
             : base()
         {
             Requires.NotNull(config, "config");
-            Requires.NotNull(sqlHelper, "sqlHelper");
+            Requires.NotNull(dataContext, "dataContext");
 
-            _sqlHelper = sqlHelper;
+            _dataContext = dataContext;
 
             _fileSystem = new PatternFileSystem(config);
         }
@@ -116,7 +116,7 @@
             var cacheValue = cache[cacheKey] as Pattern;
 
             if (cacheValue == null) {
-                pattern = new MayGetPatternQuery(_sqlHelper).Execute(designerKey, reference);
+                pattern = _dataContext.MayGetPattern(designerKey, reference);
 
                 if (pattern.IsSome) {
                     lock (Lock_) {
