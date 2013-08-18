@@ -12,34 +12,24 @@
         {
             DesignerKey = designerKey;
             Reference = reference;
+
+            CommandBehavior = CommandBehavior.CloseConnection | CommandBehavior.SingleRow;
         }
 
         public DesignerKey DesignerKey { get; private set; }
         public string Reference { get; private set; }
 
-        public override Pattern Execute()
+        protected override Pattern Execute(SqlDataReader rdr)
         {
-            Pattern result = null;
+            if (!rdr.Read()) { return null; }
 
-            using (var connection = new SqlConnection(ConnectionString)) {
-                using (var cmd = CreateCommand(connection)) {
-                    connection.Open();
-
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        if (rdr.Read()) {
-                            var pattern = new Pattern(new PatternId(DesignerKey, Reference)) {
-                                CategoryKey = rdr.GetString("category"),
-                                CreationTime = rdr.GetDateTime("creation_time"),
-                                Preferred = rdr.GetBoolean("preferred"),
-                                Published = rdr.GetBoolean("published"),
-                                Showcased = rdr.GetBoolean("showcased"),
-                            };
-
-                            result = pattern;
-                        }
-                    }
-                }
-            }
+            var result = new Pattern(new PatternId(DesignerKey, Reference)) {
+                CategoryKey = rdr.GetString("category"),
+                CreationTime = rdr.GetDateTime("creation_time"),
+                Preferred = rdr.GetBoolean("preferred"),
+                Published = rdr.GetBoolean("published"),
+                Showcased = rdr.GetBoolean("showcased"),
+            };
 
             return result;
         }

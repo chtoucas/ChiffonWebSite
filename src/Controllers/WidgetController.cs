@@ -14,19 +14,13 @@
             _config = config;
         }
 
-        //[ChildActionOnly]
-        //public PartialViewResult MemberMenu()
-        //{
-        //    return PartialView(ViewName.Widget.MemberMenu);
-        //}
-
         [ChildActionOnly]
-        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public PartialViewResult CommonJavaScript()
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "bodyId")]
+        public PartialViewResult CommonJavaScript(string bodyId)
         {
             return _config.DebugJs
-                ? PartialView(ViewName.Widget.CommonJavaScript_Debug)
-                : PartialView(ViewName.Widget.CommonJavaScript_Release);
+                ? PartialView(ViewName.Widget.CommonJavaScript_Debug, bodyId)
+                : PartialView(ViewName.Widget.CommonJavaScript_Release, bodyId);
         }
 
         [ChildActionOnly]

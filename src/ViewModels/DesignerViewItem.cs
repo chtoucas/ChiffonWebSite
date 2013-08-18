@@ -1,7 +1,9 @@
 ﻿namespace Chiffon.ViewModels
 {
+    using System;
     using Chiffon.Entities;
 
+    [Serializable]
     public class DesignerViewItem
     {
         public string DisplayName { get; set; }

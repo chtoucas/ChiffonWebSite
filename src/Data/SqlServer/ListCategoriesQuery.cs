@@ -18,26 +18,17 @@
         public DesignerKey DesignerKey { get; private set; }
         public string LanguageName { get; private set; }
 
-        public override IEnumerable<Category> Execute()
+        protected override IEnumerable<Category> Execute(SqlDataReader rdr)
         {
             var categories = new List<Category>();
 
-            using (var cnx = new SqlConnection(ConnectionString)) {
-                using (var cmd = CreateCommand(cnx)) {
-                    cnx.Open();
-
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        // Catégories du designer (avec au moins un motif).
-                        while (rdr.Read()) {
-                            var category = new Category {
-                                DisplayName = rdr.GetString("display_name"),
-                                Key = rdr.GetString("category"),
-                                //PatternCount = rdr.GetInt32("pattern_count"),
-                            };
-                            categories.Add(category);
-                        }
-                    }
-                }
+            // Catégories du designer (avec au moins un motif).
+            while (rdr.Read()) {
+                var category = new Category(DesignerKey, rdr.GetString("category")) {
+                    DisplayName = rdr.GetString("display_name"),
+                    PatternCount = rdr.GetInt32("pattern_count"),
+                };
+                categories.Add(category);
             }
 
             return categories;

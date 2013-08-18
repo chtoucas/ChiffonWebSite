@@ -1,3 +1,25 @@
-﻿<h2>Enregistrement</h2>
-<h3>J'ai déjà un compte</h3>
-<p><a href="@Url.RouteUrl(RouteName.Account.Login)">Connexion</a></p>
+﻿<p class="serif serif_large grey center">Pour obtenir votre mot de passe,<span class=break /> veuillez remplir le formulaire.</p>
+<form method=post action="/inscription">
+ <p>
+  <label for=name />
+  Nom
+ <input type=text name=name />
+  <label for=firstname />
+  Prénom
+ <input type=text name=firstname />
+  <label for=agency />
+  Agence
+ <input type=text name=agency />
+  <label for=email_address />
+  Email
+ <input type=text name=email_address />
+  <label for=subject />
+ </p>
+ <p>
+  Sujet
+ <textarea name=subject></textarea>
+  <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
+  <input type=submit value="Envoyer" />
+ </p>
+</form>
+<p><a href="@Url.RouteUrl(RouteName.Account.Login)">J'ai déjà un mot de passe</a></p>

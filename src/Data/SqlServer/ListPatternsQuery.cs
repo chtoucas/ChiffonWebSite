@@ -18,28 +18,20 @@
         public string CategoryKey { get; set; }
         public DesignerKey DesignerKey { get; private set; }
 
-        public override IEnumerable<Pattern> Execute()
+        protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
         {
             var patterns = new List<Pattern>();
 
-            using (var cnx = new SqlConnection(ConnectionString)) {
-                using (var cmd = CreateCommand(cnx)) {
-                    cnx.Open();
-
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        while (rdr.Read()) {
-                            var patternId = new PatternId(DesignerKey, rdr.GetString("reference"));
-                            var pattern = new Pattern(patternId) {
-                                CategoryKey = rdr.GetString("category"),
-                                CreationTime = rdr.GetDateTime("creation_time"),
-                                Preferred = rdr.GetBoolean("preferred"),
-                                Published = true,
-                                Showcased = rdr.GetBoolean("showcased"),
-                            };
-                            patterns.Add(pattern);
-                        }
-                    }
-                }
+            while (rdr.Read()) {
+                var patternId = new PatternId(DesignerKey, rdr.GetString("reference"));
+                var pattern = new Pattern(patternId) {
+                    CategoryKey = rdr.GetString("category"),
+                    CreationTime = rdr.GetDateTime("creation_time"),
+                    Preferred = rdr.GetBoolean("preferred"),
+                    Published = true,
+                    Showcased = rdr.GetBoolean("showcased"),
+                };
+                patterns.Add(pattern);
             }
 
             return patterns;

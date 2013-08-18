@@ -29,23 +29,23 @@
   <nav id=nav_main class=clr>
    <ul class=center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
-    <li class=sep>/</li>
-    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>
+    @*<li class=sep>/</li>
+    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>*@
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
-    <li class=right><a href="@Url.RouteUrl(RouteName.Home.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>
+    @*<li class=right><a href="@Url.RouteUrl(RouteName.Home.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
    </ul>
   </nav>
  </header>
  <div id=content>
   @RenderBody()
  </div>
- <footer class=grey>
+ <footer class=darkgrey>
   <p id=legal>@Html.Raw(VR.Layout_Disclaimer)</p>
   <p id=copyright>© Pour quel motif, Simone ? 2013</p>
  </footer>
- @{Html.RenderAction("CommonJavaScript", "Widget");}
+ @{Html.RenderAction("CommonJavaScript", "Widget", new { bodyId = ViewBag.BodyId });}
 </body>
 </html>

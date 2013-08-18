@@ -1,5 +1,5 @@
 ﻿
-BODY { font-size: 62.5%; /* 16px (default font size) * .625 = 10px */ line-height: 1.4; font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+BODY, INPUT { font-size: 62.5%; /* 16px (default font size) * .625 = 10px */ line-height: 1.4; font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
 *, UL { margin: 0; padding: 0; }
 

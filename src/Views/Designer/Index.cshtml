@@ -2,24 +2,14 @@
 
 @model DesignerViewModel
 
-@Html.Partial("_MemberMenu")
+@Html.Partial(ViewName.Shared.DesignerMenu)
 <div id=designer>
- <div id=description>
-  <p>@Model.Designer.Presentation</p>
-  <nav id=categories>
-   <ul>
-    <li><a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternCount)</a></li>
-    @foreach (var category in Model.Categories) {
-     <li><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternCount)</a></li>
-    }
-   </ul>
-  </nav>
-  <p><a href="#">@Model.Designer.EmailAddress</a> </p>
- </div>
- <ul class="mosaic clr">
+ @Html.Partial(ViewName.Shared.DesignerInfo)
+ <ul class="mosaic len_75 clr">
   @foreach (var preview in Model.Patterns) {
-   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" class="vignette @preview.CssClass">
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /></a></li>
+   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" class=vignette>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /><div class="overlay"></div>
+   </a></li>
   }
  </ul>
 </div>

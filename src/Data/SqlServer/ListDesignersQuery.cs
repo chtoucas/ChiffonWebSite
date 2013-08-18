@@ -18,28 +18,20 @@
 
         public string LanguageName { get; private set; }
 
-        public override IEnumerable<Designer> Execute()
+        protected override IEnumerable<Designer> Execute(SqlDataReader rdr)
         {
             var designers = new List<Designer>();
 
-            using (var cnx = new SqlConnection(ConnectionString)) {
-                using (var cmd = CreateCommand(cnx)) {
-                    cnx.Open();
+            while (rdr.Read()) {
+                var designerKey = DesignerKey.Parse(rdr.GetString("designer"));
+                var designer = new Designer(designerKey) {
+                    DisplayName = rdr.GetString("display_name"),
+                    EmailAddress = new MailAddress(rdr.GetString("email_address")),
+                    Presentation = rdr.GetString("presentation"),
+                    WebSiteUrl = rdr.MayGetString("website_url").Map(_ => new Uri(_)),
+                };
 
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        while (rdr.Read()) {
-                            var designerKey = DesignerKey.Parse(rdr.GetString("designer"));
-                            var designer = new Designer(designerKey) {
-                                DisplayName = rdr.GetString("display_name"),
-                                EmailAddress = new MailAddress(rdr.GetString("email_address")),
-                                Presentation = rdr.GetString("presentation"),
-                                Url = new Uri(rdr.GetString("uri")),
-                            };
-
-                            designers.Add(designer);
-                        }
-                    }
-                }
+                designers.Add(designer);
             }
 
             return designers;

@@ -7,6 +7,7 @@
     using Chiffon.Entities;
     using Chiffon.Resources;
 
+    [Serializable]
     public class PatternViewItem
     {
         public string CategoryKey { get; set; }

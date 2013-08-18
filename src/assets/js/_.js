@@ -328,7 +328,6 @@ String.toLocaleString({
     , '%ajax.temp_error': 'Un problème temporaire est intervenue. Veuillez réessayer plus tard'
     , '%ajax.fatal_error': 'Une erreur est intervenue. Veuillez réessayer plus tard'
     , '%home.watermark': 'Voir toute la collection &gt;'
-    , '%member.watermark': 'Voir toute la collection &gt;'
   }
   , 'en': {
     '%ajax.loading': 'Loading'
@@ -336,7 +335,6 @@ String.toLocaleString({
     , '%ajax.temp_error': 'A temporary error occured. Please try again later'
     , '%ajax.fatal_error': 'An error occured. Please try again later'
     , '%home.watermark': 'Go to the collection &gt;'
-    , '%member.watermark': 'Go to the collection &gt;'
   }
 });;
 
@@ -375,7 +373,8 @@ String.toLocaleString({
   $.fn.watermark = function(watermark) {
     return this.each(function() {
       $(this).append(
-        '<div class=overlay></div><div class=watermark><span>'
+        //'<div class=overlay></div><div class=watermark><span>'
+        '<div class=watermark><span>'
         + _(watermark)
         + '</span>');
     });
@@ -533,7 +532,7 @@ String.toLocaleString({
   };
 
   chiffon.ui.mosaic = function(watermark) {
-    $('.mosaic').removeClass('shadow');
+    //$('.mosaic').removeClass('shadow');
     $('.vignette').watermark(watermark);
   };
 
@@ -542,12 +541,8 @@ String.toLocaleString({
 
   chiffon.routes = {};
 
-  chiffon.routes.home = function() {
+  chiffon.routes.home_index = function() {
     chiffon.ui.mosaic('%home.watermark');
-  };
-
-  chiffon.routes.member = function() {
-    chiffon.ui.mosaic('%member.watermark');
   };
 
   return chiffon;

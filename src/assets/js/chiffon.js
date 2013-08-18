@@ -34,10 +34,7 @@
 
   $.fn.watermark = function(watermark) {
     return this.each(function() {
-      $(this).append(
-        '<div class=overlay></div><div class=watermark><span>'
-        + _(watermark)
-        + '</span>');
+      $(this).append('<div class=watermark><span>' + _(watermark) + '</span>');
     });
   };
 
@@ -192,22 +189,13 @@
     });
   };
 
-  chiffon.ui.mosaic = function(watermark) {
-    $('.mosaic').removeClass('shadow');
-    $('.vignette').watermark(watermark);
-  };
-
   /* Routes
    * ======================================================================= */
 
   chiffon.routes = {};
 
-  chiffon.routes.home = function() {
-    chiffon.ui.mosaic('%home.watermark');
-  };
-
-  chiffon.routes.member = function() {
-    chiffon.ui.mosaic('%member.watermark');
+  chiffon.routes.home_index = function() {
+    $('.vignette').watermark('%vignette.watermark');
   };
 
   return chiffon;

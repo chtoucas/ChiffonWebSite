@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<PatternViewItem>
 
-@Html.Partial(ViewName.Shared.MemberMenu)
-@Html.Partial(ViewName.Shared.PreviewsGrid, Model)
+@Html.Partial(ViewName.Shared.DesignerMenu)
+<ul class="mosaic len_100 clr">
+ @foreach (var preview in Model) {
+  <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" rel="@ViewBag.RegisterLink" class="vignette @preview.CssClass">
+   <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /><div class="overlay"></div>
+  </a></li>
+ }
+</ul>

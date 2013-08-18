@@ -2,17 +2,18 @@
 {
     using System;
     using System.Net.Mail;
+    using Narvalo.Fx;
 
     [Serializable]
     public class Designer
     {
         readonly DesignerKey _key;
 
-        Pattern _profilePattern;
+        //Pattern _profilePattern;
 
-        public Designer(DesignerKey designerKey)
+        public Designer(DesignerKey key)
         {
-            _key = designerKey;
+            _key = key;
         }
 
         /// <summary>
@@ -23,25 +24,25 @@
         /// </summary>
         public DesignerKey Key { get { return _key; } }
 
-        public Pattern ProfilePattern
-        {
-            get
-            {
-                if (_profilePattern == null) {
-                    _profilePattern = new Pattern(new PatternId(Key, Avatar));
-                }
-                return _profilePattern;
-            }
-        }
+        //public Pattern ProfilePattern
+        //{
+        //    get
+        //    {
+        //        if (_profilePattern == null) {
+        //            _profilePattern = new Pattern(new PatternId(Key, Avatar));
+        //        }
+        //        return _profilePattern;
+        //    }
+        //}
 
-        public string Avatar { get; set; }
-
-        public string Presentation { get; set; }
+        //public string Avatar { get; set; }
 
         public string DisplayName { get; set; }
 
         public MailAddress EmailAddress { get; set; }
 
-        public Uri Url { get; set; }
+        public string Presentation { get; set; }
+
+        public Maybe<Uri> WebSiteUrl { get; set; }
     }
 }

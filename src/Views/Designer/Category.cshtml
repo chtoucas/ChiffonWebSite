@@ -2,24 +2,13 @@
 
 @model DesignerViewModel
 
-@Html.Partial("_MemberMenu")
+@Html.Partial(ViewName.Shared.DesignerMenu)
 <div id=designer>
- <div id=description>
-  <p>@Model.Designer.Presentation</p>
-  <nav id=categories>
-   <ul>
-    <li><a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternCount)</a></li>
-    @foreach (var category in Model.Categories) {
-     <li><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternCount)</a></li>
-    }
-   </ul>
-  </nav>
-  <p><a href="#">@Model.Designer.EmailAddress</a> </p>
- </div>
- <ul>
+ @Html.Partial(ViewName.Shared.DesignerInfo)
+ <ul class="mosaic patterns">
   @foreach (var pattern in Model.Patterns) {
    <li>
-    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference)" class=motif alt="@pattern.Description" /></li>
+    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference)" class=pattern alt="@pattern.Description" /></li>
   }
  </ul>
 </div>
