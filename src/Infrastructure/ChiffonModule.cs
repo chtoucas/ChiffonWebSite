@@ -35,7 +35,7 @@
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
 
-            builder.RegisterType<ChiffonCacher>().As<IChiffonCacher>().InstancePerHttpRequest();
+            builder.RegisterType<ChiffonCache>().As<IChiffonCache>().InstancePerHttpRequest();
 
             // > Data <
 
@@ -66,7 +66,7 @@
         {
             return new CachedQueries(
                 new Queries(context.Resolve<ChiffonConfig>()),
-                context.Resolve<IChiffonCacher>());
+                context.Resolve<IChiffonCache>());
         }
     }
 }
