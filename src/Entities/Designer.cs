@@ -9,7 +9,7 @@
     {
         readonly DesignerKey _key;
 
-        //Pattern _profilePattern;
+        //Pattern _avatarPattern;
 
         public Designer(DesignerKey key)
         {
@@ -24,18 +24,19 @@
         /// </summary>
         public DesignerKey Key { get { return _key; } }
 
-        //public Pattern ProfilePattern
+        //public Pattern AvatarPattern
         //{
         //    get
         //    {
-        //        if (_profilePattern == null) {
-        //            _profilePattern = new Pattern(new PatternId(Key, Avatar));
+        //        if (_avatarPattern == null) {
+        //            _avatarPattern = new Pattern(new PatternId(Key, AvatarReference));
         //        }
-        //        return _profilePattern;
+        //        return _avatarPattern;
         //    }
         //}
 
-        //public string Avatar { get; set; }
+        public string AvatarCategory { get; set; }
+        public string AvatarReference { get; set; }
 
         public string DisplayName { get; set; }
 

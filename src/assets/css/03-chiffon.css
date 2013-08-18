@@ -111,11 +111,11 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 BODY#home_index #nav_home,
 BODY#home_about #nav_info,
 BODY#home_contact #nav_contact,
-BODY#home_newsletter #nav_newsletter /* ,
-BODY#designer.cl #nav_designers_cl,
-BODY#designer.cm #nav_designers_cm,
-BODY#designer.vd #nav_designers_vd,
-BODY#designer.lr #nav_designers_lr */ { color: #f00; }
+BODY#home_newsletter #nav_newsletter,
+#nav_designers.cl #nav_designers_cl,
+#nav_designers.cm #nav_designers_cm,
+#nav_designers.vd #nav_designers_vd,
+#nav_designers.lr #nav_designers_lr { color: #f00; }
 
 /* Ajax status */
 
@@ -132,22 +132,20 @@ BODY#designer.lr #nav_designers_lr */ { color: #f00; }
 /* Page - Contact
  * ============================================================================================== */
 
-#home_contact H2 { margin: 0; padding: .5em 0; border-top: 2px solid #999999; font-weight: normal; }
+#home_contact #content { margin-bottom: 5em; }
+#home_contact H2 { margin: 0; padding: .5em 0 1em 0; border-top: 2px solid #999; font-weight: normal; }
   #home_contact H2 A { display: block; font-size: .7em; }
-/*#home_contact { margin-bottom: 2em; text-align: center; }
-  #home_contact H2 { margin-top: 15px; margin-bottom: 0; font-weight: normal; }
-  #home_contact H3 { width: 100%; margin: 0; padding: 1em 0; font-weight: normal; font-size: 1.5em; font-style: italic; }
+#home_contact { margin-bottom: 2em; text-align: center; }
+  #home_contact #designers { font-style: italic; font-size: 1.538em; }
+  #home_contact H3 { width: 100%; margin: 0; margin-bottom: 1.2em; padding: 1em 0; font-weight: normal; border-color: #ccc; }
     #home_contact H3 A { padding: 0 .5em; background: #fff; color: #999; }
-  #home_contact .img { position: relative; margin-bottom: 1em; }
-  #home_contact .email { padding: 1em 0; border-top: 1px solid #999; border-bottom: 1px solid #999; }
-    #home_contact .email A { text-decoration: underline; font-style: italic; }
-  #home_contact .web { margin-top: 1em; text-align: right; }
+  #home_contact .img { position: relative; margin-bottom: 1.2em; }
+  #home_contact .email { padding: 2em 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 13px; }
+  #home_contact .web { margin-top: 1em; text-align: right; font-size: 13px; font-style: normal; }
     #home_contact .web A { color: #999; }
-  #home_contact H2 { font-style: italic; font-weight: normal; font-size: 2.0833333333em; }
   #home_contact UL { padding: 0; list-style-type: none; }
-  #home_contact #collective { text-decoration: underline; font-style: italic; font-size: 1.6666666667em; }
   #home_contact #designers LI { float: left; width: 220px; margin-right: 20px; }
-    #home_contact #designers LI:last-child { margin-right: 0; }*/
+    #home_contact #designers LI:last-child { margin-right: 0; }
 
 /* Page - About
  * ============================================================================================== */
@@ -159,7 +157,7 @@ BODY#designer.lr #nav_designers_lr */ { color: #f00; }
  * ============================================================================================== */
 
 #account_login FORM { text-transform: uppercase; }
-#account_login INPUT[type=text] { font-weight: bold; font-size: 1.8em; text-align:center; text-transform: uppercase; padding: .5em 2em; }
+#account_login INPUT[type=text] { font-weight: bold; font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em 2em; }
 #account_login INPUT[type=submit] { border: 0; background: #fff; }
   #account_login INPUT[type=submit]:hover { color: #000; }
 

@@ -26,7 +26,7 @@
             while (rdr.Read()) {
                 var category = new Category(DesignerKey, rdr.GetString("category")) {
                     DisplayName = rdr.GetString("display_name"),
-                    PatternCount = rdr.GetInt32("pattern_count"),
+                    PatternsCount = rdr.GetInt32("patterns_count"),
                 };
                 categories.Add(category);
             }

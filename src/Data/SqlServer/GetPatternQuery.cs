@@ -23,15 +23,13 @@
         {
             if (!rdr.Read()) { return null; }
 
-            var result = new Pattern(new PatternId(DesignerKey, Reference)) {
+            return new Pattern(new PatternId(DesignerKey, Reference)) {
                 CategoryKey = rdr.GetString("category"),
                 CreationTime = rdr.GetDateTime("creation_time"),
                 Preferred = rdr.GetBoolean("preferred"),
                 Published = rdr.GetBoolean("published"),
                 Showcased = rdr.GetBoolean("showcased"),
             };
-
-            return result;
         }
 
         protected override void PrepareCommand(SqlCommand command)

@@ -11,11 +11,11 @@
         public IEnumerable<CategoryViewItem> Categories { get; set; }
         public IEnumerable<PatternViewItem> Patterns { get; set; }
 
-        public int PatternCount
+        public int PatternsCount
         {
             get
             {
-                return (from _ in Categories select _.PatternCount).Sum();
+                return (from _ in Categories select _.PatternsCount).Sum();
             }
         }
     }

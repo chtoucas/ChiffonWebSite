@@ -8,6 +8,7 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
+    using Chiffon.ViewModels;
     using Narvalo;
 
     [Authorize]
@@ -26,14 +27,20 @@
         [HttpGet]
         public ActionResult Index(DesignerKey designerKey)
         {
-            var model = _queries.GetDesignerViewModel(designerKey, LanguageName);
-            if (model == null) { return new HttpNotFoundResult(); }
-
+            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            if (designer == null) { return new HttpNotFoundResult(); }
+            var categories = _queries.ListCategories(designerKey, LanguageName);
             var patterns = _queries.ListPatterns(designerKey);
-            model.Patterns = from _ in patterns
-                             orderby _.CreationTime descending
-                             select Mapper.Map(_, model.Designer.DisplayName);
 
+            var model = new DesignerViewModel {
+                Categories = from _ in categories select Mapper.Map(_),
+                Designer = Mapper.Map(designer),
+                Patterns = from _ in patterns
+                           orderby _.CreationTime descending
+                           select Mapper.Map(_, designer.DisplayName)
+            };
+
+            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
             ViewBag.Title = SR.Designer_Index_Title;
             ViewBag.MetaDescription = SR.Designer_Index_Description;
             ViewBag.CanonicalLink = SiteMap.Designer(designerKey).ToString();
@@ -44,14 +51,20 @@
         [HttpGet]
         public ActionResult Category(DesignerKey designerKey, string categoryKey)
         {
-            var model = _queries.GetDesignerViewModel(designerKey, LanguageName);
-            if (model == null) { return new HttpNotFoundResult(); }
-
+            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            if (designer == null) { return new HttpNotFoundResult(); }
+            var categories = _queries.ListCategories(designerKey, LanguageName);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
-            model.Patterns = from _ in patterns
-                             orderby _.CreationTime descending
-                             select Mapper.Map(_, model.Designer.DisplayName);
 
+            var model = new DesignerViewModel {
+                Categories = from _ in categories select Mapper.Map(_),
+                Designer = Mapper.Map(designer),
+                Patterns = from _ in patterns
+                           orderby _.CreationTime descending
+                           select Mapper.Map(_, designer.DisplayName)
+            };
+
+            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
             ViewBag.Title = SR.Designer_Category_Title;
             ViewBag.MetaDescription = SR.Designer_Category_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerCategory(designerKey, categoryKey).ToString();
@@ -62,9 +75,9 @@
         [HttpGet]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
         {
-            var model = _queries.GetDesignerViewModel(designerKey, LanguageName);
-            if (model == null) { return new HttpNotFoundResult(); }
-
+            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            if (designer == null) { return new HttpNotFoundResult(); }
+            var categories = _queries.ListCategories(designerKey, LanguageName);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
             var pattern = from _ in patterns where _.Reference == reference select _;
@@ -75,9 +88,13 @@
                        where _.Reference != reference
                        select _;
 
-            model.Patterns = from _ in pattern.Concat(patterns)
-                             select Mapper.Map(_, model.Designer.DisplayName);
+            var model = new DesignerViewModel {
+                Categories = from _ in categories select Mapper.Map(_),
+                Designer = Mapper.Map(designer),
+                Patterns = from _ in pattern.Concat(patterns) select Mapper.Map(_, designer.DisplayName)
+            };
 
+            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
             ViewBag.Title = SR.Designer_Pattern_Title;
             ViewBag.MetaDescription = SR.Designer_Pattern_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference).ToString();

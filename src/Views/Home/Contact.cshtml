@@ -1,44 +1,26 @@
-﻿<div class="serif grey clr">
- <h2 class="center serif_large">
-  Vous souhaitez contactez le collectif ? <a id=collective href="#" class=underline>contact@pourquelmotifsimone.com</a>
+﻿@using Chiffon.Entities
+
+@model IEnumerable<Designer>
+
+<div class="grey clr">
+ <h2 class="center serif serif_large">Vous souhaitez contactez le collectif ? <a href="#" class=underline>contact@pourquelmotifsimone.com</a>
   ou un membre du collectif ?
  </h2>
  <ul id=designers>
-  <li>
-   <h3 class=strike><a href="#">Chicamancha</a></h3>
-   <ul>
-    <li class=img><a href="#" rel=cm>
-     <img src="/chicamancha/motif-1_preview.jpg" alt="" /></a></li>
-    <li class=email><a href="#">chicamancha@hotmail.com</a></li>
-    <li class=web><a href="//www.chicamancha.com">www.chicamancha.com</a></li>
-   </ul>
-  </li>
-  <li>
-   <h3 class=strike><a href="#">Viviane Devaux</a></h3>
-   <ul>
-    <li class=img><a href="#" rel=vd>
-     <img src="/viviane-devaux/motif-1_preview.jpg" alt="" /></a></li>
-    <li class=email><a href="#">viviane.vdx@gmail.com</a></li>
-    <li class=web><a href="//www.vivianedevaux.com">www.vivianedevaux.com</a></li>
-   </ul>
-  </li>
-  <li>
-   <h3 class=strike><a href="#">Christine Légeret</a></h3>
-   <ul>
-    <li class=img><a href="#" rel=cl>
-     <img src="/christine-legeret/motif-1_preview.jpg" alt="" /></a></li>
-    <li class=email><a href="#">christinelegeret@gmail.com</a></li>
-    <li class=web><a href="//www.christinelegeret.com">www.christinelegeret.com</a></li>
-   </ul>
-  </li>
-  <li>
-   <h3 class=strike><a href="#">Laure Roussel</a></h3>
-   <ul>
-    <li class=img><a href="#" rel=lr>
-     <img src="/laure-roussel/motif-1_preview.jpg" alt="" /></a></li>
-    <li class=email><a href="#">laureroussel@gmail.com</a></li>
-    <li class=web><a href="//www.laureroussel.com">www.laureroussel.com</a></li>
-   </ul>
-  </li>
+  @foreach (var designer in Model) {
+   <li class=serif>
+    <h3 class=strike><a href="@Url.Designer(designer.Key)">@designer.DisplayName</a></h3>
+    <ul>
+     <li class=img><a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference)" rel="@CssUtility.DesignerClass(designer.Key)">
+      <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference)" alt="@designer.DisplayName" /></a></li>
+     <li class=email><a class=underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
+     @if (@designer.WebSiteUrl.IsSome) {
+      var website = @designer.WebSiteUrl.Value.ToString();
+      var displayValue = website.Replace("http://", String.Empty).Replace("/", String.Empty);
+      <li class="web sansserif"><a href="@website" rel=external target=_blank>@displayValue</a></li>
+     }
+    </ul>
+   </li>
+  }
  </ul>
 </div>

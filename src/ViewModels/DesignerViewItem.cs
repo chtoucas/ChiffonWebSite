@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.ViewModels
 {
     using System;
+    using System.Net.Mail;
     using Chiffon.Entities;
 
     [Serializable]

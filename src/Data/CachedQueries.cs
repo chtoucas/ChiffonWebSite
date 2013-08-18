@@ -3,49 +3,58 @@
     using System.Collections.Generic;
     using System.Linq;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
 
     public class CachedQueries : IQueries
     {
         readonly IQueries _inner;
-        readonly IChiffonCache _cacher;
+        readonly IQueryCache _cache;
 
-        public CachedQueries(IQueries inner, IChiffonCache cacher)
+        public CachedQueries(IQueries inner, IQueryCache cache)
         {
             Requires.NotNull(inner, "inner");
-            Requires.NotNull(cacher, "cacher");
+            Requires.NotNull(cache, "cache");
 
             _inner = inner;
-            _cacher = cacher;
+            _cache = cache;
         }
 
         #region IQueries
 
-        public DesignerViewModel GetDesignerViewModel(DesignerKey designerKey, string languageName)
-        {
-            return _cacher.GetOrInsertDesignerViewModel(designerKey, languageName, (a, b) => _inner.GetDesignerViewModel(a, b));
-        }
-
         public IEnumerable<PatternViewItem> GetHomeViewModel()
         {
-            return _cacher.GetOrInsertHomeViewModel(() => _inner.GetHomeViewModel());
+            return _cache.GetOrInsertHomeViewModel(() => _inner.GetHomeViewModel());
         }
 
-        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey)
+        public Designer GetDesigner(DesignerKey designerKey, string languageName)
         {
-            return _cacher.GetOrInsertPatterns(designerKey, _ => _inner.ListPatterns(_));
-        }
-
-        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
-        {
-            return from _ in ListPatterns(designerKey) where _.CategoryKey == categoryKey select _;
+            return (from _ in ListDesigners(languageName) where _.Key == designerKey select _).SingleOrDefault();
         }
 
         public Pattern GetPattern(DesignerKey designerKey, string reference)
         {
             return (from _ in ListPatterns(designerKey) where _.Reference == reference select _).SingleOrDefault();
+        }
+
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey, string languageName)
+        {
+            return _cache.GetOrInsertCategories(designerKey, languageName, (a, b) => _inner.ListCategories(a, b));
+        }
+
+        public IEnumerable<Designer> ListDesigners(string languageName)
+        {
+            return _cache.GetOrInsertDesigners(languageName, _ => _inner.ListDesigners(_));
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey)
+        {
+            return _cache.GetOrInsertPatterns(designerKey, _ => _inner.ListPatterns(_));
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
+        {
+            return from _ in ListPatterns(designerKey) where _.CategoryKey == categoryKey select _;
         }
 
         #endregion

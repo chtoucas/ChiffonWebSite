@@ -25,6 +25,8 @@
             while (rdr.Read()) {
                 var designerKey = DesignerKey.Parse(rdr.GetString("designer"));
                 var designer = new Designer(designerKey) {
+                    AvatarCategory = rdr.GetString("avatar_category"),
+                    AvatarReference = rdr.GetString("avatar_reference"),
                     DisplayName = rdr.GetString("display_name"),
                     EmailAddress = new MailAddress(rdr.GetString("email_address")),
                     Presentation = rdr.GetString("presentation"),

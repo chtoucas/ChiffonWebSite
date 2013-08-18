@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
@@ -49,11 +50,13 @@
         [HttpGet]
         public ActionResult Contact()
         {
+            var model = _queries.ListDesigners(LanguageName).OrderBy(_ => _.DisplayName);
+
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;
             ViewBag.CanonicalLink = SiteMap.Contact().ToString();
 
-            return View(ViewName.Home.Contact);
+            return View(ViewName.Home.Contact, model);
         }
 
         [HttpGet]

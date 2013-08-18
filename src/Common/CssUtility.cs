@@ -20,7 +20,7 @@
                 return CssClassName.VivianeDevaux;
             }
             else {
-                throw new NotSupportedException("XXX");
+                throw new NotSupportedException();
             }
         }
     }

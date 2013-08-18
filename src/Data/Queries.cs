@@ -19,15 +19,15 @@
 
         #region IQueries
 
-        public DesignerViewModel GetDesignerViewModel(DesignerKey designerKey, string languageName)
-        {
-            var q = new GetDesignerVMQuery(ConnectionString, designerKey, languageName);
-            return q.Execute();
-        }
-
         public IEnumerable<PatternViewItem> GetHomeViewModel()
         {
             var q = new GetHomeVMQuery(ConnectionString);
+            return q.Execute();
+        }
+
+        public Designer GetDesigner(DesignerKey designerKey, string languageName)
+        {
+            var q = new GetDesignerQuery(ConnectionString, designerKey, languageName);
             return q.Execute();
         }
 

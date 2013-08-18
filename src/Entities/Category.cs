@@ -23,6 +23,6 @@
 
         public string Key { get { return _key; } }
 
-        public int PatternCount { get; set; }
+        public int PatternsCount { get; set; }
     }
 }

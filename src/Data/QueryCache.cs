@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Infrastructure
+﻿namespace Chiffon.Data
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
     using Chiffon.ViewModels;
     using Narvalo;
 
-    public class ChiffonCache : IChiffonCache
+    public class QueryCache : IQueryCache
     {
         const int CacheExpirationInHours_ = 1;
 
@@ -20,9 +20,9 @@
         // NB: Constructeur pour Autofac.
         // TODO: Je n'aime pas l'utilisation de HttpContext.Current, il faudra voir 
         // comment injecter HttpContextBase via Autofac sans avoir à installer Autofac.Integration.Web.
-        public ChiffonCache() : this(new HttpContextWrapper(HttpContext.Current)) { }
+        public QueryCache() : this(new HttpContextWrapper(HttpContext.Current)) { }
 
-        public ChiffonCache(HttpContextBase context)
+        public QueryCache(HttpContextBase context)
         {
             Requires.NotNull(context, "context");
 
@@ -33,24 +33,24 @@
 
         #region IChiffonCache
 
-        public DesignerViewModel GetOrInsertDesignerViewModel(DesignerKey designerKey, string languageName, Func<DesignerKey, string, DesignerViewModel> query)
-        {
-            var format = "Chiffon:Designer:{0}:{1}";
-            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString(), languageName);
-            return GetOrInsert(cacheKey, () => query(designerKey, languageName));
-        }
-
         public IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query)
         {
             var cacheKey = "Chiffon:Home";
             return GetOrInsert(cacheKey, () => query());
         }
 
-        public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
+        public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, string languageName, Func<DesignerKey, string, IEnumerable<Category>> query)
         {
             var format = "Chiffon:Category:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
-            return GetOrInsert(cacheKey, () => query(designerKey));
+            return GetOrInsert(cacheKey, () => query(designerKey, languageName));
+        }
+
+        public IEnumerable<Designer> GetOrInsertDesigners(string languageName, Func<String, IEnumerable<Designer>> query)
+        {
+            var format = "Chiffon:Designer:{0}";
+            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, languageName);
+            return GetOrInsert(cacheKey, () => query(languageName));
         }
 
         public IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)
