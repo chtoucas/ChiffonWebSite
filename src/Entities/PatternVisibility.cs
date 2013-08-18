@@ -6,5 +6,4 @@
         Members = 1,
         Public = 2,
     }
-
 }

@@ -33,19 +33,27 @@
 
         #region IChiffonCache
 
-        public DesignerViewModel GetDesignerViewModel(DesignerKey designerKey, string languageName, Func<DesignerKey, string, DesignerViewModel> query)
+        public DesignerViewModel GetOrInsertDesignerViewModel(DesignerKey designerKey, string languageName, Func<DesignerKey, string, DesignerViewModel> query)
         {
             var format = "Chiffon:Designer:{0}:{1}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString(), languageName);
             return GetOrInsert(cacheKey, () => query(designerKey, languageName));
         }
 
-        public IEnumerable<PatternViewItem> GetHomeViewModel(Func<IEnumerable<PatternViewItem>> query)
+        public IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query)
         {
-            return GetOrInsert("Chiffon:Home", () => query());
+            var cacheKey = "Chiffon:Home";
+            return GetOrInsert(cacheKey, () => query());
         }
 
-        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)
+        public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
+        {
+            var format = "Chiffon:Category:{0}";
+            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
+            return GetOrInsert(cacheKey, () => query(designerKey));
+        }
+
+        public IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)
         {
             var format = "Chiffon:Pattern:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());

@@ -31,6 +31,24 @@
             return q.Execute();
         }
 
+        public Pattern GetPattern(DesignerKey designerKey, string reference)
+        {
+            var q = new GetPatternQuery(ConnectionString, designerKey, reference);
+            return q.Execute();
+        }
+
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey, string languageName)
+        {
+            var q = new ListCategoriesQuery(ConnectionString, designerKey, languageName);
+            return q.Execute();
+        }
+
+        public IEnumerable<Designer> ListDesigners(string languageName)
+        {
+            var q = new ListDesignersQuery(ConnectionString, languageName);
+            return q.Execute();
+        }
+
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey)
         {
             var q = new ListPatternsQuery(ConnectionString, designerKey);
@@ -40,12 +58,6 @@
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
         {
             var q = new ListPatternsQuery(ConnectionString, designerKey) { CategoryKey = categoryKey };
-            return q.Execute();
-        }
-
-        public Pattern GetPattern(DesignerKey designerKey, string reference)
-        {
-            var q = new GetPatternQuery(ConnectionString, designerKey, reference);
             return q.Execute();
         }
 

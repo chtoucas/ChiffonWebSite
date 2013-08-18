@@ -8,7 +8,6 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
-    using Chiffon.ViewModels;
     using Narvalo;
 
     [Authorize]
@@ -32,7 +31,7 @@
 
             var patterns = _queries.ListPatterns(designerKey);
             model.Patterns = from _ in patterns
-                              orderby _.CreationTime descending
+                             orderby _.CreationTime descending
                              select Mapper.Map(_, model.Designer.DisplayName);
 
             ViewBag.Title = SR.Designer_Index_Title;

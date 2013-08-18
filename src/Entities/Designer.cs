@@ -8,7 +8,7 @@
     {
         readonly DesignerKey _key;
 
-        Pattern _preferredPattern;
+        Pattern _profilePattern;
 
         public Designer(DesignerKey designerKey)
         {
@@ -23,18 +23,18 @@
         /// </summary>
         public DesignerKey Key { get { return _key; } }
 
-        public Pattern PreferredPattern
+        public Pattern ProfilePattern
         {
             get
             {
-                if (_preferredPattern == null) {
-                    _preferredPattern = new Pattern(new PatternId(Key, PreferredPatternReference));
+                if (_profilePattern == null) {
+                    _profilePattern = new Pattern(new PatternId(Key, Avatar));
                 }
-                return _preferredPattern;
+                return _profilePattern;
             }
         }
 
-        public string PreferredPatternReference { get; set; }
+        public string Avatar { get; set; }
 
         public string Presentation { get; set; }
 

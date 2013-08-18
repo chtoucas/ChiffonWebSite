@@ -7,8 +7,12 @@
 
     public interface IChiffonCache
     {
-        DesignerViewModel GetDesignerViewModel(DesignerKey designerKey, string languageName, Func<DesignerKey, string, DesignerViewModel> query);
-        IEnumerable<PatternViewItem> GetHomeViewModel(Func<IEnumerable<PatternViewItem>> query);
-        IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query);
+        DesignerViewModel GetOrInsertDesignerViewModel(
+            DesignerKey designerKey, string languageName, Func<DesignerKey, string, DesignerViewModel> query);
+        IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query);
+        IEnumerable<Category> GetOrInsertCategories(
+            DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query);
+        IEnumerable<Pattern> GetOrInsertPatterns(
+            DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query);
     }
 }

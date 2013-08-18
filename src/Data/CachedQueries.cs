@@ -25,17 +25,17 @@
 
         public DesignerViewModel GetDesignerViewModel(DesignerKey designerKey, string languageName)
         {
-            return _cacher.GetDesignerViewModel(designerKey, languageName, (a, b) => _inner.GetDesignerViewModel(a, b));
+            return _cacher.GetOrInsertDesignerViewModel(designerKey, languageName, (a, b) => _inner.GetDesignerViewModel(a, b));
         }
 
         public IEnumerable<PatternViewItem> GetHomeViewModel()
         {
-            return _cacher.GetHomeViewModel(() => _inner.GetHomeViewModel());
+            return _cacher.GetOrInsertHomeViewModel(() => _inner.GetHomeViewModel());
         }
 
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey)
         {
-            return _cacher.ListPatterns(designerKey, _ => _inner.ListPatterns(_));
+            return _cacher.GetOrInsertPatterns(designerKey, _ => _inner.ListPatterns(_));
         }
 
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
