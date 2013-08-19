@@ -25,9 +25,9 @@
             return q.Execute();
         }
 
-        public Designer GetDesigner(DesignerKey designerKey, string languageName)
+        public Designer GetDesigner(DesignerKey designerKey, ChiffonCulture culture)
         {
-            var q = new GetDesignerQuery(ConnectionString, designerKey, languageName);
+            var q = new GetDesignerQuery(ConnectionString, designerKey, culture);
             return q.Execute();
         }
 
@@ -37,15 +37,15 @@
             return q.Execute();
         }
 
-        public IEnumerable<Category> ListCategories(DesignerKey designerKey, string languageName)
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey, ChiffonCulture culture)
         {
-            var q = new ListCategoriesQuery(ConnectionString, designerKey, languageName);
+            var q = new ListCategoriesQuery(ConnectionString, designerKey, culture);
             return q.Execute();
         }
 
-        public IEnumerable<Designer> ListDesigners(string languageName)
+        public IEnumerable<Designer> ListDesigners(ChiffonCulture culture)
         {
-            var q = new ListDesignersQuery(ConnectionString, languageName);
+            var q = new ListDesignersQuery(ConnectionString, culture);
             return q.Execute();
         }
 

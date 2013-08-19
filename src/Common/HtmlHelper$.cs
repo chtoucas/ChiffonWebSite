@@ -3,6 +3,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
+    using Chiffon.Infrastructure;
 
     public static class HtmlHelperExtensions
     {
@@ -12,14 +13,14 @@
         //        SR.PatternDescriptionFormat, pattern.Reference, designerName));
         //}
 
-        // FIXME: Utiliser ChiffonLanguage. Cf. aussi le HomeController.About()
-        public static IHtmlString PageTitle(this HtmlHelper @this, string languageName)
+        public static IHtmlString PageTitle(this HtmlHelper @this, ChiffonLanguage language)
         {
-            if (languageName == "en") {
-                return @this.Partial(ViewName.Shared.PageTitleEnglish);
-            }
-            else {
-                return @this.Partial(ViewName.Shared.PageTitle);
+            switch (language) {
+                case ChiffonLanguage.English:
+                    return @this.Partial(ViewName.Shared.PageTitleEnglish);
+                case ChiffonLanguage.Default:
+                default:
+                    return @this.Partial(ViewName.Shared.PageTitle);
             }
         }
     }

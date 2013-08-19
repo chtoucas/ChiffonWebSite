@@ -57,7 +57,7 @@
         [HttpGet]
         public ActionResult Contact()
         {
-            var model = _queries.ListDesigners(LanguageName).OrderBy(_ => _.Lastname);
+            var model = _queries.ListDesigners(Culture).OrderBy(_ => _.DisplayName);
 
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;

@@ -22,13 +22,15 @@
             _siteMap = siteMap;
         }
 
+        protected ChiffonCulture Culture { get { return Environment.Culture; } }
         protected ChiffonEnvironment Environment { get { return _environment; } }
-        protected string LanguageName { get { return Environment.Culture.LanguageName; } }
+        //protected string LanguageName { get { return Environment.Culture.LanguageName; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Language = LanguageName;
+            ViewBag.Language = Environment.Language;
+            ViewBag.LanguageName = Culture.LanguageName;
         }
     }
 }

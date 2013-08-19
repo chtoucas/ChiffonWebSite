@@ -29,9 +29,9 @@
         [HttpGet]
         public ActionResult Index(DesignerKey designerKey)
         {
-            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, LanguageName);
+            var categories = _queries.ListCategories(designerKey, Culture);
             var patterns = _queries.ListPatterns(designerKey);
 
             var model = new DesignerViewModel {
@@ -43,6 +43,7 @@
             };
 
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
+            ViewBag.CurrentCategoryKey = "ALL";
 
             ViewBag.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, designer.DisplayName);
@@ -55,9 +56,9 @@
         [HttpGet]
         public ActionResult Category(DesignerKey designerKey, string categoryKey)
         {
-            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, LanguageName);
+            var categories = _queries.ListCategories(designerKey, Culture);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
             var model = new DesignerViewModel {
@@ -85,9 +86,9 @@
         [HttpGet]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
         {
-            var designer = _queries.GetDesigner(designerKey, LanguageName);
+            var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, LanguageName);
+            var categories = _queries.ListCategories(designerKey, Culture);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
             var pattern = from _ in patterns where _.Reference == reference select _;

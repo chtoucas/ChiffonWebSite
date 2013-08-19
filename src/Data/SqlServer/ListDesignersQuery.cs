@@ -6,17 +6,18 @@
     using System.Data.SqlClient;
     using System.Net.Mail;
     using Chiffon.Entities;
+    using Chiffon.Infrastructure;
     using Narvalo.Data;
 
     public class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
     {
-        public ListDesignersQuery(string connectionString, string languageName)
+        public ListDesignersQuery(string connectionString, ChiffonCulture culture)
             : base(connectionString, "usp_ListDesigners")
         {
-            LanguageName = languageName;
+            Culture = culture;
         }
 
-        public string LanguageName { get; private set; }
+        public ChiffonCulture Culture { get; private set; }
 
         protected override IEnumerable<Designer> Execute(SqlDataReader rdr)
         {
@@ -30,6 +31,7 @@
                     EmailAddress = new MailAddress(rdr.GetString("email_address")),
                     Firstname = rdr.GetString("firstname"),
                     Lastname = rdr.GetString("lastname"),
+                    Nickname = rdr.MayGetString("nickname"),
                     Presentation = rdr.GetString("presentation"),
                     WebSiteUrl = rdr.MayGetString("website_url").Map(_ => new Uri(_)),
                 };
@@ -42,7 +44,7 @@
 
         protected override void PrepareCommand(SqlCommand command)
         {
-            command.AddParameter("@language", SqlDbType.Char, LanguageName);
+            command.AddParameter("@language", SqlDbType.Char, Culture.LanguageName);
         }
     }
 }

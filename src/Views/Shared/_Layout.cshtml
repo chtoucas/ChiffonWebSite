@@ -1,5 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="@ViewBag.Language">
+﻿@using Chiffon.Infrastructure
+
+<!DOCTYPE html>
+<html lang="@ViewBag.LanguageName">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,8 +20,7 @@
 </head>
 <body id="@ViewBag.BodyId">
  <header>
-  @Html.PageTitle(ViewBag.LanguageName)
-  <h1>@Html.Raw(VR.Layout_Title)</h1>
+  @Html.PageTitle((ChiffonLanguage)ViewBag.Language)
   <nav id=nav_lang class=clr>
    <ul class="inline right">
     <li>EN</li>
@@ -45,7 +46,7 @@
  </div>
  <footer class=darkgrey>
   <p id=legal>@Html.Raw(VR.Layout_Disclaimer)</p>
-  <p id=copyright>© Pour quel motif, Simone ? 2013</p>
+  <p id=copyright>© Pour quel motif, Simone ? 2013. Réalisation par chtoucas@narvalo.org</p>
  </footer>
  @{Html.RenderAction("CommonJavaScript", "Widget", new { bodyId = ViewBag.BodyId });}
 </body>

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Chiffon.Entities;
+    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
 
     public interface IQueryCache
@@ -10,9 +11,11 @@
         IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query);
 
         IEnumerable<Category> GetOrInsertCategories(
-            DesignerKey designerKey, string languageName, Func<DesignerKey, String, IEnumerable<Category>> query);
+            DesignerKey designerKey, ChiffonCulture culture,
+            Func<DesignerKey, ChiffonCulture, IEnumerable<Category>> query);
 
-        IEnumerable<Designer> GetOrInsertDesigners(string languageName, Func<String, IEnumerable<Designer>> query);
+        IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture,
+            Func<ChiffonCulture, IEnumerable<Designer>> query);
 
         IEnumerable<Pattern> GetOrInsertPatterns(
             DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query);

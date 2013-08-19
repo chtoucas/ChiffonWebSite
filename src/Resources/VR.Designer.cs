@@ -122,14 +122,5 @@ namespace Chiffon.Resources {
                 return ResourceManager.GetString("Layout_Nav_Newsletter", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Le collectif &lt;strong&gt;Pour quel motif, Simone ?&lt;/strong&gt; présente sa collection &lt;em&gt;AH14/15&lt;/em&gt;.
-        /// </summary>
-        public static string Layout_Title {
-            get {
-                return ResourceManager.GetString("Layout_Title", resourceCulture);
-            }
-        }
     }
 }

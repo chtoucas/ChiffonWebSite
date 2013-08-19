@@ -6,6 +6,7 @@
     using System.Web;
     using System.Web.Caching;
     using Chiffon.Entities;
+    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
 
@@ -39,18 +40,18 @@
             return GetOrInsert(cacheKey, () => query());
         }
 
-        public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, string languageName, Func<DesignerKey, string, IEnumerable<Category>> query)
+        public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, ChiffonCulture culture, Func<DesignerKey, ChiffonCulture, IEnumerable<Category>> query)
         {
             var format = "Chiffon:Category:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
-            return GetOrInsert(cacheKey, () => query(designerKey, languageName));
+            return GetOrInsert(cacheKey, () => query(designerKey, culture));
         }
 
-        public IEnumerable<Designer> GetOrInsertDesigners(string languageName, Func<String, IEnumerable<Designer>> query)
+        public IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture, Func<ChiffonCulture, IEnumerable<Designer>> query)
         {
             var format = "Chiffon:Designer:{0}";
-            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, languageName);
-            return GetOrInsert(cacheKey, () => query(languageName));
+            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, culture);
+            return GetOrInsert(cacheKey, () => query(culture));
         }
 
         public IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)

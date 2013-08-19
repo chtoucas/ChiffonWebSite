@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Chiffon.Entities;
+    using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
 
@@ -27,9 +28,9 @@
             return _cache.GetOrInsertHomeViewModel(() => _inner.GetHomeViewModel());
         }
 
-        public Designer GetDesigner(DesignerKey designerKey, string languageName)
+        public Designer GetDesigner(DesignerKey designerKey, ChiffonCulture culture)
         {
-            return (from _ in ListDesigners(languageName) where _.Key == designerKey select _).SingleOrDefault();
+            return (from _ in ListDesigners(culture) where _.Key == designerKey select _).SingleOrDefault();
         }
 
         public Pattern GetPattern(DesignerKey designerKey, string reference)
@@ -37,14 +38,14 @@
             return (from _ in ListPatterns(designerKey) where _.Reference == reference select _).SingleOrDefault();
         }
 
-        public IEnumerable<Category> ListCategories(DesignerKey designerKey, string languageName)
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey, ChiffonCulture culture)
         {
-            return _cache.GetOrInsertCategories(designerKey, languageName, (a, b) => _inner.ListCategories(a, b));
+            return _cache.GetOrInsertCategories(designerKey, culture, (a, b) => _inner.ListCategories(a, b));
         }
 
-        public IEnumerable<Designer> ListDesigners(string languageName)
+        public IEnumerable<Designer> ListDesigners(ChiffonCulture culture)
         {
-            return _cache.GetOrInsertDesigners(languageName, _ => _inner.ListDesigners(_));
+            return _cache.GetOrInsertDesigners(culture, _ => _inner.ListDesigners(_));
         }
 
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey)

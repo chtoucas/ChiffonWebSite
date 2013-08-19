@@ -8,6 +8,7 @@
     public class Designer
     {
         readonly DesignerKey _key;
+        string _displayName;
 
         public Designer(DesignerKey key)
         {
@@ -24,10 +25,20 @@
 
         public string AvatarCategory { get; set; }
         public string AvatarReference { get; set; }
-        public string DisplayName { get { return Firstname + " " + Lastname; } }
+        public string DisplayName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_displayName)) {
+                    _displayName = Nickname.ValueOrElse(Firstname + " " + Lastname);
+                }
+                return _displayName;
+            }
+        }
         public MailAddress EmailAddress { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public Maybe<string> Nickname { get; set; }
         public string Presentation { get; set; }
         public Maybe<Uri> WebSiteUrl { get; set; }
     }

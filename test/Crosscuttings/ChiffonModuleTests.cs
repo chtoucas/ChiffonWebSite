@@ -24,12 +24,12 @@
             AutofacAssert.IsResolved<ChiffonConfig>(_container);
         }
 
-        [Fact]
-        public void DbHelper_IsResolvedWithSingleton()
-        {
-            // Act & Assert
-            AutofacAssert.SameInstance<DbHelper>(_container);
-        }
+        //[Fact]
+        //public void DbHelper_IsResolvedWithSingleton()
+        //{
+        //    // Act & Assert
+        //    AutofacAssert.SameInstance<DbHelper>(_container);
+        //}
 
         #region IDisposable
 
