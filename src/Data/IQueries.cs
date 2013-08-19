@@ -9,7 +9,7 @@
     {
         IEnumerable<PatternViewItem> GetHomeViewModel();
 
-        IEnumerable<Category> ListCategories(DesignerKey designerKey, ChiffonCulture culture);
+        IEnumerable<Category> ListCategories(DesignerKey designerKey);
         IEnumerable<Designer> ListDesigners(ChiffonCulture culture);
         IEnumerable<Pattern> ListPatterns(DesignerKey designerKey);
         IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey);

@@ -37,9 +37,9 @@
             return q.Execute();
         }
 
-        public IEnumerable<Category> ListCategories(DesignerKey designerKey, ChiffonCulture culture)
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey)
         {
-            var q = new ListCategoriesQuery(ConnectionString, designerKey, culture);
+            var q = new ListCategoriesQuery(ConnectionString, designerKey);
             return q.Execute();
         }
 

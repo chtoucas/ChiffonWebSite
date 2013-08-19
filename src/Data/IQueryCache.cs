@@ -8,11 +8,12 @@
 
     public interface IQueryCache
     {
-        IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query);
+        IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(
+            Func<IEnumerable<PatternViewItem>> query);
 
         IEnumerable<Category> GetOrInsertCategories(
-            DesignerKey designerKey, ChiffonCulture culture,
-            Func<DesignerKey, ChiffonCulture, IEnumerable<Category>> query);
+            DesignerKey designerKey,
+            Func<DesignerKey, IEnumerable<Category>> query);
 
         IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture,
             Func<ChiffonCulture, IEnumerable<Designer>> query);

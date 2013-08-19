@@ -38,9 +38,9 @@
             return (from _ in ListPatterns(designerKey) where _.Reference == reference select _).SingleOrDefault();
         }
 
-        public IEnumerable<Category> ListCategories(DesignerKey designerKey, ChiffonCulture culture)
+        public IEnumerable<Category> ListCategories(DesignerKey designerKey)
         {
-            return _cache.GetOrInsertCategories(designerKey, culture, (a, b) => _inner.ListCategories(a, b));
+            return _cache.GetOrInsertCategories(designerKey, _ => _inner.ListCategories(_));
         }
 
         public IEnumerable<Designer> ListDesigners(ChiffonCulture culture)

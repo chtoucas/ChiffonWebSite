@@ -31,7 +31,7 @@
         {
             var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, Culture);
+            var categories = _queries.ListCategories(designerKey);
             var patterns = _queries.ListPatterns(designerKey);
 
             var model = new DesignerViewModel {
@@ -58,7 +58,7 @@
         {
             var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, Culture);
+            var categories = _queries.ListCategories(designerKey);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
             var model = new DesignerViewModel {
@@ -88,7 +88,7 @@
         {
             var designer = _queries.GetDesigner(designerKey, Culture);
             if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey, Culture);
+            var categories = _queries.ListCategories(designerKey);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
             var pattern = from _ in patterns where _.Reference == reference select _;

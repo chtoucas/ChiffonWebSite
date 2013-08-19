@@ -9,15 +9,13 @@
 
     public class ListCategoriesQuery : StoredProcedure<IEnumerable<Category>>
     {
-        public ListCategoriesQuery(string connectionString, DesignerKey designerKey, ChiffonCulture culture)
+        public ListCategoriesQuery(string connectionString, DesignerKey designerKey)
             : base(connectionString, "usp_ListCategories")
         {
             DesignerKey = designerKey;
-            Culture = culture;
         }
 
         public DesignerKey DesignerKey { get; private set; }
-        public ChiffonCulture Culture { get; private set; }
 
         protected override IEnumerable<Category> Execute(SqlDataReader rdr)
         {
@@ -38,7 +36,6 @@
         protected override void PrepareCommand(SqlCommand command)
         {
             command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
-            command.AddParameter("@language", SqlDbType.Char, Culture.LanguageName);
         }
     }
 }
