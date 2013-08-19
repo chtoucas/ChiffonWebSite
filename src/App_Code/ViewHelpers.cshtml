@@ -1,0 +1,32 @@
+﻿@using System.Configuration
+@using System.Web.Mvc
+@using Chiffon.Infrastructure
+@using Chiffon.ViewModels;
+
+@* Generator: MvcHelper Namespace: Chiffon.Common*@
+
+@helper LanguageMenu(ChiffonLanguage language)
+{
+ switch (language) {
+  case ChiffonLanguage.English:
+ <ul class="inline right">
+  <li>EN</li>
+  <li class=sep>/</li>
+  <li><a href="//pourquelmotifsimone.com">FR</a></li>
+ </ul>
+   break;
+  case ChiffonLanguage.Default:
+ <ul class="inline right">
+  <li><a href="//en.pourquelmotifsimone.com">FR</a></li>
+  <li class=sep>/</li>
+  <li>FR</li>
+ </ul>
+   break;
+ }
+}
+
+@*@helper DesignerWebSite(Uri url)
+{
+ var website = url.ToString().Replace("http://", String.Empty);
+ <li class="web sansserif"><a href="//@website" rel=external target=_blank>@website</a></li>
+}*@

@@ -7,21 +7,14 @@
 
     public static class HtmlHelperExtensions
     {
-        //public IHtmlString PatternDescription(this HtmlHelper self, PatternViewItem pattern, string designerName)
-        //{
-        //    return new HtmlString(String.Format(CultureInfo.CurrentCulture,
-        //        SR.PatternDescriptionFormat, pattern.Reference, designerName));
-        //}
+        public static IHtmlString ContactTitle(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Shared.ContactTitle, language));
+        }
 
         public static IHtmlString PageTitle(this HtmlHelper @this, ChiffonLanguage language)
         {
-            switch (language) {
-                case ChiffonLanguage.English:
-                    return @this.Partial(ViewName.Shared.PageTitleEnglish);
-                case ChiffonLanguage.Default:
-                default:
-                    return @this.Partial(ViewName.Shared.PageTitle);
-            }
+            return @this.Partial(ViewUtility.Localize(ViewName.Shared.PageTitle, language));
         }
     }
 }

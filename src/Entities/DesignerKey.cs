@@ -6,8 +6,8 @@
     [Serializable]
     public struct DesignerKey : IEquatable<DesignerKey>
     {
-        public static readonly DesignerKey Chicamancha = new DesignerKey("chicamancha");
-        public static readonly DesignerKey ChristineLégeret = new DesignerKey("christine-legeret");
+        public static readonly DesignerKey ChristineLégeret = new DesignerKey("petroleum-blue");
+        public static readonly DesignerKey EstherMarthi = new DesignerKey("chicamancha");
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
@@ -27,10 +27,10 @@
         {
             switch (value) {
                 case "chicamancha":
-                    return Maybe.Create(Chicamancha);
+                    return Maybe.Create(EstherMarthi);
                 case "viviane-devaux":
                     return Maybe.Create(VivianeDevaux);
-                case "christine-legeret":
+                case "petroleum-blue":
                     return Maybe.Create(ChristineLégeret);
                 case "laure-roussel":
                     return Maybe.Create(LaureRoussel);
@@ -43,10 +43,10 @@
         {
             switch (value) {
                 case "chicamancha":
-                    return Chicamancha;
+                    return EstherMarthi;
                 case "viviane-devaux":
                     return VivianeDevaux;
-                case "christine-legeret":
+                case "petroleum-blue":
                     return ChristineLégeret;
                 case "laure-roussel":
                     return LaureRoussel;

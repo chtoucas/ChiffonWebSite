@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System.Web.Mvc;
+    using Chiffon.Common;
     using Chiffon.Common.Filters;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -24,8 +25,12 @@
 
         protected ChiffonCulture Culture { get { return Environment.Culture; } }
         protected ChiffonEnvironment Environment { get { return _environment; } }
-        //protected string LanguageName { get { return Environment.Culture.LanguageName; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
+
+        protected ActionResult LocalizedView(string viewName)
+        {
+            return View(ViewUtility.Localize(viewName, Environment.Language));
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

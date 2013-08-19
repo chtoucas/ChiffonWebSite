@@ -5,18 +5,18 @@
 
     public static class CssUtility
     {
-        public static string DesignerClass(DesignerKey self)
+        public static string DesignerClass(DesignerKey key)
         {
-            if (self == DesignerKey.Chicamancha) {
-                return CssClassName.Chicamancha;
-            }
-            else if (self == DesignerKey.ChristineLégeret) {
+            if (key == DesignerKey.ChristineLégeret) {
                 return CssClassName.ChristineLégeret;
             }
-            else if (self == DesignerKey.LaureRoussel) {
+            else if (key == DesignerKey.EstherMarthi) {
+                return CssClassName.EstherMarthi;
+            }
+            else if (key == DesignerKey.LaureRoussel) {
                 return CssClassName.LaureRoussel;
             }
-            else if (self == DesignerKey.VivianeDevaux) {
+            else if (key == DesignerKey.VivianeDevaux) {
                 return CssClassName.VivianeDevaux;
             }
             else {

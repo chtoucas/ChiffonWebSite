@@ -5,7 +5,7 @@
         // HomeController.
         public static class Home
         {
-            public const string Index = "Home/Index";
+            public const string Index = "Home/";
             public const string About = "Home/About";
             public const string Contact = "Home/Contact";
             public const string Newsletter = "Home/Newsletter";
@@ -19,11 +19,11 @@
         }
 
         // DesignerController.
-        public static class Chicamancha
+        public static class EstherMarthi
         {
-            public const string Index = "Chicamancha/";
-            public const string Pattern = "Chicamancha/Pattern";
-            public const string Category = "Chicamancha/Category";
+            public const string Index = "EstherMarthi/";
+            public const string Pattern = "EstherMarthi/Pattern";
+            public const string Category = "EstherMarthi/Category";
         }
         public static class VivianeDevaux
         {

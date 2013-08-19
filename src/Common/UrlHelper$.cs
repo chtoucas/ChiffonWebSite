@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Chiffon.Common;
     using Chiffon.Entities;
 
     public static class UrlHelperExtensions
@@ -11,24 +12,24 @@
 
         public static string Designer(this UrlHelper @this, DesignerKey designerKey)
         {
-            return SecureAction(@this, "Index", "Designer", new { designerKey = designerKey });
+            return SecureAction(@this, ActionName.Designer.Index, ControllerName.Designer, new { designerKey = designerKey });
         }
 
         public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey)
         {
-            return SecureAction(@this, "Category", "Designer",
+            return SecureAction(@this, ActionName.Designer.Category, ControllerName.Designer,
                 new { designerKey = designerKey, categoryKey = categoryKey });
         }
 
         public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference)
         {
-            return SecureAction(@this, "Pattern", "Designer",
+            return SecureAction(@this, ActionName.Designer.Pattern, ControllerName.Designer,
                 new { designerKey = designerKey, categoryKey = categoryKey, reference = reference });
         }
 
-        public static string ChicamanchaUrl(this UrlHelper @this)
+        public static string EstherMarthiUrl(this UrlHelper @this)
         {
-            return SecureUrl(@this, RouteName.Chicamancha.Index, null /* routeValues */);
+            return SecureUrl(@this, RouteName.EstherMarthi.Index, null /* routeValues */);
         }
 
         public static string VivianeDevauxUrl(this UrlHelper @this)

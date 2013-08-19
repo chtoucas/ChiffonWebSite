@@ -148,7 +148,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="Common\ActionName.cs" />
+    <Compile Include="Common\ControllerName.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
+    <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Data\CachedQueries.cs" />
     <Compile Include="Data\IQueries.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
@@ -291,7 +294,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\Logs\" />
   </ItemGroup>
   <ItemGroup>
@@ -326,14 +328,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\ViewHelpers.cshtml" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <Content Include="Views\Home\Newsletter.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
     <Content Include="Views\Home\About.en.cshtml" />
-    <Content Include="Views\Shared\_Title.cshtml" />
-    <Content Include="Views\Shared\_Title.en.cshtml" />
+    <Content Include="Views\Shared\_PageTitle.cshtml" />
+    <Content Include="Views\Shared\_PageTitle.en.cshtml" />
+    <Content Include="Views\Shared\_ContactTitle.cshtml" />
+    <Content Include="Views\Shared\_ContactTitle.en.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

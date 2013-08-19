@@ -44,14 +44,7 @@
             ViewBag.MetaDescription = SR.Home_About_Description;
             ViewBag.CanonicalLink = SiteMap.About().ToString();
 
-            // TODO: Généraliser la résolution de vues. Cf. aussi HtmlHelperExtensions
-            switch (Environment.Language) {
-                case ChiffonLanguage.English:
-                    return View(ViewName.Home.AboutEnglish);
-                case ChiffonLanguage.Default:
-                default:
-                    return View(ViewName.Home.About);
-            }
+            return LocalizedView(ViewName.Home.About);
         }
 
         [HttpGet]
