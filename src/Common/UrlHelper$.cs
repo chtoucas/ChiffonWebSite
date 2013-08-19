@@ -9,104 +9,104 @@
     {
         #region Designer controller.
 
-        public static string Designer(this UrlHelper self, DesignerKey designerKey)
+        public static string Designer(this UrlHelper @this, DesignerKey designerKey)
         {
-            return SecureAction(self, "Index", "Designer", new { designerKey = designerKey });
+            return SecureAction(@this, "Index", "Designer", new { designerKey = designerKey });
         }
 
-        public static string Category(this UrlHelper self, DesignerKey designerKey, string categoryKey)
+        public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey)
         {
-            return SecureAction(self, "Category", "Designer",
+            return SecureAction(@this, "Category", "Designer",
                 new { designerKey = designerKey, categoryKey = categoryKey });
         }
 
-        public static string Pattern(this UrlHelper self, DesignerKey designerKey, string categoryKey, string reference)
+        public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference)
         {
-            return SecureAction(self, "Pattern", "Designer",
+            return SecureAction(@this, "Pattern", "Designer",
                 new { designerKey = designerKey, categoryKey = categoryKey, reference = reference });
         }
 
-        public static string ChicamanchaUrl(this UrlHelper self)
+        public static string ChicamanchaUrl(this UrlHelper @this)
         {
-            return SecureUrl(self, RouteName.Chicamancha.Index, null /* routeValues */);
+            return SecureUrl(@this, RouteName.Chicamancha.Index, null /* routeValues */);
         }
 
-        public static string VivianeDevauxUrl(this UrlHelper self)
+        public static string VivianeDevauxUrl(this UrlHelper @this)
         {
-            return SecureUrl(self, RouteName.VivianeDevaux.Index, null /* routeValues */);
+            return SecureUrl(@this, RouteName.VivianeDevaux.Index, null /* routeValues */);
         }
 
-        public static string ChristineLégeretUrl(this UrlHelper self)
+        public static string ChristineLégeretUrl(this UrlHelper @this)
         {
-            return SecureUrl(self, RouteName.ChristineLégeret.Index, null /* routeValues */);
+            return SecureUrl(@this, RouteName.ChristineLégeret.Index, null /* routeValues */);
         }
 
-        public static string LaureRousselUrl(this UrlHelper self)
+        public static string LaureRousselUrl(this UrlHelper @this)
         {
-            return SecureUrl(self, RouteName.LaureRoussel.Index, null /* routeValues */);
+            return SecureUrl(@this, RouteName.LaureRoussel.Index, null /* routeValues */);
         }
 
         #endregion
 
-        public static string PreviewContent(this UrlHelper self, DesignerKey designerKey, string reference)
+        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference)
         {
-            return self.Content(String.Format("~/{0}/motif-{1}_preview.jpg", designerKey, reference));
+            return @this.Content(String.Format("~/{0}/motif-{1}_preview.jpg", designerKey, reference));
         }
 
-        public static string PatternContent(this UrlHelper self, DesignerKey designerKey, string reference)
+        public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference)
         {
-            return self.Content(String.Format("~/{0}/motif-{1}.jpg", designerKey, reference));
+            return @this.Content(String.Format("~/{0}/motif-{1}.jpg", designerKey, reference));
         }
 
-        public static string SecureAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
+        public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)
         {
-            return self.SecureAction(actionName, controllerName, new RouteValueDictionary(routeValues));
+            return @this.SecureAction(actionName, controllerName, new RouteValueDictionary(routeValues));
         }
 
-        public static string SecureAction(this UrlHelper self, string actionName, string controllerName, RouteValueDictionary routeValues)
+        public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, RouteValueDictionary routeValues)
         {
-            var originalUrl = self.Action(actionName, controllerName, routeValues);
+            var originalUrl = @this.Action(actionName, controllerName, routeValues);
 
-            if (self.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
+            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
                 return originalUrl;
             }
             else {
-                return self.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 
-        public static string SecureUrl(this UrlHelper self, string routeName, object routeValues)
+        public static string SecureUrl(this UrlHelper @this, string routeName, object routeValues)
         {
-            return self.SecureUrl(routeName, new RouteValueDictionary(routeValues));
+            return @this.SecureUrl(routeName, new RouteValueDictionary(routeValues));
         }
 
-        public static string SecureUrl(this UrlHelper self, string routeName, RouteValueDictionary routeValues)
+        public static string SecureUrl(this UrlHelper @this, string routeName, RouteValueDictionary routeValues)
         {
-            var originalUrl = self.RouteUrl(routeName, routeValues);
+            var originalUrl = @this.RouteUrl(routeName, routeValues);
 
-            if (self.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
+            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
                 return originalUrl;
             }
             else {
-                return self.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 
-        public static string Current(this UrlHelper self)
+        public static string Current(this UrlHelper @this)
         {
-            return self.RequestContext.HttpContext.Request.RawUrl;
+            return @this.RequestContext.HttpContext.Request.RawUrl;
         }
 
-        public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, object routeValues)
+        public static string AbsoluteAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)
         {
-            var scheme = self.RequestContext.HttpContext.Request.Url.Scheme;
-            return self.Action(actionName, controllerName, routeValues, scheme);
+            var scheme = @this.RequestContext.HttpContext.Request.Url.Scheme;
+            return @this.Action(actionName, controllerName, routeValues, scheme);
         }
 
-        public static string AbsoluteAction(this UrlHelper self, string actionName, string controllerName, RouteValueDictionary routeValues)
+        public static string AbsoluteAction(this UrlHelper @this, string actionName, string controllerName, RouteValueDictionary routeValues)
         {
-            var scheme = self.RequestContext.HttpContext.Request.Url.Scheme;
-            return self.Action(actionName, controllerName, routeValues, scheme);
+            var scheme = @this.RequestContext.HttpContext.Request.Url.Scheme;
+            return @this.Action(actionName, controllerName, routeValues, scheme);
         }
 
         //public static string AbsoluteContent(this UrlHelper self, string path)

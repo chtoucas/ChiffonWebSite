@@ -173,6 +173,6 @@ BODY#home_newsletter #nav_newsletter,
 
 #designer NAV { border-bottom: 1px solid #999; margin-bottom: 2.5em; font-size: 1.1em; }
   #designer NAV UL { margin: 0; padding: 0; }
-  #designer NAV LI:hover { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
+  #designer NAV LI:hover, #designer NAV LI.current { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
   #designer NAV A { padding: .5em 0; width: 220px; display: block; text-transform: uppercase; border-top: 1px solid #999; color: #999; }
-    #designer NAV A:hover { color: red; }
+    #designer NAV A:hover, #designer NAV LI.current A { color: red; }

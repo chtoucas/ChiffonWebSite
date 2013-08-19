@@ -6,7 +6,12 @@
   <ul>
    <li><a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternsCount)</a></li>
    @foreach (var category in Model.Categories) {
+    if (category.Key == ViewBag.CurrentCategoryKey) {
     <li><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternsCount)</a></li>
+    }
+    else {
+    <li class=current><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternsCount)</a></li>
+    }
    }
   </ul>
  </nav>

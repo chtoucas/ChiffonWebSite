@@ -10,9 +10,9 @@
     public static class ContainerBuilderExtensions
     {
         public static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle>
-            RegisterHandlers(this ContainerBuilder builder, params Assembly[] handlerAssemblies)
+            RegisterHandlers(this ContainerBuilder @this, params Assembly[] handlerAssemblies)
         {
-            return builder.RegisterAssemblyTypes(handlerAssemblies)
+            return @this.RegisterAssemblyTypes(handlerAssemblies)
                 .Where(_ => typeof(IHttpHandler).IsAssignableFrom(_)
                     && _.Name.EndsWith("Handler", StringComparison.Ordinal));
         }

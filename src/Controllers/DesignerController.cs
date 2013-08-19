@@ -1,5 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
+    using System;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using Chiffon.Common;
@@ -41,7 +43,9 @@
             };
 
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.Title = SR.Designer_Index_Title;
+
+            ViewBag.Title = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Index_Description;
             ViewBag.CanonicalLink = SiteMap.Designer(designerKey).ToString();
 
@@ -64,8 +68,14 @@
                            select Mapper.Map(_, designer.DisplayName)
             };
 
+            var category = (from _ in categories where _.Key == categoryKey select _).Single();
+
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.Title = SR.Designer_Category_Title;
+            ViewBag.CurrentCategoryKey = categoryKey;
+
+            ViewBag.Title = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
+                category.DisplayName, designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Category_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerCategory(designerKey, categoryKey).ToString();
 
@@ -95,7 +105,11 @@
             };
 
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.Title = SR.Designer_Pattern_Title;
+            ViewBag.CurrentCategoryKey = categoryKey;
+
+            ViewBag.Title = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat, 
+                pattern.Single().Reference, designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Pattern_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference).ToString();
 

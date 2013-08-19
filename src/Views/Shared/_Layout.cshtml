@@ -18,6 +18,7 @@
 </head>
 <body id="@ViewBag.BodyId">
  <header>
+  @Html.PageTitle(ViewBag.LanguageName)
   <h1>@Html.Raw(VR.Layout_Title)</h1>
   <nav id=nav_lang class=clr>
    <ul class="inline right">
@@ -29,8 +30,8 @@
   <nav id=nav_main class=clr>
    <ul class=center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
-    @*<li class=sep>/</li>
-    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>*@
+    <li class=sep>/</li>
+    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>

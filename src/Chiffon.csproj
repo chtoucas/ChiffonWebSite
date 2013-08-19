@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Data\CachedQueries.cs" />
     <Compile Include="Data\IQueries.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
@@ -197,7 +198,6 @@
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
-    <Compile Include="Infrastructure\GlimpseSecurityPolicy.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -331,6 +331,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
+    <Content Include="Views\Home\About.en.cshtml" />
+    <Content Include="Views\Shared\_Title.cshtml" />
+    <Content Include="Views\Shared\_Title.en.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

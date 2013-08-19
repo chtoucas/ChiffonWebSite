@@ -19,9 +19,12 @@ Code
 
 * Script d'automatisation des déploiements
 
+* Pages d'erreur
+* Charger moins d'images d'un coup dans les catégories
+
 Production
 ==========
 
-* Redirection des adresses email (contact et designers)
 * Configuration de IIS
 * DNS : avec et sans www, en et s
+* Emailing

@@ -117,53 +117,65 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Designer_Category_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+  <data name="Account_Login_Description" xml:space="preserve">
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
-  <data name="Designer_Category_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+  <data name="Account_Login_Title" xml:space="preserve">
+    <value>Connexion - Pour quel motif, Simone ?</value>
+  </data>
+  <data name="Account_Register_Description" xml:space="preserve">
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  </data>
+  <data name="Account_Register_Title" xml:space="preserve">
+    <value>Enregistrement - Pour quel motif, Simone ?</value>
+  </data>
+  <data name="Designer_Category_Description" xml:space="preserve">
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  </data>
+  <data name="Designer_Category_TitleFormat" xml:space="preserve">
+    <value>"{0}" par {1} - Pour quel motif, Simone ?</value>
   </data>
   <data name="Designer_Index_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
-  <data name="Designer_Index_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+  <data name="Designer_Index_TitleFormat" xml:space="preserve">
+    <value>{0} - Pour quel motif, Simone ?</value>
   </data>
   <data name="Designer_Pattern_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
-  <data name="Designer_Pattern_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+  <data name="Designer_Pattern_TitleFormat" xml:space="preserve">
+    <value>Motif n°{0} par {1} - Pour quel motif, Simone ?</value>
   </data>
   <data name="Home_About_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="Home_About_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+    <value>À propos - Pour quel motif, Simone ?</value>
   </data>
   <data name="Home_Contact_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="Home_Contact_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+    <value>Contact - Pour quel motif, Simone ?</value>
   </data>
   <data name="Home_Index_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="Home_Index_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="Home_Newsletter_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collective of textile designers.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="Home_Newsletter_Title" xml:space="preserve">
-    <value>Pour quel motif, Simone ?</value>
+    <value>Newsletter - Pour quel motif, Simone ?</value>
   </data>
   <data name="MetaDescription" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collectif de designers textiles.</value>
+    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
   </data>
   <data name="MetaKeywords" xml:space="preserve">
-    <value>Design textile</value>
+    <value>Design textile, Illustrations, Patterns</value>
   </data>
   <data name="PatternDescriptionFormat" xml:space="preserve">
     <value>Motif textile par {1}, référence n°{0}</value>

@@ -4,6 +4,7 @@
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Resources;
 
     public class AccountController : PageController
     {
@@ -13,6 +14,8 @@
         {
             ViewBag.ReturnUrl = returnUrl;
 
+            ViewBag.Title = SR.Account_Login_Title;
+            ViewBag.MetaDescription = SR.Account_Login_Description;
             ViewBag.CanonicalLink = SiteMap.Login().ToString();
 
             return View(ViewName.Account.Login);
@@ -22,6 +25,8 @@
         [HttpGet]
         public ActionResult Register(string returnUrl)
         {
+            ViewBag.Title = SR.Account_Register_Title;
+            ViewBag.MetaDescription = SR.Account_Register_Description;
             ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
             return View(ViewName.Account.Register);

@@ -44,13 +44,20 @@
             ViewBag.MetaDescription = SR.Home_About_Description;
             ViewBag.CanonicalLink = SiteMap.About().ToString();
 
-            return View(ViewName.Home.About);
+            // TODO: Généraliser la résolution de vues. Cf. aussi HtmlHelperExtensions
+            switch (Environment.Language) {
+                case ChiffonLanguage.English:
+                    return View(ViewName.Home.AboutEnglish);
+                case ChiffonLanguage.Default:
+                default:
+                    return View(ViewName.Home.About);
+            }
         }
 
         [HttpGet]
         public ActionResult Contact()
         {
-            var model = _queries.ListDesigners(LanguageName).OrderBy(_ => _.DisplayName);
+            var model = _queries.ListDesigners(LanguageName).OrderBy(_ => _.Lastname);
 
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;

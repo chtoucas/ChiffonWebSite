@@ -6,6 +6,7 @@
         {
             public const string Index = "~/Views/Home/Index.cshtml";
             public const string About = "~/Views/Home/About.cshtml";
+            public const string AboutEnglish = "~/Views/Home/About.en.cshtml";
             public const string Contact = "~/Views/Home/Contact.cshtml";
             public const string Newsletter = "~/Views/Home/Newsletter.cshtml";
         }
@@ -34,6 +35,8 @@
         {
             public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
+            public const string PageTitle = "~/Views/Shared/_Title.cshtml";
+            public const string PageTitleEnglish = "~/Views/Shared/_Title.en.cshtml";
         }
     }
 }

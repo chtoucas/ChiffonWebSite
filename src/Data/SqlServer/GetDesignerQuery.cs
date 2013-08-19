@@ -30,8 +30,9 @@
             return new Designer(designerKey) {
                 AvatarCategory = rdr.GetString("avatar_category"),
                 AvatarReference = rdr.GetString("avatar_reference"),
-                DisplayName = rdr.GetString("display_name"),
                 EmailAddress = new MailAddress(rdr.GetString("email_address")),
+                Firstname = rdr.GetString("firstname"),
+                Lastname = rdr.GetString("lastname"),
                 Presentation = rdr.GetString("presentation"),
                 WebSiteUrl = rdr.MayGetString("website_url").Map(_ => new Uri(_)),
             };
