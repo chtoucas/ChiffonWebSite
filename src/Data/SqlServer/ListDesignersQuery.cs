@@ -24,16 +24,18 @@
             var designers = new List<Designer>();
 
             while (rdr.Read()) {
-                var designerKey = DesignerKey.Parse(rdr.GetString("designer"));
+                var designerKey = DesignerKey.Parse(rdr.GetString("id"));
+
                 var designer = new Designer(designerKey) {
                     AvatarCategory = rdr.GetString("avatar_category"),
                     AvatarReference = rdr.GetString("avatar_reference"),
+                    AvatarVersion = rdr.GetString("avatar_version"),
                     EmailAddress = new MailAddress(rdr.GetString("email_address")),
                     Firstname = rdr.GetString("firstname"),
                     Lastname = rdr.GetString("lastname"),
                     Nickname = rdr.MayGetString("nickname"),
                     Presentation = rdr.GetString("presentation"),
-                    WebSiteUrl = rdr.MayGetString("website_url").Map(_ => new Uri(_)),
+                    WebSiteUrl = rdr.MayGetString("website").Map(_ => new Uri(_)),
                 };
 
                 designers.Add(designer);

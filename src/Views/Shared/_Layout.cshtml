@@ -16,7 +16,7 @@
  <link rel=canonical href="@ViewBag.CanonicalLink"/>
  @{Html.RenderAction("CommonStylesheet", "Widget");}
  @*HTML5 fix for IE*@
- <script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>
+ @*<script>(function(c) { c('header'); c('nav'); c('footer'); })(document.createElement);</script>*@
 </head>
 <body id="@ViewBag.BodyId">
  <header>
@@ -42,7 +42,7 @@
  </div>
  <footer class=darkgrey>
   <p id=legal>@Html.Raw(VR.Layout_Disclaimer)</p>
-  <p id=copyright>© Pour quel motif, Simone ? 2013. Réalisation par chtoucas@narvalo.org</p>
+  <p id=copyright>@Html.Raw(VR.Layout_Copyright)</p>
  </footer>
  @{Html.RenderAction("CommonJavaScript", "Widget", new { bodyId = ViewBag.BodyId });}
 </body>

@@ -232,7 +232,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Design textile, Illustrations, Patterns.
+        ///   Recherche une chaîne localisée semblable à Design textile, Illustrations, Motifs.
         /// </summary>
         public static string MetaKeywords {
             get {
@@ -241,7 +241,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Motif textile par {1}, référence n°{0}.
+        ///   Recherche une chaîne localisée semblable à Motif textile n°{0} par {1}.
         /// </summary>
         public static string PatternDescriptionFormat {
             get {

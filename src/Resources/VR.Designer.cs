@@ -70,6 +70,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013. Site web réalisé par chtoucas@narvalo.org.
+        /// </summary>
+        public static string Layout_Copyright {
+            get {
+                return ResourceManager.GetString("Layout_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite..
         /// </summary>
         public static string Layout_Disclaimer {

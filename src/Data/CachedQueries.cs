@@ -4,7 +4,6 @@
     using System.Linq;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.ViewModels;
     using Narvalo;
 
     public class CachedQueries : IQueries
@@ -23,9 +22,9 @@
 
         #region IQueries
 
-        public IEnumerable<PatternViewItem> GetHomeViewModel()
+        public IEnumerable<Pattern> ListShowcasedPatterns()
         {
-            return _cache.GetOrInsertHomeViewModel(() => _inner.GetHomeViewModel());
+            return _cache.GetOrInsertShowcasedPatterns(() => _inner.ListShowcasedPatterns());
         }
 
         public Designer GetDesigner(DesignerKey designerKey, ChiffonCulture culture)
@@ -33,9 +32,11 @@
             return (from _ in ListDesigners(culture) where _.Key == designerKey select _).SingleOrDefault();
         }
 
-        public Pattern GetPattern(DesignerKey designerKey, string reference)
+        public Pattern GetPattern(DesignerKey designerKey, string reference, string version)
         {
-            return (from _ in ListPatterns(designerKey) where _.Reference == reference select _).SingleOrDefault();
+            return (from _ in ListPatterns(designerKey) 
+                    where _.Reference == reference && _.Version == version 
+                    select _).SingleOrDefault();
         }
 
         public IEnumerable<Category> ListCategories(DesignerKey designerKey)
@@ -56,6 +57,18 @@
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
         {
             return from _ in ListPatterns(designerKey) where _.CategoryKey == categoryKey select _;
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey, bool published)
+        {
+            return from _ in ListPatterns(designerKey)
+                   where _.CategoryKey == categoryKey && _.Published
+                   select _;
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, bool published)
+        {
+            return from _ in ListPatterns(designerKey) where _.Published select _;
         }
 
         #endregion

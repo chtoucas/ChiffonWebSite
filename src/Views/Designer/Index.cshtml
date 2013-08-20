@@ -8,7 +8,7 @@
  <ul class="mosaic len_75 clr">
   @foreach (var preview in Model.Patterns) {
    <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference)" alt="@preview.Description" /><div class="overlay"></div>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
    </a></li>
   }
  </ul>

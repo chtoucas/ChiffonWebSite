@@ -51,10 +51,14 @@
             var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 0);
             if (reference.IsNone) { return BindingFailure("reference"); }
 
+            var version = nvc.MayGetValue("version");
+            if (version.IsNone) { return BindingFailure("reference"); }
+
             var query = new PatternImageQuery {
                 DesignerKey = designerKey.Value,
                 Reference = reference.Value,
                 Size = size.Value,
+                Version = version.Value,
             };
 
             return Outcome<PatternImageQuery>.Success(query);
@@ -64,7 +68,8 @@
         {
             var response = context.Response;
 
-            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference);
+            // FIXME
+            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Version);
             if (pattern == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }

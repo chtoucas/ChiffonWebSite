@@ -175,9 +175,9 @@
     <value>Pour quel motif, Simone ? Textile design collective.</value>
   </data>
   <data name="MetaKeywords" xml:space="preserve">
-    <value>Textile design, Illustrations, Motifs</value>
+    <value>Textile design, Illustrations, patterns</value>
   </data>
   <data name="PatternDescriptionFormat" xml:space="preserve">
-    <value>Textile pattern, reference n°{0}, by {1}</value>
+    <value>Textile pattern n°{0} by {1}</value>
   </data>
 </root>

@@ -28,7 +28,13 @@
         [HttpGet]
         public ActionResult Index()
         {
-            IEnumerable<PatternViewItem> model = _queries.GetHomeViewModel();
+            var designers = _queries.ListDesigners(Culture);
+            var patterns = _queries.ListShowcasedPatterns();
+            var model = (from p in patterns
+                        join d in designers on p.DesignerKey equals d.Key
+                        select Mapper.Map(p, d.DisplayName)).ToList();
+
+            model.Shuffle();
 
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;

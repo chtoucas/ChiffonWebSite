@@ -33,9 +33,17 @@
    * ======================================================================= */
 
   $.fn.watermark = function(watermark) {
-    return this.each(function() {
-      $(this).append('<div class=watermark><span>' + _(watermark) + '</span>');
-    });
+    if (watermark) {
+      return this.each(function() {
+        $(this).append('<div class=watermark><span>' + _(watermark) + '</span></div>');
+      });
+    }
+    else {
+      return this.each(function() {
+        var $this = $(this);
+        $this.append('<div class=watermark><span>' + $this.data('watermark') + '</span></div>');
+      });
+    }
   };
 
   /* Chiffon object
@@ -196,6 +204,14 @@
 
   chiffon.routes.home_index = function() {
     $('.vignette').watermark('%vignette.watermark');
+  };
+
+  chiffon.routes.designer_pattern = function() {
+    $('.pattern').watermark();
+  };
+
+  chiffon.routes.designer_category = function() {
+    $('.pattern').watermark();
   };
 
   return chiffon;

@@ -14,6 +14,7 @@
         public DesignerKey DesignerKey { get; set; }
         public string DesignerName { get; set; }
         public string Reference { get; set; }
+        public string Version { get; set; }
 
         public string CssClass { get { return CssUtility.DesignerClass(DesignerKey); } }
 

@@ -49,14 +49,14 @@
 
         #endregion
 
-        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference)
+        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string version)
         {
-            return @this.Content(String.Format("~/{0}/motif-{1}_preview.jpg", designerKey, reference));
+            return @this.Content(String.Format("~/{0}/vignette-{1}-{2}.jpg", designerKey, reference, version));
         }
 
-        public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference)
+        public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference, string version)
         {
-            return @this.Content(String.Format("~/{0}/motif-{1}.jpg", designerKey, reference));
+            return @this.Content(String.Format("~/{0}/motif-{1}-{2}.jpg", designerKey, reference, version));
         }
 
         public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)

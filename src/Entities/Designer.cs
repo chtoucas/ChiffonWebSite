@@ -25,6 +25,7 @@
 
         public string AvatarCategory { get; set; }
         public string AvatarReference { get; set; }
+        public string AvatarVersion { get; set; }
         public string DisplayName
         {
             get

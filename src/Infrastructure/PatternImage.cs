@@ -13,15 +13,17 @@
 
         protected PatternImage() { }
 
-        public string Directory { get; private set; }
+        public string DesignerDirectory { get; private set; }
+        public string CategoryDirectory { get; private set; }
         public string Reference { get; private set; }
+        public string Version { get; private set; }
 
         public string RelativePath
         {
             get
             {
                 if (_relativePath == null) {
-                    _relativePath = Path.Combine(Directory, Filename);
+                    _relativePath = Path.Combine(DesignerDirectory, CategoryDirectory, Filename);
                 }
                 return _relativePath;
             }
@@ -31,16 +33,31 @@
         public abstract string MimeType { get; }
         public abstract PatternSize Size { get; }
 
-        public static PatternImage Create(string directory, string reference, PatternSize size)
+        public static PatternImage Create(
+            string designerDirectory,
+            string categoryDirectory,
+            string reference,
+            string version,
+            PatternSize size)
         {
-            Requires.NotNullOrEmpty(directory, "directory");
+            Requires.NotNullOrEmpty(designerDirectory, "directory");
             Requires.NotNullOrEmpty(reference, "reference");
 
             switch (size) {
                 case PatternSize.Preview:
-                    return new Preview { Directory = directory, Reference = reference };
+                    return new Preview {
+                        CategoryDirectory = categoryDirectory,
+                        DesignerDirectory = designerDirectory,
+                        Reference = reference,
+                        Version = version,
+                    };
                 case PatternSize.Original:
-                    return new Original { Directory = directory, Reference = reference };
+                    return new Original {
+                        CategoryDirectory = categoryDirectory,
+                        DesignerDirectory = designerDirectory,
+                        Reference = reference,
+                        Version = version,
+                    };
                 default:
                     throw new InvalidOperationException();
             }
@@ -57,7 +74,7 @@
                 get
                 {
                     if (_filename == null) {
-                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}.jpg", Reference);
+                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}.jpg", Reference, Version);
                     }
                     return _filename;
                 }
@@ -78,7 +95,7 @@
                 get
                 {
                     if (_filename == null) {
-                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}_apercu.jpg", Reference);
+                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}-apercu.jpg", Reference, Version);
                     }
                     return _filename;
                 }

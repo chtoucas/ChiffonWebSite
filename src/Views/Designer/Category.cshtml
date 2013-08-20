@@ -7,8 +7,8 @@
  @Html.Partial(ViewName.Shared.DesignerInfo)
  <ul class="mosaic patterns">
   @foreach (var pattern in Model.Patterns) {
-   <li>
-    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference)" class=pattern alt="@pattern.Description" /></li>
+   <li data-watermark="ref @pattern.Reference" class=pattern>
+    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference, pattern.Version)" alt="@pattern.Description" /></li>
   }
  </ul>
 </div>

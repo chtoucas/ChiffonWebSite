@@ -109,7 +109,7 @@
             ViewBag.CurrentCategoryKey = categoryKey;
 
             ViewBag.Title = String.Format(
-                CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat, 
+                CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
                 pattern.Single().Reference, designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Pattern_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference).ToString();

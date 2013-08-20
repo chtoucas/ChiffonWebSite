@@ -34,7 +34,7 @@
 
         #region IChiffonCache
 
-        public IEnumerable<PatternViewItem> GetOrInsertHomeViewModel(Func<IEnumerable<PatternViewItem>> query)
+        public IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query)
         {
             var cacheKey = "Chiffon:Home";
             return GetOrInsert(cacheKey, () => query());

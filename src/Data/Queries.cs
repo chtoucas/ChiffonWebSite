@@ -4,7 +4,6 @@
     using Chiffon.Data.SqlServer;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.ViewModels;
 
     public class Queries : IQueries
     {
@@ -19,9 +18,9 @@
 
         #region IQueries
 
-        public IEnumerable<PatternViewItem> GetHomeViewModel()
+        public IEnumerable<Pattern> ListShowcasedPatterns()
         {
-            var q = new GetHomeVMQuery(ConnectionString);
+            var q = new ListShowcasedPatternsQuery(ConnectionString);
             return q.Execute();
         }
 
@@ -31,9 +30,9 @@
             return q.Execute();
         }
 
-        public Pattern GetPattern(DesignerKey designerKey, string reference)
+        public Pattern GetPattern(DesignerKey designerKey, string reference, string version)
         {
-            var q = new GetPatternQuery(ConnectionString, designerKey, reference);
+            var q = new GetPatternQuery(ConnectionString, designerKey, reference, version);
             return q.Execute();
         }
 
@@ -58,6 +57,21 @@
         public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey)
         {
             var q = new ListPatternsQuery(ConnectionString, designerKey) { CategoryKey = categoryKey };
+            return q.Execute();
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, string categoryKey, bool published)
+        {
+            var q = new ListPatternsQuery(ConnectionString, designerKey) {
+                CategoryKey = categoryKey,
+                Published = published,
+            };
+            return q.Execute();
+        }
+
+        public IEnumerable<Pattern> ListPatterns(DesignerKey designerKey, bool published)
+        {
+            var q = new ListPatternsQuery(ConnectionString, designerKey) { Published = published };
             return q.Execute();
         }
 

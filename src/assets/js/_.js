@@ -327,14 +327,14 @@ String.toLocaleString({
     , '%ajax.done': 'Terminé'
     , '%ajax.temp_error': 'Un problème temporaire est intervenue. Veuillez réessayer plus tard'
     , '%ajax.fatal_error': 'Une erreur est intervenue. Veuillez réessayer plus tard'
-    , '%home.watermark': 'Voir toute la collection &gt;'
+    , '%vignette.watermark': 'Voir toute la collection &gt;'
   }
   , 'en': {
     '%ajax.loading': 'Loading'
     , '%ajax.done': 'Done'
     , '%ajax.temp_error': 'A temporary error occured. Please try again later'
     , '%ajax.fatal_error': 'An error occured. Please try again later'
-    , '%home.watermark': 'Go to the collection &gt;'
+    , '%vignette.watermark': 'Go to the collection &gt;'
   }
 });;
 
@@ -372,11 +372,7 @@ String.toLocaleString({
 
   $.fn.watermark = function(watermark) {
     return this.each(function() {
-      $(this).append(
-        //'<div class=overlay></div><div class=watermark><span>'
-        '<div class=watermark><span>'
-        + _(watermark)
-        + '</span>');
+      $(this).append('<div class=watermark><span>' + _(watermark) + '</span>');
     });
   };
 
@@ -434,7 +430,7 @@ String.toLocaleString({
       return false;
     });
 
-    chiffon.ui.ajaxStatus();
+    //chiffon.ui.ajaxStatus();
     chiffon.ui.overlay.init();
 
     if (visitor.anonymous) {
@@ -501,40 +497,35 @@ String.toLocaleString({
   })();
 
   // Create & configure the ajax status placeholder.
-  chiffon.ui.ajaxStatus = function() {
-    var $status = $('<div id=ajax_status></div>')
-      , error = false;
+  //chiffon.ui.ajaxStatus = function() {
+  //  var $status = $('<div id=ajax_status></div>')
+  //    , error = false;
 
-    $status.appendTo('BODY');
+  //  $status.appendTo('BODY');
 
-    $(document).ajaxStart(function() {
-      $status
-        .removeClass('error')
-        .text(_('%ajax.loading'))
-        .show();
-    }).ajaxStop(function() {
-      if (error) {
-        error = false;
-      } else {
-        //$status.text(_('%ajax.done')).fadeOut('slow');
-        $status.fadeOut('slow');
-      }
-    }).ajaxError(function(e, req) {
-      var message = _(0 == req.status ? '%ajax.temp_error' : '%ajax.fatal_error');
+  //  $(document).ajaxStart(function() {
+  //    $status
+  //      .removeClass('error')
+  //      .text(_('%ajax.loading'))
+  //      .show();
+  //  }).ajaxStop(function() {
+  //    if (error) {
+  //      error = false;
+  //    } else {
+  //      //$status.text(_('%ajax.done')).fadeOut('slow');
+  //      $status.fadeOut('slow');
+  //    }
+  //  }).ajaxError(function(e, req) {
+  //    var message = _(0 == req.status ? '%ajax.temp_error' : '%ajax.fatal_error');
 
-      error = true;
-      $status
-        .text(message)
-        .addClass('error')
-        .show()
-        .fadeOut(5000);
-    });
-  };
-
-  chiffon.ui.mosaic = function(watermark) {
-    //$('.mosaic').removeClass('shadow');
-    $('.vignette').watermark(watermark);
-  };
+  //    error = true;
+  //    $status
+  //      .text(message)
+  //      .addClass('error')
+  //      .show()
+  //      .fadeOut(5000);
+  //  });
+  //};
 
   /* Routes
    * ======================================================================= */
@@ -542,7 +533,7 @@ String.toLocaleString({
   chiffon.routes = {};
 
   chiffon.routes.home_index = function() {
-    chiffon.ui.mosaic('%home.watermark');
+    $('.vignette').watermark('%vignette.watermark');
   };
 
   return chiffon;

@@ -151,6 +151,7 @@
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\ControllerName.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
+    <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Data\CachedQueries.cs" />
     <Compile Include="Data\IQueries.cs" />
@@ -158,7 +159,6 @@
     <Compile Include="Data\SqlServer\ListDesignersQuery.cs" />
     <Compile Include="Data\SqlServer\ListCategoriesQuery.cs" />
     <Compile Include="Entities\Category.cs" />
-    <Compile Include="Entities\PatternView.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Data\IQueryCache.cs" />
     <Compile Include="Data\Mapper.cs" />
@@ -224,7 +224,7 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\SqlServer\GetHomeVMQuery.cs" />
+    <Compile Include="Data\SqlServer\ListShowcasedPatternsQuery.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -378,9 +378,9 @@
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
   <!-- Compilation des JS et des CSS -->
-  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="D:\Tmp\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="D:\Tmp\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="D:\Tmp\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
   <Target Name="AfterBuild" Condition="'$(Configuration)'=='Release'">
     <PropertyGroup>
       <StyleDir>$(ProjectDir)assets\css</StyleDir>
