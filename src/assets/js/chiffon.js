@@ -138,8 +138,8 @@
     chiffon.ui.modal[name] = {
       show: function() {
         $modal.show();
-        $modal.css('margin-top', -$modal.height() / 2);
-        $modal.css('margin-left', -$modal.width() / 2);
+        //$modal.css('margin-top', -$modal.height() / 2);
+        //$modal.css('margin-left', -$modal.width() / 2);
       }
     };
   };
@@ -152,8 +152,8 @@
     return {
       init: function() {
         $overlay.appendTo('BODY');
-        $overlay.height(screen.height);
-        $overlay.width(screen.width);
+        //$overlay.height(screen.height);
+        //$overlay.width(screen.width);
       }
 
       , show: function() {

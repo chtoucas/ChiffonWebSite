@@ -1,14 +1,14 @@
 ﻿<div class="center serif serif_large grey">
- <p>Bonjour,</p>
+ <p id=hello>Bonjour,</p>
  <p>Pour visualiser notre catalogue,<span class=break /> entrez le mot de passe qui vous a été attribué.</p>
 </div>
 <form method=post action="/connecte" class="center">
- <input type=text placeholder="Mot de passe" name=token />
+ <input type=text placeholder="Mot de passe" name=token maxlength=25 class=highlight />
  <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
  <p>
   <input type=submit value="Valider" class="serif serif_large grey" />
  </p>
- <p>
-  <a href="@Url.RouteUrl(RouteName.Account.Register)" class=underline>Demander un mot de passe</a>
+ <p class="serif serif_large">
+  <a href="@Url.RouteUrl(RouteName.Account.Register)" class="reverse underline">Demander un mot de passe</a>
  </p>
 </form>

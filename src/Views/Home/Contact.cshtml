@@ -9,7 +9,7 @@
  <ul id=designers>
   @foreach (var designer in Model) {
    <li class=serif>
-    <h3 class=strike><a href="@Url.Designer(designer.Key)">@designer.DisplayName</a></h3>
+    <h3 class=strike><a href="@Url.Designer(designer.Key)" class=reverse>@designer.DisplayName</a></h3>
     <ul>
      <li class=img><a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference)" class=vignette>
       <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" /><div class=overlay></div>
@@ -17,7 +17,7 @@
      <li class=email><a class=underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
      @if (designer.WebSiteUrl.IsSome) {
       var website = designer.WebSiteUrl.Value.ToString().Replace("http://", String.Empty);
-      <li class="web sansserif"><a href="//@website" rel=external target=_blank>@website.Replace("/", String.Empty)</a></li>
+      <li class="web sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
      }
     </ul>
    </li>
