@@ -26,9 +26,10 @@
             return new Pattern(new PatternId(DesignerKey, Reference)) {
                 CategoryKey = rdr.GetString("category"),
                 CreationTime = rdr.GetDateTime("creation_time"),
-                Preferred = rdr.GetBoolean("preferred"),
+                LastModifiedTime = rdr.GetDateTime("last_modified_time"),
+                //Preferred = rdr.GetBoolean("preferred"),
                 Published = rdr.GetBoolean("published"),
-                Showcased = rdr.GetBoolean("showcased"),
+                //Showcased = rdr.GetBoolean("showcased"),
             };
         }
 

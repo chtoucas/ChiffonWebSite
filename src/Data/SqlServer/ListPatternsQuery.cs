@@ -27,9 +27,10 @@
                 var pattern = new Pattern(patternId) {
                     CategoryKey = rdr.GetString("category"),
                     CreationTime = rdr.GetDateTime("creation_time"),
-                    Preferred = rdr.GetBoolean("preferred"),
+                    LastModifiedTime = rdr.GetDateTime("last_modified_time"),
+                    //Preferred = rdr.GetBoolean("preferred"),
                     Published = true,
-                    Showcased = rdr.GetBoolean("showcased"),
+                    //Showcased = rdr.GetBoolean("showcased"),
                 };
                 patterns.Add(pattern);
             }

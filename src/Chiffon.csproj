@@ -158,6 +158,7 @@
     <Compile Include="Data\SqlServer\ListDesignersQuery.cs" />
     <Compile Include="Data\SqlServer\ListCategoriesQuery.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\PatternView.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Data\IQueryCache.cs" />
     <Compile Include="Data\Mapper.cs" />
