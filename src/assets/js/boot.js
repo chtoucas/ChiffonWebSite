@@ -24,6 +24,8 @@ var getChiffon = (function(window) {
       , main: [
         'vendor/jquery.cookie-1.3.1.js'
         //, 'vendor/jquery.ba-outside-events-1.1.js'
+        , 'vendor/jquery.validate-1.11.1/jquery.validate.js'
+        , 'vendor/jquery.validate-1.11.1/additional-methods.js'
         , 'vendor/l10n-2013.04.18.js'
         , 'localization.js'
         , 'chiffon.js'
@@ -32,7 +34,7 @@ var getChiffon = (function(window) {
     , release: {
       jquery: 'vendor/jquery-1.10.2.min.js'
       , jquery2: 'vendor/jquery-2.0.3.min.js'
-      , main: ['_.min.js']
+      , main: ['chi.min.js']
     }
   };
 

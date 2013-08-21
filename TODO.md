@@ -7,6 +7,9 @@ CSS & images
 * nouveau filigramme pour Christine
 * contrôle de qualité / h5bp
 
+* modales, croix en haut à droite pour fermer la modale
+* utiliser .designer à la place de #designer
+* revoir overlay pour qu'on n'aie pas à ajouter un DIV
 * vérifier toutes les nuances de gris
 * mutualiser les styles pour les input
 * supprimer toutes les dimensions fixes
@@ -16,6 +19,7 @@ CSS & images
 * créer un sprite pour les 3 images CSS en plus de l'encodage en base64 ?
 * feuille de style pour un design responsive
 * feuille de style pour l'impression
+* utiliser une image par défaut pour les motifs & vignettes qui n'existent pas
 
 JS
 ==
@@ -31,6 +35,8 @@ JS
 * utiliser Zepto ?
 * alertes concernant le statut Ajax
 * regarder les plugins bootstrap
+* typescript ?
+* charger progressivement les gros catalogues
 
 Déploiement & Co
 ================
@@ -38,13 +44,15 @@ Déploiement & Co
 * Azure, paiement
 * SqlServer, configurer
 * connexion SqlServer
-* séparer les configurations dev & prod
+* séparer les configurations DEV, PREPROD & PROD
 * IIS, configurer les logs
 * IIS, configurer les noms de domaine sans et avec www, s (statiques) & m (media)
 * DNS : déclarer et sans www, en et s
 * rediriger wwww
 * réécriture quand l'adresse se termine en /
+* problème de conf MSBuild lors de la compilation des assets
 
+* permettre aux tâches MSBuild de prendre une liste de fichiers en entrée (Closure, YUI)
 * scripts de compilation et de déploiement en ps1 ou F#
 * encrypter la connexion DB
 * MvcBuildViews
@@ -58,15 +66,17 @@ ASP.NET
 * passer les formulaires en helpers avec validation
 * vérifier les redirections (correctes + relatives)
 
+* account cookie -> HttpOnly
 * page Newsletter
 * nom de la session ASP.NET
-* cookies, chemin & persistence
-* utiliser l'encodeur AntiXSS
-* serveur SMTP
+* cookies, chemin & persistence (cf. forms dans web.config)
+* serveur SMTP (CritSend / SendGrid or Gandi)
 * pages d'erreur MVC & IIS (en particulier pour les images)
 * Serilog, enrichir les logs avec du contenu relatif à la requête
 * vérifier l'utilisation de RenderPartial (@{})
 
+* OWASP
+* utiliser les DisplayModes pour le code spécifique IE ?
 * PreserveLoginUrl et autres web.config
 * vérifier la SEO
 * utiliser les bonnes exceptions pour les Enums
@@ -86,6 +96,7 @@ ASP.NET
 * pagination dans les catégories
 * Elmah.MVC
 * module pour créer des filigrammes dans les images
+* Last-Modified-Time & co pour les images
 * automatiser la correspondance entre RouteTable et SiteMap
 * routage dépendant de la langue
 * injection de modules HTTP, cf. MVC Turbine ou HttpModuleMagic
@@ -101,6 +112,11 @@ Admin
 * AngularJS
 * développer un MRP spécifique
 
+Newsletter
+==========
+
+* MailChimp
+
 DONE
 ====
 
@@ -109,3 +125,5 @@ DONE
 
 * éléments HTML5 pour IE
 * encodeur HTTP qui ne pourrit pas les attributs en UTF-8 -> normalement c'est bon via AntiXSS
+* utiliser l'encodeur AntiXSS
+* background-color par défaut pour les motifs & vignettes, on utilise #ddd

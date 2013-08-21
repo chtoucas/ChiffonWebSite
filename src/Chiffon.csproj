@@ -167,9 +167,6 @@
     <Compile Include="Infrastructure\ChiffonRuntime.cs" />
     <Compile Include="Infrastructure\InitializeRuntimeModule.cs" />
     <Compile Include="Common\Filters\HtmlFilter.cs" />
-    <Compile Include="Common\RawHttpEncoder.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
     <Compile Include="Common\Filters\SeoPolicyAttribute.cs" />
@@ -263,9 +260,14 @@
     <Content Include="assets\css\04-chiffon.responsive.css" />
     <Content Include="assets\css\05-chiffon.print.css" />
     <Content Include="assets\css\normalize-1.1.2.css" />
+    <Content Include="assets\css\chi.min.css" />
     <Content Include="assets\js\boot.js" />
+    <Content Include="assets\js\boot.min.js" />
     <Content Include="assets\js\chiffon.js" />
     <Content Include="assets\js\localization.js" />
+    <Content Include="assets\js\vendor\jquery-1.10.2.min.js" />
+    <Content Include="assets\js\vendor\jquery-2.0.3.min.js" />
+    <Content Include="assets\js\chi.min.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -387,29 +389,31 @@
       <CssFiles Include="$(StyleDir)\01-chiffon.base.css" />
       <CssFiles Include="$(StyleDir)\02-chiffon.helpers.css" />
       <CssFiles Include="$(StyleDir)\03-chiffon.css" />
-      <!--<CssFiles Include="$(StyleDir)\04-chiffon.responsive.css" />
-      <CssFiles Include="$(StyleDir)\05-chiffon.print.css" />-->
+      <!--<CssFiles Include="$(StyleDir)\04-chiffon.responsive.css" />-->
+      <!--<CssFiles Include="$(StyleDir)\05-chiffon.print.css" />-->
     </ItemGroup>
     <ItemGroup>
       <JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />
-      <JsFiles Include="$(ScriptDir)\vendor\jquery.ba-outside-events-1.1.js" />
+      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.ba-outside-events-1.1.js" />-->
+      <JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\jquery.validate.js" />
+      <JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\additional-methods.js" />
       <JsFiles Include="$(ScriptDir)\vendor\l10n-2013.04.18.js" />
       <JsFiles Include="$(ScriptDir)\localization.js" />
       <JsFiles Include="$(ScriptDir)\chiffon.js" />
     </ItemGroup>
     <ItemGroup>
-      <CssResultFiles Include="$(StyleDir)\_.css" />
+      <CssResultFiles Include="$(StyleDir)\chi.css" />
     </ItemGroup>
     <ItemGroup>
       <JsResultFiles Include="$(ScriptDir)\boot.js" />
-      <JsResultFiles Include="$(ScriptDir)\_.js" />
+      <JsResultFiles Include="$(ScriptDir)\chi.js" />
     </ItemGroup>
     <Message Text="Fusion des fichiers CSS" Importance="normal" />
-    <MergeFiles Files="@(CssFiles)" OutFile="$(StyleDir)\_.css" />
+    <MergeFiles Files="@(CssFiles)" OutFile="$(StyleDir)\chi.css" />
     <Message Text="Compression des CSS" Importance="normal" />
     <CssYuiCompressor JarPath="$(YUICompressorJar)" Files="@(CssResultFiles)" />
     <Message Text="Fusion des fichiers JS" Importance="normal" />
-    <MergeFiles Files="@(JsFiles)" OutFile="$(ScriptDir)\_.js" />
+    <MergeFiles Files="@(JsFiles)" OutFile="$(ScriptDir)\chi.js" />
     <Message Text="Compression des JS" Importance="normal" />
     <ClosureCompiler JarPath="$(ClosureCompilerJar)" Files="@(JsResultFiles)" CompilationLevel="Simple" />
   </Target>

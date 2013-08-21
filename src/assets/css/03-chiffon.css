@@ -16,12 +16,11 @@
 A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
   A:hover, A:focus { color: #ccc; text-decoration: none; text-shadow: 0 0 10px rgba(255, 255, 255, .25); }
 
-/* Reusable rules
+/* Règles réutilisables
  * ============================================================================================== */
 
 /*.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: #fff; }*/
-/*body { position: relative; }
-.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
+/*.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
 /* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
 
 P.tidy { margin: 0; }
@@ -43,18 +42,21 @@ A.reverse { color: #999; }
 
 .watermark { left: 0; position: absolute; top: 0; width: 100%; height: 100%; }
 
-/* Heading */
+/* En-tête barrée */
 
 .strike { border-top: solid 2px #999; border-bottom: solid 2px #999; background: no-repeat center center /*url("img/strike.png")*/ url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6wAAAABCAIAAABVM7S+AAAAGklEQVRIx+3BAQEAAAABIP9XmWaIKgUAgDMD3W5DeVtFedYAAAAASUVORK5CYII=); }
 
 /* Motif */
 
 .pattern { position: relative; display: block; width: 700px; height: 520px; }
-  .pattern .watermark SPAN { position: absolute; right: 0px; bottom: 0px; background-color: #fff; font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
+  /* couleur par défaut visible quand l'image n'existe pas */
+  .pattern .watermark { background-color: #ddd; }
+    .pattern .watermark SPAN { position: absolute; right: 0px; bottom: 0px; background-color: #fff; font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
 
 /* Vignette */
 
-.vignette { position: relative; display: block; width: 220px; height: 160px; background-color: #fff; transition: all .2s ease-in-out; }
+/* #ddd couleur par défaut visible quand l'image n'existe pas */
+.vignette { position: relative; display: block; width: 220px; height: 160px; background-color: #ddd; transition: all .2s ease-in-out; }
   .vignette IMG { width: 220px; height: 160px; }
   .vignette SPAN { display: none; position: absolute; right: 12px; bottom: 9px; color: #fff; font-weight: bold; }
   .vignette .overlay { position: absolute; z-index: 0; opacity: .7; }
@@ -68,17 +70,17 @@ A.reverse { color: #999; }
 
 .vd:hover .watermark { /*background: url("img/watermarks/vd.png");*/ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAACgCAYAAABnugI7AAAE3UlEQVR42u3c0XEaVxSA4eOM30MHoYOQCqJUYFKBlAoiV4BcAfaL8yi5AuMKkCuQUoHkCqRUcPOQszM3N3cBy3IG4e+bYTS7sMsC+7N3V7KflVIC+H985y0AwYHgAMGB4ADBgeBAcIDgQHCA4EBwIDhAcCA4QHAgOEBwIDgQHCA4EBwgOBAcCA4QHAgOEBwIDhAcCA4EBwgOBAcIDgQHggMEB4IDBAeCAwQHggPBAYIDwQGCA8GB4ADBgeAAwYHgQHCA4EBwgOBAcIDgQHAgOEBwIDjgKQX3NiKKm9tXuL3dl538WSllX7alRMQz34Ec8r5lSAmCA8EBggPBAYIDwYHgAMGB4IBvN7jT+OdPeZbN/Lu8TXJ6+Du7+v5S3V+va5HTi2a6tsz7rjr3HeV9d8361802HMX43wMebXjN687j33eWWWxYf0TEbOQ1vO9sw6Radt7Zpvb97b1/k+p9n+W8aeezOhjPDzC4Ve789c4xzw/vIiLuNyx3ksutct5x/ny3w/POq512GhG3ncdMcmd7uWVdt7mt7bxtLvJx03wt84j4JSIum8ddduZFRFzn8rPc1vv8Oc/5l53XGxHxonrPPsd9RPyWQS9zW5f5nL9u+KyerlLKvtzKI67rKtc3zenznJ43z1c/5zynz3N6mtNX1WMWOW/RPF+9bCmlLJv7j8q/HeX8dbMNw+PWn/l61816o5RymvPe77D99W2ZjznJ6ZOR13RVSrnL9ZdSyqTzebaf6djzn1fb2m7zvu1bX3Q71HO4d8238Dy/LVdbjoz3zTK7Ht1e5M9XeSSYjzzudT7Hcsv6ZjlMrG+f66JzJBqcNOtedt67F83P+n2Y5jauIuLDhufZ1cvqfRuOes7hntiwchgSDsOj1Y7LDUOon5t1jZnkDnyZO80qd8j5yBDqVW7T4iu/Bw8djl1XO/8kh9i3OX/wexXhqpn3pdt7Hwfs+YG+rmEHqXfsDzss9yHjOc4d7nqHc6eT6lt/XZ3oH4/E+jqPGmcb1n2d5zNfYrrh3O8iw9/0xXMaEefVuW/vNS+qSGZ5u37Ati5y2eH8c5fzXEe4PR5WbhtOjg0rdxlOHjc79n21jsmGIVQdxWObZCzRieUhQ/J3nQtQt50LOsedeUfNVdiIiE/NvNMM9adc7nTLVVkXTfbwxHZanbifjzxf7znPq/umW076ZyMn+cOFh9PmYsiis66y4eJK70LLposmrXVzMWOxYf3tOm9y/k0zf7iwMavmTXLeXTXvpNmOm85FqEk1f9ZcgLrpXIh58hdNnh/wEe42jyTfjwwnz0aWe5PL/tUZjn3M5T5WR5KzzvrfVEe6YVvq5YbH9Lb5bMPr2XREuuxs6+XI9u96IePHiPizM9z92AwdhwsdP1S/Ehl+RXFczXvTHHGnOf2pWt+q+tymDxyi7i3/pwnfAv+nCXyLBAeCA8EBggPBAYIDwYHggMe3T3/a9Uf895/kw2PtW3thn/60CwwpAcGB4ADBgeBAcIDgQHCA4EBwgOBAcCA4QHAgOEBwIDgQHCA4EBwgOBAcCM5bAIIDwQGCA8EBggPBgeAAwYHgAMGB4EBwgOBAcIDgQHCA4EBwIDhAcCA4QHAgOBAcIDgQHCA4EBwgOBAcCA4QHAgOEBwIDgQHCA4EBwgOBAf8DdMW+S2BW9h0AAAAAElFTkSuQmCC); }
 
-/* Mosaic */
+/* Mosaïque */
 
 .mosaic { margin: 23px 0 3px 0; padding: 0; list-style-type: none; overflow: hidden; }
   .mosaic LI { float: left; margin-right: 20px; margin-bottom: 20px; }
 
-/* "Grid" */
+/* "Grille" */
 
 .len_100 { width: 960px; /* body.width(940px) + LI.margin-right(20px) */ }
 .len_75 { width: 740px; /* 3/4 * body.width(940px) + LI.margin-right(20px) */ }
 
-/* Default layout
+/* Disposition par défaut
  * ============================================================================================== */
 
 BODY { width: 940px; margin: 0 auto; }
@@ -88,31 +90,31 @@ HEADER { padding-top: 19px; }
 FOOTER { margin-bottom: 20px; border-top: solid 2px #ccc; text-transform: uppercase; font-variant: small-caps; }
   FOOTER P { margin: 20px 0 0; }
 
-/* Main title */
+/* Titre principal */
 
 H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: uppercase; font-size: 1.8em; }
   H1 EM, H1 STRONG { font-style: normal; font-weight: bold; }
 
-/* Menu - Lang chooser */
+/* Menu des langues */
 
 #nav_lang { border-bottom: solid 2px #000; }
   #nav_lang UL { margin-bottom: 6px; font-weight: bold; }
   #nav_lang LI { padding-left: 5px; }
 
-/* Menu - Main */
+/* Menu principal */
 
 #nav_main UL { position: relative; height: 58px; text-transform: uppercase; }
 #nav_main LI { margin: 22px 10px 0 0; }
 #nav_main .right { position: absolute; right: 0; margin-right: 0; }
 
-/* Menu - Designers */
+/* Menu des designers */
 
 #nav_designers UL { height: 66px; font-size: 1.8em; font-style: italic; }
 #nav_designers LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
 #nav_designers A { padding: 0 .5em; background: #fff; }
 #nav_designers .last { margin-right: 0; }
 
-/* Menu - Highlight current page */
+/* Menu - Mise en valeur la page courante dans les menus */
 
 BODY#home_index #nav_home,
 BODY#home_about #nav_info,
@@ -169,8 +171,8 @@ BODY#home_newsletter #nav_newsletter,
   .contact_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
     .contact_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
 
-/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }
-  .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
+/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }*/
+/* MODAL .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
 
 /* Page - Login
  * ============================================================================================== */

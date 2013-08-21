@@ -5,13 +5,13 @@
 
     public class MemberService/*Impl*/ : IMemberService
     {
-        readonly IFormsAuthenticationService _authentificationService;
+        readonly IFormsAuthenticationService _formsService;
 
-        public MemberService(IFormsAuthenticationService authentificationService)
+        public MemberService(IFormsAuthenticationService formsService)
         {
-            Requires.NotNull(authentificationService, "authentificationService");
+            Requires.NotNull(formsService, "formsService");
 
-            _authentificationService = authentificationService;
+            _formsService = formsService;
         }
 
         #region IMemberService
@@ -25,7 +25,7 @@
             var userName = "XXX";
 
             if (succeed) {
-                _authentificationService.SignIn(userName, createPersistentCookie);
+                _formsService.SignIn(userName, createPersistentCookie);
             }
 
             return succeed;
