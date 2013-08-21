@@ -28,6 +28,9 @@ http://stackoverflow.com/questions/1875368/best-practice-for-asp-net-mvc-resourc
 Atributes... https://gist.github.com/anurse/4036121
 http://stackoverflow.com/questions/3924861/stop-the-tag-builder-escaping-single-quotes-asp-net-mvc-2
 
+https://github.com/h5bp/server-configs-iis/blob/master/dotnet%204/mvc4%20%26%20mvc4api/web.config
+http://www.west-wind.com/weblog/posts/2007/Jun/22/IIS-7-and-JavaScript-Compression-not-working-consistently
+http://stackoverflow.com/questions/2779118/why-does-my-javascript-file-sometimes-compressed-while-sometimes-notiis-gzip-p
 
 http://geekswithblogs.net/Patware/archive/2012/08/16/150448.aspx
 http://msdn.microsoft.com/en-us/magazine/hh547101.aspx

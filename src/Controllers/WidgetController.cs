@@ -31,5 +31,12 @@
                 ? PartialView(ViewName.Widget.CommonStylesheet_Debug)
                 : PartialView(ViewName.Widget.CommonStylesheet_Release);
         }
+
+        [ChildActionOnly]
+        [OutputCache(Duration = Int32.MaxValue)]
+        public PartialViewResult GoogleAnalytics()
+        {
+            return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalytics);
+        }
     }
 }

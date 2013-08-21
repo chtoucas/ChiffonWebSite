@@ -17,12 +17,16 @@
         bool _debugCss = false;
         bool _debugJs = false;
         bool _enableCaching = false;
+        string _googleAnalytics = String.Empty;
+        string _passThroughToken = String.Empty;
 
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
         public bool EnableCaching { get { return _enableCaching; } set { _enableCaching = value; } }
+        public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
+        public string PassThroughToken { get { return _passThroughToken; } set { _passThroughToken = value; } }
         public string PatternDirectory { get; set; }
         public string SqlConnectionString { get; set; }
 
@@ -94,6 +98,10 @@
 
             EnableCaching = nvc.MayParseValue("chiffon.enableCaching", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
+
+            GoogleAnalytics = nvc.MayGetValue("chiffon.googleAnalytics").ValueOrElse(String.Empty);
+
+            PassThroughToken = nvc.MayGetValue("chiffon.passThroughToken").ValueOrElse(String.Empty);
         }
     }
 }

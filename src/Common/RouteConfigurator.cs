@@ -33,6 +33,9 @@
                 new { controller = ControllerName.Home, action = ActionName.Home.About });
             _routes.MapRoute(RouteName.Home.Contact, "contact",
                 new { controller = ControllerName.Home, action = ActionName.Home.Contact });
+            // OPENING
+            _routes.MapRoute("OpeningSoon", "ouverture-prochaine",
+               new { controller = ControllerName.Home, action = "OpeningSoon" });
 
             // ContactController.
             _routes.MapRoute(RouteName.Contact.Register, "inscription",
@@ -80,6 +83,7 @@
             _routes.Add(new Route("motif", new AutofacRouteHandler<PatternImageHandler>()));
             _routes.Add(new Route("connecte", new AutofacRouteHandler<LogOnHandler>()));
             _routes.Add(new Route("disconnecte", new AutofacRouteHandler<LogOffHandler>()));
+            _routes.Add(new Route("go", new AutofacRouteHandler<GoHandler>()));
         }
     }
 }

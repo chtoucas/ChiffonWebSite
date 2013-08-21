@@ -12,6 +12,7 @@ CSS & images
 * nouveau filigramme pour Christine
 * contrôle de qualité / h5bp
 
+* background-color par défaut pour les motifs 
 * modales, croix en haut à droite pour fermer la modale
 * utiliser .designer à la place de #designer
 * revoir overlay pour qu'on n'aie pas à ajouter un DIV
@@ -49,7 +50,7 @@ Déploiement & Co
 
 * SqlServer, configurer
 * connexion SqlServer
-* séparer les configurations DEV, PREPROD & PROD
+* machineKey
 * IIS, configurer les logs
 * IIS, configurer les noms de domaine sans et avec www, s (statiques) & m (media)
 * rediriger wwww
@@ -146,8 +147,9 @@ DONE
 * éléments HTML5 pour IE
 * encodeur HTTP qui ne pourrit pas les attributs en UTF-8 -> normalement c'est bon via AntiXSS
 * utiliser l'encodeur AntiXSS
-* background-color par défaut pour les motifs & vignettes, on utilise #ddd
+* background-color par défaut pour les vignettes, on utilise #ddd
 * DNS : déclarer les sous-domaine anglais
 * lier Google Webmaster Tools
 * lier Google Analytics
 * Azure, paiement
+* séparer les configurations DEV, PROD

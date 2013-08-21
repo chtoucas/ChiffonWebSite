@@ -160,6 +160,8 @@
     <Compile Include="Data\Queries.cs" />
     <Compile Include="Data\SqlServer\GetPatternQuery.cs" />
     <Compile Include="Data\QueryCache.cs" />
+    <Compile Include="Handlers\GoQuery.cs" />
+    <Compile Include="Handlers\GoHandler.cs" />
     <Compile Include="Infrastructure\ChiffonCulture.cs" />
     <Compile Include="Infrastructure\ChiffonLanguage.cs" />
     <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
@@ -326,6 +328,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ViewHelpers.cshtml" />
+    <Content Include="config\Development\appSettings.config" />
+    <Content Include="config\Production\appSettings.config" />
+    <Content Include="config\Development\connectionStrings.config" />
+    <Content Include="config\Production\connectionStrings.config" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <Content Include="Views\Contact\Newsletter.cshtml" />
     <Content Include="Views\Contact\Login.cshtml" />
@@ -336,12 +342,15 @@
     <Content Include="Views\Shared\_PageTitle.en.cshtml" />
     <Content Include="Views\Shared\_ContactTitle.cshtml" />
     <Content Include="Views\Shared\_ContactTitle.en.cshtml" />
+    <Content Include="Views\Shared\_Html5Shim.cshtml" />
+    <Content Include="Views\Home\OpeningSoon.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Views\Widget\GoogleAnalytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SR.en.resx">

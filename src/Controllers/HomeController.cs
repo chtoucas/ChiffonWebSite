@@ -23,14 +23,25 @@
             _queries = queries;
         }
 
+        // OPENING
+        [HttpGet]
+        public ActionResult OpeningSoon()
+        {
+            ViewBag.Title = SR.Home_Index_Title;
+            ViewBag.MetaDescription = SR.Home_Index_Description;
+            ViewBag.CanonicalLink = "/ouverture-prochaine";
+
+            return View(ViewName.Home.OpeningSoon);
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
             var designers = _queries.ListDesigners(Culture);
             var patterns = _queries.ListShowcasedPatterns();
             var model = (from p in patterns
-                        join d in designers on p.DesignerKey equals d.Key
-                        select Mapper.Map(p, d.DisplayName)).ToList();
+                         join d in designers on p.DesignerKey equals d.Key
+                         select Mapper.Map(p, d.DisplayName)).ToList();
 
             model.Shuffle();
 

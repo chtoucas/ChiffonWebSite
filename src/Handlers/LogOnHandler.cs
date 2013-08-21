@@ -51,10 +51,11 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            var succeed = _memberService.LogOn(query.Token, false /* createPersistentCookie */);
+            var userName = _memberService.LogOn(query.Token);
 
+            var succeed = !String.IsNullOrEmpty(userName);
             if (succeed) {
-                //_formsService.SignIn(
+                _formsService.SignIn(userName, false /* createPersistentCookie */);
             }
 
             Uri nextUrl = succeed
