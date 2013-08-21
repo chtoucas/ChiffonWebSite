@@ -323,7 +323,7 @@
     <Content Include="Views\Widget\Stylesheet.Release.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Contact\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -331,8 +331,8 @@
   <ItemGroup>
     <Content Include="App_Code\ViewHelpers.cshtml" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
-    <Content Include="Views\Home\Newsletter.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Contact\Newsletter.cshtml" />
+    <Content Include="Views\Contact\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
     <Content Include="Views\Home\About.en.cshtml" />
@@ -398,6 +398,7 @@
     </ItemGroup>
     <ItemGroup>
       <JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />
+      <JsFiles Include="$(ScriptDir)\vendor\jquery.ba-outside-events-1.1.js" />
       <JsFiles Include="$(ScriptDir)\vendor\l10n-2013.04.18.js" />
       <JsFiles Include="$(ScriptDir)\localization.js" />
       <JsFiles Include="$(ScriptDir)\chiffon.js" />

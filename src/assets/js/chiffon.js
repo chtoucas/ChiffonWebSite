@@ -102,6 +102,7 @@
 
     //chiffon.ui.ajaxStatus();
     chiffon.ui.overlay.init();
+    //chiffon.ui.modal.init();
 
     if (visitor.anonymous) {
       makeModal('register');
@@ -109,7 +110,6 @@
       //$.get('modal/register.html', function(data) { $modal.html(data); });
       //$modal.appendTo('BODY');
 
-      // FIXME: contient modal pas =.
       $('A[rel~=modal]').click(function(e) {
         e.preventDefault();
 
@@ -123,7 +123,7 @@
           , url: this.href
           , success: function(data) {
             var response = $('<html />').html(data);
-            $('.register').html(response.find('#content').html());
+            $('.contact_register').html(response.find('#content').html());
             chiffon.ui.overlay.show();
           }
         });
@@ -132,19 +132,31 @@
   };
 
   function makeModal(name) {
-    var $modal = $('<div class="modal register"></div>');
+    var $modal = $('<div class="modal contact_register"></div>');
     $modal.appendTo('BODY');
 
     chiffon.ui.modal[name] = {
       show: function() {
         $modal.show();
+        //chiffon.ui.modal.init();
         //$modal.css('margin-top', -$modal.height() / 2);
         //$modal.css('margin-left', -$modal.width() / 2);
       }
     };
   };
 
-  chiffon.ui.modal = {};
+  chiffon.ui.modal = {
+    init: function() {
+      $('.modal').bind("clickoutside", function(e) {
+        $(this).hide();
+        //var $this = $(this);
+        //if ($form.is(":visible")) {
+        //  $form.fadeOut();
+        //}
+        //$this.unbind("clickoutside");
+      });
+    }
+  };
 
   chiffon.ui.overlay = (function() {
     var $overlay = $('<div class=overlay></div>')

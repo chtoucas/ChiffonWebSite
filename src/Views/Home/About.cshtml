@@ -9,7 +9,9 @@
  N'hésitez pas à demander votre mot de passe.
  </p>
  <p class=tidy>Bonne visite.</p>
- <p class=center>
-  <a href="/inscription" class=underline>Je demande un mot de passe</a>
- </p>
+ @if (!User.Identity.IsAuthenticated) {
+  <p class=center>
+   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline>Je demande un mot de passe</a>
+  </p>
+ }
 </div>

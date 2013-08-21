@@ -33,11 +33,11 @@
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
-    @*<li class=right><a href="@Url.RouteUrl(RouteName.Home.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+    <li class=right><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>
    </ul>
   </nav>
  </header>
- <div id=content>
+ <div id=content class="@ViewBag.BodyId">
   @RenderBody()
  </div>
  <footer class=darkgrey>

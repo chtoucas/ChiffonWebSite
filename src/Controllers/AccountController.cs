@@ -6,38 +6,49 @@
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
 
-    public class AccountController : PageController
+    public class ContactController : PageController
     {
-        public AccountController(ChiffonEnvironment environment, ISiteMap siteMap) : base(environment, siteMap) { }
+        public ContactController(ChiffonEnvironment environment, ISiteMap siteMap)
+            : base(environment, siteMap) { }
 
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            ViewBag.Title = SR.Account_Login_Title;
-            ViewBag.MetaDescription = SR.Account_Login_Description;
+            ViewBag.Title = SR.Contact_Login_Title;
+            ViewBag.MetaDescription = SR.Contact_Login_Description;
             ViewBag.CanonicalLink = SiteMap.Login().ToString();
 
-            return View(ViewName.Account.Login);
+            return View(ViewName.Contact.Login);
         }
 
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Register(string returnUrl)
         {
-            ViewBag.Title = SR.Account_Register_Title;
-            ViewBag.MetaDescription = SR.Account_Register_Description;
+            ViewBag.Title = SR.Contact_Register_Title;
+            ViewBag.MetaDescription = SR.Contact_Register_Description;
             ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
-            return View(ViewName.Account.Register);
+            return View(ViewName.Contact.Register);
         }
 
-        [AllowAnonymous]
-        [ChildActionOnly]
+        //[AllowAnonymous]
+        //[ChildActionOnly]
+        //[HttpGet]
+        //public ActionResult ModalRegister(string returnUrl)
+        //{
+        //    return PartialView(ViewName.Account.Register);
+        //}
+
         [HttpGet]
-        public ActionResult ModalRegister(string returnUrl)
+        public ActionResult Newsletter()
         {
-            return PartialView(ViewName.Account.Register);
+            ViewBag.Title = SR.Contact_Newsletter_Title;
+            ViewBag.MetaDescription = SR.Contact_Newsletter_Description;
+            ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
+
+            return View(ViewName.Contact.Newsletter);
         }
     }
 }

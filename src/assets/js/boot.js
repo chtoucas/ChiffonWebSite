@@ -23,6 +23,7 @@ var getChiffon = (function(window) {
       , jquery2: 'vendor/jquery-2.0.3.js'
       , main: [
         'vendor/jquery.cookie-1.3.1.js'
+        , 'vendor/jquery.ba-outside-events-1.1.js'
         , 'vendor/l10n-2013.04.18.js'
         , 'localization.js'
         , 'chiffon.js'

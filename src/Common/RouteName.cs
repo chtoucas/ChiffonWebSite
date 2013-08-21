@@ -8,14 +8,14 @@
             public const string Index = "Home/";
             public const string About = "Home/About";
             public const string Contact = "Home/Contact";
-            public const string Newsletter = "Home/Newsletter";
         }
 
-        // AccountController.
-        public static class Account
+        // ContactController.
+        public static class Contact
         {
-            public const string Register = "Account/Register";
-            public const string Login = "Account/Login";
+            public const string Register = "Contact/Register";
+            public const string Login = "Contact/Login";
+            public const string Newsletter = "Contact/Newsletter";
         }
 
         // DesignerController.

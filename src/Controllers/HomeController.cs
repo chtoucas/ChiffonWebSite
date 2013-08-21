@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Chiffon.Common;
@@ -9,7 +8,6 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
-    using Chiffon.ViewModels;
     using Narvalo;
 
     [SeoPolicy(RobotsDirective = "index, follow")]
@@ -63,16 +61,6 @@
             ViewBag.CanonicalLink = SiteMap.Contact().ToString();
 
             return View(ViewName.Home.Contact, model);
-        }
-
-        [HttpGet]
-        public ActionResult Newsletter()
-        {
-            ViewBag.Title = SR.Home_Newsletter_Title;
-            ViewBag.MetaDescription = SR.Home_Newsletter_Description;
-            ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
-
-            return View(ViewName.Home.Newsletter);
         }
     }
 }

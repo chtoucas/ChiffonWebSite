@@ -7,13 +7,13 @@
             public const string Index = "~/Views/Home/Index.cshtml";
             public const string About = "~/Views/Home/About.cshtml";
             public const string Contact = "~/Views/Home/Contact.cshtml";
-            public const string Newsletter = "~/Views/Home/Newsletter.cshtml";
         }
 
-        public static class Account
+        public static class Contact
         {
-            public const string Login = "~/Views/Account/Login.cshtml";
-            public const string Register = "~/Views/Account/Register.cshtml";
+            public const string Login = "~/Views/Contact/Login.cshtml";
+            public const string Register = "~/Views/Contact/Register.cshtml";
+            public const string Newsletter = "~/Views/Contact/Newsletter.cshtml";
         }
 
         public static class Designer

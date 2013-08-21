@@ -37,11 +37,10 @@ A.reverse { color: #999; }
 
 .serif { font-family: "Droid Serif", Georgia, "Times New Roman", serif; }
 .serif_large { font-size: 3.6em; line-height: 1.5em; font-style: italic; }
-.serif_medium { font-size: 1.8em; line-height: 1.5em; font-style: italic; }
+
+.highlight:focus { box-shadow: 0 0 12px rgba(204, 204, 204, 0.37); }
 
 .overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; opacity: .8; z-index: 100; }
-
-/*BODY + .overlay { width: auto; height: auto; }*/
 
 .watermark { left: 0; position: absolute; top: 0; width: 100%; height: 100%; }
 
@@ -127,15 +126,17 @@ BODY#home_newsletter #nav_newsletter,
 
 /* Ajax status */
 
-/* XXX */
-/*#ajax_status { background-color: #fef087; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px #ccc; display: none; font-size: 1.1em; font-weight: 700; padding: .3em 1em; position: fixed; right: 45%; top: 0; z-index: 1000; }
+/*
+#ajax_status { background-color: #fef087; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px #ccc; display: none; font-size: 1.1em; font-weight: 700; padding: .3em 1em; position: fixed; right: 45%; top: 0; z-index: 1000; }
 
-  #ajax_status.error { background-color: red; color: white; }*/
+#ajax_status.error { background-color: red; color: white; }
+  */
 
-/* Modal - Register
+/* Page - About
  * ============================================================================================== */
 
-/*.register { }*/
+#home_about #nav_designers + DIV { margin-top: 1em; }
+.home_about { margin-bottom: 7em; }
 
 /* Page - Contact
  * ============================================================================================== */
@@ -146,52 +147,44 @@ BODY#home_newsletter #nav_newsletter,
 #home_contact #designers { font-style: italic; font-size: 1.538em; }
 #home_contact H3 { width: 100%; margin: 0; margin-bottom: 1.2em; padding: 1em 0; font-weight: normal; border-color: #ccc; }
   #home_contact H3 A { padding: 0 .5em; background: #fff; }
-#home_contact .img { position: relative; margin-bottom: 1.2em; }
-#home_contact .email { padding: 2em 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 13px; }
-#home_contact .web { margin-top: 1em; text-align: right; font-size: 13px; font-style: normal; }
 #home_contact UL { padding: 0; list-style-type: none; }
 #home_contact #designers LI { float: left; width: 220px; margin-right: 20px; }
   #home_contact #designers LI:last-child { margin-right: 0; }
+#home_contact .img { position: relative; margin-bottom: 1.2em; }
+#home_contact .email { padding: 2em 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 13px; }
+#home_contact .web { margin-top: 1em; text-align: right; font-size: 13px; font-style: normal; }
 
-/* Page - About
- * ============================================================================================== */
-
-#home_about #nav_designers + DIV { margin-top: 1em; }
-#home_about P.center { margin-bottom: 1.5em; }
 
 /* Page - Register
  * ============================================================================================== */
 
-.highlight:focus { box-shadow: 0 0 12px rgba(204, 204, 204, 0.37); }
+.contact_register { border-top: solid 2px #999; }
+  .contact_register FORM { width: 750px /*79%*/; margin: 0 auto; color: #999; }
+    .contact_register FORM P { margin-top: 0; }
+    .contact_register FORM .left { margin-top: 0; }
+  .contact_register LABEL { text-transform: uppercase; font-size: 1.1em; padding-bottom: .5em; }
+  .contact_register INPUT { text-transform: uppercase; width: 218px; height: 24px; font-size: 1.4em; padding: .3em .5em; background-color: transparent; border: 1px solid #999; }
+    .contact_register INPUT[name="email_address"] { text-transform: none; }
+  .contact_register TEXTAREA { width: 434px; height: 229px; font-size: 1.4em; font-style: italic; padding: .2em; background-color: transparent; border: 1px solid #999; }
+  .contact_register .submit { text-align: right; margin-top: 2em; }
+  .contact_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
+    .contact_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
 
-#account_register #content { border-top: solid 2px #999; }
-.account_register { color: #999; }
-  .account_register FORM { width: 750px /*79%*/; margin: 0 auto; }
-    .account_register FORM P { margin-top: 0; }
-    .account_register FORM .left { margin-top: 0; }
-  .account_register LABEL { text-transform: uppercase; font-size: 1.1em; padding-bottom: .5em; }
-  .account_register INPUT { text-transform: uppercase; width: 218px; height: 24px; font-size: 1.4em; padding: .3em .5em; background-color: transparent; border: 1px solid #999; }
-    .account_register INPUT[name="email_address"] { text-transform: none; }
-  .account_register TEXTAREA { width: 434px; height: 229px; font-size: 1.4em; font-style: italic; padding: .2em; background-color: transparent; border: 1px solid #999; }
-  .account_register .submit { text-align: right; margin-top: 2em; }
-  .account_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
-    .account_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
-
-.modal .account_register { position: absolute; top: 20%; z-index: 10000; }
-  .modal .account_register INPUT, .modal .account_register TEXTAREA { color: #ccc; }
+.modal /*.contact_register*/ { position: absolute; top: 20%; z-index: 10000; border-top: none; }
+  .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }
 
 /* Page - Login
  * ============================================================================================== */
 
-#account_login #content { border-top: solid 2px #999; }
-#account_login #hello { margin-bottom: 2em; }
-#account_login FORM { text-transform: uppercase; margin-bottom: 7em; }
-#account_login INPUT { background-color: transparent; border: 1px solid #999; }
-  #account_login INPUT[type=text] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
-    #account_login INPUT[type=text]:focus { color: #000; }
-  #account_login INPUT[type=submit] { border: 0; background: #fff; color: #000; margin-bottom: .9em; }
-    #account_login INPUT[type=submit]:hover { color: #ccc; }
-#account_login FORM A { text-transform: none; }
+.contact_login { border-top: solid 2px #999; }
+  .contact_login #hello { margin-bottom: 2em; }
+  .contact_login FORM { text-transform: uppercase; margin-bottom: 7em; }
+    .contact_login FORM A { text-transform: none; }
+  .contact_login INPUT { background-color: transparent; border: 1px solid #999; }
+    .contact_login INPUT[type=text] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
+      .contact_login INPUT[type=text]:focus { color: #000; }
+    .contact_login INPUT[type=submit] { border: 0; background: #fff; color: #000; margin-bottom: .9em; }
+      .contact_login INPUT[type=submit]:hover { color: #ccc; }
 
 /* Page - Designer
  * ============================================================================================== */

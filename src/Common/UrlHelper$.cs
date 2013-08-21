@@ -72,7 +72,7 @@
                 return originalUrl;
             }
             else {
-                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(RouteName.Contact.Register, new { returnUrl = originalUrl });
             }
         }
 
@@ -89,7 +89,7 @@
                 return originalUrl;
             }
             else {
-                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(RouteName.Contact.Register, new { returnUrl = originalUrl });
             }
         }
 
