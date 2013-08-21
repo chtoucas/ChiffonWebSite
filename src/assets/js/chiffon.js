@@ -101,82 +101,82 @@
     });
 
     //chiffon.ui.ajaxStatus();
-    chiffon.ui.overlay.init();
+    //chiffon.ui.overlay.init();
     //chiffon.ui.modal.init();
 
-    if (visitor.anonymous) {
-      makeModal('register');
+    //if (visitor.anonymous) {
+    //  makeModal('register');
 
-      //$.get('modal/register.html', function(data) { $modal.html(data); });
-      //$modal.appendTo('BODY');
+    //  //$.get('modal/register.html', function(data) { $modal.html(data); });
+    //  //$modal.appendTo('BODY');
 
-      $('A[rel~=modal]').click(function(e) {
-        e.preventDefault();
+    //  $('A[rel~=modal]').click(function(e) {
+    //    e.preventDefault();
 
-        chiffon.ui.modal.register.show();
+    //    chiffon.ui.modal.register.show();
 
-        // TODO: Use the Deferred jqXHR?
-        $.ajax({
-          type: 'GET'
-          , global: false
-          , dataType: 'html'
-          , url: this.href
-          , success: function(data) {
-            var response = $('<html />').html(data);
-            $('.contact_register').html(response.find('#content').html());
-            chiffon.ui.overlay.show();
-          }
-        });
-      });
-    }
+    //    // TODO: Use the Deferred jqXHR?
+    //    $.ajax({
+    //      type: 'GET'
+    //      , global: false
+    //      , dataType: 'html'
+    //      , url: this.href
+    //      , success: function(data) {
+    //        var response = $('<html />').html(data);
+    //        $('.contact_register').html(response.find('#content').html());
+    //        chiffon.ui.overlay.show();
+    //      }
+    //    });
+    //  });
+    //}
   };
 
-  function makeModal(name) {
-    var $modal = $('<div class="modal contact_register"></div>');
-    $modal.appendTo('BODY');
+  //function makeModal(name) {
+  //  var $modal = $('<div class="modal contact_register"></div>');
+  //  $modal.appendTo('BODY');
 
-    chiffon.ui.modal[name] = {
-      show: function() {
-        $modal.show();
-        //chiffon.ui.modal.init();
-        //$modal.css('margin-top', -$modal.height() / 2);
-        //$modal.css('margin-left', -$modal.width() / 2);
-      }
-    };
-  };
+  //  chiffon.ui.modal[name] = {
+  //    show: function() {
+  //      $modal.show();
+  //      //chiffon.ui.modal.init();
+  //      //$modal.css('margin-top', -$modal.height() / 2);
+  //      //$modal.css('margin-left', -$modal.width() / 2);
+  //    }
+  //  };
+  //};
 
-  chiffon.ui.modal = {
-    init: function() {
-      $('.modal').bind("clickoutside", function(e) {
-        $(this).hide();
-        //var $this = $(this);
-        //if ($form.is(":visible")) {
-        //  $form.fadeOut();
-        //}
-        //$this.unbind("clickoutside");
-      });
-    }
-  };
+  //chiffon.ui.modal = {
+  //  init: function() {
+  //    $('.modal').bind("clickoutside", function(e) {
+  //      $(this).hide();
+  //      //var $this = $(this);
+  //      //if ($form.is(":visible")) {
+  //      //  $form.fadeOut();
+  //      //}
+  //      //$this.unbind("clickoutside");
+  //    });
+  //  }
+  //};
 
-  chiffon.ui.overlay = (function() {
-    var $overlay = $('<div class=overlay></div>')
+  //chiffon.ui.overlay = (function() {
+  //  var $overlay = $('<div class=overlay></div>')
 
-    return {
-      init: function() {
-        $overlay.appendTo('BODY');
-        //$overlay.height(screen.height);
-        //$overlay.width(screen.width);
-      }
+  //  return {
+  //    init: function() {
+  //      $overlay.appendTo('BODY');
+  //      //$overlay.height(screen.height);
+  //      //$overlay.width(screen.width);
+  //    }
 
-      , show: function() {
-        $overlay.fadeIn();
-      }
+  //    , show: function() {
+  //      $overlay.fadeIn();
+  //    }
 
-      , hide: function() {
-        $overlay.hide();
-      }
-    };
-  })();
+  //    , hide: function() {
+  //      $overlay.hide();
+  //    }
+  //  };
+  //})();
 
   // Create & configure the ajax status placeholder.
   //chiffon.ui.ajaxStatus = function() {

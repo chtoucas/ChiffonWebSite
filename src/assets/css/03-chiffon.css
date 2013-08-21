@@ -22,8 +22,7 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 /*.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: #fff; }*/
 /*body { position: relative; }
 .modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
-/*body { position: relative; }*/
-.modal { display: none; z-index: 9999; width: 750px /*79%*/; margin: 0 auto auto auto; }
+/* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
 
 P.tidy { margin: 0; }
 .center { text-align: center; }
@@ -170,8 +169,8 @@ BODY#home_newsletter #nav_newsletter,
   .contact_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
     .contact_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
 
-.modal /*.contact_register*/ { position: absolute; top: 20%; z-index: 10000; border-top: none; }
-  .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }
+/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }
+  .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
 
 /* Page - Login
  * ============================================================================================== */

@@ -73,16 +73,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.2.0.0.174\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
-    </Reference>
-    <Reference Include="NodaTime">
-      <HintPath>..\packages\NodaTime.1.1.0\lib\net35-Client\NodaTime.dll</HintPath>
     </Reference>
     <Reference Include="Serilog">
       <HintPath>..\packages\Serilog.0.8.5\lib\net45\Serilog.dll</HintPath>

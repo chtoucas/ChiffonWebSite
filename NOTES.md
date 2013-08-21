@@ -1,34 +1,17 @@
-TODO
-====
 
-* Custom build for Zepto with effects.
-* DIV'itism
+IIS Rewrite
+===========
 
+(dÃ©crire la configuration de VS)
 
-RavenDB
-=======
-
-* http://geekswithblogs.net/Patware/archive/2012/08/16/150448.aspx
-* http://msdn.microsoft.com/en-us/magazine/hh547101.aspx
+Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\
 
 
-QUICK
-
-Custom Configuration -> Debug & al
-Custom ViewPageBase
-Custom MemberShip/Role
-AntiXSS
-
-http://imageresizing.net/docs/best-practices
-http://mvcauthorization.codeplex.com/
-http://www.asp.net/mvc/overview/getting-started/aspnet-mvc-content-map#global
+A CLASSER
+=========
 
 PreCompilation
 https://github.com/sayedihashimi/slow-cheetah/issues/50
-
-http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
-http://stackoverflow.com/questions/372865/path-combine-for-urls
-http://stackoverflow.com/questions/4925468/combine-relative-baseuri-with-relative-path
 
 ErrorLog
 http://blog.leansentry.com/2013/07/the-server-logs-you-need-to-know-to-fix-any-iis-aspnet-error/
@@ -45,21 +28,16 @@ http://stackoverflow.com/questions/1875368/best-practice-for-asp-net-mvc-resourc
 Atributes... https://gist.github.com/anurse/4036121
 http://stackoverflow.com/questions/3924861/stop-the-tag-builder-escaping-single-quotes-asp-net-mvc-2
 
-SEO
+
+http://geekswithblogs.net/Patware/archive/2012/08/16/150448.aspx
+http://msdn.microsoft.com/en-us/magazine/hh547101.aspx
+http://imageresizing.net/docs/best-practices
+http://mvcauthorization.codeplex.com/
+http://www.asp.net/mvc/overview/getting-started/aspnet-mvc-content-map#global
+http://weblogs.asp.net/jgalloway/archive/2012/05/04/asp-net-mvc-authentication-customizing-authentication-and-authorization-the-right-way.aspx
+http://stackoverflow.com/questions/372865/path-combine-for-urls
+http://stackoverflow.com/questions/4925468/combine-relative-baseuri-with-relative-path
 http://stackoverflow.com/questions/4263568/asp-net-mvc-strategy-for-including-seo-information-such-as-meta-keywords-and-d
-
-Rewrite
-=======
-
-Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\
-
-
-            // FIXME: Explorer les librairies suivantes afin d'activer l'injection de dépendances
-            // pour les modules HTTP.
-            // MVC Turbine ?
-            // HttpModuleMagic ?
-
-
 http://stackoverflow.com/questions/7511318/pass-currentuiculture-to-async-task-in-asp-net-mvc-3-0
 http://stackoverflow.com/questions/1064271/asp-net-mvc-set-custom-iidentity-or-iprincipal
 http://stackoverflow.com/questions/8263845/is-this-custom-principal-in-base-controller-asp-net-mvc-3-terribly-inefficient
@@ -73,5 +51,4 @@ https://github.com/DarthFubuMVC/htmltags
 http://lostechies.com/jimmybogard/2013/08/13/conventional-html-in-asp-net-mvc-building-tags/
 https://github.com/Haacked/RouteMagic
 http://www.asp.net/mvc/tutorials/hands-on-labs/aspnet-mvc-4-custom-action-filters
-
 http://dancres.org/reading_list.html
