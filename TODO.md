@@ -1,6 +1,11 @@
 TODO
 ====
 
+Divers
+======
+
+* configurer l'accès à la boîte mail Gandi
+
 CSS & images
 ============
 
@@ -25,7 +30,8 @@ JS
 ==
 
 * validation des formulaires
-* configurer Google Analytics
+* inclure le code Google Analytics
+* activer Google Analytics uniquement en production
 
 * langue par défaut
 * modales, ESC -> quitte la modale
@@ -41,17 +47,18 @@ JS
 Déploiement & Co
 ================
 
-* Azure, paiement
 * SqlServer, configurer
 * connexion SqlServer
 * séparer les configurations DEV, PREPROD & PROD
 * IIS, configurer les logs
 * IIS, configurer les noms de domaine sans et avec www, s (statiques) & m (media)
-* DNS : déclarer et sans www, en et s
 * rediriger wwww
 * réécriture quand l'adresse se termine en /
 * problème de conf MSBuild lors de la compilation des assets
+* configurer Google Analytics & Google Webmaster tools (lier les comptes ?)
 
+* vérifier l'état du paiement Azure
+* DNS : déclarer le sous-domaine des statiques
 * permettre aux tâches MSBuild de prendre une liste de fichiers en entrée (Closure, YUI)
 * scripts de compilation et de déploiement en ps1 ou F#
 * encrypter la connexion DB
@@ -60,17 +67,29 @@ Déploiement & Co
 * sortir la compilation des CSS, JS et vues de MSBuild
 * utiliser : Google Closure, CSS Lint, JS Lint, Uglify, ES Lint
 
+DB
+==
+
+* pour vivi, utiliser carr4b comme avatar
+
+Motifs
+======
+
+* référencer tous les motifs en version B
+
 ASP.NET
 =======
 
 * passer les formulaires en helpers avec validation
 * vérifier les redirections (correctes + relatives)
+* prise en charge des vues alternatives pour les motifs
 
 * account cookie -> HttpOnly
 * page Newsletter
 * nom de la session ASP.NET
 * cookies, chemin & persistence (cf. forms dans web.config)
-* serveur SMTP (CritSend / SendGrid or Gandi)
+* serveur SMTP (CritSend / SendGrid or Gandi) http://wiki.gandi.net/en/mail/standard-settings
+* pour commencer utiliser MarkdownMailer
 * pages d'erreur MVC & IIS (en particulier pour les images)
 * Serilog, enrichir les logs avec du contenu relatif à la requête
 * vérifier l'utilisation de RenderPartial (@{})
@@ -115,6 +134,7 @@ Admin
 Newsletter
 ==========
 
+* maquette & réalisation
 * MailChimp
 
 DONE
@@ -127,3 +147,7 @@ DONE
 * encodeur HTTP qui ne pourrit pas les attributs en UTF-8 -> normalement c'est bon via AntiXSS
 * utiliser l'encodeur AntiXSS
 * background-color par défaut pour les motifs & vignettes, on utilise #ddd
+* DNS : déclarer les sous-domaine anglais
+* lier Google Webmaster Tools
+* lier Google Analytics
+* Azure, paiement
