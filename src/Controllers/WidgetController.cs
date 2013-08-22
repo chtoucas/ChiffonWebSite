@@ -16,7 +16,7 @@
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "bodyId")]
-        public PartialViewResult CommonJavaScript(string bodyId)
+        public virtual PartialViewResult CommonJavaScript(string bodyId)
         {
             return _config.DebugJs
                 ? PartialView(ViewName.Widget.CommonJavaScript_Debug, bodyId)
@@ -25,7 +25,7 @@
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public PartialViewResult CommonStylesheet()
+        public virtual PartialViewResult CommonStylesheet()
         {
             return _config.DebugCss
                 ? PartialView(ViewName.Widget.CommonStylesheet_Debug)
@@ -34,7 +34,7 @@
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue)]
-        public PartialViewResult GoogleAnalytics()
+        public virtual PartialViewResult GoogleAnalytics()
         {
             return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalytics);
         }

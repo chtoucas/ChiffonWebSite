@@ -11,7 +11,7 @@
         public ContactController(ChiffonEnvironment environment, ISiteMap siteMap)
             : base(environment, siteMap) { }
 
-        public ActionResult Login(string returnUrl)
+        public virtual ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
@@ -24,7 +24,7 @@
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Register(string returnUrl)
+        public virtual ActionResult Register(string returnUrl)
         {
             ViewBag.Title = SR.Contact_Register_Title;
             ViewBag.MetaDescription = SR.Contact_Register_Description;
@@ -42,7 +42,7 @@
         //}
 
         [HttpGet]
-        public ActionResult Newsletter()
+        public virtual ActionResult Newsletter()
         {
             ViewBag.Title = SR.Contact_Newsletter_Title;
             ViewBag.MetaDescription = SR.Contact_Newsletter_Description;

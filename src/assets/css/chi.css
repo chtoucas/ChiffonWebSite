@@ -658,7 +658,7 @@ A.reverse { color: #999; }
 
 .pattern { position: relative; display: block; width: 700px; height: 520px; }
   /* couleur par d�faut visible quand l'image n'existe pas */
-  .pattern .watermark { background-color: #ddd; }
+  /*.pattern .watermark { background-color: #ddd; }*/
     .pattern .watermark SPAN { position: absolute; right: 0px; bottom: 0px; background-color: #fff; font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
 
 /* Vignette */
@@ -746,6 +746,9 @@ BODY#home_newsletter #nav_newsletter,
 
 #home_about #nav_designers + DIV { margin-top: 1em; }
 .home_about { margin-bottom: 7em; }
+/* OPENING */
+#home_openingsoon #nav_designers + DIV { margin-top: 1em; }
+.home_openingsoon { margin-bottom: 7em; }
 
 /* Page - Contact
  * ============================================================================================== */

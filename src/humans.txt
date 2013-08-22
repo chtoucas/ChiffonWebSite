@@ -1,15 +1,34 @@
-# humanstxt.org/
-# The humans responsible & technology colophon
-
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Esther Marti
+    Textile Designer
+    Paris, France
+    www.chicamancha.com
 
-# THANKS
+    Viviane Devaux
+    Textile & Web Designer
+    Paris, France
 
-    <name>
+    Christine Légeret
+    Textile Designer
+    Paris, France
+    www.christinelegeret.fr
 
-# TECHNOLOGY COLOPHON
+    Laure Roussel
+    Textile Designer
+    Paris, France
+    www.laurerousselmbc.com
 
-    HTML5, CSS3
-    Normalize.css, jQuery, Modernizr
+    Pascal Tran-Ngoc-Bich
+    Developer
+    Paris, France
+    chtoucas [at] narvalo [dot] org
+    narvalo.org
+
+# COLOPHON
+
+    Open Source
+    https://github.com/chtoucas/ChiffonWebSite
+
+    Languages
+    Français, English

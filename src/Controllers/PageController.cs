@@ -14,7 +14,7 @@
         readonly ChiffonEnvironment _environment;
         readonly ISiteMap _siteMap;
 
-        public PageController(ChiffonEnvironment environment, ISiteMap siteMap)
+        protected PageController(ChiffonEnvironment environment, ISiteMap siteMap)
         {
             Requires.NotNull(environment, "environment");
             Requires.NotNull(siteMap, "siteMap");

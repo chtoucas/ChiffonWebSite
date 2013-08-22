@@ -12,7 +12,7 @@ CSS & images
 * nouveau filigramme pour Christine
 * contrôle de qualité / h5bp
 
-* background-color par défaut pour les motifs 
+* background-color par défaut pour les motifs
 * modales, croix en haut à droite pour fermer la modale
 * utiliser .designer à la place de #designer
 * revoir overlay pour qu'on n'aie pas à ajouter un DIV
@@ -30,10 +30,8 @@ CSS & images
 JS
 ==
 
+* améliorer le processus d'activation de Google Analytics
 * validation des formulaires
-* inclure le code Google Analytics
-* activer Google Analytics uniquement en production
-
 * langue par défaut
 * modales, ESC -> quitte la modale
 * modales, événement clickoutside (via un plugin)
@@ -50,7 +48,6 @@ Déploiement & Co
 
 * SqlServer, configurer
 * connexion SqlServer
-* machineKey
 * IIS, configurer les logs
 * IIS, configurer les noms de domaine sans et avec www, s (statiques) & m (media)
 * rediriger wwww
@@ -78,13 +75,20 @@ Motifs
 
 * référencer tous les motifs en version B
 
+HTML
+====
+
+* verifier le tag robots
+
 ASP.NET
 =======
 
-* passer les formulaires en helpers avec validation
-* vérifier les redirections (correctes + relatives)
 * prise en charge des vues alternatives pour les motifs
 
+* IsLocalUrl
+* publier un sitemap
+* passer les formulaires en helpers avec validation
+* vérifier les redirections (correctes + relatives)
 * account cookie -> HttpOnly
 * page Newsletter
 * nom de la session ASP.NET
@@ -94,7 +98,7 @@ ASP.NET
 * pages d'erreur MVC & IIS (en particulier pour les images)
 * Serilog, enrichir les logs avec du contenu relatif à la requête
 * vérifier l'utilisation de RenderPartial (@{})
-
+* token de vérification
 * OWASP
 * utiliser les DisplayModes pour le code spécifique IE ?
 * PreserveLoginUrl et autres web.config
@@ -153,3 +157,11 @@ DONE
 * lier Google Analytics
 * Azure, paiement
 * séparer les configurations DEV, PROD
+* inclure le code Google Analytics
+* activer Google Analytics uniquement en production
+* machineKey (via IIS)
+
+2013/08/22
+----------
+
+* informations humantxt
