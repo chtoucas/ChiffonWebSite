@@ -273,6 +273,8 @@
     <Content Include="assets\js\vendor\jquery-1.10.2.min.js" />
     <Content Include="assets\js\vendor\jquery-2.0.3.min.js" />
     <Content Include="assets\js\chi.min.js" />
+    <Content Include="assets\js\vendor\l10n-2013.04.18.min.js" />
+    <Content Include="assets\js\vendor\yepnope-1.5.4.min.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -332,10 +334,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ViewHelpers.cshtml" />
-    <Content Include="config\Development\appSettings.config" />
-    <Content Include="config\Production\appSettings.config" />
-    <Content Include="config\Development\connectionStrings.config" />
-    <Content Include="config\Production\connectionStrings.config" />
+    <Content Include="config\appSettings.config" />
+    <Content Include="config\connectionStrings.config" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <Content Include="Views\Contact\Newsletter.cshtml" />
     <Content Include="Views\Contact\Login.cshtml" />
@@ -387,15 +387,15 @@
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
   <!-- Compilation des JS et des CSS -->
-  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
   <Target Name="AfterBuild" Condition="'$(Configuration)'=='Release'">
     <PropertyGroup>
       <StyleDir>$(ProjectDir)assets\css</StyleDir>
       <ScriptDir>$(ProjectDir)assets\js</ScriptDir>
-      <YUICompressorJar>$(ProjectDir)..\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YUICompressorJar>
-      <ClosureCompilerJar>$(ProjectDir)..\libexec\closure\compiler.jar</ClosureCompilerJar>
+      <YUICompressorJar>$(ProjectDir)..\internal\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YUICompressorJar>
+      <ClosureCompilerJar>$(ProjectDir)..\internal\libexec\closure\compiler.jar</ClosureCompilerJar>
     </PropertyGroup>
     <ItemGroup>
       <CssFiles Include="$(StyleDir)\normalize-1.1.2.css" />
@@ -406,10 +406,10 @@
       <!--<CssFiles Include="$(StyleDir)\05-chiffon.print.css" />-->
     </ItemGroup>
     <ItemGroup>
-      <JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />
+      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />-->
       <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.ba-outside-events-1.1.js" />-->
-      <JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\jquery.validate.js" />
-      <JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\additional-methods.js" />
+      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\jquery.validate.js" />-->
+      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\additional-methods.js" />-->
       <JsFiles Include="$(ScriptDir)\vendor\l10n-2013.04.18.js" />
       <JsFiles Include="$(ScriptDir)\localization.js" />
       <JsFiles Include="$(ScriptDir)\chiffon.js" />

@@ -1,9 +1,7 @@
 *.suo
 *.user
 _build/
-_patterns/
+internal/
 bin/
 obj/
-libexec/
 packages/
-tmp/

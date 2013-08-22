@@ -19,14 +19,14 @@ var getChiffon = (function(window) {
 
   var _fmap = {
     debug: {
-      jquery: 'vendor/jquery-1.10.2.js'
-      , jquery2: 'vendor/jquery-2.0.3.js'
+      jquery: 'vendor/jquery-1.10.2.min.js'
+      , jquery2: 'vendor/jquery-2.0.3.min.js'
       , main: [
-        'vendor/jquery.cookie-1.3.1.js'
+        //'vendor/jquery.cookie-1.3.1.js'
         //, 'vendor/jquery.ba-outside-events-1.1.js'
-        , 'vendor/jquery.validate-1.11.1/jquery.validate.js'
-        , 'vendor/jquery.validate-1.11.1/additional-methods.js'
-        , 'vendor/l10n-2013.04.18.js'
+        //, 'vendor/jquery.validate-1.11.1/jquery.validate.js'
+        //, 'vendor/jquery.validate-1.11.1/additional-methods.js'
+        'vendor/l10n-2013.04.18.min.js'
         , 'localization.js'
         , 'chiffon.js'
       ]

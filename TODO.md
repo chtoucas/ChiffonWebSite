@@ -11,7 +11,7 @@ CSS & images
 
 * nouveau filigramme pour Christine
 * contrôle de qualité / h5bp
-
+* ajouter des informations de version
 * background-color par défaut pour les motifs
 * modales, croix en haut à droite pour fermer la modale
 * utiliser .designer à la place de #designer
@@ -30,6 +30,7 @@ CSS & images
 JS
 ==
 
+* ajouter des informations de version
 * améliorer le processus d'activation de Google Analytics
 * validation des formulaires
 * langue par défaut

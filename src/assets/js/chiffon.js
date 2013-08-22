@@ -9,24 +9,24 @@
   'use strict';
 
   var
-    connected = undef !== $.cookie('auth')
+    //connected = undef !== $.cookie('auth')
 
-    , visitor = {
-      connected: connected
-      , anonymous: !connected
+    //, visitor = {
+    //  connected: connected
+    //  , anonymous: !connected
 
-      , logOn: function() {
-        throw 'Not Implemented';
-      }
+    //  , logOn: function() {
+    //    throw 'Not Implemented';
+    //  }
 
-      , logOff: function() {
-        this.connected = false;
-        this.anonymous = true;
-      }
-    }
+    //  , logOff: function() {
+    //    this.connected = false;
+    //    this.anonymous = true;
+    //  }
+    //}
 
      // L10N
-    , _ = function(string) { return string.toLocaleString(); }
+     _ = function(string) { return string.toLocaleString(); }
   ;
 
   /* jQuery plugins
