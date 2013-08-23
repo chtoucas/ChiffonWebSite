@@ -12,7 +12,7 @@
 
     public class QueryCache : IQueryCache
     {
-        const int CacheExpirationInHours_ = 1;
+        const int CacheExpirationInHours_ = 24;
 
         static object Lock_ = new Object();
 

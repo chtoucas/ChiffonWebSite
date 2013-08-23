@@ -15,7 +15,9 @@
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
     {
+        // Mise en cache publique pour 7 jours.
         static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(7, 0, 0, 0);
+        // Mise en cache publique pour 1 jour.
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
