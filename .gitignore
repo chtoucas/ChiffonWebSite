@@ -1,7 +1,7 @@
 *.suo
 *.user
 _build/
-internal/
+intern/
 bin/
 obj/
 packages/

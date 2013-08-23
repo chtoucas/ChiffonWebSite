@@ -25,6 +25,10 @@
     chtoucas [at] narvalo [dot] org
     narvalo.org
 
+# THANKS
+
+    All open source software contributors
+
 # COLOPHON
 
     Open Source

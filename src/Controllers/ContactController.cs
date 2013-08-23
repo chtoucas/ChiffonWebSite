@@ -6,12 +6,14 @@
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
 
+    [AllowAnonymous]
     public class ContactController : PageController
     {
         public ContactController(ChiffonEnvironment environment, ISiteMap siteMap)
             : base(environment, siteMap) { }
 
-        public virtual ActionResult Login(string returnUrl)
+        [HttpGet]
+        public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
@@ -22,9 +24,8 @@
             return View(ViewName.Contact.Login);
         }
 
-        [AllowAnonymous]
         [HttpGet]
-        public virtual ActionResult Register(string returnUrl)
+        public ActionResult Register(string returnUrl)
         {
             ViewBag.Title = SR.Contact_Register_Title;
             ViewBag.MetaDescription = SR.Contact_Register_Description;
@@ -33,16 +34,14 @@
             return View(ViewName.Contact.Register);
         }
 
-        //[AllowAnonymous]
-        //[ChildActionOnly]
-        //[HttpGet]
-        //public ActionResult ModalRegister(string returnUrl)
-        //{
-        //    return PartialView(ViewName.Account.Register);
-        //}
+        [HttpGet]
+        public ActionResult ModalRegister(string returnUrl)
+        {
+            return PartialView(ViewName.Contact.Register);
+        }
 
         [HttpGet]
-        public virtual ActionResult Newsletter()
+        public ActionResult Newsletter()
         {
             ViewBag.Title = SR.Contact_Newsletter_Title;
             ViewBag.MetaDescription = SR.Contact_Newsletter_Description;

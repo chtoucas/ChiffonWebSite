@@ -15,8 +15,8 @@
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
     {
-        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(1, 0, 0);
-        static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0);
+        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(7, 0, 0, 0);
+        static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
 
         readonly PatternFileSystem _fileSystem;
         readonly IQueries _queries;

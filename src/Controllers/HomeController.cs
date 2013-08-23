@@ -25,7 +25,7 @@
 
         // OPENING
         [HttpGet]
-        public virtual ActionResult OpeningSoon()
+        public ActionResult OpeningSoon()
         {
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;
@@ -35,7 +35,7 @@
         }
 
         [HttpGet]
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
             var designers = _queries.ListDesigners(Culture);
             var patterns = _queries.ListShowcasedPatterns();
@@ -53,7 +53,7 @@
         }
 
         [HttpGet]
-        public virtual ActionResult About()
+        public ActionResult About()
         {
             ViewBag.Title = SR.Home_About_Title;
             ViewBag.MetaDescription = SR.Home_About_Description;
@@ -63,7 +63,7 @@
         }
 
         [HttpGet]
-        public virtual ActionResult Contact()
+        public ActionResult Contact()
         {
             var model = _queries.ListDesigners(Culture).OrderBy(_ => _.Nickname.ValueOrElse(_.Lastname));
 

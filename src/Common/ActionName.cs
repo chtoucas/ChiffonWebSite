@@ -32,6 +32,7 @@
             public const string CommonJavaScript = "CommonJavaScript";
             public const string CommonStylesheet = "CommonStylesheet";
             public const string GoogleAnalytics = "GoogleAnalytics";
+            public const string LanguageMenu = "LanguageMenu";
         }
     }
 }

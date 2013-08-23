@@ -1,10 +1,20 @@
 TODO
 ====
 
+Version Alpha
+=============
+
+* version B des motifs
+* ne pas utiliser ViewHelpers -> vérifier que GA fonctionne correctement
+* GA sur les sous-domaines / langue
+* AssetManager -> GetBasePath()
+* language partagé entre les vues & co
+
 Divers
 ======
 
 * configurer l'accès à la boîte mail Gandi
+* submodule pour les fichiers internes + intern
 
 CSS & images
 ============
@@ -43,6 +53,7 @@ JS
 * regarder les plugins bootstrap
 * typescript ?
 * charger progressivement les gros catalogues
+* jQuery.Globalize ?
 
 Déploiement & Co
 ================
@@ -56,6 +67,7 @@ Déploiement & Co
 * problème de conf MSBuild lors de la compilation des assets
 * configurer Google Analytics & Google Webmaster tools (lier les comptes ?)
 
+* vérifier les logs Trace
 * vérifier l'état du paiement Azure
 * DNS : déclarer le sous-domaine des statiques
 * permettre aux tâches MSBuild de prendre une liste de fichiers en entrée (Closure, YUI)
@@ -86,6 +98,10 @@ ASP.NET
 
 * prise en charge des vues alternatives pour les motifs
 
+* custom controller factory ?
+* OnlyAnonymous attr
+* SignalR
+* Rx
 * IsLocalUrl
 * publier un sitemap
 * passer les formulaires en helpers avec validation
@@ -129,6 +145,8 @@ ASP.NET
 * asset bundles via l'AssetManager
 * vues spécifiques aux tablettes et mobiles
 * utiliser des opérations async quand c'est utile
+* pagination ?
+* nouvelle langue + outil automatique pour générer une fausse configuration de langue
 
 Admin
 -----
@@ -136,6 +154,13 @@ Admin
 * WebApi
 * AngularJS
 * développer un MRP spécifique
+
+Monitoring
+----------
+
+* Rx
+* analyse des logs IIS
+* importer les logs Analytics
 
 Newsletter
 ==========

@@ -147,6 +147,7 @@
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\ControllerName.cs" />
+    <Compile Include="Common\EmptyPartialViewResult.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
@@ -200,7 +201,7 @@
     <Compile Include="Entities\PatternVisibility.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DesignerController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
@@ -280,7 +281,6 @@
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
     <Content Include="robots.txt" />
-    <Content Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -387,15 +387,15 @@
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
   <!-- Compilation des JS et des CSS -->
-  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\internal\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
+  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
   <Target Name="AfterBuild" Condition="'$(Configuration)'=='Release'">
     <PropertyGroup>
       <StyleDir>$(ProjectDir)assets\css</StyleDir>
       <ScriptDir>$(ProjectDir)assets\js</ScriptDir>
-      <YUICompressorJar>$(ProjectDir)..\internal\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YUICompressorJar>
-      <ClosureCompilerJar>$(ProjectDir)..\internal\libexec\closure\compiler.jar</ClosureCompilerJar>
+      <YUICompressorJar>$(ProjectDir)..\intern\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YUICompressorJar>
+      <ClosureCompilerJar>$(ProjectDir)..\intern\libexec\closure\compiler.jar</ClosureCompilerJar>
     </PropertyGroup>
     <ItemGroup>
       <CssFiles Include="$(StyleDir)\normalize-1.1.2.css" />

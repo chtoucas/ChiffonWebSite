@@ -22,7 +22,8 @@
  <header>
   <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
   <nav id=nav_lang class=clr>
-   @ViewHelpers.LanguageMenu((ChiffonLanguage)ViewBag.Language)
+   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
+   @*@ViewHelpers.LanguageMenu((ChiffonLanguage)ViewBag.Language)*@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
