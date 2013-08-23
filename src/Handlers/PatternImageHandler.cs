@@ -70,9 +70,13 @@
         {
             var response = context.Response;
 
-            // FIXME
             var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Version);
             if (pattern == null) {
+                response.SetStatusCode(HttpStatusCode.NotFound); return;
+            }
+
+            // FIXME
+            if (query.Size == PatternSize.Preview && !pattern.HasPreview) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 

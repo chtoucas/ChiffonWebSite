@@ -148,6 +148,7 @@
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\ControllerName.cs" />
     <Compile Include="Common\EmptyPartialViewResult.cs" />
+    <Compile Include="Common\Enumerable`1%24.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="ViewModels\DesignerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
     <Content Include="apple-touch-icon-144x144-precomposed.png" />
     <Content Include="apple-touch-icon-57x57-precomposed.png" />
@@ -276,6 +278,7 @@
     <Content Include="assets\js\chi.min.js" />
     <Content Include="assets\js\vendor\l10n-2013.04.18.min.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.min.js" />
+    <Content Include="erreur.html" />
     <Content Include="crossdomain.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -355,6 +358,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Views\Widget\GoogleAnalytics.cshtml" />
+    <Content Include="Views\Widget\LanguageMenu.cshtml" />
+    <Content Include="Views\Widget\LanguageMenu.en.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SR.en.resx">

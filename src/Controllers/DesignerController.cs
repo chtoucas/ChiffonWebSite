@@ -38,6 +38,7 @@
                 Categories = from _ in categories select Mapper.Map(_),
                 Designer = Mapper.Map(designer),
                 Patterns = from _ in patterns
+                           where _.HasPreview
                            orderby _.CreationTime descending
                            select Mapper.Map(_, designer.DisplayName)
             };
@@ -91,18 +92,19 @@
             var categories = _queries.ListCategories(designerKey);
             var patterns = _queries.ListPatterns(designerKey, categoryKey);
 
-            var pattern = from _ in patterns where _.Reference == reference select _;
-            if (pattern.Count() == 0) { return new HttpNotFoundResult(); }
+            var pattern = (from _ in patterns where _.Reference == reference select _).FirstOrDefault();
+            //if (pattern.Count() == 0) { return new HttpNotFoundResult(); }
+            if (pattern == null) { return new HttpNotFoundResult(); }
 
             patterns = from _ in patterns
                        orderby _.CreationTime descending
-                       where _.Reference != reference
+                       where _.Reference != reference && _.Preferred
                        select _;
 
             var model = new DesignerViewModel {
                 Categories = from _ in categories select Mapper.Map(_),
                 Designer = Mapper.Map(designer),
-                Patterns = from _ in pattern.Concat(patterns) select Mapper.Map(_, designer.DisplayName)
+                Patterns = from _ in patterns.Prepend(pattern) select Mapper.Map(_, designer.DisplayName)
             };
 
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
@@ -110,7 +112,7 @@
 
             ViewBag.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
-                pattern.Single().Reference, designer.DisplayName);
+                pattern.Reference, designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Pattern_Description;
             ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference).ToString();
 

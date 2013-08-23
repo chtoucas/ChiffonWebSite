@@ -1,14 +1,23 @@
 TODO
 ====
 
+Tâches récurrentes
+==================
+
+* https://asafaweb.com/
+* YSlow
+
 Version Alpha
 =============
 
 * version B des motifs
-* ne pas utiliser ViewHelpers -> vérifier que GA fonctionne correctement
 * GA sur les sous-domaines / langue
 * AssetManager -> GetBasePath()
 * language partagé entre les vues & co
+* passer les watermark des motifs en HTML direct
+* créer un utilisateur dédié SQL
+* crypter les token ?
+* optimiser les favicons
 
 Divers
 ======
@@ -67,6 +76,7 @@ Déploiement & Co
 * problème de conf MSBuild lors de la compilation des assets
 * configurer Google Analytics & Google Webmaster tools (lier les comptes ?)
 
+* retail mode
 * vérifier les logs Trace
 * vérifier l'état du paiement Azure
 * DNS : déclarer le sous-domaine des statiques
@@ -117,6 +127,8 @@ ASP.NET
 * vérifier l'utilisation de RenderPartial (@{})
 * token de vérification
 * OWASP
+* check with https://asafaweb.com/
+* NWebsec
 * utiliser les DisplayModes pour le code spécifique IE ?
 * PreserveLoginUrl et autres web.config
 * vérifier la SEO
@@ -131,6 +143,7 @@ ASP.NET
 * utiliser AutoMapper ?
 * utiliser HtmlTags ?
 * utiliser NodaTime ?
+* utiliser HTML5 Toolkit ?
 * utiliser Microsoft.Practices.EnterpriseLibrary.Data, EF ?
 * basculer AssetTag en méthode d'extension de HtmlHelper ou via ViewPageBase
 * OpenGraph & co, microformats
@@ -191,3 +204,13 @@ DONE
 ----------
 
 * informations humantxt
+
+2013/08/22
+----------
+
+* ne pas utiliser ViewHelpers -> vérifier que GA fonctionne correctement
+
+
+
+
+
