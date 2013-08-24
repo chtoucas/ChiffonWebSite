@@ -39,7 +39,7 @@
 
             // > Data <
 
-            if (_config.EnableCaching) {
+            if (_config.EnableServerCache) {
                 builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
             }
             else {

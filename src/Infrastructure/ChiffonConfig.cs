@@ -16,13 +16,15 @@
 
         bool _debugCss = false;
         bool _debugJs = false;
-        bool _enableCaching = false;
+        bool _enableClientCache = true;
+        bool _enableServerCache = true;
         string _googleAnalytics = String.Empty;
         string _passThroughToken = String.Empty;
 
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
-        public bool EnableCaching { get { return _enableCaching; } set { _enableCaching = value; } }
+        public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
+        public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
         public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
@@ -96,8 +98,11 @@
             DebugCss = nvc.MayParseValue("chiffon.debugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
-            EnableCaching = nvc.MayParseValue("chiffon.enableCaching", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(false);
+            EnableClientCache = nvc.MayParseValue("chiffon.enableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+                .ValueOrElse(true);
+
+            EnableServerCache = nvc.MayParseValue("chiffon.enableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+                .ValueOrElse(true);
 
             GoogleAnalytics = nvc.MayGetValue("chiffon.googleAnalytics").ValueOrElse(String.Empty);
 

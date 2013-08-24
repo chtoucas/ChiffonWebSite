@@ -1,6 +1,7 @@
 *.suo
 *.user
 _build/
+admin/
 intern/
 bin/
 obj/
