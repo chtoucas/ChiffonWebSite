@@ -160,7 +160,7 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\Mapper.cs" />
+    <Compile Include="Controllers\Mapper.cs" />
     <Compile Include="Data\SqlServer\ListPatternsQuery.cs" />
     <Compile Include="Data\Queries.cs" />
     <Compile Include="Data\SqlServer\GetPatternQuery.cs" />
@@ -251,7 +251,6 @@
     <Compile Include="ViewModels\DesignerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="404.html" />
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
     <Content Include="apple-touch-icon-144x144-precomposed.png" />
     <Content Include="apple-touch-icon-57x57-precomposed.png" />
@@ -269,6 +268,7 @@
     <Content Include="assets\css\05-chiffon.print.css" />
     <Content Include="assets\css\normalize-1.1.2.css" />
     <Content Include="assets\css\chi.min.css" />
+    <Content Include="assets\img\logo.png" />
     <Content Include="assets\js\boot.js" />
     <Content Include="assets\js\boot.min.js" />
     <Content Include="assets\js\chiffon.js" />
@@ -278,8 +278,9 @@
     <Content Include="assets\js\chi.min.js" />
     <Content Include="assets\js\vendor\l10n-2013.04.18.min.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.min.js" />
-    <Content Include="erreur.html" />
     <Content Include="crossdomain.xml" />
+    <Content Include="errors\index.html" />
+    <Content Include="errors\not-found.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
@@ -351,6 +352,7 @@
     <Content Include="Views\Shared\_ContactTitle.en.cshtml" />
     <Content Include="Views\Shared\_Html5Shim.cshtml" />
     <Content Include="Views\Home\OpeningSoon.cshtml" />
+    <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,6 +375,7 @@
     <EmbeddedResource Include="Resources\VR.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VR.en.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\VR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

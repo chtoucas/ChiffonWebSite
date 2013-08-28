@@ -37,51 +37,48 @@
         public IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query)
         {
             var cacheKey = "Chiffon:Home";
-            return GetOrInsert(cacheKey, () => query());
+            return GetOrInsert_(cacheKey, () => query());
         }
 
         public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
         {
             var format = "Chiffon:Category:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
-            return GetOrInsert(cacheKey, () => query(designerKey));
+            return GetOrInsert_(cacheKey, () => query(designerKey));
         }
 
         public IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture, Func<ChiffonCulture, IEnumerable<Designer>> query)
         {
             var format = "Chiffon:Designer:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, culture);
-            return GetOrInsert(cacheKey, () => query(culture));
+            return GetOrInsert_(cacheKey, () => query(culture));
         }
 
         public IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)
         {
             var format = "Chiffon:Pattern:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
-            return GetOrInsert(cacheKey, () => query(designerKey));
+            return GetOrInsert_(cacheKey, () => query(designerKey));
         }
 
         #endregion
 
-        protected T GetOrInsert<T>(string cacheKey, Func<T> query) where T : class
+        T GetOrInsert_<T>(string cacheKey, Func<T> query) where T : class
         {
-            T result;
-
             var cachedValue = Cache[cacheKey];
 
-            if (cachedValue == null) {
-                result = query.Invoke();
-
-                lock (Lock_) {
-                    if (Cache[cacheKey] == null) {
-                        Cache.Add(cacheKey, result, null,
-                            DateTime.Now.AddHours(CacheExpirationInHours_),
-                            Cache.NoSlidingExpiration, CacheItemPriority.High, null);
-                    }
-                }
+            if (cachedValue != null) {
+                return cachedValue as T;
             }
-            else {
-                result = cachedValue as T;
+
+            T result = query.Invoke();
+
+            lock (Lock_) {
+                if (Cache[cacheKey] == null) {
+                    Cache.Add(cacheKey, result, null,
+                        DateTime.Now.AddHours(CacheExpirationInHours_),
+                        Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                }
             }
 
             return result;

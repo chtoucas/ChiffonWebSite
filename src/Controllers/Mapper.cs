@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Data
+﻿namespace Chiffon.Controllers
 {
     using Chiffon.Entities;
     using Chiffon.ViewModels;

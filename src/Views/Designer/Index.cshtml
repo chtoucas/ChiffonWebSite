@@ -2,7 +2,10 @@
 
 @model DesignerViewModel
 
-@Html.Partial(ViewName.Shared.DesignerMenu)
+@{
+ Layout = "~/Views/Shared/_DesignerLayout.cshtml";
+}
+
 <div id=designer>
  @Html.Partial(ViewName.Shared.DesignerInfo)
  <ul class="mosaic len_75 clr">

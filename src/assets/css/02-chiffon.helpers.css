@@ -48,11 +48,11 @@
 /*
  * ============================================================================================== */
 
-.right { float: right; }
-.left { float: left; }
-.clear { clear: both; }
+.center { text-align: center; }
 
-.break { display: block; }
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }
 
 /* Terminaison manuelle des blocs flottants */
 /* .clear { height: auto; display: block; clear: both; } */
@@ -60,14 +60,12 @@
 /* Terminaison automatique des blocs flottants */
 /*.clr:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }*/
 
-.hide { display: none; }
-
-/* Inlined list: UL > LI > A */
-
+/* Liste horizontale : UL > LI > A */
 UL.inline LI { float: left; }
 UL.inline A { display: inline-block; }
 
-/* Centered list: UL > LI */
+/* Liste centrée : UL > LI */
+UL.center LI { display: inline-block; }
 
-UL.center { text-align: center; }
-  UL.center LI { display: inline-block; }
+/* Retour à la ligne */
+SPAN.break { display: block; }

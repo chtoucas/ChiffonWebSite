@@ -97,15 +97,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blog.
-        /// </summary>
-        public static string Layout_Nav_Blog {
-            get {
-                return ResourceManager.GetString("Layout_Nav_Blog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Contact.
         /// </summary>
         public static string Layout_Nav_Contact {

@@ -129,9 +129,6 @@
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="Layout_Nav_Blog" xml:space="preserve">
-    <value>Blog</value>
-  </data>
   <data name="Layout_Nav_Contact" xml:space="preserve">
     <value>Contact</value>
   </data>

@@ -63,6 +63,7 @@ JS
 * typescript ?
 * charger progressivement les gros catalogues
 * jQuery.Globalize ?
+* Yeoman ?
 
 Déploiement & Co
 ================
@@ -113,6 +114,7 @@ ASP.NET
 * SignalR
 * Rx
 * IsLocalUrl
+* in memory file cache dependency
 * publier un sitemap
 * passer les formulaires en helpers avec validation
 * vérifier les redirections (correctes + relatives)

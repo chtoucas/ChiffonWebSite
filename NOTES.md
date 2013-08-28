@@ -10,6 +10,11 @@ Cf. C:\Program Files (x86)\Microsoft Visual Studio 11.0\Xml\Schemas\
 A CLASSER
 =========
 
+http://www.infoq.com/presentations/HTTP-Performance
+http://www.infoq.com/news/2013/08/solid-principles-revisited
+http://www.infoq.com/news/2013/08/reactive-programming-emerging
+http://www.infoq.com/news/2013/08/brick-web-components
+
 PreCompilation
 https://github.com/sayedihashimi/slow-cheetah/issues/50
 

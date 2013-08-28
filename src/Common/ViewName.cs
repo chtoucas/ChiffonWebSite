@@ -7,8 +7,6 @@
             public const string Index = "~/Views/Home/Index.cshtml";
             public const string About = "~/Views/Home/About.cshtml";
             public const string Contact = "~/Views/Home/Contact.cshtml";
-            // OPENING
-            public const string OpeningSoon = "~/Views/Home/OpeningSoon.cshtml";
         }
 
         public static class Contact

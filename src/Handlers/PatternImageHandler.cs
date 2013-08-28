@@ -20,6 +20,7 @@
         // Mise en cache publique pour 1 jour.
         static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
 
+        readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
         readonly IQueries _queries;
 
@@ -29,6 +30,7 @@
             Requires.NotNull(config, "config");
             Requires.NotNull(queries, "queries");
 
+            _config = config;
             _queries = queries;
 
             _fileSystem = new PatternFileSystem(config);
@@ -97,16 +99,23 @@
 
             var image = pattern.GetImage(query.Size);
 
-            // TODO: Il faut revoir les en-têtes de cache.
             response.Clear();
+            if (_config.EnableClientCache) {
+                CacheResponse_(response, visibility);
+            }
+            response.ContentType = image.MimeType;
+            response.TransmitFile(_fileSystem.GetPath(image));
+        }
+
+        // TODO: Il faut revoir les en-têtes de cache.
+        void CacheResponse_(HttpResponse response, PatternVisibility visibility)
+        {
             if (visibility == PatternVisibility.Public) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);
             }
             else {
                 response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
             }
-            response.ContentType = image.MimeType;
-            response.TransmitFile(_fileSystem.GetPath(image));
         }
     }
 }

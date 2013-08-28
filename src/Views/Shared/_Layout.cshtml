@@ -23,13 +23,10 @@
   <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
   <nav id=nav_lang class=clr>
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
-   @*@ViewHelpers.LanguageMenu((ChiffonLanguage)ViewBag.Language)*@
   </nav>
   <nav id=nav_main class=clr>
    <ul class=center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
-    @*<li class=sep>/</li>
-    <li><a href="//pourquelmotifsimone.blogspot.fr" id=nav_blog rel=external target=_blank>@VR.Layout_Nav_Blog</a></li>*@
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
@@ -37,6 +34,7 @@
     <li class=right><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>
    </ul>
   </nav>
+  @RenderSection("SecondaryNav", false /* required */)
  </header>
  <div id=content class="@ViewBag.BodyId">
   @RenderBody()

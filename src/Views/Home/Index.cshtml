@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<PatternViewItem>
 
-@Html.Partial(ViewName.Shared.DesignerMenu)
+@{
+ Layout = "~/Views/Shared/_DesignerLayout.cshtml";
+}
+
 <ul class="mosaic len_100 clr">
  @foreach (var preview in Model) {
   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference)" rel="@ViewBag.RegisterLink" class="vignette @preview.CssClass">

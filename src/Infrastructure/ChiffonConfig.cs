@@ -11,7 +11,7 @@
 
     public class ChiffonConfig
     {
-        const string SettingPrefix_ = "chiffon.";
+        const string SettingPrefix_ = "chiffon:";
         const string SqlConnectionStringName_ = "SqlServer";
 
         bool _debugCss = false;
@@ -78,35 +78,35 @@
             // > Paramètres obligatoires <
 
             // TODO: validate this? Absolute and well-formed.
-            PatternDirectory = nvc.MayGetValue("chiffon.patternDirectory")
+            PatternDirectory = nvc.MayGetValue("chiffon:PatternDirectory")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.patternDirectory'."));
+                    "Missing or invalid config 'chiffon:PatternDirectory'."));
 
-            LogProfile = nvc.MayGetValue("chiffon.logProfile")
+            LogProfile = nvc.MayGetValue("chiffon:LogProfile")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.logProfile'."));
+                    "Missing or invalid config 'chiffon:LogProfile'."));
 
-            LogMinimumLevel = nvc.MayParseValue("chiffon.logMinimumLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
+            LogMinimumLevel = nvc.MayParseValue("chiffon:LogMinimumLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon.logMinimumLevel'."));
+                    "Missing or invalid config 'chiffon:LogMinimumLevel'."));
 
             // > Paramètres optionels <
 
-            DebugJs = nvc.MayParseValue("chiffon.debugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
-            DebugCss = nvc.MayParseValue("chiffon.debugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
-            EnableClientCache = nvc.MayParseValue("chiffon.enableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            EnableClientCache = nvc.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(true);
 
-            EnableServerCache = nvc.MayParseValue("chiffon.enableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            EnableServerCache = nvc.MayParseValue("chiffon:EnableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(true);
 
-            GoogleAnalytics = nvc.MayGetValue("chiffon.googleAnalytics").ValueOrElse(String.Empty);
+            GoogleAnalytics = nvc.MayGetValue("chiffon:GoogleAnalytics").ValueOrElse(String.Empty);
 
-            PassThroughToken = nvc.MayGetValue("chiffon.passThroughToken").ValueOrElse(String.Empty);
+            PassThroughToken = nvc.MayGetValue("chiffon:PassThroughToken").ValueOrElse(String.Empty);
         }
     }
 }

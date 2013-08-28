@@ -33,10 +33,7 @@
                 new { controller = ControllerName.Home, action = ActionName.Home.About });
             _routes.MapRoute(RouteName.Home.Contact, "contact",
                 new { controller = ControllerName.Home, action = ActionName.Home.Contact });
-            // OPENING
-            _routes.MapRoute("OpeningSoon", "ouverture-prochaine",
-               new { controller = ControllerName.Home, action = "OpeningSoon" });
-
+            
             // ContactController.
             _routes.MapRoute(RouteName.Contact.Register, "inscription",
                 new { controller = ControllerName.Contact, action = ActionName.Contact.Register });

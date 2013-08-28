@@ -2,13 +2,18 @@
 
 @model DesignerViewModel
 
-@Html.Partial(ViewName.Shared.DesignerMenu)
+@{
+ Layout = "~/Views/Shared/_DesignerLayout.cshtml";
+}
+
 <div id=designer>
  @Html.Partial(ViewName.Shared.DesignerInfo)
  <ul class="mosaic patterns">
   @foreach (var pattern in Model.Patterns) {
-   <li data-watermark="ref @pattern.Reference" class=pattern>
-    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference, pattern.Version)" alt="@pattern.Description" /></li>
+   <li class=pattern id="@pattern.Reference">
+    <img src="@Url.PatternContent(pattern.DesignerKey, pattern.Reference, pattern.Version)" alt="@pattern.Description" /><div class=watermark><span>Ref @pattern.Reference</span></div>
+   </li>
   }
  </ul>
 </div>
+

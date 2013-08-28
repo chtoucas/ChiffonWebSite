@@ -10,7 +10,7 @@
 
 @import url("http://fonts.googleapis.com/css?family=Droid+Serif:400italic");
 
-/* Global policy
+/* Règles générales
  * ============================================================================================== */
 
 A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
@@ -24,7 +24,6 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 /* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
 
 P.tidy { margin: 0; }
-.center { text-align: center; }
 
 A.underline { text-decoration: underline; }
 A.reverse { color: #999; }
@@ -38,6 +37,7 @@ A.reverse { color: #999; }
 
 .highlight:focus { box-shadow: 0 0 12px rgba(204, 204, 204, 0.37); }
 
+/* TODO: width & height ne doivent pas être nécessaires */
 .overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; opacity: .8; z-index: 100; }
 
 .watermark { left: 0; position: absolute; top: 0; width: 100%; height: 100%; }
@@ -51,7 +51,7 @@ A.reverse { color: #999; }
 .pattern { position: relative; display: block; width: 700px; height: 520px; }
   /* couleur par défaut visible quand l'image n'existe pas */
   /*.pattern .watermark { background-color: #ddd; }*/
-    .pattern .watermark SPAN { position: absolute; right: 0px; bottom: 0px; background-color: #fff; font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
+  .pattern .watermark SPAN { position: absolute; right: 0px; bottom: 0px; background-color: #fff; font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
 
 /* Vignette */
 
@@ -136,11 +136,8 @@ BODY#home_newsletter #nav_newsletter,
 /* Page - About
  * ============================================================================================== */
 
-#home_about #nav_designers + DIV { margin-top: 1em; }
 .home_about { margin-bottom: 7em; }
-/* OPENING */
-#home_openingsoon #nav_designers + DIV { margin-top: 1em; }
-.home_openingsoon { margin-bottom: 7em; }
+  .home_about > DIV { margin-top: 1em; }
 
 /* Page - Contact
  * ============================================================================================== */
@@ -205,3 +202,11 @@ BODY#home_newsletter #nav_newsletter,
   #designer NAV LI:hover, #designer NAV LI.current { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
   #designer NAV A { padding: .5em 0; width: 220px; display: block; text-transform: uppercase; border-top: 1px solid #999; color: #999; }
     #designer NAV A:hover, #designer NAV LI.current A { color: red; }
+
+/* En-tête statique
+ * ============================================================================================== */
+
+#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: 940px; background-color: #fff; }
+  #sticky_header H1 { display: none; }
+  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
+    #sticky_header NAV LI { width: auto !important; font-style: initial; }

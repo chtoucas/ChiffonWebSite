@@ -23,17 +23,6 @@
             _queries = queries;
         }
 
-        // OPENING
-        [HttpGet]
-        public ActionResult OpeningSoon()
-        {
-            ViewBag.Title = SR.Home_Index_Title;
-            ViewBag.MetaDescription = SR.Home_Index_Description;
-            ViewBag.CanonicalLink = "/ouverture-prochaine";
-
-            return View(ViewName.Home.OpeningSoon);
-        }
-
         [HttpGet]
         public ActionResult Index()
         {
