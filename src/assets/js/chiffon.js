@@ -5,69 +5,71 @@
 // - ajouter es5-shim.js
 //    https://github.com/kriskowal/es5-shim/
 // http://stackoverflow.com/questions/12779565/comparing-popular-script-loaders-yepnope-requirejs-labjs-and-headjs
+// http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
+// http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
 
 (function(window, $, chiffon, undef) {
   'use strict';
 
   var
-    //connected = undef !== $.cookie('auth')
-
-    //, visitor = {
-    //  connected: connected
-    //  , anonymous: !connected
-
-    //  , logOn: function() {
-    //    throw 'Not Implemented';
-    //  }
-
-    //  , logOff: function() {
-    //    this.connected = false;
-    //    this.anonymous = true;
-    //  }
-    //}
-
      // L10N
     _ = function(string) { return string.toLocaleString(); }
 
-    // TODO:
-    // http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
-    // http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
-    , _sticky_designer_info = function() {
-      var $info = $('#info'),
+    , _designer_sticky_info = function() {
+      var
+        // Géométrie du bloc #info.
+        $info = $('#info'),
         info_h = $info.height(),
         info_w = $info.width(),
         info_pos = $info.offset(),
         info_top = info_pos.top,
+        info_left = info_pos.left,
+        // Géométrie du bloc #designer.
         $designer = $('#designer'),
         designer_w = $designer.width(),
+        // Géométrie de la fenêtre.
         window_h = $(window).height();
 
       //$info.css('position', 'static');
       //$(window).unbind(scroll);
-      // TODO: background color
+
+      var sticky_style = { position: 'fixed', 'background-color': '#fff' };
 
       if (window_h >= info_h + info_top) {
-        // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ; 
-        // on lui donne une position fixe.
-        $info.css('position', 'fixed');
-        $info.css('top', info_top + 'px');
-        $info.css('left', info_pos.left + 'px');
+        // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
+        // pour qu'il soit toujours visible on lui donne une position fixe.
+        sticky_style.left = info_left + 'px';
+        sticky_style.top = info_top + 'px';
+        $info.css(sticky_style);
       }
       else if (window_h < info_h) {
-        // La fenêtre est trop petite pour contenir tout le bloc info, on ne touche donc à rien,
-        // sinon le bas du bloc info ne sera jamais visible.
+        // La fenêtre est trop petite pour contenir tout le bloc info.
+        // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
+        // On ne touche donc à rien.
         return;
       }
       else {
-        // La fenêtre peut contenir tout le bloc info si on ne le laisse pas dans sa position initiale.
-        var css = { position: 'fixed', top: '10px', left: info_pos.left + 'px' },
+        // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
+        // haut de la fenêtre.
+        var scroll_limit = info_top - 10,
           on = false;
-        if ($(window).scrollTop() >= info_top - 10) { $info.css(css); }
+
+        // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
+        // plus tard lors d'un redimensionnement de la fenêtre.
+        $info.css('left', info_left + 'px');
+
+        sticky_style.top = '10px';
+
+        if ($(window).scrollTop() >= scroll_limit) {
+          on = true;
+          $info.css(sticky_style);
+        }
+
         $(window).scroll(function() {
-          if ($(this).scrollTop() >= info_top - 10) {
+          if ($(window).scrollTop() >= scroll_limit) {
             if (!on) {
               on = true;
-              $info.css(css);
+              $info.css(sticky_style);
             }
           } else {
             if (on) {
@@ -78,8 +80,8 @@
         });
       }
 
-      // FIXME
       $(window).resize(function() {
+        // FIXME: On ne s'occupe pour le moment que des redimensionnements horizontaux.
         var left = $designer.offset().left + designer_w - info_w;
 
         $info.css({ 'left': left + 'px' });
@@ -87,9 +89,7 @@
     }
 
     , _designer_common = function() {
-      //ui.stickyHeader.init();
-
-      _sticky_designer_info();
+      _designer_sticky_info();
     }
   ;
 
@@ -103,6 +103,7 @@
       });
     }
     else {
+      // Si aucun texte n'est fourni, on utilise l'attribut data-watermark.
       return this.each(function() {
         var $this = $(this);
         $this.append('<div class=watermark><span>' + $this.data('watermark') + '</span></div>');
@@ -116,10 +117,11 @@
   chiffon.config = function(options) {
     options = $.extend({}, chiffon.config.defaults, options);
 
-    // Pick up the locale from the HTML declaration and if not found use the default locale.
+    // En priorité, on utilise la langue définie dans la déclaration HTML, sinon on utilise
+    // celle qui est précisée dans la configuration.
     chiffon.locale($('html').attr('lang') || options.defaultLocale);
 
-    // Configure Ajax.
+    // Configuration globale du comportement des appels Ajax.
     chiffon.ajaxSetup(options.ajaxTimeout);
 
     return chiffon;
@@ -158,7 +160,7 @@
   var ui = chiffon.ui = {};
 
   ui.init = function() {
-    // Open external links in a new window.
+    // Les liens externes marqués par l'attribut rel=external s'ouvrent dans une nouvelle fenêtre.
     $('A[rel=external]').click(function() {
       window.open(this.href);
       return false;
@@ -212,6 +214,22 @@
   return chiffon;
 
 })(this, jQuery, chiffon);
+
+//connected = undef !== $.cookie('auth')
+
+//, visitor = {
+//  connected: connected
+//  , anonymous: !connected
+
+//  , logOn: function() {
+//    throw 'Not Implemented';
+//  }
+
+//  , logOff: function() {
+//    this.connected = false;
+//    this.anonymous = true;
+//  }
+//}
 
 //function makeModal(name) {
 //  var $modal = $('<div class="modal contact_register"></div>');
