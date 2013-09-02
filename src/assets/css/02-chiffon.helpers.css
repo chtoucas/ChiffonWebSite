@@ -49,6 +49,7 @@
  * ============================================================================================== */
 
 .center { text-align: center; }
+.hide { display: none; }
 
 .left { float: left; }
 .right { float: right; }

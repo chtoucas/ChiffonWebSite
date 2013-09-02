@@ -4,9 +4,13 @@
     using System.Collections.Generic;
 
     [Serializable]
-    public class DesignerViewModel
+    public class PatternViewModel
     {
+        public CategoryViewItem Category { get; set; }
         public DesignerViewItem Designer { get; set; }
+        public string Reference { get; set; }
+
+        public IEnumerable<PatternViewItem> PatternViews { get; set; }
         public IEnumerable<PatternViewItem> Previews { get; set; }
 
         public int PageCount { get; set; }

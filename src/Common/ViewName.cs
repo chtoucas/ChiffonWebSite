@@ -20,6 +20,7 @@
         {
             public const string Index = "~/Views/Designer/Index.cshtml";
             public const string Category = "~/Views/Designer/Category.cshtml";
+            public const string Pattern = "~/Views/Designer/Pattern.cshtml";
         }
 
         public static class Widget

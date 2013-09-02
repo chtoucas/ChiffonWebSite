@@ -61,7 +61,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Toutes.
+        ///   Recherche une chaîne localisée semblable à Tous.
         /// </summary>
         public static string Category_All {
             get {
@@ -120,6 +120,33 @@ namespace Chiffon.Resources {
         public static string Layout_Nav_Newsletter {
             get {
                 return ResourceManager.GetString("Layout_Nav_Newsletter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Suiv.
+        /// </summary>
+        public static string Pager_Next {
+            get {
+                return ResourceManager.GetString("Pager_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à sur.
+        /// </summary>
+        public static string Pager_Of {
+            get {
+                return ResourceManager.GetString("Pager_Of", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Préc.
+        /// </summary>
+        public static string Pager_Previous {
+            get {
+                return ResourceManager.GetString("Pager_Previous", resourceCulture);
             }
         }
     }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Category_All" xml:space="preserve">
-    <value>Toutes</value>
+    <value>Tous</value>
   </data>
   <data name="Layout_Copyright" xml:space="preserve">
     <value>© Pour quel motif, Simone ? 2013. Site web réalisé par chtoucas@narvalo.org</value>
@@ -137,5 +137,14 @@
   </data>
   <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>
+  </data>
+  <data name="Pager_Next" xml:space="preserve">
+    <value>Suiv</value>
+  </data>
+  <data name="Pager_Of" xml:space="preserve">
+    <value>sur</value>
+  </data>
+  <data name="Pager_Previous" xml:space="preserve">
+    <value>Préc</value>
   </data>
 </root>

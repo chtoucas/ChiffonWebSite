@@ -3,48 +3,49 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Chiffon.Common;
     using Chiffon.Entities;
 
     public static class UrlHelperExtensions
     {
         #region Designer controller.
 
-        public static string Designer(this UrlHelper @this, DesignerKey designerKey)
+        public static string Designer(this UrlHelper @this, DesignerKey designerKey, int pageIndex)
         {
-            return SecureAction(@this, ActionName.Designer.Index, ControllerName.Designer, new { designerKey = designerKey });
+            object routeValues;
+            if (pageIndex > 1) {
+                routeValues = new { designerKey = designerKey.ToString(), p = pageIndex };
+            }
+            else {
+                routeValues = new { designerKey = designerKey.ToString() };
+            }
+
+            return SecureAction(@this, ActionName.Designer.Index, ControllerName.Designer, routeValues);
         }
 
-        public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey)
+        public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey, int pageIndex)
         {
-            return SecureAction(@this, ActionName.Designer.Category, ControllerName.Designer,
-                new { designerKey = designerKey, categoryKey = categoryKey });
+            object routeValues;
+            if (pageIndex > 1) {
+                routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, p = pageIndex };
+            }
+            else {
+                routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey };
+            }
+
+            return SecureAction(@this, ActionName.Designer.Category, ControllerName.Designer, routeValues);
         }
 
-        public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference)
+        public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
         {
-            return SecureAction(@this, ActionName.Designer.Pattern, ControllerName.Designer,
-                new { designerKey = designerKey, categoryKey = categoryKey, reference = reference });
-        }
+            object routeValues;
+            if (pageIndex > 1) {
+                routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, reference = reference, p = pageIndex };
+            }
+            else {
+                routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, reference = reference };
+            }
 
-        public static string EstherMarthiUrl(this UrlHelper @this)
-        {
-            return SecureUrl(@this, RouteName.EstherMarthi.Index, null /* routeValues */);
-        }
-
-        public static string VivianeDevauxUrl(this UrlHelper @this)
-        {
-            return SecureUrl(@this, RouteName.VivianeDevaux.Index, null /* routeValues */);
-        }
-
-        public static string ChristineLégeretUrl(this UrlHelper @this)
-        {
-            return SecureUrl(@this, RouteName.ChristineLégeret.Index, null /* routeValues */);
-        }
-
-        public static string LaureRousselUrl(this UrlHelper @this)
-        {
-            return SecureUrl(@this, RouteName.LaureRoussel.Index, null /* routeValues */);
+            return SecureAction(@this, ActionName.Designer.Pattern, ControllerName.Designer, routeValues);
         }
 
         #endregion

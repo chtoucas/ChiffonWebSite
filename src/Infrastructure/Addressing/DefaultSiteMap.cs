@@ -1,6 +1,8 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
     using System;
+    using System.Globalization;
+    using System.Net;
     using Chiffon.Entities;
     using Narvalo;
 
@@ -50,7 +52,7 @@
                 throw new ArgumentException("XXX", "targetUrl");
             }
 
-            UriBuilder builder = new UriBuilder(MakeAbsoluteUri("connexion")) {
+            var builder = new UriBuilder(MakeAbsoluteUri("connexion")) {
                 Query = "targetUrl=XXX",
             };
             return builder.Uri;
@@ -59,19 +61,22 @@
         public Uri Login() { return MakeAbsoluteUri("connexion"); }
         public Uri Register() { return MakeAbsoluteUri("informations"); }
 
-        public Uri Designer(DesignerKey designerKey)
+        public Uri Designer(DesignerKey designerKey, int pageIndex)
         {
-            return MakeAbsoluteUri(designerKey.ToString() + "/");
+            var uri = MakeAbsoluteUri(designerKey.ToString() + "/");
+            return AddPagination_(uri, pageIndex);
         }
 
-        public Uri DesignerCategory(DesignerKey designerKey, string categoryKey)
+        public Uri DesignerCategory(DesignerKey designerKey, string categoryKey, int pageIndex)
         {
-            return MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey);
+            var uri = MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey);
+            return AddPagination_(uri, pageIndex);
         }
 
-        public Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference)
+        public Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
         {
-            return MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey + "/" + reference);
+            var uri = MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey + "/" + reference);
+            return AddPagination_(uri, pageIndex);
         }
 
         public Uri MakeAbsoluteUri(string relativeUri)
@@ -85,5 +90,18 @@
         }
 
         #endregion
+
+        static Uri AddPagination_(Uri uri, int pageIndex)
+        {
+            if (pageIndex > 1) {
+                var builder = new UriBuilder(uri) {
+                    Query = "p=" + pageIndex.ToString(CultureInfo.InvariantCulture)
+                };
+                return builder.Uri;
+            }
+            else {
+                return uri;
+            }
+        }
     }
 }

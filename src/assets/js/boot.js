@@ -38,10 +38,10 @@ var getChiffon = (function(window) {
     }
   };
 
-  var ctor, chiffon = {};
+  var ctor, Chiffon = {};
 
   ctor = function(debug, baseUrl) {
-    var that = chiffon;
+    var that = Chiffon;
 
     that.debug = debug;
     that.baseUrl = baseUrl;
@@ -51,9 +51,9 @@ var getChiffon = (function(window) {
     return that;
   }
 
-  chiffon.realurl = function(src) { return chiffon.baseUrl + src; };
+  Chiffon.realurl = function(src) { return Chiffon.baseUrl + src; };
 
-  chiffon.main = function(fn, options) {
+  Chiffon.main = function(fn, options) {
     var that = this
       , fmap = that.fmap
       , realurl = that.realurl;
@@ -65,7 +65,7 @@ var getChiffon = (function(window) {
     }
     , {
       load: fmap.main.map(realurl)
-      , complete: function() { $(function() { that.config(options); fn(that); }); }
+      , complete: function() { $(function() { that.configure(options); fn(that); }); }
     }]);
   };
 

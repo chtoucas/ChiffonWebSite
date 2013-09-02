@@ -50,6 +50,8 @@
 
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
             builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
+            // NB: On utilise InstancePerHttpRequest car PatternService dépend d'IQueries.
+            builder.RegisterType<PatternService>().As<IPatternService>().InstancePerHttpRequest();
 
             // > MVC <
 

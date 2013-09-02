@@ -3,7 +3,6 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Chiffon.Entities;
     using Chiffon.Handlers;
     using Narvalo;
     using Narvalo.Web;
@@ -33,7 +32,7 @@
                 new { controller = ControllerName.Home, action = ActionName.Home.About });
             _routes.MapRoute(RouteName.Home.Contact, "contact",
                 new { controller = ControllerName.Home, action = ActionName.Home.Contact });
-            
+
             // ContactController.
             _routes.MapRoute(RouteName.Contact.Register, "inscription",
                 new { controller = ControllerName.Contact, action = ActionName.Contact.Register });
@@ -43,39 +42,22 @@
                 new { controller = ControllerName.Contact, action = ActionName.Contact.Newsletter });
 
             // DesignerController.
-            _routes.MapRoute(RouteName.EstherMarthi.Index, "chicamancha/",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Index, designerKey = DesignerKey.EstherMarthi });
-            _routes.MapRoute(RouteName.VivianeDevaux.Index, "viviane-devaux/",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Index, designerKey = DesignerKey.VivianeDevaux });
-            _routes.MapRoute(RouteName.ChristineLégeret.Index, "petroleum-blue/",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Index, designerKey = DesignerKey.ChristineLégeret });
-            _routes.MapRoute(RouteName.LaureRoussel.Index, "laure-roussel/",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Index, designerKey = DesignerKey.LaureRoussel });
-
-            _routes.MapRoute(RouteName.EstherMarthi.Category, "chicamancha/{categoryKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Category, designerKey = DesignerKey.EstherMarthi });
-            _routes.MapRoute(RouteName.VivianeDevaux.Category, "viviane-devaux/{categoryKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Category, designerKey = DesignerKey.VivianeDevaux });
-            _routes.MapRoute(RouteName.ChristineLégeret.Category, "petroleum-blue/{categoryKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Category, designerKey = DesignerKey.ChristineLégeret });
-            _routes.MapRoute(RouteName.LaureRoussel.Category, "laure-roussel/{categoryKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Category, designerKey = DesignerKey.LaureRoussel });
-
-            _routes.MapRoute(RouteName.EstherMarthi.Pattern, "chicamancha/{categoryKey}/{reference}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern, designerKey = DesignerKey.EstherMarthi });
-            _routes.MapRoute(RouteName.VivianeDevaux.Pattern, "viviane-devaux/{categoryKey}/{reference}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern, designerKey = DesignerKey.VivianeDevaux });
-            _routes.MapRoute(RouteName.ChristineLégeret.Pattern, "petroleum-blue/{categoryKey}/{reference}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern, designerKey = DesignerKey.ChristineLégeret });
-            _routes.MapRoute(RouteName.LaureRoussel.Pattern, "laure-roussel/{categoryKey}/{reference}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern, designerKey = DesignerKey.LaureRoussel });
+            _routes.MapRoute(RouteName.Designer.Index, "{designerKey}",
+                new { controller = ControllerName.Designer, action = ActionName.Designer.Index },
+                new { designerKey = new DesignerKeyConstraint()});
+            _routes.MapRoute(RouteName.Designer.Category, "{designerKey}/{categoryKey}",
+                new { controller = ControllerName.Designer, action = ActionName.Designer.Category },
+                new { designerKey = new DesignerKeyConstraint()});
+            _routes.MapRoute(RouteName.Designer.Pattern, "{designerKey}/{categoryKey}/{reference}",
+                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern },
+                new { designerKey = new DesignerKeyConstraint()});
 
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 
-            RegisterRouteHandlers_();
+            RegisterHandlerRoutes_();
         }
 
-        void RegisterRouteHandlers_()
+        void RegisterHandlerRoutes_()
         {
             _routes.Add(new Route("motif", new AutofacRouteHandler<PatternImageHandler>()));
             _routes.Add(new Route("connecte", new AutofacRouteHandler<LogOnHandler>()));

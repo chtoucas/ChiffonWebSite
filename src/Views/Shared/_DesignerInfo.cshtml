@@ -1,16 +1,18 @@
-﻿@model DesignerViewModel
+﻿@using Chiffon.Controllers
+
+@model DesignerViewItem
 
 <div id=info class=darkgrey>
- <p>@Model.Designer.Presentation</p>
+ <p>@Model.Presentation</p>
  <nav>
   <ul>
-   <li @(ViewBag.CurrentCategoryKey == "ALL" ? " class=current" : String.Empty)>
-    <a href="@Url.Designer(Model.Designer.Key)">@VR.Category_All (@Model.PatternsCount)</a></li>
+   <li @(ViewBag.CurrentCategoryKey == DesignerController.AllCategoryKey ? " class=current" : String.Empty)>
+    <a href="@Url.Designer(Model.Key, 1)">@VR.Category_All (@Model.PatternCount)</a></li>
    @foreach (var category in Model.Categories) {
-    <li @(ViewBag.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)><a href="@Url.Category(Model.Designer.Key, category.Key)">@category.DisplayName (@category.PatternsCount)</a>
+    <li @(ViewBag.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)><a href="@Url.Category(Model.Key, category.Key, 1)">@category.DisplayName (@category.PatternsCount)</a>
     </li>
    }
   </ul>
  </nav>
- <p><a href="mailto:@Model.Designer.EmailAddress" class="underline darkgrey">@Model.Designer.EmailAddress</a></p>
+ <p><a href="mailto:@Model.EmailAddress" class="underline darkgrey">@Model.EmailAddress</a></p>
 </div>

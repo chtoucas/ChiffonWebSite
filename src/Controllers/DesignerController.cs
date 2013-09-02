@@ -10,113 +10,147 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
+    using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
 
     [Authorize]
     public class DesignerController : PageController
     {
-        readonly IQueries _queries;
+        public const string AllCategoryKey = "ALL";
 
-        public DesignerController(ChiffonEnvironment environment, ISiteMap siteMap, IQueries queries)
+        // On limite le nombre d'aperçus à 30 = 5 * 6. En effet, suivant la taille de l'écran 
+        // de l'internaute, on peut avoir de 2 à 3 colonnes, on choisit donc un multiple de 6.
+        const int PreviewsPageSize_ = 18;
+
+        readonly IQueries _queries;
+        readonly IPatternService _patternService;
+
+        public DesignerController(
+            ChiffonEnvironment environment,
+            ISiteMap siteMap,
+            IQueries queries,
+            IPatternService patternService)
             : base(environment, siteMap)
         {
             Requires.NotNull(queries, "queries");
+            Requires.NotNull(patternService, "patternService");
 
             _queries = queries;
-        }
-
-        DesignerViewModel GetBaseModel_(DesignerKey designerKey)
-        {
-            var designer = _queries.GetDesigner(designerKey, Culture);
-            if (designer == null) { return null; }
-            var categories = _queries.ListCategories(designerKey);
-
-            return new DesignerViewModel {
-                Categories = from _ in categories select Mapper.Map(_),
-                Designer = Mapper.Map(designer),
-            };
+            _patternService = patternService;
         }
 
         [HttpGet]
-        public ActionResult Index(DesignerKey designerKey)
+        public ActionResult Index(DesignerKey designerKey, int p = 1)
         {
-            var model = GetBaseModel_(designerKey);
-            var patterns = _queries.ListPatterns(designerKey);
+            var pagedList = _patternService.ListPreviews(designerKey, p, PreviewsPageSize_);
+            if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            model.Patterns = from _ in patterns
-                             where _.HasPreview
-                             orderby _.LastModifiedTime descending
-                             select Mapper.Map(_, model.Designer.DisplayName);
+            var designer = GetDesignerViewItem_(designerKey);
 
-            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.CurrentCategoryKey = "ALL";
+            var model = new DesignerViewModel {
+                Designer = designer,
+                IsFirstPage = pagedList.IsFirstPage,
+                IsLastPage = pagedList.IsLastPage,
+                PageCount = pagedList.PageCount,
+                PageIndex = pagedList.PageIndex,
+                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+            };
+
+            SetDesignerViewData_(designerKey);
 
             ViewBag.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Index_Description;
-            ViewBag.CanonicalLink = SiteMap.Designer(designerKey).ToString();
+            ViewBag.CanonicalLink = SiteMap.Designer(designerKey, p).ToString();
 
             return View(ViewName.Designer.Index, model);
         }
 
         [HttpGet]
-        public ActionResult Category(DesignerKey designerKey, string categoryKey)
+        public ActionResult Category(DesignerKey designerKey, string categoryKey, int p = 1)
         {
-            var model = GetBaseModel_(designerKey);
-            var patterns = _queries.ListPatterns(designerKey, categoryKey);
+            var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
+            if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            model.Patterns = from _ in patterns
-                             orderby _.LastModifiedTime descending
-                             select Mapper.Map(_, model.Designer.DisplayName);
+            var designer = GetDesignerViewItem_(designerKey);
+            var category = (from _ in designer.Categories where _.Key == categoryKey select _).Single();
 
-            var category = (from _ in model.Categories where _.Key == categoryKey select _).Single();
+            var model = new CategoryViewModel {
+                Category = category,
+                Designer = designer,
+                IsFirstPage = pagedList.IsFirstPage,
+                IsLastPage = pagedList.IsLastPage,
+                PageCount = pagedList.PageCount,
+                PageIndex = pagedList.PageIndex,
+                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+            };
 
-            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.CurrentCategoryKey = categoryKey;
+            SetDesignerViewData_(designerKey, categoryKey);
 
             ViewBag.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
-                category.DisplayName, model.Designer.DisplayName);
+                model.Category.DisplayName, model.Designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Category_Description;
-            ViewBag.CanonicalLink = SiteMap.DesignerCategory(designerKey, categoryKey).ToString();
+            ViewBag.CanonicalLink = SiteMap.DesignerCategory(designerKey, categoryKey, p).ToString();
 
             return View(ViewName.Designer.Category, model);
         }
 
         [HttpGet]
-        public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference)
+        public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
-            var designer = _queries.GetDesigner(designerKey, Culture);
-            if (designer == null) { return new HttpNotFoundResult(); }
-            var categories = _queries.ListCategories(designerKey);
-            var patterns = _queries.ListPatterns(designerKey, categoryKey);
+            var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
+            if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            var pattern = (from _ in patterns where _.Reference == reference select _).FirstOrDefault();
-            //if (pattern.Count() == 0) { return new HttpNotFoundResult(); }
-            if (pattern == null) { return new HttpNotFoundResult(); }
+            var views = _patternService.GetPatternViews(designerKey, categoryKey, reference);
+            if (views.Count() == 0) { return new HttpNotFoundResult(); }
 
-            patterns = from _ in patterns
-                       orderby _.LastModifiedTime descending
-                       where _.Reference != reference && _.Preferred
-                       select _;
+            var designer = GetDesignerViewItem_(designerKey);
+            var category = (from _ in designer.Categories where _.Key == categoryKey select _).Single();
 
-            var model = new DesignerViewModel {
-                Categories = from _ in categories select Mapper.Map(_),
-                Designer = Mapper.Map(designer),
-                Patterns = from _ in patterns.Prepend(pattern) select Mapper.Map(_, designer.DisplayName)
+            var model = new PatternViewModel {
+                Category = category,
+                Designer = designer,
+                PatternViews = from _ in views select ObjectMapper.Map(_, designer.DisplayName),
+                Reference = reference,
+                IsFirstPage = pagedList.IsFirstPage,
+                IsLastPage = pagedList.IsLastPage,
+                PageCount = pagedList.PageCount,
+                PageIndex = pagedList.PageIndex,
+                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
-            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.CurrentCategoryKey = categoryKey;
+            SetDesignerViewData_(designerKey, categoryKey);
 
             ViewBag.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
-                pattern.Reference, designer.DisplayName);
+                reference, model.Designer.DisplayName);
             ViewBag.MetaDescription = SR.Designer_Pattern_Description;
-            ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference).ToString();
+            ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p).ToString();
 
-            return View(ViewName.Designer.Category, model);
+            return View(ViewName.Designer.Pattern, model);
         }
+
+        #region Utilitaires.
+
+        // On suppose que designerKey est toujours valide (une contrainte sur la route doit
+        // toujours assurer qu'on se retrouve dans cette configuration).
+
+        DesignerViewItem GetDesignerViewItem_(DesignerKey designerKey)
+        {
+            var designer = _queries.GetDesigner(designerKey, Culture);
+            var categories = _queries.ListCategories(designerKey);
+
+            return ObjectMapper.Map(designer, categories);
+        }
+
+        void SetDesignerViewData_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
+        {
+            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
+            ViewBag.CurrentCategoryKey = categoryKey;
+        }
+
+        #endregion
     }
 }

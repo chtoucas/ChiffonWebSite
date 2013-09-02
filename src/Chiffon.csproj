@@ -147,20 +147,24 @@
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\ControllerName.cs" />
+    <Compile Include="Common\DesignerKeyConstraint.cs" />
+    <Compile Include="Common\DesignerKeyModelBinder.cs" />
     <Compile Include="Common\EmptyPartialViewResult.cs" />
     <Compile Include="Common\Enumerable`1%24.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Data\CachedQueries.cs" />
+    <Compile Include="Services\Enumerable`1%24.cs" />
     <Compile Include="Data\IQueries.cs" />
+    <Compile Include="Services\PreviewPagedList.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
     <Compile Include="Data\SqlServer\ListDesignersQuery.cs" />
     <Compile Include="Data\SqlServer\ListCategoriesQuery.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Controllers\Mapper.cs" />
+    <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Data\SqlServer\ListPatternsQuery.cs" />
     <Compile Include="Data\Queries.cs" />
     <Compile Include="Data\SqlServer\GetPatternQuery.cs" />
@@ -244,8 +248,12 @@
       <DependentUpon>VR.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\IMemberService.cs" />
+    <Compile Include="Services\IPatternService.cs" />
     <Compile Include="Services\MemberService.cs" />
+    <Compile Include="Services\PatternService.cs" />
     <Compile Include="ViewModels\CategoryViewItem.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\PatternViewModel.cs" />
     <Compile Include="ViewModels\DesignerViewItem.cs" />
     <Compile Include="ViewModels\PatternViewItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
@@ -353,6 +361,7 @@
     <Content Include="Views\Shared\_Html5Shim.cshtml" />
     <Content Include="Views\Home\OpeningSoon.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
+    <Content Include="Views\Designer\Pattern.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

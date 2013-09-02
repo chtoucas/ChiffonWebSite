@@ -72,7 +72,7 @@ A.reverse { color: #999; }
 
 /* Mosaïque */
 
-.mosaic { margin: 23px 0 3px 0; padding: 0; list-style-type: none; overflow: hidden; }
+.mosaic { padding: 0; list-style-type: none; overflow: hidden; }
   .mosaic LI { float: left; margin-right: 20px; margin-bottom: 20px; }
 
 /* "Grille" */
@@ -133,6 +133,11 @@ BODY#home_newsletter #nav_newsletter,
 #ajax_status.error { background-color: red; color: white; }
   */
 
+/* Page - Home
+ * ============================================================================================== */
+
+#home_index .mosaic { margin: 23px 0 3px 0; }
+
 /* Page - About
  * ============================================================================================== */
 
@@ -190,23 +195,36 @@ BODY#home_newsletter #nav_newsletter,
 /* Page - Designer
  * ============================================================================================== */
 
-#designer #info { width: 220px; float: right; font-size: 1.1em; }
-  #designer #info > P { margin-top: 0; margin-bottom: 2em; font-size: 1.2em; }
+#designer { padding-top: 23px; }
+  #designer #info { width: 220px; float: right; font-size: 1.1em; }
+    #designer #info > P { margin-top: 0; margin-bottom: 2em; font-size: 1.2em; }
+    #designer #info.sticky { position: fixed; background-color: #fff; }
+      #designer #info.sticky.top { top: 23px; }
 
-/* 3-columns mosaic */
-#designer .mosaic { width: 720px; }
-  #designer .mosaic LI { margin-right: 20px; }
+  /* 3-columns mosaic */
+  #designer .mosaic { width: 720px; }
+    #designer .mosaic LI { margin-right: 20px; }
 
-#designer NAV { border-bottom: 1px solid #999; margin-bottom: 2.5em; font-size: 1.1em; }
-  #designer NAV UL { margin: 0; padding: 0; }
-  #designer NAV LI:hover, #designer NAV LI.current { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
-  #designer NAV A { padding: .5em 0; width: 220px; display: block; text-transform: uppercase; border-top: 1px solid #999; color: #999; }
-    #designer NAV A:hover, #designer NAV LI.current A { color: red; }
+  #designer .vignette SPAN { font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
 
-/* En-tête statique
+  #designer NAV { border-bottom: 1px solid #999; margin-bottom: 2.5em; font-size: 1.1em; }
+    #designer NAV UL { margin: 0; padding: 0; }
+    #designer NAV LI:hover, #designer NAV LI.current { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
+    #designer NAV A { padding: .5em 0; width: 220px; display: block; text-transform: uppercase; border-top: 1px solid #999; color: #999; }
+      #designer NAV A:hover, #designer NAV LI.current A { color: red; }
+
+/* En-tête statique.
  * ============================================================================================== */
 
-#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: 940px; background-color: #fff; }
+/*#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: 940px; background-color: #fff; }
   #sticky_header H1 { display: none; }
   #sticky_header NAV, #sticky_header UL { border: none; float: left; }
-    #sticky_header NAV LI { width: auto !important; font-style: initial; }
+    #sticky_header NAV LI { width: auto !important; font-style: initial; }*/
+
+/* Pagination.
+ * ============================================================================================== */
+
+.pager { width: 700px; text-align: center; text-transform: uppercase; }
+
+.patterns { height: 520px; }
+#nav_views { width: 700px; padding-bottom: 20px; text-align: center; text-transform: uppercase; }

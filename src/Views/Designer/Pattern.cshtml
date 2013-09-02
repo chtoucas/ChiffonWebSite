@@ -1,0 +1,64 @@
+﻿@using Chiffon.Entities
+
+@model PatternViewModel
+
+@{
+ Layout = "~/Views/Shared/_DesignerLayout.cshtml";
+
+ var views = Model.PatternViews;
+ var viewCount = views.Count();
+}
+
+<div id=designer class=clr>
+ @Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
+ <ul class="mosaic patterns">
+  @foreach (var view in Model.PatternViews) {
+   var version = viewCount == 1 || String.IsNullOrWhiteSpace(@view.Version) ? "" : " (" + @view.Version + ")";
+   <li class=pattern id="@view.Version">
+    <img src="@Url.PatternContent(view.DesignerKey, view.Reference, view.Version)" alt="@view.Description" /><div class=watermark><span>Ref @Model.Reference @version</span></div>
+   </li>
+  }
+ </ul>
+ @* 
+ Navigation dans les différentes vues du motif.
+ *@
+ <p id=nav_views>
+  @if (viewCount > 1) {
+   <span class=prev_noop>@VR.Pager_Previous</span>
+   <a class="underline hide prev" href="#">@VR.Pager_Previous</a>
+   <span>/</span>
+   <a class="underline next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
+   <span class="hide next_noop">@VR.Pager_Next</span>
+   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
+  }
+ </p>
+ @* 
+ Liste des motifs.
+ *@
+ <ul class="mosaic len_75 clr">
+  @foreach (var preview in Model.Previews) {
+   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)" class=vignette>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+    <div class=watermark><span>Ref @preview.Reference</span></div>
+   </a></li>
+  }
+ </ul>
+ @* 
+ Pagination.
+ *@
+ @if (Model.PageCount > 1) {
+  <p class=pager>
+   @if (!Model.IsFirstPage) {
+    <a class=underline rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+   }
+   @if (!Model.IsFirstPage && !Model.IsLastPage) {
+    @:/
+   }
+   @if (!Model.IsLastPage) {
+    <a class="underline more" rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   }
+   @Model.PageIndex @VR.Pager_Of @Model.PageCount
+  </p>
+ }
+</div>
+

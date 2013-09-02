@@ -5,6 +5,8 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Chiffon.Common;
+    using Chiffon.Entities;
     using Narvalo.Web;
     using Serilog;
 
@@ -118,6 +120,7 @@
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
         }
 
         /// <summary>

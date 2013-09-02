@@ -138,4 +138,13 @@
   <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>
   </data>
+  <data name="Pager_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Pager_Of" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="Pager_Previous" xml:space="preserve">
+    <value>Prev</value>
+  </data>
 </root>
