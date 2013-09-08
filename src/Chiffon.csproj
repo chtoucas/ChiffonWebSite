@@ -277,7 +277,6 @@
     <Content Include="assets\css\04-chiffon.responsive.css" />
     <Content Include="assets\css\05-chiffon.print.css" />
     <Content Include="assets\css\normalize-1.1.2.css" />
-    <Content Include="assets\css\chi.min.css" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\js\vendor\ecma-5.js" />
     <Content Include="assets\js\main.js" />

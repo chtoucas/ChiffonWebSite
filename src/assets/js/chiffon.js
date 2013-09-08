@@ -266,14 +266,14 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
 
   Views.Layout = (function() {
     function Layout() {
-      this.modalView = new Views.Modal();
+      //this.modalView = new Views.Modal();
       this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
       this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
     }
 
     Layout.prototype = {
       initialize: function() {
-        this.modalView.registerEventHandlers();
+        //this.modalView.registerEventHandlers();
         this.registerModalView.registerEventHandlers();
         this.ajaxStatusView.registerEventHandlers();
 
@@ -964,7 +964,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
       }
     }
 
-    Modal.initialize = function(options) { initialize(options, true /* initializing */); };
+    Modal.Modal = function(options) { initialize(options, true /* initializing */); };
 
     Modal.prototype = {
       registerEventHandlers: function() {

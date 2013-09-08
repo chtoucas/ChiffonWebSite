@@ -8,7 +8,7 @@
 /* Imports
  * ============================================================================================== */
 
-@import url("http://fonts.googleapis.com/css?family=Droid+Serif:400italic");
+/*@import url("http://fonts.googleapis.com/css?family=Droid+Serif:400italic");*/
 
 /* Règles générales
  * ============================================================================================== */
@@ -239,5 +239,5 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 /* Modal */
 .modal { display: table; margin: auto; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; }
 
-.modal { width: 940px; /* text-align: center; */ }
-  .modal, .modal A, .modal INPUT, .modal .grey { color: #fff !important; }
+.modal { width: 940px; }
+  .modal, .modal A, .modal INPUT, .modal TEXTAREA, .modal .grey { color: #fff !important; }
