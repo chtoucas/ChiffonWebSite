@@ -19,10 +19,6 @@ A { color: #000; text-decoration: none; transition: all .2s ease-in-out; }
 /* Régles réutilisables
  * ============================================================================================== */
 
-/*.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: #fff; }*/
-/*.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
-/* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
-
 P.tidy { margin: 0; }
 
 A.underline { text-decoration: underline; }
@@ -37,8 +33,10 @@ A.reverse { color: #999; }
 
 .highlight:focus { box-shadow: 0 0 12px rgba(204, 204, 204, 0.37); }
 
+/* Overlay */
 /* TODO: width & height ne doivent pas être nécessaires */
-.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; opacity: .8; z-index: 100; }
+/*.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; opacity: .8; z-index: 100; }*/
+.overlay { display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; margin: 0; background-color: #000; opacity: .8; z-index: 100; }
 
 .watermark { left: 0; position: absolute; top: 0; width: 100%; height: 100%; }
 
@@ -106,6 +104,11 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 #nav_main UL { position: relative; height: 58px; text-transform: uppercase; }
 #nav_main LI { margin: 22px 10px 0 0; }
 #nav_main .right { position: absolute; right: 0; margin-right: 0; }
+/* Mise en valeur la page courante dans les menus */
+#nav_main.index #nav_home,
+#nav_main.about #nav_about,
+#nav_main.contact #nav_contact,
+#nav_main.newsletter #nav_newsletter { color: #f00; }
 
 /* Menu des designers */
 
@@ -113,13 +116,6 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 #nav_designers LI { width: 220px; margin: 22px 20px 0 0; text-align: center; }
 #nav_designers A { padding: 0 .5em; background: #fff; }
 #nav_designers .last { margin-right: 0; }
-
-/* Menu - Mise en valeur la page courante dans les menus */
-
-BODY#home_index #nav_home,
-BODY#home_about #nav_info,
-BODY#home_contact #nav_contact,
-BODY#home_newsletter #nav_newsletter,
 #nav_designers.cl #nav_designers_cl,
 #nav_designers.em #nav_designers_em,
 #nav_designers.vd #nav_designers_vd,
@@ -127,39 +123,35 @@ BODY#home_newsletter #nav_newsletter,
 
 /* Ajax status */
 
-/*
-#ajax_status { background-color: #fef087; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px #ccc; display: none; font-size: 1.1em; font-weight: 700; padding: .3em 1em; position: fixed; right: 45%; top: 0; z-index: 1000; }
+#ajax_status { background-color: #fef087; /* border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px #ccc; */ display: none; font-size: 1.3em; font-weight: 700; padding: .3em 1em; position: fixed; right: 45%; top: 0; z-index: 1000; }
 
-#ajax_status.error { background-color: red; color: white; }
-  */
+  #ajax_status.ajax_error { background-color: red; color: white; }
 
 /* Page - Home
  * ============================================================================================== */
 
-#home_index .mosaic { margin: 23px 0 3px 0; }
+.home_index .mosaic { margin: 23px 0 3px 0; }
 
 /* Page - About
  * ============================================================================================== */
 
-.home_about { margin-bottom: 7em; }
-  .home_about > DIV { margin-top: 1em; }
+.home_about { margin-bottom: 2em; margin-top: 1em; }
 
 /* Page - Contact
  * ============================================================================================== */
 
-#home_contact #content { margin-bottom: 5em; text-align: center; }
-#home_contact H2 { margin: 0; padding: .5em 0 1em 0; border-top: 2px solid #999; font-weight: normal; }
-  #home_contact H2 A { display: block; font-size: .7em; }
-#home_contact #designers { font-style: italic; font-size: 1.538em; }
-#home_contact H3 { width: 100%; margin: 0; margin-bottom: 1.2em; padding: 1em 0; font-weight: normal; border-color: #ccc; }
-  #home_contact H3 A { padding: 0 .5em; background: #fff; }
-#home_contact UL { padding: 0; list-style-type: none; }
-#home_contact #designers LI { float: left; width: 220px; margin-right: 20px; }
-  #home_contact #designers LI:last-child { margin-right: 0; }
-#home_contact .img { position: relative; margin-bottom: 1.2em; }
-#home_contact .email { padding: 2em 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 13px; }
-#home_contact .web { margin-top: 1em; text-align: right; font-size: 13px; font-style: normal; }
-
+.home_contact { margin-bottom: 5em; text-align: center; }
+  .home_contact H2 { margin: 0; padding: .5em 0 1em 0; border-top: 2px solid #999; font-weight: normal; }
+    .home_contact H2 A { display: block; font-size: .7em; }
+  .home_contact #designers { font-style: italic; font-size: 1.538em; }
+  .home_contact H3 { width: 100%; margin: 0; margin-bottom: 1.2em; padding: 1em 0; font-weight: normal; border-color: #ccc; }
+    .home_contact H3 A { padding: 0 .5em; background: #fff; }
+  .home_contact UL { padding: 0; list-style-type: none; }
+  .home_contact #designers LI { float: left; width: 220px; margin-right: 20px; }
+    .home_contact #designers LI:last-child { margin-right: 0; }
+  .home_contact .img { position: relative; margin-bottom: 1.2em; }
+  .home_contact .email { padding: 2em 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 13px; }
+  .home_contact .web { margin-top: 1em; text-align: right; font-size: 13px; font-style: normal; }
 
 /* Page - Register
  * ============================================================================================== */
@@ -176,8 +168,7 @@ BODY#home_newsletter #nav_newsletter,
   .contact_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
     .contact_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
 
-/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }*/
-/* MODAL .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
+.modal .contact_register { border-top: none; }
 
 /* Page - Login
  * ============================================================================================== */
@@ -189,8 +180,10 @@ BODY#home_newsletter #nav_newsletter,
   .contact_login INPUT { background-color: transparent; border: 1px solid #999; }
     .contact_login INPUT[type=text] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
       .contact_login INPUT[type=text]:focus { color: #000; }
-    .contact_login INPUT[type=submit] { border: 0; background: #fff; color: #000; margin-bottom: .9em; }
+    .contact_login INPUT[type=submit] { border: 0; background: transparent; color: #000; margin-bottom: .9em; }
       .contact_login INPUT[type=submit]:hover { color: #ccc; }
+
+.modal .contact_login { border-top: none; }
 
 /* Page - Designer
  * ============================================================================================== */
@@ -228,3 +221,23 @@ BODY#home_newsletter #nav_newsletter,
 
 .patterns { height: 520px; }
 #nav_views { width: 700px; padding-bottom: 20px; text-align: center; text-transform: uppercase; }
+
+/* Modales.
+  */
+
+/*.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: #fff; }*/
+/*.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
+/* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
+
+/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }*/
+/* MODAL .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
+
+/* Absolutely centered */
+.centered-container { position: relative; }
+.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+
+/* Modal */
+.modal { display: table; margin: auto; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; }
+
+.modal { width: 940px; /* text-align: center; */ }
+  .modal, .modal A, .modal INPUT, .modal .grey { color: #fff !important; }

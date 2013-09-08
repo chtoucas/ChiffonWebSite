@@ -37,6 +37,7 @@
             ViewBag.Title = SR.Home_Index_Title;
             ViewBag.MetaDescription = SR.Home_Index_Description;
             ViewBag.CanonicalLink = SiteMap.Home().ToString();
+            ViewBag.MainMenuClass = "index";
 
             return View(ViewName.Home.Index, model);
         }
@@ -47,6 +48,7 @@
             ViewBag.Title = SR.Home_About_Title;
             ViewBag.MetaDescription = SR.Home_About_Description;
             ViewBag.CanonicalLink = SiteMap.About().ToString();
+            ViewBag.MainMenuClass = "about";
 
             return LocalizedView(ViewName.Home.About);
         }
@@ -59,6 +61,7 @@
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;
             ViewBag.CanonicalLink = SiteMap.Contact().ToString();
+            ViewBag.MainMenuClass = "contact";
 
             return View(ViewName.Home.Contact, model);
         }

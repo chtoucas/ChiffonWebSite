@@ -1,14 +1,10 @@
-﻿@Narvalo.Web.Html.AssetTag.JavaScript("vendor/yepnope-1.5.4.min.js")
+﻿@model CommonJavaScriptViewModel
+
+@Narvalo.Web.Html.AssetTag.JavaScript("main-" + Model.Version + ".min.js")
+
 <script>
- @* TODO: Google Analytics. *@
- (function(w, b, c) {
-  b = '/assets/js/';
-  yepnope({
-   load: b + 'boot.min.js',
-   complete: function() {
-    c = w.Chiffon = getChiffon(0, b);
-    c.main(function(_) { _.handle('@Model'); });
-   }
-  });
- })(this);
+ (function(y,E,m){
+  if (!m) { return } E.Init('@(Model.Version)',@Model.IsAuthenticated, '@Model.LanguageName', !1, '/assets/js/')
+  m(function(_){_.handle('@Model.ControllerName', '@Model.ActionName')})
+ })(this.yepnope,this.Env,this.main);
 </script>

@@ -69,4 +69,4 @@ UL.inline A { display: inline-block; }
 UL.center LI { display: inline-block; }
 
 /* Retour à la ligne */
-SPAN.break { display: block; }
+.break { display: block; }

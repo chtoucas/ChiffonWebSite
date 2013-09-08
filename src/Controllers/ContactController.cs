@@ -21,7 +21,12 @@
             ViewBag.MetaDescription = SR.Contact_Login_Description;
             ViewBag.CanonicalLink = SiteMap.Login().ToString();
 
-            return View(ViewName.Contact.Login);
+            if (Request.IsAjaxRequest()) {
+                return PartialView(ViewName.Contact.Login);
+            }
+            else {
+                return View(ViewName.Contact.Login);
+            }
         }
 
         [HttpGet]
@@ -31,13 +36,12 @@
             ViewBag.MetaDescription = SR.Contact_Register_Description;
             ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
-            return View(ViewName.Contact.Register);
-        }
-
-        [HttpGet]
-        public ActionResult ModalRegister(string returnUrl)
-        {
-            return PartialView(ViewName.Contact.Register);
+            if (Request.IsAjaxRequest()) {
+                return PartialView(ViewName.Contact.Register);
+            }
+            else {
+                return View(ViewName.Contact.Register);
+            }
         }
 
         [HttpGet]
@@ -46,6 +50,7 @@
             ViewBag.Title = SR.Contact_Newsletter_Title;
             ViewBag.MetaDescription = SR.Contact_Newsletter_Description;
             ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
+            ViewBag.MainMenuClass = "newsletter";
 
             return View(ViewName.Contact.Newsletter);
         }

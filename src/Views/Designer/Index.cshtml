@@ -6,29 +6,27 @@
  Layout = "~/Views/Shared/_DesignerLayout.cshtml";
 }
 
-<div id=designer class=clr>
- @Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
- <ul class="mosaic len_75 clr">
-  @foreach (var preview in Model.Previews) {
-   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
-   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
-    <div class=watermark><span>Ref @preview.Reference</span></div>
-   </a></li>
-  }
- </ul>
- @if (Model.PageCount > 1) {
-  <p class=pager>
-   @if (!Model.IsFirstPage) {
-    <a class=underline href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
-   }
-   @if (!Model.IsFirstPage && !Model.IsLastPage) {
-    @:/
-   }
-   @if (!Model.IsLastPage) {
-    <a class="underline more" href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
-   }
-   @Model.PageIndex @VR.Pager_Of @Model.PageCount
-  </p>
+@Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
+<ul class="mosaic len_75 clr">
+ @foreach (var preview in Model.Previews) {
+  var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
+  <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
+   <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+   <div class=watermark><span>Ref @preview.Reference</span></div>
+  </a></li>
  }
-</div>
+</ul>
+@if (Model.PageCount > 1) {
+ <p class=pager>
+  @if (!Model.IsFirstPage) {
+   <a class=underline href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+  }
+  @if (!Model.IsFirstPage && !Model.IsLastPage) {
+   @:/
+   }
+  @if (!Model.IsLastPage) {
+   <a class="underline more" href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+  }
+  @Model.PageIndex @VR.Pager_Of @Model.PageCount
+ </p>
+}

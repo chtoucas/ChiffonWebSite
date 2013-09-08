@@ -21,11 +21,13 @@
         string _googleAnalytics = String.Empty;
         string _passThroughToken = String.Empty;
 
+        public string CssVersion { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
         public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
         public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
         public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
+        public string JsVersion { get; set; }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
         public string PassThroughToken { get { return _passThroughToken; } set { _passThroughToken = value; } }
@@ -77,10 +79,13 @@
         {
             // > Paramètres obligatoires <
 
-            // TODO: validate this? Absolute and well-formed.
-            PatternDirectory = nvc.MayGetValue("chiffon:PatternDirectory")
+            CssVersion = nvc.MayGetValue("chiffon:CssVersion")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon:PatternDirectory'."));
+                    "Missing or invalid config 'chiffon:CssVersion'."));
+
+            JsVersion = nvc.MayGetValue("chiffon:JsVersion")
+                .ValueOrThrow(() => new ConfigurationErrorsException(
+                    "Missing or invalid config 'chiffon:JsVersion'."));
 
             LogProfile = nvc.MayGetValue("chiffon:LogProfile")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
@@ -90,12 +95,17 @@
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon:LogMinimumLevel'."));
 
+            // TODO: validate this? Absolute and well-formed.
+            PatternDirectory = nvc.MayGetValue("chiffon:PatternDirectory")
+                .ValueOrThrow(() => new ConfigurationErrorsException(
+                    "Missing or invalid config 'chiffon:PatternDirectory'."));
+
             // > Paramètres optionels <
 
-            DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
-            DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+            DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);
 
             EnableClientCache = nvc.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))

@@ -7,25 +7,21 @@
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.Controller.ViewData["BodyId"] = GetBodyId_(filterContext);
+            var actionDescriptor = filterContext.ActionDescriptor;
+
+            var controllerName = actionDescriptor.ControllerDescriptor.ControllerName;
+            var actionName = actionDescriptor.ActionName;
+
+            filterContext.Controller.ViewData["ControllerName"] = controllerName;
+            filterContext.Controller.ViewData["ActionName"] = actionName;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            filterContext.Controller.ViewData["RegisterLink"]
-                = identity.IsAuthenticated ? String.Empty : "modal nofollow";
-        }
-
-        static string GetBodyId_(ActionExecutingContext filterContext)
-        {
-            var actionDescriptor = filterContext.ActionDescriptor;
-
-            var controllerName = actionDescriptor.ControllerDescriptor.ControllerName;
-            var actionName = actionDescriptor.ActionName;
-
-            return (controllerName + "_" + actionName).ToLowerInvariant();
+            filterContext.Controller.ViewData["RegisterRelation"]
+                = identity.IsAuthenticated ? String.Empty : "register nofollow";
         }
     }
 }

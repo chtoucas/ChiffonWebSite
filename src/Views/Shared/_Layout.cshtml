@@ -18,17 +18,17 @@
  @{Html.RenderAction(ActionName.Widget.CommonStylesheet, ControllerName.Widget);}
  @{Html.Partial(ViewName.Shared.Html5Shim);}
 </head>
-<body id="@ViewBag.BodyId">
+<body>
  <header>
   <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
   <nav id=nav_lang class=clr>
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
-  <nav id=nav_main class=clr>
+  <nav id=nav_main class="clr @ViewBag.MainMenuClass">
    <ul class=center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_info>@VR.Layout_Nav_About</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_about>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
     <li class=right><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>
@@ -36,14 +36,16 @@
   </nav>
   @RenderSection("SecondaryNav", false /* required */)
  </header>
- <div id=content class="@ViewBag.BodyId">
-  @RenderBody()
- </div>
+ @RenderBody()
  <footer class=darkgrey>
   <p id=legal>@Html.Raw(VR.Layout_Disclaimer)</p>
   <p id=copyright>@Html.Raw(VR.Layout_Copyright)</p>
  </footer>
- @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new { bodyId = ViewBag.BodyId });}
+ @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new {
+    actionName = ViewBag.ActionName,
+    controllerName = ViewBag.ControllerName,
+    languageName = ViewBag.LanguageName,
+   });}
  @{Html.RenderAction(ActionName.Widget.GoogleAnalytics, ControllerName.Widget);}
 </body>
 </html>

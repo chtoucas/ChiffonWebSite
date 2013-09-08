@@ -11,11 +11,11 @@
   #content { width: 940px; text-align: center; }
 
   /* Absolutely centered */
-  .center-container { position: relative; }
-  .center { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+  .centered-container { position: relative; }
+  .centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 
-  /* Overlay */
-  .overlay { display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; margin: 0; background-color: #000; opacity: .8; z-index: 100; }
+  /* Overlay, absolute or fixed */
+  .overlay { display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: 0; background-color: #000; opacity: .8; z-index: 100; }
 
   /* Modal */
   .modal { display: table; margin: auto; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; }
@@ -26,7 +26,7 @@
  </style>
 </head>
 <body>
- <div id=content class="center">
+ <div id=content class="centered">
   <img src="/assets/img/logo.png" alt="Pour quel motif Simone ?" />
   <p>Les Simones sont confuses<span class=break /> mais le site est dans les choux.</p>
  </div>

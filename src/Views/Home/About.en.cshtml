@@ -1,8 +1,8 @@
 ﻿@{
- Layout = "~/Views/Shared/_DesignerLayout.cshtml";
+ Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="serif grey serif_large">
+<div class="home_about serif grey serif_large">
  <p class=tidy>
   Inspirés par la nature, l'enfance, les fifties ou la rue, les travaux graphiques et illustratifs de notre collectif s'adressent aux secteurs de la lingerie, de la mode, de la papeterie ou de l'art de vivre.
  </p>
@@ -12,7 +12,11 @@
  <p class=tidy>Bonne visite.</p>
  @if (!User.Identity.IsAuthenticated) {
   <p class=center>
-   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline>Je demande un mot de passe</a>
+   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline rel=modal>Je demande un mot de passe</a>
   </p>
  }
 </div>
+
+@section SecondaryNav {
+ @Html.Partial(ViewName.Shared.DesignerMenu)
+}

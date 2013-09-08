@@ -1,2 +1,4 @@
-﻿@Narvalo.Web.Html.AssetTag.Css("chi.min.css")
-@*@Narvalo.Web.Html.AssetTag.Css("print.min.css", "print")*@
+﻿@model CommonStylesheetViewModel
+
+@Narvalo.Web.Html.AssetTag.Css("chiffon-" + Model.Version + ".min.css")
+@*@Narvalo.Web.Html.AssetTag.Css("print-" + Model.Version + ".min.css", "print")*@

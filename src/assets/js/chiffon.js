@@ -2,173 +2,489 @@
 
 // TODO:
 // - ajouter html5shiv.js
-// - ajouter es5-shim.js
-// https://github.com/kriskowal/es5-shim/
-// http://stackoverflow.com/questions/12779565/comparing-popular-script-loaders-yepnope-requirejs-labjs-and-headjs
-// http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
-// http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
+// - utiliser es5-shim.js à la place d'ecma-5.js ?
+// - https://github.com/kriskowal/es5-shim/
+// - http://stackoverflow.com/questions/12779565/comparing-popular-script-loaders-yepnope-requirejs-labjs-and-headjs
+// - http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
+// - http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
 
-(function(window, $, Chiffon, undef) {
+(function(window, $, undef) {
   'use strict';
 
-  var
-    // L10N
-    _ = function(_string_) { return _string_.toLocaleString(); }
-  ;
-
-  /* Plugins jQuery.
-   * ======================================================================= */
-
-  $.fn.watermark = function(watermark) {
-    if (undef !== watermark) {
-      return this.each(function() {
-        $(this).append('<div class=watermark><span>' + _(watermark) + '</span></div>');
+  $.fn.external = function() {
+    return this.each(function() {
+      $(this).click(function() {
+        window.open(this.href);
+        return false;
       });
-    }
-    else {
-      // Si aucun texte n'est fourni, on utilise l'attribut data-watermark.
-      return this.each(function() {
-        var $this = $(this);
-        $this.append('<div class=watermark><span>' + $this.data('watermark') + '</span></div>');
-      });
-    }
+    });
   };
 
-  /* Configuration de l'objet Chiffon.
-   * ======================================================================= */
+  $.fn.watermark = function(watermark, options) {
+    var settings = $.extend({}, $.fn.watermark.defaults, options);
 
-  var configure = Chiffon.configure = function(options) {
-    var opts = $.extend({}, configure.defaults, options);
+    var getWatermak = undef !== watermark
+      ? function($elt) { return watermark; }
+      // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
+      : function($elt) { return $elt.data('watermark'); };
 
-    // En priorité, on utilise la langue définie dans la déclaration HTML, sinon on utilise
-    // celle qui est précisée dans la configuration.
-    configure.locale($('html').attr('lang') || opts.defaultLocale);
-
-    // Configuration globale du comportement des appels Ajax.
-    configure.ajax(opts.ajaxTimeout);
+    return this.each(function() {
+      var $this = $(this);
+      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
+    });
   };
 
-  configure.defaults = {
+  $.fn.watermark.defaults = {
+    wrapperStart: '<div class=watermark><span>'
+    , wrapperEnd: '</span></div>'
+  };
+
+})(this, this.jQuery);
+
+this.Chiffon = (function(window, document, location, $, undef) {
+  'use strict';
+
+  // Configuration par défaut.
+  var defaults = {
     ajaxTimeout: 3000
-    , defaultLocale: 'fr'
   };
 
-  // Configuration de la L10N.
-  configure.locale = function(locale) {
+  // Configuration de L10N.
+  function setLocale(locale) {
     String.locale = locale;
-  };
+  }
 
-  // Configuration des appels Ajax via jQuery.
-  configure.ajax = function(timeout) {
+  // Configuration globale du comportement des appels Ajax via jQuery.
+  function setupAjax(timeout) {
     $.ajaxSetup({
       timeout: timeout
       , async: true
       , cache: true
     });
-  };
+  }
 
-  /* Méthodes publiques de l'objet Chiffon.
-   * ======================================================================= */
+  function breakFrame() {
+    var top = window.top;
 
-  Chiffon.handle = function(route, params) {
-    Chiffon.initUI();
+    if (top !== window) {
+      if (undef !== location) {
+        top.location.replace(location.href);
+      }
+      else {
+        top.document.location.replace(document.location.href);
+      }
+    }
+  }
 
-    if (Routes.hasOwnProperty(route)) {
-      Routes[route](params);
+  function Chiffon(env, deps, options) {
+    this.settings = $.extend({}, defaults, options);
+
+    this.env = env;
+    this.deps = deps;
+  }
+
+  Chiffon.prototype = {
+    handleCore: function(controllerName, actionName, params) {
+      throw new Error('You must override the "handleCore" method.');
+    }
+
+    , handle: function(controllerName, actionName, params) {
+      breakFrame();
+      setupAjax(this.settings.ajaxTimeout);
+      setLocale(this.env.locale);
+
+      this.handleCore(controllerName, actionName, params);
     }
   };
 
-  Chiffon.initUI = function() {
-    // Les liens externes avec l'attribut rel=external s'ouvrent dans une nouvelle fenêtre.
-    $('A[rel=external]').click(function() {
-      window.open(this.href);
-      return false;
-    });
-  };
+  return Chiffon;
 
-  // Navigation entre les différentes vues d'un même motif.
-  var initViews = Chiffon.initViews = function(options) {
+})(this, this.document, this.location, this.jQuery);
+
+this.Chiffon.Presenters = (function($, undef) {
+  'use strict';
+
+  var Presenters = {};
+
+  Presenters.Modal = (function() {
+    function Modal(view) {
+      this.view = view;
+    }
+
+    Modal.prototype = {
+      loadContent: function(sender, e) {
+        var that = this, href = e.href;
+
+        // TODO: Use the Deferred jqXHR?
+        $.ajax({
+          type: 'GET'
+          , dataType: 'html'
+          , url: href
+          , success: function(data) {
+            that.view.onContentLoaded({ href: href, data: data });
+          }
+        });
+      }
+    };
+
+    return Modal;
+  })();
+
+  /*
+  Presenters.StickyInfo = (function() {
+    // Configuration par défaut.
+    var defaults = {
+      stickyClass: 'sticky top'
+    };
+
+    var
+      SMALL_SIZE = 1
+      , MEDIUM_SIZE = 2
+      , LARGE_SIZE = 3
+
+      , size = SMALL_SIZE
+
+      // Géométrie du bloc #info.
+      , info_h
+      , info_w
+      , info_top
+      , info_left
+
+      // Géométrie du bloc #designer.
+      , designer_w
+
+      // Géométrie de la fenêtre.
+      , window_h
+    ;
+
+    function StickyInfo(view, options) {
+      this.$info = view.$info;
+      this.$designer = view.$designer;
+      this.size = LARGE_SIZE;
+      this.settings = $.extend({}, defaults, options);
+    }
+
+    StickyInfo.prototype = {
+      is_sticky: false
+
+      , stick: function() {
+        if (this.is_sticky) { return; }
+        this.is_sticky = true;
+        this.$info.addClass(this.settings.stickyClass);
+      }
+
+      , unstick: function() {
+        if (!this.is_sticky) { return; }
+        this.is_sticky = false;
+        this.$info.removeClass(this.settings.stickyClass);
+      }
+
+      // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
+      // pour qu'il soit toujours visible on lui donne une position fixe.
+      , setupSmallBlock: function() {
+        this.$info.addClass('sticky');
+        this.$info.css({ top: info_top + 'px', left: info_left + 'px' });
+      }
+
+      // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
+      // haut de la fenêtre.
+      , setupMediumBlock: function() {
+        // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
+        // plus tard lors d'un redimensionnement horizontal de la fenêtre.
+        this.$info.css('left', info_left + 'px');
+
+        //handleScrollEventForMediumBlock();
+      }
+
+      , setup: function() {
+        if (SMALL_SIZE === this.size) {
+          this.setupSmallBlock();
+        } else if (MEDIUM_SIZE === this.size) {
+          this.setupMediumBlock();
+        } else {
+          ;
+        }
+      }
+
+      , onDocumentReady: function(sender, e, callback) {
+        info_h = this.$info.height();
+        info_w = this.$info.width();
+
+        info_offset = this.$info.offset();
+        info_top = info_offset.top;
+        info_left = info_offset.left;
+
+        designer_w = this.$designer.width();
+        window_h = $(window).height();
+
+        if (window_h >= info_h + info_top) {
+          this.size = SMALL_SIZE;
+        } else if (window_h >= info_h) {
+          this.size = MEDIUM_SIZE;
+        } else {
+          // La fenêtre est trop petite pour contenir tout le bloc info.
+          // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
+          // On ne touche donc à rien.
+          this.size = LARGE_SIZE;
+        }
+
+        setup();
+
+        callback(type);
+      }
+
+      // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
+      , onWindowResize: function(sender, e) {
+        var left = this.$designer.offset().left + designer_w - info_w;
+
+        this.$info.css({ 'left': left + 'px' });
+      }
+
+      , onWindowScroll: function(sender, e) {
+        $(window).scrollTop() >= scroll_limit ? stick() : unstick();
+      }
+    };
+
+    return StickyInfo;
+  })();
+  */
+
+  return Presenters;
+})(this.jQuery);
+
+this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) {
+  'use strict';
+
+  var Views = {};
+
+  // L10N
+  function _(string) {
+    return string.toLocaleString();
+  }
+
+  /* Layouts */
+
+  Views.Layout = (function() {
+    function Layout() {
+      this.modalView = new Views.Modal();
+      this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
+      this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
+    }
+
+    Layout.prototype = {
+      initialize: function() {
+        this.modalView.registerEventHandlers();
+        this.registerModalView.registerEventHandlers();
+        this.ajaxStatusView.registerEventHandlers();
+
+        $('A[rel=external]').external();
+      }
+    };
+
+    return Layout;
+  })();
+
+  Views.DesignerLayout = (function() {
+    function DesignerLayout() {
+      this.layoutView = new Views.Layout();
+    }
+
+    DesignerLayout.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+        Views.StickyInfo();
+      }
+    };
+
+    return DesignerLayout;
+  })();
+
+  /* Pages */
+
+  Views.ContactLogin = (function() {
+    function ContactLogin() {
+      this.layoutView = new Views.Layout();
+    }
+
+    ContactLogin.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+      }
+    };
+
+    return ContactLogin;
+  })();
+
+  Views.ContactNewsletter = (function() {
+    function ContactNewsletter() {
+      this.layoutView = new Views.Layout();
+    }
+
+    ContactNewsletter.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+      }
+    };
+
+    return ContactNewsletter;
+  })();
+
+  Views.ContactRegister = (function() {
+    function ContactRegister() {
+      this.layoutView = new Views.Layout();
+    }
+
+    ContactRegister.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+      }
+    };
+
+    return ContactRegister;
+  })();
+
+  Views.DesignerPattern = (function() {
+    function DesignerPattern() {
+      this.layoutView = new Views.DesignerLayout();
+    }
+
+    DesignerPattern.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+
+        // NB: location.hash contient le caractère '#'.
+        Views.ViewNavigator({ currentSel: location.hash });
+      }
+    };
+
+    return DesignerPattern;
+  })();
+
+  Views.HomeIndex = (function() {
+    function HomeIndex() {
+      this.layoutView = new Views.Layout();
+    }
+
+    HomeIndex.prototype = {
+      initialize: function() {
+        this.layoutView.initialize();
+
+        $('.vignette').watermark(_('%preview.watermark'));
+      }
+    };
+
+    return HomeIndex;
+  })();
+
+  /* Composants communs */
+
+  // Navigation entre les vues d'un même motif.
+  Views.ViewNavigator = (function() {
+    var settings
+      , defaults = {
+        viewsSel: '.pattern'
+        , navSel: '#nav_views'
+        , currentSel: undef
+      };
+
     var
       // Liste des vues.
       $views
       // Lien 'Précédent'.
       , $prev
-      // Lien 'Précédent' factice.
+      // Lien 'Précédent' désactivé.
       , $prev_noop
       // Lien 'Suivant'.
       , $next
-      // Lien 'Suivant' factice.
+      // Lien 'Suivant' désactivé.
       , $next_noop
-      // Conteneur HTML pour la position courante.
+      // Conteneur HTML de la position courante.
       , $pos
 
+      // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
+      , pos = 1
       // Nombre de vues.
       , length
-      // On démarre à 1, ce qui semble plus naturel.
-      , pos = 1
-      // Pour ne pas avoir à jongler entre index et position, on initialise la liste 'selectors' avec 
-      // un élément factice en début de tableau.
+      // Liste des sélecteurs de vue.
+      // Pour ne pas avoir à jongler entre index et position, on initialise la liste
+      // avec un élément factice en début de tableau.
       , selectors = [undef]
     ;
 
-    // > Actions sur l'objet $views <
+    /* Actions sur l'objet $views */
 
-    function showView(sel) {
-      $views.hide();
-      $(sel).fadeIn();
-    }
-
+    // Rend visible la vue à la position 'i' et cache les autres vues.
     function showViewAt(i) {
-      showView(selectors[i]);
+      $views.hide();
+      $(selectors[i]).fadeIn();
     }
 
-    // > Actions sur l'objet $pos <
+    /* Actions sur l'objet $pos */
 
-    function updatePosition(i) {
-      // On met à jour l'indicateur de position.
+    // Met à jour l'indicateur visuel de position quand on est à la position 'i'.
+    function setPositionMarkAt(i) {
       $pos.html(i);
     }
 
-    // > Actions sur les objets $prev et $prev_noop <
+    /* Actions sur les objets $prev et $prev_noop */
 
+    // Désactive le lien 'Précédent'.
     function disablePreviousLink() {
       $prev.hide();
       $prev_noop.show();
     }
 
+    // Active le lien 'Précédent'.
     function enablePreviousLink() {
       $prev.show();
       $prev_noop.hide();
     }
 
+    // Met à jour le lien 'Précédent' quand on arrive à la position 'i'.
     function setPreviousLinkAt(i) {
-      // NB: i représente la position courante.
       $prev.attr('href', selectors[i - 1]);
     }
 
-    // > Actions sur les objets $next et $next_noop <
+    /* Actions sur les objets $next et $next_noop */
 
+    // Désactive le lien 'Suivant'.
     function disableNextLink() {
       $next.hide();
       $next_noop.show();
     }
 
+    // Active le lien 'Suivant'.
     function enableNextLink() {
       $next.show();
       $next_noop.hide();
     }
 
+    // Met à jour le lien 'Suivant' quand on arrive à la position 'i'.
     function setNextLinkAt(i) {
-      // NB: i représente la position courante.
       $next.attr('href', selectors[i + 1]);
     }
 
-    // > Utilitaires <
+    /* Utilitaires */
 
+    function getSelector(obj) {
+      // FIXME: prop ou attr ?
+      return '#' + $(obj).prop('id');
+    }
+
+    function goTo(i) {
+      showViewAt(i);
+      setPositionMarkAt(i);
+    }
+
+    /* Fonctions utilisées lors d'un changement de position */
+
+    // Actions à mener lors d'un démarrage à la position 'i'.
     function startAt(i) {
-      // TODO: Vérifier que le motif présenté par défaut est bien visible au démarrage.
-      updatePosition(i);
+      // TODO: Vérifier que le motif présenté par défaut est bien visible au démarrage
+      // et, donc, qu'on n'ait pas besoin d'appeler showViewAt(i).
+      setPositionMarkAt(i);
 
+      // On active le lien 'Précédent' car, au démarrage, il est invisible.
       setPreviousLinkAt(i);
       enablePreviousLink();
 
@@ -181,9 +497,9 @@
       }
     }
 
-    function goBackAt(i) {
-      showViewAt(i);
-      updatePosition(i);
+    // Actions à mener quand on avance à la position 'i'.
+    function goBackTo(i) {
+      goTo(i);
 
       // Lien 'Précédent'.
       if (1 === i) {
@@ -205,9 +521,9 @@
       }
     }
 
-    function goForthAt(i) {
-      showViewAt(i);
-      updatePosition(i);
+    // Actions à mener quand on recule à la position 'i'.
+    function goForthTo(i) {
+      goTo(i);
 
       // Lien 'Précédent'.
       if (1 !== i) {
@@ -229,32 +545,27 @@
       }
     }
 
-    function getSelector(obj) {
-      // FIXME: prop ou attr ?
-      return '#' + $(obj).prop('id');
-    }
+    /* Configuration et initialisation */
 
-    // > Constructeur <
-
-    function setupLinks() {
+    function setupLinkHandlers() {
       $prev.click(function(e) {
         e.preventDefault();
 
-        goBackAt(--pos);
+        goBackTo(--pos);
       });
       $next.click(function(e) {
         e.preventDefault();
 
-        goForthAt(++pos);
+        goForthTo(++pos);
       });
     }
 
-    function initialize(options) {
+    function initialize() {
       var $nav
         , currentSel
         , callback;
 
-      $views = $(options.viewsSel);
+      $views = $(settings.viewsSel);
       length = $views.length;
 
       if (length <= 1) {
@@ -262,14 +573,14 @@
         return;
       }
 
-      $nav = $(options.navSel);
+      $nav = $(settings.navSel);
       $prev = $nav.find('.prev');
       $prev_noop = $nav.find('.prev_noop');
       $next = $nav.find('.next');
       $next_noop = $nav.find('.next_noop');
       $pos = $nav.find('.pos');
 
-      currentSel = options.currentSel;
+      currentSel = settings.currentSel;
 
       if (undef === currentSel) {
         callback = function() { selectors.push(getSelector(this)); };
@@ -287,35 +598,35 @@
       $views.each(callback);
     }
 
-    return (function(options) {
-      var opts = $.extend({}, initViews.defaults, options);
+    return function(options) {
+      settings = $.extend({}, defaults, options);
 
-      initialize(opts);
+      initialize();
 
-      if (length > 1) {
-        if (pos > 1) {
-          startAt(pos);
-        }
-        setupLinks();
+      if (length <= 1) { return; }
+
+      if (pos > 1) {
+        startAt(pos);
       }
-    })(options);
-  };
+      setupLinkHandlers();
+    }
+  })();
 
-  initViews.defaults = {
-    viewsSel: '.pattern'
-    , navSel: '#nav_views'
-    , currentSel: undef
-  };
+  // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
+  Views.StickyInfo = (function() {
+    // Configuration par défaut.
+    var settings
+      , defaults = {
+        infoSel: '#info'
+        , designerSel: '#designer'
+      };
 
-  var stickInfo = Chiffon.stickInfo = function(options) {
-    var
-      $info
+    var $info
       , $designer
 
       // Géométrie du bloc #info.
       , info_h
       , info_w
-      , info_pos
       , info_top
       , info_left
 
@@ -326,264 +637,446 @@
       , window_h
     ;
 
-    function setupSmallBlock() {
-      $info.addClass('sticky');
-      $info.css({ top: info_top + 'px', left: info_left + 'px' });
-    }
-
-    function setupMediumBlock() {
-      var scroll_limit = info_top - 23
+    function handleScrollEventForMediumBlock() {
+      var scroll_limit
         , sticky_class = 'sticky top'
-        , is_sticky = false
-        , stick = function() {
-          if (is_sticky) { return; }
-          is_sticky = true;
-          $info.addClass(sticky_class);
-        }
-        , unstick = function() {
-          if (!is_sticky) { return; }
-          is_sticky = false;
-          $info.removeClass(sticky_class);
-        }
-      ;
+        , is_sticky = false;
 
-      // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
-      // plus tard lors d'un redimensionnement horizontal de la fenêtre.
-      $info.css('left', info_left + 'px');
-
-      if ($(window).scrollTop() >= scroll_limit) {
-        stick();
+      function stick() {
+        if (is_sticky) { return; }
+        is_sticky = true;
+        $info.addClass(sticky_class);
       }
+
+      function unstick() {
+        if (!is_sticky) { return; }
+        is_sticky = false;
+        $info.removeClass(sticky_class);
+      }
+
+      scroll_limit = info_top - 23;
+
+      if ($(window).scrollTop() >= scroll_limit) { stick(); }
 
       $(window).scroll(function() {
         $(window).scrollTop() >= scroll_limit ? stick() : unstick();
       });
     }
 
+    // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
     function handleResizeEvent() {
       $(window).resize(function() {
-        // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
         var left = $designer.offset().left + designer_w - info_w;
 
         $info.css({ 'left': left + 'px' });
       });
     }
 
-    function initialize(options) {
-      $info = $(options.infoSel);
-      $designer = $(options.designerSel);
+    // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
+    // pour qu'il soit toujours visible on lui donne une position fixe.
+    function setupSmallBlock() {
+      $info.addClass('sticky');
+      $info.css({ top: info_top + 'px', left: info_left + 'px' });
+    }
+
+    // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
+    // haut de la fenêtre.
+    function setupMediumBlock() {
+      // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
+      // plus tard lors d'un redimensionnement horizontal de la fenêtre.
+      $info.css('left', info_left + 'px');
+
+      handleScrollEventForMediumBlock();
+    }
+
+    function initialize() {
+      var info_offset;
+
+      $info = $(settings.infoSel);
+      $designer = $(settings.designerSel);
+
       info_h = $info.height();
       info_w = $info.width();
-      info_pos = $info.offset();
-      info_top = info_pos.top;
-      info_left = info_pos.left;
-      // Géométrie du bloc #designer.
+
+      info_offset = $info.offset();
+      info_top = info_offset.top;
+      info_left = info_offset.left;
+
       designer_w = $designer.width();
-      // Géométrie de la fenêtre.
       window_h = $(window).height();
     }
 
-    return (function(options) {
-      var opts = $.extend({}, stickInfo.defaults, options);
+    return function(options) {
+      settings = $.extend({}, defaults, options);
 
-      initialize(opts);
+      initialize();
 
-      if (window_h < info_h) {
+      if (window_h >= info_h + info_top) {
+        setupSmallBlock();
+      } else if (window_h >= info_h) {
+        setupMediumBlock();
+      } else {
         // La fenêtre est trop petite pour contenir tout le bloc info.
         // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
         // On ne touche donc à rien.
         return;
-      } else if (window_h >= info_h + info_top) {
-        // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
-        // pour qu'il soit toujours visible on lui donne une position fixe.
-        setupSmallBlock();
-      } else {
-        // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
-        // haut de la fenêtre.
-        setupMediumBlock();
       }
 
       handleResizeEvent();
-    })(options);
+    }
+  })();
+
+  // En-tête de la page en position fixe.
+  Views.StickyHeader = (function() {
+    var settings
+      , defaults = {
+        headerSel: 'HEADER'
+        , headerWrapper: '<div id=sticky_header></div>'
+      };
+
+    var $sticky_header
+      , scroll_limit
+      , is_sticky = false;
+
+    function stick() {
+      if (is_sticky) { return; }
+      is_sticky = true;
+      $sticky_header.fadeIn('fast');
+    }
+
+    function unstick() {
+      if (!is_sticky) { return; }
+      is_sticky = false;
+      $sticky_header.hide();
+    }
+
+    function addStickyHeaderToDom() {
+      $sticky_header.appendTo('BODY');
+    }
+
+    function handleScrollEvent() {
+      if ($(window).scrollTop() >= scroll_limit) { stick(); }
+
+      $(window).scroll(function() {
+        $(window).scrollTop() >= scroll_limit ? stick() : unstick();
+      });
+    }
+
+    function initialize() {
+      var $header = $(settings.headerSel);
+
+      // FIXME: en clonant l'en-tête on duplique les IDs...
+      $sticky_header = $(settings.headerWrapper);
+      $header.children().clone().appendTo($sticky_header);
+
+      scroll_limit = $header.position().top + $header.height();
+    }
+
+    return function(options) {
+      settings = $.extend({}, defaults, options);
+
+      initialize();
+
+      addStickyHeaderToDom();
+      handleScrollEvent();
+    }
+  })();
+
+  // Indicateur d'activité Ajax à la Google Mail.
+  Views.AjaxStatus = (function() {
+    // Configuration par défaut.
+    var defaults = {
+      errorClass: 'ajax_error'
+      , displayLoading: true
+      , onErrorFadingSpeed: 5000
+      , loadingMessage: _('%ajax.loading')
+      , notFoundErrorMessage: _('%ajax.notfound_error')
+      , tempErrorMessage: _('%ajax.temp_error')
+      , fatalErrorMessage: _('%ajax.fatal_error')
+    };
+
+    // Membres statiques.
+    var $status, visible = false;
+
+    // Constructeur.
+    function AjaxStatus(options) {
+      this.settings = $.extend({}, defaults, options);
+
+      initialize({}, false /* initializing */);
+
+      this.isError = false;
+    }
+
+    // Constructeur statique.
+    var initialize = (function() {
+      var defaults = { statusElement: '<div id=ajax_status></div>' };
+      var initialized = false;
+
+      return function(options, initializing) {
+        if (initialized) {
+          if (initializing) {
+            throw new TypeError('You can not initialize "AjaxStatus" twice.');
+          }
+          else { return; }
+        }
+
+        var settings = $.extend({}, defaults, options);
+
+        $status = $(settings.statusElement);
+
+        // On ajoute l'élément status au DOM.
+        $(document.body).append($status);
+
+        initialized = true;
+      }
+    })();
+
+    AjaxStatus.AjaxStatus = function(options) { initialize(options, true /* initializing */); };
+
+    AjaxStatus.prototype = {
+      registerEventHandlers: function() {
+        var that = this;
+
+        $(document)
+          .ajaxStart(function(e) { that.onStart(e); })
+          .ajaxError(function(e, req) { that.onError(e, req); })
+          .ajaxStop(function(e) { that.onStop(e); });
+      }
+
+      , getErrorMessage: function(status) {
+        if (404 === status) {
+          return this.settings.notFoundErrorMessage;
+        } else if (0 === status) {
+          return this.settings.tempErrorMessage;
+        } else {
+          return this.settings.fatalErrorMessage;
+        }
+      }
+
+      , onStart: function(e) {
+        // On remet les compteurs à zéro.
+        $status.removeClass(this.settings.errorClass);
+
+        if (this.settings.displayLoading) {
+          $status.text(this.settings.loadingMessage).show();
+        }
+      }
+
+      , onStop: function(e) {
+        if (this.isError) {
+          this.isError = false;
+        } else if (this.settings.displayLoading) {
+          $status.hide();
+        }
+      }
+
+      , onError: function(e, req) {
+        var fadingOutSpeed = this.settings.onErrorFadingOutSpeed
+          , message = this.getErrorMessage(req.status);
+
+        this.isError = true;
+        $status
+          .addClass(this.settings.errorClass)
+          .text(message)
+          .show();
+
+        if (fadingOutSpeed > 0) {
+          $status.fadeOut(fadingOutSpeed);
+        }
+      }
+    };
+
+    return AjaxStatus;
+  })();
+
+  Views.Modal = (function() {
+    // Configuration par défaut.
+    var defaults = {
+      linkSel: 'A[rel~=modal]'
+    };
+
+    var ESC_KEYCODE = 27;
+    var $overlay, $modal, lastHref = '', opened = false;
+
+    function Modal(options) {
+      this.settings = $.extend({}, defaults, options);
+
+      initialize({}, false /* initializing */);
+
+      this.presenter = new Presenters.Modal(this);
+    }
+
+    var initialize = (function() {
+      var defaults = {
+        modalElement: '<div class=modal></div>'
+        , overlayElement: '<div class=overlay></div>'
+      };
+      var initialized = false;
+
+      return function(options, initializing) {
+        if (initialized) {
+          if (initializing) {
+            throw new TypeError('You can not initialize "Modal" twice.');
+          }
+          else { return; }
+        }
+
+        var settings = $.extend({}, defaults, options);
+
+        $overlay = $(settings.overlayElement);
+        $modal = $(settings.modalElement);
+
+        // On ajoute les éléments au DOM.
+        $(document.body).append($overlay).append($modal);
+
+        // On enregistre les événements associés.
+        $(document).bind('keydown.modal', function(e) { keydownPressed(this, e); });
+
+        $overlay.click(function(e) { overlayClicked(this, e); });
+
+        initialized = true;
+      }
+    })();
+
+    function open() {
+      $overlay.show();
+      $modal.show();
+      opened = true;
+    }
+
+    function close() {
+      $modal.hide();
+      $overlay.fadeOut();
+      opened = false;
+    }
+
+    function keydownPressed(sender, e) {
+      if (opened && ESC_KEYCODE === e.keyCode) {
+        e.preventDefault();
+        close();
+      }
+    }
+
+    function overlayClicked(sender, e) {
+      if (opened) {
+        e.preventDefault();
+        close();
+      }
+    }
+
+    Modal.initialize = function(options) { initialize(options, true /* initializing */); };
+
+    Modal.prototype = {
+      registerEventHandlers: function() {
+        var that = this;
+
+        $(this.settings.linkSel).click(function(e) { that.linkClicked(this, e); });
+      }
+
+      , linkClicked: function(sender, e) {
+        e.preventDefault();
+
+        var href = sender.href;
+
+        if (lastHref === href) {
+          open();
+        } else {
+          this.onLoadContent({ href: href });
+        }
+      }
+
+      , loadContent: function(sender, e) {
+        this.presenter.loadContent(sender, e);
+      }
+
+      , onLoadContent: function(e) {
+        this.loadContent(this, e);
+      }
+
+      , onContentLoaded: function(e) {
+        $modal.html(e.data);
+        open();
+        lastHref = e.href;
+      }
+    };
+
+    return Modal;
+  })();
+
+  return Views;
+
+})(this, this.document, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+
+this.Chiffon.Controllers = (function($, Views, undef) {
+  'use strict';
+
+  function extend(methods) { return $.extend({}, BaseController.prototype, methods); }
+
+  /* BaseController */
+
+  function BaseController(env, deps) {
+    this.user = env.user;
+    this.deps = deps;
+  }
+
+  /* ContactController */
+
+  function ContactController() {
+    BaseController.apply(this, arguments);
+  }
+
+  ContactController.prototype = extend({
+    login: function() { (new Views.ContactLogin()).initialize(); }
+    , newsletter: function() { (new Views.ContactRegister()).initialize(); }
+    , register: function() { (new Views.ContactNewsletter()).initialize(); }
+  });
+
+  /* DesignerController */
+
+  function DesignerController() {
+    BaseController.apply(this, arguments);
+  }
+
+  DesignerController.prototype = extend({
+    index: function() { (new Views.DesignerLayout()).initialize(); }
+    , category: function() { (new Views.DesignerLayout()).initialize(); }
+    , pattern: function() { (new Views.DesignerPattern()).initialize(); }
+  });
+
+  /* HomeController */
+
+  function HomeController() {
+    BaseController.apply(this, arguments);
+  }
+
+  HomeController.prototype = extend({
+    about: function() { (new Views.Layout()).initialize(); }
+    , contact: function() { (new Views.Layout()).initialize(); }
+    , index: function() { (new Views.HomeIndex()).initialize(); }
+  });
+
+  return {
+    Contact: ContactController
+    , Designer: DesignerController
+    , Home: HomeController
   };
 
-  stickInfo.defaults = {
-    infoSel: '#info'
-    , designerSel: '#designer'
+})(this.jQuery, this.Chiffon.Views);
+
+this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
+  'use strict';
+
+  return function(controllerName, actionName, params) {
+    if (Controllers.hasOwnProperty(controllerName)) {
+      var controllerClass = Controllers[controllerName]
+        , controllerPrototype = controllerClass.prototype
+        , actionMethod = actionName.toLowerCase();
+
+      if (controllerPrototype.hasOwnProperty(actionMethod)) {
+        var controller = new controllerClass(this.env, this.deps);
+        controllerPrototype[actionMethod].apply(controller, params);
+      }
+    }
   };
 
-  /* Routes
-   * ======================================================================= */
-
-  var Routes = Chiffon.Routes = {}
-
-  Routes.home_index = function() {
-    $('.vignette').watermark('%vignette.watermark');
-  };
-
-  Routes.designer_index = Chiffon.stickInfo;
-  Routes.designer_category = Chiffon.stickInfo;
-
-  Routes.designer_pattern = function() {
-    // NB: window.location.hash contient le caractère '#'.
-    Chiffon.initViews({ currentSel: window.location.hash });
-    Chiffon.stickInfo();
-  };
-
-})(this, jQuery, Chiffon);
-
-//UI.stickyHeader.init();
-//UI.ajaxStatus();
-//UI.overlay.init();
-//UI.modal.init();
-
-//if (visitor.anonymous) {
-//  makeModal('register');
-
-//  //$.get('modal/register.html', function(data) { $modal.html(data); });
-//  //$modal.appendTo('BODY');
-
-//  $('A[rel~=modal]').click(function(e) {
-//    e.preventDefault();
-
-//    Chiffon.UI.modal.register.show();
-
-//    // TODO: Use the Deferred jqXHR?
-//    $.ajax({
-//      type: 'GET'
-//      , global: false
-//      , dataType: 'html'
-//      , url: this.href
-//      , success: function(data) {
-//        var response = $('<html />').html(data);
-//        $('.contact_register').html(response.find('#content').html());
-//        Chiffon.UI.overlay.show();
-//      }
-//    });
-//  });
-//}
-//connected = undef !== $.cookie('auth')
-
-//, visitor = {
-//  connected: connected
-//  , anonymous: !connected
-
-//  , logOn: function() {
-//    throw 'Not Implemented';
-//  }
-
-//  , logOff: function() {
-//    this.connected = false;
-//    this.anonymous = true;
-//  }
-//}
-
-//function makeModal(name) {
-//  var $modal = $('<div class="modal contact_register"></div>');
-//  $modal.appendTo('BODY');
-
-//  Chiffon.UI.modal[name] = {
-//    show: function() {
-//      $modal.show();
-//      //Chiffon.UI.modal.init();
-//      //$modal.css('margin-top', -$modal.height() / 2);
-//      //$modal.css('margin-left', -$modal.width() / 2);
-//    }
-//  };
-//};
-
-//// En-tête fixe.
-//UI.stickyHeader = {
-//  init: function() {
-//    var $header = $('HEADER'),
-//      header_pos = $header.position().top + $header.height(),
-//      header_content = $header.children().clone(),
-//      $sticky_header = $('<div id=sticky_header></div>'),
-//      on = false;
-
-//    $sticky_header.appendTo('BODY');
-//    header_content.appendTo($sticky_header);
-
-//    // TODO: si à l'ouverture, on est déjà trop bas, afficher l'en-tête statique.
-//    // FIXME: en clonant l'en-tête on duplique les IDs...
-
-//    $(window).scroll(function() {
-//      if ($(this).scrollTop() < header_pos) {
-//        if (on) {
-//          on = false;
-//          $sticky_header.hide();
-//        }
-//      } else {
-//        // On est en dessous de la position limite d'activation.
-//        if (!on) {
-//          on = true;
-//          $sticky_header.fadeIn('fast');
-//        }
-//      }
-//    });
-//  }
-//};
-
-//UI.modal = {
-//  init: function() {
-//    $('.modal').bind("clickoutside", function(e) {
-//      $(this).hide();
-//      //var $this = $(this);
-//      //if ($form.is(":visible")) {
-//      //  $form.fadeOut();
-//      //}
-//      //$this.unbind("clickoutside");
-//    });
-//  }
-//};
-
-//UI.overlay = (function() {
-//  var $overlay = $('<div class=overlay></div>')
-
-//  return {
-//    init: function() {
-//      $overlay.appendTo('BODY');
-//      //$overlay.height(screen.height);
-//      //$overlay.width(screen.width);
-//    }
-
-//    , show: function() {
-//      $overlay.fadeIn();
-//    }
-
-//    , hide: function() {
-//      $overlay.hide();
-//    }
-//  };
-//})();
-
-// Create & configure the ajax status placeholder.
-//UI.ajaxStatus = function() {
-//  var $status = $('<div id=ajax_status></div>')
-//    , error = false;
-
-//  $status.appendTo('BODY');
-
-//  $(document).ajaxStart(function() {
-//    $status
-//      .removeClass('error')
-//      .text(_('%ajax.loading'))
-//      .show();
-//  }).ajaxStop(function() {
-//    if (error) {
-//      error = false;
-//    } else {
-//      //$status.text(_('%ajax.done')).fadeOut('slow');
-//      $status.fadeOut('slow');
-//    }
-//  }).ajaxError(function(e, req) {
-//    var message = _(0 == req.status ? '%ajax.temp_error' : '%ajax.fatal_error');
-
-//    error = true;
-//    $status
-//      .text(message)
-//      .addClass('error')
-//      .show()
-//      .fadeOut(5000);
-//  });
-//};
+})(this.Chiffon.Controllers);
