@@ -229,15 +229,14 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 /*.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/
 /* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
 
-/* MODAL .modal .contact_register { position: absolute; top: 20%; z-index: 10000; border-top: none; }*/
-/* MODAL .modal .contact_register INPUT, .modal .contact_register TEXTAREA { color: #ccc; }*/
-
 /* Absolutely centered */
 .centered-container { position: relative; }
 .centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 
 /* Modal */
-.modal { display: table; margin: auto; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; }
+/* FIXME: position sur BODY, Opera ! */
+body { position: relative; }
+.modal { display: table; margin: auto; height: auto; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; }
 
 .modal { width: 940px; }
   .modal, .modal A, .modal INPUT, .modal TEXTAREA, .modal .grey { color: #fff !important; }
