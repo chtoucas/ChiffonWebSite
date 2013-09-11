@@ -41,7 +41,7 @@
 
 })(this, this.jQuery);
 
-this.Chiffon = (function(window, document, location, $, undef) {
+this.Chiffon = (function(window, document, location, _, $, undef) {
   'use strict';
 
   // Configuration par défaut.
@@ -77,7 +77,7 @@ this.Chiffon = (function(window, document, location, $, undef) {
   }
 
   function Chiffon(env, deps, options) {
-    this.settings = $.extend({}, defaults, options);
+    this.settings = _.defaults(options || {}, defaults);
 
     this.env = env;
     this.deps = deps;
@@ -99,7 +99,7 @@ this.Chiffon = (function(window, document, location, $, undef) {
 
   return Chiffon;
 
-})(this, this.document, this.location, this.jQuery);
+})(this, this.document, this.location, this._, this.jQuery);
 
 this.Chiffon.Presenters = (function($, undef) {
   'use strict';
@@ -252,13 +252,13 @@ this.Chiffon.Presenters = (function($, undef) {
   return Presenters;
 })(this.jQuery);
 
-this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) {
+this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, undef) {
   'use strict';
 
   var Views = {};
 
   // L10N
-  function _(string) {
+  function l(string) {
     return string.toLocaleString();
   }
 
@@ -369,7 +369,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
       initialize: function() {
         this.layoutView.initialize();
 
-        $('.vignette').watermark(_('%preview.watermark'));
+        $('.vignette').watermark(l('%preview.watermark'));
       }
     };
 
@@ -599,7 +599,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
     }
 
     return function(options) {
-      settings = $.extend({}, defaults, options);
+      settings = _.defaults(options || {}, defaults);
 
       initialize();
 
@@ -707,7 +707,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
     }
 
     return function(options) {
-      settings = $.extend({}, defaults, options);
+      settings = _.defaults(options || {}, defaults);
 
       initialize();
 
@@ -773,7 +773,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
     }
 
     return function(options) {
-      settings = $.extend({}, defaults, options);
+      settings = _.defaults(options || {}, defaults);
 
       initialize();
 
@@ -789,10 +789,10 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
       errorClass: 'ajax_error'
       , displayLoading: true
       , onErrorFadingSpeed: 5000
-      , loadingMessage: _('%ajax.loading')
-      , notFoundErrorMessage: _('%ajax.notfound_error')
-      , tempErrorMessage: _('%ajax.temp_error')
-      , fatalErrorMessage: _('%ajax.fatal_error')
+      , loadingMessage: l('%ajax.loading')
+      , notFoundErrorMessage: l('%ajax.notfound_error')
+      , tempErrorMessage: l('%ajax.temp_error')
+      , fatalErrorMessage: l('%ajax.fatal_error')
     };
 
     // Membres statiques.
@@ -820,7 +820,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
           else { return; }
         }
 
-        var settings = $.extend({}, defaults, options);
+        var settings = _.defaults(options || {}, defaults);
 
         $status = $(settings.statusElement);
 
@@ -899,7 +899,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
     var $overlay, $modal, lastHref = '', opened = false;
 
     function Modal(options) {
-      this.settings = $.extend({}, defaults, options);
+      this.settings = _.defaults(options || {}, defaults);
 
       initialize({}, false /* initializing */);
 
@@ -1005,7 +1005,7 @@ this.Chiffon.Views = (function(window, document, $, Chiffon, Presenters, undef) 
 
   return Views;
 
-})(this, this.document, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+})(this, this.document, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
 
 this.Chiffon.Controllers = (function($, Views, undef) {
   'use strict';
