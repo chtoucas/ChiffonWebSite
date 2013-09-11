@@ -84,7 +84,7 @@ this.main = (function(window, Env, Dependencies, yepnope, undef) {
   return function(fn) {
     var deps, env = Env.Current;
 
-    if (undef === env) { throw new Error('The "Env" variable is not initialized.'); }
+    if (undef === env) { throw new Error('The "Env" variable is not set.'); }
     deps = new Dependencies(env);
     // FIXME: Quid quand un des appels échoue ?
     yepnope({
