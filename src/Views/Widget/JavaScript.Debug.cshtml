@@ -7,7 +7,7 @@
 <script>
  (function(yepnope, Env, main, undef) {
   if (undef === yepnope || undef === main) { return; }
-  Env.Init('@(Model.Version)', @(Model.IsAuthenticated), '@(Model.LanguageName)', true /* debug */, '/assets/js/');
-  main(function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+  var env = new Env('@Model.Version', @Model.IsAuthenticated, '@Model.LanguageName', true /* debug */, '/assets/js/');
+  main(env, function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.yepnope, this.Env, this.main);
 </script>

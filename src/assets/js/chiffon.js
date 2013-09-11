@@ -4,17 +4,16 @@
 // - ajouter html5shiv.js
 // - utiliser es5-shim.js à la place d'ecma-5.js ?
 // - https://github.com/kriskowal/es5-shim/
-// - http://stackoverflow.com/questions/12779565/comparing-popular-script-loaders-yepnope-requirejs-labjs-and-headjs
 // - http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
 // - http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
 
-(function(window, $, undef) {
+(function(win, $, undef) {
   'use strict';
 
   $.fn.external = function() {
     return this.each(function() {
       $(this).click(function() {
-        window.open(this.href);
+        win.open(this.href);
         return false;
       });
     });
@@ -41,7 +40,7 @@
 
 })(this, this.jQuery);
 
-this.Chiffon = (function(window, document, location, _, $, undef) {
+this.Chiffon = (function(win, doc, loc, _, $, undef) {
   'use strict';
 
   // Configuration par défaut.
@@ -64,14 +63,14 @@ this.Chiffon = (function(window, document, location, _, $, undef) {
   }
 
   function breakFrame() {
-    var top = window.top;
+    var top = win.top;
 
-    if (top !== window) {
-      if (undef !== location) {
-        top.location.replace(location.href);
+    if (top !== win) {
+      if (undef !== loc) {
+        top.location.replace(loc.href);
       }
       else {
-        top.document.location.replace(document.location.href);
+        top.document.location.replace(doc.location.href);
       }
     }
   }
@@ -215,7 +214,7 @@ this.Chiffon.Presenters = (function($, undef) {
         info_left = info_offset.left;
 
         designer_w = this.$designer.width();
-        window_h = $(window).height();
+        window_h = $(win).height();
 
         if (window_h >= info_h + info_top) {
           this.size = SMALL_SIZE;
@@ -241,7 +240,7 @@ this.Chiffon.Presenters = (function($, undef) {
       }
 
       , onWindowScroll: function(sender, e) {
-        $(window).scrollTop() >= scroll_limit ? stick() : unstick();
+        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
       }
     };
 
@@ -252,7 +251,7 @@ this.Chiffon.Presenters = (function($, undef) {
   return Presenters;
 })(this.jQuery);
 
-this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, undef) {
+this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) {
   'use strict';
 
   var Views = {};
@@ -353,7 +352,7 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
         this.layoutView.initialize();
 
         // NB: location.hash contient le caractère '#'.
-        Views.ViewNavigator({ currentSel: location.hash });
+        Views.ViewNavigator({ currentSel: loc.hash });
       }
     };
 
@@ -656,16 +655,16 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
 
       scroll_limit = info_top - 23;
 
-      if ($(window).scrollTop() >= scroll_limit) { stick(); }
+      if ($(win).scrollTop() >= scroll_limit) { stick(); }
 
-      $(window).scroll(function() {
-        $(window).scrollTop() >= scroll_limit ? stick() : unstick();
+      $(win).scroll(function() {
+        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
       });
     }
 
     // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
     function handleResizeEvent() {
-      $(window).resize(function() {
+      $(win).resize(function() {
         var left = $designer.offset().left + designer_w - info_w;
 
         $info.css({ 'left': left + 'px' });
@@ -703,7 +702,7 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
       info_left = info_offset.left;
 
       designer_w = $designer.width();
-      window_h = $(window).height();
+      window_h = $(win).height();
     }
 
     return function(options) {
@@ -755,10 +754,10 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
     }
 
     function handleScrollEvent() {
-      if ($(window).scrollTop() >= scroll_limit) { stick(); }
+      if ($(win).scrollTop() >= scroll_limit) { stick(); }
 
-      $(window).scroll(function() {
-        $(window).scrollTop() >= scroll_limit ? stick() : unstick();
+      $(win).scroll(function() {
+        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
       });
     }
 
@@ -825,7 +824,7 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
         $status = $(settings.statusElement);
 
         // On ajoute l'élément status au DOM.
-        $(document.body).append($status);
+        $(doc.body).append($status);
 
         initialized = true;
       }
@@ -837,7 +836,7 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
       registerEventHandlers: function() {
         var that = this;
 
-        $(document)
+        $(doc)
           .ajaxStart(function(e) { that.onStart(e); })
           .ajaxError(function(e, req) { that.onError(e, req); })
           .ajaxStop(function(e) { that.onStop(e); });
@@ -927,10 +926,10 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
         $modal = $(settings.modalElement);
 
         // On ajoute les éléments au DOM.
-        $(document.body).append($overlay).append($modal);
+        $(doc.body).append($overlay).append($modal);
 
         // On enregistre les événements associés.
-        $(document).bind('keydown.modal', function(e) { keydownPressed(this, e); });
+        $(doc).bind('keydown.modal', function(e) { keydownPressed(this, e); });
 
         $overlay.click(function(e) { overlayClicked(this, e); });
 
@@ -1005,7 +1004,7 @@ this.Chiffon.Views = (function(window, document, _, $, Chiffon, Presenters, unde
 
   return Views;
 
-})(this, this.document, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+})(this, this.document, this.location, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
 
 this.Chiffon.Controllers = (function($, Views, undef) {
   'use strict';

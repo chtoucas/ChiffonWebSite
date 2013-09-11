@@ -3,13 +3,9 @@
 this.Env = (function(undef) {
   'use strict';
 
-  var Env = {}, locales = ['en', 'fr'];
+  var locales = ['en', 'fr'];
 
-  function _Env() { }
-
-  Env.Current = undef;
-
-  Env.Init = function(version, authenticated, locale, debug, baseUrl) {
+  return function(version, authenticated, locale, debug, baseUrl) {
     if (undef === version) {
       throw new ReferenceError('The "version" argument is undefined.');
     }
@@ -24,18 +20,12 @@ this.Env = (function(undef) {
       baseUrl = baseUrl + '/';
     }
 
-    var env = new _Env();
-
-    env.baseUrl = baseUrl;
-    env.debug = true === debug;
-    env.locale = locale;
-    env.user = { authenticated: true === authenticated };
-    env.version = version;
-
-    Env.Current = env;
+    this.baseUrl = baseUrl;
+    this.debug = true === debug;
+    this.locale = locale;
+    this.user = { authenticated: true === authenticated };
+    this.version = version;
   };
-
-  return Env;
 })();
 
 this.Dependencies = (function() {
@@ -78,23 +68,21 @@ this.Dependencies = (function() {
   return Dependencies;
 })();
 
-this.main = (function(window, Env, Dependencies, yepnope, undef) {
+this.main = (function(win, Dependencies, yepnope, undef) {
   'use strict';
 
-  return function(fn) {
-    var deps, env = Env.Current;
+  return function(env, fn) {
+    var deps = new Dependencies(env);
 
-    if (undef === env) { throw new Error('The "Env" variable is not set.'); }
-    deps = new Dependencies(env);
     // FIXME: Quid quand un des appels échoue ?
     yepnope({
       load: [deps.jQuery()].concat(deps.Chiffon())
       , complete: function() {
-        var Chiffon = window.Chiffon;
+        var Chiffon = win.Chiffon;
         if (undef === Chiffon) { return; }
         fn(new Chiffon(env, deps));
       }
     });
   };
 
-})(this, this.Env, this.Dependencies, this.yepnope);
+})(this, this.Dependencies, this.yepnope);
