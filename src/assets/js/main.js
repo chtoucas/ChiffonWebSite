@@ -1,5 +1,38 @@
 ;
 
+this.Config = (function(undef) {
+  'use strict';
+
+  var locales = ['en', 'fr'];
+
+  return function(version, locale, debug, baseUrl) {
+    if (undef === version) {
+      throw new ReferenceError('The "version" argument is undefined.');
+    }
+
+    if (-1 === locales.indexOf(locale)) {
+      throw new Error('The locale "' + locale + '" is not supported.');
+    }
+
+    if (undef === baseUrl) {
+      throw new ReferenceError('The "baseUrl" argument is undefined.');
+    } else if ('/' !== baseUrl.substring(-1, 1)) {
+      baseUrl = baseUrl + '/';
+    }
+
+    this.baseUrl = baseUrl;
+    this.debug = true === debug;
+    this.locale = locale;
+    this.version = version;
+  };
+})();
+
+this.Env = {
+  config: undef
+  , deps: undef
+  , user: undef
+};
+
 this.Env = (function(undef) {
   'use strict';
 
@@ -31,12 +64,12 @@ this.Env = (function(undef) {
 this.Dependencies = (function() {
   'use strict';
 
-  function Dependencies(env) {
-    var baseUrl = env.baseUrl;
+  function Dependencies(config) {
+    var baseUrl = config.baseUrl;
 
-    this.debug = env.debug;
-    this.locale = env.locale;
-    this.version = env.version;
+    this.debug = config.debug;
+    this.locale = config.locale;
+    this.version = config.version;
 
     this.rebase = function(src) { return baseUrl + src; }
 
@@ -71,8 +104,8 @@ this.Dependencies = (function() {
 this.main = (function(win, Dependencies, yepnope, undef) {
   'use strict';
 
-  return function(env, fn) {
-    var deps = new Dependencies(env);
+  return function(config, fn) {
+    var deps = new Dependencies(config);
 
     // FIXME: Quid quand un des appels échoue ?
     yepnope({

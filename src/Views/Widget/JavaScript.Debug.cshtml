@@ -7,7 +7,8 @@
 <script>
  (function(yepnope, Env, main, undef) {
   if (undef === yepnope || undef === main) { return; }
-  var env = new Env('@Model.Version', @Model.IsAuthenticated, '@Model.LanguageName', true /* debug */, '/assets/js/');
-  main(env, function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+  /* @Model.IsAuthenticated, */
+  var config = new Config('@Model.Version', '@Model.LanguageName', true /* debug */, '/assets/js/');
+  main(config, function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.yepnope, this.Env, this.main);
 </script>
