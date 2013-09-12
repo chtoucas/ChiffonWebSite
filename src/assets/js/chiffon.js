@@ -75,11 +75,8 @@ this.Chiffon = (function(win, doc, loc, _, $, undef) {
     }
   }
 
-  function Chiffon(env, deps, options) {
-    this.settings = _.defaults(options || {}, defaults);
-
-    this.env = env;
-    this.deps = deps;
+  function Chiffon(context) {
+    this.context = context;
   }
 
   Chiffon.prototype = {
@@ -89,8 +86,8 @@ this.Chiffon = (function(win, doc, loc, _, $, undef) {
 
     , handle: function(controllerName, actionName, params) {
       breakFrame();
-      setupAjax(this.settings.ajaxTimeout);
-      setLocale(this.env.locale);
+      setupAjax(defaults.ajaxTimeout);
+      setLocale(this.context.locale);
 
       this.handleCore(controllerName, actionName, params);
     }
@@ -1013,9 +1010,8 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   /* BaseController */
 
-  function BaseController(env, deps) {
-    this.user = env.user;
-    this.deps = deps;
+  function BaseController(context) {
+    this.context = context;
   }
 
   /* ContactController */
@@ -1072,7 +1068,7 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
         , actionMethod = actionName.toLowerCase();
 
       if (controllerPrototype.hasOwnProperty(actionMethod)) {
-        var controller = new controllerClass(this.env, this.deps);
+        var controller = new controllerClass(this.context);
         controllerPrototype[actionMethod].apply(controller, params);
       }
     }

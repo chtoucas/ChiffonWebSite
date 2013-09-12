@@ -3,8 +3,9 @@
 @Narvalo.Web.Html.AssetTag.JavaScript("main-" + Model.Version + ".min.js")
 
 <script>
- (function(y,E,m){
-  if (!m) { return } E.Init('@(Model.Version)',@Model.IsAuthenticated, '@Model.LanguageName', !1, '/assets/js/')
-  m(function(_){_.handle('@Model.ControllerName', '@Model.ActionName')})
- })(this.yepnope,this.Env,this.main);
+ (function(m) {
+  if (!m) { return; }
+  Bundles.version = '@Model.Version';
+  main('@Model.LanguageName', function(_) { _.handle('@Model.ControllerName', '@Model.ActionName'); });
+ })(this.main);
 </script>

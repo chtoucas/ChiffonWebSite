@@ -1,119 +1,63 @@
 ;
 
-this.Config = (function(undef) {
+this.Bundles = (function(undef) {
   'use strict';
 
-  var locales = ['en', 'fr'];
+  var Bundles = {
+    baseUrl: '/assets/js/'
 
-  return function(version, locale, debug, baseUrl) {
-    if (undef === version) {
-      throw new ReferenceError('The "version" argument is undefined.');
+    , version: undef
+
+    , rebase: function(src) { return Bundles.baseUrl + src; }
+
+    , vendor: function(src) { return Bundles.baseUrl + 'vendor/' + src; }
+
+    , jQuery: function() {
+      return Bundles.vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js');
     }
 
-    if (-1 === locales.indexOf(locale)) {
-      throw new Error('The locale "' + locale + '" is not supported.');
-    }
+    //, jQueryCookie: function() { return Bundles.vendor('jquery.cookie-1.3.1.min.js'); }
 
-    if (undef === baseUrl) {
-      throw new ReferenceError('The "baseUrl" argument is undefined.');
-    } else if ('/' !== baseUrl.substring(-1, 1)) {
-      baseUrl = baseUrl + '/';
-    }
+    //, jQueryOutside: function() { return Bundles.vendor('jquery.ba-outside-events-1.1.min.js'); }
 
-    this.baseUrl = baseUrl;
-    this.debug = true === debug;
-    this.locale = locale;
-    this.version = version;
-  };
-})();
-
-this.Env = {
-  config: undef
-  , deps: undef
-  , user: undef
-};
-
-this.Env = (function(undef) {
-  'use strict';
-
-  var locales = ['en', 'fr'];
-
-  return function(version, authenticated, locale, debug, baseUrl) {
-    if (undef === version) {
-      throw new ReferenceError('The "version" argument is undefined.');
-    }
-
-    if (-1 === locales.indexOf(locale)) {
-      throw new Error('The locale "' + locale + '" is not supported.');
-    }
-
-    if (undef === baseUrl) {
-      throw new ReferenceError('The "baseUrl" argument is undefined.');
-    } else if ('/' !== baseUrl.substring(-1, 1)) {
-      baseUrl = baseUrl + '/';
-    }
-
-    this.baseUrl = baseUrl;
-    this.debug = true === debug;
-    this.locale = locale;
-    this.user = { authenticated: true === authenticated };
-    this.version = version;
-  };
-})();
-
-this.Dependencies = (function() {
-  'use strict';
-
-  function Dependencies(config) {
-    var baseUrl = config.baseUrl;
-
-    this.debug = config.debug;
-    this.locale = config.locale;
-    this.version = config.version;
-
-    this.rebase = function(src) { return baseUrl + src; }
-
-    this.vendor = function(src) { return baseUrl + 'vendor/' + src; }
-  }
-
-  Dependencies.prototype = {
-    jQuery: function() {
-      return this.vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js');
-    }
-
-    //, jQueryCookie: function() { return this.vendor('jquery.cookie-1.3.1.min.js'); }
-
-    //, jQueryOutside: function() { return this.vendor('jquery.ba-outside-events-1.1.min.js'); }
-
-    , jQueryValidate: function() {
+    , jQueryValidate: function(locale) {
       return ['jquery.validate.min.js', 'additional-methods.min.js']
-        .push('localization/messages_' + this.locale + '.js')
-        .map(function(src) { return this.vendor('jquery.validate-1.11.1/' + src); });
+        .push('localization/messages_' + locale + '.js')
+        .map(function(src) { return Bundles.vendor('jquery.validate-1.11.1/' + src); });
     }
 
     , Chiffon: function() {
-      return this.debug
-        ? ['vendor/l10n-2013.04.18.min.js', 'localization.js', 'chiffon.js'].map(this.rebase)
-        : rebase('chiffon-' + this.version + '.min.js');;
+      return undef !== Bundles.version
+        ? rebase('chiffon-' + Bundles.version + '.min.js')
+        : ['vendor/l10n-2013.04.18.min.js', 'localization.js', 'chiffon.js'].map(Bundles.rebase);
     }
   };
 
-  return Dependencies;
+  return Bundles;
 })();
 
 this.main = (function(win, Dependencies, yepnope, undef) {
   'use strict';
 
-  return function(config, fn) {
-    var deps = new Dependencies(config);
+  var locales = ['fr', 'en'];
+
+  return function(locale, fn) {
+    if (-1 === locales.indexOf(locale)) {
+      throw new Error('The locale "' + locale + '" is not supported.');
+    }
 
     // FIXME: Quid quand un des appels échoue ?
     yepnope({
-      load: [deps.jQuery()].concat(deps.Chiffon())
+      load: [Bundles.jQuery()].concat(Bundles.Chiffon())
       , complete: function() {
         var Chiffon = win.Chiffon;
         if (undef === Chiffon) { return; }
-        fn(new Chiffon(env, deps));
+
+        var context = {
+          locale: locale
+        };
+
+        fn(new Chiffon(context));
       }
     });
   };

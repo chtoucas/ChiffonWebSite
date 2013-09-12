@@ -5,10 +5,8 @@
 @Narvalo.Web.Html.AssetTag.JavaScript("main.js")
 
 <script>
- (function(yepnope, Env, main, undef) {
-  if (undef === yepnope || undef === main) { return; }
-  /* @Model.IsAuthenticated, */
-  var config = new Config('@Model.Version', '@Model.LanguageName', true /* debug */, '/assets/js/');
-  main(config, function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
- })(this.yepnope, this.Env, this.main);
+ (function(main) {
+  if (!main) { return; }
+  main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+ })(this.main);
 </script>
