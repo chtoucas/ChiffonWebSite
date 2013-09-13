@@ -1,11 +1,9 @@
 ﻿@model CommonJavaScriptViewModel
 
-@Narvalo.Web.Html.AssetTag.JavaScript("main-" + Model.Version + ".min.js")
+@Narvalo.Web.Html.AssetTag.JavaScript("app-" + Model.Version + ".min.js")
 
 <script>
- (function(m) {
-  if (!m) { return; }
-  Config.setVersion('@Model.Version')
-  main('@Model.LanguageName', function(_) { _.handle('@Model.ControllerName', '@Model.ActionName'); });
- })(this.main);
+ (function(a,o) {
+  if (!a){return;}(new a({version:'@Model.Version'})).main('@Model.LanguageName',function(_){_.handle('@Model.ControllerName','@Model.ActionName');});
+ })(this.a);
 </script>

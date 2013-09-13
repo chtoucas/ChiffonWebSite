@@ -2,11 +2,12 @@
 
 @Narvalo.Web.Html.AssetTag.JavaScript("vendor/yepnope-1.5.4.min.js")
 @Narvalo.Web.Html.AssetTag.JavaScript("vendor/lodash.compat-1.3.1.min.js")
-@Narvalo.Web.Html.AssetTag.JavaScript("main.js")
+@Narvalo.Web.Html.AssetTag.JavaScript("app.js")
 
 <script>
- (function(App) {
+ (function(App, undef) {
   if (!App) { return; }
-  (new App()).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+  var options = { debug: true, gaq: '' };
+  (new App(options)).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.App);
 </script>

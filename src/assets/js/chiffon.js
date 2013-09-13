@@ -2,7 +2,6 @@
 
 // TODO:
 // - ajouter html5shiv.js
-// - utiliser es5-shim.js à la place d'ecma-5.js ?
 // - https://github.com/kriskowal/es5-shim/
 // - http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
 // - http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
