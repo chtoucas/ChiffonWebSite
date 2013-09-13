@@ -5,8 +5,8 @@
 @Narvalo.Web.Html.AssetTag.JavaScript("main.js")
 
 <script>
- (function(main) {
-  if (!main) { return; }
-  main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
- })(this.main);
+ (function(App) {
+  if (!App) { return; }
+  (new App()).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+ })(this.App);
 </script>

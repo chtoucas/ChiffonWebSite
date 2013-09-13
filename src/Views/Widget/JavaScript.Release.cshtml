@@ -5,7 +5,7 @@
 <script>
  (function(m) {
   if (!m) { return; }
-  Bundles.version = '@Model.Version';
+  Config.setVersion('@Model.Version')
   main('@Model.LanguageName', function(_) { _.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.main);
 </script>
