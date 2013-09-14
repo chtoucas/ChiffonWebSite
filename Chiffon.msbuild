@@ -8,18 +8,99 @@
 
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+
+    <YuiCompressorJar>$(ProjectDirectory)\intern\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <GoogleClosureJar>$(ProjectDirectory)\intern\libexec\closure\compiler.jar</GoogleClosureJar>
+    
+    <AssetDirectory>$(ProjectDirectory)\src\assets</AssetDirectory>
+    <StylesheetDirectory>$(AssetDirectory)\css</StylesheetDirectory>
+    <JavaScriptDirectory>$(AssetDirectory)\js</JavaScriptDirectory>
+
   </PropertyGroup>
 
   <Target Name="Noop" />
 
-  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)">
-    <Message Text="Cleaning..." Importance="high" />
-  </Target>
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)" />
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
 
   <PropertyGroup>
+    <CleanDependsOn>
+    </CleanDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <BuildDependsOn>
+      _BuildStylesheet;
+      _BuildJavaScript;
     </BuildDependsOn>
   </PropertyGroup>
+
+  <Target Name="_BuildStylesheet">
+    <Message Text="Compilation des CSS" Importance="high" />
+
+    <ItemGroup>
+      <CssFiles Include="$(StylesheetDirectory)\normalize-1.1.2.css" />
+      <CssFiles Include="$(StylesheetDirectory)\01-chiffon.base.css" />
+      <CssFiles Include="$(StylesheetDirectory)\02-chiffon.helpers.css" />
+      <CssFiles Include="$(StylesheetDirectory)\03-chiffon.css" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <CssMergeFile>$(StylesheetDirectory)\_chiffon.css</CssMergeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <CssTmpFiles Include="$(CssMergeFile)" />
+    </ItemGroup>
+
+    <Message Text="Fusion des CSS" Importance="normal" />
+    <MergeFiles Files="@(CssFiles)" OutFile="$(CssMergeFile)" />
+
+    <Message Text="Minification des CSS" Importance="normal" />
+    <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="@(CssTmpFiles)" />
+    <Move SourceFiles="$(StylesheetDirectory)\_chiffon.min.css" DestinationFiles="$(StylesheetDirectory)\chiffon-$(CssVersion).min.css" />
+
+    <Message Text="Suppression des fichiers temporaires" Importance="normal" />
+    <Delete Files="@(CssTmpFiles)" />
+  </Target>
+
+  <Target Name="_BuildJavaScript">
+    <Message Text="Compilation des fichiers JS" Importance="high" />
+
+    <ItemGroup>
+      <App_JsFiles Include="$(JavaScriptDirectory)\vendor\yepnope-1.5.4.js" />
+      <App_JsFiles Include="$(JavaScriptDirectory)\vendor\lodash.compat-1.3.1.js" />
+      <App_JsFiles Include="$(JavaScriptDirectory)\app.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Chiffon_JsFiles Include="$(JavaScriptDirectory)\vendor\l10n-2013.04.18.js" />
+      <Chiffon_JsFiles Include="$(JavaScriptDirectory)\localization.js" />
+      <Chiffon_JsFiles Include="$(JavaScriptDirectory)\chiffon.js" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <App_JsMergeFile>$(JavaScriptDirectory)\_app.js</App_JsMergeFile>
+      <Chiffon_JsMergeFile>$(JavaScriptDirectory)\_chiffon.js</Chiffon_JsMergeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <JsTmpFiles Include="$(App_JsMergeFile)" />
+      <JsTmpFiles Include="$(Chiffon_JsMergeFile)" />
+    </ItemGroup>
+
+    <Message Text="Fusion des JS" Importance="normal" />
+    <MergeFiles Files="@(App_JsFiles)" OutFile="$(App_JsMergeFile)" />
+    <MergeFiles Files="@(Chiffon_JsFiles)" OutFile="$(Chiffon_JsMergeFile)" />
+
+    <Message Text="Minification des JS" Importance="normal" />
+    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="@(JsTmpFiles)" CompilationLevel="Simple" />
+
+    <Move SourceFiles="$(JavaScriptDirectory)\_app.min.js" DestinationFiles="$(JavaScriptDirectory)\app-$(JsVersion).min.js" />
+    <Move SourceFiles="$(JavaScriptDirectory)\_chiffon.min.js" DestinationFiles="$(JavaScriptDirectory)\chiffon-$(JsVersion).min.js" />
+
+    <Message Text="Suppression des fichiers temporaires" Importance="normal" />
+    <Delete Files="@(JsTmpFiles)" />
+  </Target>
 </Project>

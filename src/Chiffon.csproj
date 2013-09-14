@@ -278,8 +278,6 @@
     <Content Include="assets\css\01-chiffon.base.css" />
     <Content Include="assets\css\02-chiffon.helpers.css" />
     <Content Include="assets\css\03-chiffon.css" />
-    <Content Include="assets\css\04-chiffon.responsive.css" />
-    <Content Include="assets\css\05-chiffon.print.css" />
     <Content Include="assets\css\normalize-1.1.2.css" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\js\app.js" />
@@ -427,50 +425,6 @@
   <!-- Compilation des vues en mode Release -->
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true' And '$(Configuration)'=='Release'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
-  </Target>
-  <!-- Compilation des JS et des CSS -->
-  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
-  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(ProjectDir)..\intern\libexec\Narvalo.Build.dll" />
-  <Target Name="AfterBuild" Condition="'$(Configuration)'=='Release'">
-    <PropertyGroup>
-      <StyleDir>$(ProjectDir)assets\css</StyleDir>
-      <ScriptDir>$(ProjectDir)assets\js</ScriptDir>
-      <YUICompressorJar>$(ProjectDir)..\intern\libexec\yuicompressor\build\yuicompressor-2.4.7.jar</YUICompressorJar>
-      <ClosureCompilerJar>$(ProjectDir)..\intern\libexec\closure\compiler.jar</ClosureCompilerJar>
-    </PropertyGroup>
-    <ItemGroup>
-      <CssFiles Include="$(StyleDir)\normalize-1.1.2.css" />
-      <CssFiles Include="$(StyleDir)\01-chiffon.base.css" />
-      <CssFiles Include="$(StyleDir)\02-chiffon.helpers.css" />
-      <CssFiles Include="$(StyleDir)\03-chiffon.css" />
-      <!--<CssFiles Include="$(StyleDir)\04-chiffon.responsive.css" />-->
-      <!--<CssFiles Include="$(StyleDir)\05-chiffon.print.css" />-->
-    </ItemGroup>
-    <ItemGroup>
-      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.cookie-1.3.1.js" />-->
-      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.ba-outside-events-1.1.js" />-->
-      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\jquery.validate.js" />-->
-      <!--<JsFiles Include="$(ScriptDir)\vendor\jquery.validate-1.11.1\additional-methods.js" />-->
-      <JsFiles Include="$(ScriptDir)\vendor\l10n-2013.04.18.js" />
-      <JsFiles Include="$(ScriptDir)\localization.js" />
-      <JsFiles Include="$(ScriptDir)\chiffon.js" />
-    </ItemGroup>
-    <ItemGroup>
-      <CssResultFiles Include="$(StyleDir)\chi.css" />
-    </ItemGroup>
-    <ItemGroup>
-      <JsResultFiles Include="$(ScriptDir)\boot.js" />
-      <JsResultFiles Include="$(ScriptDir)\chi.js" />
-    </ItemGroup>
-    <Message Text="Fusion des fichiers CSS" Importance="normal" />
-    <MergeFiles Files="@(CssFiles)" OutFile="$(StyleDir)\chi.css" />
-    <Message Text="Compression des CSS" Importance="normal" />
-    <CssYuiCompressor JarPath="$(YUICompressorJar)" Files="@(CssResultFiles)" />
-    <Message Text="Fusion des fichiers JS" Importance="normal" />
-    <MergeFiles Files="@(JsFiles)" OutFile="$(ScriptDir)\chi.js" />
-    <Message Text="Compression des JS" Importance="normal" />
-    <ClosureCompiler JarPath="$(ClosureCompilerJar)" Files="@(JsResultFiles)" CompilationLevel="Simple" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

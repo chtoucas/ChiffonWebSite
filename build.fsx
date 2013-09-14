@@ -1,34 +1,21 @@
-// include Fake lib
 #r @"packages\FAKE.1.74.256.0\tools\FakeLib.dll"
 
 open Fake
 
 let buildDir = @".\_build\"
+let jsVersion = "1.0"
+let cssVersion = "1.0"
 
 // Targets
 
 Target "Noop" (fun () -> trace " *** Noop")
 
-Target "Clean" (fun _ -> trace " *** Clean")
-
-Target "Build" (fun _ ->
+Target "BuildAssets" (fun _ ->
   !! @"Chiffon.msbuild"
-    |> MSBuildRelease buildDir "Clean"
+    |>  MSBuild buildDir "Build" ["Configuration", "Release"; "CssVersion", cssVersion; "JsVersion", jsVersion]
     |> Log "Build-Output: "
 )
 
-Target "Zip" (fun _ -> trace " *** Zip")
-
-Target "Publish" (fun _ -> trace " *** Publish")
-
-Target "Deploy" (fun _ -> trace " *** Deploy")
-
 // Dependencies
 
-"Clean"
-  ==> "Build"
-  ==> "Zip"
-
 RunTargetOrDefault "Noop"
-
-//Run <| getBuildParamOrDefault "target" "Clean"
