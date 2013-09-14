@@ -1,42 +1,34 @@
 // include Fake lib
-#r @"packages\FAKE.1.74.255.0\tools\FakeLib.dll"
+#r @"packages\FAKE.1.74.256.0\tools\FakeLib.dll"
 
 open Fake
 
-// Directories
-let buildDir  = @".\build\"
-let publishDir = @".\_build\"
-let tmpDir = @".\tmp\"
-
-let version = "0.1"
+let buildDir = @".\_build\"
 
 // Targets
-Target "Clean" (fun _ -> 
-    CleanDirs [buildDir; tmpDir]
+
+Target "Noop" (fun () -> trace " *** Noop")
+
+Target "Clean" (fun _ -> trace " *** Clean")
+
+Target "Build" (fun _ ->
+  !! @"Chiffon.msbuild"
+    |> MSBuildRelease buildDir "Clean"
+    |> Log "Build-Output: "
 )
 
-Target "Build" (fun _ ->    
-    !! @"src\*.csproj" 
-      |> MSBuildDebug buildDir "Build" 
-      |> Log "Build-Output: "
-)
+Target "Zip" (fun _ -> trace " *** Zip")
 
-Target "Publish" (fun _ ->    
-    !! @"src\*.csproj" 
-      |> MSBuildDebug publishDir "Publish" 
-      |> Log "Publish-Output: "
-)
+Target "Publish" (fun _ -> trace " *** Publish")
 
-Target "Zip" (fun _ ->
-    !+ (buildDir + "\**\*.*") 
-        -- "*.zip" 
-        |> Scan
-        |> Zip buildDir (tmpDir + "Chiffon." + version + ".zip")
-)
+Target "Deploy" (fun _ -> trace " *** Deploy")
 
 // Dependencies
+
 "Clean"
-  ==> "Build" 
+  ==> "Build"
   ==> "Zip"
- 
-Run <| getBuildParamOrDefault "target" "Clean"
+
+RunTargetOrDefault "Noop"
+
+//Run <| getBuildParamOrDefault "target" "Clean"

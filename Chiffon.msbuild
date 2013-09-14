@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <ProjectDirectory>$(MSBuildProjectDirectory)</ProjectDirectory>
   </PropertyGroup>
-  <Import Project="$(ProjectDirectory)\intern\libexec\Narvalo.Build.Targets" />
-  <ItemGroup>
-    <Projects Include="src\Chiffon.csproj" />
-  </ItemGroup>
+
+  <Import Project="$(ProjectDirectory)\libdata\Narvalo.Build.Targets" />
+
+  <PropertyGroup>
+    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+  </PropertyGroup>
+
+  <Target Name="Noop" />
+
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)">
+    <Message Text="Cleaning..." Importance="high" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+
+  <PropertyGroup>
+    <BuildDependsOn>
+    </BuildDependsOn>
+  </PropertyGroup>
 </Project>

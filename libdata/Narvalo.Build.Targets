@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TasksPath>$(MSBuildProjectDirectory)\libexec</TasksPath>
+    <TasksLib>$(WibilongTasksPath)\Narvalo.Build.dll</TasksLib>
+  </PropertyGroup>
+
+  <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(TasksLib)" />
+  <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(TasksLib)" />
+  <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(TasksLib)" />
+  <UsingTask TaskName="Narvalo.Build.UpdateVersionInfo" AssemblyFile="$(TasksLib)" />
+
+</Project>
