@@ -31,9 +31,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Build", "..\Narvalo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9-AD2F-4C18-B796-F5568736357D}"
 	ProjectSection(SolutionItems) = preProject
+		Build.cmd = Build.cmd
 		build.fsx = build.fsx
 		Chiffon.msbuild = Chiffon.msbuild
+		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
 		fake.cmd = fake.cmd
+		etc\VersionInfo.xml = etc\VersionInfo.xml
 	EndProjectSection
 EndProject
 Global
@@ -71,6 +74,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0C3061B9-AD2F-4C18-B796-F5568736357D} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 		{56E3969F-5066-4702-A670-4C35FBD97201} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{7B564B3C-CCCC-43CA-94B6-D375AA40F085} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
