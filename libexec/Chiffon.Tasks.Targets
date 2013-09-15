@@ -1,0 +1,61 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="UpdateAssemblyVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <VersionInfoFile ParameterType="System.String" Required="true" />
+      <AssemblyTemplateFile ParameterType="System.String" Required="true" />
+      <AssemblyVersionFile ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.Globalization" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Xml.Linq" />
+      <Using Namespace="Microsoft.Build.Framework" />
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+try {
+  // Récupèration des informations de version.
+  XDocument xdoc;
+  using (var reader = new StreamReader(VersionInfoFile)) {
+      xdoc = XDocument.Load(reader);
+  }
+  var root = xdoc.Root;
+  var branch = root.Element("Branch").Value;
+  var major = Int16.Parse(root.Element("Major").Value);
+  var minor = Int16.Parse(root.Element("Minor").Value);
+  var build = Int16.Parse(root.Element("Build").Value);
+  var revision = Int16.Parse(root.Element("Revision").Value);
+
+  //
+  revision++;
+  var buildTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+
+  // Mise à jour des informations de version.
+  root.Element("Revision").Value = revision.ToString(CultureInfo.InvariantCulture);
+  root.Element("Timestamp").Value = buildTime;
+  using (var writer = new StreamWriter(VersionInfoFile)) {
+      xdoc.Save(writer);
+  }
+
+  // Mise à jour des informations d'assemblée.
+  var version = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
+  string template = File.ReadAllText(AssemblyTemplateFile)
+      .Replace("$Branch$", branch)
+      .Replace("$BuildTime$", buildTime)
+      .Replace("$Revision$", revision.ToString(CultureInfo.InvariantCulture))
+      .Replace("$Version$", version);
+  File.WriteAllText(AssemblyVersionFile, template);
+}
+catch (IOException ex) {
+    Log.LogErrorFromException(ex);
+}
+
+return !Log.HasLoggedErrors;
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>

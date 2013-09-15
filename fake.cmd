@@ -7,9 +7,7 @@
 )
 
 :end
-@popd
 @goto :eof
 
 :error
-@popd
 @exit /B %errorlevel%

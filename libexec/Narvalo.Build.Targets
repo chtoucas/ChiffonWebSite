@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TasksPath>$(MSBuildProjectDirectory)\libdata</TasksPath>
-    <TasksLib>$(TasksPath)\Narvalo.Build.dll</TasksLib>
+    <TasksLib>$(MSBuildProjectDirectory)\libexec\Narvalo.Build.dll</TasksLib>
   </PropertyGroup>
 
   <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(TasksLib)" />
