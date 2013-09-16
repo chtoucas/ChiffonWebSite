@@ -5,6 +5,7 @@
     using System.Configuration;
     using System.Globalization;
     using System.Linq;
+    using System.Reflection;
     using Narvalo;
     using Narvalo.Collections;
     using Serilog.Events;
@@ -13,6 +14,9 @@
     {
         const string SettingPrefix_ = "chiffon:";
         const string SqlConnectionStringName_ = "SqlServer";
+
+        static readonly Version AssemblyVersion_
+            = Assembly.GetExecutingAssembly().GetName().Version;
 
         bool _debugCss = false;
         bool _debugJs = false;
@@ -79,14 +83,6 @@
         {
             // > Paramètres obligatoires <
 
-            CssVersion = nvc.MayGetValue("chiffon:CssVersion")
-                .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon:CssVersion'."));
-
-            JsVersion = nvc.MayGetValue("chiffon:JsVersion")
-                .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon:JsVersion'."));
-
             LogProfile = nvc.MayGetValue("chiffon:LogProfile")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon:LogProfile'."));
@@ -101,6 +97,22 @@
                     "Missing or invalid config 'chiffon:PatternDirectory'."));
 
             // > Paramètres optionels <
+
+            var version = String.Format(CultureInfo.InvariantCulture,
+                "{0}.{1}.{2}",
+                AssemblyVersion_.Major.ToString(CultureInfo.InvariantCulture),
+                AssemblyVersion_.Minor.ToString(CultureInfo.InvariantCulture),
+                AssemblyVersion_.Build.ToString(CultureInfo.InvariantCulture));
+
+            CssVersion = nvc.MayGetValue("chiffon:CssVersion")
+                .ValueOrElse(version);
+            //.ValueOrThrow(() => new ConfigurationErrorsException(
+            //    "Missing or invalid config 'chiffon:CssVersion'."));
+
+            JsVersion = nvc.MayGetValue("chiffon:JsVersion")
+                .ValueOrElse(version);
+            //.ValueOrThrow(() => new ConfigurationErrorsException(
+            //    "Missing or invalid config 'chiffon:JsVersion'."));
 
             DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(false);

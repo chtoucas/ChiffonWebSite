@@ -7,44 +7,46 @@
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <VersionNumber>0.0.0</VersionNumber>
+
+    <AssetProject>$(LibExecDirectory)\Chiffon.Assets.msbuild</AssetProject>
+    <!--<WebSiteProject>$(BaseDirectory)\src\Chiffon.csproj</WebSiteProject>-->
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectFiles Include="$(LibExecDirectory)\Chiffon.Assets.msbuild" />
-    <ProjectFiles Include="$(BaseDirectory)\src\Chiffon.csproj" />
+    <ConfigFiles Include="$(ConfigDirectory)\$(TargetPlatform)\*.config"></ConfigFiles>
   </ItemGroup>
 
   <Target Name="Clean">
-    <MSBuild Projects="@(ProjectFiles)" Targets="Clean" Properties="Configuration=$(Configuration)" />
+    <!--<MSBuild Projects="$(WebSiteProject)" Targets="Clean" Properties="Configuration=$(Configuration)" />-->
   </Target>
 
   <Target Name="Build">
-    <MSBuild Projects="@(ProjectFiles)" Targets="Build" Properties="Configuration=$(Configuration)" />
+    <MSBuild Projects="$(AssetProject)" Targets="Build"
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);TargetPlatform=$(TargetPlatform)" />
+    <!--<MSBuild Projects="$(WebSiteProject)" Targets="Build" Properties="Configuration=$(Configuration)" />-->
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Package" DependsOnTargets="Clean;Build" />
+  <Target Name="Package" DependsOnTargets="Clean;Build">
+    <MSBuild Projects="$(AssetProject)"
+             Targets="Package"
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);TargetPlatform=$(TargetPlatform)" />
+  </Target>
+
+  <Target Name="_UpdateVersionNumber" BeforeTargets="Build" Condition="$(TargetPlatform) == 'Production'">
+    <UpdateVersionNumber
+      VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"
+      AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs">
+      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
+    </UpdateVersionNumber>
+  </Target>
 
   <!--
   http://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild
-  http://stackoverflow.com/questions/1983575/copywebapplication-with-web-config-transformations/2953376#2953376 -->
-
-  <Target Name="_MakeTmpDirectory">
-    <MakeDir Directories="$(TmpDirectory)" Condition="!Exists(@(TmpDirectory))" />
-  </Target>
-
-  <Target Name="_UpdateAssemblyVersion" BeforeTargets="Build">
-    <UpdateVersionInfo VersionFile="$(EtcDirectory)\VersionInfo.xml">
-      <Output PropertyName="Version" TaskParameter="Version" />
-      <Output PropertyName="Revision" TaskParameter="Revision" />
-      <Output PropertyName="Branch" TaskParameter="Branch" />
-    </UpdateVersionInfo>
-
-    <UpdateAssemblyVersion
-      Version="$(Version)"
-      Revision="$(Revision)"
-      Branch="$(Branch)"
-      AssemblyTemplateFile="$(EtcDirectory)\AssemblyInfo.Chiffon.Version.Template.cs"
-      AssemblyVersionFile="$(EtcDirectory)\AssemblyInfo.Chiffon.Version.cs"
-      />
-  </Target>
+  http://stackoverflow.com/questions/1983575/copywebapplication-with-web-config-transformations/2953376#2953376 
+  -->
 </Project>

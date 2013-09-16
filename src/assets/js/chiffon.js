@@ -262,14 +262,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   Views.Layout = (function() {
     function Layout() {
       //this.modalView = new Views.Modal();
-      this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
+      //this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
       this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
     }
 
     Layout.prototype = {
       initialize: function() {
         //this.modalView.registerEventHandlers();
-        this.registerModalView.registerEventHandlers();
+        //this.registerModalView.registerEventHandlers();
         this.ajaxStatusView.registerEventHandlers();
 
         $('A[rel=external]').external();

@@ -57,9 +57,6 @@
     /// </summary>
     public class Global : HttpApplication
     {
-        //static readonly string AssemblyVersion_
-        //    = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
         //public Global()
         //    : base()
         //{

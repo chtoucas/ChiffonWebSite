@@ -5,7 +5,7 @@
 @Narvalo.Web.Html.AssetTag.JavaScript("app.js")
 
 <script>
- (function(App, undef) {
+ (function(App) {
   if (!App) { return; }
   var options = { debug: true, gaq: '' };
   (new App(options)).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });

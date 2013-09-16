@@ -148,8 +148,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\etc\AssemblyInfo.Chiffon.Version.cs">
-      <Link>Properties\AssemblyInfo.Chiffon.Version.cs</Link>
+    <Compile Include="..\etc\AssemblyInfo.Version.cs">
+      <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\ActionName.cs" />

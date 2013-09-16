@@ -1,14 +1,28 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Narvalo.Build.Targets" />
   <Import Project=".\Chiffon.Tasks.Targets" />
-  
+
   <PropertyGroup>
-    <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</BaseDirectory>
+    <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDirectory>
+
+    <!-- Valeurs possibles pour TargetPlatform: Development, Production -->
+    <TargetPlatform Condition="$(TargetPlatform) == ''">Production</TargetPlatform>
+    
     <EtcDirectory>$(BaseDirectory)\etc</EtcDirectory>
     <LibExecDirectory>$(BaseDirectory)\libexec</LibExecDirectory>
-    <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
+    <SourceDirectory>$(BaseDirectory)\src</SourceDirectory>
 
-    <YuiCompressorJar>$(ToolsDirectory)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <TmpDirectory>$(BaseDirectory)\_tmp</TmpDirectory>
+    <BuildDirectory>$(BaseDirectory)\_build</BuildDirectory>
+
+    <ConfigDirectory>$(BaseDirectory)\intern\config\$(TargetPlatform)</ConfigDirectory>
+    <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
+  </PropertyGroup>
+
+  <!-- Outils (exe ou jar) -->
+  <PropertyGroup>
+    <SevenZipExe>$(ToolsDirectory)\7-zip\7za.exe</SevenZipExe>
     <GoogleClosureJar>$(ToolsDirectory)\closure\compiler.jar</GoogleClosureJar>
+    <YuiCompressorJar>$(ToolsDirectory)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
   </PropertyGroup>
 </Project>

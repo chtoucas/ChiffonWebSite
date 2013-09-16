@@ -3,64 +3,69 @@
 
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+    <TargetPlatform Condition="$(TargetPlatform) == ''">Production</TargetPlatform>
+    <VersionNumber Condition="$(VersionNumber) == ''">0.0.0</VersionNumber>
   </PropertyGroup>
 
   <PropertyGroup>
-    <CssVersion>1.0</CssVersion>
-    <JsVersion>1.0</JsVersion>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <AssetDirectory>$(BaseDirectory)\src\assets</AssetDirectory>
+    <AssetDirectory>$(SourceDirectory)\assets</AssetDirectory>
     <CssDirectory>$(AssetDirectory)\css</CssDirectory>
     <JsDirectory>$(AssetDirectory)\js</JsDirectory>
 
-    <ScreenCssFile>$(CssDirectory)\chiffon-$(CssVersion).css</ScreenCssFile>
-    <AppJsFile>$(JsDirectory)\app-$(JsVersion).js</AppJsFile>
-    <ChiffonJsFile>$(JsDirectory)\chiffon-$(JsVersion).js</ChiffonJsFile>
+    <TmpDirectory>$(TmpDirectory)\assets</TmpDirectory>
+
+    <CssScreenBundle>$(CssDirectory)\chiffon-$(VersionNumber).css</CssScreenBundle>
+    <JsAppBundle>$(JsDirectory)\app-$(VersionNumber).min.js</JsAppBundle>
+    <JsChiffonBundle>$(JsDirectory)\chiffon-$(VersionNumber).min.js</JsChiffonBundle>
   </PropertyGroup>
 
   <ItemGroup>
     <CssFiles Include="normalize-1.1.2.css">
-      <OutFile>$(ScreenCssFile)</OutFile>
+      <Bundle>$(CssScreenBundle)</Bundle>
     </CssFiles>
     <CssFiles Include="01-chiffon.base.css">
-      <OutFile>$(ScreenCssFile)</OutFile>
+      <Bundle>$(CssScreenBundle)</Bundle>
     </CssFiles>
     <CssFiles Include="02-chiffon.helpers.css">
-      <OutFile>$(ScreenCssFile)</OutFile>
+      <Bundle>$(CssScreenBundle)</Bundle>
     </CssFiles>
     <CssFiles Include="03-chiffon.css">
-      <OutFile>$(ScreenCssFile)</OutFile>
+      <Bundle>$(CssScreenBundle)</Bundle>
     </CssFiles>
   </ItemGroup>
 
   <ItemGroup>
-    <JsFiles Include="vendor\yepnope-1.5.4.js">
-      <OutFile>$(AppJsFile)</OutFile>
+    <JsFiles Include="vendor\yepnope-1.5.4.min.js">
+      <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
-    <JsFiles Include="vendor\lodash.compat-1.3.1.js">
-      <OutFile>$(AppJsFile)</OutFile>
+    <JsFiles Include="vendor\lodash.compat-1.3.1.min.js">
+      <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
-    <JsFiles Include="app.js">
-      <OutFile>$(AppJsFile)</OutFile>
+    <JsFiles Include="app.min.js">
+      <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
 
-    <JsFiles Include="vendor\l10n-2013.04.18.js">
-      <OutFile>$(ChiffonJsFile)</OutFile>
+    <JsFiles Include="vendor\l10n-2013.04.18.min.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
     </JsFiles>
-    <JsFiles Include="localization.js">
-      <OutFile>$(ChiffonJsFile)</OutFile>
+    <JsFiles Include="localization.min.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
     </JsFiles>
-    <JsFiles Include="chiffon.js">
-      <OutFile>$(ChiffonJsFile)</OutFile>
+    <JsFiles Include="chiffon.min.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
     </JsFiles>
   </ItemGroup>
 
-  <Target Name="Clean" />
-  
+  <ItemGroup>
+    <JsSources Include="app.js" />
+    <JsSources Include="localization.js" />
+    <JsSources Include="chiffon.js" />
+  </ItemGroup>
+
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
-  
+
+  <Target Name="Package" DependsOnTargets="$(PackageDependsOn)" />
+
   <PropertyGroup>
     <BuildDependsOn>
       MergeAndMinifyCss;
@@ -68,21 +73,56 @@
     </BuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="MergeAndMinifyCss" Inputs="@(CssFiles)" Outputs="%(OutFile)">
+  <PropertyGroup>
+    <PackageDependsOn>
+      Build;
+      _CopyFiles;
+      _Zip;
+    </PackageDependsOn>
+  </PropertyGroup>
+
+  <Target Name="MergeAndMinifyCss" Inputs="@(CssFiles)" Outputs="%(Bundle)">
     <MergeFiles Files="@(CssFiles->'$(CssDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
-                OutFile="%(OutFile)"/>
+                OutFile="%(Bundle)"/>
 
-    <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="%(CssFiles.OutFile)" />
+    <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="%(CssFiles.Bundle)" />
 
-    <Delete Files="%(CssFiles.OutFile)" />
+    <Delete Files="%(CssFiles.Bundle)" />
   </Target>
 
-  <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(OutFile)">
+  <Target Name="_BeforeMergeAndMinifyJs" BeforeTargets="MergeAndMinifyJs">
+    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')" CompilationLevel="Simple" />
+  </Target>
+
+  <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(Bundle)">
     <MergeFiles Files="@(JsFiles->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
-                OutFile="%(OutFile)" />
+                OutFile="%(Bundle)" />
+  </Target>
 
-    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.OutFile)" CompilationLevel="Simple" />
+  <Target Name="_AfterMergeAndMinifyJs" AfterTargets="MergeAndMinifyJs">
+    <Delete Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename).min%(Extension)')" />
+  </Target>
 
-    <Delete Files="%(JsFiles.OutFile)" />
+  <Target Name="_BeforeCopyFiles" BeforeTargets="_CopyFiles">
+    <RemoveDir Directories="$(TmpDirectory)" Condition="Exists($(TmpDirectory))" />
+    <MakeDir Directories="$(TmpDirectory)" Condition="!Exists($(TmpDirectory))" />
+  </Target>
+
+  <Target Name="_BeforeZip" BeforeTargets="_Zip">
+    <MakeDir Directories="$(BuildDirectory)" Condition="!Exists($(BuildDirectory))" />
+  </Target>
+
+  <Target Name="_CopyFiles">
+    <ItemGroup>
+      <SourceFiles Include="$(AssetDirectory)\**\*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(SourceFiles)"
+          DestinationFiles="@(SourceFiles->'$(TmpDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="_Zip">
+    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets.$(VersionNumber)-$(TargetPlatform).7z $(TmpDirectory)\"
+      ContinueOnError="false"/>
   </Target>
 </Project>

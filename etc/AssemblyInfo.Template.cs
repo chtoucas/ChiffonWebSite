@@ -6,9 +6,9 @@ using System;
 using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: AssemblyVersion("$Version$")]
-[assembly: AssemblyFileVersion("$Version$.$Revision$")]
-[assembly: AssemblyInformationalVersion("$Version$-$Branch$")]
+[assembly: AssemblyVersion("$VersionNumber$.0")]
+[assembly: AssemblyFileVersion("$VersionNumber$.0")]
+[assembly: AssemblyInformationalVersion("$VersionNumber$")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug packaged on $BuildTime$")]

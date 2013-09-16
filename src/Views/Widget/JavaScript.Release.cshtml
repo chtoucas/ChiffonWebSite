@@ -3,7 +3,7 @@
 @Narvalo.Web.Html.AssetTag.JavaScript("app-" + Model.Version + ".min.js")
 
 <script>
- (function(a,o) {
+ (function(a) {
   if (!a){return;}(new a({version:'@Model.Version'})).main('@Model.LanguageName',function(_){_.handle('@Model.ControllerName','@Model.ActionName');});
- })(this.a);
+ })(this.App);
 </script>
