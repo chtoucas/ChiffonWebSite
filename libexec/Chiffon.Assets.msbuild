@@ -94,7 +94,7 @@
     <MergeFiles Files="@(JsFiles->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
-    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.Bundle)" 
+    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.Bundle)"
                      CompilationLevel="Simple" ProcessTimeout="10000" />
 
     <Delete Files="%(JsFiles.Bundle)" />
@@ -134,7 +134,7 @@
   </Target>
 
   <Target Name="_Zip">
-    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets.$(VersionNumber)-$(Branch).7z $(TmpDirectory)\"
+    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets.$(VersionNumber)-$(PlatformPackage).7z $(TmpDirectory)\"
       ContinueOnError="false"/>
   </Target>
 </Project>

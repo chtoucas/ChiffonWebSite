@@ -20,19 +20,19 @@
 
   <Target Name="Build">
     <MSBuild Projects="$(AssetProject)" Targets="Build"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);Branch=$(Branch)" />
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);PlatformPackage=$(PlatformPackage)" />
     <!--<MSBuild Projects="$(WebSiteProject)" Targets="Build" Properties="Configuration=$(Configuration)" />-->
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Package" DependsOnTargets="Clean;Build">
+  <Target Name="Package">
     <MSBuild Projects="$(AssetProject)"
              Targets="Package"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);Branch=$(Branch)" />
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);PlatformPackage=$(PlatformPackage)" />
   </Target>
 
-  <Target Name="_BeforeBuild" BeforeTargets="Build" Condition="$(Branch) == 'RELENG'">
+  <Target Name="_BeforePackage" BeforeTargets="Package">
     <UpdateVersionNumber
       VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"
       AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
@@ -43,6 +43,6 @@
 
   <!--
   http://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild
-  http://stackoverflow.com/questions/1983575/copywebapplication-with-web-config-transformations/2953376#2953376 
+  http://stackoverflow.com/questions/1983575/copywebapplication-with-web-config-transformations/2953376#2953376
   -->
 </Project>

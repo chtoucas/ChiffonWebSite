@@ -4,7 +4,7 @@
 @call "%VS110COMNTOOLS%vsvars32.bat"
 
 :build
-MSBuild Chiffon.msbuild /nologo /verbosity:normal /t:Build /p:Branch=CURRENT
+MSBuild Chiffon.msbuild /nologo /verbosity:normal /t:Build
 @if errorlevel 1 (
   @goto error
 )

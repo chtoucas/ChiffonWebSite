@@ -5,12 +5,14 @@
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
+
+    <!-- Aujourd'hui on a une seule Valeur possible pour PlatformPackage:
+      * Production
+      -->
+    <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Valeurs possibles pour Branch: CURRENT, RELENG -->
-    <Branch Condition="$(Branch) == ''">CURRENT</Branch>
-
     <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDirectory>
 
     <EtcDirectory>$(BaseDirectory)\etc</EtcDirectory>
@@ -20,7 +22,7 @@
     <TmpDirectory>$(BaseDirectory)\_tmp</TmpDirectory>
     <BuildDirectory>$(BaseDirectory)\_build</BuildDirectory>
 
-    <ConfigDirectory>$(BaseDirectory)\intern\config\$(Branch)</ConfigDirectory>
+    <ConfigDirectory>$(BaseDirectory)\intern\config\$(PlatformPackage)</ConfigDirectory>
     <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
   </PropertyGroup>
 
@@ -29,5 +31,6 @@
     <SevenZipExe>$(ToolsDirectory)\7-zip\7za.exe</SevenZipExe>
     <GoogleClosureJar>$(ToolsDirectory)\closure\compiler.jar</GoogleClosureJar>
     <YuiCompressorJar>$(ToolsDirectory)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <!--<NodeExe></NodeExe>-->
   </PropertyGroup>
 </Project>
