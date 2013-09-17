@@ -262,6 +262,8 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
     <Compile Include="ViewModels\CommonStylesheetViewModel.cs" />
+    <Compile Include="ViewModels\NewContactViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
     <Compile Include="ViewModels\DesignerViewItem.cs" />
     <Compile Include="ViewModels\PatternViewItem.cs" />
@@ -366,6 +368,8 @@
     <Content Include="Views\Shared\_Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
+    <Content Include="Views\Contact\PostRegister.cshtml" />
+    <Content Include="Views\Contact\RegisterTwice.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

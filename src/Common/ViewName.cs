@@ -13,6 +13,8 @@
         {
             public const string Login = "~/Views/Contact/Login.cshtml";
             public const string Register = "~/Views/Contact/Register.cshtml";
+            public const string PostRegister = "~/Views/Contact/PostRegister.cshtml";
+            public const string RegisterTwice = "~/Views/Contact/RegisterTwice.cshtml";
             public const string Newsletter = "~/Views/Contact/Newsletter.cshtml";
         }
 

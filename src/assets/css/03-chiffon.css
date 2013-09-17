@@ -162,11 +162,15 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
     .contact_register FORM .left { margin-top: 0; }
   .contact_register LABEL { text-transform: uppercase; font-size: 1.1em; padding-bottom: .5em; }
   .contact_register INPUT { text-transform: uppercase; width: 218px; height: 24px; font-size: 1.4em; padding: .3em .5em; background-color: transparent; border: 1px solid #999; }
-    .contact_register INPUT[name="email_address"] { text-transform: none; }
+    .contact_register INPUT[name="EmailAddress"] { text-transform: none; }
   .contact_register TEXTAREA { width: 434px; height: 229px; font-size: 1.4em; font-style: italic; padding: .2em; background-color: transparent; border: 1px solid #999; }
   .contact_register .submit { text-align: right; margin-top: 2em; }
   .contact_register INPUT[type=submit] { width: 160px; height: 32px; color: #999; }
     .contact_register INPUT[type=submit]:hover { color: #000; border-color: #000; }
+
+  .contact_register .public_key { color: #000; border: 1px #000 solid; padding: .1em .5em; }
+  .contact_register .validation-summary-errors { font-size: 1.3em; text-align: center; margin-bottom: 2em; color: red; }
+    .contact_register .validation-summary-errors UL { list-style-type: none; }
 
 .modal .contact_register { border-top: none; }
 
@@ -178,8 +182,8 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
   .contact_login FORM { text-transform: uppercase; margin-bottom: 7em; }
     .contact_login FORM A { text-transform: none; }
   .contact_login INPUT { background-color: transparent; border: 1px solid #999; }
-    .contact_login INPUT[type=text] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
-      .contact_login INPUT[type=text]:focus { color: #000; }
+    .contact_login INPUT[type=password] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
+    .contact_login INPUT[type=text]:focus { color: #000; }
     .contact_login INPUT[type=submit] { border: 0; background: transparent; color: #000; margin-bottom: .9em; }
       .contact_login INPUT[type=submit]:hover { color: #ccc; }
 
@@ -198,7 +202,7 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
   #designer .mosaic { width: 720px; }
     #designer .mosaic LI { margin-right: 20px; }
 
-  #designer .vignette SPAN { font-weight: bold; text-transform: uppercase; padding: .5em 1em; }
+  #designer .vignette SPAN { font-weight: bold; text-transform: uppercase; /*padding: .5em 1em;*/ }
 
   #designer NAV { border-bottom: 1px solid #999; margin-bottom: 2.5em; font-size: 1.1em; }
     #designer NAV UL { margin: 0; padding: 0; }

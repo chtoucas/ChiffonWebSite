@@ -54,14 +54,6 @@
     </JsFiles>
   </ItemGroup>
 
-  <!--
-  <ItemGroup>
-    <JsSources Include="app.js" />
-    <JsSources Include="localization.js" />
-    <JsSources Include="chiffon.js" />
-  </ItemGroup>
-  -->
-
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
 
   <Target Name="Package" DependsOnTargets="$(PackageDependsOn)" />
@@ -104,12 +96,10 @@
   <Target Name="_BeforeMergeAndMinifyJs" BeforeTargets="MergeAndMinifyJs">
     <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')" CompilationLevel="Simple" />
   </Target>
-
   <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(Bundle)">
     <MergeFiles Files="@(JsFiles->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)" />
   </Target>
-
   <Target Name="_AfterMergeAndMinifyJs" AfterTargets="MergeAndMinifyJs">
     <Delete Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename).min%(Extension)')" />
   </Target>

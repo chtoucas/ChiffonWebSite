@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Common.Targets" />
-  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />-->
 
   <PropertyGroup>
     <VersionNumber>0.0.0</VersionNumber>
 
-    <AssetProject>$(LibExecDirectory)\Chiffon.Assets.msbuild</AssetProject>
-    <!--<WebSiteProject>$(BaseDirectory)\src\Chiffon.csproj</WebSiteProject>-->
+    <AssetsProject>$(LibExecDirectory)\Chiffon.Assets.msbuild</AssetsProject>
   </PropertyGroup>
 
   <ItemGroup>
     <ConfigFiles Include="$(ConfigDirectory)\*.config"></ConfigFiles>
   </ItemGroup>
 
-  <Target Name="Clean">
-    <!--<MSBuild Projects="$(WebSiteProject)" Targets="Clean" Properties="Configuration=$(Configuration)" />-->
-  </Target>
+  <Target Name="Clean" />
 
   <Target Name="Build">
-    <MSBuild Projects="$(AssetProject)" Targets="Build"
+    <MSBuild Projects="$(AssetsProject)" Targets="Build"
              Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);PlatformPackage=$(PlatformPackage)" />
-    <!--<MSBuild Projects="$(WebSiteProject)" Targets="Build" Properties="Configuration=$(Configuration)" />-->
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
   <Target Name="Package">
-    <MSBuild Projects="$(AssetProject)"
+    <MSBuild Projects="$(AssetsProject)"
              Targets="Package"
              Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);PlatformPackage=$(PlatformPackage)" />
   </Target>
@@ -40,9 +35,4 @@
       <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
     </UpdateVersionNumber>
   </Target>
-
-  <!--
-  http://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild
-  http://stackoverflow.com/questions/1983575/copywebapplication-with-web-config-transformations/2953376#2953376
-  -->
 </Project>

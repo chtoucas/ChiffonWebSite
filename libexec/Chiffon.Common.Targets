@@ -6,22 +6,27 @@
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
 
-    <!-- Aujourd'hui on a une seule Valeur possible pour PlatformPackage:
-      * Production
-      -->
+    <!-- Aujourd'hui on a une seule Valeur possible pour PlatformPackage: Production -->
     <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
   </PropertyGroup>
 
+  <!-- Répertoires communs -->
   <PropertyGroup>
     <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDirectory>
 
     <EtcDirectory>$(BaseDirectory)\etc</EtcDirectory>
     <LibExecDirectory>$(BaseDirectory)\libexec</LibExecDirectory>
     <SourceDirectory>$(BaseDirectory)\src</SourceDirectory>
+  </PropertyGroup>
 
+  <!-- Répertoires temporaires -->
+  <PropertyGroup>
     <TmpDirectory>$(BaseDirectory)\_tmp</TmpDirectory>
     <BuildDirectory>$(BaseDirectory)\_build</BuildDirectory>
+  </PropertyGroup>
 
+  <!-- Répertoires privés -->
+  <PropertyGroup>
     <ConfigDirectory>$(BaseDirectory)\intern\config\$(PlatformPackage)</ConfigDirectory>
     <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
   </PropertyGroup>

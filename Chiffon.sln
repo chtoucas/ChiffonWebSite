@@ -39,6 +39,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9
 		etc\VersionNumber.xml = etc\VersionNumber.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Production", "Production", "{AFE5A1C2-966F-45F8-9D12-C099ECCAE315}"
+	ProjectSection(SolutionItems) = preProject
+		intern\config\appSettings.config = intern\config\appSettings.config
+		intern\config\connectionStrings.config = intern\config\connectionStrings.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +81,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C3061B9-AD2F-4C18-B796-F5568736357D} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
+		{AFE5A1C2-966F-45F8-9D12-C099ECCAE315} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 		{56E3969F-5066-4702-A670-4C35FBD97201} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{7B564B3C-CCCC-43CA-94B6-D375AA40F085} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}

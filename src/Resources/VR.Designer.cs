@@ -70,11 +70,20 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013. Site web réalisé par chtoucas@narvalo.org.
+        ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013..
         /// </summary>
         public static string Layout_Copyright {
             get {
                 return ResourceManager.GetString("Layout_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Conception graphique : Viviane Devaux. Réalisation : chtoucas@narvalo.org..
+        /// </summary>
+        public static string Layout_CreatedBy {
+            get {
+                return ResourceManager.GetString("Layout_CreatedBy", resourceCulture);
             }
         }
         

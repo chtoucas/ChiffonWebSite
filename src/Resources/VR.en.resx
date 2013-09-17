@@ -121,7 +121,10 @@
     <value>All</value>
   </data>
   <data name="Layout_Copyright" xml:space="preserve">
-    <value>© Pour quel motif, Simone ? 2013. Website produced by chtoucas@narvalo.org</value>
+    <value>© Pour quel motif, Simone ? 2013.</value>
+  </data>
+  <data name="Layout_CreatedBy" xml:space="preserve">
+    <value>Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
   </data>
   <data name="Layout_Disclaimer" xml:space="preserve">
     <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.</value>

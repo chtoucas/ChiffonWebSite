@@ -1,0 +1,20 @@
+﻿@model NewContactViewModel
+
+<div class=contact_register>
+ <div class="serif serif_large grey center">
+  <p>
+   Bonjour @Model.Firstname @Model.Lastname,                 
+  </p>
+  <p>
+   Merci de vous être enregistré sur notre site.
+  <span class=break />
+   Votre mot de passe est le suivant&nbsp;:
+  </p>
+  <p>
+   <span class=public_key>@Model.PublicKey</span>
+  </p>
+  <p>
+   Vous pouvez d'ores et déjà consulter notre <a href="/">catalogue</a>.
+  </p>
+ </div>
+</div>
