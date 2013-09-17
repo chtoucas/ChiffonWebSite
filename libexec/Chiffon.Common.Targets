@@ -4,7 +4,10 @@
 
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
-    <Configuration Condition="$(Platform) == ''">AnyCPU</Configuration>
+    <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <!-- Valeurs possibles pour Branch: CURRENT, RELENG -->
     <Branch Condition="$(Branch) == ''">CURRENT</Branch>
 
