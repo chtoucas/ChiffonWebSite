@@ -33,13 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9
 	ProjectSection(SolutionItems) = preProject
 		etc\AssemblyInfo.Template.cs = etc\AssemblyInfo.Template.cs
 		Build.cmd = Build.cmd
-		build.fsx = build.fsx
 		libexec\Chiffon.Assets.msbuild = libexec\Chiffon.Assets.msbuild
 		libexec\Chiffon.Common.Targets = libexec\Chiffon.Common.Targets
 		Chiffon.msbuild = Chiffon.msbuild
 		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
-		fake.cmd = fake.cmd
-		libexec\Narvalo.Build.Targets = libexec\Narvalo.Build.Targets
 		Package.cmd = Package.cmd
 		etc\VersionNumber.xml = etc\VersionNumber.xml
 	EndProjectSection

@@ -3,11 +3,13 @@
   <Import Project=".\Chiffon.Tasks.Targets" />
 
   <PropertyGroup>
+    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+    <Configuration Condition="$(Platform) == ''">AnyCPU</Configuration>
+    <!-- Valeurs possibles pour Branch: CURRENT, RELENG -->
+    <Branch Condition="$(Branch) == ''">CURRENT</Branch>
+
     <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDirectory>
 
-    <!-- Valeurs possibles pour TargetPlatform: Development, Production -->
-    <TargetPlatform Condition="$(TargetPlatform) == ''">Production</TargetPlatform>
-    
     <EtcDirectory>$(BaseDirectory)\etc</EtcDirectory>
     <LibExecDirectory>$(BaseDirectory)\libexec</LibExecDirectory>
     <SourceDirectory>$(BaseDirectory)\src</SourceDirectory>
@@ -15,7 +17,7 @@
     <TmpDirectory>$(BaseDirectory)\_tmp</TmpDirectory>
     <BuildDirectory>$(BaseDirectory)\_build</BuildDirectory>
 
-    <ConfigDirectory>$(BaseDirectory)\intern\config\$(TargetPlatform)</ConfigDirectory>
+    <ConfigDirectory>$(BaseDirectory)\intern\config\$(Branch)</ConfigDirectory>
     <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
   </PropertyGroup>
 

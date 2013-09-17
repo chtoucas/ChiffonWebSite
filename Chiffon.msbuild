@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Common.Targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-
-  <PropertyGroup>
-    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
-  </PropertyGroup>
+  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />-->
 
   <PropertyGroup>
     <VersionNumber>0.0.0</VersionNumber>
@@ -15,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ConfigFiles Include="$(ConfigDirectory)\$(TargetPlatform)\*.config"></ConfigFiles>
+    <ConfigFiles Include="$(ConfigDirectory)\*.config"></ConfigFiles>
   </ItemGroup>
 
   <Target Name="Clean">
@@ -24,7 +20,7 @@
 
   <Target Name="Build">
     <MSBuild Projects="$(AssetProject)" Targets="Build"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);TargetPlatform=$(TargetPlatform)" />
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);Branch=$(Branch)" />
     <!--<MSBuild Projects="$(WebSiteProject)" Targets="Build" Properties="Configuration=$(Configuration)" />-->
   </Target>
 
@@ -33,10 +29,10 @@
   <Target Name="Package" DependsOnTargets="Clean;Build">
     <MSBuild Projects="$(AssetProject)"
              Targets="Package"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);TargetPlatform=$(TargetPlatform)" />
+             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);Branch=$(Branch)" />
   </Target>
 
-  <Target Name="_UpdateVersionNumber" BeforeTargets="Build" Condition="$(TargetPlatform) == 'Production'">
+  <Target Name="_BeforeBuild" BeforeTargets="Build" Condition="$(Branch) == 'RELENG'">
     <UpdateVersionNumber
       VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"
       AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
