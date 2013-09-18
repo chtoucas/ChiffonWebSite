@@ -6,14 +6,14 @@ using System;
 using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: AssemblyVersion("1.0.23.0")]
-[assembly: AssemblyFileVersion("1.0.23.0")]
-[assembly: AssemblyInformationalVersion("1.0.23")]
+[assembly: AssemblyVersion("1.0.25.0")]
+[assembly: AssemblyFileVersion("1.0.25.0")]
+[assembly: AssemblyInformationalVersion("1.0.25")]
 
 #if DEBUG
-[assembly: AssemblyConfiguration("Debug packaged on 2013-09-18 08:43")]
+[assembly: AssemblyConfiguration("Debug packaged on 2013-09-18 22:48")]
 #else
-[assembly: AssemblyConfiguration("Release packaged on 2013-09-18 08:43")]
+[assembly: AssemblyConfiguration("Release packaged on 2013-09-18 22:48")]
 #endif
 
 [assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly")]

@@ -30,29 +30,32 @@
             base.Initialize(name, config);
 
             // Initialisation du champs baseUri.
-            _baseUri = config.MayParseValue("baseUri", _ => MayParse.ToUri(_, UriKind.Absolute))
-                .ValueOrThrow(() => new ProviderException("Missing or invalid config 'baseUri'."));
+            _baseUri = config.MayParseValue("baseUri", _ => MayParse.ToUri(_, UriKind.RelativeOrAbsolute))
+               .ValueOrThrow(() => new ProviderException("Missing or invalid config 'baseUri'."));
             config.Remove("baseUri");
         }
 
+        // WARNING: Ne pas utiliser "/img/", par exemple car si _baseUri contient déjà un chemin 
+        // relatif, il sera ignoré.
+
         public override Uri GetImage(string relativePath)
         {
-            return MakeUri_("/img/", relativePath);
+            return MakeUri_("img/", relativePath);
         }
 
         public override Uri GetScript(string relativePath)
         {
-            return MakeUri_("/js/", relativePath);
+            return MakeUri_("js/", relativePath);
         }
 
         public override Uri GetStyle(string relativePath)
         {
-            return MakeUri_("/css/", relativePath);
+            return MakeUri_("css/", relativePath);
         }
 
         Uri MakeUri_(string basePath, string relativePath)
         {
-            return new Uri(_baseUri, VirtualPathUtility.Combine(basePath, relativePath));
+            return new Uri(_baseUri, basePath + relativePath);
         }
     }
 }

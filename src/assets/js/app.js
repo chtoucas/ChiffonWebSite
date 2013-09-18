@@ -8,7 +8,7 @@ this.App = (function(win, _, yepnope, undef) {
     baseUrl: '/assets/js/'
     , debug: false
     , domain: 'pourquelmotifsimone.com'
-    , gaq: 'UA-43374044-1'
+    //, gaq: 'UA-43374044-1'
     , version: undef
   };
 
@@ -33,8 +33,6 @@ this.App = (function(win, _, yepnope, undef) {
           : rebase('chiffon-' + settings.version + '.min.js');
       }
 
-      , googleAnalytics: '//www.google-analytics.com/ga.js'
-
       , jQuery: function() {
         return vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js');
       }
@@ -56,19 +54,6 @@ this.App = (function(win, _, yepnope, undef) {
       if (-1 === locales.indexOf(locale)) {
         throw new Error('The locale "' + locale + '" is not supported.');
       }
-
-      // Google Analytics.
-      yepnope({
-        test: settings.gaq
-        , yep: this.dependencies.googleAnalytics
-        , callback: function() {
-          var ga = win.ga;
-          if (undef === ga) { return; }
-
-          ga('create', settings.gaq, settings.domain);
-          ga('send', 'pageview');
-        }
-      });
 
       // FIXME: Quid quand un des appels échoue ?
       yepnope({

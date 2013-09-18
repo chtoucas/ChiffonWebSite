@@ -22,14 +22,14 @@
         bool _debugJs = false;
         bool _enableClientCache = true;
         bool _enableServerCache = true;
-        //string _googleAnalytics = String.Empty;
+        string _googleAnalytics = String.Empty;
 
         public string CssVersion { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
         public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
         public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
-        //public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
+        public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
         public string JsVersion { get; set; }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
@@ -120,7 +120,7 @@
             EnableServerCache = nvc.MayParseValue("chiffon:EnableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(true);
 
-            //GoogleAnalytics = nvc.MayGetValue("chiffon:GoogleAnalytics").ValueOrElse(String.Empty);
+            GoogleAnalytics = nvc.MayGetValue("chiffon:GoogleAnalytics").ValueOrElse(String.Empty);
         }
     }
 }

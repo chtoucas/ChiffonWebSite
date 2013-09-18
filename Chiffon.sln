@@ -39,11 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9
 		etc\VersionNumber.xml = etc\VersionNumber.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Production", "Production", "{AFE5A1C2-966F-45F8-9D12-C099ECCAE315}"
-	ProjectSection(SolutionItems) = preProject
-		intern\config\appSettings.config = intern\config\appSettings.config
-		intern\config\connectionStrings.config = intern\config\connectionStrings.config
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw", "wznw\Wznw.csproj", "{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,13 +71,16 @@ Global
 		{AE69E1DD-A499-48E9-8BAA-B279E07F7DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE69E1DD-A499-48E9-8BAA-B279E07F7DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE69E1DD-A499-48E9-8BAA-B279E07F7DC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C3061B9-AD2F-4C18-B796-F5568736357D} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
-		{AFE5A1C2-966F-45F8-9D12-C099ECCAE315} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 		{56E3969F-5066-4702-A670-4C35FBD97201} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{7B564B3C-CCCC-43CA-94B6-D375AA40F085} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
