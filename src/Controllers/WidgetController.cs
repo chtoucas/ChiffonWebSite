@@ -47,16 +47,16 @@
                 : PartialView(ViewName.Widget.CommonStylesheet_Release, model);
         }
 
-        [ChildActionOnly]
-        [OutputCache(Duration = Int32.MaxValue)]
-        public PartialViewResult GoogleAnalytics()
-        {
-            if (String.IsNullOrEmpty(_config.GoogleAnalytics)) {
-                return new EmptyPartialViewResult();
-            }
+        //[ChildActionOnly]
+        //[OutputCache(Duration = Int32.MaxValue)]
+        //public PartialViewResult GoogleAnalytics()
+        //{
+        //    if (String.IsNullOrEmpty(_config.GoogleAnalytics)) {
+        //        return new EmptyPartialViewResult();
+        //    }
 
-            return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalytics);
-        }
+        //    return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalytics);
+        //}
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "language")]

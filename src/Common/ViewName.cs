@@ -31,7 +31,7 @@
             public const string CommonJavaScript_Release = "~/Views/Widget/JavaScript.Release.cshtml";
             public const string CommonStylesheet_Debug = "~/Views/Widget/Stylesheet.Debug.cshtml";
             public const string CommonStylesheet_Release = "~/Views/Widget/Stylesheet.Release.cshtml";
-            public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
+            //public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
             public const string LanguageMenu = "~/Views/Widget/LanguageMenu.cshtml";
         }
 

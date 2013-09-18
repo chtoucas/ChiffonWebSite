@@ -54,15 +54,7 @@
 
         protected override void ProcessRequestCore(HttpContext context, GoQuery query)
         {
-            string userName;
-
-            if (query.Token == _config.PassThroughToken) {
-                // FIXME: c'est un peu laxiste...
-                userName = "Simone";
-            }
-            else {
-                userName = _memberService.LogOn(query.Token);
-            }
+            var userName = _memberService.LogOn(query.Token);
 
             var succeed = !String.IsNullOrEmpty(userName);
             if (succeed) {

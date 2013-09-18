@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Chiffon.Common
+﻿namespace Chiffon.Common
 {
+    using System;
+    using System.Collections.Generic;
+
     public static class ListExtensions
     {
         // Cf. http://stackoverflow.com/questions/273313/randomize-a-listt-in-c-sharp

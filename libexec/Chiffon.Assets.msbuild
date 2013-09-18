@@ -124,7 +124,7 @@
   </Target>
 
   <Target Name="_Zip">
-    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets.$(VersionNumber)-$(PlatformPackage).7z $(TmpDirectory)\"
+    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets-$(VersionNumber)-$(PlatformPackage).7z $(TmpDirectory)\"
       ContinueOnError="false"/>
   </Target>
 </Project>
