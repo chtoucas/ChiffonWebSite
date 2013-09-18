@@ -5,10 +5,8 @@ this.App = (function(win, _, yepnope, undef) {
 
   // Configuration par défaut.
   var defaults = {
-    baseUrl: '/assets/js/'
+    baseUrl: '//wznw.org/chiffon/js/'
     , debug: false
-    , domain: 'pourquelmotifsimone.com'
-    //, gaq: 'UA-43374044-1'
     , version: undef
   };
 

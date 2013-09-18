@@ -7,7 +7,7 @@
 <script>
  (function(App) {
   if (!App) { return; }
-  var options = { debug: true };
+  var options = { baseUrl: '/assets/js/', debug: true };
   (new App(options)).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.App);
 </script>
