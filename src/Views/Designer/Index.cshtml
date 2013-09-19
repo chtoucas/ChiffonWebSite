@@ -9,7 +9,7 @@
 @Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
 <ul class="mosaic len_75 clr">
  @foreach (var preview in Model.Previews) {
-  var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#!" + @preview.Version;
+  var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
    <div class=watermark><span>Ref @preview.Reference</span></div>
