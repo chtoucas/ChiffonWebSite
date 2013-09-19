@@ -29,7 +29,7 @@ this.App = (function(win, _, yepnope, undef) {
     this.dependencies = {
       chiffon: function() {
         return settings.debug
-          ? ['vendor/l10n-2013.04.18.min.js', 'localization.js', 'chiffon.js'].map(rebase)
+          ? ['vendor/l10n-2013.09.19.min.js', 'localization.js', 'chiffon.js'].map(rebase)
           : rebase('chiffon-' + settings.version + '.min.js');
       }
 

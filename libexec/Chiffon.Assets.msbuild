@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <CssFiles Include="normalize-1.1.2.css">
+    <CssFiles Include="normalize-1.1.3.css">
       <Bundle>$(CssScreenBundle)</Bundle>
     </CssFiles>
     <CssFiles Include="01-chiffon.base.css">
@@ -36,14 +36,14 @@
     <JsFiles Include="vendor\yepnope-1.5.4.js">
       <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
-    <JsFiles Include="vendor\lodash.compat-1.3.1.js">
+    <JsFiles Include="vendor\lodash.compat-2.0.0.js">
       <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
     <JsFiles Include="app.js">
       <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
 
-    <JsFiles Include="vendor\l10n-2013.04.18.js">
+    <JsFiles Include="vendor\l10n-2013.09.19.js">
       <Bundle>$(JsChiffonBundle)</Bundle>
     </JsFiles>
     <JsFiles Include="localization.js">

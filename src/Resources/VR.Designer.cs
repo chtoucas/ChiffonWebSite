@@ -70,6 +70,150 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=break /&gt; entrez le mot de passe qui vous a été attribué..
+        /// </summary>
+        public static string ContactLogin_DescriptionHtml {
+            get {
+                return ResourceManager.GetString("ContactLogin_DescriptionHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Agence.
+        /// </summary>
+        public static string ContactRegister_CompanyName {
+            get {
+                return ResourceManager.GetString("ContactRegister_CompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour obtenir votre mot de passe,&lt;span class=break /&gt; veuillez remplir le formulaire..
+        /// </summary>
+        public static string ContactRegister_DescriptionHtml {
+            get {
+                return ResourceManager.GetString("ContactRegister_DescriptionHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Email.
+        /// </summary>
+        public static string ContactRegister_EmailAddress {
+            get {
+                return ResourceManager.GetString("ContactRegister_EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Prénom.
+        /// </summary>
+        public static string ContactRegister_Firstname {
+            get {
+                return ResourceManager.GetString("ContactRegister_Firstname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bonjour,.
+        /// </summary>
+        public static string ContactRegister_Hello {
+            get {
+                return ResourceManager.GetString("ContactRegister_Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nom.
+        /// </summary>
+        public static string ContactRegister_Lastname {
+            get {
+                return ResourceManager.GetString("ContactRegister_Lastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à J&apos;ai déjà un mot de passe.
+        /// </summary>
+        public static string ContactRegister_Login {
+            get {
+                return ResourceManager.GetString("ContactRegister_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sujet.
+        /// </summary>
+        public static string ContactRegister_Message {
+            get {
+                return ResourceManager.GetString("ContactRegister_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mot de passe.
+        /// </summary>
+        public static string ContactRegister_Password {
+            get {
+                return ResourceManager.GetString("ContactRegister_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
+        /// </summary>
+        public static string ContactRegister_RequestPassword {
+            get {
+                return ResourceManager.GetString("ContactRegister_RequestPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Envoyer.
+        /// </summary>
+        public static string ContactRegister_Submit {
+            get {
+                return ResourceManager.GetString("ContactRegister_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Valider.
+        /// </summary>
+        public static string ContactRegister_Validate {
+            get {
+                return ResourceManager.GetString("ContactRegister_Validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Je demande un mot de passe.
+        /// </summary>
+        public static string HomeAbout_PasswordRequest {
+            get {
+                return ResourceManager.GetString("HomeAbout_PasswordRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ou un membre du collectif ?.
+        /// </summary>
+        public static string HomeContact_TitleEnd {
+            get {
+                return ResourceManager.GetString("HomeContact_TitleEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Vous souhaitez contactez le collectif ?.
+        /// </summary>
+        public static string HomeContact_TitleStart {
+            get {
+                return ResourceManager.GetString("HomeContact_TitleStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013..
         /// </summary>
         public static string Layout_Copyright {
@@ -79,20 +223,11 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Conception graphique : Viviane Devaux. Réalisation : chtoucas@narvalo.org..
+        ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite.&lt;span class=break /&gt;Conception graphique : Viviane Devaux. Mise en scène : chtoucas@narvalo.org..
         /// </summary>
-        public static string Layout_CreatedBy {
+        public static string Layout_DisclaimerHtml {
             get {
-                return ResourceManager.GetString("Layout_CreatedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite..
-        /// </summary>
-        public static string Layout_Disclaimer {
-            get {
-                return ResourceManager.GetString("Layout_Disclaimer", resourceCulture);
+                return ResourceManager.GetString("Layout_DisclaimerHtml", resourceCulture);
             }
         }
         

@@ -4,7 +4,7 @@
 @model IEnumerable<Designer>
 
 <div class="home_contact grey clr">
- <h2 class="center serif serif_large">@Html.ContactTitle((ChiffonLanguage)ViewBag.Language)
+ <h2 class="center serif serif_large">@Html.Raw(VR.HomeContact_TitleStart) <a href="mailto:contact@pourquelmotifsimone.com" class=underline>contact@pourquelmotifsimone.com</a> @Html.Raw(VR.HomeContact_TitleEnd)
  </h2>
  <ul id=designers>
   @foreach (var designer in Model) {

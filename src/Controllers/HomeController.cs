@@ -50,7 +50,7 @@
             ViewBag.CanonicalLink = SiteMap.About().ToString();
             ViewBag.MainMenuClass = "about";
 
-            return LocalizedView(ViewName.Home.About);
+            return View(ViewName.Home.About);
         }
 
         [HttpGet]

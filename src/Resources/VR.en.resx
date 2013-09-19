@@ -120,14 +120,59 @@
   <data name="Category_All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="ContactLogin_DescriptionHtml" xml:space="preserve">
+    <value>To browse our catalog, enter your password.</value>
+  </data>
+  <data name="ContactRegister_CompanyName" xml:space="preserve">
+    <value>Agency</value>
+  </data>
+  <data name="ContactRegister_DescriptionHtml" xml:space="preserve">
+    <value>To obtain a password,&lt;span class=break /&gt; please fill out the form.</value>
+  </data>
+  <data name="ContactRegister_EmailAddress" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ContactRegister_Firstname" xml:space="preserve">
+    <value>Firstname</value>
+  </data>
+  <data name="ContactRegister_Hello" xml:space="preserve">
+    <value>Hello,</value>
+  </data>
+  <data name="ContactRegister_Lastname" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ContactRegister_Login" xml:space="preserve">
+    <value>I already own a password</value>
+  </data>
+  <data name="ContactRegister_Message" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="ContactRegister_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="ContactRegister_RequestPassword" xml:space="preserve">
+    <value>Request your password</value>
+  </data>
+  <data name="ContactRegister_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="ContactRegister_Validate" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="HomeAbout_PasswordRequest" xml:space="preserve">
+    <value>Request a password</value>
+  </data>
+  <data name="HomeContact_TitleEnd" xml:space="preserve">
+    <value>or a member of the collective ?</value>
+  </data>
+  <data name="HomeContact_TitleStart" xml:space="preserve">
+    <value>You wish to contact the collective ?</value>
+  </data>
   <data name="Layout_Copyright" xml:space="preserve">
     <value>© Pour quel motif, Simone ? 2013.</value>
   </data>
-  <data name="Layout_CreatedBy" xml:space="preserve">
-    <value>Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
-  </data>
-  <data name="Layout_Disclaimer" xml:space="preserve">
-    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.</value>
+  <data name="Layout_DisclaimerHtml" xml:space="preserve">
+    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=break /&gt;Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
   </data>
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>

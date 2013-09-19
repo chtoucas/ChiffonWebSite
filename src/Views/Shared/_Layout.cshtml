@@ -38,9 +38,7 @@
  </header>
  @RenderBody()
  <footer class=darkgrey>
-  <p>@Html.Raw(VR.Layout_Disclaimer)<br />
-   @Html.Raw(VR.Layout_CreatedBy)
-  </p>
+  <p>@Html.Raw(VR.Layout_DisclaimerHtml)</p>
   <p>@Html.Raw(VR.Layout_Copyright)</p>
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new {
