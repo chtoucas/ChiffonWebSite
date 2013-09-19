@@ -27,6 +27,12 @@
              Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);PlatformPackage=$(PlatformPackage)" />
   </Target>
 
+  <Target Name="_BeforeBuild" BeforeTargets="Build">
+    <GetVersionNumber VersionNumberXml="$(EtcDirectory)\VersionNumber.xml">
+      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
+    </GetVersionNumber>
+  </Target>
+
   <Target Name="_BeforePackage" BeforeTargets="Package">
     <UpdateVersionNumber
       VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"

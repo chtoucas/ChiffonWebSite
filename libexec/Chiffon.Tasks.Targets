@@ -1,4 +1,50 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="GetVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <VersionNumberXml ParameterType="System.String" Required="true" />
+      <VersionNumber ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq" />
+      <Using Namespace="System" />
+      <Using Namespace="System.Globalization" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Xml" />
+      <Using Namespace="System.Xml.Linq" />
+      <Using Namespace="Microsoft.Build.Framework" />
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+if (VersionNumberXml.Length == 0) {
+    Log.LogMessage(MessageImportance.High, "You must supply a version file.");
+    return false;
+}
+
+try {
+    XDocument xdoc;
+    using (var reader = new StreamReader(VersionNumberXml)) {
+        xdoc = XDocument.Load(reader);
+    }
+
+    var root = xdoc.Root;
+
+    var major = Int16.Parse(root.Element("Major").Value).ToString(CultureInfo.InvariantCulture);
+    var minor = Int16.Parse(root.Element("Minor").Value).ToString(CultureInfo.InvariantCulture);
+    var build = Int16.Parse(root.Element("Build").Value).ToString(CultureInfo.InvariantCulture);
+
+    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
+}
+catch (IOException ex) {
+    Log.LogErrorFromException(ex);
+}
+
+return !Log.HasLoggedErrors;
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
   <UsingTask TaskName="UpdateVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <VersionNumberXml ParameterType="System.String" Required="true" />
@@ -35,16 +81,16 @@ try {
     var minor = Int16.Parse(root.Element("Minor").Value).ToString(CultureInfo.InvariantCulture);
     var build = (1 + Int16.Parse(root.Element("Build").Value)).ToString(CultureInfo.InvariantCulture);
     var buildTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-    
+
     root.Element("Build").Value = build;
     root.Element("Timestamp").Value = buildTime;
 
     using (var writer = new StreamWriter(VersionNumberXml)) {
         xdoc.Save(writer);
     }
-    
+
     VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
-            
+
     // Mise à jour des informations d'assemblée.
     string template = File.ReadAllText(AssemblyInfoTemplate)
         .Replace("$VersionNumber$", VersionNumber)
