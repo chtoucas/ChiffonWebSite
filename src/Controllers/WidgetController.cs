@@ -24,10 +24,10 @@
         {
             var model = new CommonJavaScriptViewModel {
                 ActionName = actionName,
-                BaseUrl = AssetManager.GetScript(String.Empty),
                 ControllerName = controllerName,
                 IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
                 LanguageName = languageName,
+                ScriptBase = AssetManager.ScriptBase.ToProtocolLessString(),
                 Version = _config.JsVersion,
             };
 
