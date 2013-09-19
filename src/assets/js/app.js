@@ -5,7 +5,7 @@ this.App = (function(win, _, yepnope, undef) {
 
   // Configuration par défaut.
   var defaults = {
-    baseUrl: '//wznw.org/chiffon/js/'
+    baseUrl: undef
     , debug: false
     , version: undef
   };
@@ -16,7 +16,9 @@ this.App = (function(win, _, yepnope, undef) {
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
 
-    if ('/' !== settings.baseUrl.substring(-1, 1)) {
+    if (undef === settings.baseUrl) {
+      throw new Error('The baseUrl is not defined.');
+    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
       settings.baseUrl = settings.baseUrl + '/';
     }
 

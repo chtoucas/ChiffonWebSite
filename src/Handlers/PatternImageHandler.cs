@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
+    using System.IO;
     using System.Net;
     using System.Web;
     using System.Web.Mvc;
@@ -99,6 +100,7 @@
 
             var image = pattern.GetImage(query.Size);
 
+            // FIXME: Capturer les exceptions d'IO.
             response.Clear();
             if (_config.EnableClientCache) {
                 CacheResponse_(response, visibility);

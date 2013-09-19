@@ -1,4 +1,6 @@
-﻿@model CommonJavaScriptViewModel
+﻿@using Narvalo
+
+@model CommonJavaScriptViewModel
 
 @Narvalo.Web.Html.AssetTag.JavaScript("vendor/yepnope-1.5.4.min.js")
 @Narvalo.Web.Html.AssetTag.JavaScript("vendor/lodash.compat-1.3.1.min.js")
@@ -7,7 +9,7 @@
 <script>
  (function(App) {
   if (!App) { return; }
-  var options = { baseUrl: '/assets/js/', debug: true };
+  var options = { baseUrl: '@Model.BaseUrl.ToProtocolLessString()', debug: true };
   (new App(options)).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
  })(this.App);
 </script>

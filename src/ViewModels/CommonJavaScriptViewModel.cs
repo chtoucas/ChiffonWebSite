@@ -1,8 +1,11 @@
 ﻿namespace Chiffon.ViewModels
 {
+    using System;
+
     public class CommonJavaScriptViewModel
     {
         public string ActionName { get; set; }
+        public Uri BaseUrl { get; set; }
         public string ControllerName { get; set; }
         public string IsAuthenticated { get; set; }
         public string LanguageName { get; set; }

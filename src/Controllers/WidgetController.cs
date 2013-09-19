@@ -6,6 +6,7 @@
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Web.UI.Assets;
 
     public class WidgetController : Controller
     {
@@ -23,6 +24,7 @@
         {
             var model = new CommonJavaScriptViewModel {
                 ActionName = actionName,
+                BaseUrl = AssetManager.GetScript(String.Empty),
                 ControllerName = controllerName,
                 IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
                 LanguageName = languageName,

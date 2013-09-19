@@ -355,6 +355,7 @@
     <Content Include="App_Code\ViewHelpers.cshtml" />
     <Content Include="config\appSettings.config" />
     <Content Include="config\connectionStrings.config" />
+    <Content Include="config\assets.config" />
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
     <Content Include="Views\Contact\Newsletter.cshtml" />
     <Content Include="Views\Contact\Login.cshtml" />

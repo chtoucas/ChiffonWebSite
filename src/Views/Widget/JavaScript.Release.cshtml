@@ -1,9 +1,7 @@
-﻿@model CommonJavaScriptViewModel
+﻿@using Narvalo
+
+@model CommonJavaScriptViewModel
 
 @Narvalo.Web.Html.AssetTag.JavaScript("app-" + Model.Version + ".min.js")
 
-<script>
- (function(a) {
-  if (!a){return;}(new a({version:'@Model.Version'})).main('@Model.LanguageName',function(_){_.handle('@Model.ControllerName','@Model.ActionName');});
- })(this.App);
-</script>
+<script>(function(a,o){if(!a){return;}o={baseUrl:'@Model.BaseUrl.ToProtocolLessString()',version:'@Model.Version'};(new a(o)).main('@Model.LanguageName',function(_){_.handle('@Model.ControllerName','@Model.ActionName');});})(this.App);</script>
