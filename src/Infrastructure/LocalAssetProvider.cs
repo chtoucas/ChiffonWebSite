@@ -48,7 +48,8 @@
 
         static string Combine_(string basePath, string relativePath)
         {
-            return VirtualPathUtility.ToAbsolute(VirtualPathUtility.Combine(basePath, relativePath));
+            return VirtualPathUtility.ToAbsolute(
+                relativePath.Length == 0 ? basePath : VirtualPathUtility.Combine(basePath, relativePath));
         }
     }
 }
