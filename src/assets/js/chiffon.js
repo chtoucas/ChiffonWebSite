@@ -3,7 +3,6 @@
 // TODO:
 // - ajouter html5shiv.js
 // - https://github.com/kriskowal/es5-shim/
-// - http://benalman.com/code/projects/jquery-resize/docs/files/jquery-ba-resize-js.html
 // - http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
 
 (function(win, $, undef) {
@@ -108,7 +107,8 @@ this.Chiffon.Presenters = (function($, undef) {
 
     Modal.prototype = {
       loadContent: function(sender, e) {
-        var that = this, href = e.href;
+        var that = this;
+        var href = e.href;
 
         // TODO: Use the Deferred jqXHR?
         $.ajax({
@@ -247,7 +247,7 @@ this.Chiffon.Presenters = (function($, undef) {
   return Presenters;
 })(this.jQuery);
 
-this.Chiffon.Views = (function(win, doc, loc, _, yepnope, $, Chiffon, Presenters, undef) {
+this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) {
   'use strict';
 
   var Views = {};
@@ -361,7 +361,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, yepnope, $, Chiffon, Presenters
 
         validateForm(this.context, function() {
           $('#register_form').validate({
-            // On ne veut pas de message d'erreur par "input" (FIXME: ne semble pas marcher).
+            // On ne veut pas de message d'erreur par "input" (FIXME: errorPlacement ne semble pas marcher).
             errorPlacement: $.noop
             , messages: {
               Lastname: ''
@@ -706,11 +706,13 @@ this.Chiffon.Views = (function(win, doc, loc, _, yepnope, $, Chiffon, Presenters
 
     // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
     function handleResizeEvent() {
-      $(win).resize(function() {
+      // On utilise "_.debounce()" pour temporiser la prise en charge de l'évènement "resize"
+      // pendant 150 millisecondes.
+      $(win).resize(_.debounce(function() {
         var left = $designer.offset().left + designer_w - info_w;
 
         $info.css({ 'left': left + 'px' });
-      });
+      }, 150));
     }
 
     // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
@@ -1046,7 +1048,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, yepnope, $, Chiffon, Presenters
 
   return Views;
 
-})(this, this.document, this.location, this._, this.yepnope, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+})(this, this.document, this.location, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
 
 this.Chiffon.Controllers = (function($, Views, undef) {
   'use strict';
