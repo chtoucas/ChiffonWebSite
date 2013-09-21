@@ -96,40 +96,7 @@ this.Chiffon = (function(_, $, undef) {
 
 })(this._, this.jQuery);
 
-this.Chiffon.Presenters = (function($, undef) {
-  'use strict';
-
-  var Presenters = {};
-
-  Presenters.Modal = (function() {
-    function Modal(view) {
-      this.view = view;
-    }
-
-    Modal.prototype = {
-      loadContent: function(sender, e) {
-        var that = this;
-        var href = e.href;
-
-        // TODO: Use the Deferred jqXHR?
-        $.ajax({
-          type: 'GET'
-          , dataType: 'html'
-          , url: href
-          , success: function(data) {
-            that.view.onContentLoaded({ href: href, data: data });
-          }
-        });
-      }
-    };
-
-    return Modal;
-  })();
-
-  return Presenters;
-})(this.jQuery);
-
-this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) {
+this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   'use strict';
 
   var Views = {};
@@ -734,9 +701,9 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
     var settings;
 
-    var $sticky_header
-      , scroll_limit
-      , is_sticky = false;
+    var $sticky_header;
+    var scroll_limit;
+    var is_sticky = false;
 
     function stick() {
       if (is_sticky) { return; }
@@ -787,7 +754,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
   return Views;
 
-})(this, this.document, this.location, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+})(this, this.document, this.location, this._, this.jQuery, this.Chiffon);
 
 this.Chiffon.Controllers = (function($, Views, undef) {
   'use strict';
@@ -849,18 +816,52 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
 
   return function(controllerName, actionName, params) {
     if (Controllers.hasOwnProperty(controllerName)) {
-      var controllerClass = Controllers[controllerName]
-        , controllerPrototype = controllerClass.prototype
-        , actionMethod = actionName.toLowerCase();
+      var controller;
+      var controllerClass = Controllers[controllerName];
+      var controllerPrototype = controllerClass.prototype;
+      var actionMethod = actionName.toLowerCase();
 
       if (controllerPrototype.hasOwnProperty(actionMethod)) {
-        var controller = new controllerClass(this.context);
+        controller = new controllerClass(this.context);
         controllerPrototype[actionMethod].apply(controller, params);
       }
     }
   };
 
 })(this.Chiffon.Controllers);
+
+//this.Chiffon.Presenters = (function($, undef) {
+//  'use strict';
+
+//  var Presenters = {};
+
+//  Presenters.Modal = (function() {
+//    function Modal(view) {
+//      this.view = view;
+//    }
+
+//    Modal.prototype = {
+//      loadContent: function(sender, e) {
+//        var that = this;
+//        var href = e.href;
+
+//        // TODO: Use the Deferred jqXHR?
+//        $.ajax({
+//          type: 'GET'
+//          , dataType: 'html'
+//          , url: href
+//          , success: function(data) {
+//            that.view.onContentLoaded({ href: href, data: data });
+//          }
+//        });
+//      }
+//    };
+
+//    return Modal;
+//  })();
+
+//  return Presenters;
+//})(this.jQuery);
 
 //// Indicateur d'activité Ajax à la Google Mail.
 //Views.AjaxStatus = (function() {
