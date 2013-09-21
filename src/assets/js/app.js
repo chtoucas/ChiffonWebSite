@@ -34,7 +34,7 @@ this.App = (function(win, _, yepnope, undef) {
       }
 
       , jQuery: function() {
-        return vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js');
+        return [vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js')];
       }
 
       //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.min.js'); }
@@ -59,21 +59,28 @@ this.App = (function(win, _, yepnope, undef) {
         throw new Error('The locale "' + locale + '" is not supported.');
       }
 
-      // FIXME: Quid quand un des appels échoue ?
       yepnope({
-        load: [this.dependencies.jQuery()].concat(this.dependencies.chiffon())
+        load: that.dependencies.jQuery()
         , complete: function() {
-          var Chiffon = win.Chiffon;
-          if (undef === Chiffon) { return; }
+          // Si le chargement de jQuery a échoué, on dégage.
+          if (undef === win.jQuery) { return; }
 
-          that.loadJS = function(options) { yepnope(options); };
+          yepnope({
+            load: that.dependencies.chiffon()
+            , complete: function() {
+              var Chiffon = win.Chiffon;
+              if (undef === Chiffon) { return; }
 
-          var context = {
-            locale: locale
-            , app: that
-          };
+              that.loadJS = function(options) { yepnope(options); };
 
-          fn(new Chiffon(context));
+              var context = {
+                locale: locale
+                , app: that
+              };
+
+              fn(new Chiffon(context));
+            }
+          });
         }
       });
     };
