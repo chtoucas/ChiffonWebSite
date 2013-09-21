@@ -8,6 +8,8 @@
  (function(App) {
   if (!App) { return; }
   var options = { baseUrl: '@Model.ScriptBase', debug: true };
-  (new App(options)).main('@Model.LanguageName', function(chiffon) { chiffon.handle('@Model.ControllerName', '@Model.ActionName'); });
+  (new App(options)).main(@(Model.IsAuthenticated.ToString().ToLower()), '@Model.LanguageName', function(chiffon) {
+   chiffon.handle('@Model.ControllerName', '@Model.ActionName');
+  });
  })(this.App);
 </script>

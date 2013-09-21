@@ -13,6 +13,10 @@ this.App = (function(win, _, yepnope, undef) {
   // Langues supportées.
   var locales = ['fr', 'en'];
 
+  var loadJS = function(options) {
+    throw new Error('You can not use this method until the main() method has been called.');
+  };
+
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
 
@@ -39,10 +43,8 @@ this.App = (function(win, _, yepnope, undef) {
 
       //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.min.js'); }
 
-      // WARNING: Lors de la mise à jour il faut commenter les dernières lignes
-      // du script qui exécutent automatiquement les événements modal:open.
       // TODO: Version minifiée.
-      , jQueryModal: function() { return vendor('jquery.modal.custom-0.5.4.js'); }
+      , jQueryModal: function() { return rebase('jquery.modal.js'); }
 
       //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
@@ -53,11 +55,14 @@ this.App = (function(win, _, yepnope, undef) {
       }
     };
 
-    this.loadJS = function(options) {
-      throw new Error('You can not use this method until the main() method has been called.');
+    this.require = function(dependencies, onComplete) {
+      loadJS({
+        load: dependencies
+        , complete: onComplete
+      });
     };
 
-    this.main = function(locale, fn) {
+    this.main = function(isAuth, locale, fn) {
       var that = this;
 
       if (-1 === locales.indexOf(locale)) {
@@ -76,10 +81,11 @@ this.App = (function(win, _, yepnope, undef) {
               var Chiffon = win.Chiffon;
               if (undef === Chiffon) { return; }
 
-              that.loadJS = function(options) { yepnope(options); };
+              loadJS = function(options) { yepnope(options); };
 
               var context = {
-                locale: locale
+                isAuth: true === isAuth
+                , locale: locale
                 , app: that
               };
 

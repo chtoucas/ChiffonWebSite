@@ -53,11 +53,11 @@
         [OutputCache(Duration = Int32.MaxValue)]
         public PartialViewResult GoogleAnalytics()
         {
-            if (String.IsNullOrEmpty(_config.GoogleAnalytics)) {
+            if (String.IsNullOrEmpty(_config.GoogleAnalyticsKey)) {
                 return new EmptyPartialViewResult();
             }
 
-            return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalytics);
+            return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalyticsKey);
         }
 
         [ChildActionOnly]

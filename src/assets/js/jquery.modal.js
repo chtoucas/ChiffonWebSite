@@ -1,7 +1,16 @@
 /*
-    A simple jQuery modal (http://github.com/kylefox/jquery-modal)
-    Version 0.5.4
-*/
+ * Différences :
+ * - contrairement au plugin original, on n'execute pas par défaut celui-ci ;
+ * TODO:
+ * - configuration d'ajax (timeout & co)
+ * - slider quand on reste dans la modale
+ * - meilleur indicateur de chargement ?
+ * - utiliser RxJS ?
+ */
+/*
+ * A simple jQuery modal (http://github.com/kylefox/jquery-modal)
+ * Version 0.5.4
+ */
 (function($) {
 
   var current = null;
@@ -19,7 +28,7 @@
         this.$elm = $(target);
         if (this.$elm.length !== 1) return null;
         this.open();
-      //AJAX
+        //AJAX
       } else {
         this.$elm = $('<div>');
         this.$body.append(this.$elm);
@@ -50,7 +59,7 @@
 
     open: function() {
       var m = this;
-      if(this.options.doFade) {
+      if (this.options.doFade) {
         this.block();
         setTimeout(function() {
           m.show();
@@ -85,14 +94,14 @@
         opacity: initialOpacity
       });
       this.$body.append(this.blocker);
-      if(this.options.doFade) {
-        this.blocker.animate({opacity: this.options.opacity}, this.options.fadeDuration);
+      if (this.options.doFade) {
+        this.blocker.animate({ opacity: this.options.opacity }, this.options.fadeDuration);
       }
       this.$elm.trigger($.modal.BLOCK, [this._ctx()]);
     },
 
     unblock: function() {
-      if(this.options.doFade) {
+      if (this.options.doFade) {
         this.blocker.fadeOut(this.options.fadeDuration, function() {
           this.remove();
         });
@@ -104,12 +113,12 @@
     show: function() {
       this.$elm.trigger($.modal.BEFORE_OPEN, [this._ctx()]);
       if (this.options.showClose) {
-        this.closeButton = $('<a href="#close-modal" rel="modal:close" class="close-modal">' + this.options.closeText + '</a>');
+        this.closeButton = $('<a href="#" rel="modal:close" class=close>' + this.options.closeText + '</a>');
         this.$elm.append(this.closeButton);
       }
       this.$elm.addClass(this.options.modalClass + ' current');
       this.center();
-      if(this.options.doFade) {
+      if (this.options.doFade) {
         this.$elm.fadeIn(this.options.fadeDuration);
       } else {
         this.$elm.show();
@@ -122,7 +131,7 @@
       if (this.closeButton) this.closeButton.remove();
       this.$elm.removeClass('current');
 
-      if(this.options.doFade) {
+      if (this.options.doFade) {
         this.$elm.fadeOut(this.options.fadeDuration);
       } else {
         this.$elm.hide();
@@ -147,8 +156,8 @@
         position: 'fixed',
         top: "50%",
         left: "50%",
-        marginTop: - (this.$elm.outerHeight() / 2),
-        marginLeft: - (this.$elm.outerWidth() / 2),
+        marginTop: -(this.$elm.outerHeight() / 2),
+        marginLeft: -(this.$elm.outerWidth() / 2),
         zIndex: this.options.zIndex + 1
       });
     },
@@ -183,7 +192,7 @@
     escapeClose: true,
     clickClose: true,
     closeText: 'Close',
-    modalClass: "modal",
+    modalClass: 'modal',
     spinnerHtml: null,
     showSpinner: true,
     showClose: true,
@@ -203,7 +212,7 @@
   $.modal.AJAX_FAIL = 'modal:ajax:fail';
   $.modal.AJAX_COMPLETE = 'modal:ajax:complete';
 
-  $.fn.modal = function(options){
+  $.fn.modal = function(options) {
     if (this.length === 1) {
       current = new $.modal(this, options);
     }

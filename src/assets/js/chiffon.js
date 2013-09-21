@@ -106,51 +106,64 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     return string.toLocaleString();
   }
 
-  // Conventions globales concernant la validation des formulaires.
-  function setupValidation() {
-    var $errContainer = $('#error_container');
+  // Chargement de jQuery.validate puis exécution d'un callback.
+  function initializeValidation(context, fn) {
+    var app = context.app;
 
-    // Comportement du validateur utilisé par défaut.
-    $.validator.setDefaults({
-      hightlight: function(elmt) { $(elmt).addClass('error'); }
-      , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
-      , errorContainer: $errContainer
-      , errorLabelContainer: $errContainer
-      , invalidHandler: function() { $errContainer.fadeIn(); }
+    app.require(app.dependencies.jQueryValidate(context.locale), function() {
+      var $errContainer = $('#error_container');
+
+      $.validator.setDefaults({
+        hightlight: function(elmt) { $(elmt).addClass('error'); }
+        , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
+        , errorContainer: $errContainer
+        , errorLabelContainer: $errContainer
+        , invalidHandler: function() { $errContainer.fadeIn(); }
+      });
+
+      if (undef !== fn) { fn(); }
     });
   }
 
-  function setupModal() {
-    // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
-    // WARNING: jquery.modal ne prend pas en compte les sélecteurs du genre rel=~modal
-    $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
-      e.preventDefault();
+  // Chargement de jQuery.modal puis exécution d'un callback.
+  function initializeModal(context, fn) {
+    if (context.isAuth) {
+      // On n'active les modales qu'en mode anonyme.
+      return;
+    }
 
-      $(this).modal({
-        opacity: .8
-        , fadeDuration: 200
-        , fadeDelay: 0
-        , closeText: l('%modal.close')
+    var app = context.app;
+
+    app.require(app.dependencies.jQueryModal(), function() {
+      // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
+      $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
+        e.preventDefault();
+
+        $(this).modal({
+          opacity: .8
+          , fadeDuration: 150
+          , fadeDelay: 0
+          , showSpinner: false
+          , closeText: l('%modal.close')
+        });
       });
+
+      if (undef !== fn) { fn(); }
     });
   }
 
   /* Layouts */
 
   Views.Layout = (function() {
-    function Layout() {
-      //this.modalView = new Views.Modal();
-      //this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
-      //this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
+    function Layout(context) {
+      this.context = context;
     }
 
     Layout.prototype = {
       initialize: function() {
-        //this.modalView.registerEventHandlers();
-        //this.registerModalView.registerEventHandlers();
-        //this.ajaxStatusView.registerEventHandlers();
-
         $('A[rel=external]').external();
+
+        initializeModal(this.context);
       }
     };
 
@@ -158,8 +171,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   })();
 
   Views.DesignerLayout = (function() {
-    function DesignerLayout() {
-      this.layoutView = new Views.Layout();
+    function DesignerLayout(context) {
+      this.layoutView = new Views.Layout(this.context);
     }
 
     DesignerLayout.prototype = {
@@ -177,33 +190,18 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   Views.ContactLogin = (function() {
     function ContactLogin(context) {
       this.context = context;
-      this.layoutView = new Views.Layout();
+      this.layoutView = new Views.Layout(this.context);
     }
 
     ContactLogin.prototype = {
       initialize: function() {
-        var app = this.context.app;
-        var dependencies = app.dependencies;
-
         this.layoutView.initialize();
 
-        app.loadJS({
-          load: dependencies.jQueryValidate(this.context.locale)
-          , complete: this.setupValidation
-        });
-
-        app.loadJS({
-          load: dependencies.jQueryModal()
-          , complete: setupModal
-        });
-      }
-
-      , setupValidation: function() {
-        setupValidation();
-
-        $('#login_form').validate({
-          messages: { token: l('%login.password_required') }
-          , rules: { token: { required: true, minlength: 10 } }
+        initializeValidation(this.context, function() {
+          $('#login_form').validate({
+            messages: { token: l('%login.password_required') }
+            , rules: { token: { required: true, minlength: 10 } }
+          });
         });
       }
     };
@@ -211,64 +209,37 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     return ContactLogin;
   })();
 
-  Views.ContactNewsletter = (function() {
-    function ContactNewsletter() {
-      this.layoutView = new Views.Layout();
-    }
-
-    ContactNewsletter.prototype = {
-      initialize: function() {
-        this.layoutView.initialize();
-      }
-    };
-
-    return ContactNewsletter;
-  })();
-
   Views.ContactRegister = (function() {
     function ContactRegister(context) {
       this.context = context;
-      this.layoutView = new Views.Layout();
+      this.layoutView = new Views.Layout(this.context);
     }
 
     ContactRegister.prototype = {
       initialize: function() {
-        var app = this.context.app;
-        var dependencies = app.dependencies;
+        var $form = $('#register_form');
 
         this.layoutView.initialize();
 
-        app.loadJS({
-          load: dependencies.jQueryValidate(this.context.locale)
-          , complete: this.setupValidation
-        });
-
-        app.loadJS({
-          load: dependencies.jQueryModal()
-          , complete: setupModal
-        });
-      }
-
-      , setupValidation: function() {
-        setupValidation();
-
-        $('#register_form').validate({
-          // NB: On ne veut pas de message d'erreur par "input".
-          // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
-          errorPlacement: $.noop
-          , messages: {
-            Lastname: ''
-            , Firstname: ''
-            , CompanyName: ''
-            , EmailAddress: ''
-          }
-          , rules: {
-            Lastname: { required: true, minlength: 2, maxlength: 50 }
-            , Firstname: { required: true, minlength: 2, maxlength: 50 }
-            , CompanyName: { required: true, minlength: 2, maxlength: 100 }
-            , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
-            , Message: { maxlength: 4000 }
-          }
+        initializeValidation(this.context, function() {
+          $form.validate({
+            // NB: On ne veut pas de message d'erreur par "input".
+            // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+            errorPlacement: $.noop
+            , messages: {
+              Lastname: ''
+              , Firstname: ''
+              , CompanyName: ''
+              , EmailAddress: ''
+            }
+            , rules: {
+              Lastname: { required: true, minlength: 2, maxlength: 50 }
+              , Firstname: { required: true, minlength: 2, maxlength: 50 }
+              , CompanyName: { required: true, minlength: 2, maxlength: 100 }
+              , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
+              , Message: { maxlength: 4000 }
+            }
+          });
         });
       }
     };
@@ -278,7 +249,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
   Views.DesignerPattern = (function() {
     function DesignerPattern() {
-      this.layoutView = new Views.DesignerLayout();
+      this.layoutView = new Views.DesignerLayout(this.context);
     }
 
     DesignerPattern.prototype = {
@@ -293,47 +264,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     return DesignerPattern;
   })();
 
-  Views.HomeAbout = (function() {
-    function HomeAbout(context) {
-      this.context = context;
-      this.layoutView = new Views.Layout();
-    }
-
-    HomeAbout.prototype = {
-      initialize: function() {
-        var app = this.context.app;
-        var dependencies = app.dependencies;
-
-        // FIXME: à ne faire qu'en mode authentifié.
-        app.loadJS({
-          load: dependencies.jQueryModal()
-          , complete: setupModal
-        });
-
-        this.layoutView.initialize();
-      }
-    };
-
-    return HomeAbout;
-  })();
-
   Views.HomeIndex = (function() {
     function HomeIndex(context) {
       this.context = context;
-      this.layoutView = new Views.Layout();
+      this.layoutView = new Views.Layout(this.context);
     }
 
     HomeIndex.prototype = {
       initialize: function() {
-        var app = this.context.app;
-        var dependencies = app.dependencies;
-
-        // FIXME: à ne faire qu'en mode authentifié.
-        app.loadJS({
-          load: dependencies.jQueryModal()
-          , complete: setupModal
-        });
-
         this.layoutView.initialize();
 
         $('.vignette').watermark(l('%preview.watermark'));
@@ -775,7 +713,7 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   ContactController.prototype = extend({
     login: function() { (new Views.ContactLogin(this.context)).initialize(); }
-    , newsletter: function() { (new Views.ContactNewsletter(this.context)).initialize(); }
+    , newsletter: function() { (new Views.Layout(this.context)).initialize(); }
     , register: function() { (new Views.ContactRegister(this.context)).initialize(); }
   });
 
@@ -798,8 +736,8 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   HomeController.prototype = extend({
-    about: function() { (new Views.HomeAbout(this.context)).initialize(); }
-    , contact: function() { (new Views.Layout(this.context)).initialize(); }
+    about: function() { (new Views.Layout(this.context)).initialize(); }
+    , contact: function() { (new Views.HomeContact(this.context)).initialize(); }
     , index: function() { (new Views.HomeIndex(this.context)).initialize(); }
   });
 

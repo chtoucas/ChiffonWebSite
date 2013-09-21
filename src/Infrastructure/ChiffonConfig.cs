@@ -15,21 +15,27 @@
         const string SettingPrefix_ = "chiffon:";
         const string SqlConnectionStringName_ = "SqlServer";
 
+        const bool DefaultDebugCss = false;
+        const bool DefaultDebugJs = false;
+        const bool DefaultEnableClientCache = true;
+        const bool DefaultEnableServerCache = true;
+        const string DefaultGoogleAnalyticsKey = String.Empty;
+
         static readonly Version AssemblyVersion_
             = Assembly.GetExecutingAssembly().GetName().Version;
 
-        bool _debugCss = false;
-        bool _debugJs = false;
-        bool _enableClientCache = true;
-        bool _enableServerCache = true;
-        string _googleAnalytics = String.Empty;
+        bool _debugCss = DefaultDebugCss;
+        bool _debugJs = DefaultDebugJs;
+        bool _enableClientCache = DefaultEnableClientCache;
+        bool _enableServerCache = DefaultEnableServerCache;
+        string _googleAnalyticsKey = DefaultGoogleAnalyticsKey;
 
         public string CssVersion { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
         public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
         public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
         public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
-        public string GoogleAnalytics { get { return _googleAnalytics; } set { _googleAnalytics = value; } }
+        public string GoogleAnalyticsKey { get { return _googleAnalyticsKey; } set { _googleAnalyticsKey = value; } }
         public string JsVersion { get; set; }
         public string LogProfile { get; set; }
         public LogEventLevel LogMinimumLevel { get; set; }
@@ -102,25 +108,23 @@
                 AssemblyVersion_.Minor.ToString(CultureInfo.InvariantCulture),
                 AssemblyVersion_.Build.ToString(CultureInfo.InvariantCulture));
 
-            CssVersion = nvc.MayGetValue("chiffon:CssVersion")
-                .ValueOrElse(version);
+            CssVersion = nvc.MayGetValue("chiffon:CssVersion").ValueOrElse(version);
 
-            JsVersion = nvc.MayGetValue("chiffon:JsVersion")
-                .ValueOrElse(version);
+            JsVersion = nvc.MayGetValue("chiffon:JsVersion").ValueOrElse(version);
 
             DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(false);
+                .ValueOrElse(DefaultDebugCss);
 
             DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(false);
+                .ValueOrElse(DefaultDebugJs);
 
             EnableClientCache = nvc.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(true);
+                .ValueOrElse(DefaultEnableClientCache);
 
             EnableServerCache = nvc.MayParseValue("chiffon:EnableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(true);
+                .ValueOrElse(DefaultEnableServerCache);
 
-            GoogleAnalytics = nvc.MayGetValue("chiffon:GoogleAnalytics").ValueOrElse(String.Empty);
+            GoogleAnalyticsKey = nvc.MayGetValue("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey);
         }
     }
 }

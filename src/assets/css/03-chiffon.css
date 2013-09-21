@@ -28,7 +28,7 @@ A.reverse { color: #999; }
 .darkgrey { color: #999; }
 .grey { color: #ccc; }
 
-.serif { font-family: "Droid Serif", Georgia, "Times New Roman", serif; }
+.serif { font-family: "Droid Serif", Georgia, "Times New Roman", serif; font-style: italic; }
 .serif_medium { font-size: 2.8em; line-height: 1.5em; }
 .serif_large { font-size: 3.6em; line-height: 1.5em; }
 
@@ -181,6 +181,7 @@ INPUT.error { border: 1px solid #ff0000 !important; }
   .contact_register #error_container { text-align: center; }
 
 .modal .contact_register { border-top: none; }
+.modal .contact_register INPUT[type=submit]:hover { border-color: #fff; }
 
 /* Page - Login
  * ============================================================================================== */
@@ -257,6 +258,6 @@ body { position: relative; }
 
 .modal { width: 940px; }
   .modal, .modal A, .modal INPUT, .modal TEXTAREA, .modal .grey { color: #fff !important; }
-    .modal A.close-modal { position: absolute; top: -12.5px; right: -12.5px; display: block; width: 30px; height: 30px; text-indent: -9999px; background: url(img/close.png) no-repeat 0 0; }
+    .modal A.close { position: absolute; top: -12.5px; right: -12.5px; display: block; width: 30px; height: 30px; text-indent: -9999px; background: url(img/close.png) no-repeat 0 0; }
 
-.modal-spinner { display: none; width: 64px; height: 64px; position: fixed; top: 50%; left: 50%; margin-right: -32px; margin-top: -32px; background: url(img/spinner.gif) #111 no-repeat center center; -webkit-border-radius: 8px; -moz-border-radius: 8px; -o-border-radius: 8px; -ms-border-radius: 8px; border-radius: 8px; }
+/*.modal-spinner { display: none; width: 64px; height: 64px; position: fixed; top: 50%; left: 50%; margin-right: -32px; margin-top: -32px; background: url(img/spinner.gif) #111 no-repeat center center; border-radius: 8px; }*/
