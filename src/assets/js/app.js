@@ -16,7 +16,17 @@ this.App = (function(win, _, yepnope, undef) {
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
 
-    var dependencies = {
+    if (undef === settings.baseUrl) {
+      throw new Error('The baseUrl is not defined.');
+    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
+      settings.baseUrl = settings.baseUrl + '/';
+    }
+
+    function rebase(src) { return settings.baseUrl + src; }
+
+    function vendor(src) { return settings.baseUrl + 'vendor/' + src; }
+
+    this.dependencies = {
       chiffon: function() {
         return settings.debug
           ? ['vendor/l10n-2013.09.19.min.js', 'localization.js', 'chiffon.js'].map(rebase)
@@ -38,21 +48,8 @@ this.App = (function(win, _, yepnope, undef) {
       }
     };
 
-    if (undef === settings.baseUrl) {
-      throw new Error('The baseUrl is not defined.');
-    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
-      settings.baseUrl = settings.baseUrl + '/';
-    }
-
-    function rebase(src) { return settings.baseUrl + src; }
-
-    function vendor(src) { return settings.baseUrl + 'vendor/' + src; }
-
-    this.loadjQueryValidate = function(locale, onComplete) {
-      yepnope({
-        load: dependencies.jQueryValidate(locale)
-        , complete: onComplete
-      });
+    this.loadJS = function(options) {
+      throw new Error('You can not use this method until the main() method has been called.');
     };
 
     this.main = function(locale, fn) {
@@ -64,10 +61,12 @@ this.App = (function(win, _, yepnope, undef) {
 
       // FIXME: Quid quand un des appels échoue ?
       yepnope({
-        load: [dependencies.jQuery()].concat(dependencies.chiffon())
+        load: [this.dependencies.jQuery()].concat(this.dependencies.chiffon())
         , complete: function() {
           var Chiffon = win.Chiffon;
           if (undef === Chiffon) { return; }
+
+          that.loadJS = function(options) { yepnope(options); };
 
           var context = {
             locale: locale

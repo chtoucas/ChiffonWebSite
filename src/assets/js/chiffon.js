@@ -3,7 +3,6 @@
 // TODO:
 // - ajouter html5shiv.js
 // - https://github.com/kriskowal/es5-shim/
-// - http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
 
 (function(win, $, undef) {
   'use strict';
@@ -125,125 +124,6 @@ this.Chiffon.Presenters = (function($, undef) {
     return Modal;
   })();
 
-  /*
-  Presenters.StickyInfo = (function() {
-    // Configuration par défaut.
-    var defaults = {
-      stickyClass: 'sticky top'
-    };
-
-    var
-      SMALL_SIZE = 1
-      , MEDIUM_SIZE = 2
-      , LARGE_SIZE = 3
-
-      , size = SMALL_SIZE
-
-      // Géométrie du bloc #info.
-      , info_h
-      , info_w
-      , info_top
-      , info_left
-
-      // Géométrie du bloc #designer.
-      , designer_w
-
-      // Géométrie de la fenêtre.
-      , window_h
-    ;
-
-    function StickyInfo(view, options) {
-      this.$info = view.$info;
-      this.$designer = view.$designer;
-      this.size = LARGE_SIZE;
-      this.settings = $.extend({}, defaults, options);
-    }
-
-    StickyInfo.prototype = {
-      is_sticky: false
-
-      , stick: function() {
-        if (this.is_sticky) { return; }
-        this.is_sticky = true;
-        this.$info.addClass(this.settings.stickyClass);
-      }
-
-      , unstick: function() {
-        if (!this.is_sticky) { return; }
-        this.is_sticky = false;
-        this.$info.removeClass(this.settings.stickyClass);
-      }
-
-      // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
-      // pour qu'il soit toujours visible on lui donne une position fixe.
-      , setupSmallBlock: function() {
-        this.$info.addClass('sticky');
-        this.$info.css({ top: info_top + 'px', left: info_left + 'px' });
-      }
-
-      // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
-      // haut de la fenêtre.
-      , setupMediumBlock: function() {
-        // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
-        // plus tard lors d'un redimensionnement horizontal de la fenêtre.
-        this.$info.css('left', info_left + 'px');
-
-        //handleScrollEventForMediumBlock();
-      }
-
-      , setup: function() {
-        if (SMALL_SIZE === this.size) {
-          this.setupSmallBlock();
-        } else if (MEDIUM_SIZE === this.size) {
-          this.setupMediumBlock();
-        } else {
-          ;
-        }
-      }
-
-      , onDocumentReady: function(sender, e, callback) {
-        info_h = this.$info.height();
-        info_w = this.$info.width();
-
-        info_offset = this.$info.offset();
-        info_top = info_offset.top;
-        info_left = info_offset.left;
-
-        designer_w = this.$designer.width();
-        window_h = $(win).height();
-
-        if (window_h >= info_h + info_top) {
-          this.size = SMALL_SIZE;
-        } else if (window_h >= info_h) {
-          this.size = MEDIUM_SIZE;
-        } else {
-          // La fenêtre est trop petite pour contenir tout le bloc info.
-          // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
-          // On ne touche donc à rien.
-          this.size = LARGE_SIZE;
-        }
-
-        setup();
-
-        callback(type);
-      }
-
-      // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
-      , onWindowResize: function(sender, e) {
-        var left = this.$designer.offset().left + designer_w - info_w;
-
-        this.$info.css({ 'left': left + 'px' });
-      }
-
-      , onWindowScroll: function(sender, e) {
-        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
-      }
-    };
-
-    return StickyInfo;
-  })();
-  */
-
   return Presenters;
 })(this.jQuery);
 
@@ -257,20 +137,30 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     return string.toLocaleString();
   }
 
+  function setupValidation() {
+    var $errContainer = $('#error_container');
+
+    // Comportement du validateur utilisé par défaut.
+    $.validator.setDefaults({
+      hightlight: function(elmt) { $(elmt).addClass('error'); }
+      , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
+      , errorContainer: $errContainer
+      , errorLabelContainer: $errContainer
+      , invalidHandler: function() { $errContainer.fadeIn(); }
+    });
+  }
+
   function validateForm(context, fn) {
-    context.app.loadjQueryValidate(context.locale, function() {
-      var $errContainer = $('#error_container');
+    var app = context.app;
+    var dependencies = app.dependencies;
 
-      // Comportement du validateur utilisé par défaut.
-      $.validator.setDefaults({
-        hightlight: function(elmt) { $(elmt).addClass('error'); }
-        , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
-        , errorContainer: $errContainer
-        , errorLabelContainer: $errContainer
-        , invalidHandler: function() { $errContainer.fadeIn(); }
-      });
+    app.loadJS({
+      load: dependencies.jQueryValidate(context.locale)
+        , complete: function() {
+          setupValidation();
 
-      fn();
+          fn();
+        }
     });
   };
 
@@ -314,6 +204,15 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   /* Pages */
 
   Views.ContactLogin = (function() {
+    function onJQueryValidateLoaded() {
+      setupValidation();
+
+      $('#login_form').validate({
+        messages: { token: l('%login.password_required') }
+        , rules: { token: { required: true, minlength: 10 } }
+      });
+    }
+
     function ContactLogin(context) {
       this.context = context;
       this.layoutView = new Views.Layout();
@@ -321,13 +220,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
     ContactLogin.prototype = {
       initialize: function() {
+        var app = this.context.app;
+        var dependencies = app.dependencies;
+
         this.layoutView.initialize();
 
-        validateForm(this.context, function() {
-          $('#login_form').validate({
-            messages: { token: l('%login.password_required') }
-            , rules: { token: { required: true, minlength: 10 } }
-          });
+        app.loadJS({
+          load: dependencies.jQueryValidate(this.context.locale)
+          , complete: onJQueryValidateLoaded
         });
       }
     };
@@ -350,6 +250,29 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   })();
 
   Views.ContactRegister = (function() {
+    function onJQueryValidateLoaded() {
+      setupValidation();
+
+      $('#register_form').validate({
+        // NB: On ne veut pas de message d'erreur par "input".
+        // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+        errorPlacement: $.noop
+        , messages: {
+          Lastname: ''
+          , Firstname: ''
+          , CompanyName: ''
+          , EmailAddress: ''
+        }
+        , rules: {
+          Lastname: { required: true, minlength: 2, maxlength: 50 }
+          , Firstname: { required: true, minlength: 2, maxlength: 50 }
+          , CompanyName: { required: true, minlength: 2, maxlength: 100 }
+          , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
+          , Message: { maxlength: 4000 }
+        }
+      });
+    }
+
     function ContactRegister(context) {
       this.context = context;
       this.layoutView = new Views.Layout();
@@ -357,26 +280,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
     ContactRegister.prototype = {
       initialize: function() {
+        var app = this.context.app;
+        var dependencies = app.dependencies;
+
         this.layoutView.initialize();
 
-        validateForm(this.context, function() {
-          $('#register_form').validate({
-            // On ne veut pas de message d'erreur par "input" (FIXME: errorPlacement ne semble pas marcher).
-            errorPlacement: $.noop
-            , messages: {
-              Lastname: ''
-              , Firstname: ''
-              , CompanyName: ''
-              , EmailAddress: ''
-            }
-            , rules: {
-              Lastname: { required: true, minlength: 2, maxlength: 50 }
-              , Firstname: { required: true, minlength: 2, maxlength: 50 }
-              , CompanyName: { required: true, minlength: 2, maxlength: 100 }
-              , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
-              , Message: { maxlength: 4000 }
-            }
-          });
+        app.loadJS({
+          load: dependencies.jQueryValidate(this.context.locale)
+            , complete: onJQueryValidateLoaded
         });
       }
     };
@@ -428,29 +339,27 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
         , currentSel: undef
       };
 
-    var
-      // Liste des vues.
-      $views
-      // Lien 'Précédent'.
-      , $prev
-      // Lien 'Précédent' désactivé.
-      , $prev_noop
-      // Lien 'Suivant'.
-      , $next
-      // Lien 'Suivant' désactivé.
-      , $next_noop
-      // Conteneur HTML de la position courante.
-      , $pos
+    // Liste des vues.
+    var $views;
+    // Lien 'Précédent'.
+    var $prev;
+    // Lien 'Précédent' désactivé.
+    var $prev_noop;
+    // Lien 'Suivant'.
+    var $next;
+    // Lien 'Suivant' désactivé.
+    var $next_noop;
+    // Conteneur HTML de la position courante.
+    var $pos;
 
-      // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
-      , pos = 1
-      // Nombre de vues.
-      , length
-      // Liste des sélecteurs de vue.
-      // Pour ne pas avoir à jongler entre index et position, on initialise la liste
-      // avec un élément factice en début de tableau.
-      , selectors = [undef]
-    ;
+    // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
+    var pos = 1;
+    // Nombre de vues.
+    var length;
+    // Liste des sélecteurs de vue.
+    // Pour ne pas avoir à jongler entre index et position, on initialise la liste
+    // avec un élément factice en début de tableau.
+    var selectors = [undef];
 
     /* Actions sur l'objet $views */
 
@@ -602,9 +511,9 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     }
 
     function initialize() {
-      var $nav
-        , currentSel
-        , callback;
+      var $nav;
+      var currentSel;
+      var callback;
 
       $views = $(settings.viewsSel);
       length = $views.length;
@@ -662,26 +571,25 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
         , designerSel: '#designer'
       };
 
-    var $info
-      , $designer
+    var $info;
+    var $designer;
 
-      // Géométrie du bloc #info.
-      , info_h
-      , info_w
-      , info_top
-      , info_left
+    // Géométrie du bloc #info.
+    var info_h;
+    var info_w;
+    var info_top;
+    var info_left;
 
-      // Géométrie du bloc #designer.
-      , designer_w
+    // Géométrie du bloc #designer.
+    var designer_w;
 
-      // Géométrie de la fenêtre.
-      , window_h
-    ;
+    // Géométrie de la fenêtre.
+    var window_h;
 
     function handleScrollEventForMediumBlock() {
-      var scroll_limit
-        , sticky_class = 'sticky top'
-        , is_sticky = false;
+      var scroll_limit;
+      var sticky_class = 'sticky top';
+      var is_sticky = false;
 
       function stick() {
         if (is_sticky) { return; }
@@ -771,11 +679,12 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
   // En-tête de la page en position fixe.
   Views.StickyHeader = (function() {
-    var settings
-      , defaults = {
-        headerSel: 'HEADER'
+    var defaults = {
+      headerSel: 'HEADER'
         , headerWrapper: '<div id=sticky_header></div>'
-      };
+    };
+
+    var settings;
 
     var $sticky_header
       , scroll_limit
@@ -914,8 +823,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
       }
 
       , onError: function(e, req) {
-        var fadingOutSpeed = this.settings.onErrorFadingOutSpeed
-          , message = this.getErrorMessage(req.status);
+        var fadingOutSpeed = this.settings.onErrorFadingOutSpeed;
+        var message = this.getErrorMessage(req.status);
 
         this.isError = true;
         $status
@@ -939,7 +848,11 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     };
 
     var ESC_KEYCODE = 27;
-    var $overlay, $modal, lastHref = '', opened = false, initialize;
+    var $overlay;
+    var $modal;
+    var lastHref = '';
+    var opened = false;
+    var initialize;
 
     function Modal(options) {
       this.settings = _.defaults(options || {}, defaults);
@@ -1122,3 +1035,123 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
   };
 
 })(this.Chiffon.Controllers);
+
+
+/*
+Presenters.StickyInfo = (function() {
+  // Configuration par défaut.
+  var defaults = {
+    stickyClass: 'sticky top'
+  };
+
+  var
+    SMALL_SIZE = 1
+    , MEDIUM_SIZE = 2
+    , LARGE_SIZE = 3
+
+    , size = SMALL_SIZE
+
+    // Géométrie du bloc #info.
+    , info_h
+    , info_w
+    , info_top
+    , info_left
+
+    // Géométrie du bloc #designer.
+    , designer_w
+
+    // Géométrie de la fenêtre.
+    , window_h
+  ;
+
+  function StickyInfo(view, options) {
+    this.$info = view.$info;
+    this.$designer = view.$designer;
+    this.size = LARGE_SIZE;
+    this.settings = $.extend({}, defaults, options);
+  }
+
+  StickyInfo.prototype = {
+    is_sticky: false
+
+    , stick: function() {
+      if (this.is_sticky) { return; }
+      this.is_sticky = true;
+      this.$info.addClass(this.settings.stickyClass);
+    }
+
+    , unstick: function() {
+      if (!this.is_sticky) { return; }
+      this.is_sticky = false;
+      this.$info.removeClass(this.settings.stickyClass);
+    }
+
+    // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
+    // pour qu'il soit toujours visible on lui donne une position fixe.
+    , setupSmallBlock: function() {
+      this.$info.addClass('sticky');
+      this.$info.css({ top: info_top + 'px', left: info_left + 'px' });
+    }
+
+    // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
+    // haut de la fenêtre.
+    , setupMediumBlock: function() {
+      // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
+      // plus tard lors d'un redimensionnement horizontal de la fenêtre.
+      this.$info.css('left', info_left + 'px');
+
+      //handleScrollEventForMediumBlock();
+    }
+
+    , setup: function() {
+      if (SMALL_SIZE === this.size) {
+        this.setupSmallBlock();
+      } else if (MEDIUM_SIZE === this.size) {
+        this.setupMediumBlock();
+      } else {
+        ;
+      }
+    }
+
+    , onDocumentReady: function(sender, e, callback) {
+      info_h = this.$info.height();
+      info_w = this.$info.width();
+
+      info_offset = this.$info.offset();
+      info_top = info_offset.top;
+      info_left = info_offset.left;
+
+      designer_w = this.$designer.width();
+      window_h = $(win).height();
+
+      if (window_h >= info_h + info_top) {
+        this.size = SMALL_SIZE;
+      } else if (window_h >= info_h) {
+        this.size = MEDIUM_SIZE;
+      } else {
+        // La fenêtre est trop petite pour contenir tout le bloc info.
+        // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
+        // On ne touche donc à rien.
+        this.size = LARGE_SIZE;
+      }
+
+      setup();
+
+      callback(type);
+    }
+
+    // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
+    , onWindowResize: function(sender, e) {
+      var left = this.$designer.offset().left + designer_w - info_w;
+
+      this.$info.css({ 'left': left + 'px' });
+    }
+
+    , onWindowScroll: function(sender, e) {
+      $(win).scrollTop() >= scroll_limit ? stick() : unstick();
+    }
+  };
+
+  return StickyInfo;
+})();
+*/
