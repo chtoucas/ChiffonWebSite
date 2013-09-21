@@ -22,9 +22,9 @@
     var settings = $.extend({}, $.fn.watermark.defaults, options);
 
     var getWatermak = undef !== watermark
-      ? function($elt) { return watermark; }
+      ? function($elmt) { return watermark; }
       // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
-      : function($elt) { return $elt.data('watermark'); };
+      : function($elmt) { return $elmt.data('watermark'); };
 
     return this.each(function() {
       var $this = $(this);
@@ -247,7 +247,7 @@ this.Chiffon.Presenters = (function($, undef) {
   return Presenters;
 })(this.jQuery);
 
-this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) {
+this.Chiffon.Views = (function(win, doc, loc, _, yepnope, $, Chiffon, Presenters, undef) {
   'use strict';
 
   var Views = {};
@@ -257,19 +257,36 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     return string.toLocaleString();
   }
 
+  function validateForm(context, fn) {
+    context.app.loadjQueryValidate(context.locale, function() {
+      var $errContainer = $('#error_container');
+
+      // Comportement du validateur utilisé par défaut.
+      $.validator.setDefaults({
+        hightlight: function(elmt) { $(elmt).addClass('error'); }
+        , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
+        , errorContainer: $errContainer
+        , errorLabelContainer: $errContainer
+        , invalidHandler: function() { $errContainer.fadeIn(); }
+      });
+
+      fn();
+    });
+  };
+
   /* Layouts */
 
   Views.Layout = (function() {
     function Layout() {
       //this.modalView = new Views.Modal();
-      //this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
+      this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
       this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
     }
 
     Layout.prototype = {
       initialize: function() {
         //this.modalView.registerEventHandlers();
-        //this.registerModalView.registerEventHandlers();
+        this.registerModalView.registerEventHandlers();
         this.ajaxStatusView.registerEventHandlers();
 
         $('A[rel=external]').external();
@@ -297,13 +314,21 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   /* Pages */
 
   Views.ContactLogin = (function() {
-    function ContactLogin() {
+    function ContactLogin(context) {
+      this.context = context;
       this.layoutView = new Views.Layout();
     }
 
     ContactLogin.prototype = {
       initialize: function() {
         this.layoutView.initialize();
+
+        validateForm(this.context, function() {
+          $('#login_form').validate({
+            messages: { token: l('%login.password_required') }
+            , rules: { token: { required: true, minlength: 10 } }
+          });
+        });
       }
     };
 
@@ -325,13 +350,34 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   })();
 
   Views.ContactRegister = (function() {
-    function ContactRegister() {
+    function ContactRegister(context) {
+      this.context = context;
       this.layoutView = new Views.Layout();
     }
 
     ContactRegister.prototype = {
       initialize: function() {
         this.layoutView.initialize();
+
+        validateForm(this.context, function() {
+          $('#register_form').validate({
+            // On ne veut pas de message d'erreur par "input" (FIXME: ne semble pas marcher).
+            errorPlacement: $.noop
+            , messages: {
+              Lastname: ''
+              , Firstname: ''
+              , CompanyName: ''
+              , EmailAddress: ''
+            }
+            , rules: {
+              Lastname: { required: true, minlength: 2, maxlength: 50 }
+              , Firstname: { required: true, minlength: 2, maxlength: 50 }
+              , CompanyName: { required: true, minlength: 2, maxlength: 100 }
+              , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
+              , Message: { maxlength: 4000 }
+            }
+          });
+        });
       }
     };
 
@@ -891,7 +937,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     };
 
     var ESC_KEYCODE = 27;
-    var $overlay, $modal, lastHref = '', opened = false;
+    var $overlay, $modal, lastHref = '', opened = false, initialize;
 
     function Modal(options) {
       this.settings = _.defaults(options || {}, defaults);
@@ -901,7 +947,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
       this.presenter = new Presenters.Modal(this);
     }
 
-    var initialize = (function() {
+    initialize = (function() {
       var defaults = {
         modalElement: '<div class=modal></div>'
         , overlayElement: '<div class=overlay></div>'
@@ -1000,7 +1046,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
   return Views;
 
-})(this, this.document, this.location, this._, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
+})(this, this.document, this.location, this._, this.yepnope, this.jQuery, this.Chiffon, this.Chiffon.Presenters);
 
 this.Chiffon.Controllers = (function($, Views, undef) {
   'use strict';
@@ -1020,9 +1066,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   ContactController.prototype = extend({
-    login: function() { (new Views.ContactLogin()).initialize(); }
-    , newsletter: function() { (new Views.ContactRegister()).initialize(); }
-    , register: function() { (new Views.ContactNewsletter()).initialize(); }
+    login: function() { (new Views.ContactLogin(this.context)).initialize(); }
+    , newsletter: function() { (new Views.ContactNewsletter()).initialize(); }
+    , register: function() { (new Views.ContactRegister(this.context)).initialize(); }
   });
 
   /* DesignerController */

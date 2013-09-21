@@ -29,7 +29,8 @@ A.reverse { color: #999; }
 .grey { color: #ccc; }
 
 .serif { font-family: "Droid Serif", Georgia, "Times New Roman", serif; }
-.serif_large { font-size: 3.6em; line-height: 1.5em; font-style: italic; }
+.serif_medium { font-size: 2.8em; line-height: 1.5em; }
+.serif_large { font-size: 3.6em; line-height: 1.5em; }
 
 .highlight:focus { box-shadow: 0 0 12px rgba(204, 204, 204, 0.37); }
 
@@ -127,6 +128,12 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 
   #ajax_status.ajax_error { background-color: red; color: white; }
 
+/* Erreurs */
+
+#error_container { display: none; list-style-type: none; color: #ff0000; }
+INPUT.error { border: 1px solid #ff0000 !important; }
+/*INPUT.valid { border: 1px solid green !important; }*/
+
 /* Page - Home
  * ============================================================================================== */
 
@@ -171,6 +178,7 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
   .contact_register .public_key { color: #000; border: 1px #000 solid; padding: .1em .5em; }
   .contact_register .validation-summary-errors { font-size: 1.3em; text-align: center; margin-bottom: 2em; color: red; }
     .contact_register .validation-summary-errors UL { list-style-type: none; }
+  .contact_register #error_container { text-align: center; }
 
 .modal .contact_register { border-top: none; }
 
@@ -179,7 +187,7 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 
 .contact_login { border-top: solid 2px #999; }
   .contact_login #hello { margin-bottom: 2em; }
-  .contact_login FORM { text-transform: uppercase; margin-bottom: 7em; }
+  .contact_login FORM { margin-bottom: 7em; }
     .contact_login FORM A { text-transform: none; }
   .contact_login INPUT { background-color: transparent; border: 1px solid #999; }
     .contact_login INPUT[type=password] { font-size: 1.8em; text-align: center; text-transform: uppercase; padding: .5em .75em; margin-bottom: 1.5em; width: 16em; color: #999; }
@@ -227,7 +235,7 @@ H1 { margin: 0 auto; text-align: center; font-weight: normal; text-transform: up
 #nav_views { width: 700px; padding-bottom: 20px; text-align: center; text-transform: uppercase; }
 
 /* Modales.
-  */
+ * ============================================================================================== */
 
 /*.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: #fff; }*/
 /*.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }*/

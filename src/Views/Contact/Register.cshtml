@@ -5,7 +5,8 @@
   @Html.Raw(VR.ContactRegister_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
- <form method=post action="@Url.RouteUrl(RouteName.Contact.Register)" class=clr>
+ <form method=post action="@Url.RouteUrl(RouteName.Contact.Register)" class=clr id=register_form>
+  <p id=error_container class="serif serif_medium grey">@VR.ContactRegister_ValidationMessage</p>
   <div class=left>
    <p>
     <label for=name class=break>@Html.Raw(VR.ContactRegister_Lastname)</label>

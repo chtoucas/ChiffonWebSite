@@ -159,6 +159,9 @@
   <data name="ContactRegister_Validate" xml:space="preserve">
     <value>Valider</value>
   </data>
+  <data name="ContactRegister_ValidationMessage" xml:space="preserve">
+    <value>Veuillez renseigner tous les champs entourés en rouge.</value>
+  </data>
   <data name="HomeAbout_PasswordRequest" xml:space="preserve">
     <value>Je demande un mot de passe</value>
   </data>

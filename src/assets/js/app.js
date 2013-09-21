@@ -16,17 +16,7 @@ this.App = (function(win, _, yepnope, undef) {
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
 
-    if (undef === settings.baseUrl) {
-      throw new Error('The baseUrl is not defined.');
-    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
-      settings.baseUrl = settings.baseUrl + '/';
-    }
-
-    function rebase(src) { return settings.baseUrl + src; }
-
-    function vendor(src) { return settings.baseUrl + 'vendor/' + src; }
-
-    this.dependencies = {
+    var dependencies = {
       chiffon: function() {
         return settings.debug
           ? ['vendor/l10n-2013.09.19.min.js', 'localization.js', 'chiffon.js'].map(rebase)
@@ -42,10 +32,27 @@ this.App = (function(win, _, yepnope, undef) {
       //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
       , jQueryValidate: function(locale) {
-        return ['jquery.validate.min.js', 'additional-methods.min.js']
-          .push('localization/messages_' + locale + '.js')
-          .map(function(src) { return vendor('jquery.validate-1.11.1/' + src); });
+        var scripts = ['jquery.validate.min.js']
+        if ('en' !== locale) { scripts.push('localization/messages_' + locale + '.js'); }
+        return scripts.map(function(src) { return vendor('jquery.validate-1.11.1/' + src); });
       }
+    };
+
+    if (undef === settings.baseUrl) {
+      throw new Error('The baseUrl is not defined.');
+    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
+      settings.baseUrl = settings.baseUrl + '/';
+    }
+
+    function rebase(src) { return settings.baseUrl + src; }
+
+    function vendor(src) { return settings.baseUrl + 'vendor/' + src; }
+
+    this.loadjQueryValidate = function(locale, onComplete) {
+      yepnope({
+        load: dependencies.jQueryValidate(locale)
+        , complete: onComplete
+      });
     };
 
     this.main = function(locale, fn) {
@@ -57,7 +64,7 @@ this.App = (function(win, _, yepnope, undef) {
 
       // FIXME: Quid quand un des appels échoue ?
       yepnope({
-        load: [this.dependencies.jQuery()].concat(this.dependencies.chiffon())
+        load: [dependencies.jQuery()].concat(dependencies.chiffon())
         , complete: function() {
           var Chiffon = win.Chiffon;
           if (undef === Chiffon) { return; }

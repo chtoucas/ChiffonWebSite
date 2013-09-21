@@ -3,9 +3,12 @@
   <p id=hello>@Html.Raw(VR.ContactRegister_Hello)</p>
   <p>@Html.Raw(VR.ContactLogin_DescriptionHtml)</p>
  </div>
- <form method=post action="/connecte" class="center">
-  <input type=password placeholder="@Html.Raw(VR.ContactRegister_Password)" name=token maxlength=25 class=highlight />
-  <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
+ <form method=post action="/connecte" class=center id=login_form>
+  <p id=error_container class="serif serif_medium grey"></p>
+  <p>
+   <input type=password placeholder="@Html.Raw(VR.ContactRegister_Password)" name=token maxlength=25 class=highlight />
+   <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
+  </p>
   <p>
    <input type=submit value="@Html.Raw(VR.ContactRegister_Validate)" class="serif serif_large grey" />
   </p>

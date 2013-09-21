@@ -8,6 +8,11 @@ String.toLocaleString({
     , '%ajax.temp_error': 'Un problème temporaire est intervenue. Veuillez réessayer plus tard'
     , '%ajax.fatal_error': 'Une erreur est intervenue. Veuillez réessayer plus tard'
     , '%preview.watermark': 'Voir toute la collection &gt;'
+    , '%login.password_required': 'Veuillez entrer un mot de passe'
+    //, '%register.lastname': ''
+    //, '%register.firstname': ''
+    //, '%register.company': ''
+    //, '%register.email': ''
   }
   , 'en': {
     '%ajax.loading': 'Loading'
@@ -16,5 +21,10 @@ String.toLocaleString({
     , '%ajax.temp_error': 'A temporary error occured. Please try again later'
     , '%ajax.fatal_error': 'An error occured. Please try again later'
     , '%preview.watermark': 'Go to the collection &gt;'
+    , '%login.password_required': 'Please, enter a password'
+    //, '%register.lastname': ''
+    //, '%register.firstname': ''
+    //, '%register.company': ''
+    //, '%register.email': ''
   }
 });

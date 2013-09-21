@@ -27,18 +27,18 @@
              Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);PlatformPackage=$(PlatformPackage)" />
   </Target>
 
-  <Target Name="_BeforeBuild" BeforeTargets="Build">
-    <GetVersionNumber VersionNumberXml="$(EtcDirectory)\VersionNumber.xml">
-      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
-    </GetVersionNumber>
-  </Target>
-
-  <Target Name="_BeforePackage" BeforeTargets="Package">
+  <Target Name="PostDeploy">
     <UpdateVersionNumber
       VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"
       AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
       AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs">
       <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
     </UpdateVersionNumber>
+  </Target>
+
+  <Target Name="_BeforeBuild" BeforeTargets="Build;Package">
+    <GetVersionNumber VersionNumberXml="$(EtcDirectory)\VersionNumber.xml">
+      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
+    </GetVersionNumber>
   </Target>
 </Project>

@@ -187,6 +187,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez renseigner tous les champs entourés en rouge..
+        /// </summary>
+        public static string ContactRegister_ValidationMessage {
+            get {
+                return ResourceManager.GetString("ContactRegister_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Je demande un mot de passe.
         /// </summary>
         public static string HomeAbout_PasswordRequest {

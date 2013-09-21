@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9
 		Chiffon.msbuild = Chiffon.msbuild
 		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
 		Package.cmd = Package.cmd
+		PostDeploy.cmd = PostDeploy.cmd
 		etc\VersionNumber.xml = etc\VersionNumber.xml
 	EndProjectSection
 EndProject
