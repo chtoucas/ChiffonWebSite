@@ -26,6 +26,7 @@
 
             // Modules HTTP.
             HttpHeaderCleanupModule.Register();
+            HttpHeaderPolicyModule.Register();
             InitializeRuntimeModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".

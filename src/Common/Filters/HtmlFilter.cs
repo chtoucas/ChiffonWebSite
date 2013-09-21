@@ -20,8 +20,8 @@
         {
             var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            filterContext.Controller.ViewData["RegisterRelation"]
-                = identity.IsAuthenticated ? String.Empty : "register nofollow";
+            filterContext.Controller.ViewData["ModalRelation"]
+                = identity.IsAuthenticated ? String.Empty : "modal:open";
         }
     }
 }

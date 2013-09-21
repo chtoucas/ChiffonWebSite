@@ -6,14 +6,14 @@
  <form method=post action="/connecte" class=center id=login_form>
   <p id=error_container class="serif serif_medium grey"></p>
   <p>
-   <input type=password placeholder="@Html.Raw(VR.ContactRegister_Password)" name=token maxlength=25 class=highlight />
+   <input type=password autofocus placeholder="@Html.Raw(VR.ContactRegister_Password)" name=token required=required maxlength=25 class=highlight />
    <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
   </p>
   <p>
    <input type=submit value="@Html.Raw(VR.ContactRegister_Validate)" class="serif serif_large grey" />
   </p>
   <p class="serif serif_large">
-   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class="reverse underline" rel="register nofollow">@Html.Raw(VR.ContactRegister_RequestPassword)</a>
+   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class="reverse underline" rel="@ViewBag.ModalRelation">@Html.Raw(VR.ContactRegister_RequestPassword)</a>
   </p>
  </form>
 </div>

@@ -39,6 +39,11 @@ this.App = (function(win, _, yepnope, undef) {
 
       //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.min.js'); }
 
+      // WARNING: Lors de la mise à jour il faut commenter les dernières lignes
+      // du script qui exécutent automatiquement les événements modal:open.
+      // TODO: Version minifiée.
+      , jQueryModal: function() { return vendor('jquery.modal.custom-0.5.4.js'); }
+
       //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
       , jQueryValidate: function(locale) {

@@ -37,7 +37,7 @@
 
 })(this, this.jQuery);
 
-this.Chiffon = (function(win, doc, loc, _, $, undef) {
+this.Chiffon = (function(_, $, undef) {
   'use strict';
 
   // Configuration par défaut.
@@ -59,18 +59,20 @@ this.Chiffon = (function(win, doc, loc, _, $, undef) {
     });
   }
 
-  function breakFrame() {
-    var top = win.top;
+  //function killFrame() {
+  //  // On remplace cette méthode par l'envoi d'une en-tête "X-Frame-Options: DENY".
+  //  // Cf. aussi http://en.wikipedia.org/wiki/Framekiller 
+  //  var top = win.top;
 
-    if (top !== win) {
-      if (undef !== loc) {
-        top.location.replace(loc.href);
-      }
-      else {
-        top.document.location.replace(doc.location.href);
-      }
-    }
-  }
+  //  if (top !== win) {
+  //    if (undef !== loc) {
+  //      top.location.replace(loc.href);
+  //    }
+  //    else {
+  //      top.document.location.replace(doc.location.href);
+  //    }
+  //  }
+  //}
 
   function Chiffon(context) {
     this.context = context;
@@ -82,7 +84,7 @@ this.Chiffon = (function(win, doc, loc, _, $, undef) {
     }
 
     , handle: function(controllerName, actionName, params) {
-      breakFrame();
+      //killFrame();
       setupAjax(defaults.ajaxTimeout);
       setLocale(this.context.locale);
 
@@ -92,7 +94,7 @@ this.Chiffon = (function(win, doc, loc, _, $, undef) {
 
   return Chiffon;
 
-})(this, this.document, this.location, this._, this.jQuery);
+})(this._, this.jQuery);
 
 this.Chiffon.Presenters = (function($, undef) {
   'use strict';
@@ -137,6 +139,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     return string.toLocaleString();
   }
 
+  // Conventions globales concernant la validation des formulaires.
   function setupValidation() {
     var $errContainer = $('#error_container');
 
@@ -150,34 +153,35 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     });
   }
 
-  function validateForm(context, fn) {
-    var app = context.app;
-    var dependencies = app.dependencies;
+  function setupModal() {
+    // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
+    // WARNING: jquery.modal ne prend pas en compte les sélecteurs du genre rel=~modal
+    $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
+      e.preventDefault();
 
-    app.loadJS({
-      load: dependencies.jQueryValidate(context.locale)
-        , complete: function() {
-          setupValidation();
-
-          fn();
-        }
+      $(this).modal({
+        opacity: .8
+        , fadeDuration: 200
+        , fadeDelay: 0
+        , closeText: l('%modal.close')
+      });
     });
-  };
+  }
 
   /* Layouts */
 
   Views.Layout = (function() {
     function Layout() {
       //this.modalView = new Views.Modal();
-      this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
-      this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
+      //this.registerModalView = new Views.Modal({ linkSel: 'A[rel~=register]' });
+      //this.ajaxStatusView = new Views.AjaxStatus({ displayLoading: false });
     }
 
     Layout.prototype = {
       initialize: function() {
         //this.modalView.registerEventHandlers();
-        this.registerModalView.registerEventHandlers();
-        this.ajaxStatusView.registerEventHandlers();
+        //this.registerModalView.registerEventHandlers();
+        //this.ajaxStatusView.registerEventHandlers();
 
         $('A[rel=external]').external();
       }
@@ -204,15 +208,6 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   /* Pages */
 
   Views.ContactLogin = (function() {
-    function onJQueryValidateLoaded() {
-      setupValidation();
-
-      $('#login_form').validate({
-        messages: { token: l('%login.password_required') }
-        , rules: { token: { required: true, minlength: 10 } }
-      });
-    }
-
     function ContactLogin(context) {
       this.context = context;
       this.layoutView = new Views.Layout();
@@ -227,7 +222,21 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
         app.loadJS({
           load: dependencies.jQueryValidate(this.context.locale)
-          , complete: onJQueryValidateLoaded
+          , complete: this.setupValidation
+        });
+
+        app.loadJS({
+          load: dependencies.jQueryModal()
+          , complete: setupModal
+        });
+      }
+
+      , setupValidation: function() {
+        setupValidation();
+
+        $('#login_form').validate({
+          messages: { token: l('%login.password_required') }
+          , rules: { token: { required: true, minlength: 10 } }
         });
       }
     };
@@ -250,29 +259,6 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
   })();
 
   Views.ContactRegister = (function() {
-    function onJQueryValidateLoaded() {
-      setupValidation();
-
-      $('#register_form').validate({
-        // NB: On ne veut pas de message d'erreur par "input".
-        // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
-        errorPlacement: $.noop
-        , messages: {
-          Lastname: ''
-          , Firstname: ''
-          , CompanyName: ''
-          , EmailAddress: ''
-        }
-        , rules: {
-          Lastname: { required: true, minlength: 2, maxlength: 50 }
-          , Firstname: { required: true, minlength: 2, maxlength: 50 }
-          , CompanyName: { required: true, minlength: 2, maxlength: 100 }
-          , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
-          , Message: { maxlength: 4000 }
-        }
-      });
-    }
-
     function ContactRegister(context) {
       this.context = context;
       this.layoutView = new Views.Layout();
@@ -287,7 +273,35 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
 
         app.loadJS({
           load: dependencies.jQueryValidate(this.context.locale)
-            , complete: onJQueryValidateLoaded
+          , complete: this.setupValidation
+        });
+
+        app.loadJS({
+          load: dependencies.jQueryModal()
+          , complete: setupModal
+        });
+      }
+
+      , setupValidation: function() {
+        setupValidation();
+
+        $('#register_form').validate({
+          // NB: On ne veut pas de message d'erreur par "input".
+          // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+          errorPlacement: $.noop
+          , messages: {
+            Lastname: ''
+            , Firstname: ''
+            , CompanyName: ''
+            , EmailAddress: ''
+          }
+          , rules: {
+            Lastname: { required: true, minlength: 2, maxlength: 50 }
+            , Firstname: { required: true, minlength: 2, maxlength: 50 }
+            , CompanyName: { required: true, minlength: 2, maxlength: 100 }
+            , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
+            , Message: { maxlength: 4000 }
+          }
         });
       }
     };
@@ -312,13 +326,47 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     return DesignerPattern;
   })();
 
+  Views.HomeAbout = (function() {
+    function HomeAbout(context) {
+      this.context = context;
+      this.layoutView = new Views.Layout();
+    }
+
+    HomeAbout.prototype = {
+      initialize: function() {
+        var app = this.context.app;
+        var dependencies = app.dependencies;
+
+        // FIXME: à ne faire qu'en mode authentifié.
+        app.loadJS({
+          load: dependencies.jQueryModal()
+          , complete: setupModal
+        });
+
+        this.layoutView.initialize();
+      }
+    };
+
+    return HomeAbout;
+  })();
+
   Views.HomeIndex = (function() {
-    function HomeIndex() {
+    function HomeIndex(context) {
+      this.context = context;
       this.layoutView = new Views.Layout();
     }
 
     HomeIndex.prototype = {
       initialize: function() {
+        var app = this.context.app;
+        var dependencies = app.dependencies;
+
+        // FIXME: à ne faire qu'en mode authentifié.
+        app.loadJS({
+          load: dependencies.jQueryModal()
+          , complete: setupModal
+        });
+
         this.layoutView.initialize();
 
         $('.vignette').watermark(l('%preview.watermark'));
@@ -734,230 +782,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, Presenters, undef) 
     }
   })();
 
-  // Indicateur d'activité Ajax à la Google Mail.
-  Views.AjaxStatus = (function() {
-    // Configuration par défaut.
-    var defaults = {
-      errorClass: 'ajax_error'
-      , displayLoading: true
-      , onErrorFadingSpeed: 5000
-      , loadingMessage: l('%ajax.loading')
-      , notFoundErrorMessage: l('%ajax.notfound_error')
-      , tempErrorMessage: l('%ajax.temp_error')
-      , fatalErrorMessage: l('%ajax.fatal_error')
-    };
-
-    // Membres statiques.
-    var $status, visible = false;
-
-    // Constructeur.
-    function AjaxStatus(options) {
-      this.settings = $.extend({}, defaults, options);
-
-      initialize({}, false /* initializing */);
-
-      this.isError = false;
-    }
-
-    // Constructeur statique.
-    var initialize = (function() {
-      var defaults = { statusElement: '<div id=ajax_status></div>' };
-      var initialized = false;
-
-      return function(options, initializing) {
-        if (initialized) {
-          if (initializing) {
-            throw new TypeError('You can not initialize "AjaxStatus" twice.');
-          }
-          else { return; }
-        }
-
-        var settings = _.defaults(options || {}, defaults);
-
-        $status = $(settings.statusElement);
-
-        // On ajoute l'élément status au DOM.
-        $(doc.body).append($status);
-
-        initialized = true;
-      }
-    })();
-
-    AjaxStatus.AjaxStatus = function(options) { initialize(options, true /* initializing */); };
-
-    AjaxStatus.prototype = {
-      registerEventHandlers: function() {
-        var that = this;
-
-        $(doc)
-          .ajaxStart(function(e) { that.onStart(e); })
-          .ajaxError(function(e, req) { that.onError(e, req); })
-          .ajaxStop(function(e) { that.onStop(e); });
-      }
-
-      , getErrorMessage: function(status) {
-        if (404 === status) {
-          return this.settings.notFoundErrorMessage;
-        } else if (0 === status) {
-          return this.settings.tempErrorMessage;
-        } else {
-          return this.settings.fatalErrorMessage;
-        }
-      }
-
-      , onStart: function(e) {
-        // On remet les compteurs à zéro.
-        $status.removeClass(this.settings.errorClass);
-
-        if (this.settings.displayLoading) {
-          $status.text(this.settings.loadingMessage).show();
-        }
-      }
-
-      , onStop: function(e) {
-        if (this.isError) {
-          this.isError = false;
-        } else if (this.settings.displayLoading) {
-          $status.hide();
-        }
-      }
-
-      , onError: function(e, req) {
-        var fadingOutSpeed = this.settings.onErrorFadingOutSpeed;
-        var message = this.getErrorMessage(req.status);
-
-        this.isError = true;
-        $status
-          .addClass(this.settings.errorClass)
-          .text(message)
-          .show();
-
-        if (fadingOutSpeed > 0) {
-          $status.fadeOut(fadingOutSpeed);
-        }
-      }
-    };
-
-    return AjaxStatus;
-  })();
-
-  Views.Modal = (function() {
-    // Configuration par défaut.
-    var defaults = {
-      linkSel: 'A[rel~=modal]'
-    };
-
-    var ESC_KEYCODE = 27;
-    var $overlay;
-    var $modal;
-    var lastHref = '';
-    var opened = false;
-    var initialize;
-
-    function Modal(options) {
-      this.settings = _.defaults(options || {}, defaults);
-
-      initialize({}, false /* initializing */);
-
-      this.presenter = new Presenters.Modal(this);
-    }
-
-    initialize = (function() {
-      var defaults = {
-        modalElement: '<div class=modal></div>'
-        , overlayElement: '<div class=overlay></div>'
-      };
-      var initialized = false;
-
-      return function(options, initializing) {
-        if (initialized) {
-          if (initializing) {
-            throw new TypeError('You can not initialize "Modal" twice.');
-          }
-          else { return; }
-        }
-
-        var settings = $.extend({}, defaults, options);
-
-        $overlay = $(settings.overlayElement);
-        $modal = $(settings.modalElement);
-
-        // On ajoute les éléments au DOM.
-        $(doc.body).append($overlay).append($modal);
-
-        // On enregistre les événements associés.
-        $(doc).bind('keydown.modal', function(e) { keydownPressed(this, e); });
-
-        $overlay.click(function(e) { overlayClicked(this, e); });
-
-        initialized = true;
-      }
-    })();
-
-    function open() {
-      $overlay.show();
-      $modal.show();
-      opened = true;
-    }
-
-    function close() {
-      $modal.hide();
-      $overlay.fadeOut();
-      opened = false;
-    }
-
-    function keydownPressed(sender, e) {
-      if (opened && ESC_KEYCODE === e.keyCode) {
-        e.preventDefault();
-        close();
-      }
-    }
-
-    function overlayClicked(sender, e) {
-      if (opened) {
-        e.preventDefault();
-        close();
-      }
-    }
-
-    Modal.Modal = function(options) { initialize(options, true /* initializing */); };
-
-    Modal.prototype = {
-      registerEventHandlers: function() {
-        var that = this;
-
-        $(this.settings.linkSel).click(function(e) { that.linkClicked(this, e); });
-      }
-
-      , linkClicked: function(sender, e) {
-        e.preventDefault();
-
-        var href = sender.href;
-
-        if (lastHref === href) {
-          open();
-        } else {
-          this.onLoadContent({ href: href });
-        }
-      }
-
-      , loadContent: function(sender, e) {
-        this.presenter.loadContent(sender, e);
-      }
-
-      , onLoadContent: function(e) {
-        this.loadContent(this, e);
-      }
-
-      , onContentLoaded: function(e) {
-        $modal.html(e.data);
-        open();
-        lastHref = e.href;
-      }
-    };
-
-    return Modal;
-  })();
+  //  return AjaxStatus;
+  //})();
 
   return Views;
 
@@ -982,7 +808,7 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   ContactController.prototype = extend({
     login: function() { (new Views.ContactLogin(this.context)).initialize(); }
-    , newsletter: function() { (new Views.ContactNewsletter()).initialize(); }
+    , newsletter: function() { (new Views.ContactNewsletter(this.context)).initialize(); }
     , register: function() { (new Views.ContactRegister(this.context)).initialize(); }
   });
 
@@ -993,9 +819,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   DesignerController.prototype = extend({
-    index: function() { (new Views.DesignerLayout()).initialize(); }
-    , category: function() { (new Views.DesignerLayout()).initialize(); }
-    , pattern: function() { (new Views.DesignerPattern()).initialize(); }
+    index: function() { (new Views.DesignerLayout(this.context)).initialize(); }
+    , category: function() { (new Views.DesignerLayout(this.context)).initialize(); }
+    , pattern: function() { (new Views.DesignerPattern(this.context)).initialize(); }
   });
 
   /* HomeController */
@@ -1005,9 +831,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   HomeController.prototype = extend({
-    about: function() { (new Views.Layout()).initialize(); }
-    , contact: function() { (new Views.Layout()).initialize(); }
-    , index: function() { (new Views.HomeIndex()).initialize(); }
+    about: function() { (new Views.HomeAbout(this.context)).initialize(); }
+    , contact: function() { (new Views.Layout(this.context)).initialize(); }
+    , index: function() { (new Views.HomeIndex(this.context)).initialize(); }
   });
 
   return {
@@ -1036,6 +862,227 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
 
 })(this.Chiffon.Controllers);
 
+//// Indicateur d'activité Ajax à la Google Mail.
+//Views.AjaxStatus = (function() {
+//  // Configuration par défaut.
+//  var defaults = {
+//    errorClass: 'ajax_error'
+//    , displayLoading: true
+//    , onErrorFadingSpeed: 5000
+//    , loadingMessage: l('%ajax.loading')
+//    , notFoundErrorMessage: l('%ajax.notfound_error')
+//    , tempErrorMessage: l('%ajax.temp_error')
+//    , fatalErrorMessage: l('%ajax.fatal_error')
+//  };
+
+//  // Membres statiques.
+//  var $status, visible = false;
+
+//  // Constructeur.
+//  function AjaxStatus(options) {
+//    this.settings = $.extend({}, defaults, options);
+
+//    initialize({}, false /* initializing */);
+
+//    this.isError = false;
+//  }
+
+//  // Constructeur statique.
+//  var initialize = (function() {
+//    var defaults = { statusElement: '<div id=ajax_status></div>' };
+//    var initialized = false;
+
+//    return function(options, initializing) {
+//      if (initialized) {
+//        if (initializing) {
+//          throw new TypeError('You can not initialize "AjaxStatus" twice.');
+//        }
+//        else { return; }
+//      }
+
+//      var settings = _.defaults(options || {}, defaults);
+
+//      $status = $(settings.statusElement);
+
+//      // On ajoute l'élément status au DOM.
+//      $(doc.body).append($status);
+
+//      initialized = true;
+//    }
+//  })();
+
+//  AjaxStatus.AjaxStatus = function(options) { initialize(options, true /* initializing */); };
+
+//  AjaxStatus.prototype = {
+//    registerEventHandlers: function() {
+//      var that = this;
+
+//      $(doc)
+//        .ajaxStart(function(e) { that.onStart(e); })
+//        .ajaxError(function(e, req) { that.onError(e, req); })
+//        .ajaxStop(function(e) { that.onStop(e); });
+//    }
+
+//    , getErrorMessage: function(status) {
+//      if (404 === status) {
+//        return this.settings.notFoundErrorMessage;
+//      } else if (0 === status) {
+//        return this.settings.tempErrorMessage;
+//      } else {
+//        return this.settings.fatalErrorMessage;
+//      }
+//    }
+
+//    , onStart: function(e) {
+//      // On remet les compteurs à zéro.
+//      $status.removeClass(this.settings.errorClass);
+
+//      if (this.settings.displayLoading) {
+//        $status.text(this.settings.loadingMessage).show();
+//      }
+//    }
+
+//    , onStop: function(e) {
+//      if (this.isError) {
+//        this.isError = false;
+//      } else if (this.settings.displayLoading) {
+//        $status.hide();
+//      }
+//    }
+
+//    , onError: function(e, req) {
+//      var fadingOutSpeed = this.settings.onErrorFadingOutSpeed;
+//      var message = this.getErrorMessage(req.status);
+
+//      this.isError = true;
+//      $status
+//        .addClass(this.settings.errorClass)
+//        .text(message)
+//        .show();
+
+//      if (fadingOutSpeed > 0) {
+//        $status.fadeOut(fadingOutSpeed);
+//      }
+//    }
+//  };
+
+//Views.Modal = (function() {
+//  // Configuration par défaut.
+//  var defaults = {
+//    linkSel: 'A[rel~=modal]'
+//  };
+
+//  var ESC_KEYCODE = 27;
+//  var $overlay;
+//  var $modal;
+//  var lastHref = '';
+//  var opened = false;
+//  var initialize;
+
+//  function Modal(options) {
+//    this.settings = _.defaults(options || {}, defaults);
+
+//    initialize({}, false /* initializing */);
+
+//    this.presenter = new Presenters.Modal(this);
+//  }
+
+//  initialize = (function() {
+//    var defaults = {
+//      modalElement: '<div class=modal></div>'
+//      , overlayElement: '<div class=overlay></div>'
+//    };
+//    var initialized = false;
+
+//    return function(options, initializing) {
+//      if (initialized) {
+//        if (initializing) {
+//          throw new TypeError('You can not initialize "Modal" twice.');
+//        }
+//        else { return; }
+//      }
+
+//      var settings = $.extend({}, defaults, options);
+
+//      $overlay = $(settings.overlayElement);
+//      $modal = $(settings.modalElement);
+
+//      // On ajoute les éléments au DOM.
+//      $(doc.body).append($overlay).append($modal);
+
+//      // On enregistre les événements associés.
+//      $(doc).bind('keydown.modal', function(e) { keydownPressed(this, e); });
+
+//      $overlay.click(function(e) { overlayClicked(this, e); });
+
+//      initialized = true;
+//    }
+//  })();
+
+//  function open() {
+//    $overlay.show();
+//    $modal.show();
+//    opened = true;
+//  }
+
+//  function close() {
+//    $modal.hide();
+//    $overlay.fadeOut();
+//    opened = false;
+//  }
+
+//  function keydownPressed(sender, e) {
+//    if (opened && ESC_KEYCODE === e.keyCode) {
+//      e.preventDefault();
+//      close();
+//    }
+//  }
+
+//  function overlayClicked(sender, e) {
+//    if (opened) {
+//      e.preventDefault();
+//      close();
+//    }
+//  }
+
+//  Modal.Modal = function(options) { initialize(options, true /* initializing */); };
+
+//  Modal.prototype = {
+//    registerEventHandlers: function() {
+//      var that = this;
+
+//      $(this.settings.linkSel).click(function(e) { that.linkClicked(this, e); });
+//    }
+
+//    , linkClicked: function(sender, e) {
+//      e.preventDefault();
+
+//      var href = sender.href;
+
+//      if (lastHref === href) {
+//        open();
+//      } else {
+//        this.onLoadContent({ href: href });
+//      }
+//    }
+
+//    , loadContent: function(sender, e) {
+//      this.presenter.loadContent(sender, e);
+//    }
+
+//    , onLoadContent: function(e) {
+//      this.loadContent(this, e);
+//    }
+
+//    , onContentLoaded: function(e) {
+//      $modal.html(e.data);
+//      open();
+//      lastHref = e.href;
+//    }
+//  };
+
+//  return Modal;
+//})();
 
 /*
 Presenters.StickyInfo = (function() {
