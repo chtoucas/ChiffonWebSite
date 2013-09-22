@@ -38,6 +38,9 @@
                 return;
             }
 
+            // Habituellement on essaie de prévenir l'inclusion d'une page du site dans une "frame" via javascript.
+            // Malheureusement cela ne suffit pas et il existe des techniques pour contrer les techniques basées sur javascript.
+            // Cf. http://en.wikipedia.org/wiki/Framekiller
             response.Headers.Add("X-Frame-Options", "DENY");
         }
     }

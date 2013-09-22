@@ -59,21 +59,6 @@ this.Chiffon = (function(_, $, undef) {
     });
   }
 
-  //function killFrame() {
-  //  // On remplace cette méthode par l'envoi d'une en-tête "X-Frame-Options: DENY".
-  //  // Cf. aussi http://en.wikipedia.org/wiki/Framekiller 
-  //  var top = win.top;
-
-  //  if (top !== win) {
-  //    if (undef !== loc) {
-  //      top.location.replace(loc.href);
-  //    }
-  //    else {
-  //      top.document.location.replace(doc.location.href);
-  //    }
-  //  }
-  //}
-
   function Chiffon(context) {
     this.context = context;
   }
@@ -84,7 +69,6 @@ this.Chiffon = (function(_, $, undef) {
     }
 
     , handle: function(controllerName, actionName, params) {
-      //killFrame();
       setupAjax(defaults.ajaxTimeout);
       setLocale(this.context.locale);
 
@@ -127,10 +111,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
   // Chargement de jQuery.modal puis exécution d'un callback.
   function initializeModal(context, fn) {
-    if (context.isAuth) {
-      // On n'active les modales qu'en mode anonyme.
-      return;
-    }
+    // On n'active les modales qu'en mode anonyme.
+    if (context.isAuth) { return; }
 
     var app = context.app;
 
@@ -139,13 +121,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
         e.preventDefault();
 
-        $(this).modal({
-          opacity: .8
-          , fadeDuration: 150
-          , fadeDelay: 0
-          , showSpinner: false
-          , closeText: l('%modal.close')
-        });
+        $(this).modal({ closeText: l('%modal.close') });
       });
 
       if (undef !== fn) { fn(); }
@@ -737,7 +713,7 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   HomeController.prototype = extend({
     about: function() { (new Views.Layout(this.context)).initialize(); }
-    , contact: function() { (new Views.HomeContact(this.context)).initialize(); }
+    , contact: function() { (new Views.Layout(this.context)).initialize(); }
     , index: function() { (new Views.HomeIndex(this.context)).initialize(); }
   });
 

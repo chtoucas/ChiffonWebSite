@@ -15,20 +15,21 @@
         const string SettingPrefix_ = "chiffon:";
         const string SqlConnectionStringName_ = "SqlServer";
 
-        const bool DefaultDebugCss = false;
-        const bool DefaultDebugJs = false;
-        const bool DefaultEnableClientCache = true;
-        const bool DefaultEnableServerCache = true;
-        const string DefaultGoogleAnalyticsKey = String.Empty;
+        const bool DefaultDebugCss_ = false;
+        const bool DefaultDebugJs_ = false;
+        const bool DefaultEnableClientCache_ = true;
+        const bool DefaultEnableServerCache_ = true;
+
+        static readonly string DefaultGoogleAnalyticsKey_ = String.Empty;
 
         static readonly Version AssemblyVersion_
             = Assembly.GetExecutingAssembly().GetName().Version;
 
-        bool _debugCss = DefaultDebugCss;
-        bool _debugJs = DefaultDebugJs;
-        bool _enableClientCache = DefaultEnableClientCache;
-        bool _enableServerCache = DefaultEnableServerCache;
-        string _googleAnalyticsKey = DefaultGoogleAnalyticsKey;
+        bool _debugCss = DefaultDebugCss_;
+        bool _debugJs = DefaultDebugJs_;
+        bool _enableClientCache = DefaultEnableClientCache_;
+        bool _enableServerCache = DefaultEnableServerCache_;
+        string _googleAnalyticsKey = DefaultGoogleAnalyticsKey_;
 
         public string CssVersion { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
@@ -113,18 +114,18 @@
             JsVersion = nvc.MayGetValue("chiffon:JsVersion").ValueOrElse(version);
 
             DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultDebugCss);
+                .ValueOrElse(DefaultDebugCss_);
 
             DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultDebugJs);
+                .ValueOrElse(DefaultDebugJs_);
 
             EnableClientCache = nvc.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultEnableClientCache);
+                .ValueOrElse(DefaultEnableClientCache_);
 
             EnableServerCache = nvc.MayParseValue("chiffon:EnableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultEnableServerCache);
+                .ValueOrElse(DefaultEnableServerCache_);
 
-            GoogleAnalyticsKey = nvc.MayGetValue("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey);
+            GoogleAnalyticsKey = nvc.MayGetValue("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey_);
         }
     }
 }

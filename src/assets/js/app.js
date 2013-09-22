@@ -83,13 +83,13 @@ this.App = (function(win, _, yepnope, undef) {
 
               loadJS = function(options) { yepnope(options); };
 
-              var context = {
+              var ctx = {
                 isAuth: true === isAuth
                 , locale: locale
                 , app: that
               };
 
-              fn(new Chiffon(context));
+              fn(new Chiffon(ctx));
             }
           });
         }

@@ -5,11 +5,6 @@
  * - http://webcodertools.com/imagetobase64converter/Create
  */
 
-/* Imports
- * ============================================================================================== */
-
-/*@import url("http://fonts.googleapis.com/css?family=Droid+Serif:400italic");*/
-
 /* Règles générales
  * ============================================================================================== */
 
@@ -181,7 +176,7 @@ INPUT.error { border: 1px solid #ff0000 !important; }
   .contact_register #error_container { text-align: center; }
 
 .modal .contact_register { border-top: none; }
-.modal .contact_register INPUT[type=submit]:hover { border-color: #fff; }
+  .modal .contact_register INPUT[type=submit]:hover { border-color: #fff; }
 
 /* Page - Login
  * ============================================================================================== */
@@ -258,6 +253,5 @@ body { position: relative; }
 
 .modal { width: 940px; }
   .modal, .modal A, .modal INPUT, .modal TEXTAREA, .modal .grey { color: #fff !important; }
-    .modal A.close { position: absolute; top: -12.5px; right: -12.5px; display: block; width: 30px; height: 30px; text-indent: -9999px; background: url(img/close.png) no-repeat 0 0; }
+    .modal A.close { position: absolute; top: 0; right: 0; display: block; width: 30px; height: 30px; text-indent: -9999px; background: url(img/close.png) no-repeat 0 0; }
 
-/*.modal-spinner { display: none; width: 64px; height: 64px; position: fixed; top: 50%; left: 50%; margin-right: -32px; margin-top: -32px; background: url(img/spinner.gif) #111 no-repeat center center; border-radius: 8px; }*/
