@@ -43,6 +43,9 @@
       <Bundle>$(JsAppBundle)</Bundle>
     </JsFiles>
 
+    <JsFiles Include="jquery.plugins.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
+    </JsFiles>
     <JsFiles Include="vendor\l10n-2013.09.19.js">
       <Bundle>$(JsChiffonBundle)</Bundle>
     </JsFiles>

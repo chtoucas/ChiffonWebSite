@@ -33,7 +33,7 @@ this.App = (function(win, _, yepnope, undef) {
     this.dependencies = {
       chiffon: function() {
         return settings.debug
-          ? ['vendor/l10n-2013.09.19.min.js', 'localization.js', 'chiffon.js'].map(rebase)
+          ? ['jquery.plugins.js', 'vendor/l10n-2013.09.19.min.js', 'localization.js', 'chiffon.js'].map(rebase)
           : rebase('chiffon-' + settings.version + '.min.js');
       }
 
@@ -41,10 +41,8 @@ this.App = (function(win, _, yepnope, undef) {
         return [vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js')];
       }
 
-      //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.min.js'); }
-
-      // TODO: Version minifiée.
-      , jQueryModal: function() { return rebase('jquery.modal.js'); }
+      // TODO: Minification.
+      //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.js'); }
 
       //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
@@ -64,6 +62,7 @@ this.App = (function(win, _, yepnope, undef) {
 
     this.main = function(isAuth, locale, fn) {
       var that = this;
+      var isAuth = true === isAuth;
 
       if (-1 === locales.indexOf(locale)) {
         throw new Error('The locale "' + locale + '" is not supported.');
@@ -84,9 +83,12 @@ this.App = (function(win, _, yepnope, undef) {
               loadJS = function(options) { yepnope(options); };
 
               var ctx = {
-                isAuth: true === isAuth
-                , locale: locale
+                locale: locale
                 , app: that
+                , user: {
+                  isAnonymous: !isAuth
+                  , isAuth: isAuth
+                }
               };
 
               fn(new Chiffon(ctx));

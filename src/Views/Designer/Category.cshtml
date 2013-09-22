@@ -12,7 +12,7 @@
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
-   <div class=watermark><span>Ref @preview.Reference</span></div>
+   <div class=watermark><span>@VR.Designer_SeePattern</span></div>
   </a></li>
  }
 </ul>
@@ -27,6 +27,6 @@
   @if (!Model.IsLastPage) {
    <a class="underline more" href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
-  @Model.PageIndex @VR.Pager_Of @Model.PageCount
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
 }

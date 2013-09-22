@@ -196,6 +196,24 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Voir le motif &gt;.
+        /// </summary>
+        public static string Designer_SeePattern {
+            get {
+                return ResourceManager.GetString("Designer_SeePattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nous contacter.
+        /// </summary>
+        public static string HomeAbout_ContactUs {
+            get {
+                return ResourceManager.GetString("HomeAbout_ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Je demande un mot de passe.
         /// </summary>
         public static string HomeAbout_PasswordRequest {

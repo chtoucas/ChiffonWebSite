@@ -162,6 +162,12 @@
   <data name="ContactRegister_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
   </data>
+  <data name="Designer_SeePattern" xml:space="preserve">
+    <value>See the pattern</value>
+  </data>
+  <data name="HomeAbout_ContactUs" xml:space="preserve">
+    <value>Contact us</value>
+  </data>
   <data name="HomeAbout_PasswordRequest" xml:space="preserve">
     <value>Request a password</value>
   </data>

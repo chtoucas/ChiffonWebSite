@@ -162,6 +162,12 @@
   <data name="ContactRegister_ValidationMessage" xml:space="preserve">
     <value>Veuillez renseigner tous les champs entourés en rouge.</value>
   </data>
+  <data name="Designer_SeePattern" xml:space="preserve">
+    <value>Voir le motif &gt;</value>
+  </data>
+  <data name="HomeAbout_ContactUs" xml:space="preserve">
+    <value>Nous contacter</value>
+  </data>
   <data name="HomeAbout_PasswordRequest" xml:space="preserve">
     <value>Je demande un mot de passe</value>
   </data>

@@ -1,7 +1,43 @@
+﻿;
+
+(function(win, $, undef) {
+  'use strict';
+
+  // Ouverture des liens externes dans une nouvelle fenêtre.
+  $.fn.external = function() {
+    return this.each(function() {
+      $(this).click(function() {
+        win.open(this.href);
+        return false;
+      });
+    });
+  };
+
+  $.fn.watermark = function(watermark, options) {
+    var settings = $.extend({}, $.fn.watermark.defaults, options);
+
+    var getWatermak = undef !== watermark
+      ? function($elmt) { return watermark; }
+      // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
+      : function($elmt) { return $elmt.data('watermark'); };
+
+    return this.each(function() {
+      var $this = $(this);
+      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
+    });
+  };
+
+  $.fn.watermark.defaults = {
+    wrapperStart: '<div class=watermark><span>'
+    , wrapperEnd: '</span></div>'
+  };
+
+})(this, this.jQuery);
+
 /*
  * TODO:
  * - configuration d'ajax (timeout & co)
- * - slider quand on reste dans la modale
+ * - slider quand on reste dans la modale ?
  * - meilleur indicateur de chargement ?
  * - utiliser RxJS ?
  */
@@ -120,7 +156,7 @@
     clickClose: true,
     closeText: 'Close',
     modalClass: 'modal',
-    showClose: true,
+    showClose: true
   };
 
   // Event constants
@@ -136,5 +172,4 @@
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
   $(document).on('click.modal', 'a[rel="modal:close"]', $.modal.close);
-
-})(jQuery);
+})(this.jQuery);

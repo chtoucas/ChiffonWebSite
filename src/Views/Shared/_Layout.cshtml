@@ -31,7 +31,16 @@
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_about>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
-    @*<li class=right><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+    @*<li class=sep>/</li>
+    <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+    <li class=right>
+     @if (User.Identity.IsAuthenticated) {
+      <a href="#" id=nav_account>Mon compte</a>
+     }
+     else {
+      <a href="@Url.RouteUrl(RouteName.Contact.Login)" id=nav_login>Login</a>
+     }
+    </li>
    </ul>
   </nav>
   @RenderSection("SecondaryNav", false /* required */)

@@ -85,20 +85,34 @@
                 ViewBag.MetaDescription = SR.Contact_Register_Description;
                 ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
-                var publicKey = CreateContact_(contact);
+                // FIXME:
+                if (contact.Message == null) { contact.Message = String.Empty; }
+                if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
 
-                var model = new NewContactViewModel {
-                    Firstname = contact.Firstname,
-                    Lastname = contact.Lastname,
-                    PublicKey = publicKey,
-                };
+                //var publicKey = 
+                CreateContact_(contact);
 
                 // FIXME: 
                 string userName = contact.Firstname + " " + contact.Lastname;
-
                 _formsService.SignIn(userName, false /* createPersistentCookie */);
 
-                return View(ViewName.Contact.PostRegister, model);
+                // FIXME: vérifier le contenu de l'URL.
+                // FIXME: rajouter un indicateur que tout s'est bien passé.
+                var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
+                if (nextUrl.IsSome) {
+                    return Redirect(nextUrl.ToString());
+                }
+                else {
+                    return RedirectToRoute(RouteName.Home.Index);
+                }
+
+                //var model = new NewContactViewModel {
+                //    Firstname = contact.Firstname,
+                //    Lastname = contact.Lastname,
+                //    PublicKey = publicKey,
+                //};
+
+                //return View(ViewName.Contact.PostRegister, model);
             }
             else {
                 ViewBag.Title = SR.Contact_Register_Title;
@@ -169,7 +183,7 @@
             return exists;
         }
 
-        string CreateContact_(RegisterViewModel contact)
+        void CreateContact_(RegisterViewModel contact)
         {
             var publicKey = CreateRandomPassword_(25);
 
@@ -192,7 +206,7 @@
                 }
             }
 
-            return publicKey;
+            //return publicKey;
         }
 
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx

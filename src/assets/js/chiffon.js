@@ -4,39 +4,6 @@
 // - ajouter html5shiv.js
 // - https://github.com/kriskowal/es5-shim/
 
-(function(win, $, undef) {
-  'use strict';
-
-  $.fn.external = function() {
-    return this.each(function() {
-      $(this).click(function() {
-        win.open(this.href);
-        return false;
-      });
-    });
-  };
-
-  $.fn.watermark = function(watermark, options) {
-    var settings = $.extend({}, $.fn.watermark.defaults, options);
-
-    var getWatermak = undef !== watermark
-      ? function($elmt) { return watermark; }
-      // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
-      : function($elmt) { return $elmt.data('watermark'); };
-
-    return this.each(function() {
-      var $this = $(this);
-      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
-    });
-  };
-
-  $.fn.watermark.defaults = {
-    wrapperStart: '<div class=watermark><span>'
-    , wrapperEnd: '</span></div>'
-  };
-
-})(this, this.jQuery);
-
 this.Chiffon = (function(_, $, undef) {
   'use strict';
 
@@ -59,8 +26,8 @@ this.Chiffon = (function(_, $, undef) {
     });
   }
 
-  function Chiffon(context) {
-    this.context = context;
+  function Chiffon(ctx) {
+    this.ctx = ctx;
   }
 
   Chiffon.prototype = {
@@ -70,7 +37,7 @@ this.Chiffon = (function(_, $, undef) {
 
     , handle: function(controllerName, actionName, params) {
       setupAjax(defaults.ajaxTimeout);
-      setLocale(this.context.locale);
+      setLocale(this.ctx.locale);
 
       this.handleCore(controllerName, actionName, params);
     }
@@ -91,10 +58,10 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   }
 
   // Chargement de jQuery.validate puis exécution d'un callback.
-  function initializeValidation(context, fn) {
-    var app = context.app;
+  function initializeValidation(ctx, fn) {
+    var app = ctx.app;
 
-    app.require(app.dependencies.jQueryValidate(context.locale), function() {
+    app.require(app.dependencies.jQueryValidate(ctx.locale), function() {
       var $errContainer = $('#error_container');
 
       $.validator.setDefaults({
@@ -109,37 +76,31 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     });
   }
 
-  // Chargement de jQuery.modal puis exécution d'un callback.
-  function initializeModal(context, fn) {
-    // On n'active les modales qu'en mode anonyme.
-    if (context.isAuth) { return; }
-
-    var app = context.app;
-
-    app.require(app.dependencies.jQueryModal(), function() {
-      // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
-      $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
-        e.preventDefault();
-
-        $(this).modal({ closeText: l('%modal.close') });
-      });
-
-      if (undef !== fn) { fn(); }
-    });
-  }
-
   /* Layouts */
 
   Views.Layout = (function() {
-    function Layout(context) {
-      this.context = context;
+    function Layout(ctx) {
+      this.ctx = ctx;
     }
 
     Layout.prototype = {
       initialize: function() {
+        // On ouvre les liens externes dans une nouvelle fenêtre.
         $('A[rel=external]').external();
 
-        initializeModal(this.context);
+        // Pour les visiteurs anonymes uniquement, on active les modales.
+        if (this.ctx.user.isAnonymous) {
+          // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
+          $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
+            e.preventDefault();
+
+            $(this).modal({ closeText: l('%modal.close') });
+          });
+        } else {
+          // TODO: Détecter un hashcode pour afficher la confirmation de compte.
+          //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
+          //  .appendTo('body').modal({ closeText: l('%modal.close') });
+        }
       }
     };
 
@@ -147,8 +108,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   })();
 
   Views.DesignerLayout = (function() {
-    function DesignerLayout(context) {
-      this.layoutView = new Views.Layout(this.context);
+    function DesignerLayout(ctx) {
+      this.layoutView = new Views.Layout(ctx);
     }
 
     DesignerLayout.prototype = {
@@ -164,16 +125,16 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   /* Pages */
 
   Views.ContactLogin = (function() {
-    function ContactLogin(context) {
-      this.context = context;
-      this.layoutView = new Views.Layout(this.context);
+    function ContactLogin(ctx) {
+      this.ctx = ctx;
+      this.layoutView = new Views.Layout(ctx);
     }
 
     ContactLogin.prototype = {
       initialize: function() {
         this.layoutView.initialize();
 
-        initializeValidation(this.context, function() {
+        initializeValidation(this.ctx, function() {
           $('#login_form').validate({
             messages: { token: l('%login.password_required') }
             , rules: { token: { required: true, minlength: 10 } }
@@ -186,9 +147,9 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   })();
 
   Views.ContactRegister = (function() {
-    function ContactRegister(context) {
-      this.context = context;
-      this.layoutView = new Views.Layout(this.context);
+    function ContactRegister(ctx) {
+      this.ctx = ctx;
+      this.layoutView = new Views.Layout(ctx);
     }
 
     ContactRegister.prototype = {
@@ -197,7 +158,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
         this.layoutView.initialize();
 
-        initializeValidation(this.context, function() {
+        initializeValidation(this.ctx, function() {
           $form.validate({
             // NB: On ne veut pas de message d'erreur par "input".
             // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
@@ -224,8 +185,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   })();
 
   Views.DesignerPattern = (function() {
-    function DesignerPattern() {
-      this.layoutView = new Views.DesignerLayout(this.context);
+    function DesignerPattern(ctx) {
+      this.layoutView = new Views.DesignerLayout(ctx);
     }
 
     DesignerPattern.prototype = {
@@ -241,9 +202,9 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
   })();
 
   Views.HomeIndex = (function() {
-    function HomeIndex(context) {
-      this.context = context;
-      this.layoutView = new Views.Layout(this.context);
+    function HomeIndex(ctx) {
+      this.ctx = ctx;
+      this.layoutView = new Views.Layout(ctx);
     }
 
     HomeIndex.prototype = {
@@ -677,8 +638,8 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   /* BaseController */
 
-  function BaseController(context) {
-    this.context = context;
+  function BaseController(ctx) {
+    this.ctx = ctx;
   }
 
   /* ContactController */
@@ -688,9 +649,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   ContactController.prototype = extend({
-    login: function() { (new Views.ContactLogin(this.context)).initialize(); }
-    , newsletter: function() { (new Views.Layout(this.context)).initialize(); }
-    , register: function() { (new Views.ContactRegister(this.context)).initialize(); }
+    login: function() { (new Views.ContactLogin(this.ctx)).initialize(); }
+    , newsletter: function() { (new Views.Layout(this.ctx)).initialize(); }
+    , register: function() { (new Views.ContactRegister(this.ctx)).initialize(); }
   });
 
   /* DesignerController */
@@ -700,9 +661,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   DesignerController.prototype = extend({
-    index: function() { (new Views.DesignerLayout(this.context)).initialize(); }
-    , category: function() { (new Views.DesignerLayout(this.context)).initialize(); }
-    , pattern: function() { (new Views.DesignerPattern(this.context)).initialize(); }
+    index: function() { (new Views.DesignerLayout(this.ctx)).initialize(); }
+    , category: function() { (new Views.DesignerLayout(this.ctx)).initialize(); }
+    , pattern: function() { (new Views.DesignerPattern(this.ctx)).initialize(); }
   });
 
   /* HomeController */
@@ -712,9 +673,9 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   }
 
   HomeController.prototype = extend({
-    about: function() { (new Views.Layout(this.context)).initialize(); }
-    , contact: function() { (new Views.Layout(this.context)).initialize(); }
-    , index: function() { (new Views.HomeIndex(this.context)).initialize(); }
+    about: function() { (new Views.Layout(this.ctx)).initialize(); }
+    , contact: function() { (new Views.Layout(this.ctx)).initialize(); }
+    , index: function() { (new Views.HomeIndex(this.ctx)).initialize(); }
   });
 
   return {
@@ -736,7 +697,7 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
       var actionMethod = actionName.toLowerCase();
 
       if (controllerPrototype.hasOwnProperty(actionMethod)) {
-        controller = new controllerClass(this.context);
+        controller = new controllerClass(this.ctx);
         controllerPrototype[actionMethod].apply(controller, params);
       }
     }

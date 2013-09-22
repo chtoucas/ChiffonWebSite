@@ -206,8 +206,6 @@ INPUT.error { border: 1px solid #ff0000 !important; }
   #designer .mosaic { width: 720px; }
     #designer .mosaic LI { margin-right: 20px; }
 
-  #designer .vignette SPAN { font-weight: bold; text-transform: uppercase; /*padding: .5em 1em;*/ }
-
   #designer NAV { border-bottom: 1px solid #999; margin-bottom: 2.5em; font-size: 1.1em; }
     #designer NAV UL { margin: 0; padding: 0; }
     #designer NAV LI:hover, #designer NAV LI.current { background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAQklEQVQY02P4z8DAgAPr4pQA4lfYJAxAEv9BTFwS6JIoEsiSIIm3yBIwSawSMEljfJJ4jcWpgGivEAwEFAUM+AIeAGMrjSIE55ViAAAAAElFTkSuQmCC); }
@@ -254,4 +252,3 @@ body { position: relative; }
 .modal { width: 940px; }
   .modal, .modal A, .modal INPUT, .modal TEXTAREA, .modal .grey { color: #fff !important; }
     .modal A.close { position: absolute; top: 0; right: 0; display: block; width: 30px; height: 30px; text-indent: -9999px; background: url(img/close.png) no-repeat 0 0; }
-

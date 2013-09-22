@@ -28,6 +28,7 @@
   <span>/</span>
   <a class="underline next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
   <span class="hide next_noop">@VR.Pager_Next</span>
+  @: -
   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
   }
 </p>
@@ -57,7 +58,7 @@
   @if (!Model.IsLastPage) {
    <a class="underline more" rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
-  @Model.PageIndex @VR.Pager_Of @Model.PageCount
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
 }
 
