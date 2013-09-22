@@ -1,9 +1,5 @@
 ;
 
-// TODO:
-// - ajouter html5shiv.js
-// - https://github.com/kriskowal/es5-shim/
-
 this.Chiffon = (function(_, $, undef) {
   'use strict';
 
@@ -76,11 +72,17 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     });
   }
 
+  /* BaseView */
+
+  function BaseView(ctx) {
+    this.ctx = ctx;
+  }
+
   /* Layouts */
 
   Views.Layout = (function() {
     function Layout(ctx) {
-      this.ctx = ctx;
+      BaseView.apply(this, arguments);
     }
 
     Layout.prototype = {
@@ -91,13 +93,13 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
         // Pour les visiteurs anonymes uniquement, on active les modales.
         if (this.ctx.user.isAnonymous) {
           // NB: On place l'événement sur "doc" car on veut rester dans la modale après un clic.
-          $(doc).on('click.modal', 'a[rel="modal:open"]', function(e) {
+          $(doc).on('click.modal', 'A[rel="modal:open"]', function(e) {
             e.preventDefault();
 
             $(this).modal({ closeText: l('%modal.close') });
           });
         } else {
-          // TODO: Détecter un hashcode pour afficher la confirmation de compte.
+          // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
           //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
           //  .appendTo('body').modal({ closeText: l('%modal.close') });
         }
@@ -109,6 +111,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
   Views.DesignerLayout = (function() {
     function DesignerLayout(ctx) {
+      BaseView.apply(this, arguments);
       this.layoutView = new Views.Layout(ctx);
     }
 
@@ -122,17 +125,56 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     return DesignerLayout;
   })();
 
-  /* Pages */
+  function DefaultView(ctx) {
+    BaseView.apply(this, arguments);
+    this.layoutView = new Views.Layout(ctx);
+  }
+
+  DefaultView.prototype = {
+    initialize: function() {
+      this.layoutView.initialize();
+    }
+  };
+
+  function DesignerView(ctx) {
+    BaseView.apply(this, arguments);
+    this.layoutView = new Views.DesignerLayout(ctx);
+  }
+
+  DesignerView.prototype = {
+    initialize: function() {
+      this.layoutView.initialize();
+    }
+  };
+
+  /* Pages Home */
+
+  Views.HomeIndex = (function() {
+    function HomeIndex(ctx) {
+      DefaultView.apply(this, arguments);
+    }
+
+    HomeIndex.prototype = {
+      initialize: function() {
+        DefaultView.prototype.initialize.call(this);
+
+        $('.vignette').watermark(l('%preview.watermark'));
+      }
+    };
+
+    return HomeIndex;
+  })();
+
+  /* Pages Contact */
 
   Views.ContactLogin = (function() {
     function ContactLogin(ctx) {
-      this.ctx = ctx;
-      this.layoutView = new Views.Layout(ctx);
+      DefaultView.apply(this, arguments);
     }
 
     ContactLogin.prototype = {
       initialize: function() {
-        this.layoutView.initialize();
+        DefaultView.prototype.initialize.call(this);
 
         initializeValidation(this.ctx, function() {
           $('#login_form').validate({
@@ -148,15 +190,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
   Views.ContactRegister = (function() {
     function ContactRegister(ctx) {
-      this.ctx = ctx;
-      this.layoutView = new Views.Layout(ctx);
+      DefaultView.apply(this, arguments);
     }
 
     ContactRegister.prototype = {
       initialize: function() {
-        var $form = $('#register_form');
+        DefaultView.prototype.initialize.call(this);
 
-        this.layoutView.initialize();
+        var $form = $('#register_form');
 
         initializeValidation(this.ctx, function() {
           $form.validate({
@@ -184,14 +225,16 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     return ContactRegister;
   })();
 
+  /* Pages Designer */
+
   Views.DesignerPattern = (function() {
     function DesignerPattern(ctx) {
-      this.layoutView = new Views.DesignerLayout(ctx);
+      DesignerView.apply(this, arguments);
     }
 
     DesignerPattern.prototype = {
       initialize: function() {
-        this.layoutView.initialize();
+        DesignerView.prototype.initialize.call(this);
 
         // NB: location.hash contient le caractère '#'.
         Views.ViewNavigator({ currentSel: loc.hash });
@@ -199,23 +242,6 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return DesignerPattern;
-  })();
-
-  Views.HomeIndex = (function() {
-    function HomeIndex(ctx) {
-      this.ctx = ctx;
-      this.layoutView = new Views.Layout(ctx);
-    }
-
-    HomeIndex.prototype = {
-      initialize: function() {
-        this.layoutView.initialize();
-
-        $('.vignette').watermark(l('%preview.watermark'));
-      }
-    };
-
-    return HomeIndex;
   })();
 
   /* Composants communs */
@@ -567,66 +593,6 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     }
   })();
 
-  // En-tête de la page en position fixe.
-  Views.StickyHeader = (function() {
-    var defaults = {
-      headerSel: 'HEADER'
-        , headerWrapper: '<div id=sticky_header></div>'
-    };
-
-    var settings;
-
-    var $sticky_header;
-    var scroll_limit;
-    var is_sticky = false;
-
-    function stick() {
-      if (is_sticky) { return; }
-      is_sticky = true;
-      $sticky_header.fadeIn('fast');
-    }
-
-    function unstick() {
-      if (!is_sticky) { return; }
-      is_sticky = false;
-      $sticky_header.hide();
-    }
-
-    function addStickyHeaderToDom() {
-      $sticky_header.appendTo('BODY');
-    }
-
-    function handleScrollEvent() {
-      if ($(win).scrollTop() >= scroll_limit) { stick(); }
-
-      $(win).scroll(function() {
-        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
-      });
-    }
-
-    function initialize() {
-      var $header = $(settings.headerSel);
-
-      // FIXME: en clonant l'en-tête on duplique les IDs...
-      $sticky_header = $(settings.headerWrapper);
-      $header.children().clone().appendTo($sticky_header);
-
-      scroll_limit = $header.position().top + $header.height();
-    }
-
-    return function(options) {
-      settings = _.defaults(options || {}, defaults);
-
-      initialize();
-
-      addStickyHeaderToDom();
-      handleScrollEvent();
-    }
-  })();
-
-  //  return AjaxStatus;
-  //})();
-
   return Views;
 
 })(this, this.document, this.location, this._, this.jQuery, this.Chiffon);
@@ -738,6 +704,63 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
 //  return Presenters;
 //})(this.jQuery);
 
+//// En-tête de la page en position fixe.
+//Views.StickyHeader = (function() {
+//  var defaults = {
+//    headerSel: 'HEADER'
+//      , headerWrapper: '<div id=sticky_header></div>'
+//  };
+
+//  var settings;
+
+//  var $sticky_header;
+//  var scroll_limit;
+//  var is_sticky = false;
+
+//  function stick() {
+//    if (is_sticky) { return; }
+//    is_sticky = true;
+//    $sticky_header.fadeIn('fast');
+//  }
+
+//  function unstick() {
+//    if (!is_sticky) { return; }
+//    is_sticky = false;
+//    $sticky_header.hide();
+//  }
+
+//  function addStickyHeaderToDom() {
+//    $sticky_header.appendTo('BODY');
+//  }
+
+//  function handleScrollEvent() {
+//    if ($(win).scrollTop() >= scroll_limit) { stick(); }
+
+//    $(win).scroll(function() {
+//      $(win).scrollTop() >= scroll_limit ? stick() : unstick();
+//    });
+//  }
+
+//  function initialize() {
+//    var $header = $(settings.headerSel);
+
+//    // FIXME: en clonant l'en-tête on duplique les IDs...
+//    $sticky_header = $(settings.headerWrapper);
+//    $header.children().clone().appendTo($sticky_header);
+
+//    scroll_limit = $header.position().top + $header.height();
+//  }
+
+//  return function(options) {
+//    settings = _.defaults(options || {}, defaults);
+
+//    initialize();
+
+//    addStickyHeaderToDom();
+//    handleScrollEvent();
+//  }
+//})();
+
 //// Indicateur d'activité Ajax à la Google Mail.
 //Views.AjaxStatus = (function() {
 //  // Configuration par défaut.
@@ -841,6 +864,9 @@ this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
 //      }
 //    }
 //  };
+
+//  return AjaxStatus;
+//})();
 
 //Views.Modal = (function() {
 //  // Configuration par défaut.
