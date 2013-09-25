@@ -1,19 +1,19 @@
 ﻿<div class=contact_login>
  <div class="center serif serif_large grey">
-  <p id=hello>@Html.Raw(VR.ContactRegister_Hello)</p>
+  <p id=hello>@VR.ContactRegister_Hello</p>
   <p>@Html.Raw(VR.ContactLogin_DescriptionHtml)</p>
  </div>
  <form method=post action="/connecte" class=center id=login_form>
   <p id=error_container class="serif serif_medium grey"></p>
   <p>
-   <input type=password autofocus placeholder="@Html.Raw(VR.ContactRegister_Password)" name=token required=required maxlength=25 class=highlight />
+   <input type=password autofocus placeholder="@VR.ContactRegister_Password" name=token required=required maxlength=25 class=highlight />
    <input type=hidden value="@ViewBag.ReturnUrl" name=targeturl />
   </p>
   <p>
-   <input type=submit value="@Html.Raw(VR.ContactRegister_Validate)" class="serif serif_large grey" />
+   <input type=submit value="@VR.ContactRegister_Validate" class="serif serif_large grey" />
   </p>
   <p class="serif serif_large">
-   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class="reverse underline" rel="@ViewBag.ModalRelation">@Html.Raw(VR.ContactRegister_RequestPassword)</a>
+   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class="reverse underline" rel="@ViewBag.ModalRelation">@VR.ContactRegister_RequestPassword</a>
   </p>
  </form>
 </div>

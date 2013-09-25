@@ -15,11 +15,11 @@
  <p class=tidy>Bonne visite.</p>
  @if (!User.Identity.IsAuthenticated) {
   <p class=center>
-   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline rel="@ViewBag.ModalRelation">@Html.Raw(VR.HomeAbout_PasswordRequest)</a>
+   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline rel="@ViewBag.ModalRelation">@VR.HomeAbout_PasswordRequest</a>
   </p>
  }
  <p class=center>
-  <a href="@Url.RouteUrl(RouteName.Home.Contact)" class=underline>@Html.Raw(VR.HomeAbout_ContactUs)</a>
+  <a href="@Url.RouteUrl(RouteName.Home.Contact)" class=underline>@VR.HomeAbout_ContactUs</a>
  </p>
 </div>
 

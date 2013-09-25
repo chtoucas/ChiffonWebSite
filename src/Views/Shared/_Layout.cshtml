@@ -38,7 +38,7 @@
       <a href="#" id=nav_account>Mon compte</a>
      }
      else {
-      <a href="@Url.RouteUrl(RouteName.Contact.Login)" id=nav_login>Login</a>
+      <a href="@Url.RouteUrl(RouteName.Contact.Login)" id=nav_login rel="modal:open">Login</a>
      }
     </li>
    </ul>
@@ -48,7 +48,7 @@
  @RenderBody()
  <footer class=darkgrey>
   <p>@Html.Raw(VR.Layout_DisclaimerHtml)</p>
-  <p>@Html.Raw(VR.Layout_Copyright)</p>
+  <p>@VR.Layout_Copyright</p>
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new {
     actionName = ViewBag.ActionName,

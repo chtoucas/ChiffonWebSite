@@ -1,9 +1,71 @@
 ﻿@using System.Configuration
 @using System.Web.Mvc
+@using Chiffon.Common
 @using Chiffon.Infrastructure
-@using Chiffon.ViewModels;
+@using Chiffon.Resources
+@using Chiffon.ViewModels
 
 @* Generator: MvcHelper Namespace: Chiffon.Common*@
+
+@helper Pager(UrlHelper Url, DesignerViewModel Model)
+{
+ <p class=pager>
+  @if (Model.IsFirstPage) {  
+   @VR.Pager_Previous
+  }
+  else {
+   <a class=underline href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+  }
+  /
+  @if (Model.IsLastPage) {          
+   @VR.Pager_Next
+  }
+  else {
+   <a class="underline more" href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+  }
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
+ </p>
+}
+
+@helper Pager(UrlHelper Url, CategoryViewModel Model)
+{
+ <p class=pager>
+  @if (Model.IsFirstPage) {
+   @VR.Pager_Previous
+  }
+  else {
+   <a class=underline href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+  }
+  /
+  @if (Model.IsLastPage) {
+   @VR.Pager_Next
+  }
+  else {
+   <a class="underline more" href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+  }
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
+ </p>
+}
+
+@helper Pager(UrlHelper Url, PatternViewModel Model)
+{
+ <p class=pager>
+  @if (Model.IsFirstPage) {
+   @VR.Pager_Previous
+  }
+  else {
+   <a class=underline rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+  }
+  /
+  @if (Model.IsLastPage) {
+   @VR.Pager_Next
+  }
+  else {
+   <a class="underline more" rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+  }
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
+ </p>
+}
 
 @*@helper LanguageMenu(ChiffonLanguage language)
 {

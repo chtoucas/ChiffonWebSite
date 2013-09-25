@@ -378,6 +378,7 @@
     </None>
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Widget\GoogleAnalytics.cshtml" />
     <Content Include="Views\Widget\LanguageMenu.cshtml" />
