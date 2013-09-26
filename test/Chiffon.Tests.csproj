@@ -70,8 +70,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Chiffon.csproj">
+    <ProjectReference Include="..\src\Chiffon.WebSite\Chiffon.WebSite.csproj">
       <Project>{0f446c2e-d766-428d-a567-724631f114a6}</Project>
+      <Name>Chiffon.WebSite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Chiffon\Chiffon.csproj">
+      <Project>{1759636f-fe03-4daa-87b7-895ceb3f8797}</Project>
       <Name>Chiffon</Name>
     </ProjectReference>
   </ItemGroup>
