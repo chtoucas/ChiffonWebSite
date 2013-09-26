@@ -1,35 +1,25 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Resources;
 using System.Runtime.InteropServices;
+using Chiffon;
+using WebActivatorEx;
 
-// Les informations générales relatives à un assembly dépendent de 
-// l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
-// associées à un assembly.
 [assembly: AssemblyTitle("Chiffon.MediaSite")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Chiffon.MediaSite")]
+[assembly: AssemblyProduct("Chiffon")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("fr-FR")]
 
-// L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly 
-// aux composants COM. Si vous devez accéder à un type dans cet assembly à partir de 
-// COM, affectez la valeur true à l'attribut ComVisible sur ce type.
 [assembly: ComVisible(false)]
 
-// Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
 [assembly: Guid("ef8e0239-76f7-4d53-8439-de3e419aef2f")]
 
-// Les informations de version pour un assembly se composent des quatre valeurs suivantes :
-//
-//      Version principale
-//      Version secondaire 
-//      Numéro de build
-//      Révision
-//
-// Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de révision et de build par défaut 
-// en utilisant '*', comme indiqué ci-dessous :
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+// WARNING: cet attribut ne peut être utilisé qu'une fois par assemblée.
+//[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+
+[assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+[assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
+[assembly: ApplicationShutdownMethod(typeof(AppActivator), "Shutdown")]

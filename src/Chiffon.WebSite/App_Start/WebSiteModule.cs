@@ -1,8 +1,9 @@
-﻿namespace Chiffon.Infrastructure
+﻿namespace Chiffon
 {
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Data;
+    using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;

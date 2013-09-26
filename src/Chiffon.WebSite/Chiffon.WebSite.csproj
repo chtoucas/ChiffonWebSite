@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\ActionName.cs" />
+    <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\ControllerName.cs" />
     <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
@@ -167,7 +168,7 @@
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
-    <Compile Include="Infrastructure\WebSiteModule.cs" />
+    <Compile Include="App_Start\WebSiteModule.cs" />
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Handlers\GoQuery.cs" />
     <Compile Include="Handlers\GoHandler.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -193,7 +193,6 @@
     <Compile Include="Handlers\LogOffHandler.cs" />
     <Compile Include="Handlers\LogOnHandler.cs" />
     <Compile Include="Handlers\LogOnQuery.cs" />
-    <Compile Include="Infrastructure\ContainerBuilder%24.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
