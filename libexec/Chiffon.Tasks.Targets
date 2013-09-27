@@ -93,8 +93,8 @@ try {
 
     // Mise à jour des informations d'assemblée.
     string template = File.ReadAllText(AssemblyInfoTemplate)
-        .Replace("$VersionNumber$", VersionNumber)
-        .Replace("$BuildTime$", buildTime);
+        .Replace("$VersionNumber$", VersionNumber);
+        //.Replace("$BuildTime$", buildTime);
     File.WriteAllText(AssemblyInfoFile, template);
 }
 catch (IOException ex) {

@@ -10,8 +10,8 @@
             public const string Index = "Home/";
         }
 
-        // ContactController.
-        public static class Contact
+        // AccountController.
+        public static class Account
         {
             public const string Login = "Contact/Login";
             public const string Newsletter = "Contact/Newsletter";

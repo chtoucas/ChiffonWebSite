@@ -117,50 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category_All" xml:space="preserve">
-    <value>All</value>
-  </data>
-  <data name="ContactLogin_DescriptionHtml" xml:space="preserve">
+  <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
     <value>To browse our catalog, enter your password.</value>
   </data>
-  <data name="ContactRegister_CompanyName" xml:space="preserve">
+  <data name="AccountRegister_CompanyName" xml:space="preserve">
     <value>Agency</value>
   </data>
-  <data name="ContactRegister_DescriptionHtml" xml:space="preserve">
+  <data name="AccountRegister_DescriptionHtml" xml:space="preserve">
     <value>To obtain a password,&lt;span class=break /&gt; please fill out the form.</value>
   </data>
-  <data name="ContactRegister_EmailAddress" xml:space="preserve">
+  <data name="AccountRegister_EmailAddress" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="ContactRegister_Firstname" xml:space="preserve">
+  <data name="AccountRegister_Firstname" xml:space="preserve">
     <value>Firstname</value>
   </data>
-  <data name="ContactRegister_Hello" xml:space="preserve">
+  <data name="AccountRegister_Hello" xml:space="preserve">
     <value>Hello,</value>
   </data>
-  <data name="ContactRegister_Lastname" xml:space="preserve">
+  <data name="AccountRegister_Lastname" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="ContactRegister_Login" xml:space="preserve">
+  <data name="AccountRegister_Login" xml:space="preserve">
     <value>I already own a password</value>
   </data>
-  <data name="ContactRegister_Message" xml:space="preserve">
+  <data name="AccountRegister_Message" xml:space="preserve">
     <value>Subject</value>
   </data>
-  <data name="ContactRegister_Password" xml:space="preserve">
+  <data name="AccountRegister_Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="ContactRegister_RequestPassword" xml:space="preserve">
+  <data name="AccountRegister_RequestPassword" xml:space="preserve">
     <value>Request your password</value>
   </data>
-  <data name="ContactRegister_Submit" xml:space="preserve">
+  <data name="AccountRegister_Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
-  <data name="ContactRegister_Validate" xml:space="preserve">
+  <data name="AccountRegister_Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="ContactRegister_ValidationMessage" xml:space="preserve">
+  <data name="AccountRegister_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
+  </data>
+  <data name="Category_All" xml:space="preserve">
+    <value>All</value>
   </data>
   <data name="Designer_SeePattern" xml:space="preserve">
     <value>See the pattern</value>

@@ -109,8 +109,6 @@
         /// NB: Pour exécuter un code avant Application_Start, utiliser les facilités offertes par
         /// l'attribut PreApplicationStartMethod. Voir aussi WebActivator.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Application_Start()
         {
             Log.Information("Application starting.");
@@ -123,8 +121,6 @@
         /// <summary>
         /// Appelé une fois dans la durée de vie de l'application avant que celle-ci ne soit déchargée. 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Application_End(object sender, EventArgs e)
         {
             Log.Information("Application ending.");
@@ -146,8 +142,6 @@
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Application_Disposed(object sender, EventArgs e)
         {
             Log.Information("Application disposed.");
@@ -157,14 +151,9 @@
         /// Se produit lorsqu'une exception non gérée est levée.
         /// NB: Application_Error peut être déclenché à tout moment du cycle de vie de l'application.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            var app = (HttpApplication)sender;
-            var server = app.Server;
-
-            var ex = server.GetLastError();
+            var ex = Server.GetLastError();
             if (ex == null) {
                 // En théorie, cela ne devrait jamais se produire.
                 return;
@@ -175,15 +164,15 @@
             switch (err) {
                 case UnhandledErrorType.InvalidViewState:
                     Log.Warning(ex, ex.Message);
-                    server.ClearError();
-                    SetResponseStatus_(app, HttpStatusCode.ServiceUnavailable);
+                    Server.ClearError();
+                    SetResponseStatus_(HttpStatusCode.ServiceUnavailable);
                     break;
 
                 case UnhandledErrorType.PotentiallyDangerousForm:
                 case UnhandledErrorType.PotentiallyDangerousPath:
                     Log.Warning(ex, ex.Message);
-                    server.ClearError();
-                    SetResponseStatus_(app, HttpStatusCode.NotFound);
+                    Server.ClearError();
+                    SetResponseStatus_(HttpStatusCode.NotFound);
                     break;
 
                 case UnhandledErrorType.NotFound:
@@ -200,11 +189,10 @@
 
         #endregion
 
-        static void SetResponseStatus_(HttpApplication app, HttpStatusCode statusCode)
+        void SetResponseStatus_(HttpStatusCode statusCode)
         {
-            var response = app.Response;
-            if (response != null) {
-                response.SetStatusCode(statusCode);
+            if (Response != null) {
+                Response.SetStatusCode(statusCode);
             }
         }
     }

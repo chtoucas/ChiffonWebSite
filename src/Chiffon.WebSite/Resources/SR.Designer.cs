@@ -63,54 +63,54 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collectif de designers textile..
         /// </summary>
-        public static string Contact_Login_Description {
+        public static string Account_Login_Description {
             get {
-                return ResourceManager.GetString("Contact_Login_Description", resourceCulture);
+                return ResourceManager.GetString("Account_Login_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Connexion - Pour quel motif, Simone ?.
         /// </summary>
-        public static string Contact_Login_Title {
+        public static string Account_Login_Title {
             get {
-                return ResourceManager.GetString("Contact_Login_Title", resourceCulture);
+                return ResourceManager.GetString("Account_Login_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collectif de designers textile..
         /// </summary>
-        public static string Contact_Newsletter_Description {
+        public static string Account_Newsletter_Description {
             get {
-                return ResourceManager.GetString("Contact_Newsletter_Description", resourceCulture);
+                return ResourceManager.GetString("Account_Newsletter_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Newsletter - Pour quel motif, Simone ?.
         /// </summary>
-        public static string Contact_Newsletter_Title {
+        public static string Account_Newsletter_Title {
             get {
-                return ResourceManager.GetString("Contact_Newsletter_Title", resourceCulture);
+                return ResourceManager.GetString("Account_Newsletter_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collectif de designers textile..
         /// </summary>
-        public static string Contact_Register_Description {
+        public static string Account_Register_Description {
             get {
-                return ResourceManager.GetString("Contact_Register_Description", resourceCulture);
+                return ResourceManager.GetString("Account_Register_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Enregistrement - Pour quel motif, Simone ?.
         /// </summary>
-        public static string Contact_Register_Title {
+        public static string Account_Register_Title {
             get {
-                return ResourceManager.GetString("Contact_Register_Title", resourceCulture);
+                return ResourceManager.GetString("Account_Register_Title", resourceCulture);
             }
         }
         

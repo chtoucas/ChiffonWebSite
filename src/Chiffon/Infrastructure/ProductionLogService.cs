@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
+    using System;
     using System.ComponentModel.Composition;
     using Serilog;
     using Serilog.Events;
@@ -9,6 +10,7 @@
     {
         #region ILogService
 
+        [CLSCompliant(false)]
         public ILogger GetLogger(LogEventLevel minimumLevel)
         {
             return new LoggerConfiguration()

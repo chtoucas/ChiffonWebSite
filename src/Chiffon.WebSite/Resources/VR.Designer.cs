@@ -61,137 +61,137 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tous.
-        /// </summary>
-        public static string Category_All {
-            get {
-                return ResourceManager.GetString("Category_All", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=break /&gt; entrez le mot de passe qui vous a été attribué..
         /// </summary>
-        public static string ContactLogin_DescriptionHtml {
+        public static string AccountLogin_DescriptionHtml {
             get {
-                return ResourceManager.GetString("ContactLogin_DescriptionHtml", resourceCulture);
+                return ResourceManager.GetString("AccountLogin_DescriptionHtml", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Agence.
         /// </summary>
-        public static string ContactRegister_CompanyName {
+        public static string AccountRegister_CompanyName {
             get {
-                return ResourceManager.GetString("ContactRegister_CompanyName", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_CompanyName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour obtenir votre mot de passe,&lt;span class=break /&gt; veuillez remplir le formulaire..
         /// </summary>
-        public static string ContactRegister_DescriptionHtml {
+        public static string AccountRegister_DescriptionHtml {
             get {
-                return ResourceManager.GetString("ContactRegister_DescriptionHtml", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_DescriptionHtml", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
-        public static string ContactRegister_EmailAddress {
+        public static string AccountRegister_EmailAddress {
             get {
-                return ResourceManager.GetString("ContactRegister_EmailAddress", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_EmailAddress", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Prénom.
         /// </summary>
-        public static string ContactRegister_Firstname {
+        public static string AccountRegister_Firstname {
             get {
-                return ResourceManager.GetString("ContactRegister_Firstname", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Firstname", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Bonjour,.
         /// </summary>
-        public static string ContactRegister_Hello {
+        public static string AccountRegister_Hello {
             get {
-                return ResourceManager.GetString("ContactRegister_Hello", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Hello", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Nom.
         /// </summary>
-        public static string ContactRegister_Lastname {
+        public static string AccountRegister_Lastname {
             get {
-                return ResourceManager.GetString("ContactRegister_Lastname", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Lastname", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à J&apos;ai déjà un mot de passe.
         /// </summary>
-        public static string ContactRegister_Login {
+        public static string AccountRegister_Login {
             get {
-                return ResourceManager.GetString("ContactRegister_Login", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Login", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Sujet.
         /// </summary>
-        public static string ContactRegister_Message {
+        public static string AccountRegister_Message {
             get {
-                return ResourceManager.GetString("ContactRegister_Message", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Message", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Mot de passe.
         /// </summary>
-        public static string ContactRegister_Password {
+        public static string AccountRegister_Password {
             get {
-                return ResourceManager.GetString("ContactRegister_Password", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Password", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
         /// </summary>
-        public static string ContactRegister_RequestPassword {
+        public static string AccountRegister_RequestPassword {
             get {
-                return ResourceManager.GetString("ContactRegister_RequestPassword", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_RequestPassword", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Envoyer.
         /// </summary>
-        public static string ContactRegister_Submit {
+        public static string AccountRegister_Submit {
             get {
-                return ResourceManager.GetString("ContactRegister_Submit", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Submit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Valider.
         /// </summary>
-        public static string ContactRegister_Validate {
+        public static string AccountRegister_Validate {
             get {
-                return ResourceManager.GetString("ContactRegister_Validate", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_Validate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Veuillez renseigner tous les champs entourés en rouge..
         /// </summary>
-        public static string ContactRegister_ValidationMessage {
+        public static string AccountRegister_ValidationMessage {
             get {
-                return ResourceManager.GetString("ContactRegister_ValidationMessage", resourceCulture);
+                return ResourceManager.GetString("AccountRegister_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Tous.
+        /// </summary>
+        public static string Category_All {
+            get {
+                return ResourceManager.GetString("Category_All", resourceCulture);
             }
         }
         

@@ -39,6 +39,7 @@
         public string GoogleAnalyticsKey { get { return _googleAnalyticsKey; } set { _googleAnalyticsKey = value; } }
         public string JsVersion { get; set; }
         public string LogProfile { get; set; }
+        [CLSCompliant(false)]
         public LogEventLevel LogMinimumLevel { get; set; }
         public string PatternDirectory { get; set; }
         public string SqlConnectionString { get; set; }

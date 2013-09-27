@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.1.1\lib\net40\Autofac.dll</HintPath>
@@ -57,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\etc\AssemblyInfo.Common.cs">
+      <Link>Properties\AssemblyInfo.Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
+      <Link>Properties\AssemblyInfo.Version.cs</Link>
+    </Compile>
     <Compile Include="Data\CachedQueries.cs" />
     <Compile Include="Data\IQueries.cs" />
     <Compile Include="Data\IQueryCache.cs" />
@@ -109,6 +121,9 @@
     <Compile Include="Services\PreviewPagedList.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\etc\Chiffon.snk">
+      <Link>Properties\Chiffon.snk</Link>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -167,12 +167,12 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
   /* Pages Contact */
 
-  Views.ContactLogin = (function() {
-    function ContactLogin(ctx) {
+  Views.AccountLogin = (function() {
+    function AccountLogin(ctx) {
       DefaultView.apply(this, arguments);
     }
 
-    ContactLogin.prototype = {
+    AccountLogin.prototype = {
       initialize: function() {
         DefaultView.prototype.initialize.call(this);
 
@@ -185,15 +185,15 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       }
     };
 
-    return ContactLogin;
+    return AccountLogin;
   })();
 
-  Views.ContactRegister = (function() {
-    function ContactRegister(ctx) {
+  Views.AccountRegister = (function() {
+    function AccountRegister(ctx) {
       DefaultView.apply(this, arguments);
     }
 
-    ContactRegister.prototype = {
+    AccountRegister.prototype = {
       initialize: function() {
         DefaultView.prototype.initialize.call(this);
 
@@ -222,7 +222,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       }
     };
 
-    return ContactRegister;
+    return AccountRegister;
   })();
 
   /* Pages Designer */
@@ -610,14 +610,14 @@ this.Chiffon.Controllers = (function($, Views, undef) {
 
   /* ContactController */
 
-  function ContactController() {
+  function AccountController() {
     BaseController.apply(this, arguments);
   }
 
-  ContactController.prototype = extend({
-    login: function() { (new Views.ContactLogin(this.ctx)).initialize(); }
+  AccountController.prototype = extend({
+    login: function() { (new Views.AccountLogin(this.ctx)).initialize(); }
     , newsletter: function() { (new Views.Layout(this.ctx)).initialize(); }
-    , register: function() { (new Views.ContactRegister(this.ctx)).initialize(); }
+    , register: function() { (new Views.AccountRegister(this.ctx)).initialize(); }
   });
 
   /* DesignerController */
@@ -645,7 +645,7 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   });
 
   return {
-    Contact: ContactController
+    Account: AccountController
     , Designer: DesignerController
     , Home: HomeController
   };

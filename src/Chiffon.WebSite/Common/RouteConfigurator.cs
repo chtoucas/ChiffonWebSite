@@ -33,13 +33,13 @@
             _routes.MapRoute(RouteName.Home.Contact, "contact",
                 new { controller = ControllerName.Home, action = ActionName.Home.Contact });
 
-            // ContactController.
-            _routes.MapRoute(RouteName.Contact.Register, "inscription",
-                new { controller = ControllerName.Contact, action = ActionName.Contact.Register });
-            _routes.MapRoute(RouteName.Contact.Login, "connexion",
-                new { controller = ControllerName.Contact, action = ActionName.Contact.Login });
-            _routes.MapRoute(RouteName.Contact.Newsletter, "newsletter",
-                new { controller = ControllerName.Contact, action = ActionName.Contact.Newsletter });
+            // AccountController.
+            _routes.MapRoute(RouteName.Account.Register, "inscription",
+                new { controller = ControllerName.Account, action = ActionName.Contact.Register });
+            _routes.MapRoute(RouteName.Account.Login, "connexion",
+                new { controller = ControllerName.Account, action = ActionName.Contact.Login });
+            _routes.MapRoute(RouteName.Account.Newsletter, "newsletter",
+                new { controller = ControllerName.Account, action = ActionName.Contact.Newsletter });
 
             // DesignerController.
             _routes.MapRoute(RouteName.Designer.Index, "{designerKey}",

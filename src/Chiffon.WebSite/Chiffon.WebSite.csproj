@@ -148,6 +148,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\etc\AssemblyInfo.Common.cs">
+      <Link>Properties\AssemblyInfo.Common.cs</Link>
+    </Compile>
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
@@ -183,7 +186,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DesignerController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
@@ -309,7 +312,7 @@
     <Content Include="Views\Widget\Stylesheet.Release.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Contact\Register.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -320,9 +323,12 @@
     <Content Include="config\connectionStrings.config" />
     <Content Include="config\assets.config" />
     <Content Include="config\Web.config" />
+    <Content Include="..\..\etc\Chiffon.snk">
+      <Link>Properties\Chiffon.snk</Link>
+    </Content>
     <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
-    <Content Include="Views\Contact\Newsletter.cshtml" />
-    <Content Include="Views\Contact\Login.cshtml" />
+    <Content Include="Views\Account\Newsletter.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
     <Content Include="Views\Shared\_PageTitle.cshtml" />
@@ -330,8 +336,8 @@
     <Content Include="Views\Shared\_Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
-    <Content Include="Views\Contact\PostRegister.cshtml" />
-    <Content Include="Views\Contact\RegisterTwice.cshtml" />
+    <Content Include="Views\Account\PostRegister.cshtml" />
+    <Content Include="Views\Account\RegisterTwice.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -366,6 +372,12 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -11,6 +11,7 @@
     {
         #region ILogService
 
+        [CLSCompliant(false)]
         public ILogger GetLogger(LogEventLevel minimumLevel)
         {
             // Cf. http://stackoverflow.com/questions/1268738/asp-net-mvc-find-absolute-path-to-the-app-data-folder-from-controller

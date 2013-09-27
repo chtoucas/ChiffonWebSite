@@ -16,7 +16,7 @@
     using Narvalo.Web.Security;
 
     [AllowAnonymous]
-    public class ContactController : PageController
+    public class AccountController : PageController
     {
         //static readonly Regex EmailAddressRegex
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
@@ -25,7 +25,7 @@
         readonly IFormsAuthenticationService _formsService;
         readonly IMemberService _memberService;
 
-        public ContactController(
+        public AccountController(
             ChiffonEnvironment environment,
             ISiteMap siteMap,
             IMemberService memberService,
@@ -46,30 +46,30 @@
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            ViewBag.Title = SR.Contact_Login_Title;
-            ViewBag.MetaDescription = SR.Contact_Login_Description;
+            ViewBag.Title = SR.Account_Login_Title;
+            ViewBag.MetaDescription = SR.Account_Login_Description;
             ViewBag.CanonicalLink = SiteMap.Login().ToString();
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(ViewName.Contact.Login);
+                return PartialView(ViewName.Account.Login);
             }
             else {
-                return View(ViewName.Contact.Login);
+                return View(ViewName.Account.Login);
             }
         }
 
         [HttpGet]
         public ActionResult Register(string returnUrl)
         {
-            ViewBag.Title = SR.Contact_Register_Title;
-            ViewBag.MetaDescription = SR.Contact_Register_Description;
+            ViewBag.Title = SR.Account_Register_Title;
+            ViewBag.MetaDescription = SR.Account_Register_Description;
             ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(ViewName.Contact.Register, new RegisterViewModel());
+                return PartialView(ViewName.Account.Register, new RegisterViewModel());
             }
             else {
-                return View(ViewName.Contact.Register, new RegisterViewModel());
+                return View(ViewName.Account.Register, new RegisterViewModel());
             }
         }
 
@@ -78,11 +78,11 @@
         {
             if (ModelState.IsValid) {
                 if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
-                    return View(ViewName.Contact.RegisterTwice);
+                    return View(ViewName.Account.RegisterTwice);
                 }
 
-                ViewBag.Title = SR.Contact_Register_Title;
-                ViewBag.MetaDescription = SR.Contact_Register_Description;
+                ViewBag.Title = SR.Account_Register_Title;
+                ViewBag.MetaDescription = SR.Account_Register_Description;
                 ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
                 // FIXME:
@@ -115,23 +115,23 @@
                 //return View(ViewName.Contact.PostRegister, model);
             }
             else {
-                ViewBag.Title = SR.Contact_Register_Title;
-                ViewBag.MetaDescription = SR.Contact_Register_Description;
+                ViewBag.Title = SR.Account_Register_Title;
+                ViewBag.MetaDescription = SR.Account_Register_Description;
                 ViewBag.CanonicalLink = SiteMap.Register().ToString();
 
-                return View(ViewName.Contact.Register, contact);
+                return View(ViewName.Account.Register, contact);
             }
         }
 
         [HttpGet]
         public ActionResult Newsletter()
         {
-            ViewBag.Title = SR.Contact_Newsletter_Title;
-            ViewBag.MetaDescription = SR.Contact_Newsletter_Description;
+            ViewBag.Title = SR.Account_Newsletter_Title;
+            ViewBag.MetaDescription = SR.Account_Newsletter_Description;
             ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
             ViewBag.MainMenuClass = "newsletter";
 
-            return View(ViewName.Contact.Newsletter);
+            return View(ViewName.Account.Newsletter);
         }
 
         // FIXME:

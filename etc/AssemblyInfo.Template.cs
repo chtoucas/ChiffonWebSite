@@ -10,10 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: AssemblyFileVersion("$VersionNumber$.0")]
 [assembly: AssemblyInformationalVersion("$VersionNumber$")]
 
-#if DEBUG
-[assembly: AssemblyConfiguration("Debug packaged on $BuildTime$")]
-#else
-[assembly: AssemblyConfiguration("Release packaged on $BuildTime$")]
-#endif
-
-[assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly")]
+//[assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly")]

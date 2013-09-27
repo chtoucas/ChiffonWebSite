@@ -9,13 +9,13 @@
             public const string Contact = "~/Views/Home/Contact.cshtml";
         }
 
-        public static class Contact
+        public static class Account
         {
-            public const string Login = "~/Views/Contact/Login.cshtml";
-            public const string Register = "~/Views/Contact/Register.cshtml";
-            public const string PostRegister = "~/Views/Contact/PostRegister.cshtml";
-            public const string RegisterTwice = "~/Views/Contact/RegisterTwice.cshtml";
-            public const string Newsletter = "~/Views/Contact/Newsletter.cshtml";
+            public const string Login = "~/Views/Account/Login.cshtml";
+            public const string Register = "~/Views/Account/Register.cshtml";
+            public const string PostRegister = "~/Views/Account/PostRegister.cshtml";
+            public const string RegisterTwice = "~/Views/Account/RegisterTwice.cshtml";
+            public const string Newsletter = "~/Views/Account/Newsletter.cshtml";
         }
 
         public static class Designer

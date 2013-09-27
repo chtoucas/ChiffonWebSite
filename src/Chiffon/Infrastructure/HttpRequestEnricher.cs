@@ -9,6 +9,7 @@
     {
         #region ILogEventEnricher
 
+        [CLSCompliant(false)]
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             if (HttpContext.Current != null) {

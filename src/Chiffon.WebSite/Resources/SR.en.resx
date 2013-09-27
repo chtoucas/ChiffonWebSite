@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contact_Login_Description" xml:space="preserve">
+  <data name="Account_Login_Description" xml:space="preserve">
     <value>Pour quel motif, Simone ? Textile design collective.</value>
   </data>
-  <data name="Contact_Login_Title" xml:space="preserve">
+  <data name="Account_Login_Title" xml:space="preserve">
     <value>Login - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Contact_Newsletter_Description" xml:space="preserve">
+  <data name="Account_Newsletter_Description" xml:space="preserve">
     <value>Pour quel motif, Simone ? Textile design collective.</value>
   </data>
-  <data name="Contact_Newsletter_Title" xml:space="preserve">
+  <data name="Account_Newsletter_Title" xml:space="preserve">
     <value>Newsletter - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Contact_Register_Description" xml:space="preserve">
+  <data name="Account_Register_Description" xml:space="preserve">
     <value>Pour quel motif, Simone ? Textile design collective.</value>
   </data>
-  <data name="Contact_Register_Title" xml:space="preserve">
+  <data name="Account_Register_Title" xml:space="preserve">
     <value>Register - Pour quel motif, Simone ?</value>
   </data>
   <data name="Designer_Category_Description" xml:space="preserve">

@@ -15,7 +15,7 @@
  <p class=tidy>Bonne visite.</p>
  @if (!User.Identity.IsAuthenticated) {
   <p class=center>
-   <a href="@Url.RouteUrl(RouteName.Contact.Register)" class=underline rel="@ViewBag.ModalRelation">@VR.HomeAbout_PasswordRequest</a>
+   <a href="@Url.RouteUrl(RouteName.Account.Register)" class=underline rel="@ViewBag.ModalRelation">@VR.HomeAbout_PasswordRequest</a>
   </p>
  }
  <p class=center>
