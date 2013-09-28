@@ -14,7 +14,7 @@
     <RootNamespace>Chiffon</RootNamespace>
     <AssemblyName>Chiffon.WebSite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -154,10 +154,10 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageHandler.cs">
+    <Compile Include="..\Chiffon.StaticSite\Handlers\PatternImageHandler.cs">
       <Link>Handlers\PatternImageHandler.cs</Link>
     </Compile>
-    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageQuery.cs">
+    <Compile Include="..\Chiffon.StaticSite\Handlers\PatternImageQuery.cs">
       <Link>Handlers\PatternImageQuery.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
@@ -326,7 +326,7 @@
     <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>
-    <None Include="Properties\PublishProfiles\LocalBuild.pubxml" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Views\Account\Newsletter.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
@@ -383,9 +383,9 @@
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- Compilation des vues en mode Release -->
-  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true' And '$(Configuration)'=='Release'">
+  <!--<Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true' And '$(Configuration)'=='Release'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
-  </Target>
+  </Target>-->
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

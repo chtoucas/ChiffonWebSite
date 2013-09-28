@@ -46,12 +46,12 @@ return !Log.HasLoggedErrors;
     </Task>
   </UsingTask>
 
-  <UsingTask TaskName="UpdateVersionInfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="UpdateVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <VersionInfoXml ParameterType="System.String" Required="true" />
       <AssemblyInfoTemplate ParameterType="System.String" Required="true" />
       <AssemblyInfoFile ParameterType="System.String" Required="true" />
-      <Mode ParameterType="System.String" Required="true" />
+      <BuildRevision ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
       <Reference Include="System.Xml" />
@@ -84,7 +84,7 @@ try {
     var revision = Int16.Parse(root.Element("Revision").Value);
     var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm K");
 
-    switch (Mode) {
+    switch (BuildRevision) {
       case "Major":
         // Nouvelle version majeure.
         major++;
@@ -98,16 +98,16 @@ try {
         build = 0;
         revision = 0;
         break;
-      case "Revision":
+      case "Patch":
         // Révision d'une version existante.
         revision++;
         build++;
         break;
-      case "Build":
+      case "Override":
         build++;
         break;
       default:
-        Log.LogError("The requested mode '" + Mode + "' is not valid.");
+        Log.LogError("The requested mode '" + BuildRevision + "' is not valid.");
         return false;
     }
 

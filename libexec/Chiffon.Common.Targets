@@ -6,36 +6,36 @@
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
 
-    <!-- Aujourd'hui on a une seule Valeur possible pour PlatformPackage: Production -->
+    <!-- Aujourd'hui on a une seule valeur possible pour PlatformPackage: Production -->
     <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
   </PropertyGroup>
 
   <!-- Répertoires communs -->
   <PropertyGroup>
-    <BaseDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDirectory>
-
-    <EtcDirectory>$(BaseDirectory)\etc</EtcDirectory>
-    <LibExecDirectory>$(BaseDirectory)\libexec</LibExecDirectory>
-    <SourceDirectory>$(BaseDirectory)\src</SourceDirectory>
+    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</BaseDir>
+    
+    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <LibExecDir>$(BaseDir)\libexec</LibExecDir>
+    <SourceDir>$(BaseDir)\src</SourceDir>
   </PropertyGroup>
 
   <!-- Répertoires temporaires -->
   <PropertyGroup>
-    <TmpDirectory>$(BaseDirectory)\_tmp</TmpDirectory>
-    <BuildDirectory>$(BaseDirectory)\_build</BuildDirectory>
+    <TmpDir>$(BaseDir)\_tmp</TmpDir>
+    <BuildDir>$(BaseDir)\_build</BuildDir>
   </PropertyGroup>
 
   <!-- Répertoires privés -->
   <PropertyGroup>
-    <ConfigDirectory>$(BaseDirectory)\intern\config\$(PlatformPackage)</ConfigDirectory>
-    <ToolsDirectory>$(BaseDirectory)\intern\tools</ToolsDirectory>
+    <ConfigDir>$(BaseDir)\intern\config\$(PlatformPackage)</ConfigDir>
+    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
   </PropertyGroup>
 
   <!-- Outils (exe ou jar) -->
   <PropertyGroup>
-    <SevenZipExe>$(ToolsDirectory)\7-zip\7za.exe</SevenZipExe>
-    <GoogleClosureJar>$(ToolsDirectory)\closure\compiler.jar</GoogleClosureJar>
-    <YuiCompressorJar>$(ToolsDirectory)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <SevenZipExe>$(ToolsDir)\7-zip\7za.exe</SevenZipExe>
+    <GoogleClosureJar>$(ToolsDir)\closure\compiler.jar</GoogleClosureJar>
+    <YuiCompressorJar>$(ToolsDir)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
     <!--<NodeExe></NodeExe>-->
   </PropertyGroup>
 </Project>

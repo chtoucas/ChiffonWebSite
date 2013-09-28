@@ -9,30 +9,51 @@
   <PropertyGroup>
     <SemVer>0.0.0</SemVer>
 
-    <AssetsProject>$(LibExecDirectory)\Chiffon.Assets.msbuild</AssetsProject>
+    <!-- Valeurs possibles : Major, Minor, Patch, Override -->
+    <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
+
+    <AssetsProject>$(LibExecDir)\Chiffon.Assets.msbuild</AssetsProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ConfigFiles Include="$(ConfigDirectory)\*.config"></ConfigFiles>
+    <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectsToPublish Include="$(LibExecDir)\Chiffon.Assets.msbuild" />
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
+      <AdditionalProperties>PublishProfile=Local</AdditionalProperties>
+    </ProjectsToPublish>
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.csproj">
+      <AdditionalProperties>PublishProfile=Local</AdditionalProperties>
+    </ProjectsToPublish>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ConfigFiles Include="$(ConfigDir)\*.config"></ConfigFiles>
   </ItemGroup>
 
   <!--
     Cibles publiques.
     -->
 
-  <Target Name="Clean" />
-
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
-    <MSBuild Projects="$(AssetsProject)" Targets="Build"
-             Properties="Configuration=$(Configuration);SemVer=$(SemVer);PlatformPackage=$(PlatformPackage)" />
+  <Target Name="Clean">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean"
+             Properties="Configuration=$(Configuration)"/>
   </Target>
 
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+  
+  <Target Name="BuildAssets">
+    <MSBuild Projects="$(AssetsProject)" 
+             Properties="Configuration=$(Configuration);SemVer=$(SemVer)"/>
+  </Target>
+  
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Package" DependsOnTargets="$(PackageDependsOn)">
-    <MSBuild Projects="$(AssetsProject)"
-             Targets="Package"
-             Properties="Configuration=$(Configuration);SemVer=$(SemVer);PlatformPackage=$(PlatformPackage)" />
+  <Target Name="Publish" DependsOnTargets="$(PublishDependsOn)">
+    
   </Target>
 
   <!--
@@ -41,41 +62,49 @@
 
   <PropertyGroup>
     <BuildDependsOn>
-    _BeforeBuild;
+      _UpdateVersion;
+      BuildAssets;
+      _Build;
     </BuildDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageDependsOn>
-    </PackageDependsOn>
+    <PublishDependsOn>
+      _UpdateVersion;
+      _Publish;
+    </PublishDependsOn>
   </PropertyGroup>
 
   <!--
     Cibles privées.
     -->
 
-  <Target Name="_BeforeBuild">
-    <UpdateVersionInfo
-      VersionInfoXml="$(EtcDirectory)\VersionInfo.xml"
-      AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs"
-      Mode="Build">
-    </UpdateVersionInfo>
+  <Target Name="_UpdateVersion">
+    <UpdateVersion
+      VersionInfoXml="$(EtcDir)\VersionInfo.xml"
+      AssemblyInfoTemplate="$(EtcDir)\AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(EtcDir)\AssemblyInfo.Version.cs"
+      BuildRevision="$(BuildRevision)">
+    </UpdateVersion>
+  </Target>
+  
+  <Target Name="_Build">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build"
+             Properties="Configuration=$(Configuration)"/>
   </Target>
 
-  <!--
-  <Target Name="_NewRelease" AfterTargets="Package">
-    <UpdateVersionInfo
-      VersionInfoXml="$(EtcDirectory)\VersionInfo.xml"
-      AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs"
-      Mode="Minor">
-    </UpdateVersionInfo>
+  <Target Name="_Publish">
+    <!-- FIXME: J'ai été obligé de désactiver MvcBuildViews -->
+    <MSBuild Projects="@(ProjectsToPublish)" Targets="Build"
+             Properties="Configuration=$(Configuration);DeployOnBuild=true;SemVer=$(SemVer)"/>
   </Target>
-  -->
 
-  <Target Name="_SemVer" BeforeTargets="Build;Package">
-    <GetSemVer VersionInfoXml="$(EtcDirectory)\VersionInfo.xml">
+  <!--<Target Name="_BeforeBuild" BeforeTargets="_Build">
+    <MakeDir Directories="$(OutDir)"/>
+  </Target>-->
+
+  <Target Name="_SemVer" BeforeTargets="BuildAssets;_Publish">
+    <GetSemVer VersionInfoXml="$(EtcDir)\VersionInfo.xml">
       <Output PropertyName="SemVer" TaskParameter="SemVer" />
     </GetSemVer>
   </Target>

@@ -32,20 +32,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9
 	ProjectSection(SolutionItems) = preProject
 		etc\AssemblyInfo.Template.cs = etc\AssemblyInfo.Template.cs
 		Build.cmd = Build.cmd
+		BuildAssets.cmd = BuildAssets.cmd
 		libexec\Chiffon.Assets.msbuild = libexec\Chiffon.Assets.msbuild
 		libexec\Chiffon.Common.Targets = libexec\Chiffon.Common.Targets
 		Chiffon.msbuild = Chiffon.msbuild
 		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
 		Package.cmd = Package.cmd
-		PostDeploy.cmd = PostDeploy.cmd
-		etc\VersionNumber.xml = etc\VersionNumber.xml
+		Publish.cmd = Publish.cmd
+		etc\VersionInfo.xml = etc\VersionInfo.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wznw.Org.csproj", "{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chiffon.csproj", "{1759636F-FE03-4DAA-87B7-895CEB3F8797}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.MediaSite", "src\Chiffon.MediaSite\Chiffon.MediaSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.StaticSite", "src\Chiffon.StaticSite\Chiffon.StaticSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
