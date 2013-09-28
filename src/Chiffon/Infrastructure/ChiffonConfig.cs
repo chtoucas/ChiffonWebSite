@@ -106,9 +106,9 @@
 
             var version = String.Format(CultureInfo.InvariantCulture,
                 "{0}.{1}.{2}",
-                AssemblyVersion_.Major.ToString(CultureInfo.InvariantCulture),
-                AssemblyVersion_.Minor.ToString(CultureInfo.InvariantCulture),
-                AssemblyVersion_.Build.ToString(CultureInfo.InvariantCulture));
+                AssemblyVersion_.Major,
+                AssemblyVersion_.Minor,
+                AssemblyVersion_.Revision);
 
             CssVersion = nvc.MayGetValue("chiffon:CssVersion").ValueOrElse(version);
 

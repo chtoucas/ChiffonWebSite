@@ -2,7 +2,7 @@
   <Import Project=".\Chiffon.Common.Targets" />
 
   <PropertyGroup>
-    <VersionNumber Condition="$(VersionNumber) == ''">0.0.0</VersionNumber>
+    <SemVer Condition="$(SemVer) == ''">0.0.0</SemVer>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,9 +12,9 @@
 
     <TmpDirectory>$(TmpDirectory)\assets</TmpDirectory>
 
-    <CssScreenBundle>$(CssDirectory)\chiffon-$(VersionNumber).css</CssScreenBundle>
-    <JsAppBundle>$(JsDirectory)\app-$(VersionNumber).js</JsAppBundle>
-    <JsChiffonBundle>$(JsDirectory)\chiffon-$(VersionNumber).js</JsChiffonBundle>
+    <CssScreenBundle>$(CssDirectory)\chiffon-$(SemVer).css</CssScreenBundle>
+    <JsAppBundle>$(JsDirectory)\app-$(SemVer).js</JsAppBundle>
+    <JsChiffonBundle>$(JsDirectory)\chiffon-$(SemVer).js</JsChiffonBundle>
   </PropertyGroup>
 
   <ItemGroup>
@@ -127,7 +127,7 @@
   </Target>
 
   <Target Name="_Zip">
-    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets-$(VersionNumber)-$(PlatformPackage).7z $(TmpDirectory)\"
+    <Exec Command="$(SevenZipExe) a $(BuildDirectory)\assets-$(SemVer)-$(PlatformPackage).7z $(TmpDirectory)\"
       ContinueOnError="false"/>
   </Target>
 </Project>

@@ -1,8 +1,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask TaskName="GetVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="GetSemVer" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
-      <VersionNumberXml ParameterType="System.String" Required="true" />
-      <VersionNumber ParameterType="System.String" Output="true" />
+      <VersionInfoXml ParameterType="System.String" Required="true" />
+      <SemVer ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Reference Include="System.Xml" />
@@ -16,24 +16,25 @@
       <Using Namespace="Microsoft.Build.Utilities" />
       <Code Type="Fragment" Language="cs">
         <![CDATA[
-if (VersionNumberXml.Length == 0) {
+if (VersionInfoXml.Length == 0) {
     Log.LogMessage(MessageImportance.High, "You must supply a version file.");
     return false;
 }
 
 try {
     XDocument xdoc;
-    using (var reader = new StreamReader(VersionNumberXml)) {
+    using (var reader = new StreamReader(VersionInfoXml)) {
         xdoc = XDocument.Load(reader);
     }
 
     var root = xdoc.Root;
 
-    var major = Int16.Parse(root.Element("Major").Value).ToString(CultureInfo.InvariantCulture);
-    var minor = Int16.Parse(root.Element("Minor").Value).ToString(CultureInfo.InvariantCulture);
-    var build = Int16.Parse(root.Element("Build").Value).ToString(CultureInfo.InvariantCulture);
+    // Dans la version sémantique, on omet le numéro de Build.
+    var major = Int16.Parse(root.Element("Major").Value);
+    var minor = Int16.Parse(root.Element("Minor").Value);
+    var patch = Int16.Parse(root.Element("Revision").Value);
 
-    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
+    SemVer = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, patch);
 }
 catch (IOException ex) {
     Log.LogErrorFromException(ex);
@@ -45,12 +46,12 @@ return !Log.HasLoggedErrors;
     </Task>
   </UsingTask>
 
-  <UsingTask TaskName="UpdateVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="UpdateVersionInfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
-      <VersionNumberXml ParameterType="System.String" Required="true" />
+      <VersionInfoXml ParameterType="System.String" Required="true" />
       <AssemblyInfoTemplate ParameterType="System.String" Required="true" />
       <AssemblyInfoFile ParameterType="System.String" Required="true" />
-      <VersionNumber ParameterType="System.String" Output="true" />
+      <Mode ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
       <Reference Include="System.Xml" />
@@ -64,37 +65,69 @@ return !Log.HasLoggedErrors;
       <Using Namespace="Microsoft.Build.Utilities" />
       <Code Type="Fragment" Language="cs">
         <![CDATA[
-if (VersionNumberXml.Length == 0) {
+if (VersionInfoXml.Length == 0) {
     Log.LogMessage(MessageImportance.High, "You must supply a version file.");
     return false;
 }
 
 try {
     XDocument xdoc;
-    using (var reader = new StreamReader(VersionNumberXml)) {
+    using (var reader = new StreamReader(VersionInfoXml)) {
         xdoc = XDocument.Load(reader);
     }
 
     var root = xdoc.Root;
 
-    var major = Int16.Parse(root.Element("Major").Value).ToString(CultureInfo.InvariantCulture);
-    var minor = Int16.Parse(root.Element("Minor").Value).ToString(CultureInfo.InvariantCulture);
-    var build = (1 + Int16.Parse(root.Element("Build").Value)).ToString(CultureInfo.InvariantCulture);
-    var buildTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+    var major = Int16.Parse(root.Element("Major").Value);
+    var minor = Int16.Parse(root.Element("Minor").Value);
+    var build = Int16.Parse(root.Element("Build").Value);
+    var revision = Int16.Parse(root.Element("Revision").Value);
+    var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm K");
 
-    root.Element("Build").Value = build;
-    root.Element("Timestamp").Value = buildTime;
+    switch (Mode) {
+      case "Major":
+        // Nouvelle version majeure.
+        major++;
+        minor = 0;
+        build = 0;
+        revision = 0;
+        break;
+      case "Minor":
+        // Nouvelle version mineure.
+        minor++;
+        build = 0;
+        revision = 0;
+        break;
+      case "Revision":
+        // Révision d'une version existante.
+        revision++;
+        build++;
+        break;
+      case "Build":
+        build++;
+        break;
+      default:
+        Log.LogError("The requested mode '" + Mode + "' is not valid.");
+        return false;
+    }
 
-    using (var writer = new StreamWriter(VersionNumberXml)) {
+    root.Element("Major").Value = major.ToString(CultureInfo.InvariantCulture);
+    root.Element("Minor").Value = minor.ToString(CultureInfo.InvariantCulture);
+    root.Element("Build").Value = build.ToString(CultureInfo.InvariantCulture);
+    root.Element("Revision").Value = revision.ToString(CultureInfo.InvariantCulture);
+    root.Element("Timestamp").Value = timestamp;
+
+    using (var writer = new StreamWriter(VersionInfoXml)) {
         xdoc.Save(writer);
     }
 
-    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
-
     // Mise à jour des informations d'assemblée.
     string template = File.ReadAllText(AssemblyInfoTemplate)
-        .Replace("$VersionNumber$", VersionNumber);
-        //.Replace("$BuildTime$", buildTime);
+        .Replace("$Major$", major.ToString(CultureInfo.InvariantCulture))
+        .Replace("$Minor$", minor.ToString(CultureInfo.InvariantCulture))
+        .Replace("$Build$", build.ToString(CultureInfo.InvariantCulture))
+        .Replace("$Revision$", revision.ToString(CultureInfo.InvariantCulture))
+        .Replace("$Timestamp$", timestamp);
     File.WriteAllText(AssemblyInfoFile, template);
 }
 catch (IOException ex) {

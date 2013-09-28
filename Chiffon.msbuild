@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!-- Cf.
+  * http://blogs.msdn.com/b/webdev/archive/2013/09/22/web-publish-how-to-automate-multi-project-publish-with-file-system.aspx
+  * https://github.com/sayedihashimi/publish-samples
+  -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Common.Targets" />
 
   <PropertyGroup>
-    <VersionNumber>0.0.0</VersionNumber>
+    <SemVer>0.0.0</SemVer>
 
     <AssetsProject>$(LibExecDirectory)\Chiffon.Assets.msbuild</AssetsProject>
   </PropertyGroup>
@@ -12,33 +16,67 @@
     <ConfigFiles Include="$(ConfigDirectory)\*.config"></ConfigFiles>
   </ItemGroup>
 
+  <!--
+    Cibles publiques.
+    -->
+
   <Target Name="Clean" />
 
-  <Target Name="Build">
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
     <MSBuild Projects="$(AssetsProject)" Targets="Build"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);PlatformPackage=$(PlatformPackage)" />
+             Properties="Configuration=$(Configuration);SemVer=$(SemVer);PlatformPackage=$(PlatformPackage)" />
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Package">
+  <Target Name="Package" DependsOnTargets="$(PackageDependsOn)">
     <MSBuild Projects="$(AssetsProject)"
              Targets="Package"
-             Properties="Configuration=$(Configuration);VersionNumber=$(VersionNumber);CssVersion=$(CssVersion);JsVersion=$(JsVersion);PlatformPackage=$(PlatformPackage)" />
+             Properties="Configuration=$(Configuration);SemVer=$(SemVer);PlatformPackage=$(PlatformPackage)" />
   </Target>
 
-  <Target Name="PostDeploy">
-    <UpdateVersionNumber
-      VersionNumberXml="$(EtcDirectory)\VersionNumber.xml"
+  <!--
+    Dépendences.
+    -->
+
+  <PropertyGroup>
+    <BuildDependsOn>
+    _BeforeBuild;
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageDependsOn>
+    </PackageDependsOn>
+  </PropertyGroup>
+
+  <!--
+    Cibles privées.
+    -->
+
+  <Target Name="_BeforeBuild">
+    <UpdateVersionInfo
+      VersionInfoXml="$(EtcDirectory)\VersionInfo.xml"
       AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs">
-      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
-    </UpdateVersionNumber>
+      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs"
+      Mode="Build">
+    </UpdateVersionInfo>
   </Target>
 
-  <Target Name="_BeforeBuild" BeforeTargets="Build;Package">
-    <GetVersionNumber VersionNumberXml="$(EtcDirectory)\VersionNumber.xml">
-      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
-    </GetVersionNumber>
+  <!--
+  <Target Name="_NewRelease" AfterTargets="Package">
+    <UpdateVersionInfo
+      VersionInfoXml="$(EtcDirectory)\VersionInfo.xml"
+      AssemblyInfoTemplate="$(EtcDirectory)\AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(EtcDirectory)\AssemblyInfo.Version.cs"
+      Mode="Minor">
+    </UpdateVersionInfo>
+  </Target>
+  -->
+
+  <Target Name="_SemVer" BeforeTargets="Build;Package">
+    <GetSemVer VersionInfoXml="$(EtcDirectory)\VersionInfo.xml">
+      <Output PropertyName="SemVer" TaskParameter="SemVer" />
+    </GetSemVer>
   </Target>
 </Project>
