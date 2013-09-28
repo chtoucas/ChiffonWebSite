@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Propriétés obligatoires :
+    - YuiCompressorJar
+    - GoogleClosureJar
+    - SemVer
+  -->
+
+  <Import Project="..\..\..\libexec\Narvalo.Build.Targets" />
+
+  <PropertyGroup>
+    <SourceDir>$(MSBuildProjectDirectory)</SourceDir>
+    <CssDir>$(SourceDir)\css</CssDir>
+    <JsDir>$(SourceDir)\js</JsDir>
+
+    <CssScreenBundle>$(CssDir)\chiffon-$(SemVer).css</CssScreenBundle>
+    <JsAppBundle>$(JsDir)\app-$(SemVer).js</JsAppBundle>
+    <JsChiffonBundle>$(JsDir)\chiffon-$(SemVer).js</JsChiffonBundle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CssFiles Include="normalize-1.1.3.css">
+      <Bundle>$(CssScreenBundle)</Bundle>
+    </CssFiles>
+    <CssFiles Include="01-chiffon.base.css">
+      <Bundle>$(CssScreenBundle)</Bundle>
+    </CssFiles>
+    <CssFiles Include="02-chiffon.helpers.css">
+      <Bundle>$(CssScreenBundle)</Bundle>
+    </CssFiles>
+    <CssFiles Include="03-chiffon.css">
+      <Bundle>$(CssScreenBundle)</Bundle>
+    </CssFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <JsFiles Include="vendor\yepnope-1.5.4.js">
+      <Bundle>$(JsAppBundle)</Bundle>
+    </JsFiles>
+    <JsFiles Include="vendor\lodash.compat-2.0.0.js">
+      <Bundle>$(JsAppBundle)</Bundle>
+    </JsFiles>
+    <JsFiles Include="app.js">
+      <Bundle>$(JsAppBundle)</Bundle>
+    </JsFiles>
+
+    <JsFiles Include="jquery.plugins.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
+    </JsFiles>
+    <JsFiles Include="vendor\l10n-2013.09.19.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
+    </JsFiles>
+    <JsFiles Include="localization.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
+    </JsFiles>
+    <JsFiles Include="chiffon.js">
+      <Bundle>$(JsChiffonBundle)</Bundle>
+    </JsFiles>
+  </ItemGroup>
+
+  <Target Name="Clean" />
+
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+
+  <PropertyGroup>
+    <BuildDependsOn>
+      MergeAndMinifyCss;
+      MergeAndMinifyJs;
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="MergeAndMinifyCss" Inputs="@(CssFiles)" Outputs="%(Bundle)">
+    <MergeFiles Files="@(CssFiles->'$(CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
+                OutFile="%(Bundle)"/>
+
+    <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="%(CssFiles.Bundle)" />
+
+    <Delete Files="%(CssFiles.Bundle)" />
+  </Target>
+
+  <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(Bundle)">
+    <MergeFiles Files="@(JsFiles->'$(JsDir)\%(RelativeDir)%(Filename)%(Extension)')"
+                OutFile="%(Bundle)"/>
+
+    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.Bundle)"
+                     CompilationLevel="Simple" ProcessTimeout="10000" />
+
+    <Delete Files="%(JsFiles.Bundle)" />
+  </Target>
+
+  <!--
+  Validation des propriétés.
+  -->
+
+  <Target Name="_ValidateSemVer" BeforeTargets="MergeAndMinifyCss;MergeAndMinifyJs">
+    <Error Text="The property 'SemVer' must be set."
+           Condition="$(SemVer) == ''"/>
+  </Target>
+
+  <Target Name="_ValidateYuiCompressorJar" BeforeTargets="MergeAndMinifyCss">
+    <Error Text="The property 'YuiCompressorJar' must be set."
+           Condition="$(YuiCompressorJar) == ''"/>
+  </Target>
+
+  <Target Name="_ValidateGoogleClosureJar" BeforeTargets="MergeAndMinifyJs">
+    <Error Text="The property 'GoogleClosureJar' must be set."
+           Condition="$(GoogleClosureJar) == ''"/>
+  </Target>
+
+</Project>

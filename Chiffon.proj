@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Cf.
+  * http://blogs.msdn.com/b/webdev/archive/2013/09/22/web-publish-how-to-automate-multi-project-publish-with-file-system.aspx
+  * https://github.com/sayedihashimi/publish-samples
+  -->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\libexec\Chiffon.Tasks.Targets" />
+
+  <!-- Propriétés standards -->
+  <PropertyGroup>
+    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+    <OutDir Condition=" '$(OutDir)'=='' ">$(MSBuildProjectDirectory)\_build\$(Configuration)\</OutDir>
+    <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
+  </PropertyGroup>
+
+  <!-- Propriétés optionnelles -->
+  <PropertyGroup>
+    <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
+
+    <!-- Valeurs possibles : Major, Minor, Patch, Override -->
+    <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
+
+    <!-- Aujourd'hui on a une seule valeur possible pour PlatformPackage: Production -->
+    <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
+  </PropertyGroup>
+
+  <!-- Configuration -->
+  <PropertyGroup>
+    <!-- Répertoires communs -->
+    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</BaseDir>
+
+    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <SourceDir>$(BaseDir)\src</SourceDir>
+
+    <!-- Répertoires temporaires -->
+    <PublishDir>$(BaseDir)\_build\Publish</PublishDir>
+
+    <!-- Répertoires privés -->
+    <ConfigDir>$(BaseDir)\intern\config\$(PlatformPackage)</ConfigDir>
+    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
+
+    <!-- Outils (exe ou jar) -->
+    <SevenZipExe>$(ToolsDir)\7-zip\7za.exe</SevenZipExe>
+    <GoogleClosureJar>$(ToolsDir)\closure\compiler.jar</GoogleClosureJar>
+    <YuiCompressorJar>$(ToolsDir)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <!--<NodeExe></NodeExe>-->
+
+    <PublishProfile>Local</PublishProfile>
+  </PropertyGroup>
+
+  <!--
+    Définitions des projets.
+  -->
+  
+  <ItemGroup>
+    <AssetProjects Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
+      <AdditionalProperties>
+        YuiCompressorJar=$(YuiCompressorJar);
+        GoogleClosureJar=$(GoogleClosureJar)
+      </AdditionalProperties>
+    </AssetProjects>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectsToBuild Include="@(AssetProjects)" />
+    <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectsToPublish Include="@(AssetsProject)" />
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
+      <AdditionalProperties>PublishProfile=$(PublishProfile)</AdditionalProperties>
+    </ProjectsToPublish>
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.csproj">
+      <AdditionalProperties>PublishProfile=$(PublishProfile)</AdditionalProperties>
+    </ProjectsToPublish>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ConfigFiles Include="$(ConfigDir)\*.config"></ConfigFiles>
+  </ItemGroup>
+
+  <!--
+    Cibles publiques.
+    -->
+
+  <Target Name="Clean">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean"
+             Properties="Configuration=$(Configuration);OutDir=$(OutDir)"/>
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild Projects="@(ProjectsToBuild)"
+             Properties="Configuration=$(Configuration);OutDir=$(OutDir);SemVer=$(SemVer)"/>
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+
+  <Target Name="Publish" DependsOnTargets="Build">
+    <!-- FIXME: J'ai été obligé de désactiver MvcBuildViews. -->
+    <MSBuild Projects="@(ProjectsToPublish)"
+             Properties="Configuration=$(Configuration);OutDir=$(OutDir);DeployOnBuild=true;SemVer=$(SemVer)"/>
+  </Target>
+
+  <!--
+    Cibles privées.
+    -->
+
+  <!--<Target Name="_BeforeBuild" BeforeTargets="Build">
+    <MakeDir Directories="$(OutDir)"/>
+  </Target>-->
+
+  <Target Name="_SemVer" BeforeTargets="Build;Publish">
+    <UpdateVersion
+      VersionInfoXml="$(EtcDir)\VersionInfo.xml"
+      AssemblyInfoTemplate="$(EtcDir)\AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(EtcDir)\AssemblyInfo.Version.cs"
+      BuildRevision="$(BuildRevision)">
+    </UpdateVersion>
+    <GetSemVer VersionInfoXml="$(EtcDir)\VersionInfo.xml">
+      <Output PropertyName="SemVer" TaskParameter="SemVer" />
+    </GetSemVer>
+  </Target>
+</Project>
