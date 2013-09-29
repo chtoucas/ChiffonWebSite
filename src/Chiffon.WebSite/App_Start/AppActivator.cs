@@ -1,4 +1,14 @@
-﻿namespace Chiffon
+﻿using Chiffon;
+using WebActivatorEx;
+
+// WARNING: cet attribut ne peut être utilisé qu'une fois par assemblée.
+//[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+
+[assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+[assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
+[assembly: ApplicationShutdownMethod(typeof(AppActivator), "Shutdown")]
+
+namespace Chiffon
 {
     using System.Web.Mvc;
     using Autofac;

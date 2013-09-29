@@ -4,7 +4,7 @@
 @call "%VS110COMNTOOLS%vsvars32.bat"
 
 :build
-MSBuild Chiffon.proj /nologo /verbosity:minimal /t:BuildViews /fl
+MSBuild .\src\Chiffon.WebSite\Chiffon.WebSite.csproj /nologo /verbosity:minimal /p:Configuration=Debug;MvcBuildViews=true /t:Clean;Build;MvcBuildViews /fl
 @if errorlevel 1 (
   @goto error
 )

@@ -8,8 +8,8 @@
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
   TODO:
   * encrypter les chaînes de connection
-  * pré-compilation complète
-  * utiliser psake au lieu de multiples cmd
+  * vérification les résultats via PEVerify ?
+  * custom deploy script
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Tasks.Targets" />
@@ -17,7 +17,8 @@
   <!-- Macros -->
 
   <PropertyGroup>
-    <VisualStudioVersion Condition=" '$(VisualStudioVersion)'=='' ">11.0</VisualStudioVersion>
+    <!-- On force la valeur de VisualStudioVersion, obligatoire pour la cible Publish -->
+    <VisualStudioVersion>11.0</VisualStudioVersion>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
 
@@ -25,6 +26,7 @@
     <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
     <OutDir Condition=" '$(OutDir)'=='' ">$(BaseDir)\_build\$(Configuration)\</OutDir>
     <PublishDir>$(BaseDir)\_build\Publish</PublishDir>
+    <PackageDir>$(BaseDir)\_build</PackageDir>
     <EtcDir>$(BaseDir)\etc</EtcDir>
     <SourceDir>$(BaseDir)\src</SourceDir>
     <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
@@ -38,36 +40,10 @@
     <!-- Valeurs possibles : Major, Minor, Patch, Override -->
     <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
 
-    <!-- Aujourd'hui on a une seule valeur possible pour PlatformPackage: Production -->
-    <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
+    <!-- Aujourd'hui, on a une seule valeur possible pour TargetEnv: Production -->
+    <TargetEnv Condition="$(TargetEnv) == ''">Production</TargetEnv>
 
-    <ConfigDir>$(BaseDir)\intern\config\$(PlatformPackage)</ConfigDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Propriétés communes à toutes les configurations de compilation -->
-    <BuildProperties>
-      Configuration=$(Configuration);
-      OutDir=$(OutDir);
-      Platform=$(Platform)
-    </BuildProperties>
-
-    <!-- Propriétés communes à toutes les configurations de publication -->
-    <PublishProperties>
-      $(BuildProperties);
-      OutputPath=$(OutDir);
-      VisualStudioVersion=$(VisualStudioVersion);
-      WebPublishMethod=FileSystem;
-      DeleteExistingFiles=true;
-      PrecompileBeforePublish=true;
-      EnableUpdateable=true;
-      DebugSymbols=true;
-      DeployOnBuild=true;
-      DeployTarget=WebPublish;
-      ExcludeApp_Data=true;
-      WDPMergeOption=DonotMerge;
-      ConfigDir=$(ConfigDir)
-    </PublishProperties>
+    <ConfigDir>$(BaseDir)\intern\config\$(TargetEnv)</ConfigDir>
   </PropertyGroup>
 
   <!-- Outils (exe ou jar) -->
@@ -79,24 +55,58 @@
     <!--<NodeExe></NodeExe>-->
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Propriétés pour la compilation -->
+    <BuildProperties>
+      Configuration=$(Configuration);
+      OutDir=$(OutDir);
+      Platform=$(Platform)
+    </BuildProperties>
+
+    <!-- Propriétés pour la publication -->
+    <PublishProperties>
+      $(BuildProperties);
+      OutputPath=$(OutDir);
+      VisualStudioVersion=$(VisualStudioVersion);
+      WebPublishMethod=FileSystem;
+      DeleteExistingFiles=true;
+      PrecompileBeforePublish=true;
+      EnableUpdateable=false;
+      DebugSymbols=true;
+      DeployOnBuild=true;
+      DeployTarget=WebPublish;
+      WDPMergeOption=MergeAllOutputsToASingleAssembly;
+      UseMerge=true;
+      DeleteAppCodeCompiledFiles=true;
+      ExcludeApp_Data=true;
+      ConfigDir=$(ConfigDir)
+    </PublishProperties>
+
+    <AssetProperties>
+      YuiCompressorJar=$(YuiCompressorJar);
+      GoogleClosureJar=$(GoogleClosureJar)
+    </AssetProperties>
+  </PropertyGroup>
+
   <!-- Définitions des projets -->
 
   <ItemGroup>
-    <AssetProjects Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
+    <ProjectsToBuild Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
-        YuiCompressorJar=$(YuiCompressorJar);
-        GoogleClosureJar=$(GoogleClosureJar)
+        $(AssetProperties)
       </AdditionalProperties>
-    </AssetProjects>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectsToBuild Include="@(AssetProjects)" />
+    </ProjectsToBuild>
     <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectsToPublish Include="@(AssetsProject)" />-->
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
+      <AdditionalProperties>
+        $(AssetProperties);
+        $(PublishProperties);
+        publishUrl=$(PublishDir)\wznw.org_chiffon\
+      </AdditionalProperties>
+    </ProjectsToPublish>
 
     <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
       <AdditionalProperties>
@@ -129,14 +139,6 @@
     <MSBuild Projects="@(ProjectsToBuild)" Properties="$(BuildProperties);SemVer=$(SemVer)"/>
   </Target>
 
-  <Target Name="BuildViews">
-    <!-- FIXME: J'ai été obligé de désactiver MvcBuildViews dans le projet
-         car cela ne cohabitait pas avec les profils de publication. -->
-    <MSBuild Projects="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj"
-             Targets="Clean;Build;MvcBuildViews"
-             Properties="Configuration=Release;MvcBuildViews=true" />
-  </Target>
-
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
   <Target Name="Publish">
@@ -144,12 +146,27 @@
   </Target>
 
   <Target Name="Package" DependsOnTargets="Clean;Publish">
+    <PropertyGroup>
+      <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(TargetEnv).7z</_PackageFile>
+    </PropertyGroup>
+    <Delete Files="$(_PackageFile)" />
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)\*"
+      ContinueOnError="false"/>
   </Target>
 
   <!--
     Cibles privées.
     -->
 
+  <Target Name="_PEVerify">
+    <ItemGroup>
+      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll" />
+      
+      <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_BinaryFiles.FullPath)"
+            ContinueOnError="false" />
+    </ItemGroup>
+  </Target>
+  
   <Target Name="_PrepareForBuild" BeforeTargets="Build">
     <MakeDir Directories="$(OutDir)"  Condition="!Exists($(OutDir))" />
   </Target>
@@ -168,5 +185,17 @@
     <GetSemVer VersionInfoXml="$(EtcDir)\VersionInfo.xml">
       <Output PropertyName="SemVer" TaskParameter="SemVer" />
     </GetSemVer>
+  </Target>
+
+  <Target Name="_PrepareForPEVerify" BeforeTargets="_PEVerify">
+    <!--<GetFrameworkSdkPath>
+      <Output TaskParameter="FrameworkSdkVersion40Path"
+              PropertyName="SDKPath" />
+    </GetFrameworkSdkPath>-->
+    <PropertyGroup>
+      <SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>
+      <PEVerifyExe>"$(SDK40ToolsPath)\peverify.exe"</PEVerifyExe>
+      <PEVerifyArgs>/il /md /nologo</PEVerifyArgs>
+    </PropertyGroup>
   </Target>
 </Project>
