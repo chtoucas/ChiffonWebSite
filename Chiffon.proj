@@ -8,8 +8,8 @@
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
   TODO:
   * encrypter les chaînes de connection
-  * vérification les résultats via PEVerify ?
-  * custom deploy script
+  * permettre de ne sélectionner qu'une partie des projets
+  * add custom deploy script
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Tasks.Targets" />
@@ -17,36 +17,39 @@
   <!-- Macros -->
 
   <PropertyGroup>
-    <!-- On force la valeur de VisualStudioVersion, obligatoire pour la cible Publish -->
+    <!-- On force la valeur de VisualStudioVersion, nécessaire pour la cible Publish -->
     <VisualStudioVersion>11.0</VisualStudioVersion>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
 
-    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</BaseDir>
-    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
-    <OutDir Condition=" '$(OutDir)'=='' ">$(BaseDir)\_build\$(Configuration)\</OutDir>
-    <PublishDir>$(BaseDir)\_build\Publish</PublishDir>
-    <PackageDir>$(BaseDir)\_build</PackageDir>
-    <EtcDir>$(BaseDir)\etc</EtcDir>
-    <SourceDir>$(BaseDir)\src</SourceDir>
-    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
-  </PropertyGroup>
-
-  <!-- Propriétés optionnelles -->
-
-  <PropertyGroup>
     <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
+    <VerifyAssemblies Condition="$(VerifyAssemblies) != 'true'">false</VerifyAssemblies>
 
     <!-- Valeurs possibles : Major, Minor, Patch, Override -->
     <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
 
-    <!-- Aujourd'hui, on a une seule valeur possible pour TargetEnv: Production -->
-    <TargetEnv Condition="$(TargetEnv) == ''">Production</TargetEnv>
-
-    <ConfigDir>$(BaseDir)\intern\config\$(TargetEnv)</ConfigDir>
+    <!-- Aujourd'hui, on a une seule valeur possible pour DeployEnv: Production -->
+    <DeployEnv Condition="$(DeployEnv) == ''">Production</DeployEnv>
   </PropertyGroup>
 
-  <!-- Outils (exe ou jar) -->
+  <!-- Répertoires  -->
+
+  <PropertyGroup>
+    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</BaseDir>
+    <!-- Répertoires temporaires -->
+    <BuildDir>$(BaseDir)\_build</BuildDir>
+    <OutDir>$(BuildDir)\$(Configuration)\</OutDir>
+    <PublishDir>$(BuildDir)\Publish</PublishDir>
+    <PackageDir>$(BuildDir)\Packages</PackageDir>
+    <!-- Répertoires sous contrôle de source -->
+    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <SourceDir>$(BaseDir)\src</SourceDir>
+    <!-- Répertoires privés -->
+    <ConfigDir>$(BaseDir)\intern\config\$(DeployEnv)</ConfigDir>
+    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
+  </PropertyGroup>
+
+  <!-- Outils locaux (exe ou jar) -->
 
   <PropertyGroup>
     <SevenZipExe>$(ToolsDir)\7-zip\7za.exe</SevenZipExe>
@@ -57,13 +60,14 @@
 
   <PropertyGroup>
     <!-- Propriétés pour la compilation -->
+    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
     <BuildProperties>
       Configuration=$(Configuration);
       OutDir=$(OutDir);
       Platform=$(Platform)
     </BuildProperties>
 
-    <!-- Propriétés pour la publication -->
+    <!-- Propriétés pour la publication dans les système de fichiers -->
     <PublishProperties>
       $(BuildProperties);
       OutputPath=$(OutDir);
@@ -82,10 +86,10 @@
       ConfigDir=$(ConfigDir)
     </PublishProperties>
 
-    <AssetProperties>
+    <MinifyProperties>
       YuiCompressorJar=$(YuiCompressorJar);
       GoogleClosureJar=$(GoogleClosureJar)
-    </AssetProperties>
+    </MinifyProperties>
   </PropertyGroup>
 
   <!-- Définitions des projets -->
@@ -93,7 +97,7 @@
   <ItemGroup>
     <ProjectsToBuild Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
-        $(AssetProperties)
+        $(MinifyProperties)
       </AdditionalProperties>
     </ProjectsToBuild>
     <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
@@ -102,7 +106,7 @@
   <ItemGroup>
     <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
-        $(AssetProperties);
+        $(MinifyProperties);
         $(PublishProperties);
         publishUrl=$(PublishDir)\wznw.org_chiffon\
       </AdditionalProperties>
@@ -125,9 +129,7 @@
     </ProjectsToPublish>
   </ItemGroup>
 
-  <!--
-    Cibles publiques.
-    -->
+  <!-- Cibles publiques -->
 
   <Target Name="Clean">
     <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
@@ -141,32 +143,22 @@
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Publish">
+  <!-- Publication vers le système de fichier -->
+  <Target Name="Publish" DependsOnTargets="Clean">
     <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Clean;Publish">
+  <Target Name="Package" DependsOnTargets="Publish">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(TargetEnv).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(DeployEnv).7z</_PackageFile>
     </PropertyGroup>
+
     <Delete Files="$(_PackageFile)" />
-    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)\*"
-      ContinueOnError="false"/>
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)\*" ContinueOnError="false"/>
   </Target>
 
-  <!--
-    Cibles privées.
-    -->
+  <!-- Cibles privées -->
 
-  <Target Name="_PEVerify">
-    <ItemGroup>
-      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll" />
-      
-      <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_BinaryFiles.FullPath)"
-            ContinueOnError="false" />
-    </ItemGroup>
-  </Target>
-  
   <Target Name="_PrepareForBuild" BeforeTargets="Build">
     <MakeDir Directories="$(OutDir)"  Condition="!Exists($(OutDir))" />
   </Target>
@@ -175,7 +167,23 @@
     <MakeDir Directories="$(PublishDir)"  Condition="!Exists($(PublishDir))" />
   </Target>
 
-  <Target Name="_UpdateVersionNumber" BeforeTargets="Build;Publish">
+  <Target Name="_PrepareForPackage" BeforeTargets="Package">
+    <MakeDir Directories="$(PackageDir)"  Condition="!Exists($(PackageDir))" />
+  </Target>
+
+  <Target Name="_PEVerify" BeforeTargets="Package" Condition="$(VerifyAssemblies) == 'true'">
+    <ItemGroup>
+      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll" />
+    </ItemGroup>
+
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_DllFiles"/>
+    </RemoveDuplicates>
+
+    <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_DllFiles.FullPath)" ContinueOnError="false" />
+  </Target>
+
+  <Target Name="_UpdateVersionNumber" BeforeTargets="Build;Publish;Package">
     <UpdateVersion
       VersionInfoXml="$(EtcDir)\VersionInfo.xml"
       AssemblyInfoTemplate="$(EtcDir)\AssemblyInfo.Template.cs"
@@ -188,10 +196,11 @@
   </Target>
 
   <Target Name="_PrepareForPEVerify" BeforeTargets="_PEVerify">
-    <!--<GetFrameworkSdkPath>
-      <Output TaskParameter="FrameworkSdkVersion40Path"
-              PropertyName="SDKPath" />
-    </GetFrameworkSdkPath>-->
+    <!--
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="SDKPath" />
+    </GetFrameworkSdkPath>
+    -->
     <PropertyGroup>
       <SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>
       <PEVerifyExe>"$(SDK40ToolsPath)\peverify.exe"</PEVerifyExe>

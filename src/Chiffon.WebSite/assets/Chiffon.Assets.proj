@@ -11,6 +11,7 @@
 
   <PropertyGroup>
     <DeployOnBuild Condition="$(DeployOnBuild) != 'true'">false</DeployOnBuild>
+
     <CssDir>$(MSBuildProjectDirectory)\css</CssDir>
     <JsDir>$(MSBuildProjectDirectory)\js</JsDir>
 
@@ -67,7 +68,7 @@
     <BuildDependsOn>
       MergeAndMinifyCss;
       MergeAndMinifyJs;
-      _Deploy
+      _Publish
     </BuildDependsOn>
   </PropertyGroup>
 
@@ -89,21 +90,21 @@
 
     <Delete Files="%(JsFiles.Bundle)" />
   </Target>
+  
+  <!-- Cibles privées -->
 
-  <Target Name="_Deploy" Condition="$(DeployOnBuild) == 'true'">
-    <Message Text="$(MSBuildThisFile)" Importance="High" />
+  <Target Name="_Publish" Condition="$(DeployOnBuild) == 'true'">
     <ItemGroup>
+      <!-- On inclut tous les fichiers sauf le fichier de projet -->
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
-                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile)" />
+                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);$(MSBuildProjectDirectory)\**\*.gitignore" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_SourceFiles)"
           DestinationFiles="@(_SourceFiles->'$(publishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
-  <!--
-  Validation des propriétés.
-  -->
+  <!-- Validation des propriétés -->
 
   <Target Name="_ValidateSemVer" BeforeTargets="MergeAndMinifyCss;MergeAndMinifyJs">
     <Error Text="The property 'SemVer' must be set."
@@ -120,7 +121,7 @@
            Condition="$(GoogleClosureJar) == ''"/>
   </Target>
 
-  <Target Name="_ValidateDeploy" BeforeTargets="_Deploy">
+  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="$(DeployOnBuild) == 'true'">
     <Error Text="The property 'publishUrl' must be set."
            Condition="$(publishUrl) == ''"/>
   </Target>
