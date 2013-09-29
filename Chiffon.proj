@@ -2,18 +2,36 @@
 <!-- Cf.
   * http://blogs.msdn.com/b/webdev/archive/2013/09/22/web-publish-how-to-automate-multi-project-publish-with-file-system.aspx
   * https://github.com/sayedihashimi/publish-samples
+  * http://www.hanselman.com/blog/TinyHappyFeatures3PublishingImprovementsChainedConfigTransformsAndDeployingASPNETAppsFromTheCommandLine.aspx
+  * http://www.asp.net/mvc/tutorials/deployment/visual-studio-web-deployment/deploying-extra-files
+  * http://msdn.microsoft.com/en-us/library/ee942158.aspx
+  * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
+  TODO:
+  * encrypter les chaînes de connection
+  * pré-compilation complète
+  * utiliser psake au lieu de multiples cmd
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.Tasks.Targets" />
 
-  <!-- Propriétés standards -->
+  <!-- Macros -->
+
   <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)'=='' ">11.0</VisualStudioVersion>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
-    <OutDir Condition=" '$(OutDir)'=='' ">$(MSBuildProjectDirectory)\_build\$(Configuration)\</OutDir>
-    <Platform Condition="$(Platform) == ''">AnyCPU</Platform>
+    <Platform Condition="$(Platform) == ''">Any CPU</Platform>
+
+    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</BaseDir>
+    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
+    <OutDir Condition=" '$(OutDir)'=='' ">$(BaseDir)\_build\$(Configuration)\</OutDir>
+    <PublishDir>$(BaseDir)\_build\Publish</PublishDir>
+    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <SourceDir>$(BaseDir)\src</SourceDir>
+    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
   </PropertyGroup>
 
   <!-- Propriétés optionnelles -->
+
   <PropertyGroup>
     <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
 
@@ -22,36 +40,47 @@
 
     <!-- Aujourd'hui on a une seule valeur possible pour PlatformPackage: Production -->
     <PlatformPackage Condition="$(PlatformPackage) == ''">Production</PlatformPackage>
+
+    <ConfigDir>$(BaseDir)\intern\config\$(PlatformPackage)</ConfigDir>
   </PropertyGroup>
 
-  <!-- Configuration -->
   <PropertyGroup>
-    <!-- Répertoires communs -->
-    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</BaseDir>
+    <!-- Propriétés communes à toutes les configurations de compilation -->
+    <BuildProperties>
+      Configuration=$(Configuration);
+      OutDir=$(OutDir);
+      Platform=$(Platform)
+    </BuildProperties>
 
-    <EtcDir>$(BaseDir)\etc</EtcDir>
-    <SourceDir>$(BaseDir)\src</SourceDir>
+    <!-- Propriétés communes à toutes les configurations de publication -->
+    <PublishProperties>
+      $(BuildProperties);
+      OutputPath=$(OutDir);
+      VisualStudioVersion=$(VisualStudioVersion);
+      WebPublishMethod=FileSystem;
+      DeleteExistingFiles=true;
+      PrecompileBeforePublish=true;
+      EnableUpdateable=true;
+      DebugSymbols=true;
+      DeployOnBuild=true;
+      DeployTarget=WebPublish;
+      ExcludeApp_Data=true;
+      WDPMergeOption=DonotMerge;
+      ConfigDir=$(ConfigDir)
+    </PublishProperties>
+  </PropertyGroup>
 
-    <!-- Répertoires temporaires -->
-    <PublishDir>$(BaseDir)\_build\Publish</PublishDir>
+  <!-- Outils (exe ou jar) -->
 
-    <!-- Répertoires privés -->
-    <ConfigDir>$(BaseDir)\intern\config\$(PlatformPackage)</ConfigDir>
-    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
-
-    <!-- Outils (exe ou jar) -->
+  <PropertyGroup>
     <SevenZipExe>$(ToolsDir)\7-zip\7za.exe</SevenZipExe>
     <GoogleClosureJar>$(ToolsDir)\closure\compiler.jar</GoogleClosureJar>
     <YuiCompressorJar>$(ToolsDir)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
     <!--<NodeExe></NodeExe>-->
-
-    <PublishProfile>Local</PublishProfile>
   </PropertyGroup>
 
-  <!--
-    Définitions des projets.
-  -->
-  
+  <!-- Définitions des projets -->
+
   <ItemGroup>
     <AssetProjects Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
@@ -67,17 +96,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectsToPublish Include="@(AssetsProject)" />
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
-      <AdditionalProperties>PublishProfile=$(PublishProfile)</AdditionalProperties>
-    </ProjectsToPublish>
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.csproj">
-      <AdditionalProperties>PublishProfile=$(PublishProfile)</AdditionalProperties>
-    </ProjectsToPublish>
-  </ItemGroup>
+    <!--<ProjectsToPublish Include="@(AssetsProject)" />-->
 
-  <ItemGroup>
-    <ConfigFiles Include="$(ConfigDir)\*.config"></ConfigFiles>
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
+      <AdditionalProperties>
+        $(PublishProperties);
+        publishUrl=$(PublishDir)\pourquelmotifsimone.com\;
+        PublishProfile=$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.pubxml
+      </AdditionalProperties>
+    </ProjectsToPublish>
+
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.csproj">
+      <AdditionalProperties>
+        $(PublishProperties);
+        publishUrl=$(PublishDir)\s.pourquelmotifsimone.com\;
+        PublishProfile=$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.pubxml
+      </AdditionalProperties>
+    </ProjectsToPublish>
   </ItemGroup>
 
   <!--
@@ -85,32 +120,45 @@
     -->
 
   <Target Name="Clean">
-    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean"
-             Properties="Configuration=$(Configuration);OutDir=$(OutDir)"/>
+    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
+    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" Properties="$(BuildProperties)"/>
   </Target>
 
   <Target Name="Build">
-    <MSBuild Projects="@(ProjectsToBuild)"
-             Properties="Configuration=$(Configuration);OutDir=$(OutDir);SemVer=$(SemVer)"/>
+    <MSBuild Projects="@(ProjectsToBuild)" Properties="$(BuildProperties);SemVer=$(SemVer)"/>
+  </Target>
+
+  <Target Name="BuildViews">
+    <!-- FIXME: J'ai été obligé de désactiver MvcBuildViews dans le projet
+         car cela ne cohabitait pas avec les profils de publication. -->
+    <MSBuild Projects="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj"
+             Targets="Clean;Build;MvcBuildViews"
+             Properties="Configuration=Release;MvcBuildViews=true" />
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Publish" DependsOnTargets="Build">
-    <!-- FIXME: J'ai été obligé de désactiver MvcBuildViews. -->
-    <MSBuild Projects="@(ProjectsToPublish)"
-             Properties="Configuration=$(Configuration);OutDir=$(OutDir);DeployOnBuild=true;SemVer=$(SemVer)"/>
+  <Target Name="Publish">
+    <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Clean;Publish">
   </Target>
 
   <!--
     Cibles privées.
     -->
 
-  <!--<Target Name="_BeforeBuild" BeforeTargets="Build">
-    <MakeDir Directories="$(OutDir)"/>
-  </Target>-->
+  <Target Name="_PrepareForBuild" BeforeTargets="Build">
+    <MakeDir Directories="$(OutDir)"  Condition="!Exists($(OutDir))" />
+  </Target>
 
-  <Target Name="_SemVer" BeforeTargets="Build;Publish">
+  <Target Name="_PrepareForPublish" BeforeTargets="Publish">
+    <MakeDir Directories="$(PublishDir)"  Condition="!Exists($(PublishDir))" />
+  </Target>
+
+  <Target Name="_UpdateVersionNumber" BeforeTargets="Build;Publish">
     <UpdateVersion
       VersionInfoXml="$(EtcDir)\VersionInfo.xml"
       AssemblyInfoTemplate="$(EtcDir)\AssemblyInfo.Template.cs"

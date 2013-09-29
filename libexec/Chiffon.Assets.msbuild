@@ -3,92 +3,9 @@
   <Import Project=".\Chiffon.Common.Targets" />
 
   <PropertyGroup>
-    <DeployOnBuild Condition="$(DeployOnBuild) == ''">false</DeployOnBuild>
-    <SemVer Condition="$(SemVer) == ''">0.0.0</SemVer>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <AssetDirectory>$(SourceDir)\Chiffon.WebSite\assets</AssetDirectory>
-    <CssDirectory>$(AssetDirectory)\css</CssDirectory>
-    <JsDirectory>$(AssetDirectory)\js</JsDirectory>
-
     <TmpDir>$(TmpDir)\wznw.org_chiffon</TmpDir>
-
-    <CssScreenBundle>$(CssDirectory)\chiffon-$(SemVer).css</CssScreenBundle>
-    <JsAppBundle>$(JsDirectory)\app-$(SemVer).js</JsAppBundle>
-    <JsChiffonBundle>$(JsDirectory)\chiffon-$(SemVer).js</JsChiffonBundle>
   </PropertyGroup>
-
-  <ItemGroup>
-    <CssFiles Include="normalize-1.1.3.css">
-      <Bundle>$(CssScreenBundle)</Bundle>
-    </CssFiles>
-    <CssFiles Include="01-chiffon.base.css">
-      <Bundle>$(CssScreenBundle)</Bundle>
-    </CssFiles>
-    <CssFiles Include="02-chiffon.helpers.css">
-      <Bundle>$(CssScreenBundle)</Bundle>
-    </CssFiles>
-    <CssFiles Include="03-chiffon.css">
-      <Bundle>$(CssScreenBundle)</Bundle>
-    </CssFiles>
-  </ItemGroup>
-
-  <ItemGroup>
-    <JsFiles Include="vendor\yepnope-1.5.4.js">
-      <Bundle>$(JsAppBundle)</Bundle>
-    </JsFiles>
-    <JsFiles Include="vendor\lodash.compat-2.0.0.js">
-      <Bundle>$(JsAppBundle)</Bundle>
-    </JsFiles>
-    <JsFiles Include="app.js">
-      <Bundle>$(JsAppBundle)</Bundle>
-    </JsFiles>
-
-    <JsFiles Include="jquery.plugins.js">
-      <Bundle>$(JsChiffonBundle)</Bundle>
-    </JsFiles>
-    <JsFiles Include="vendor\l10n-2013.09.19.js">
-      <Bundle>$(JsChiffonBundle)</Bundle>
-    </JsFiles>
-    <JsFiles Include="localization.js">
-      <Bundle>$(JsChiffonBundle)</Bundle>
-    </JsFiles>
-    <JsFiles Include="chiffon.js">
-      <Bundle>$(JsChiffonBundle)</Bundle>
-    </JsFiles>
-  </ItemGroup>
-
-  <Target Name="Clean" />
-
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
-
-  <PropertyGroup>
-    <BuildDependsOn>
-      MergeAndMinifyCss;
-      MergeAndMinifyJs;
-      _Deploy;
-    </BuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="MergeAndMinifyCss" Inputs="@(CssFiles)" Outputs="%(Bundle)">
-    <MergeFiles Files="@(CssFiles->'$(CssDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
-                OutFile="%(Bundle)"/>
-
-    <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="%(CssFiles.Bundle)" />
-
-    <Delete Files="%(CssFiles.Bundle)" />
-  </Target>
-
-  <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(Bundle)">
-    <MergeFiles Files="@(JsFiles->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')"
-                OutFile="%(Bundle)"/>
-
-    <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.Bundle)"
-                     CompilationLevel="Simple" ProcessTimeout="10000" />
-
-    <Delete Files="%(JsFiles.Bundle)" />
-  </Target>
 
   <Target Name="_BeforeDeploy" BeforeTargets="_Deploy">
     <RemoveDir Directories="$(TmpDir)" Condition="Exists($(TmpDir))" />

@@ -4,7 +4,7 @@
 @call "%VS110COMNTOOLS%vsvars32.bat"
 
 :build
-MSBuild Chiffon.proj /nologo /verbosity:quiet /p:VisualStudioVersion=11.0 /t:Publish /fl
+MSBuild Chiffon.proj /nologo /verbosity:minimal /t:Publish /fl
 @if errorlevel 1 (
   @goto error
 )

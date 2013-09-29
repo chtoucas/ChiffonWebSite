@@ -10,9 +10,8 @@
   <Import Project="..\..\..\libexec\Narvalo.Build.Targets" />
 
   <PropertyGroup>
-    <SourceDir>$(MSBuildProjectDirectory)</SourceDir>
-    <CssDir>$(SourceDir)\css</CssDir>
-    <JsDir>$(SourceDir)\js</JsDir>
+    <CssDir>$(MSBuildProjectDirectory)\css</CssDir>
+    <JsDir>$(MSBuildProjectDirectory)\js</JsDir>
 
     <CssScreenBundle>$(CssDir)\chiffon-$(SemVer).css</CssScreenBundle>
     <JsAppBundle>$(JsDir)\app-$(SemVer).js</JsAppBundle>
