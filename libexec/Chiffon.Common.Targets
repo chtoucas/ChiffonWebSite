@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Répertoires  -->
+
+  <PropertyGroup>
+    <!-- TODO: Vérifier que c'est le bon chemin -->
+    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)')\..)</BaseDir>
+    <!-- Répertoires temporaires -->
+    <BuildDir>$(BaseDir)\_build</BuildDir>
+
+    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
+    <OutDir>$(BuildDir)\$(Configuration)\</OutDir>
+    <PublishDir>$(BuildDir)\Publish</PublishDir>
+    <PackageDir>$(BuildDir)\Packages</PackageDir>
+
+    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <PublishProfilesDir>$(BaseDir)\etc\PublishProfiles</PublishProfilesDir>
+    <SourceDir>$(BaseDir)\src</SourceDir>
+  </PropertyGroup>
+
+  <!-- Outils locaux (exe ou jar) -->
+
+  <PropertyGroup>
+    <_ToolsDir>$(BaseDir)\tools</_ToolsDir>
+
+    <SevenZipExe>$(_ToolsDir)\7-zip\7za.exe</SevenZipExe>
+    <GoogleClosureJar>$(_ToolsDir)\closure\compiler.jar</GoogleClosureJar>
+    <YuiCompressorJar>$(_ToolsDir)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+    <!--<NodeExe></NodeExe>-->
+  </PropertyGroup>
+
+  <!-- Outils .NET -->
+
+  <!--
+  <Target Name="_PrepareForPEVerify" BeforeTargets="_PEVerify">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="SDKPath" />
+    </GetFrameworkSdkPath>
+    <PropertyGroup>
+      <SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>
+      <PEVerifyExe>"$(SDK40ToolsPath)\peverify.exe"</PEVerifyExe>
+      <PEVerifyArgs>/il /md /nologo</PEVerifyArgs>
+    </PropertyGroup>
+  </Target>
+  -->
+</Project>

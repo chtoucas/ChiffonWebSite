@@ -1,14 +1,14 @@
 
 properties {
-  $verbosity     = 'minimal'
-  $configuration = 'Release'
-  $deploy_env    = 'Production'
+  $verbosity      = 'minimal'
+  $configuration  = 'Release'
+  $publish_target = 'Production'
 
   # Ne rien changer ci-dessous
 
   $msproject = 'Chiffon.proj'
   $msoptions = "/nologo", "/v:`"$verbosity`"", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
-  $msproperties = "/p:Configuration=`"$configuration`";DeployEnv=`"$deploy_env`"";
+  $msproperties = "/p:Configuration=`"$configuration`";PublishTarget=`"$publish_target`"";
 }
 
 Task default -depends Build
@@ -19,10 +19,6 @@ Task Clean {
 
 Task Build {
   msbuild $msoptions .\$msproject $msproperties
-}
-
-Task Minify {
-  msbuild $msoptions .\$msproject /p:MinifyOnly=true $msproperties
 }
 
 Task Publish {

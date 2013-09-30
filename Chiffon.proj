@@ -12,12 +12,15 @@
   * add custom deploy script
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\libexec\Chiffon.Common.Targets" />
   <Import Project=".\libexec\Chiffon.Tasks.Targets" />
 
   <!-- Macros -->
 
   <PropertyGroup>
-    <!-- On force la valeur de VisualStudioVersion, nécessaire pour la cible Publish -->
+    <!-- On force la valeur de VisualStudioVersion.
+      TODO: Comme cela n'est nécessaire que pour la cible Publish, on devrait peut-être
+            ne pas le faire dans tous les cas. -->
     <VisualStudioVersion>11.0</VisualStudioVersion>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
@@ -28,71 +31,49 @@
     <!-- Valeurs possibles : Major, Minor, Patch, Override -->
     <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
 
-    <!-- Aujourd'hui, on a une seule valeur possible pour DeployEnv: Production -->
-    <DeployEnv Condition="$(DeployEnv) == ''">Production</DeployEnv>
-  </PropertyGroup>
+    <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
+    <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
 
-  <!-- Répertoires  -->
-
-  <PropertyGroup>
-    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</BaseDir>
-    <!-- Répertoires temporaires -->
-    <BuildDir>$(BaseDir)\_build</BuildDir>
-    <OutDir>$(BuildDir)\$(Configuration)\</OutDir>
-    <PublishDir>$(BuildDir)\Publish</PublishDir>
-    <PackageDir>$(BuildDir)\Packages</PackageDir>
-    <!-- Répertoires sous contrôle de source -->
-    <EtcDir>$(BaseDir)\etc</EtcDir>
-    <SourceDir>$(BaseDir)\src</SourceDir>
-    <!-- Répertoires privés -->
-    <ConfigDir>$(BaseDir)\intern\config\$(DeployEnv)</ConfigDir>
-    <ToolsDir>$(BaseDir)\intern\tools</ToolsDir>
-  </PropertyGroup>
-
-  <!-- Outils locaux (exe ou jar) -->
-
-  <PropertyGroup>
-    <SevenZipExe>$(ToolsDir)\7-zip\7za.exe</SevenZipExe>
-    <GoogleClosureJar>$(ToolsDir)\closure\compiler.jar</GoogleClosureJar>
-    <YuiCompressorJar>$(ToolsDir)\yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
-    <!--<NodeExe></NodeExe>-->
+    <ConfigDir>$(BaseDir)\intern\config\$(PublishTarget)</ConfigDir>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Propriétés pour la compilation -->
-    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
+    <!-- Configuration de la compilation -->
     <BuildProperties>
       Configuration=$(Configuration);
       OutDir=$(OutDir);
       Platform=$(Platform)
     </BuildProperties>
 
-    <!-- Propriétés pour la publication dans les système de fichiers -->
+    <!-- Configuration de la publication dans le système de fichiers -->
     <PublishProperties>
       $(BuildProperties);
+      <!-- Configuration de MSBuild -->
       OutputPath=$(OutDir);
+      DeployOnBuild=true;
       VisualStudioVersion=$(VisualStudioVersion);
+      ConfigDir=$(ConfigDir);
+      <!-- Configuration commune à tous les profils de publication -->
       WebPublishMethod=FileSystem;
       DeleteExistingFiles=true;
+      DebugSymbols=true;
+      ExcludeApp_Data=true;
       PrecompileBeforePublish=true;
       EnableUpdateable=false;
-      DebugSymbols=true;
-      DeployOnBuild=true;
       DeployTarget=WebPublish;
       WDPMergeOption=MergeAllOutputsToASingleAssembly;
       UseMerge=true;
-      DeleteAppCodeCompiledFiles=true;
-      ExcludeApp_Data=true;
-      ConfigDir=$(ConfigDir)
+      DeleteAppCodeCompiledFiles=true
     </PublishProperties>
 
+    <!-- Configuration de la minification -->
     <MinifyProperties>
       YuiCompressorJar=$(YuiCompressorJar);
       GoogleClosureJar=$(GoogleClosureJar)
     </MinifyProperties>
   </PropertyGroup>
 
-  <!-- Définitions des projets -->
+  <!-- Liste des projets à compiler -->
 
   <ItemGroup>
     <ProjectsToBuild Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
@@ -102,6 +83,8 @@
     </ProjectsToBuild>
     <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
+
+  <!-- Liste des projets à publier -->
 
   <ItemGroup>
     <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
@@ -116,7 +99,7 @@
       <AdditionalProperties>
         $(PublishProperties);
         publishUrl=$(PublishDir)\pourquelmotifsimone.com\;
-        PublishProfile=$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.pubxml
+        PublishProfile=$(PublishProfilesDir)\Chiffon.WebSite.$(PublishTarget).pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
 
@@ -124,7 +107,7 @@
       <AdditionalProperties>
         $(PublishProperties);
         publishUrl=$(PublishDir)\s.pourquelmotifsimone.com\;
-        PublishProfile=$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.pubxml
+        PublishProfile=$(PublishProfilesDir)\Chiffon.StaticSite.$(PublishTarget).pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
   </ItemGroup>
@@ -150,7 +133,7 @@
 
   <Target Name="Package" DependsOnTargets="Publish">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(DeployEnv).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(PublishTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />
@@ -171,16 +154,18 @@
     <MakeDir Directories="$(PackageDir)"  Condition="!Exists($(PackageDir))" />
   </Target>
 
-  <Target Name="_PEVerify" BeforeTargets="Package" Condition="$(VerifyAssemblies) == 'true'">
+  <Target Name="_VerifyAssemblies" AfterTargets="Publish" Condition="$(VerifyAssemblies) == 'true'">
     <ItemGroup>
-      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll" />
+      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll"
+                    Exclude="$(PublishDir)\**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
 
     <RemoveDuplicates Inputs="@(_BinaryFiles)">
-      <Output TaskParameter="Filtered" ItemName="_DllFiles"/>
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
     </RemoveDuplicates>
 
-    <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_DllFiles.FullPath)" ContinueOnError="false" />
+    <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_AssemblyFiles.FullPath)"
+          ContinueOnError="false" />
   </Target>
 
   <Target Name="_UpdateVersionNumber" BeforeTargets="Build;Publish;Package">
