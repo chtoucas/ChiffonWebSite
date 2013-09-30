@@ -18,24 +18,22 @@
   <!-- Macros -->
 
   <PropertyGroup>
-    <!-- On force la valeur de VisualStudioVersion.
-      TODO: Comme cela n'est nécessaire que pour la cible Publish, on devrait peut-être
-            ne pas le faire dans tous les cas. -->
-    <VisualStudioVersion>11.0</VisualStudioVersion>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
 
     <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
-    <VerifyAssemblies Condition="$(VerifyAssemblies) != 'true'">false</VerifyAssemblies>
 
-    <!-- Valeurs possibles : Major, Minor, Patch, Override -->
-    <BuildRevision Condition="$(BuildRevision) == ''">Override</BuildRevision>
+    <!-- Valeurs possibles : Major, Minor, Patch, None -->
+    <Milestone Condition="$(Milestone) == ''">None</Milestone>
 
     <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
     <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
+    <VerifyAssemblies Condition="$(VerifyAssemblies) != 'true'">false</VerifyAssemblies>
 
     <ConfigDir>$(BaseDir)\intern\config\$(PublishTarget)</ConfigDir>
   </PropertyGroup>
+
+  <!-- Configurations -->
 
   <PropertyGroup>
     <!-- Configuration de la compilation -->
@@ -51,19 +49,20 @@
       <!-- Configuration de MSBuild -->
       OutputPath=$(OutDir);
       DeployOnBuild=true;
-      VisualStudioVersion=$(VisualStudioVersion);
+      <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
+      VisualStudioVersion=11.0;
       ConfigDir=$(ConfigDir);
       <!-- Configuration commune à tous les profils de publication -->
       WebPublishMethod=FileSystem;
-      DeleteExistingFiles=true;
       DebugSymbols=true;
+      DeleteAppCodeCompiledFiles=true;
+      DeleteExistingFiles=true;
+      DeployTarget=WebPublish;
+      EnableUpdateable=false;
       ExcludeApp_Data=true;
       PrecompileBeforePublish=true;
-      EnableUpdateable=false;
-      DeployTarget=WebPublish;
-      WDPMergeOption=MergeAllOutputsToASingleAssembly;
       UseMerge=true;
-      DeleteAppCodeCompiledFiles=true
+      WDPMergeOption=MergeAllOutputsToASingleAssembly
     </PublishProperties>
 
     <!-- Configuration de la minification -->
@@ -81,11 +80,14 @@
         $(MinifyProperties)
       </AdditionalProperties>
     </ProjectsToBuild>
+    <!-- TODO: Il semble que pour une solution on ne peut pas ajouter automatiquement
+         'AdditionalProperties' -->
     <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
 
   <!-- Liste des projets à publier -->
 
+  <!-- Publication vers le système de fichier -->
   <ItemGroup>
     <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
@@ -115,8 +117,6 @@
   <!-- Cibles publiques -->
 
   <Target Name="Clean">
-    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
-    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" Properties="$(BuildProperties)"/>
   </Target>
 
@@ -126,12 +126,66 @@
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <!-- Publication vers le système de fichier -->
   <Target Name="Publish" DependsOnTargets="Clean">
     <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Publish">
+  <!-- Avant ou après une cible -->
+
+  <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(_BeforeCleanDependsOn)" />
+
+  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(_BeforeBuildDependsOn)" />
+
+  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(_BeforePublishDependsOn)" />
+  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(_AfterPublishDependsOn)" />
+
+  <!-- Dépendances -->
+
+  <PropertyGroup>
+    <_BeforeCleanDependsOn>
+      _RemoveOutDir;
+      _RemovePublishDir
+    </_BeforeCleanDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_BeforeBuildDependsOn>
+      _CreateOutDir;
+      _UpdateVersionNumber
+    </_BeforeBuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_BeforePublishDependsOn>
+      _ValidateMilestone;
+      _CreatePublishDir;
+      _CreatePackageDir;
+      _UpdateVersionNumber
+    </_BeforePublishDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_AfterPublishDependsOn>
+      _VerifyAssemblies;
+      _Package
+    </_AfterPublishDependsOn>
+  </PropertyGroup>
+
+  <!-- Cibles privées -->
+
+  <Target Name="_CreateOutDir">
+    <MakeDir Directories="$(OutDir)" Condition="!Exists($(OutDir))" />
+  </Target>
+
+  <Target Name="_CreatePublishDir">
+    <MakeDir Directories="$(PublishDir)" Condition="!Exists($(PublishDir))" />
+  </Target>
+
+  <Target Name="_CreatePackageDir">
+    <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
+  </Target>
+
+  <Target Name="_Package">
     <PropertyGroup>
       <_PackageFile>$(PackageDir)\chiffon-$(SemVer)-$(PublishTarget).7z</_PackageFile>
     </PropertyGroup>
@@ -140,56 +194,50 @@
     <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)\*" ContinueOnError="false"/>
   </Target>
 
-  <!-- Cibles privées -->
-
-  <Target Name="_PrepareForBuild" BeforeTargets="Build">
-    <MakeDir Directories="$(OutDir)"  Condition="!Exists($(OutDir))" />
+  <Target Name="_RemoveOutDir">
+    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
   </Target>
 
-  <Target Name="_PrepareForPublish" BeforeTargets="Publish">
-    <MakeDir Directories="$(PublishDir)"  Condition="!Exists($(PublishDir))" />
+  <Target Name="_RemovePublishDir">
+    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
   </Target>
 
-  <Target Name="_PrepareForPackage" BeforeTargets="Package">
-    <MakeDir Directories="$(PackageDir)"  Condition="!Exists($(PackageDir))" />
-  </Target>
-
-  <Target Name="_VerifyAssemblies" AfterTargets="Publish" Condition="$(VerifyAssemblies) == 'true'">
-    <ItemGroup>
-      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll"
-                    Exclude="$(PublishDir)\**\Chiffon.*.AspNet.dll" />
-    </ItemGroup>
-
-    <RemoveDuplicates Inputs="@(_BinaryFiles)">
-      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
-    </RemoveDuplicates>
-
-    <Exec Command="$(PEVerifyExe) $(PEVerifyArgs) %(_AssemblyFiles.FullPath)"
-          ContinueOnError="false" />
-  </Target>
-
-  <Target Name="_UpdateVersionNumber" BeforeTargets="Build;Publish;Package">
+  <Target Name="_UpdateVersionNumber">
     <UpdateVersion
       VersionInfoXml="$(EtcDir)\VersionInfo.xml"
       AssemblyInfoTemplate="$(EtcDir)\AssemblyInfo.Template.cs"
       AssemblyInfoFile="$(EtcDir)\AssemblyInfo.Version.cs"
-      BuildRevision="$(BuildRevision)">
+      Milestone="$(Milestone)">
     </UpdateVersion>
     <GetSemVer VersionInfoXml="$(EtcDir)\VersionInfo.xml">
       <Output PropertyName="SemVer" TaskParameter="SemVer" />
     </GetSemVer>
   </Target>
 
-  <Target Name="_PrepareForPEVerify" BeforeTargets="_PEVerify">
-    <!--
-    <GetFrameworkSdkPath>
-      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="SDKPath" />
-    </GetFrameworkSdkPath>
-    -->
-    <PropertyGroup>
-      <SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>
-      <PEVerifyExe>"$(SDK40ToolsPath)\peverify.exe"</PEVerifyExe>
-      <PEVerifyArgs>/il /md /nologo</PEVerifyArgs>
-    </PropertyGroup>
+  <Target Name="_ValidateMilestone">
+    <Error Text="The property 'Milestone' must be set to something different to 'None'."
+           Condition="$(Milestone) == 'None'"/>
   </Target>
+
+  <Target Name="_VerifyAssemblies" DependsOnTargets="Sdk40Tools"
+          Condition="$(VerifyAssemblies) == 'true'">
+    <ItemGroup>
+      <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll"
+                    Exclude="$(PublishDir)\**\Chiffon.*.AspNet.dll" />
+      <_AspFiles Include="$(PublishDir)\**\Chiffon.*.AspNet.dll" />
+    </ItemGroup>
+
+    <!-- On supprime les doublons -->
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
+    </RemoveDuplicates>
+
+    <Exec Command="$(PEVerifyExe) %(_AssemblyFiles.FullPath) /nologo /md /il /unique"
+          ContinueOnError="false" />
+    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
+         "incorrectes" de ce point de vue là -->
+    <Exec Command="$(PEVerifyExe) %(_AspFiles.FullPath) /nologo /il /unique"
+          ContinueOnError="false" />
+  </Target>
+
 </Project>

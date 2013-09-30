@@ -1,14 +1,17 @@
 
 properties {
-  $verbosity      = 'minimal'
-  $configuration  = 'Release'
-  $publish_target = 'Production'
+  $verbosity         = 'minimal'
+  $configuration     = 'Release'
+
+  $publish_target	 = 'Production'
+  $milestone         = 'Patch'
+  $verify_assemblies = 'false'
 
   # Ne rien changer ci-dessous
 
   $msproject = 'Chiffon.proj'
   $msoptions = "/nologo", "/v:`"$verbosity`"", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
-  $msproperties = "/p:Configuration=`"$configuration`";PublishTarget=`"$publish_target`"";
+  $msproperties = "/p:Configuration=`"$configuration`"";
 }
 
 Task default -depends Build
@@ -22,9 +25,5 @@ Task Build {
 }
 
 Task Publish {
-  msbuild $msoptions .\$msproject /t:Publish $msproperties
-}
-
-Task Package {
-  msbuild $msoptions .\$msproject /t:Package $msproperties
+  msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:VerifyAssemblies=`"$verify_assemblies`"" "/p:PublishTarget=`"$publish_target`"" "/p:Milestone=`"$milestone`""
 }

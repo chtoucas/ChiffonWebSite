@@ -3,8 +3,8 @@
   <!-- Répertoires  -->
 
   <PropertyGroup>
-    <!-- TODO: Vérifier que c'est le bon chemin -->
-    <BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)')\..)</BaseDir>
+    <!--<BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)')\..)</BaseDir>-->
+    <BaseDir>$(MSBuildThisFileDirectory)..</BaseDir>
     <!-- Répertoires temporaires -->
     <BuildDir>$(BaseDir)\_build</BuildDir>
 
@@ -14,7 +14,7 @@
     <PackageDir>$(BuildDir)\Packages</PackageDir>
 
     <EtcDir>$(BaseDir)\etc</EtcDir>
-    <PublishProfilesDir>$(BaseDir)\etc\PublishProfiles</PublishProfilesDir>
+    <PublishProfilesDir>$(EtcDir)\PublishProfiles</PublishProfilesDir>
     <SourceDir>$(BaseDir)\src</SourceDir>
   </PropertyGroup>
 
@@ -31,16 +31,18 @@
 
   <!-- Outils .NET -->
 
-  <!--
-  <Target Name="_PrepareForPEVerify" BeforeTargets="_PEVerify">
+  <Target Name="Sdk40Tools">
     <GetFrameworkSdkPath>
-      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="SDKPath" />
+      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="_Sdk40Path" />
     </GetFrameworkSdkPath>
+
     <PropertyGroup>
-      <SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>
-      <PEVerifyExe>"$(SDK40ToolsPath)\peverify.exe"</PEVerifyExe>
-      <PEVerifyArgs>/il /md /nologo</PEVerifyArgs>
+      <!--<SDK40ToolsPath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools</SDK40ToolsPath>-->
+      <_Sdk40ToolsPath>$(_Sdk40Path)Bin\NETFX 4.0 Tools</_Sdk40ToolsPath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <PEVerifyExe>"$(_Sdk40ToolsPath)\peverify.exe"</PEVerifyExe>
     </PropertyGroup>
   </Target>
-  -->
 </Project>
