@@ -10,8 +10,12 @@
   * encrypter les chaînes de connection
   * permettre de ne sélectionner qu'une partie des projets
   * add custom deploy script
+  * BuildInParallel ?
+  * multiples plateformes : x64, x86 & co ?
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\Web\Microsoft.Web.Publishing.targets" />-->
+
   <Import Project=".\libexec\Chiffon.Common.Targets" />
   <Import Project=".\libexec\Chiffon.Tasks.Targets" />
 
@@ -29,8 +33,6 @@
     <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
     <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
     <VerifyAssemblies Condition="$(VerifyAssemblies) != 'true'">false</VerifyAssemblies>
-
-    <ConfigDir>$(BaseDir)\intern\config\$(PublishTarget)</ConfigDir>
   </PropertyGroup>
 
   <!-- Configurations -->
@@ -46,12 +48,13 @@
     <!-- Configuration de la publication dans le système de fichiers -->
     <PublishProperties>
       $(BuildProperties);
+      TransformsDir=$(TransformsDir);
+      PublishTarget=$(PublishTarget);
       <!-- Configuration de MSBuild -->
       OutputPath=$(OutDir);
       DeployOnBuild=true;
       <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
       VisualStudioVersion=11.0;
-      ConfigDir=$(ConfigDir);
       <!-- Configuration commune à tous les profils de publication -->
       WebPublishMethod=FileSystem;
       DebugSymbols=true;
@@ -60,6 +63,7 @@
       DeployTarget=WebPublish;
       EnableUpdateable=false;
       ExcludeApp_Data=true;
+      ExcludeGeneratedDebugSymbol=false;
       PrecompileBeforePublish=true;
       UseMerge=true;
       WDPMergeOption=MergeAllOutputsToASingleAssembly
@@ -82,7 +86,7 @@
     </ProjectsToBuild>
     <!-- TODO: Il semble que pour une solution on ne peut pas ajouter automatiquement
          'AdditionalProperties' -->
-    <ProjectsToBuild Include="$(BaseDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
+    <ProjectsToBuild Include="$(RootDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
 
   <!-- Liste des projets à publier -->
@@ -105,11 +109,11 @@
       </AdditionalProperties>
     </ProjectsToPublish>
 
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.StaticSite\Chiffon.StaticSite.csproj">
+    <ProjectsToPublish Include="$(SourceDir)\Chiffon.MediaSite\Chiffon.MediaSite.csproj">
       <AdditionalProperties>
         $(PublishProperties);
         publishUrl=$(PublishDir)\s.pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfilesDir)\Chiffon.StaticSite.$(PublishTarget).pubxml
+        PublishProfile=$(PublishProfilesDir)\Chiffon.MediaSite.$(PublishTarget).pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
   </ItemGroup>

@@ -129,9 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="config\appSettings.config" />
-    <Content Include="config\connectionStrings.config" />
-    <Content Include="config\Web.config" />
     <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>

@@ -154,10 +154,10 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="..\Chiffon.StaticSite\Handlers\PatternImageHandler.cs">
+    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageHandler.cs">
       <Link>Handlers\PatternImageHandler.cs</Link>
     </Compile>
-    <Compile Include="..\Chiffon.StaticSite\Handlers\PatternImageQuery.cs">
+    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageQuery.cs">
       <Link>Handlers\PatternImageQuery.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
@@ -319,10 +319,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ViewHelpers.cshtml" />
-    <Content Include="config\appSettings.config" />
-    <Content Include="config\connectionStrings.config" />
-    <Content Include="config\assets.config" />
-    <Content Include="config\Web.config" />
     <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>

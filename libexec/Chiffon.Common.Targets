@@ -3,25 +3,29 @@
   <!-- Répertoires  -->
 
   <PropertyGroup>
-    <!--<BaseDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)')\..)</BaseDir>-->
-    <BaseDir>$(MSBuildThisFileDirectory)..</BaseDir>
+    <!--<RootDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)')\..)</RootDir>-->
+    <RootDir>$(MSBuildThisFileDirectory)..</RootDir>
     <!-- Répertoires temporaires -->
-    <BuildDir>$(BaseDir)\_build</BuildDir>
+    <BuildDir>$(RootDir)\_build</BuildDir>
 
     <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
     <OutDir>$(BuildDir)\$(Configuration)\</OutDir>
     <PublishDir>$(BuildDir)\Publish</PublishDir>
     <PackageDir>$(BuildDir)\Packages</PackageDir>
 
-    <EtcDir>$(BaseDir)\etc</EtcDir>
+    <EtcDir>$(RootDir)\etc</EtcDir>
     <PublishProfilesDir>$(EtcDir)\PublishProfiles</PublishProfilesDir>
-    <SourceDir>$(BaseDir)\src</SourceDir>
+    <SourceDir>$(RootDir)\src</SourceDir>
+    
+    <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git,
+                  car il contient toutes les configurations privées. -->
+    <TransformsDir>$(RootDir)\intern\transforms</TransformsDir>
   </PropertyGroup>
 
   <!-- Outils locaux (exe ou jar) -->
 
   <PropertyGroup>
-    <_ToolsDir>$(BaseDir)\tools</_ToolsDir>
+    <_ToolsDir>$(RootDir)\tools</_ToolsDir>
 
     <SevenZipExe>$(_ToolsDir)\7-zip\7za.exe</SevenZipExe>
     <GoogleClosureJar>$(_ToolsDir)\closure\compiler.jar</GoogleClosureJar>

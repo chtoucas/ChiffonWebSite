@@ -8,10 +8,11 @@ properties {
   $verify_assemblies = 'false'
 
   # Ne rien changer ci-dessous
+  # --------------------------
 
   $msproject = 'Chiffon.proj'
-  $msoptions = "/nologo", "/v:`"$verbosity`"", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
-  $msproperties = "/p:Configuration=`"$configuration`"";
+  $msoptions = "/nologo", "/v:$verbosity", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
+  $msproperties = "/p:Configuration=$configuration";
 }
 
 Task default -depends Build
@@ -25,5 +26,5 @@ Task Build {
 }
 
 Task Publish {
-  msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:VerifyAssemblies=`"$verify_assemblies`"" "/p:PublishTarget=`"$publish_target`"" "/p:Milestone=`"$milestone`""
+  msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:VerifyAssemblies=$verify_assemblies;PublishTarget=$publish_target;Milestone=$milestone"
 }

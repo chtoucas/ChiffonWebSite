@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite", "src\Chiffon.WebSite\Chiffon.WebSite.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "test\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Tests", "..\Narvalo.NET\test\Narvalo.Tests\Narvalo.Tests.csproj", "{967FD938-F4FF-452B-9F9B-426D1F250BEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Build", "..\Narvalo.NET\src\Narvalo.Build\Narvalo.Build.csproj", "{AE69E1DD-A499-48E9-8BAA-B279E07F7DC7}"
@@ -40,11 +38,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chiffon.csproj", "{1759636F-FE03-4DAA-87B7-895CEB3F8797}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.StaticSite", "src\Chiffon.StaticSite\Chiffon.StaticSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishProfiles", "{D1E9C98A-55A2-4636-8FB0-D8874C9660C9}"
 	ProjectSection(SolutionItems) = preProject
-		etc\PublishProfiles\Chiffon.StaticSite.Production.pubxml = etc\PublishProfiles\Chiffon.StaticSite.Production.pubxml
+		etc\PublishProfiles\Chiffon.MediaSite.Production.pubxml = etc\PublishProfiles\Chiffon.MediaSite.Production.pubxml
 		etc\PublishProfiles\Chiffon.WebSite.Production.pubxml = etc\PublishProfiles\Chiffon.WebSite.Production.pubxml
 	EndProjectSection
 EndProject
@@ -61,6 +57,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInf
 		etc\AssemblyInfo.Template.cs = etc\AssemblyInfo.Template.cs
 		etc\VersionInfo.xml = etc\VersionInfo.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "src\Chiffon.Tests\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.MediaSite", "src\Chiffon.MediaSite\Chiffon.MediaSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,10 +80,6 @@ Global
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -100,6 +96,10 @@ Global
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Release|Any CPU.ActiveCfg = Release|Any CPU

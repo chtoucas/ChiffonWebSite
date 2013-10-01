@@ -10,3 +10,5 @@ Technology footprint
 * ASP.NET MVC 4
 * I18N'ized
 * Autofac
+* MEF
+* jQuery

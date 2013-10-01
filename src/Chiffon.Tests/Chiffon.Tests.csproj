@@ -40,7 +40,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -68,10 +68,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="..\etc\AssemblyInfo.Common.cs">
+    <Compile Include="..\..\etc\AssemblyInfo.Common.cs">
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
-    <Compile Include="..\etc\AssemblyInfo.Version.cs">
+    <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="AutofacAssert.cs" />
@@ -79,18 +79,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\etc\Chiffon.snk">
+    <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Chiffon.WebSite\Chiffon.WebSite.csproj">
+    <ProjectReference Include="..\Chiffon.WebSite\Chiffon.WebSite.csproj">
       <Project>{0f446c2e-d766-428d-a567-724631f114a6}</Project>
       <Name>Chiffon.WebSite</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\Chiffon\Chiffon.csproj">
+    <ProjectReference Include="..\Chiffon\Chiffon.csproj">
       <Project>{1759636f-fe03-4daa-87b7-895ceb3f8797}</Project>
       <Name>Chiffon</Name>
     </ProjectReference>
