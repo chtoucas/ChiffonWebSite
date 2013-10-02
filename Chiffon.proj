@@ -12,6 +12,7 @@
   * add custom deploy script
   * BuildInParallel ?
   * multiples plateformes : x64, x86 & co ?
+  * supprimer _PublishedWebsites
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\Web\Microsoft.Web.Publishing.targets" />-->
@@ -32,7 +33,6 @@
 
     <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
     <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
-    <VerifyAssemblies Condition="$(VerifyAssemblies) != 'true'">false</VerifyAssemblies>
   </PropertyGroup>
 
   <!-- Configurations -->
@@ -55,6 +55,7 @@
       DeployOnBuild=true;
       <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
       VisualStudioVersion=11.0;
+
       <!-- Configuration commune à tous les profils de publication -->
       WebPublishMethod=FileSystem;
       DebugSymbols=true;
@@ -63,6 +64,7 @@
       DeployTarget=WebPublish;
       EnableUpdateable=false;
       ExcludeApp_Data=true;
+      <!-- On garde aussi les fichiers debug des autres projets -->
       ExcludeGeneratedDebugSymbol=false;
       PrecompileBeforePublish=true;
       UseMerge=true;
@@ -76,24 +78,34 @@
     </MinifyProperties>
   </PropertyGroup>
 
+  <!-- Définition des projets -->
+
+  <PropertyGroup>
+    <SolutionFile>$(RootDir)\Chiffon.sln</SolutionFile>
+    <WebSiteProject>$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj</WebSiteProject>
+    <MediaSiteProject>$(SourceDir)\Chiffon.MediaSite\Chiffon.MediaSite.csproj</MediaSiteProject>
+    <TestsProject>$(SourceDir)\Chiffon.Tests\Chiffon.Tests.csproj</TestsProject>
+    <StaticSiteProject>$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj</StaticSiteProject>
+  </PropertyGroup>
+
   <!-- Liste des projets à compiler -->
 
   <ItemGroup>
-    <ProjectsToBuild Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
+    <ProjectsToBuild Include="$(StaticSiteProject)">
       <AdditionalProperties>
         $(MinifyProperties)
       </AdditionalProperties>
     </ProjectsToBuild>
     <!-- TODO: Il semble que pour une solution on ne peut pas ajouter automatiquement
          'AdditionalProperties' -->
-    <ProjectsToBuild Include="$(RootDir)\Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
+    <ProjectsToBuild Include="$(SolutionFile)" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
 
   <!-- Liste des projets à publier -->
 
   <!-- Publication vers le système de fichier -->
   <ItemGroup>
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\assets\Chiffon.Assets.proj">
+    <ProjectsToPublish Include="$(StaticSiteProject)">
       <AdditionalProperties>
         $(MinifyProperties);
         $(PublishProperties);
@@ -101,7 +113,7 @@
       </AdditionalProperties>
     </ProjectsToPublish>
 
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.WebSite\Chiffon.WebSite.csproj">
+    <ProjectsToPublish Include="$(WebSiteProject)">
       <AdditionalProperties>
         $(PublishProperties);
         publishUrl=$(PublishDir)\pourquelmotifsimone.com\;
@@ -109,7 +121,7 @@
       </AdditionalProperties>
     </ProjectsToPublish>
 
-    <ProjectsToPublish Include="$(SourceDir)\Chiffon.MediaSite\Chiffon.MediaSite.csproj">
+    <ProjectsToPublish Include="$(MediaSiteProject)">
       <AdditionalProperties>
         $(PublishProperties);
         publishUrl=$(PublishDir)\s.pourquelmotifsimone.com\;
@@ -129,6 +141,31 @@
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+
+  <Target Name="BuildViews" DependsOnTargets="Build">
+    <MSBuild Projects="$(WebSiteProject)"
+             Targets="MvcBuildViews" Properties="$(BuildProperties);MvcBuildViews=true" />
+  </Target>
+
+  <Target Name="RunTests" DependsOnTargets="Build">
+    <Message Text="Not yet done" Importance="High" />
+  </Target>
+
+  <Target Name="VerifyAssemblies" DependsOnTargets="Sdk40Tools;Build">
+    <ItemGroup>
+      <_BinaryFiles Include="$(OutDir)\**\Chiffon.*.dll" />
+    </ItemGroup>
+
+    <!-- On supprime les doublons -->
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
+    </RemoveDuplicates>
+
+    <Exec Command="$(PEVerifyExe) %(_AssemblyFiles.FullPath) /nologo /md /il /unique"
+          ContinueOnError="false" />
+  </Target>
+
+  <Target Name="FullBuild" DependsOnTargets="VerifyAssemblies;RunTests" />
 
   <Target Name="Publish" DependsOnTargets="Clean">
     <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
@@ -170,7 +207,7 @@
 
   <PropertyGroup>
     <_AfterPublishDependsOn>
-      _VerifyAssemblies;
+      <!-- _VerifyAssemblies; -->
       _Package
     </_AfterPublishDependsOn>
   </PropertyGroup>
@@ -223,8 +260,7 @@
            Condition="$(Milestone) == 'None'"/>
   </Target>
 
-  <Target Name="_VerifyAssemblies" DependsOnTargets="Sdk40Tools"
-          Condition="$(VerifyAssemblies) == 'true'">
+  <Target Name="_VerifyAssemblies" DependsOnTargets="Sdk40Tools">
     <ItemGroup>
       <_BinaryFiles Include="$(PublishDir)\**\Chiffon.*.dll"
                     Exclude="$(PublishDir)\**\Chiffon.*.AspNet.dll" />
@@ -243,5 +279,4 @@
     <Exec Command="$(PEVerifyExe) %(_AspFiles.FullPath) /nologo /il /unique"
           ContinueOnError="false" />
   </Target>
-
 </Project>

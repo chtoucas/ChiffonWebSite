@@ -3,9 +3,8 @@ properties {
   $verbosity         = 'minimal'
   $configuration     = 'Release'
 
-  $publish_target	 = 'Production'
+  $publish_target	   = 'Production'
   $milestone         = 'Patch'
-  $verify_assemblies = 'false'
 
   # Ne rien changer ci-dessous
   # --------------------------
@@ -26,5 +25,5 @@ Task Build {
 }
 
 Task Publish {
-  msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:VerifyAssemblies=$verify_assemblies;PublishTarget=$publish_target;Milestone=$milestone"
+  msbuild $msoptions .\$msproject /t:Publish $msproperties "PublishTarget=$publish_target;Milestone=$milestone"
 }
