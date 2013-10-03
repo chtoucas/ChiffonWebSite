@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)\</RootDir>
+
+    <!-- Répertoires temporaires -->
+    <BuildDir>$(RootDir)\_build\</BuildDir>
+    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
+    <OutDir>$(BuildDir)$(Configuration)\</OutDir>
+    <PublishDir>$(BuildDir)Publish\</PublishDir>
+    <PackageDir>$(BuildDir)Packages\</PackageDir>
+
+    <EtcDir>$(RootDir)etc\</EtcDir>
+    <SourceDir>$(RootDir)src\</SourceDir>
+    <ToolsDir>$(RootDir)tools\</ToolsDir>
+
+    <PublishProfilesDir>$(EtcDir)PublishProfiles\</PublishProfilesDir>
+
+    <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git
+                  car il contient toutes les configurations privées. -->
+    <TransformsDir>$(RootDir)intern\transforms\</TransformsDir>
+  </PropertyGroup>
+
+  <!-- Outils locaux (exe ou jar) -->
+
+  <PropertyGroup>
+    <SevenZipExe>$(ToolsDir)7-zip\7za.exe</SevenZipExe>
+    <GoogleClosureJar>$(ToolsDir)closure\compiler.jar</GoogleClosureJar>
+    <YuiCompressorJar>$(ToolsDir)yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
+  </PropertyGroup>
+
+</Project>

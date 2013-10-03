@@ -15,13 +15,16 @@
   * supprimer _PublishedWebsites
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project=".\libexec\Chiffon.Tasks.Targets" />
+  <Import Project=".\libexec\Chiffon.settings.targets" />
+  <Import Project=".\libexec\Chiffon.helpers.targets" />
+  <Import Project=".\libexec\Chiffon.Tasks.targets" />
 
   <!-- Macros -->
 
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
+    <BuildInParallel Condition="$(BuildInParallel) == ''">true</BuildInParallel>
 
     <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
 
@@ -32,44 +35,14 @@
     <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
   </PropertyGroup>
 
-  <!-- Répertoires -->
-
-  <PropertyGroup>
-    <RootDir>$(MSBuildProjectDirectory)\</RootDir>
-
-    <!-- Répertoires temporaires -->
-    <BuildDir>$(RootDir)\_build\</BuildDir>
-    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
-    <OutDir>$(BuildDir)$(Configuration)\</OutDir>
-    <PublishDir>$(BuildDir)Publish\</PublishDir>
-    <PackageDir>$(BuildDir)Packages\</PackageDir>
-
-    <EtcDir>$(RootDir)etc\</EtcDir>
-    <SourceDir>$(RootDir)src\</SourceDir>
-    <ToolsDir>$(RootDir)tools\</ToolsDir>
-
-    <PublishProfilesDir>$(EtcDir)PublishProfiles\</PublishProfilesDir>
-
-    <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git
-                  car il contient toutes les configurations privées. -->
-    <TransformsDir>$(RootDir)intern\transforms\</TransformsDir>
-  </PropertyGroup>
-
-  <!-- Outils locaux (exe ou jar) -->
-
-  <PropertyGroup>
-    <SevenZipExe>$(ToolsDir)7-zip\7za.exe</SevenZipExe>
-    <GoogleClosureJar>$(ToolsDir)closure\compiler.jar</GoogleClosureJar>
-    <YuiCompressorJar>$(ToolsDir)yuicompressor\build\yuicompressor-2.4.7.jar</YuiCompressorJar>
-  </PropertyGroup>
-
   <!-- Configuration de la compilation -->
 
   <PropertyGroup>
     <BuildProperties>
       Configuration=$(Configuration);
       OutDir=$(OutDir);
-      Platform=$(Platform)
+      Platform=$(Platform);
+      BuildInParallel=$(BuildInParallel)
     </BuildProperties>
   </PropertyGroup>
 
@@ -119,7 +92,7 @@
         $(MinifyProperties)
       </AdditionalProperties>
     </ProjectsToBuild>
-    <!-- TODO: Il semble que pour une solution on ne peut pas ajouter automatiquement
+    <!-- TODO: Il semble bien que pour une solution on ne peut pas ajouter automatiquement
          'AdditionalProperties' -->
     <ProjectsToBuild Include="$(RootDir)Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
   </ItemGroup>
@@ -139,7 +112,7 @@
       <AdditionalProperties>
         $(PublishProperties);
         PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfilesDir)Chiffon.WebSite.$(PublishTarget).pubxml
+        PublishProfile=$(PublishProfilesDir)Chiffon.WebSite.pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
 
@@ -147,7 +120,7 @@
       <AdditionalProperties>
         $(PublishProperties);
         PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfilesDir)Chiffon.MediaSite.$(PublishTarget).pubxml
+        PublishProfile=$(PublishProfilesDir)Chiffon.MediaSite.pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
   </ItemGroup>
@@ -186,6 +159,7 @@
   <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(_BeforeCleanDependsOn)" />
 
   <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(_BeforeBuildDependsOn)" />
+  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(_AfterBuildDependsOn)" />
 
   <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(_BeforePublishDependsOn)" />
   <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(_AfterPublishDependsOn)" />
@@ -202,8 +176,15 @@
   <PropertyGroup>
     <_BeforeBuildDependsOn>
       _CreateOutDir;
-      _UpdateVersionNumber
+      _UpdateVersionNumber;
+      _GetSemVer
     </_BeforeBuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_AfterBuildDependsOn>
+      _VerifyAssemblies
+    </_AfterBuildDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -211,7 +192,8 @@
       _ValidateMilestone;
       _CreatePublishDir;
       _CreatePackageDir;
-      _UpdateVersionNumber
+      _UpdateVersionNumber;
+      _GetSemVer
     </_BeforePublishDependsOn>
   </PropertyGroup>
 
@@ -236,7 +218,7 @@
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
   </Target>
 
-  <!--<Target Name="_EncryptConfigs" DependsOnTargets="_GetAspNetRegIis;_GetPEVerify">
+  <!--<Target Name="_EncryptConfigs" DependsOnTargets="GetAspNetRegIis;GetPEVerify">
     <ItemGroup>
       <_WebSites Include="$(PublishDir)pourquelmotifsimone.com" />
       <_WebSites Include="$(PublishDir)s.pourquelmotifsimone.com" />
@@ -245,28 +227,10 @@
     --><!--<Exec Command="$(AspNetRegIis) -pef &quot;connectionStrings&quot; &quot;%(_WebSites.FullPath)&quot; -prov &quot;RsaProvider&quot;" />--><!--
   </Target>-->
 
-  <Target Name="_GetAspNetRegIis">
-    <GetFrameworkPath>
-      <Output TaskParameter="FrameworkVersion40Path" PropertyName="_FxPath" />
-    </GetFrameworkPath>
-
-    <PropertyGroup>
-      <AspNetRegIis>$(_FxPath)\aspnet_regiis.exe</AspNetRegIis>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="_GetPEVerify">
-    <GetFrameworkSdkPath>
-      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="_SdkPath" />
-    </GetFrameworkSdkPath>
-
-    <PropertyGroup>
-      <_NetFxTools>$(_SdkPath)Bin\NETFX 4.0 Tools\</_NetFxTools>
-    </PropertyGroup>
-
-    <PropertyGroup>
-      <PEVerifyExe>"$(_NetFxTools)peverify.exe"</PEVerifyExe>
-    </PropertyGroup>
+  <Target Name="_GetSemVer">
+    <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
+      <Output PropertyName="SemVer" TaskParameter="SemVer" />
+    </GetSemVer>
   </Target>
 
   <Target Name="_Package">
@@ -293,9 +257,6 @@
       AssemblyInfoFile="$(EtcDir)AssemblyInfo.Version.cs"
       Milestone="$(Milestone)">
     </UpdateVersion>
-    <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
-      <Output PropertyName="SemVer" TaskParameter="SemVer" />
-    </GetSemVer>
   </Target>
 
   <Target Name="_ValidateMilestone">
@@ -303,20 +264,20 @@
            Condition="$(Milestone) == 'None'"/>
   </Target>
 
-  <Target Name="_VerifyAspNetAssemblies" DependsOnTargets="_GetPEVerify">
+  <Target Name="_VerifyAspNetAssemblies" DependsOnTargets="GetPEVerify">
     <ItemGroup>
       <_AspFiles Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
 
     <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
          "incorrectes" de ce point de vue là -->
-    <Exec Command="$(PEVerifyExe) %(_AspFiles.FullPath) /nologo /il /unique"
+    <Exec Command="$(PEVerifyExe) &quot;%(_AspFiles.FullPath)&quot; /nologo /il /unique"
           ContinueOnError="false" />
   </Target>
 
-  <Target Name="_VerifyAssemblies" DependsOnTargets="_GetPEVerify">
+  <Target Name="_VerifyAssemblies" DependsOnTargets="GetPEVerify">
     <ItemGroup>
-      <_BinaryFiles Include="$(OutDir)**\Chiffon.*.dll"
+      <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
                     Exclude="$(OutDir)_PublishedWebsites\**\*"/>
     </ItemGroup>
 
@@ -325,7 +286,7 @@
       <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
     </RemoveDuplicates>
 
-    <Exec Command="$(PEVerifyExe) %(_AssemblyFiles.FullPath) /nologo /md /il /unique"
+    <Exec Command="$(PEVerifyExe) &quot;%(_AssemblyFiles.FullPath)&quot; /nologo /md /il /unique"
           ContinueOnError="false" />
   </Target>
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="GetAspNetRegIis" Condition="$(AspNetRegIis) == ''">
+    <GetFrameworkPath>
+      <Output TaskParameter="FrameworkVersion40Path" PropertyName="_FxPath" />
+    </GetFrameworkPath>
+
+    <PropertyGroup>
+      <AspNetRegIis>&quot;$(_FxPath)\aspnet_regiis.exe&quot;</AspNetRegIis>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GetPEVerify" Condition="$(PEVerifyExe) == ''">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="_SdkPath" />
+    </GetFrameworkSdkPath>
+
+    <PropertyGroup>
+      <_NetFxTools>$(_SdkPath)Bin\NETFX 4.0 Tools\</_NetFxTools>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <PEVerifyExe>&quot;$(_NetFxTools)peverify.exe&quot;</PEVerifyExe>
+    </PropertyGroup>
+  </Target>
+
+</Project>
