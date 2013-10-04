@@ -68,7 +68,7 @@
 
   <Target Name="FullBuild" DependsOnTargets="Build;RunTests" />
 
-  <Target Name="Publish" DependsOnTargets="Clean">
+  <Target Name="Publish" DependsOnTargets="$(PublishDependsOn)">
     <MSBuild Projects="@(_ProjectsToPublish)" Targets="Build" />
   </Target>
 
