@@ -7,8 +7,9 @@
   * http://msdn.microsoft.com/en-us/library/ee942158.aspx
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
   TODO:
+  * compilation conditionnelle
+  * compilation incrémentale
   * encrypter les chaînes de connection + custom machineKey per publish target
-  * permettre de ne sélectionner qu'une partie des projets
   * add custom deploy script
   * BuildInParallel ?
   * multiples plateformes : x64, x86 & co ?
@@ -112,7 +113,7 @@
       <AdditionalProperties>
         $(PublishProperties);
         PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfilesDir)Chiffon.WebSite.pubxml
+        PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
 
@@ -120,12 +121,12 @@
       <AdditionalProperties>
         $(PublishProperties);
         PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfilesDir)Chiffon.MediaSite.pubxml
+        PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
       </AdditionalProperties>
     </ProjectsToPublish>
   </ItemGroup>
 
-  <!-- Cibles publiques -->
+  <!-- Directives publiques -->
 
   <Target Name="Clean">
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" Properties="$(BuildProperties)"/>
@@ -154,54 +155,54 @@
     <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
   </Target>
 
-  <!-- Avant ou après une cible -->
+  <!-- Avant ou après une directive -->
 
-  <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(_BeforeCleanDependsOn)" />
+  <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(BeforeCleanDependsOn)" />
 
-  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(_BeforeBuildDependsOn)" />
-  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(_AfterBuildDependsOn)" />
+  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
+  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
-  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(_BeforePublishDependsOn)" />
-  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(_AfterPublishDependsOn)" />
+  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(BeforePublishDependsOn)" />
+  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(AfterPublishDependsOn)" />
 
   <!-- Dépendances -->
 
   <PropertyGroup>
-    <_BeforeCleanDependsOn>
+    <BeforeCleanDependsOn>
       _RemoveOutDir;
       _RemovePublishDir
-    </_BeforeCleanDependsOn>
+    </BeforeCleanDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <_BeforeBuildDependsOn>
+    <BeforeBuildDependsOn>
       _CreateOutDir;
       _UpdateVersionNumber;
       _GetSemVer
-    </_BeforeBuildDependsOn>
+    </BeforeBuildDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <_AfterBuildDependsOn>
+    <AfterBuildDependsOn>
       _VerifyAssemblies
-    </_AfterBuildDependsOn>
+    </AfterBuildDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <_BeforePublishDependsOn>
-      _ValidateMilestone;
+    <BeforePublishDependsOn>
+      _ValidateMilestoneForPublication;
       _CreatePublishDir;
       _CreatePackageDir;
       _UpdateVersionNumber;
       _GetSemVer
-    </_BeforePublishDependsOn>
+    </BeforePublishDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <_AfterPublishDependsOn>
+    <AfterPublishDependsOn>
       _VerifyAspNetAssemblies;
       _Package
-    </_AfterPublishDependsOn>
+    </AfterPublishDependsOn>
   </PropertyGroup>
 
   <!-- Cibles privées -->
@@ -218,22 +219,13 @@
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
   </Target>
 
-  <!--<Target Name="_EncryptConfigs" DependsOnTargets="GetAspNetRegIis;GetPEVerify">
-    <ItemGroup>
-      <_WebSites Include="$(PublishDir)pourquelmotifsimone.com" />
-      <_WebSites Include="$(PublishDir)s.pourquelmotifsimone.com" />
-    </ItemGroup>
-
-    --><!--<Exec Command="$(AspNetRegIis) -pef &quot;connectionStrings&quot; &quot;%(_WebSites.FullPath)&quot; -prov &quot;RsaProvider&quot;" />--><!--
-  </Target>-->
-
   <Target Name="_GetSemVer">
     <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
       <Output PropertyName="SemVer" TaskParameter="SemVer" />
     </GetSemVer>
   </Target>
 
-  <Target Name="_Package">
+  <Target Name="_Package" DependsOnTargets="_GetSemVer">
     <PropertyGroup>
       <_PackageFile>$(PackageDir)chiffon-$(SemVer)-$(PublishTarget).7z</_PackageFile>
     </PropertyGroup>
@@ -259,7 +251,7 @@
     </UpdateVersion>
   </Target>
 
-  <Target Name="_ValidateMilestone">
+  <Target Name="_ValidateMilestoneForPublication">
     <Error Text="The property 'Milestone' must be set to something different to 'None'."
            Condition="$(Milestone) == 'None'"/>
   </Target>

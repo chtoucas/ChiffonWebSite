@@ -2,7 +2,11 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <RootDir>$(MSBuildProjectDirectory)\</RootDir>
+    <RootDir>$(MSBuildThisFileDirectory)..\</RootDir>
+
+    <EtcDir>$(RootDir)etc\</EtcDir>
+    <SourceDir>$(RootDir)src\</SourceDir>
+    <ToolsDir>$(RootDir)tools\</ToolsDir>
 
     <!-- Répertoires temporaires -->
     <BuildDir>$(RootDir)\_build\</BuildDir>
@@ -11,11 +15,7 @@
     <PublishDir>$(BuildDir)Publish\</PublishDir>
     <PackageDir>$(BuildDir)Packages\</PackageDir>
 
-    <EtcDir>$(RootDir)etc\</EtcDir>
-    <SourceDir>$(RootDir)src\</SourceDir>
-    <ToolsDir>$(RootDir)tools\</ToolsDir>
-
-    <PublishProfilesDir>$(EtcDir)PublishProfiles\</PublishProfilesDir>
+    <PublishProfileDir>$(RootDir)libexec\</PublishProfileDir>
 
     <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git
                   car il contient toutes les configurations privées. -->
