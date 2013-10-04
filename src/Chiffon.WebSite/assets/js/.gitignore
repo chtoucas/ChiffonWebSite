@@ -1,2 +1,4 @@
+app-*.js
 app-*.min.js
+chiffon-*.js
 chiffon-*.min.js

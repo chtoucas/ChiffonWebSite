@@ -7,7 +7,7 @@
     - SemVer
   -->
 
-  <Import Project="..\..\..\libexec\Narvalo.Build.Targets" />
+  <Import Project="..\..\..\libexec\Narvalo.Build.targets" />
 
   <PropertyGroup>
     <DeployOnBuild Condition="$(DeployOnBuild) != 'true'">false</DeployOnBuild>
@@ -60,7 +60,10 @@
     </JsFiles>
   </ItemGroup>
 
-  <Target Name="Clean" />
+  <Target Name="Clean">
+    <Delete Files="%(CssFiles.Bundle)" />
+    <Delete Files="%(JsFiles.Bundle)" />
+  </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
 
@@ -72,25 +75,25 @@
     </BuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="MergeAndMinifyCss" Inputs="@(CssFiles)" Outputs="%(Bundle)">
+  <Target Name="MergeAndMinifyCss"
+          Inputs="@(CssFiles->'$(CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
+          Outputs="%(Bundle)">
     <MergeFiles Files="@(CssFiles->'$(CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
     <CssYuiCompressor JarPath="$(YuiCompressorJar)" Files="%(CssFiles.Bundle)" />
-
-    <Delete Files="%(CssFiles.Bundle)" />
   </Target>
 
-  <Target Name="MergeAndMinifyJs" Inputs="@(JsFiles)" Outputs="%(Bundle)">
+  <Target Name="MergeAndMinifyJs"
+          Inputs="@(JsFiles->'$(JsDir)\%(RelativeDir)%(Filename)%(Extension)')"
+          Outputs="%(Bundle)">
     <MergeFiles Files="@(JsFiles->'$(JsDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
     <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="%(JsFiles.Bundle)"
                      CompilationLevel="Simple" ProcessTimeout="10000" />
-
-    <Delete Files="%(JsFiles.Bundle)" />
   </Target>
-  
+
   <!-- Cibles privées -->
 
   <Target Name="_Publish" Condition="$(DeployOnBuild) == 'true'">
@@ -101,7 +104,7 @@
     </ItemGroup>
 
     <Copy SourceFiles="@(_SourceFiles)"
-          DestinationFiles="@(_SourceFiles->'$(publishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
+          DestinationFiles="@(_SourceFiles->'$(PublishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
   <!-- Validation des propriétés -->
@@ -122,8 +125,8 @@
   </Target>
 
   <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="$(DeployOnBuild) == 'true'">
-    <Error Text="The property 'publishUrl' must be set."
-           Condition="$(publishUrl) == ''"/>
+    <Error Text="The property 'PublishUrl' must be set."
+           Condition="$(PublishUrl) == ''"/>
   </Target>
 
   <!--

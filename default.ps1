@@ -24,10 +24,11 @@ Task Build {
   msbuild $msoptions .\$msproject $msproperties
 }
 
+Task Rebuild {
+  msbuild $msoptions .\$msproject /t:Rebuild $msproperties
+}
+
 Task Publish {
   msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:PublishTarget=$publish_target;Milestone=$milestone"
 }
 
-Task Test {
-  msbuild $msoptions .\$msproject /t:_EncryptConfigs $msproperties
-}

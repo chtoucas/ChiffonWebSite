@@ -25,115 +25,32 @@
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <Platform Condition="$(Platform) == ''">Any CPU</Platform>
-    <BuildInParallel Condition="$(BuildInParallel) == ''">true</BuildInParallel>
-
-    <MinifyOnly Condition="$(MinifyOnly) != 'true'">false</MinifyOnly>
+    <BuildInParallel Condition="$(BuildInParallel) != 'true'">false</BuildInParallel>
 
     <!-- Valeurs possibles : Major, Minor, Patch, None -->
     <Milestone Condition="$(Milestone) == ''">None</Milestone>
 
     <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
     <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
+
+    <!-- Compilation conditionnelle -->
+    <BuildAssets Condition="$(BuildAssets) != 'false'">true</BuildAssets>
+    <BuildSolution Condition="$(BuildSolution) != 'false'">true</BuildSolution>
+
+    <!-- Publication conditionnelle -->
+    <PublishAssets Condition="$(PublishAssets) != 'false'">true</PublishAssets>
+    <PublishMediaSite Condition="$(PublishMediaSite) != 'false'">true</PublishMediaSite>
+    <PublishWebSite Condition="$(PublishWebSite) != 'false'">true</PublishWebSite>
   </PropertyGroup>
-
-  <!-- Configuration de la compilation -->
-
-  <PropertyGroup>
-    <BuildProperties>
-      Configuration=$(Configuration);
-      OutDir=$(OutDir);
-      Platform=$(Platform);
-      BuildInParallel=$(BuildInParallel)
-    </BuildProperties>
-  </PropertyGroup>
-
-  <!-- Configuration de la publication -->
-
-  <PropertyGroup>
-    <PublishProperties>
-      $(BuildProperties);
-      TransformsDir=$(TransformsDir);
-      PublishTarget=$(PublishTarget);
-      <!-- Configuration de MSBuild -->
-      OutputPath=$(OutDir);
-      DeployOnBuild=true;
-      <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
-      VisualStudioVersion=11.0;
-
-      <!-- Configuration commune à tous les profils de publication -->
-      WebPublishMethod=FileSystem;
-      DebugSymbols=true;
-      DeleteAppCodeCompiledFiles=true;
-      DeleteExistingFiles=true;
-      DeployTarget=WebPublish;
-      EnableUpdateable=false;
-      ExcludeApp_Data=true;
-      <!-- On garde aussi les fichiers debug des autres projets -->
-      ExcludeGeneratedDebugSymbol=false;
-      PrecompileBeforePublish=true;
-      UseMerge=true;
-      WDPMergeOption=MergeAllOutputsToASingleAssembly
-    </PublishProperties>
-  </PropertyGroup>
-
-  <!-- Configuration de la minification -->
-
-  <PropertyGroup>
-    <MinifyProperties>
-      YuiCompressorJar=$(YuiCompressorJar);
-      GoogleClosureJar=$(GoogleClosureJar)
-    </MinifyProperties>
-  </PropertyGroup>
-
-  <!-- Liste des projets à compiler -->
-
-  <ItemGroup>
-    <ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
-      <AdditionalProperties>
-        $(MinifyProperties)
-      </AdditionalProperties>
-    </ProjectsToBuild>
-    <!-- TODO: Il semble bien que pour une solution on ne peut pas ajouter automatiquement
-         'AdditionalProperties' -->
-    <ProjectsToBuild Include="$(RootDir)Chiffon.sln" Condition="$(MinifyOnly) != 'true'" />
-  </ItemGroup>
-
-  <!-- Liste des projets à publier vers le système de fichier -->
-
-  <ItemGroup>
-    <ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
-      <AdditionalProperties>
-        $(MinifyProperties);
-        $(PublishProperties);
-        PublishUrl=$(PublishDir)wznw.org_chiffon\
-      </AdditionalProperties>
-    </ProjectsToPublish>
-
-    <ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj">
-      <AdditionalProperties>
-        $(PublishProperties);
-        PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
-      </AdditionalProperties>
-    </ProjectsToPublish>
-
-    <ProjectsToPublish Include="$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj">
-      <AdditionalProperties>
-        $(PublishProperties);
-        PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
-        PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
-      </AdditionalProperties>
-    </ProjectsToPublish>
-  </ItemGroup>
 
   <!-- Directives publiques -->
 
-  <Target Name="Clean">
-    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" Properties="$(BuildProperties)"/>
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)">
+    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
   </Target>
 
-  <Target Name="Build">
-    <MSBuild Projects="@(ProjectsToBuild)" Properties="$(BuildProperties);SemVer=$(SemVer)"/>
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
+    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build" />
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
@@ -141,31 +58,29 @@
   <!--
   <Target Name="_BuildViews" DependsOnTargets="Build">
     <MSBuild Projects="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
-              Targets="MvcBuildViews" Properties="$(BuildProperties);MvcBuildViews=true" />
+              Targets="MvcBuildViews" Properties="$(_BuildProperties);MvcBuildViews=true" />
   </Target>
   -->
 
   <Target Name="RunTests" DependsOnTargets="Build">
-    <Message Text="Not yet done" Importance="High" />
+    <Message Text="RunTests not yet done..." Importance="High" />
   </Target>
 
-  <Target Name="FullBuild" DependsOnTargets="Build;_VerifyAssemblies;RunTests" />
+  <Target Name="FullBuild" DependsOnTargets="Build;RunTests" />
 
   <Target Name="Publish" DependsOnTargets="Clean">
-    <MSBuild Projects="@(ProjectsToPublish)" Properties="SemVer=$(SemVer)" />
+    <MSBuild Projects="@(_ProjectsToPublish)" Targets="Build" />
   </Target>
 
-  <!-- Avant ou après une directive -->
+  <!-- Dépendances pour Clean -->
+
+  <PropertyGroup>
+    <CleanDependsOn>
+      _GetProjectsToBuild
+    </CleanDependsOn>
+  </PropertyGroup>
 
   <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(BeforeCleanDependsOn)" />
-
-  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
-  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
-
-  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(BeforePublishDependsOn)" />
-  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(AfterPublishDependsOn)" />
-
-  <!-- Dépendances -->
 
   <PropertyGroup>
     <BeforeCleanDependsOn>
@@ -174,13 +89,24 @@
     </BeforeCleanDependsOn>
   </PropertyGroup>
 
+  <!-- Dépendances pour Build -->
+
+  <PropertyGroup>
+    <BuildDependsOn>
+      _UpdateVersionNumber;
+      _GetProjectsToBuild
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
+
   <PropertyGroup>
     <BeforeBuildDependsOn>
-      _CreateOutDir;
-      _UpdateVersionNumber;
-      _GetSemVer
+      _CreateOutDir
     </BeforeBuildDependsOn>
   </PropertyGroup>
+
+  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
   <PropertyGroup>
     <AfterBuildDependsOn>
@@ -188,15 +114,27 @@
     </AfterBuildDependsOn>
   </PropertyGroup>
 
+  <!-- Dépendances pour Publish -->
+
+  <PropertyGroup>
+    <PublishDependsOn>
+      _ValidateMilestoneForPublish;
+      Clean;
+      _UpdateVersionNumber;
+      _GetProjectsToPublish
+    </PublishDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(BeforePublishDependsOn)" />
+
   <PropertyGroup>
     <BeforePublishDependsOn>
-      _ValidateMilestoneForPublication;
       _CreatePublishDir;
-      _CreatePackageDir;
-      _UpdateVersionNumber;
-      _GetSemVer
+      _CreatePackageDir
     </BeforePublishDependsOn>
   </PropertyGroup>
+
+  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(AfterPublishDependsOn)" />
 
   <PropertyGroup>
     <AfterPublishDependsOn>
@@ -219,9 +157,110 @@
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
   </Target>
 
+  <!-- Configuration de la compilation -->
+  <Target Name="_GetBuildProperties">
+    <PropertyGroup>
+      <_BuildProperties>
+        Configuration=$(Configuration);
+        OutDir=$(OutDir);
+        Platform=$(Platform);
+        BuildInParallel=$(BuildInParallel)
+      </_BuildProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Configuration de la minification -->
+  <Target Name="_GetMinifyProperties" DependsOnTargets="_GetSemVer">
+    <PropertyGroup>
+      <_MinifyProperties>
+        YuiCompressorJar=$(YuiCompressorJar);
+        GoogleClosureJar=$(GoogleClosureJar);
+        SemVer=$(_SemVer)
+      </_MinifyProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Liste des projets à compiler -->
+  <Target Name="_GetProjectsToBuild" DependsOnTargets="_GetBuildProperties;_GetMinifyProperties">
+    <ItemGroup>
+      <_ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
+        Condition="$(BuildAssets) == 'true'">
+        <AdditionalProperties>$(_MinifyProperties)</AdditionalProperties>
+      </_ProjectsToBuild>
+
+      <_ProjectsToBuild Include="$(RootDir)Chiffon.sln"
+        Condition="$(BuildSolution) == 'true'">
+        <AdditionalProperties>$(_BuildProperties)</AdditionalProperties>
+      </_ProjectsToBuild>
+    </ItemGroup>
+  </Target>
+
+  <!-- Liste des projets à publier (vers le système de fichier) -->
+  <Target Name="_GetProjectsToPublish" DependsOnTargets="_GetPublishProperties;_GetMinifyProperties">
+    <ItemGroup>
+      <_ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
+        Condition="$(PublishAssets) == 'true'">
+        <AdditionalProperties>
+          $(_MinifyProperties);
+          $(_PublishProperties);
+          PublishUrl=$(PublishDir)wznw.org_chiffon\
+        </AdditionalProperties>
+      </_ProjectsToPublish>
+
+      <_ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
+        Condition="$(PublishMediaSite) == 'true'">
+        <AdditionalProperties>
+          $(_PublishProperties);
+          PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
+          PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
+        </AdditionalProperties>
+      </_ProjectsToPublish>
+
+      <_ProjectsToPublish Include="$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
+        Condition="$(PublishWebSite) == 'true'">
+        <AdditionalProperties>
+          $(_PublishProperties);
+          PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
+          PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
+        </AdditionalProperties>
+      </_ProjectsToPublish>
+    </ItemGroup>
+  </Target>
+
+  <!-- Configuration de la publication -->
+  <Target Name="_GetPublishProperties" DependsOnTargets="$(_GetBuildProperties)">
+    <PropertyGroup>
+      <_PublishProperties>
+        $(_BuildProperties);
+        TransformsDir=$(TransformsDir);
+        PublishTarget=$(PublishTarget);
+        <!-- Configuration de MSBuild -->
+        OutputPath=$(OutDir);
+        DeployOnBuild=true;
+        <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
+        VisualStudioVersion=11.0;
+
+        <!-- Configuration commune à tous les profils de publication -->
+        WebPublishMethod=FileSystem;
+        DebugSymbols=true;
+        DeleteAppCodeCompiledFiles=true;
+        DeleteExistingFiles=true;
+        DeployTarget=WebPublish;
+        EnableUpdateable=false;
+        ExcludeApp_Data=true;
+        <!-- On garde aussi les fichiers debug des autres projets -->
+        ExcludeGeneratedDebugSymbol=false;
+        PrecompileBeforePublish=true;
+        UseMerge=true;
+        WDPMergeOption=MergeAllOutputsToASingleAssembly
+      </_PublishProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!--- Récupération du numéro de version sémantique -->
   <Target Name="_GetSemVer">
     <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
-      <Output PropertyName="SemVer" TaskParameter="SemVer" />
+      <Output PropertyName="_SemVer" TaskParameter="SemVer" />
     </GetSemVer>
   </Target>
 
@@ -251,7 +290,7 @@
     </UpdateVersion>
   </Target>
 
-  <Target Name="_ValidateMilestoneForPublication">
+  <Target Name="_ValidateMilestoneForPublish">
     <Error Text="The property 'Milestone' must be set to something different to 'None'."
            Condition="$(Milestone) == 'None'"/>
   </Target>
