@@ -1,5 +1,6 @@
 *.suo
 *.user
+.buildTime
 _build/
 _tmp/
 bin/

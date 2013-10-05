@@ -1,34 +1,74 @@
 
 properties {
-  $verbosity         = 'minimal'
-  $configuration     = 'Release'
+  $MSProject = '.\Chiffon.proj'
+  $MSOptions = "/nologo", "/v:minimal", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
 
-  $publish_target    = 'Production'
-  $milestone         = 'Patch'
-
-  # Ne rien changer ci-dessous
-  # --------------------------
-
-  $msproject = 'Chiffon.proj'
-  $msoptions = "/nologo", "/v:$verbosity", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
-  $msproperties = "/p:Configuration=$configuration";
+  $Configuration   = "Release"
+  $Platform        = "Any CPU"
+  $BuildInParallel = "true"
 }
 
 Task default -depends Build
 
-Task Clean {
-  msbuild $msoptions .\$msproject /t:Clean $msproperties
+Task Clean -depends ReadBuildConfig {
+  MSBuild $MSOptions $MSProject /t:Clean $MSProperties
 }
 
-Task Build {
-  msbuild $msoptions .\$msproject $msproperties
+Task Build -depends ReadBuildConfig {
+  MSBuild $MSOptions $MSProject /t:Build $MSProperties
 }
 
-Task Rebuild {
-  msbuild $msoptions .\$msproject /t:Rebuild $msproperties
+Task Rebuild -depends ReadBuildConfig, Clean {
+  MSBuild $MSOptions $MSProject /t:Rebuild $MSProperties
 }
 
-Task Publish {
-  msbuild $msoptions .\$msproject /t:Publish $msproperties "/p:PublishTarget=$publish_target;Milestone=$milestone"
+Task RunTests -depends ReadBuildConfig {
+  MSBuild $MSOptions $MSProject /t:RunTests $MSProperties
 }
+
+Task Integrate -depends ReadBuildConfig, Clean, Build, RunTests { }
+
+Task Publish -depends Clean, ReadPublishConfig {
+  MSBuild $MSOptions $MSProject /t:Publish $MSProperties
+}
+
+Task ReadBuildConfig {
+  $configPath = $(Get-Location).Path + "\etc\Build.config"
+
+  [xml]$configXml = Get-Content -Path $configPath
+
+  [System.Xml.XmlElement] $config = $configXml.configuration
+
+  [string] $BuildAssets = $config.BuildAssets
+  [string] $BuildSolution = $config.BuildSolution
+
+  $script:MSProperties = "/p:Configuration=$Configuration",
+    "/p:BuildInParallel=$BuildInParallel",
+    "/p:BuildAssets=$BuildAssets",
+    "/p:BuildSolution=$BuildSolution";
+}
+
+Task ReadPublishConfig {
+  $configPath = $(Get-Location).Path + "\etc\Publish.config"
+
+  [xml]$configXml = Get-Content -Path $configPath
+
+  [System.Xml.XmlElement] $config = $configXml.configuration
+
+  [string] $Milestone = $config.Milestone
+  [string] $PublishTarget = $config.PublishTarget
+
+  [string] $PublishAssets = $config.PublishAssets
+  [string] $PublishMediaSite = $config.PublishMediaSite
+  [string] $PublishWebSite = $config.PublishWebSite
+
+  $script:MSProperties = "/p:Configuration=$Configuration",
+    "/p:BuildInParallel=$BuildInParallel",
+    "/p:Milestone=$Milestone",
+    "/p:PublishTarget=$PublishTarget",
+    "/p:PublishAssets=$PublishAssets",
+    "/p:PublishMediaSite=$PublishMediaSite",
+    "/p:PublishWebSite=$PublishWebSite";
+}
+
 

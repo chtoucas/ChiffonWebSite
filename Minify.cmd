@@ -4,7 +4,7 @@
 @call "%VS110COMNTOOLS%vsvars32.bat"
 
 :build
-MSBuild Chiffon.proj /nologo /verbosity:minimal /p:MinifyAssets=true;BuildSolution=false /t:Build /fl
+MSBuild Chiffon.proj /nologo /verbosity:minimal /p:BuildAssets=true;BuildSolution=false /t:Build /fl
 @if errorlevel 1 (
   @goto error
 )

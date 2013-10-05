@@ -10,7 +10,7 @@
   <Import Project="..\..\..\libexec\Narvalo.Build.targets" />
 
   <PropertyGroup>
-    <DeployOnBuild Condition="$(DeployOnBuild) != 'true'">false</DeployOnBuild>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' != 'true'">false</DeployOnBuild>
 
     <CssDir>$(MSBuildProjectDirectory)\css</CssDir>
     <JsDir>$(MSBuildProjectDirectory)\js</JsDir>
@@ -61,8 +61,18 @@
   </ItemGroup>
 
   <Target Name="Clean">
+    <!--
     <Delete Files="%(CssFiles.Bundle)" />
     <Delete Files="%(JsFiles.Bundle)" />
+    -->
+
+    <ItemGroup>
+      <_FilesToRemove Include="$(CssDir)\chiffon-*.css" />
+      <_FilesToRemove Include="$(JsDir)\app-*.js" />
+      <_FilesToRemove Include="$(JsDir)\chiffon-*.js" />
+    </ItemGroup>
+
+    <Delete Files="@(_FilesToRemove)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
@@ -96,7 +106,7 @@
 
   <!-- Cibles privées -->
 
-  <Target Name="_Publish" Condition="$(DeployOnBuild) == 'true'">
+  <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
     <ItemGroup>
       <!-- On inclut tous les fichiers sauf le fichier de projet -->
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
@@ -111,22 +121,22 @@
 
   <Target Name="_ValidateSemVer" BeforeTargets="MergeAndMinifyCss;MergeAndMinifyJs">
     <Error Text="The property 'SemVer' must be set."
-           Condition="$(SemVer) == ''"/>
+           Condition="'$(SemVer)' == ''"/>
   </Target>
 
   <Target Name="_ValidateYuiCompressorJar" BeforeTargets="MergeAndMinifyCss">
     <Error Text="The property 'YuiCompressorJar' must be set."
-           Condition="$(YuiCompressorJar) == ''"/>
+           Condition="'$(YuiCompressorJar)' == ''"/>
   </Target>
 
   <Target Name="_ValidateGoogleClosureJar" BeforeTargets="MergeAndMinifyJs">
     <Error Text="The property 'GoogleClosureJar' must be set."
-           Condition="$(GoogleClosureJar) == ''"/>
+           Condition="'$(GoogleClosureJar)' == ''"/>
   </Target>
 
-  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="$(DeployOnBuild) == 'true'">
+  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
     <Error Text="The property 'PublishUrl' must be set."
-           Condition="$(PublishUrl) == ''"/>
+           Condition="'$(PublishUrl)' == ''"/>
   </Target>
 
   <!--

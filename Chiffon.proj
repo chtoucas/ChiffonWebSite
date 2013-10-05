@@ -8,12 +8,11 @@
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
   TODO:
   * compilation conditionnelle
-  * compilation incrémentale
-  * encrypter les chaînes de connection + custom machineKey per publish target
+  * compilation incrémentale pour PEVerify
+  * encrypter les chaînes de connection
   * add custom deploy script
   * BuildInParallel ?
   * multiples plateformes : x64, x86 & co ?
-  * supprimer _PublishedWebsites
   -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\libexec\Chiffon.settings.targets" />
@@ -23,24 +22,24 @@
   <!-- Macros -->
 
   <PropertyGroup>
-    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
-    <Platform Condition="$(Platform) == ''">Any CPU</Platform>
-    <BuildInParallel Condition="$(BuildInParallel) != 'true'">false</BuildInParallel>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <BuildInParallel Condition="'$(BuildInParallel)' != 'true'">false</BuildInParallel>
 
     <!-- Valeurs possibles : Major, Minor, Patch, None -->
-    <Milestone Condition="$(Milestone) == ''">None</Milestone>
+    <Milestone Condition="'$(Milestone)' == ''">None</Milestone>
 
     <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
-    <PublishTarget Condition="$(PublishTarget) == ''">Production</PublishTarget>
+    <PublishTarget Condition="'$(PublishTarget)' == ''">Production</PublishTarget>
 
     <!-- Compilation conditionnelle -->
-    <BuildAssets Condition="$(BuildAssets) != 'false'">true</BuildAssets>
-    <BuildSolution Condition="$(BuildSolution) != 'false'">true</BuildSolution>
+    <BuildAssets Condition="'$(BuildAssets)' != 'false'">true</BuildAssets>
+    <BuildSolution Condition="'$(BuildSolution)' != 'false'">true</BuildSolution>
 
     <!-- Publication conditionnelle -->
-    <PublishAssets Condition="$(PublishAssets) != 'false'">true</PublishAssets>
-    <PublishMediaSite Condition="$(PublishMediaSite) != 'false'">true</PublishMediaSite>
-    <PublishWebSite Condition="$(PublishWebSite) != 'false'">true</PublishWebSite>
+    <PublishAssets Condition="'$(PublishAssets)' != 'false'">true</PublishAssets>
+    <PublishMediaSite Condition="'$(PublishMediaSite)' != 'false'">true</PublishMediaSite>
+    <PublishWebSite Condition="'$(PublishWebSite)' != 'false'">true</PublishWebSite>
   </PropertyGroup>
 
   <!-- Directives publiques -->
@@ -50,10 +49,10 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
-    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build" />
+    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build">
+      <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
+    </MSBuild>
   </Target>
-
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
   <!--
   <Target Name="_BuildViews" DependsOnTargets="Build">
@@ -62,13 +61,12 @@
   </Target>
   -->
 
-  <Target Name="RunTests" DependsOnTargets="Build">
+  <Target Name="RunTests">
     <Message Text="RunTests not yet done..." Importance="High" />
   </Target>
 
-  <Target Name="FullBuild" DependsOnTargets="Build;RunTests" />
-
   <Target Name="Publish" DependsOnTargets="$(PublishDependsOn)">
+    <Error Text="--- %(_ProjectsToPublish.AdditionalProperties)" />
     <MSBuild Projects="@(_ProjectsToPublish)" Targets="Build" />
   </Target>
 
@@ -93,6 +91,7 @@
 
   <PropertyGroup>
     <BuildDependsOn>
+      _ValidateMilestoneForBuild;
       _UpdateVersionNumber;
       _GetProjectsToBuild
     </BuildDependsOn>
@@ -110,7 +109,7 @@
 
   <PropertyGroup>
     <AfterBuildDependsOn>
-      _VerifyAssemblies
+      _VerifyBuildOutputs
     </AfterBuildDependsOn>
   </PropertyGroup>
 
@@ -119,9 +118,13 @@
   <PropertyGroup>
     <PublishDependsOn>
       _ValidateMilestoneForPublish;
-      Clean;
       _UpdateVersionNumber;
       _GetProjectsToPublish
+      <!-- WARNING: Clean dépend indirectement de _GetSemVer, donc pour que _UpdateVersionNumber
+           puisse mettre correctement à jour la valeur de _SemVer utilisée par _GetProjectsToPublish
+           il faut laisser Clean en fin de liste.
+           NB: On n'appelle plus directement Clean, on laisse psake lancer cette directive. -->
+      <!-- Clean -->
     </PublishDependsOn>
   </PropertyGroup>
 
@@ -138,7 +141,7 @@
 
   <PropertyGroup>
     <AfterPublishDependsOn>
-      _VerifyAspNetAssemblies;
+      _VerifyPublishOutputs;
       _Package
     </AfterPublishDependsOn>
   </PropertyGroup>
@@ -266,7 +269,7 @@
 
   <Target Name="_Package" DependsOnTargets="_GetSemVer">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(SemVer)-$(PublishTarget).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PublishTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />
@@ -290,12 +293,41 @@
     </UpdateVersion>
   </Target>
 
-  <Target Name="_ValidateMilestoneForPublish">
-    <Error Text="The property 'Milestone' must be set to something different to 'None'."
-           Condition="$(Milestone) == 'None'"/>
+  <Target Name="_ValidateMilestoneForBuild">
+    <Error Text="The property 'Milestone' must be set to 'None'."
+           Condition="'$(Milestone)' != 'None'"/>
   </Target>
 
-  <Target Name="_VerifyAspNetAssemblies" DependsOnTargets="GetPEVerify">
+  <Target Name="_ValidateMilestoneForPublish">
+    <Error Text="The property 'Milestone' must be set to something different to 'None'."
+           Condition="'$(Milestone)' == 'None'"/>
+  </Target>
+
+  <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(RootDir).buildTime">
+    <!--
+    <ItemGroup>
+      <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
+                    Exclude="$(OutDir)_PublishedWebsites\**\*"/>
+    </ItemGroup>
+
+    --><!-- On supprime les doublons --><!--
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
+    </RemoveDuplicates>
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_AssemblyFiles.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+    -->
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+
+    <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify">
     <ItemGroup>
       <_AspFiles Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
@@ -303,21 +335,6 @@
     <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
          "incorrectes" de ce point de vue là -->
     <Exec Command="$(PEVerifyExe) &quot;%(_AspFiles.FullPath)&quot; /nologo /il /unique"
-          ContinueOnError="false" />
-  </Target>
-
-  <Target Name="_VerifyAssemblies" DependsOnTargets="GetPEVerify">
-    <ItemGroup>
-      <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
-                    Exclude="$(OutDir)_PublishedWebsites\**\*"/>
-    </ItemGroup>
-
-    <!-- On supprime les doublons -->
-    <RemoveDuplicates Inputs="@(_BinaryFiles)">
-      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
-    </RemoveDuplicates>
-
-    <Exec Command="$(PEVerifyExe) &quot;%(_AssemblyFiles.FullPath)&quot; /nologo /md /il /unique"
           ContinueOnError="false" />
   </Target>
 
