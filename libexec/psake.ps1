@@ -26,12 +26,12 @@ Task RunTests -depends ReadBuildConfig {
   MSBuild $MSOptions $MSProject /t:RunTests $MSProperties
 }
 
-Task Integrate -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:Integrate $MSProperties
+Task Package -depends ReadPackageConfig {
+  MSBuild $MSOptions $MSProject /t:Package $MSProperties
 }
 
-Task Publish -depends ReadPublishConfig {
-  MSBuild $MSOptions $MSProject /t:Publish $MSProperties
+Task Repackage -depends ReadPackageConfig {
+  MSBuild $MSOptions $MSProject /t:Repackage $MSProperties
 }
 
 Task ReadBuildConfig {
@@ -50,27 +50,27 @@ Task ReadBuildConfig {
     "/p:BuildSolution=$BuildSolution";
 }
 
-Task ReadPublishConfig {
-  $configPath = $(Get-Location).Path + "\..\etc\Publish.config"
+Task ReadPackageConfig {
+  $configPath = $(Get-Location).Path + "\..\etc\Package.config"
 
   [xml]$configXml = Get-Content -Path $configPath
 
   [System.Xml.XmlElement] $config = $configXml.configuration
 
   [string] $Milestone = $config.Milestone
-  [string] $PublishTarget = $config.PublishTarget
+  [string] $PackageTarget = $config.PackageTarget
 
-  [string] $PublishAssets = $config.PublishAssets
-  [string] $PublishMediaSite = $config.PublishMediaSite
-  [string] $PublishWebSite = $config.PublishWebSite
+  [string] $PackageAssets = $config.PackageAssets
+  [string] $PackageMediaSite = $config.PackageMediaSite
+  [string] $PackageWebSite = $config.PackageWebSite
 
   $script:MSProperties = "/p:Configuration=$Configuration",
     "/p:BuildInParallel=$BuildInParallel",
     "/p:Milestone=$Milestone",
-    "/p:PublishTarget=$PublishTarget",
-    "/p:PublishAssets=$PublishAssets",
-    "/p:PublishMediaSite=$PublishMediaSite",
-    "/p:PublishWebSite=$PublishWebSite";
+    "/p:PackageTarget=$PackageTarget",
+    "/p:PackageAssets=$PackageAssets",
+    "/p:PackageMediaSite=$PackageMediaSite",
+    "/p:PackageWebSite=$PackageWebSite";
 }
 
 

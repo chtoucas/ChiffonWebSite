@@ -60,12 +60,7 @@
     </JsFiles>
   </ItemGroup>
 
-  <Target Name="Clean">
-    <!--
-    <Delete Files="%(CssFiles.Bundle)" />
-    <Delete Files="%(JsFiles.Bundle)" />
-    -->
-
+  <Target Name="DeepClean">
     <ItemGroup>
       <_FilesToRemove Include="$(CssDir)\chiffon-*.css" />
       <_FilesToRemove Include="$(JsDir)\app-*.js" />
@@ -73,6 +68,11 @@
     </ItemGroup>
 
     <Delete Files="@(_FilesToRemove)" />
+  </Target>
+
+  <Target Name="Clean">
+    <Delete Files="%(CssFiles.Bundle)" />
+    <Delete Files="%(JsFiles.Bundle)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />

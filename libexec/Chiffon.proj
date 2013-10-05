@@ -8,23 +8,22 @@
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
   * http://stackoverflow.com/questions/4752293/msbuild-determine-a-solutions-publishedwebsites?rq=1
   TODO:
-  * compilation incrémentale pour PEVerify
+  * rajouter aux package les scripts de déploiement
   * encrypter les chaînes de connection
-  * add custom deploy script
-  * multiples plateformes : x64, x86 & co ?
+  * compilation pour de multiples plateformes ?
   -->
 
-<!-- WARNING: L'ordre est extrèmement important. Par exemple, _GetSemVer doit absolument s'exécuter
-     après _UpdateVersionNumber. Ainsi si une directive dépend indirectement de _GetSemVer
-     et _UpdateVersionNumber est lancé après, la version utilisée sera obsolète. -->
+<!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, _GetSemVer
+     doit absolument s'exécuter après _UpdateVersionNumber. Ainsi si une directive dépend
+     indirectement de _GetSemVer et _UpdateVersionNumber est lancé après, la version utilisée
+     devient obsolète. -->
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.settings.targets" />
   <Import Project=".\Chiffon.helpers.targets" />
   <Import Project=".\Chiffon.Tasks.targets" />
 
-  <!-- Propriétés globales
-       =================== -->
+  <!-- ### Propriétés globales -->
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -34,23 +33,24 @@
     <!-- Valeurs possibles : Major, Minor, Patch, None -->
     <Milestone Condition="'$(Milestone)' == ''">None</Milestone>
 
-    <!-- Aujourd'hui, on a une seule valeur possible pour PublishTarget: Production -->
-    <PublishTarget Condition="'$(PublishTarget)' == ''">Production</PublishTarget>
+    <!-- Aujourd'hui, on a une seule valeur possible pour PackageTarget: Production -->
+    <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
     <!-- Compilation conditionnelle -->
     <BuildAssets Condition="'$(BuildAssets)' != 'false'">true</BuildAssets>
     <BuildSolution Condition="'$(BuildSolution)' != 'false'">true</BuildSolution>
 
-    <!-- Publication conditionnelle -->
-    <PublishAssets Condition="'$(PublishAssets)' != 'false'">true</PublishAssets>
-    <PublishMediaSite Condition="'$(PublishMediaSite)' != 'false'">true</PublishMediaSite>
-    <PublishWebSite Condition="'$(PublishWebSite)' != 'false'">true</PublishWebSite>
+    <!-- Packaging conditionnelle -->
+    <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
+    <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
+    <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
-  <!-- Directives publiques
-       ==================== -->
+  <!-- ### Directives publiques -->
 
-  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)">
+  <Target Name="Clean" DependsOnTargets="CleanBuild;CleanPackage" />
+
+  <Target Name="CleanBuild" DependsOnTargets="$(CleanBuildDependsOn)">
     <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
   </Target>
 
@@ -60,7 +60,7 @@
     </MSBuild>
   </Target>
 
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+  <Target Name="Rebuild" DependsOnTargets="CleanBuild;Build" />
 
   <!--
   <Target Name="_BuildViews" DependsOnTargets="Build">
@@ -73,30 +73,34 @@
     <Message Text="RunTests not yet done..." Importance="High" />
   </Target>
 
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build;RunTests" />
-
-  <Target Name="Publish" DependsOnTargets="$(PublishDependsOn)">
-    <MSBuild Projects="@(_ProjectsToPublish)" Targets="Clean;Build" />
+  <Target Name="CleanPackage" DependsOnTargets="$(CleanPackageDependsOn)">
+    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Clean" />
   </Target>
 
-  <!-- Dépendances
-       =========== -->
+  <Target Name="Package" DependsOnTargets="$(PackageDependsOn)">
+    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Build">
+      <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
+    </MSBuild>
+  </Target>
+
+  <Target Name="Repackage" DependsOnTargets="CleanPackage;Package" />
+
+  <!-- ### Dépendances -->
 
   <!-- Dépendances pour Clean -->
 
   <PropertyGroup>
-    <CleanDependsOn>
+    <CleanBuildDependsOn>
       _GetProjectsToBuild
-    </CleanDependsOn>
+    </CleanBuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="_BeforeClean" BeforeTargets="Clean" DependsOnTargets="$(BeforeCleanDependsOn)" />
+  <Target Name="_BeforeCleanBuild" BeforeTargets="CleanBuild" DependsOnTargets="$(BeforeCleanBuildDependsOn)" />
 
   <PropertyGroup>
-    <BeforeCleanDependsOn>
-      _RemoveOutDir;
-      _RemovePublishDir
-    </BeforeCleanDependsOn>
+    <BeforeCleanBuildDependsOn>
+      _RemoveOutDir
+    </BeforeCleanBuildDependsOn>
   </PropertyGroup>
 
   <!-- Dépendances pour Build -->
@@ -108,8 +112,8 @@
            le numéro de Build.
            Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
       -->
-      _ValidateMilestoneForBuild;
-      <!-- _UpdateVersionNumber -->
+      <!--_ValidateMilestoneForBuild;-->
+      <!--_UpdateVersionNumber-->
       _GetProjectsToBuild
     </BuildDependsOn>
   </PropertyGroup>
@@ -130,38 +134,54 @@
     </AfterBuildDependsOn>
   </PropertyGroup>
 
-  <!-- Dépendances pour Publish -->
+  <!-- Dépendances pour CleanPackage -->
 
   <PropertyGroup>
-    <PublishDependsOn>
-      _ValidateMilestoneForPublish;
-      _UpdateVersionNumber;
-      _GetProjectsToPublish;
-    </PublishDependsOn>
+    <CleanPackageDependsOn>
+      _GetProjectsToPackage;
+    </CleanPackageDependsOn>
   </PropertyGroup>
 
-  <Target Name="_BeforePublish" BeforeTargets="Publish" DependsOnTargets="$(BeforePublishDependsOn)" />
+  <Target Name="_BeforeCleanPackage" BeforeTargets="CleanPackage" DependsOnTargets="$(BeforeCleanPackageDependsOn)" />
 
   <PropertyGroup>
-    <BeforePublishDependsOn>
+    <BeforeCleanPackageDependsOn>
       _RemoveOutDir;
+      _RemovePublishDir
+    </BeforeCleanPackageDependsOn>
+  </PropertyGroup>
+
+  <!-- Dépendances pour Package -->
+
+  <PropertyGroup>
+    <PackageDependsOn>
+      <!--_ValidateMilestoneForPackage;-->
+      _UpdateVersionNumber;
+      _GetProjectsToPackage;
+    </PackageDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_BeforePackage" BeforeTargets="Package" DependsOnTargets="$(BeforePackageDependsOn)" />
+
+  <PropertyGroup>
+    <BeforePackageDependsOn>
       _CreateOutDir;
       _CreatePublishDir;
       _CreatePackageDir
-    </BeforePublishDependsOn>
+    </BeforePackageDependsOn>
   </PropertyGroup>
 
-  <Target Name="_AfterPublish" AfterTargets="Publish" DependsOnTargets="$(AfterPublishDependsOn)" />
+  <Target Name="_AfterPackage" AfterTargets="Package" DependsOnTargets="$(AfterPackageDependsOn)" />
 
   <PropertyGroup>
-    <AfterPublishDependsOn>
+    <AfterPackageDependsOn>
+      _VerifyBuildOutputs;
       _VerifyPublishOutputs;
       _Package
-    </AfterPublishDependsOn>
+    </AfterPackageDependsOn>
   </PropertyGroup>
 
-  <!-- Cibles privées
-       ============== -->
+  <!-- ### Cibles privées -->
 
   <!-- Répertoires temporaires -->
 
@@ -197,6 +217,7 @@
              Pour les projets Web, utiliser la même valeur pour OutDir et OutputPath permet d'éviter
              la création de _PublishedWebsites. -->
         OutputPath=$(OutDir);
+        BaseIntermediateOutputPath=$(BuildDir)\Tmp\;
         Platform=$(Platform);
         BuildInParallel=$(BuildInParallel)
       </_BuildProperties>
@@ -214,13 +235,13 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="_GetPublishProperties" DependsOnTargets="_GetBuildProperties">
+  <Target Name="_GetPackageProperties" DependsOnTargets="_GetBuildProperties">
     <!-- Configuration de la publication -->
     <PropertyGroup>
-      <_PublishProperties>
+      <_PackageProperties>
         $(_BuildProperties);
         TransformsDir=$(TransformsDir);
-        PublishTarget=$(PublishTarget);
+        PackageTarget=$(PackageTarget);
         <!-- Configuration de MSBuild -->
         DeployOnBuild=true;
         <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
@@ -239,7 +260,7 @@
         PrecompileBeforePublish=true;
         UseMerge=true;
         WDPMergeOption=MergeAllOutputsToASingleAssembly
-      </_PublishProperties>
+      </_PackageProperties>
     </PropertyGroup>
   </Target>
 
@@ -249,46 +270,46 @@
     <!-- Liste des projets à compiler -->
     <ItemGroup>
       <_ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
-        Condition="$(BuildAssets) == 'true'">
+        Condition="'$(BuildAssets)' == 'true'">
         <AdditionalProperties>$(_MinifyProperties)</AdditionalProperties>
       </_ProjectsToBuild>
 
       <_ProjectsToBuild Include="$(RootDir)Chiffon.sln"
-        Condition="$(BuildSolution) == 'true'">
+        Condition="'$(BuildSolution)' == 'true'">
         <AdditionalProperties>$(_BuildProperties)</AdditionalProperties>
       </_ProjectsToBuild>
     </ItemGroup>
   </Target>
 
-  <Target Name="_GetProjectsToPublish" DependsOnTargets="_GetPublishProperties;_GetMinifyProperties">
+  <Target Name="_GetProjectsToPackage" DependsOnTargets="_GetPackageProperties;_GetMinifyProperties">
     <!-- Liste des projets à publier (vers le système de fichier) -->
     <ItemGroup>
-      <_ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
-        Condition="$(PublishAssets) == 'true'">
+      <_ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
+        Condition="'$(PackageAssets)' == 'true'">
         <AdditionalProperties>
           $(_MinifyProperties);
-          $(_PublishProperties);
+          $(_PackageProperties);
           PublishUrl=$(PublishDir)wznw.org_chiffon\
         </AdditionalProperties>
-      </_ProjectsToPublish>
+      </_ProjectsToPackage>
 
-      <_ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
-        Condition="$(PublishMediaSite) == 'true'">
+      <_ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
+        Condition="'$(PackageWebSite)' == 'true'">
         <AdditionalProperties>
-          $(_PublishProperties);
+          $(_PackageProperties);
           PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
           PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
         </AdditionalProperties>
-      </_ProjectsToPublish>
+      </_ProjectsToPackage>
 
-      <_ProjectsToPublish Include="$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
-        Condition="$(PublishWebSite) == 'true'">
+      <_ProjectsToPackage Include="$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
+        Condition="'$(PackageMediaSite)' == 'true'">
         <AdditionalProperties>
-          $(_PublishProperties);
+          $(_PackageProperties);
           PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
           PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
         </AdditionalProperties>
-      </_ProjectsToPublish>
+      </_ProjectsToPackage>
     </ItemGroup>
   </Target>
 
@@ -312,15 +333,17 @@
 
   <!-- Validation des paramètres -->
 
+  <!--
   <Target Name="_ValidateMilestoneForBuild">
     <Error Text="The property 'Milestone' must be set to 'None'."
            Condition="'$(Milestone)' != 'None'"/>
   </Target>
 
-  <Target Name="_ValidateMilestoneForPublish">
+  <Target Name="_ValidateMilestoneForPackage">
     <Error Text="The property 'Milestone' must be set to something different to 'None'."
            Condition="'$(Milestone)' == 'None'"/>
   </Target>
+  -->
 
   <!-- Vérification des résultats -->
 
@@ -347,28 +370,22 @@
     <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
   </Target>
 
-  <Target Name="_GetPublishOutputs">
+  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify">
     <ItemGroup>
       <_PublishOutputs Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
-  </Target>
 
-  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify;_GetPublishOutputs"
-          Inputs="@(_PublishOutputs)"
-          Outputs="$(RootDir).publishTime" >
     <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
          "incorrectes" de ce point de vue là -->
     <Exec Command="$(PEVerifyExe) &quot;%(_PublishOutputs.FullPath)&quot; /nologo /il /unique"
           ContinueOnError="false" />
-
-    <Touch Files="$(RootDir).publishTime" AlwaysCreate="true" />
   </Target>
 
   <!-- Utilitaires -->
 
   <Target Name="_Package" DependsOnTargets="_GetSemVer">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PublishTarget).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />

@@ -1,7 +1,6 @@
 *.suo
 *.user
 .buildTime
-.publishTime
 _build/
 _tmp/
 bin/

@@ -28,10 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Build", "..\Narvalo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9-AD2F-4C18-B796-F5568736357D}"
 	ProjectSection(SolutionItems) = preProject
-		build.ps1 = build.ps1
-		BuildViews.cmd = BuildViews.cmd
-		default.ps1 = default.ps1
-		Minify.cmd = Minify.cmd
+		etc\Build.config = etc\Build.config
+		make.ps1 = make.ps1
+		etc\Package.config = etc\Package.config
+		libexec\psake.ps1 = libexec\psake.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wznw.Org.csproj", "{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}"
@@ -40,14 +40,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chif
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishProfiles", "{D1E9C98A-55A2-4636-8FB0-D8874C9660C9}"
 	ProjectSection(SolutionItems) = preProject
-		etc\PublishProfiles\Chiffon.MediaSite.Production.pubxml = etc\PublishProfiles\Chiffon.MediaSite.Production.pubxml
-		etc\PublishProfiles\Chiffon.WebSite.Production.pubxml = etc\PublishProfiles\Chiffon.WebSite.Production.pubxml
+		libexec\Chiffon.MediaSite.pubxml = libexec\Chiffon.MediaSite.pubxml
+		libexec\Chiffon.WebSite.pubxml = libexec\Chiffon.WebSite.pubxml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{925044C1-66B2-4DE3-8FE9-F38BACB917F3}"
 	ProjectSection(SolutionItems) = preProject
 		src\Chiffon.WebSite\assets\Chiffon.Assets.proj = src\Chiffon.WebSite\assets\Chiffon.Assets.proj
-		Chiffon.proj = Chiffon.proj
+		libexec\Chiffon.helpers.targets = libexec\Chiffon.helpers.targets
+		libexec\Chiffon.proj = libexec\Chiffon.proj
+		libexec\Chiffon.settings.targets = libexec\Chiffon.settings.targets
 		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
 	EndProjectSection
 EndProject
