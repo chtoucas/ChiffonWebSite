@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{9250
 		libexec\Chiffon.proj = libexec\Chiffon.proj
 		libexec\Chiffon.settings.targets = libexec\Chiffon.settings.targets
 		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
+		libexec\Chiffon.xunit.targets = libexec\Chiffon.xunit.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInfo", "{CA1374AC-6B74-4840-8B92-4AB593FBA306}"

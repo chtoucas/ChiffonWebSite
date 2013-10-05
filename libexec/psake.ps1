@@ -10,8 +10,12 @@ properties {
 
 Task default -depends Build
 
-Task Clean -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:Clean $MSProperties
+Task DeepClean {
+  MSBuild $MSOptions $MSProject /t:DeepClean
+}
+
+Task Clean {
+  MSBuild $MSOptions $MSProject /t:Clean
 }
 
 Task Build -depends ReadBuildConfig {
@@ -22,8 +26,12 @@ Task Rebuild -depends ReadBuildConfig {
   MSBuild $MSOptions $MSProject /t:Rebuild $MSProperties
 }
 
-Task RunTests -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:RunTests $MSProperties
+Task FastBuild -depends ReadBuildConfig {
+  MSBuild $MSOptions $MSProject /t:Build $MSProperties "/p:MvcBuildViews=false;RunTests=false"
+}
+
+Task Integrate {
+  MSBuild $MSOptions $MSProject "/t:Repackage" "/p:PackageTarget=Production"
 }
 
 Task Package -depends ReadPackageConfig {
@@ -53,7 +61,7 @@ Task ReadBuildConfig {
 Task ReadPackageConfig {
   $configPath = $(Get-Location).Path + "\..\etc\Package.config"
 
-  [xml]$configXml = Get-Content -Path $configPath
+  [xml] $configXml = Get-Content -Path $configPath
 
   [System.Xml.XmlElement] $config = $configXml.configuration
 

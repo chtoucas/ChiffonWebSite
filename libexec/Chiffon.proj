@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Cf.
-  * http://blogs.msdn.com/b/webdev/archive/2013/09/22/web-publish-how-to-automate-multi-project-publish-with-file-system.aspx
-  * https://github.com/sayedihashimi/publish-samples
-  * http://www.hanselman.com/blog/TinyHappyFeatures3PublishingImprovementsChainedConfigTransformsAndDeployingASPNETAppsFromTheCommandLine.aspx
-  * http://www.asp.net/mvc/tutorials/deployment/visual-studio-web-deployment/deploying-extra-files
-  * http://msdn.microsoft.com/en-us/library/ee942158.aspx
-  * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
-  * http://stackoverflow.com/questions/4752293/msbuild-determine-a-solutions-publishedwebsites?rq=1
+<!--
   TODO:
   * rajouter aux package les scripts de déploiement
   * encrypter les chaînes de connection
   * compilation pour de multiples plateformes ?
+  * RestorePackages ?
   -->
 
+<!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé...
+      Il faut deviser un processus plus intelligent pour savoir quand on doit mettre à jour
+      le numéro de Build.
+      Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
+-->
 <!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, _GetSemVer
-     doit absolument s'exécuter après _UpdateVersionNumber. Ainsi si une directive dépend
-     indirectement de _GetSemVer et _UpdateVersionNumber est lancé après, la version utilisée
+     doit absolument être exécuté après _UpdateVersionNumber. En effet, si une directive dépend
+     indirectement de _GetSemVer et si _UpdateVersionNumber est lancé après, la valeur de _SemVer
      devient obsolète. -->
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.settings.targets" />
   <Import Project=".\Chiffon.helpers.targets" />
+  <Import Project=".\Chiffon.xunit.targets" />
   <Import Project=".\Chiffon.Tasks.targets" />
 
-  <!-- ### Propriétés globales -->
+  <!-- ### Propriétés globales ### -->
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
-    <BuildInParallel Condition="'$(BuildInParallel)' != 'true'">false</BuildInParallel>
+    <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
+    <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
+
+    <MvcBuildViews Condition="'$(MvcBuildViews)' != 'false'">true</MvcBuildViews>
+    <RunTests Condition="'$(RunTests)' != 'false'">true</RunTests>
 
     <!-- Valeurs possibles : Major, Minor, Patch, None -->
     <Milestone Condition="'$(Milestone)' == ''">None</Milestone>
@@ -40,54 +44,58 @@
     <BuildAssets Condition="'$(BuildAssets)' != 'false'">true</BuildAssets>
     <BuildSolution Condition="'$(BuildSolution)' != 'false'">true</BuildSolution>
 
-    <!-- Packaging conditionnelle -->
+    <!-- Packaging conditionnel -->
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
     <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
-  <!-- ### Directives publiques -->
+  <!-- ### Directives publiques ### -->
 
   <Target Name="Clean" DependsOnTargets="CleanBuild;CleanPackage" />
+
+  <Target Name="DeepClean" DependsOnTargets="Clean">
+    <ItemGroup>
+      <_FilesToDelete Include="$(BaseOutDir)**\*"/>
+      <_FilesToDelete Include="$(BaseIntermediateOutDir)**\*"/>
+      <_FilesToDelete Include="$(PublishDir)**\*"/>
+    </ItemGroup>
+
+    <Delete Files="@(_FilesToDelete)" />
+    <RemoveDir Directories="$(BaseOutDir)" Condition="Exists($(BaseOutDir))" />
+    <RemoveDir Directories="$(BaseIntermediateOutDir)" Condition="Exists($(BaseIntermediateOutDir))" />
+    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
+
+    <MSBuild Projects="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="DeepClean" />
+  </Target>
 
   <Target Name="CleanBuild" DependsOnTargets="$(CleanBuildDependsOn)">
     <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
-    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build">
+    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="CleanBuild;Build" />
 
-  <!--
-  <Target Name="_BuildViews" DependsOnTargets="Build">
-    <MSBuild Projects="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
-              Targets="MvcBuildViews" Properties="$(_BuildProperties);MvcBuildViews=true" />
-  </Target>
-  -->
-
-  <Target Name="RunTests">
-    <Message Text="RunTests not yet done..." Importance="High" />
-  </Target>
-
   <Target Name="CleanPackage" DependsOnTargets="$(CleanPackageDependsOn)">
     <MSBuild Projects="@(_ProjectsToPackage)" Targets="Clean" />
   </Target>
 
   <Target Name="Package" DependsOnTargets="$(PackageDependsOn)">
-    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Build">
+    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
 
   <Target Name="Repackage" DependsOnTargets="CleanPackage;Package" />
 
-  <!-- ### Dépendances -->
+  <!-- ### Dépendances ### -->
 
-  <!-- Dépendances pour Clean -->
+  <!-- Dépendances pour CleanBuild -->
 
   <PropertyGroup>
     <CleanBuildDependsOn>
@@ -95,42 +103,19 @@
     </CleanBuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="_BeforeCleanBuild" BeforeTargets="CleanBuild" DependsOnTargets="$(BeforeCleanBuildDependsOn)" />
-
-  <PropertyGroup>
-    <BeforeCleanBuildDependsOn>
-      _RemoveOutDir
-    </BeforeCleanBuildDependsOn>
-  </PropertyGroup>
-
   <!-- Dépendances pour Build -->
 
   <PropertyGroup>
     <BuildDependsOn>
-      <!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé...
-           Il faut deviser un processus plus intelligent pour savoir quand on doit mettre à jour
-           le numéro de Build.
-           Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
-      -->
-      <!--_ValidateMilestoneForBuild;-->
-      <!--_UpdateVersionNumber-->
       _GetProjectsToBuild
     </BuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
-
-  <PropertyGroup>
-    <BeforeBuildDependsOn>
-      _CreateOutDir
-    </BeforeBuildDependsOn>
   </PropertyGroup>
 
   <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
   <PropertyGroup>
     <AfterBuildDependsOn>
-      _VerifyBuildOutputs
+      _VerifyBuild
     </AfterBuildDependsOn>
   </PropertyGroup>
 
@@ -142,20 +127,10 @@
     </CleanPackageDependsOn>
   </PropertyGroup>
 
-  <Target Name="_BeforeCleanPackage" BeforeTargets="CleanPackage" DependsOnTargets="$(BeforeCleanPackageDependsOn)" />
-
-  <PropertyGroup>
-    <BeforeCleanPackageDependsOn>
-      _RemoveOutDir;
-      _RemovePublishDir
-    </BeforeCleanPackageDependsOn>
-  </PropertyGroup>
-
   <!-- Dépendances pour Package -->
 
   <PropertyGroup>
     <PackageDependsOn>
-      <!--_ValidateMilestoneForPackage;-->
       _UpdateVersionNumber;
       _GetProjectsToPackage;
     </PackageDependsOn>
@@ -165,8 +140,6 @@
 
   <PropertyGroup>
     <BeforePackageDependsOn>
-      _CreateOutDir;
-      _CreatePublishDir;
       _CreatePackageDir
     </BeforePackageDependsOn>
   </PropertyGroup>
@@ -175,34 +148,18 @@
 
   <PropertyGroup>
     <AfterPackageDependsOn>
-      _VerifyBuildOutputs;
+      _VerifyBuild;
       _VerifyPublishOutputs;
-      _Package
+      _ZipPackage
     </AfterPackageDependsOn>
   </PropertyGroup>
 
-  <!-- ### Cibles privées -->
+  <!-- ### Cibles privées ### -->
 
   <!-- Répertoires temporaires -->
 
-  <Target Name="_CreateOutDir">
-    <MakeDir Directories="$(OutDir)" Condition="!Exists($(OutDir))" />
-  </Target>
-
-  <Target Name="_CreatePublishDir">
-    <MakeDir Directories="$(PublishDir)" Condition="!Exists($(PublishDir))" />
-  </Target>
-
   <Target Name="_CreatePackageDir">
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
-  </Target>
-
-  <Target Name="_RemoveOutDir">
-    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
-  </Target>
-
-  <Target Name="_RemovePublishDir">
-    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
   </Target>
 
   <!-- Configuration des projets MSBuild -->
@@ -217,9 +174,10 @@
              Pour les projets Web, utiliser la même valeur pour OutDir et OutputPath permet d'éviter
              la création de _PublishedWebsites. -->
         OutputPath=$(OutDir);
-        BaseIntermediateOutputPath=$(BuildDir)\Tmp\;
+        BaseIntermediateOutputPath=$(BaseIntermediateOutDir);
         Platform=$(Platform);
-        BuildInParallel=$(BuildInParallel)
+        BuildInParallel=$(BuildInParallel);
+        MvcBuildViews=$(MvcBuildViews)
       </_BuildProperties>
     </PropertyGroup>
   </Target>
@@ -267,6 +225,10 @@
   <!-- Listes des projets-->
 
   <Target Name="_GetProjectsToBuild" DependsOnTargets="_GetBuildProperties;_GetMinifyProperties">
+    <!-- L'instruction suivant demande à MSBuild de sauvegarder le résultat de la transformation
+         d'une solution en fichier projet. -->
+    <SetEnvVar Variable="msbuildemitsolution" Value="1"/>
+
     <!-- Liste des projets à compiler -->
     <ItemGroup>
       <_ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
@@ -331,25 +293,24 @@
     </UpdateVersion>
   </Target>
 
-  <!-- Validation des paramètres -->
+  <!-- Tests & vérifications -->
 
-  <!--
-  <Target Name="_ValidateMilestoneForBuild">
-    <Error Text="The property 'Milestone' must be set to 'None'."
-           Condition="'$(Milestone)' != 'None'"/>
-  </Target>
-
-  <Target Name="_ValidateMilestoneForPackage">
-    <Error Text="The property 'Milestone' must be set to something different to 'None'."
-           Condition="'$(Milestone)' == 'None'"/>
-  </Target>
-  -->
-
-  <!-- Vérification des résultats -->
-
-  <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
+  <Target Name="_VerifyBuild"
           Inputs="@(_BuildOutputs)"
           Outputs="$(RootDir).buildTime">
+    <CallTarget Targets="_VerifyBuildOutputs;_RunXunitTests" RunEachTargetSeparately="true" />
+    <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="_RunXunitTests" Condition="'$(RunTests)' == 'true'">
+    <ItemGroup>
+      <_TestAssemblies Include="$(OutDir)**\Chiffon*.Tests.dll" />
+    </ItemGroup>
+
+    <xunit Assemblies="@(_TestAssemblies)" />
+  </Target>
+
+  <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
     <!--
     <ItemGroup>
       <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
@@ -381,9 +342,9 @@
           ContinueOnError="false" />
   </Target>
 
-  <!-- Utilitaires -->
+  <!-- Miscs -->
 
-  <Target Name="_Package" DependsOnTargets="_GetSemVer">
+  <Target Name="_ZipPackage" DependsOnTargets="_GetSemVer">
     <PropertyGroup>
       <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>

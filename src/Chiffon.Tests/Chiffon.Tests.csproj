@@ -75,7 +75,6 @@
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="AutofacAssert.cs" />
-    <Compile Include="Crosscuttings\ChiffonModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +93,9 @@
       <Project>{1759636f-fe03-4daa-87b7-895ceb3f8797}</Project>
       <Name>Chiffon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Crosscuttings\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

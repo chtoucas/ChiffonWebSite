@@ -7,3 +7,4 @@ bin/
 obj/
 packages/
 msbuild.log
+Chiffon.sln.metaproj*

@@ -10,7 +10,9 @@
 
     <!-- Répertoires temporaires -->
     <BuildDir>$(RootDir)_build\</BuildDir>
-    <OutDir>$(BuildDir)$(Configuration)\</OutDir>
+    <BaseOutDir>$(BuildDir)Bin\</BaseOutDir>
+    <OutDir>$(BaseOutDir)$(Configuration)\</OutDir>
+    <BaseIntermediateOutDir>$(BuildDir)Obj\</BaseIntermediateOutDir>
     <PublishDir>$(BuildDir)Publish\</PublishDir>
     <PackageDir>$(BuildDir)Packages\</PackageDir>
 
