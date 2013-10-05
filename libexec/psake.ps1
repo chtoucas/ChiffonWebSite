@@ -1,7 +1,7 @@
 
 properties {
   $MSProject = '.\Chiffon.proj'
-  $MSOptions = "/nologo", "/v:minimal", "/fl", "/flp:logfile=msbuild.log;verbosity=normal;"
+  $MSOptions = "/nologo", "/v:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
 
   $Configuration   = "Release"
   $Platform        = "Any CPU"
@@ -18,7 +18,7 @@ Task Build -depends ReadBuildConfig {
   MSBuild $MSOptions $MSProject /t:Build $MSProperties
 }
 
-Task Rebuild -depends ReadBuildConfig, Clean {
+Task Rebuild -depends ReadBuildConfig {
   MSBuild $MSOptions $MSProject /t:Rebuild $MSProperties
 }
 
@@ -26,14 +26,16 @@ Task RunTests -depends ReadBuildConfig {
   MSBuild $MSOptions $MSProject /t:RunTests $MSProperties
 }
 
-Task Integrate -depends ReadBuildConfig, Clean, Build, RunTests { }
+Task Integrate -depends ReadBuildConfig {
+  MSBuild $MSOptions $MSProject /t:Integrate $MSProperties
+}
 
-Task Publish -depends Clean, ReadPublishConfig {
+Task Publish -depends ReadPublishConfig {
   MSBuild $MSOptions $MSProject /t:Publish $MSProperties
 }
 
 Task ReadBuildConfig {
-  $configPath = $(Get-Location).Path + "\etc\Build.config"
+  $configPath = $(Get-Location).Path + "\..\etc\Build.config"
 
   [xml]$configXml = Get-Content -Path $configPath
 
@@ -49,7 +51,7 @@ Task ReadBuildConfig {
 }
 
 Task ReadPublishConfig {
-  $configPath = $(Get-Location).Path + "\etc\Publish.config"
+  $configPath = $(Get-Location).Path + "\..\etc\Publish.config"
 
   [xml]$configXml = Get-Content -Path $configPath
 

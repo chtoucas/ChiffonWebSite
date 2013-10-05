@@ -10,7 +10,6 @@
 
     <!-- Répertoires temporaires -->
     <BuildDir>$(RootDir)_build\</BuildDir>
-    <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath -->
     <OutDir>$(BuildDir)$(Configuration)\</OutDir>
     <PublishDir>$(BuildDir)Publish\</PublishDir>
     <PackageDir>$(BuildDir)Packages\</PackageDir>

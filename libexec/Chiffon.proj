@@ -6,20 +6,25 @@
   * http://www.asp.net/mvc/tutorials/deployment/visual-studio-web-deployment/deploying-extra-files
   * http://msdn.microsoft.com/en-us/library/ee942158.aspx
   * http://stackoverflow.com/questions/11198252/msbuild-task-with-aftertargets-to-encrypt-web-config-after-transform
+  * http://stackoverflow.com/questions/4752293/msbuild-determine-a-solutions-publishedwebsites?rq=1
   TODO:
-  * compilation conditionnelle
   * compilation incrémentale pour PEVerify
   * encrypter les chaînes de connection
   * add custom deploy script
-  * BuildInParallel ?
   * multiples plateformes : x64, x86 & co ?
   -->
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project=".\libexec\Chiffon.settings.targets" />
-  <Import Project=".\libexec\Chiffon.helpers.targets" />
-  <Import Project=".\libexec\Chiffon.Tasks.targets" />
 
-  <!-- Macros -->
+<!-- WARNING: L'ordre est extrèmement important. Par exemple, _GetSemVer doit absolument s'exécuter
+     après _UpdateVersionNumber. Ainsi si une directive dépend indirectement de _GetSemVer
+     et _UpdateVersionNumber est lancé après, la version utilisée sera obsolète. -->
+
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\Chiffon.settings.targets" />
+  <Import Project=".\Chiffon.helpers.targets" />
+  <Import Project=".\Chiffon.Tasks.targets" />
+
+  <!-- Propriétés globales
+       =================== -->
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -42,7 +47,8 @@
     <PublishWebSite Condition="'$(PublishWebSite)' != 'false'">true</PublishWebSite>
   </PropertyGroup>
 
-  <!-- Directives publiques -->
+  <!-- Directives publiques
+       ==================== -->
 
   <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)">
     <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
@@ -53,6 +59,8 @@
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
   <!--
   <Target Name="_BuildViews" DependsOnTargets="Build">
@@ -65,10 +73,14 @@
     <Message Text="RunTests not yet done..." Importance="High" />
   </Target>
 
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build;RunTests" />
+
   <Target Name="Publish" DependsOnTargets="$(PublishDependsOn)">
-    <Error Text="--- %(_ProjectsToPublish.AdditionalProperties)" />
-    <MSBuild Projects="@(_ProjectsToPublish)" Targets="Build" />
+    <MSBuild Projects="@(_ProjectsToPublish)" Targets="Clean;Build" />
   </Target>
+
+  <!-- Dépendances
+       =========== -->
 
   <!-- Dépendances pour Clean -->
 
@@ -91,8 +103,13 @@
 
   <PropertyGroup>
     <BuildDependsOn>
+      <!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé...
+           Il faut deviser un processus plus intelligent pour savoir quand on doit mettre à jour
+           le numéro de Build.
+           Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
+      -->
       _ValidateMilestoneForBuild;
-      _UpdateVersionNumber;
+      <!-- _UpdateVersionNumber -->
       _GetProjectsToBuild
     </BuildDependsOn>
   </PropertyGroup>
@@ -119,12 +136,7 @@
     <PublishDependsOn>
       _ValidateMilestoneForPublish;
       _UpdateVersionNumber;
-      _GetProjectsToPublish
-      <!-- WARNING: Clean dépend indirectement de _GetSemVer, donc pour que _UpdateVersionNumber
-           puisse mettre correctement à jour la valeur de _SemVer utilisée par _GetProjectsToPublish
-           il faut laisser Clean en fin de liste.
-           NB: On n'appelle plus directement Clean, on laisse psake lancer cette directive. -->
-      <!-- Clean -->
+      _GetProjectsToPublish;
     </PublishDependsOn>
   </PropertyGroup>
 
@@ -132,6 +144,8 @@
 
   <PropertyGroup>
     <BeforePublishDependsOn>
+      _RemoveOutDir;
+      _CreateOutDir;
       _CreatePublishDir;
       _CreatePackageDir
     </BeforePublishDependsOn>
@@ -146,7 +160,10 @@
     </AfterPublishDependsOn>
   </PropertyGroup>
 
-  <!-- Cibles privées -->
+  <!-- Cibles privées
+       ============== -->
+
+  <!-- Répertoires temporaires -->
 
   <Target Name="_CreateOutDir">
     <MakeDir Directories="$(OutDir)" Condition="!Exists($(OutDir))" />
@@ -160,20 +177,34 @@
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
   </Target>
 
-  <!-- Configuration de la compilation -->
+  <Target Name="_RemoveOutDir">
+    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
+  </Target>
+
+  <Target Name="_RemovePublishDir">
+    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
+  </Target>
+
+  <!-- Configuration des projets MSBuild -->
+
   <Target Name="_GetBuildProperties">
+    <!-- Configuration de la compilation -->
     <PropertyGroup>
       <_BuildProperties>
         Configuration=$(Configuration);
         OutDir=$(OutDir);
+        <!-- NB: D'après Microsoft.Common.targets, on doit utiliser OutDir plutôt qu'OutputPath.
+             Pour les projets Web, utiliser la même valeur pour OutDir et OutputPath permet d'éviter
+             la création de _PublishedWebsites. -->
+        OutputPath=$(OutDir);
         Platform=$(Platform);
         BuildInParallel=$(BuildInParallel)
       </_BuildProperties>
     </PropertyGroup>
   </Target>
 
-  <!-- Configuration de la minification -->
   <Target Name="_GetMinifyProperties" DependsOnTargets="_GetSemVer">
+    <!-- Configuration de la minification -->
     <PropertyGroup>
       <_MinifyProperties>
         YuiCompressorJar=$(YuiCompressorJar);
@@ -183,8 +214,39 @@
     </PropertyGroup>
   </Target>
 
-  <!-- Liste des projets à compiler -->
+  <Target Name="_GetPublishProperties" DependsOnTargets="_GetBuildProperties">
+    <!-- Configuration de la publication -->
+    <PropertyGroup>
+      <_PublishProperties>
+        $(_BuildProperties);
+        TransformsDir=$(TransformsDir);
+        PublishTarget=$(PublishTarget);
+        <!-- Configuration de MSBuild -->
+        DeployOnBuild=true;
+        <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
+        VisualStudioVersion=11.0;
+
+        <!-- Configuration commune à tous les profils de publication -->
+        WebPublishMethod=FileSystem;
+        DebugSymbols=true;
+        DeleteAppCodeCompiledFiles=true;
+        DeleteExistingFiles=true;
+        DeployTarget=WebPublish;
+        EnableUpdateable=false;
+        ExcludeApp_Data=true;
+        <!-- On garde aussi les fichiers debug des autres projets -->
+        ExcludeGeneratedDebugSymbol=false;
+        PrecompileBeforePublish=true;
+        UseMerge=true;
+        WDPMergeOption=MergeAllOutputsToASingleAssembly
+      </_PublishProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Listes des projets-->
+
   <Target Name="_GetProjectsToBuild" DependsOnTargets="_GetBuildProperties;_GetMinifyProperties">
+    <!-- Liste des projets à compiler -->
     <ItemGroup>
       <_ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
         Condition="$(BuildAssets) == 'true'">
@@ -198,8 +260,8 @@
     </ItemGroup>
   </Target>
 
-  <!-- Liste des projets à publier (vers le système de fichier) -->
   <Target Name="_GetProjectsToPublish" DependsOnTargets="_GetPublishProperties;_GetMinifyProperties">
+    <!-- Liste des projets à publier (vers le système de fichier) -->
     <ItemGroup>
       <_ProjectsToPublish Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
         Condition="$(PublishAssets) == 'true'">
@@ -230,58 +292,13 @@
     </ItemGroup>
   </Target>
 
-  <!-- Configuration de la publication -->
-  <Target Name="_GetPublishProperties" DependsOnTargets="$(_GetBuildProperties)">
-    <PropertyGroup>
-      <_PublishProperties>
-        $(_BuildProperties);
-        TransformsDir=$(TransformsDir);
-        PublishTarget=$(PublishTarget);
-        <!-- Configuration de MSBuild -->
-        OutputPath=$(OutDir);
-        DeployOnBuild=true;
-        <!-- On force la valeur de VisualStudioVersion, sinon MSBuild refuse de publier le projet -->
-        VisualStudioVersion=11.0;
+  <!-- Récupération ou mise à jour dun numéro de version -->
 
-        <!-- Configuration commune à tous les profils de publication -->
-        WebPublishMethod=FileSystem;
-        DebugSymbols=true;
-        DeleteAppCodeCompiledFiles=true;
-        DeleteExistingFiles=true;
-        DeployTarget=WebPublish;
-        EnableUpdateable=false;
-        ExcludeApp_Data=true;
-        <!-- On garde aussi les fichiers debug des autres projets -->
-        ExcludeGeneratedDebugSymbol=false;
-        PrecompileBeforePublish=true;
-        UseMerge=true;
-        WDPMergeOption=MergeAllOutputsToASingleAssembly
-      </_PublishProperties>
-    </PropertyGroup>
-  </Target>
-
-  <!--- Récupération du numéro de version sémantique -->
   <Target Name="_GetSemVer">
+    <!--- Récupération du numéro de version sémantique -->
     <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
       <Output PropertyName="_SemVer" TaskParameter="SemVer" />
     </GetSemVer>
-  </Target>
-
-  <Target Name="_Package" DependsOnTargets="_GetSemVer">
-    <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PublishTarget).7z</_PackageFile>
-    </PropertyGroup>
-
-    <Delete Files="$(_PackageFile)" />
-    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)\*" ContinueOnError="false"/>
-  </Target>
-
-  <Target Name="_RemoveOutDir">
-    <RemoveDir Directories="$(OutDir)" Condition="Exists($(OutDir))" />
-  </Target>
-
-  <Target Name="_RemovePublishDir">
-    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
   </Target>
 
   <Target Name="_UpdateVersionNumber">
@@ -293,6 +310,8 @@
     </UpdateVersion>
   </Target>
 
+  <!-- Validation des paramètres -->
+
   <Target Name="_ValidateMilestoneForBuild">
     <Error Text="The property 'Milestone' must be set to 'None'."
            Condition="'$(Milestone)' != 'None'"/>
@@ -303,6 +322,8 @@
            Condition="'$(Milestone)' == 'None'"/>
   </Target>
 
+  <!-- Vérification des résultats -->
+
   <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
           Inputs="@(_BuildOutputs)"
           Outputs="$(RootDir).buildTime">
@@ -312,7 +333,6 @@
                     Exclude="$(OutDir)_PublishedWebsites\**\*"/>
     </ItemGroup>
 
-    --><!-- On supprime les doublons --><!--
     <RemoveDuplicates Inputs="@(_BinaryFiles)">
       <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
     </RemoveDuplicates>
@@ -327,15 +347,32 @@
     <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
   </Target>
 
-  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify">
+  <Target Name="_GetPublishOutputs">
     <ItemGroup>
-      <_AspFiles Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
+      <_PublishOutputs Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
+  </Target>
 
+  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify;_GetPublishOutputs"
+          Inputs="@(_PublishOutputs)"
+          Outputs="$(RootDir).publishTime" >
     <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
          "incorrectes" de ce point de vue là -->
-    <Exec Command="$(PEVerifyExe) &quot;%(_AspFiles.FullPath)&quot; /nologo /il /unique"
+    <Exec Command="$(PEVerifyExe) &quot;%(_PublishOutputs.FullPath)&quot; /nologo /il /unique"
           ContinueOnError="false" />
+
+    <Touch Files="$(RootDir).publishTime" AlwaysCreate="true" />
+  </Target>
+
+  <!-- Utilitaires -->
+
+  <Target Name="_Package" DependsOnTargets="_GetSemVer">
+    <PropertyGroup>
+      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PublishTarget).7z</_PackageFile>
+    </PropertyGroup>
+
+    <Delete Files="$(_PackageFile)" />
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)*" ContinueOnError="false"/>
   </Target>
 
 </Project>
