@@ -13,11 +13,11 @@
 
     <!-- Répertoires temporaires -->
     <BuildDir>$(RootDir)_build\</BuildDir>
-    <BaseOutDir>$(BuildDir)Bin\</BaseOutDir>
-    <BaseIntermediateOutDir>$(BuildDir)Obj\</BaseIntermediateOutDir>
+    <BaseOutDir>$(BuildDir)bin\</BaseOutDir>
+    <BaseIntermediateOutDir>$(BuildDir)obj\</BaseIntermediateOutDir>
     <OutDir>$(BaseOutDir)$(Configuration)\</OutDir>
-    <PublishDir>$(BuildDir)Publish\</PublishDir>
-    <LogDir>$(BuildDir)Logs\</LogDir>
+    <PublishDir>$(BuildDir)publish\</PublishDir>
+    <ReportsDir>$(BuildDir)reports\</ReportsDir>
 
     <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git
                   car il contient toutes les configurations privées. -->

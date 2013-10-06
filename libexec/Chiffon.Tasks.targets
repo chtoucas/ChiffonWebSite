@@ -17,7 +17,7 @@ return true;
     </Task>
   </UsingTask>
 
- <UsingTask TaskName="GetSemVer" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="GetSemVer" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <VersionInfoXml ParameterType="System.String" Required="true" />
       <SemVer ParameterType="System.String" Output="true" />
@@ -65,7 +65,7 @@ return !Log.HasLoggedErrors;
     </Task>
   </UsingTask>
 
- <UsingTask TaskName="GetVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="GetVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <VersionInfoXml ParameterType="System.String" Required="true" />
       <VersionNumber ParameterType="System.String" Output="true" />

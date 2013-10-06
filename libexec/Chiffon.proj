@@ -69,7 +69,7 @@
       <_FilesToDelete Include="$(BaseOutDir)**\*"/>
       <_FilesToDelete Include="$(BaseIntermediateOutDir)**\*"/>
       <_FilesToDelete Include="$(PublishDir)**\*"/>
-      <_FilesToDelete Include="$(LogDir)**\*"/>
+      <_FilesToDelete Include="$(ReportsDir)**\*"/>
       -->
     </ItemGroup>
 
@@ -80,7 +80,7 @@
     <RemoveDir Directories="$(BaseOutDir)" Condition="Exists($(BaseOutDir))" />
     <RemoveDir Directories="$(BaseIntermediateOutDir)" Condition="Exists($(BaseIntermediateOutDir))" />
     <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
-    <RemoveDir Directories="$(LogDir)" Condition="Exists($(LogDir))" />
+    <RemoveDir Directories="$(ReportsDir)" Condition="Exists($(ReportsDir))" />
     -->
 
     <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
@@ -112,8 +112,7 @@
 
   <Target Name="Repackage" DependsOnTargets="_PreRepackage;CleanPackage;CorePackage;_PostPackage" />
 
-  <!-- TODO: Artifact ? -->
-  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;CorePackage" />
+  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;CleanPackage;CorePackage" />
 
   <!-- ### Directives connexes ### -->
 
@@ -121,7 +120,7 @@
 
   <PropertyGroup>
     <BeforeBuildDependsOn>
-      _CreateLogDir
+      _CreateReportsDir
     </BeforeBuildDependsOn>
   </PropertyGroup>
 
@@ -138,7 +137,7 @@
 
   <PropertyGroup>
     <BeforeCorePackageDependsOn>
-      _CreateLogDir;
+      _CreateReportsDir;
       _CreatePackageDir
     </BeforeCorePackageDependsOn>
   </PropertyGroup>
@@ -157,8 +156,8 @@
 
   <!-- Répertoires temporaires -->
 
-  <Target Name="_CreateLogDir">
-    <MakeDir Directories="$(LogDir)" Condition="!Exists($(LogDir))" />
+  <Target Name="_CreateReportsDir">
+    <MakeDir Directories="$(ReportsDir)" Condition="!Exists($(ReportsDir))" />
   </Target>
 
   <Target Name="_CreatePackageDir">
@@ -318,7 +317,7 @@
       <_TestAssemblies Include="$(OutDir)**\Chiffon*.Tests.dll" />
     </ItemGroup>
 
-    <xunit Assemblies="@(_TestAssemblies)" Xml="$(LogDir)\xunit.xml" />
+    <xunit Assemblies="@(_TestAssemblies)" Xml="$(ReportsDir)\xunit.xml" />
   </Target>
 
   <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
