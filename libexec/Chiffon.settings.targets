@@ -7,6 +7,8 @@
     <EtcDir>$(RootDir)etc\</EtcDir>
     <SourceDir>$(RootDir)src\</SourceDir>
     <ToolsDir>$(RootDir)tools\</ToolsDir>
+    <PackageDir>$(RootDir)_artifacts\</PackageDir>
+
     <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
 
     <!-- Répertoires temporaires -->
@@ -15,7 +17,6 @@
     <BaseIntermediateOutDir>$(BuildDir)Obj\</BaseIntermediateOutDir>
     <OutDir>$(BaseOutDir)$(Configuration)\</OutDir>
     <PublishDir>$(BuildDir)Publish\</PublishDir>
-    <PackageDir>$(BuildDir)Packages\</PackageDir>
     <LogDir>$(BuildDir)Logs\</LogDir>
 
     <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git

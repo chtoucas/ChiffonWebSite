@@ -6,7 +6,6 @@
   * compilation pour de multiples plateformes ?
   * RestorePackages ?
   * IISExpress, configSource
-  * logs : msbuild.log, xunit.log
   -->
 
 <!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé. En plus,
@@ -65,17 +64,24 @@
 
   <Target Name="DeepClean" DependsOnTargets="Clean">
     <ItemGroup>
+      <_FilesToDelete Include="$(BuildDir)**\*"/>
+      <!--
       <_FilesToDelete Include="$(BaseOutDir)**\*"/>
       <_FilesToDelete Include="$(BaseIntermediateOutDir)**\*"/>
       <_FilesToDelete Include="$(PublishDir)**\*"/>
       <_FilesToDelete Include="$(LogDir)**\*"/>
+      -->
     </ItemGroup>
 
     <Delete Files="@(_FilesToDelete)" />
+
+    <RemoveDir Directories="$(BuildDir)" Condition="Exists($(BuildDir))" />
+    <!--
     <RemoveDir Directories="$(BaseOutDir)" Condition="Exists($(BaseOutDir))" />
     <RemoveDir Directories="$(BaseIntermediateOutDir)" Condition="Exists($(BaseIntermediateOutDir))" />
     <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
     <RemoveDir Directories="$(LogDir)" Condition="Exists($(LogDir))" />
+    -->
 
     <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
   </Target>
