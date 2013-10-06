@@ -1,7 +1,7 @@
 
 properties {
   $MSProject = '.\Chiffon.proj'
-  $MSOptions = "/nologo", "/v:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
+  $MSOptions = "/nologo", "/verbosity:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
 
   $Configuration   = "Release"
   $Platform        = "Any CPU"
@@ -31,7 +31,7 @@ Task FastBuild -depends ReadBuildConfig {
 }
 
 Task Integrate {
-  MSBuild $MSOptions $MSProject "/t:Repackage" "/p:PackageTarget=Integrate"
+  MSBuild $MSOptions $MSProject /t:Integrate
 }
 
 Task Package -depends ReadPackageConfig {

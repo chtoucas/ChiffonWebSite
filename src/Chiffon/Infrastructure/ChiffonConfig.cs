@@ -108,7 +108,7 @@
                 "{0}.{1}.{2}",
                 AssemblyVersion_.Major,
                 AssemblyVersion_.Minor,
-                AssemblyVersion_.Revision);
+                AssemblyVersion_.Build);
 
             CssVersion = nvc.MayGetValue("chiffon:CssVersion").ValueOrElse(version);
 

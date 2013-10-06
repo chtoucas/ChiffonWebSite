@@ -5,12 +5,14 @@
   * encrypter les chaînes de connection
   * compilation pour de multiples plateformes ?
   * RestorePackages ?
+  * IISExpress, configSource
+  * logs : msbuild.log, xunit.log
   -->
 
-<!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé...
-      Il faut deviser un processus plus intelligent pour savoir quand on doit mettre à jour
-      le numéro de Build.
-      Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
+<!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé. En plus,
+     cela empêcherait la compilation incrémentale. Il faut donc deviser un processus plus
+     intelligent pour savoir quand on doit mettre à jour le numéro de Build.
+     Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
 -->
 <!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, _GetSemVer
      doit absolument être exécuté après _UpdateVersionNumber. En effet, si une directive dépend
@@ -34,10 +36,10 @@
     <MvcBuildViews Condition="'$(MvcBuildViews)' != 'false'">true</MvcBuildViews>
     <RunTests Condition="'$(RunTests)' != 'false'">true</RunTests>
 
-    <!-- Valeurs possibles : Major, Minor, Patch, None -->
-    <Milestone Condition="'$(Milestone)' == ''">None</Milestone>
+    <!-- Valeurs possibles : Major, Minor, Patch, Build -->
+    <Milestone Condition="'$(Milestone)' == ''">Build</Milestone>
 
-    <!-- Valeurs possibles : Production, Integrate -->
+    <!-- Valeurs possibles : Production, Integration -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
     <!-- Compilation conditionnelle -->
@@ -59,21 +61,23 @@
       <_FilesToDelete Include="$(BaseOutDir)**\*"/>
       <_FilesToDelete Include="$(BaseIntermediateOutDir)**\*"/>
       <_FilesToDelete Include="$(PublishDir)**\*"/>
+      <_FilesToDelete Include="$(LogDir)**\*"/>
     </ItemGroup>
 
     <Delete Files="@(_FilesToDelete)" />
     <RemoveDir Directories="$(BaseOutDir)" Condition="Exists($(BaseOutDir))" />
     <RemoveDir Directories="$(BaseIntermediateOutDir)" Condition="Exists($(BaseIntermediateOutDir))" />
     <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
+    <RemoveDir Directories="$(LogDir)" Condition="Exists($(LogDir))" />
 
     <MSBuild Projects="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="DeepClean" />
   </Target>
 
-  <Target Name="CleanBuild" DependsOnTargets="$(CleanBuildDependsOn)">
+  <Target Name="CleanBuild" DependsOnTargets="_GetProjectsToBuild">
     <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
   </Target>
 
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
+  <Target Name="Build" DependsOnTargets="_GetProjectsToBuild">
     <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
@@ -81,34 +85,30 @@
 
   <Target Name="Rebuild" DependsOnTargets="CleanBuild;Build" />
 
-  <Target Name="CleanPackage" DependsOnTargets="$(CleanPackageDependsOn)">
+  <Target Name="CleanPackage" DependsOnTargets="_GetProjectsToPackage">
     <MSBuild Projects="@(_ProjectsToPackage)" Targets="Clean" />
   </Target>
 
-  <Target Name="Package" DependsOnTargets="$(PackageDependsOn)">
+  <Target Name="CorePackage" DependsOnTargets="_GetProjectsToPackage">
     <MSBuild Projects="@(_ProjectsToPackage)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
 
-  <Target Name="Repackage" DependsOnTargets="CleanPackage;Package" />
+  <Target Name="Package" DependsOnTargets="_PrePackage;CleanPackage;CorePackage;_PostPackage" />
 
-  <!-- ### Dépendances ### -->
+  <Target Name="Repackage" DependsOnTargets="_PreRepackage;CleanPackage;CorePackage;_PostPackage" />
 
-  <!-- Dépendances pour CleanBuild -->
+  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;CorePackage;_PostPackage" />
 
-  <PropertyGroup>
-    <CleanBuildDependsOn>
-      _GetProjectsToBuild
-    </CleanBuildDependsOn>
-  </PropertyGroup>
+  <!-- ### Directives connexes ### -->
 
-  <!-- Dépendances pour Build -->
+  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
 
   <PropertyGroup>
-    <BuildDependsOn>
-      _GetProjectsToBuild
-    </BuildDependsOn>
+    <BeforeBuildDependsOn>
+      _CreateLogDir
+    </BeforeBuildDependsOn>
   </PropertyGroup>
 
   <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
@@ -119,44 +119,33 @@
     </AfterBuildDependsOn>
   </PropertyGroup>
 
-  <!-- Dépendances pour CleanPackage -->
+  <Target Name="_BeforeCorePackage" BeforeTargets="CorePackage"
+          DependsOnTargets="$(BeforeCorePackageDependsOn)" />
 
   <PropertyGroup>
-    <CleanPackageDependsOn>
-      _GetProjectsToPackage;
-    </CleanPackageDependsOn>
-  </PropertyGroup>
-
-  <!-- Dépendances pour Package -->
-
-  <PropertyGroup>
-    <PackageDependsOn>
-      _UpdateVersionNumber;
-      _GetProjectsToPackage;
-    </PackageDependsOn>
-  </PropertyGroup>
-
-  <Target Name="_BeforePackage" BeforeTargets="Package" DependsOnTargets="$(BeforePackageDependsOn)" />
-
-  <PropertyGroup>
-    <BeforePackageDependsOn>
+    <BeforeCorePackageDependsOn>
+      _CreateLogDir;
       _CreatePackageDir
-    </BeforePackageDependsOn>
+    </BeforeCorePackageDependsOn>
   </PropertyGroup>
 
-  <Target Name="_AfterPackage" AfterTargets="Package" DependsOnTargets="$(AfterPackageDependsOn)" />
+  <Target Name="_AfterCorePackage" AfterTargets="CorePackage"
+          DependsOnTargets="$(AfterCorePackageDependsOn)" />
 
   <PropertyGroup>
-    <AfterPackageDependsOn>
+    <AfterCorePackageDependsOn>
       _VerifyBuild;
-      _VerifyPublishOutputs;
-      _ZipPackage
-    </AfterPackageDependsOn>
+      _VerifyPublishOutputs
+    </AfterCorePackageDependsOn>
   </PropertyGroup>
 
   <!-- ### Cibles privées ### -->
 
   <!-- Répertoires temporaires -->
+
+  <Target Name="_CreateLogDir">
+    <MakeDir Directories="$(LogDir)" Condition="!Exists($(LogDir))" />
+  </Target>
 
   <Target Name="_CreatePackageDir">
     <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
@@ -227,7 +216,7 @@
   <Target Name="_GetProjectsToBuild" DependsOnTargets="_GetBuildProperties;_GetMinifyProperties">
     <!-- L'instruction suivant demande à MSBuild de sauvegarder le résultat de la transformation
          d'une solution en fichier projet. -->
-    <SetEnvVar Variable="msbuildemitsolution" Value="1"/>
+    <SetEnv Variable="msbuildemitsolution" Value="1"/>
 
     <!-- Liste des projets à compiler -->
     <ItemGroup>
@@ -284,6 +273,13 @@
     </GetSemVer>
   </Target>
 
+  <Target Name="_GetVersionNumber">
+    <!--- Récupération du numéro de version complet -->
+    <GetVersion VersionInfoXml="$(EtcDir)VersionInfo.xml">
+      <Output PropertyName="_VersionNumber" TaskParameter="VersionNumber" />
+    </GetVersion>
+  </Target>
+
   <Target Name="_UpdateVersionNumber">
     <UpdateVersion
       VersionInfoXml="$(EtcDir)VersionInfo.xml"
@@ -307,7 +303,7 @@
       <_TestAssemblies Include="$(OutDir)**\Chiffon*.Tests.dll" />
     </ItemGroup>
 
-    <xunit Assemblies="@(_TestAssemblies)" />
+    <xunit Assemblies="@(_TestAssemblies)" Xml="$(LogDir)\xunit.xml" />
   </Target>
 
   <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
@@ -342,11 +338,28 @@
           ContinueOnError="false" />
   </Target>
 
-  <!-- Miscs -->
+  <!-- Packaging -->
 
-  <Target Name="_ZipPackage" DependsOnTargets="_GetSemVer">
+  <Target Name="_PrePackage">
+    <!-- Lors de la création d'un package, 'Milestone' doit être différent de 'Build' -->
+    <Error Text="The parameter 'Milestone' must not be set to 'Build'."
+           Condition="'$(Milestone)' == 'Build'" />
+    <CallTarget Targets="_UpdateVersionNumber" />
+  </Target>
+
+  <Target Name="_PreRepackage">
+    <!-- Lors de la mise à jour d'un package, on incrémente uniquement le numéro de 'Build' -->
+    <Milestone>Build</Milestone>
+    <CallTarget Targets="_UpdateVersionNumber" />
+  </Target>
+
+  <Target Name="_PreIntegrate">
+    <PackageTarget>Integration</PackageTarget>
+  </Target>
+
+  <Target Name="_PostPackage" DependsOnTargets="_GetVersionNumber">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(_SemVer)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />

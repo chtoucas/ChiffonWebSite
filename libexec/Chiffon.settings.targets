@@ -7,16 +7,16 @@
     <EtcDir>$(RootDir)etc\</EtcDir>
     <SourceDir>$(RootDir)src\</SourceDir>
     <ToolsDir>$(RootDir)tools\</ToolsDir>
+    <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
 
     <!-- Répertoires temporaires -->
     <BuildDir>$(RootDir)_build\</BuildDir>
     <BaseOutDir>$(BuildDir)Bin\</BaseOutDir>
-    <OutDir>$(BaseOutDir)$(Configuration)\</OutDir>
     <BaseIntermediateOutDir>$(BuildDir)Obj\</BaseIntermediateOutDir>
+    <OutDir>$(BaseOutDir)$(Configuration)\</OutDir>
     <PublishDir>$(BuildDir)Publish\</PublishDir>
     <PackageDir>$(BuildDir)Packages\</PackageDir>
-
-    <PublishProfileDir>$(RootDir)libexec\</PublishProfileDir>
+    <LogDir>$(BuildDir)Logs\</LogDir>
 
     <!-- WARNING: Ce répertoire n'est pas inclus dans l'entrepôt Git
                   car il contient toutes les configurations privées. -->

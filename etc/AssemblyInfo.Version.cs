@@ -7,8 +7,8 @@ using System;
 using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: AssemblyVersion("1.0.273.27")]
-[assembly: AssemblyFileVersion("1.0.273.27")]
+[assembly: AssemblyVersion("1.0.27.273")]
+[assembly: AssemblyFileVersion("1.0.27.273")]
 [assembly: AssemblyInformationalVersion("1.0.27")]
 
 //[assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly")]

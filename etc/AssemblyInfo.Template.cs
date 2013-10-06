@@ -9,6 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: AssemblyVersion("$Major$.$Minor$.$Build$.$Revision$")]
 [assembly: AssemblyFileVersion("$Major$.$Minor$.$Build$.$Revision$")]
-[assembly: AssemblyInformationalVersion("$Major$.$Minor$.$Revision$")]
+[assembly: AssemblyInformationalVersion("$Major$.$Minor$.$Build$")]
 
 //[assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly")]
