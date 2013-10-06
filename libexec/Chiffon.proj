@@ -37,7 +37,7 @@
     <!-- Valeurs possibles : Major, Minor, Patch, None -->
     <Milestone Condition="'$(Milestone)' == ''">None</Milestone>
 
-    <!-- Aujourd'hui, on a une seule valeur possible pour PackageTarget: Production -->
+    <!-- Valeurs possibles : Production, Integrate -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
     <!-- Compilation conditionnelle -->

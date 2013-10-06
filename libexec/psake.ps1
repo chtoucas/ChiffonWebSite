@@ -31,7 +31,7 @@ Task FastBuild -depends ReadBuildConfig {
 }
 
 Task Integrate {
-  MSBuild $MSOptions $MSProject "/t:Repackage" "/p:PackageTarget=Production"
+  MSBuild $MSOptions $MSProject "/t:Repackage" "/p:PackageTarget=Integrate"
 }
 
 Task Package -depends ReadPackageConfig {
