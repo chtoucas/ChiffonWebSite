@@ -47,10 +47,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{925044C1-66B2-4DE3-8FE9-F38BACB917F3}"
 	ProjectSection(SolutionItems) = preProject
 		src\Chiffon.WebSite\assets\Chiffon.Assets.proj = src\Chiffon.WebSite\assets\Chiffon.Assets.proj
+		libexec\Chiffon.common.targets = libexec\Chiffon.common.targets
 		libexec\Chiffon.helpers.targets = libexec\Chiffon.helpers.targets
 		libexec\Chiffon.proj = libexec\Chiffon.proj
+		libexec\Chiffon.properties.targets = libexec\Chiffon.properties.targets
 		libexec\Chiffon.settings.targets = libexec\Chiffon.settings.targets
-		libexec\Chiffon.Tasks.Targets = libexec\Chiffon.Tasks.Targets
+		libexec\Chiffon.tasks.targets = libexec\Chiffon.tasks.targets
 		libexec\Chiffon.xunit.targets = libexec\Chiffon.xunit.targets
 	EndProjectSection
 EndProject

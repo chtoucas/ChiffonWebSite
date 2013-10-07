@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Ce fichier contient toutes les directives communes.
+  -->
+
+  <Import Project=".\Chiffon.properties.targets" />
+  <Import Project=".\Chiffon.tasks.targets" />
+  <Import Project=".\Chiffon.xunit.targets" />
+  <Import Project=".\Chiffon.helpers.targets" />
+
+  <!-- ### Répertoires temporaires ### -->
+
+  <!--
+    Création du répertoire contenant les rapports produits durant la compilation.
+    
+    @@  $(ReportsDir)
+  -->
+  <Target Name="CreateReportsDir">
+    <MakeDir Directories="$(ReportsDir)" Condition="!Exists($(ReportsDir))" />
+  </Target>
+
+  <!--
+    Création du répertoire contenant les packages produits durant la compilation.
+    
+    @@  $(PackageDir)
+  -->
+  <Target Name="CreatePackageDir">
+    <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
+  </Target>
+
+  <!-- ### Récupération ou mise à jour des numéros de version ### -->
+
+  <!-- 
+    Récupération du numéro de version sémantique. 
+    
+    @@  $(EtcDir)
+    =>  $(SemVer)
+  -->
+  <Target Name="GetSemVer">
+    <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
+      <Output PropertyName="SemVer" TaskParameter="SemVer" />
+    </GetSemVer>
+  </Target>
+
+  <!-- 
+    Récupération du numéro de version .NET.
+    
+    @@  $(EtcDir)
+    =>  $(VersionNumber)
+  -->
+  <Target Name="GetVersionNumber">
+    <GetVersion VersionInfoXml="$(EtcDir)VersionInfo.xml">
+      <Output PropertyName="VersionNumber" TaskParameter="VersionNumber" />
+    </GetVersion>
+  </Target>
+
+  <!-- 
+    Mise à jour du numéro de version .NET. 
+    
+    @@  $(EtcDir)
+    <=  $(Milestone)
+  -->
+  <Target Name="UpdateVersionNumber">
+    <UpdateVersion
+      VersionInfoXml="$(EtcDir)VersionInfo.xml"
+      AssemblyInfoTemplate="$(EtcDir)AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(EtcDir)AssemblyInfo.Version.cs"
+      Milestone="$(Milestone)">
+    </UpdateVersion>
+  </Target>
+
+  <!-- Tests (Whitebox) -->
+
+  <!-- 
+    Tests unitaires Xunit. 
+    
+    @@  $(OutDir), $(ReportsDir)
+    <=  $(RunTests), $(Milestone)
+  -->
+  <Target Name="RunXunitTests" Condition="'$(RunTests)' == 'true'"
+          DependsOnTargets="CreateReportsDir">
+    <ItemGroup>
+      <_TestAssemblies Include="$(OutDir)**\Chiffon*.Tests.dll" />
+    </ItemGroup>
+
+    <xunit Assemblies="@(_TestAssemblies)" Xml="$(ReportsDir)\xunit.xml" />
+  </Target>
+
+  <!-- ### Vérification des résultats ### -->
+
+  <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
+    <!--
+    <ItemGroup>
+      <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
+                    Exclude="$(OutDir)_PublishedWebsites\**\*"/>
+    </ItemGroup>
+
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
+    </RemoveDuplicates>
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_AssemblyFiles.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+    -->
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+
+    <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="VerifyAspNetMergeOutputs" DependsOnTargets="GetPEVerify">
+    <ItemGroup>
+      <_PublishOutputs Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
+    </ItemGroup>
+
+    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
+         "incorrectes" de ce point de vue là. -->
+    <Exec Command="$(PEVerifyExe) &quot;%(_PublishOutputs.FullPath)&quot; /nologo /il /unique"
+          ContinueOnError="false" />
+  </Target>
+
+</Project>

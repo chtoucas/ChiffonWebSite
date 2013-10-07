@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Ce fichier contient toutes les directives sans effet de bord.
+  -->
+  
+  <Import Project=".\Chiffon.settings.targets" />
+
+  <!-- ### Listes des projets ### -->
+
+  <!-- 
+    Liste des projets à compiler.
+    
+    @@  $(AssetsProject), $(SolutionFile)
+    <=  $(BuildAssets), $(BuildSolution)
+    =>  @(ProjectsToBuild)
+  -->
+  <Target Name="GetProjectsToBuild" DependsOnTargets="GetBuildProperties;GetMinifyProperties">
+    <ItemGroup>
+      <ProjectsToBuild Include="$(AssetsProject)" Condition="'$(BuildAssets)' == 'true'">
+        <AdditionalProperties>$(MinifyProperties)</AdditionalProperties>
+      </ProjectsToBuild>
+
+      <ProjectsToBuild Include="$(SolutionFile)" Condition="'$(BuildSolution)' == 'true'">
+        <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
+      </ProjectsToBuild>
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    Liste des projets à publier (vers le système de fichier).
+    
+    @@  $(AssetsProject), $(TestsProject), $(WebSiteProject), $(MediaSiteProject), 
+        $(PublishDir), $(PublishProfileDir)
+    <=  $(PackageAssets), $(RunTests), $(PackageWebSite), $(PackageMediaSite)
+    =>  @(ProjectsToPackage)
+  -->
+  <Target Name="GetProjectsToPackage" DependsOnTargets="GetBuildProperties;GetPackageProperties;GetMinifyProperties">
+    <ItemGroup>
+      <ProjectsToPackage Include="$(AssetsProject)" Condition="'$(PackageAssets)' == 'true'">
+        <AdditionalProperties>
+          $(MinifyProperties);
+          $(PackageProperties);
+          PublishUrl=$(PublishDir)wznw.org_chiffon\
+        </AdditionalProperties>
+      </ProjectsToPackage>
+
+      <ProjectsToPackage Include="$(TestsProject)" Condition="'$(RunTests)' == 'true'">
+        <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
+      </ProjectsToPackage>
+
+      <ProjectsToPackage Include="$(WebSiteProject)" Condition="'$(PackageWebSite)' == 'true'">
+        <AdditionalProperties>
+          $(PackageProperties);
+          PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
+          PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
+        </AdditionalProperties>
+      </ProjectsToPackage>
+
+      <ProjectsToPackage Include="$(MediaSiteProject)" Condition="'$(PackageMediaSite)' == 'true'">
+        <AdditionalProperties>
+          $(PackageProperties);
+          PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
+          PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
+        </AdditionalProperties>
+      </ProjectsToPackage>
+    </ItemGroup>
+  </Target>
+
+  <!-- ### Configuration des projets ### -->
+
+  <!-- 
+    Configuration de la compilation.
+    NB: On essaie au mieux d'isoler l'environnement de compilation, ie de définir
+    des répertoires complètement différents de ceux utilisés par VS.
+    
+    @@  $(BaseIntermediateOutDir), $(OutDir)
+    <=  $(BuildInParallel), $(Configuration), $(MvcBuildViews), $(Platform)
+    =>  $(BuildProperties)
+  -->
+  <Target Name="GetBuildProperties">
+    <PropertyGroup>
+      <BuildProperties>
+        Configuration=$(Configuration);
+        OutDir=$(OutDir);
+        <!-- NB: D'après Microsoft.Common.targets, on doit utiliser "OutDir" plutôt qu'"OutputPath".
+             Pour les projets Web, utiliser la même valeur pour "OutDir" et "OutputPath" permet d'éviter
+             la création de "_PublishedWebsites". -->
+        OutputPath=$(OutDir);
+        BaseIntermediateOutputPath=$(BaseIntermediateOutDir);
+        Platform=$(Platform);
+        BuildInParallel=$(BuildInParallel);
+        MvcBuildViews=$(MvcBuildViews)
+      </BuildProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- 
+    Configuration de la minification.
+    
+    @@  $(GoogleClosureJar), $(YuiCompressorJar)
+    =>  $(MinifyProperties)
+  -->
+  <Target Name="GetMinifyProperties" DependsOnTargets="GetSemVer">
+    <PropertyGroup>
+      <MinifyProperties>
+        YuiCompressorJar=$(YuiCompressorJar);
+        GoogleClosureJar=$(GoogleClosureJar);
+        SemVer=$(SemVer)
+      </MinifyProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- 
+    Configuration de la publication. 
+    
+    @@  $(TransformsDir)
+    <=  $(PackageTarget)
+    =>  $(PackageProperties)
+  -->
+  <Target Name="GetPackageProperties" DependsOnTargets="GetBuildProperties">
+    <PropertyGroup>
+      <PackageProperties>
+        $(BuildProperties);
+        TransformsDir=$(TransformsDir);
+        PackageTarget=$(PackageTarget);
+        <!-- Configuration de MSBuild. -->
+        DeployOnBuild=true;
+        <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refuse de publier le projet. -->
+        VisualStudioVersion=11.0;
+
+        <!-- Configuration commune à tous les profils. -->
+        WebPublishMethod=FileSystem;
+        DebugSymbols=true;
+        DeleteAppCodeCompiledFiles=true;
+        DeleteExistingFiles=true;
+        DeployTarget=WebPublish;
+        EnableUpdateable=false;
+        ExcludeApp_Data=true;
+        <!-- On garde aussi les fichiers debug des autres projets. -->
+        ExcludeGeneratedDebugSymbol=false;
+        PrecompileBeforePublish=true;
+        UseMerge=true;
+        WDPMergeOption=MergeAllOutputsToASingleAssembly
+      </PackageProperties>
+    </PropertyGroup>
+  </Target>
+
+</Project>

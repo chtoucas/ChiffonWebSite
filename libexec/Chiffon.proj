@@ -13,18 +13,15 @@
      intelligent pour savoir quand on doit mettre à jour le numéro de "Build".
      Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
 -->
-<!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, "_GetSemVer"
-     doit absolument être exécuté après _UpdateVersionNumber. En effet, si une directive dépend
-     indirectement de "_GetSemVer" et si "_UpdateVersionNumber" est lancé après, la valeur de "_SemVer"
+<!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, "GetSemVer"
+     doit absolument être exécuté après "UpdateVersionNumber". En effet, si une directive dépend
+     indirectement de "GetSemVer" et si "UpdateVersionNumber" est lancé après, la valeur de "SemVer"
      devient obsolète. -->
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project=".\Chiffon.settings.targets" />
-  <Import Project=".\Chiffon.helpers.targets" />
-  <Import Project=".\Chiffon.xunit.targets" />
-  <Import Project=".\Chiffon.Tasks.targets" />
+  <Import Project=".\Chiffon.common.targets" />
 
-  <!-- ### Propriétés globales ### -->
+  <!-- ### Propriétés locales ### -->
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -49,13 +46,6 @@
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
     <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
-
-    <!-- Liste des projets -->
-    <_SolutionFile>$(RootDir)Chiffon.sln</_SolutionFile>
-    <_AssetsProject>$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj</_AssetsProject>
-    <_WebSiteProject>$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj</_WebSiteProject>
-    <_MediaSiteProject>$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj</_MediaSiteProject>
-    <_TestsProject>$(SourceDir)Chiffon.Tests\Chiffon.Tests.csproj</_TestsProject>
   </PropertyGroup>
 
   <!-- ### Directives publiques ### -->
@@ -65,45 +55,33 @@
   <Target Name="DeepClean" DependsOnTargets="Clean">
     <ItemGroup>
       <_FilesToDelete Include="$(BuildDir)**\*"/>
-      <!--
-      <_FilesToDelete Include="$(BaseOutDir)**\*"/>
-      <_FilesToDelete Include="$(BaseIntermediateOutDir)**\*"/>
-      <_FilesToDelete Include="$(PublishDir)**\*"/>
-      <_FilesToDelete Include="$(ReportsDir)**\*"/>
-      -->
     </ItemGroup>
 
     <Delete Files="@(_FilesToDelete)" />
 
     <RemoveDir Directories="$(BuildDir)" Condition="Exists($(BuildDir))" />
-    <!--
-    <RemoveDir Directories="$(BaseOutDir)" Condition="Exists($(BaseOutDir))" />
-    <RemoveDir Directories="$(BaseIntermediateOutDir)" Condition="Exists($(BaseIntermediateOutDir))" />
-    <RemoveDir Directories="$(PublishDir)" Condition="Exists($(PublishDir))" />
-    <RemoveDir Directories="$(ReportsDir)" Condition="Exists($(ReportsDir))" />
-    -->
 
-    <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
+    <MSBuild Projects="$(AssetsProject)" Targets="DeepClean" />
   </Target>
 
-  <Target Name="CleanBuild" DependsOnTargets="_GetProjectsToBuild">
-    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Clean" />
+  <Target Name="CleanBuild" DependsOnTargets="GetProjectsToBuild">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
   </Target>
 
-  <Target Name="Build" DependsOnTargets="_GetProjectsToBuild">
-    <MSBuild Projects="@(_ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
+  <Target Name="Build" DependsOnTargets="GetProjectsToBuild">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="CleanBuild;Build" />
 
-  <Target Name="CleanPackage" DependsOnTargets="_GetProjectsToPackage">
-    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Clean" />
+  <Target Name="CleanPackage" DependsOnTargets="GetProjectsToPackage">
+    <MSBuild Projects="@(ProjectsToPackage)" Targets="Clean" />
   </Target>
 
-  <Target Name="CorePackage" DependsOnTargets="_GetProjectsToPackage">
-    <MSBuild Projects="@(_ProjectsToPackage)" Targets="Build" StopOnFirstFailure="true">
+  <Target Name="CorePackage" DependsOnTargets="GetProjectsToPackage">
+    <MSBuild Projects="@(ProjectsToPackage)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
@@ -116,240 +94,39 @@
 
   <!-- ### Directives connexes ### -->
 
-  <Target Name="_BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
+  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
 
   <PropertyGroup>
     <BeforeBuildDependsOn>
-      _CreateReportsDir
+      EmitProjectSolution
     </BeforeBuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="_AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
+  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
   <PropertyGroup>
     <AfterBuildDependsOn>
-      _VerifyBuild
+      _PostBuild
     </AfterBuildDependsOn>
   </PropertyGroup>
 
-  <Target Name="_BeforeCorePackage" BeforeTargets="CorePackage"
-          DependsOnTargets="$(BeforeCorePackageDependsOn)" />
-
-  <PropertyGroup>
-    <BeforeCorePackageDependsOn>
-      _CreateReportsDir;
-      _CreatePackageDir
-    </BeforeCorePackageDependsOn>
-  </PropertyGroup>
-
-  <Target Name="_AfterCorePackage" AfterTargets="CorePackage"
+  <Target Name="AfterCorePackage" AfterTargets="CorePackage"
           DependsOnTargets="$(AfterCorePackageDependsOn)" />
 
   <PropertyGroup>
     <AfterCorePackageDependsOn>
-      _VerifyBuild;
-      _VerifyPublishOutputs
+      _PostBuild;
+      VerifyAspNetMergeOutputs
     </AfterCorePackageDependsOn>
   </PropertyGroup>
 
-  <!-- ### Cibles privées ### -->
+  <!-- ### Directives privées ### -->
 
-  <!-- Répertoires temporaires -->
-
-  <Target Name="_CreateReportsDir">
-    <MakeDir Directories="$(ReportsDir)" Condition="!Exists($(ReportsDir))" />
-  </Target>
-
-  <Target Name="_CreatePackageDir">
-    <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
-  </Target>
-
-  <!-- Configuration des projets MSBuild. -->
-
-  <Target Name="_GetBuildProperties">
-    <!-- Configuration de la compilation. -->
-    <!-- NB: On essaie au mieux d'isoler l'environnement de compilation, ie de définir
-         des répertoires complètement différents de ceux utilisés par VS. -->
-    <PropertyGroup>
-      <_BuildProperties>
-        Configuration=$(Configuration);
-        OutDir=$(OutDir);
-        <!-- NB: D'après Microsoft.Common.targets, on doit utiliser "OutDir" plutôt qu'"OutputPath".
-             Pour les projets Web, utiliser la même valeur pour "OutDir" et "OutputPath" permet d'éviter
-             la création de "_PublishedWebsites". -->
-        OutputPath=$(OutDir);
-        BaseIntermediateOutputPath=$(BaseIntermediateOutDir);
-        Platform=$(Platform);
-        BuildInParallel=$(BuildInParallel);
-        MvcBuildViews=$(MvcBuildViews)
-      </_BuildProperties>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="_GetMinifyProperties" DependsOnTargets="_GetSemVer">
-    <!-- Configuration de la minification. -->
-    <PropertyGroup>
-      <_MinifyProperties>
-        YuiCompressorJar=$(YuiCompressorJar);
-        GoogleClosureJar=$(GoogleClosureJar);
-        SemVer=$(_SemVer)
-      </_MinifyProperties>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="_GetPackageProperties" DependsOnTargets="_GetBuildProperties">
-    <!-- Configuration de la publication. -->
-    <PropertyGroup>
-      <_PackageProperties>
-        $(_BuildProperties);
-        TransformsDir=$(TransformsDir);
-        PackageTarget=$(PackageTarget);
-        <!-- Configuration de MSBuild. -->
-        DeployOnBuild=true;
-        <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refuse de publier le projet. -->
-        VisualStudioVersion=11.0;
-
-        <!-- Configuration commune à tous les profils de publication. -->
-        WebPublishMethod=FileSystem;
-        DebugSymbols=true;
-        DeleteAppCodeCompiledFiles=true;
-        DeleteExistingFiles=true;
-        DeployTarget=WebPublish;
-        EnableUpdateable=false;
-        ExcludeApp_Data=true;
-        <!-- On garde aussi les fichiers debug des autres projets. -->
-        ExcludeGeneratedDebugSymbol=false;
-        PrecompileBeforePublish=true;
-        UseMerge=true;
-        WDPMergeOption=MergeAllOutputsToASingleAssembly
-      </_PackageProperties>
-    </PropertyGroup>
-  </Target>
-
-  <!-- Listes des projets-->
-
-  <Target Name="_GetProjectsToBuild" DependsOnTargets="_GetBuildProperties;_GetMinifyProperties">
-    <!-- L'instruction suivant demande à MSBuild de sauvegarder le résultat de la transformation
-         d'une solution en fichier projet. -->
-    <SetEnv Variable="msbuildemitsolution" Value="1"/>
-
-    <!-- Liste des projets à compiler. -->
-    <ItemGroup>
-      <_ProjectsToBuild Include="$(_AssetsProject)" Condition="'$(BuildAssets)' == 'true'">
-        <AdditionalProperties>$(_MinifyProperties)</AdditionalProperties>
-      </_ProjectsToBuild>
-
-      <_ProjectsToBuild Include="$(_SolutionFile)" Condition="'$(BuildSolution)' == 'true'">
-        <AdditionalProperties>$(_BuildProperties)</AdditionalProperties>
-      </_ProjectsToBuild>
-    </ItemGroup>
-  </Target>
-
-  <Target Name="_GetProjectsToPackage" DependsOnTargets="_GetBuildProperties;_GetPackageProperties;_GetMinifyProperties">
-    <!-- Liste des projets à publier (vers le système de fichier). -->
-    <ItemGroup>
-      <_ProjectsToPackage Include="$(_AssetsProject)" Condition="'$(PackageAssets)' == 'true'">
-        <AdditionalProperties>
-          $(_MinifyProperties);
-          $(_PackageProperties);
-          PublishUrl=$(PublishDir)wznw.org_chiffon\
-        </AdditionalProperties>
-      </_ProjectsToPackage>
-
-      <_ProjectsToPackage Include="$(_TestsProject)" Condition="'$(RunTests)' == 'true'">
-        <AdditionalProperties>$(_BuildProperties)</AdditionalProperties>
-      </_ProjectsToPackage>
-
-      <_ProjectsToPackage Include="$(_WebSiteProject)" Condition="'$(PackageWebSite)' == 'true'">
-        <AdditionalProperties>
-          $(_PackageProperties);
-          PublishUrl=$(PublishDir)pourquelmotifsimone.com\;
-          PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
-        </AdditionalProperties>
-      </_ProjectsToPackage>
-
-      <_ProjectsToPackage Include="$(_MediaSiteProject)" Condition="'$(PackageMediaSite)' == 'true'">
-        <AdditionalProperties>
-          $(_PackageProperties);
-          PublishUrl=$(PublishDir)s.pourquelmotifsimone.com\;
-          PublishProfile=$(PublishProfileDir)Chiffon.MediaSite.pubxml
-        </AdditionalProperties>
-      </_ProjectsToPackage>
-    </ItemGroup>
-  </Target>
-
-  <!-- Récupération ou mise à jour dun numéro de version. -->
-
-  <Target Name="_GetSemVer">
-    <!--- Récupération du numéro de version sémantique. -->
-    <GetSemVer VersionInfoXml="$(EtcDir)VersionInfo.xml">
-      <Output PropertyName="_SemVer" TaskParameter="SemVer" />
-    </GetSemVer>
-  </Target>
-
-  <Target Name="_GetVersionNumber">
-    <!--- Récupération du numéro de version complet. -->
-    <GetVersion VersionInfoXml="$(EtcDir)VersionInfo.xml">
-      <Output PropertyName="_VersionNumber" TaskParameter="VersionNumber" />
-    </GetVersion>
-  </Target>
-
-  <Target Name="_UpdateVersionNumber">
-    <UpdateVersion
-      VersionInfoXml="$(EtcDir)VersionInfo.xml"
-      AssemblyInfoTemplate="$(EtcDir)AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(EtcDir)AssemblyInfo.Version.cs"
-      Milestone="$(Milestone)">
-    </UpdateVersion>
-  </Target>
-
-  <!-- Tests & vérifications -->
-
-  <Target Name="_VerifyBuild"
+  <Target Name="_PostBuild"
           Inputs="@(_BuildOutputs)"
           Outputs="$(RootDir).buildTime">
-    <CallTarget Targets="_VerifyBuildOutputs;_RunXunitTests" RunEachTargetSeparately="true" />
+    <CallTarget Targets="VerifyBuildOutputs;RunXunitTests" RunEachTargetSeparately="true" />
     <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
-  </Target>
-
-  <Target Name="_RunXunitTests" Condition="'$(RunTests)' == 'true'">
-    <ItemGroup>
-      <_TestAssemblies Include="$(OutDir)**\Chiffon*.Tests.dll" />
-    </ItemGroup>
-
-    <xunit Assemblies="@(_TestAssemblies)" Xml="$(ReportsDir)\xunit.xml" />
-  </Target>
-
-  <Target Name="_VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
-    <!--
-    <ItemGroup>
-      <_BinaryFiles Include="$(OutDir)**\Chiffon*.dll"
-                    Exclude="$(OutDir)_PublishedWebsites\**\*"/>
-    </ItemGroup>
-
-    <RemoveDuplicates Inputs="@(_BinaryFiles)">
-      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
-    </RemoveDuplicates>
-
-    <Exec Command="$(PEVerifyExe) &quot;%(_AssemblyFiles.FullPath)&quot; /nologo /md /il /unique"
-          ContinueOnError="false" />
-    -->
-
-    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
-          ContinueOnError="false" />
-
-    <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
-  </Target>
-
-  <Target Name="_VerifyPublishOutputs" DependsOnTargets="GetPEVerify">
-    <ItemGroup>
-      <_PublishOutputs Include="$(PublishDir)**\Chiffon.*.AspNet.dll" />
-    </ItemGroup>
-
-    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
-         "incorrectes" de ce point de vue là. -->
-    <Exec Command="$(PEVerifyExe) &quot;%(_PublishOutputs.FullPath)&quot; /nologo /il /unique"
-          ContinueOnError="false" />
   </Target>
 
   <!-- Packaging -->
@@ -359,7 +136,7 @@
     <Error Text="The parameter 'Milestone' must not be set to 'Build'." Condition="'$(Milestone)' == 'Build'" />
   </Target>
 
-  <Target Name="_AfterPrePackage" AfterTargets="_PrePackage" DependsOnTargets="_UpdateVersionNumber" />
+  <Target Name="_AfterPrePackage" AfterTargets="_PrePackage" DependsOnTargets="UpdateVersionNumber" />
 
   <Target Name="_PreRepackage">
     <!-- Lors de la mise à jour d'un package, on incrémente uniquement le numéro de "Build". -->
@@ -368,9 +145,9 @@
     </PropertyGroup>
   </Target>
 
-  <!-- NB: On ne place la directive suivante dans "_PreRepackage" car "_UpdateVersionNumber" n'utiliserait
+  <!-- NB: On ne place la directive suivante dans "_PreRepackage" car "UpdateVersionNumber" n'utiliserait
        pas la version mise à jour de "Milestone". -->
-  <Target Name="_AfterPreRepackage" AfterTargets="_PreRepackage" DependsOnTargets="_UpdateVersionNumber" />
+  <Target Name="_AfterPreRepackage" AfterTargets="_PreRepackage" DependsOnTargets="UpdateVersionNumber" />
 
   <Target Name="_PreIntegrate">
     <PropertyGroup>
@@ -378,9 +155,9 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="_PostPackage" DependsOnTargets="_GetVersionNumber">
+  <Target Name="_PostPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)chiffon-$(VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />

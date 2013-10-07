@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Ce fichier définit toutes les globales.
+  -->
+  
   <PropertyGroup>
     <RootDir>$(MSBuildThisFileDirectory)..\</RootDir>
 
     <EtcDir>$(RootDir)etc\</EtcDir>
     <SourceDir>$(RootDir)src\</SourceDir>
     <ToolsDir>$(RootDir)tools\</ToolsDir>
-    <PackageDir>$(RootDir)_artifacts\</PackageDir>
+    <PackageDir>$(RootDir)_packages\</PackageDir>
 
     <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
 
@@ -24,7 +27,20 @@
     <TransformsDir>$(RootDir)intern\transforms\</TransformsDir>
   </PropertyGroup>
 
-  <!-- Outils locaux (exe ou jar) -->
+  <!-- Liste des projets
+       ================= -->
+
+  <PropertyGroup>
+    <SolutionFile>$(RootDir)Chiffon.sln</SolutionFile>
+    <AssetsProject>$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj</AssetsProject>
+    
+    <WebSiteProject>$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj</WebSiteProject>
+    <MediaSiteProject>$(SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj</MediaSiteProject>
+    <TestsProject>$(SourceDir)Chiffon.Tests\Chiffon.Tests.csproj</TestsProject>
+  </PropertyGroup>
+
+  <!-- Outils locaux (exe ou jar)
+       ========================== -->
 
   <PropertyGroup>
     <SevenZipExe>$(ToolsDir)7-zip\7za.exe</SevenZipExe>
