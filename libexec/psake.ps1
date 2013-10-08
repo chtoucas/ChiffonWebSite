@@ -1,7 +1,9 @@
 
 properties {
-  $MSProject = '.\Chiffon.proj'
-  $MSOptions = "/nologo", "/verbosity:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
+  $BuildProject = '.\Build.proj'
+  $PackageProject = '.\Package.proj'
+
+  $MSOptions = "/nologo", "/m:2", "/verbosity:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
 
   $Configuration   = "Release"
   $Platform        = "Any CPU"
@@ -11,35 +13,35 @@ properties {
 Task default -depends Build
 
 Task DeepClean {
-  MSBuild $MSOptions $MSProject /t:DeepClean
+  MSBuild $MSOptions $BuildProject /t:DeepClean
 }
 
 Task Clean {
-  MSBuild $MSOptions $MSProject /t:Clean
+  MSBuild $MSOptions $BuildProject /t:Clean
 }
 
 Task Build -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:Build $MSProperties
+  MSBuild $MSOptions $BuildProject /t:Build $MSProperties
 }
 
 Task Rebuild -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:Rebuild $MSProperties
+  MSBuild $MSOptions $BuildProject /t:Rebuild $MSProperties
 }
 
 Task FastBuild -depends ReadBuildConfig {
-  MSBuild $MSOptions $MSProject /t:Build $MSProperties "/p:MvcBuildViews=false;RunTests=false"
+  MSBuild $MSOptions $BuildProject /t:Build $MSProperties "/p:MvcBuildViews=false;RunTests=false"
 }
 
 Task Integrate {
-  MSBuild $MSOptions $MSProject /t:Integrate
+  MSBuild $MSOptions $PackageProject /t:Integrate
 }
 
 Task Package -depends ReadPackageConfig {
-  MSBuild $MSOptions $MSProject /t:Package $MSProperties
+  MSBuild $MSOptions $PackageProject /t:Package $MSProperties
 }
 
 Task Repackage -depends ReadPackageConfig {
-  MSBuild $MSOptions $MSProject /t:Repackage $MSProperties
+  MSBuild $MSOptions $PackageProject /t:Repackage $MSProperties
 }
 
 Task ReadBuildConfig {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  TODO:
+  On ne veut pas mettre à jour la version de compilation si rien n'a changé. En plus,
+  cela empêcherait la compilation incrémentale. Il faut donc deviser un processus plus
+  intelligent pour savoir quand on doit mettre à jour le numéro de "Build".
+  Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
+
+  WARNING:
+  L'ordre des directives est extrèmement important. Par exemple, "GetSemVer"
+  doit absolument être exécuté après "UpdateVersionNumber". En effet, si une directive dépend
+  indirectement de "GetSemVer" et si "UpdateVersionNumber" est lancé après, la valeur de "_SemVer"
+  devient obsolète.
+ -->
+
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\Chiffon.projects.targets" />
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
+    <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
+
+    <MvcBuildViews Condition="'$(MvcBuildViews)' != 'false'">true</MvcBuildViews>
+    <RunTests Condition="'$(RunTests)' != 'false'">true</RunTests>
+
+    <!-- Compilation conditionnelle. -->
+    <BuildAssets Condition="'$(BuildAssets)' != 'false'">true</BuildAssets>
+    <BuildSolution Condition="'$(BuildSolution)' != 'false'">true</BuildSolution>
+  </PropertyGroup>
+
+
+  <!-- ### Directives publiques ### -->
+
+  <Target Name="DeepClean" DependsOnTargets="CleanTempFiles">
+    <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
+  </Target>
+
+  <Target Name="Clean" DependsOnTargets="GetProjectsToBuild">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="GetProjectsToBuild">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
+      <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
+    </MSBuild>
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+
+
+  <!-- ### Directives connexes ### -->
+
+  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
+
+  <PropertyGroup>
+    <BeforeBuildDependsOn>
+      EmitProjectSolution
+    </BeforeBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
+
+  <PropertyGroup>
+    <AfterBuildDependsOn>
+      _PostBuild
+    </AfterBuildDependsOn>
+  </PropertyGroup>
+
+
+  <!-- ### Directives privées ### -->
+
+  <Target Name="_PostBuild"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(_RootDir).buildTime">
+
+    <Touch Files="$(_RootDir).buildTime" AlwaysCreate="true" />
+    <CallTarget Targets="RunXunitTests" RunEachTargetSeparately="true" Condition="'$(RunTests)' == 'true'" />
+    <CallTarget Targets="VerifyBuildOutputs" RunEachTargetSeparately="true" />
+  </Target>
+
+</Project>

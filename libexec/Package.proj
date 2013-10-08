@@ -6,22 +6,10 @@
   * compilation pour de multiples plateformes ?
   * RestorePackages ?
   * IISExpress, configSource
-  -->
-
-<!-- TODO: On ne veut pas mettre à jour la version de compilation si rien n'a changé. En plus,
-     cela empêcherait la compilation incrémentale. Il faut donc deviser un processus plus
-     intelligent pour savoir quand on doit mettre à jour le numéro de "Build".
-     Cf. http://stackoverflow.com/questions/11667510/determine-if-msbuild-corecompile-will-run-and-call-custom-target
--->
-<!-- WARNING: L'ordre des directives est extrèmement important. Par exemple, "GetSemVer"
-     doit absolument être exécuté après "UpdateVersionNumber". En effet, si une directive dépend
-     indirectement de "GetSemVer" et si "UpdateVersionNumber" est lancé après, la valeur de "SemVer"
-     devient obsolète. -->
+ -->
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project=".\Chiffon.common.targets" />
-
-  <!-- ### Propriétés locales ### -->
+  <Import Project=".\Chiffon.projects.targets" />
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -38,45 +26,20 @@
     <!-- Valeurs possibles : Production, Integration. -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
-    <!-- Compilation conditionnelle. -->
-    <BuildAssets Condition="'$(BuildAssets)' != 'false'">true</BuildAssets>
-    <BuildSolution Condition="'$(BuildSolution)' != 'false'">true</BuildSolution>
-
     <!-- Packaging conditionnel. -->
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
     <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
+
   <!-- ### Directives publiques ### -->
 
-  <Target Name="Clean" DependsOnTargets="CleanBuild;CleanPackage" />
-
-  <Target Name="DeepClean" DependsOnTargets="Clean">
-    <ItemGroup>
-      <_FilesToDelete Include="$(BuildDir)**\*"/>
-    </ItemGroup>
-
-    <Delete Files="@(_FilesToDelete)" />
-
-    <RemoveDir Directories="$(BuildDir)" Condition="Exists($(BuildDir))" />
-
-    <MSBuild Projects="$(AssetsProject)" Targets="DeepClean" />
+  <Target Name="DeepClean" DependsOnTargets="CleanTempFiles">
+    <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
   </Target>
 
-  <Target Name="CleanBuild" DependsOnTargets="GetProjectsToBuild">
-    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
-  </Target>
-
-  <Target Name="Build" DependsOnTargets="GetProjectsToBuild">
-    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
-      <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
-    </MSBuild>
-  </Target>
-
-  <Target Name="Rebuild" DependsOnTargets="CleanBuild;Build" />
-
-  <Target Name="CleanPackage" DependsOnTargets="GetProjectsToPackage">
+  <Target Name="Clean" DependsOnTargets="GetProjectsToPackage">
     <MSBuild Projects="@(ProjectsToPackage)" Targets="Clean" />
   </Target>
 
@@ -86,47 +49,35 @@
     </MSBuild>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="_PrePackage;CleanPackage;CorePackage;_PostPackage" />
+  <Target Name="Package" DependsOnTargets="_PrePackage;Clean;CorePackage;_PostPackage" />
 
-  <Target Name="Repackage" DependsOnTargets="_PreRepackage;CleanPackage;CorePackage;_PostPackage" />
+  <Target Name="Repackage" DependsOnTargets="_PreRepackage;Clean;CorePackage;_PostPackage" />
 
-  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;CleanPackage;CorePackage" />
+  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Clean;CorePackage" />
+
 
   <!-- ### Directives connexes ### -->
-
-  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="$(BeforeBuildDependsOn)" />
-
-  <PropertyGroup>
-    <BeforeBuildDependsOn>
-      EmitProjectSolution
-    </BeforeBuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
-
-  <PropertyGroup>
-    <AfterBuildDependsOn>
-      _PostBuild
-    </AfterBuildDependsOn>
-  </PropertyGroup>
 
   <Target Name="AfterCorePackage" AfterTargets="CorePackage"
           DependsOnTargets="$(AfterCorePackageDependsOn)" />
 
   <PropertyGroup>
     <AfterCorePackageDependsOn>
-      _PostBuild;
+      _VerifyBuild;
       VerifyAspNetMergeOutputs
     </AfterCorePackageDependsOn>
   </PropertyGroup>
 
+
   <!-- ### Directives privées ### -->
 
-  <Target Name="_PostBuild"
+  <Target Name="_VerifyBuild"
           Inputs="@(_BuildOutputs)"
-          Outputs="$(RootDir).buildTime">
-    <CallTarget Targets="VerifyBuildOutputs;RunXunitTests" RunEachTargetSeparately="true" />
-    <Touch Files="$(RootDir).buildTime" AlwaysCreate="true" />
+          Outputs="$(_RootDir).buildTime">
+
+    <Touch Files="$(_RootDir).buildTime" AlwaysCreate="true" />
+    <CallTarget Targets="RunXunitTests" RunEachTargetSeparately="true" Condition="'$(RunTests)' == 'true'" />
+    <CallTarget Targets="VerifyBuildOutputs" RunEachTargetSeparately="true" />
   </Target>
 
   <!-- Packaging -->
@@ -157,11 +108,11 @@
 
   <Target Name="_PostPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(VersionNumber)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(_PackageDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Delete Files="$(_PackageFile)" />
-    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(PublishDir)*" ContinueOnError="false"/>
+    <Exec Command="$(_SevenZipExe) -mx9 a $(_PackageFile) $(_StageDir)*" ContinueOnError="false"/>
   </Target>
 
 </Project>
