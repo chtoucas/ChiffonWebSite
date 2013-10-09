@@ -35,12 +35,8 @@
 
   <!-- ### Directives publiques ### -->
 
-  <Target Name="DeepClean" DependsOnTargets="CleanTempFiles">
+  <Target Name="Clean" DependsOnTargets="DeleteTempBuildDir">
     <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
-  </Target>
-
-  <Target Name="Clean" DependsOnTargets="GetProjectsToPackage">
-    <MSBuild Projects="@(ProjectsToPackage)" Targets="Clean" />
   </Target>
 
   <Target Name="CorePackage" DependsOnTargets="GetProjectsToPackage">

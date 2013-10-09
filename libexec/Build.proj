@@ -33,7 +33,8 @@
 
   <!-- ### Directives publiques ### -->
 
-  <Target Name="DeepClean" DependsOnTargets="CleanTempFiles">
+  <Target Name="DeepClean" DependsOnTargets="DeleteTempBuildDir">
+    <!-- TODO: Supprimer .buildTime ? -->
     <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
   </Target>
 
