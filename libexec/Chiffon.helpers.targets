@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!--
-    L'instruction suivante instruit MSBuild qu'il faut sauvegarder le résultat de la transformation
+    On demande à MSBuild de sauvegarder le résultat de la transformation
     d'une solution en un fichier projet.
   -->
   <Target Name="EmitProjectSolution">

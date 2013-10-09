@@ -1,6 +1,6 @@
 
 properties {
-  $BuildProject = '.\Build.proj'
+  $BuildProject   = '.\Build.proj'
   $PackageProject = '.\Package.proj'
 
   $MSOptions = "/nologo", "/m:2", "/verbosity:minimal", "/fl", "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8;"
@@ -12,12 +12,8 @@ properties {
 
 Task default -depends Build
 
-Task DeepClean {
-  MSBuild $MSOptions $BuildProject /t:DeepClean
-}
-
-Task Clean {
-  MSBuild $MSOptions $BuildProject /t:Clean
+Task Clean -depends ReadBuildConfig {
+  MSBuild $MSOptions $BuildProject /t:Clean $MSProperties
 }
 
 Task Build -depends ReadBuildConfig {
@@ -29,11 +25,17 @@ Task Rebuild -depends ReadBuildConfig {
 }
 
 Task FastBuild -depends ReadBuildConfig {
-  MSBuild $MSOptions $BuildProject /t:Build $MSProperties "/p:MvcBuildViews=false;RunTests=false"
+  MSBuild $MSOptions $BuildProject /t:Build $MSProperties "/p:MvcBuildViews=false;RunTests=false;Analyze=false"
 }
+
 
 Task Integrate {
   MSBuild $MSOptions $PackageProject /t:Integrate
+}
+
+
+Task DeepClean {
+  MSBuild $MSOptions $PackageProject /t:DeepClean
 }
 
 Task Package -depends ReadPackageConfig {
@@ -45,19 +47,9 @@ Task Repackage -depends ReadPackageConfig {
 }
 
 Task ReadBuildConfig {
-  $configPath = $(Get-Location).Path + "\..\etc\Build.config"
-
-  [xml]$configXml = Get-Content -Path $configPath
-
-  [System.Xml.XmlElement] $config = $configXml.configuration
-
-  [string] $BuildAssets = $config.BuildAssets
-  [string] $BuildSolution = $config.BuildSolution
-
   $script:MSProperties = "/p:Configuration=$Configuration",
-    "/p:BuildInParallel=$BuildInParallel",
-    "/p:BuildAssets=$BuildAssets",
-    "/p:BuildSolution=$BuildSolution";
+    "/p:Platform=$Platform",
+    "/p:BuildInParallel=$BuildInParallel";
 }
 
 Task ReadPackageConfig {

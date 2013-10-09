@@ -1,8 +1,7 @@
 *.suo
 *.user
-.buildTime
-_artifacts/
 _build/
+_packages/
 bin/
 obj/
 packages/

@@ -9,7 +9,6 @@
   <Import Project=".\Chiffon.common.tasks" />
   <Import Project=".\Chiffon.xunit.tasks" />
 
-
   <!-- ### Création ou suppression des répertoires temporaires ### -->
 
   <!-- Supprime tous les fichiers temporaires créés pendant une compilation. -->
@@ -64,9 +63,13 @@
   <!-- ### Tests (Whitebox) ### -->
 
   <!-- Tests unitaires via Xunit. -->
-  <Target Name="RunXunitTests" DependsOnTargets="CreateReportsDir">
+  <Target Name="RunXunitTests" DependsOnTargets="CreateReportsDir"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(_ReportsDir)xunit.xml">
     <ItemGroup>
-      <_TestAssemblies Include="$(_OutDir)**\Chiffon*.Tests.dll" />
+      <!--<_TestAssemblies Include="$(_OutDir)**\*.Tests.dll" />-->
+      <_TestAssemblies Include="%(_BuildOutputs.Identity)"
+                       Condition="'@(_BuildOutputs->EndsWith('Tests.dll'))' == 'true'" />
     </ItemGroup>
 
     <xunit Assemblies="@(_TestAssemblies)" Xml="$(_ReportsDir)xunit.xml" />
@@ -75,7 +78,9 @@
 
   <!-- ### Analyses ### -->
 
-  <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify">
+  <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(_BuildDir).verifyTime">
     <!--
     <ItemGroup>
       <_BinaryFiles Include="$(_OutDir)**\Chiffon*.dll"
@@ -89,6 +94,9 @@
 
     <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
           ContinueOnError="false" />
+
+    <!-- NB: Garder cette commande en fin de directive au cas où une des vérifications aie échoué -->
+    <Touch Files="$(_BuildDir).verifyTime" AlwaysCreate="true" />
   </Target>
 
   <Target Name="VerifyAspNetMergeOutputs" DependsOnTargets="GetPEVerify">

@@ -20,7 +20,6 @@
     <_BuildDir>$(_RootDir)_build\</_BuildDir>
     <_BaseOutDir>$(_BuildDir)bin\</_BaseOutDir>
     <_BaseIntermediateOutDir>$(_BuildDir)obj\</_BaseIntermediateOutDir>
-    <_OutDir>$(_BaseOutDir)$(Configuration)\</_OutDir>
     <_ReportsDir>$(_BuildDir)reports\</_ReportsDir>
     <_StageDir>$(_BuildDir)stage\</_StageDir>
   </PropertyGroup>
