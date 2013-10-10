@@ -61,15 +61,6 @@
       </AdditionalProperties>
     </ProjectsToBuild>
 
-    <!--<ProjectsToBuild Include="$(_SourceDir)Wznw.Org\Wznw.Org.csproj"
-                     Condition="'$(PackageAssets)' == 'true'">
-      <AdditionalProperties>
-        $(PublishProperties);
-        PublishUrl=$(_StageDir)wznw.org\;
-        PublishProfile=$(_PublishProfileDir)Wznw.Org.pubxml
-      </AdditionalProperties>
-    </ProjectsToBuild>-->
-
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
                      Condition="'$(PackageWebSite)' == 'true'">
       <AdditionalProperties>
@@ -88,7 +79,7 @@
       </AdditionalProperties>
     </ProjectsToBuild>
 
-    <ProjectsToBuild Include="$(_TestDir)Chiffon.Tests\Chiffon.Tests.csproj"
+    <ProjectsToBuild Include="$(_TestDir)Chiffon.Tests\*.Tests.csproj"
                      Condition="'$(RunTests)' == 'true'">
       <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
     </ProjectsToBuild>
@@ -122,7 +113,6 @@
   </PropertyGroup>
 
   <Target Name="_ValidateMilestone">
-    <!-- Lors de la création d'un package, "Milestone" doit être différent de "Build". -->
     <Error Text="The parameter 'Milestone' must not be set to 'Build'."
            Condition="'$(Milestone)' == 'Build'" />
   </Target>
