@@ -52,7 +52,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
                      Condition="'$(PackageAssets)' == 'true'">
       <AdditionalProperties>
@@ -61,16 +60,15 @@
         PublishUrl=$(_StageDir)wznw.org_chiffon\
       </AdditionalProperties>
     </ProjectsToBuild>
-    -->
 
-    <ProjectsToBuild Include="$(_SourceDir)Wznw.Org\Wznw.Org.csproj"
+    <!--<ProjectsToBuild Include="$(_SourceDir)Wznw.Org\Wznw.Org.csproj"
                      Condition="'$(PackageAssets)' == 'true'">
       <AdditionalProperties>
         $(PublishProperties);
         PublishUrl=$(_StageDir)wznw.org\;
         PublishProfile=$(_PublishProfileDir)Wznw.Org.pubxml
       </AdditionalProperties>
-    </ProjectsToBuild>
+    </ProjectsToBuild>-->
 
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
                      Condition="'$(PackageWebSite)' == 'true'">
@@ -113,10 +111,6 @@
 
   <Target Name="Package" DependsOnTargets="UpdateVersionNumber;Rebuild;_ZipPackage" />
 
-  <!--
-  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Package" />
-  -->
-
   <ItemGroup>
     <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
     <_AfterBuildTargets Include="VerifyAspNetMergeOutputs" Condition="'$(Analyze)' == 'true'" />
@@ -132,14 +126,6 @@
     <Error Text="The parameter 'Milestone' must not be set to 'Build'."
            Condition="'$(Milestone)' == 'Build'" />
   </Target>
-
-  <!--
-  <Target Name="_PreIntegrate">
-    <PropertyGroup>
-      <PackageTarget>Integration</PackageTarget>
-    </PropertyGroup>
-  </Target>
-  -->
 
   <Target Name="_ZipPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
     <PropertyGroup>

@@ -28,9 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Build", "..\Narvalo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9-AD2F-4C18-B796-F5568736357D}"
 	ProjectSection(SolutionItems) = preProject
-		build.cmd = build.cmd
 		build.ps1 = build.ps1
-		make.cmd = make.cmd
 		make.ps1 = make.ps1
 		etc\Milestone.config = etc\Milestone.config
 		Minify.cmd = Minify.cmd

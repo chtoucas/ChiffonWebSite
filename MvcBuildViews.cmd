@@ -1,9 +1,7 @@
 @echo off
 
-:init
 @call "%VS110COMNTOOLS%vsvars32.bat"
 
-:build
 MSBuild "%~dp0\src\Chiffon.WebSite\Chiffon.WebSite.csproj" /nologo /v:normal /p:Configuration=Debug;MvcBuildViews=true /t:MvcBuildViews /fl
 @if errorlevel 1 (
   @goto error
