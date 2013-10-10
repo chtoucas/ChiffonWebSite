@@ -16,7 +16,6 @@
     <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
     <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
 
-    <MvcBuildViews Condition="'$(MvcBuildViews)' != 'false'">true</MvcBuildViews>
     <RunTests Condition="'$(RunTests)' != 'false'">true</RunTests>
     <Analyze Condition="'$(Analyze)' != 'false'">true</Analyze>
   </PropertyGroup>
@@ -41,8 +40,7 @@
       OutputPath=$(_OutDir);
       BaseIntermediateOutputPath=$(_BaseIntermediateOutDir);
       Platform=$(Platform);
-      BuildInParallel=$(BuildInParallel);
-      MvcBuildViews=$(MvcBuildViews)
+      BuildInParallel=$(BuildInParallel)
     </BuildProperties>
   </PropertyGroup>
 
@@ -52,19 +50,19 @@
   <!-- Supprime tous les fichiers temporaires créés pendant une compilation. -->
   <Target Name="DeleteTempFiles">
     <ItemGroup>
-      <_TempFilesToDelete Include="$(_XunitXmlReport)"/>
-      <_TempFilesToDelete Include="$(_buildTimestamp)"/>
+      <_TempFilesToRemove Include="$(_XunitXmlReport)"/>
+      <_TempFilesToRemove Include="$(_buildTimestamp)"/>
     </ItemGroup>
 
-    <Delete Files="@(_TempFilesToDelete)" />
+    <Delete Files="@(_TempFilesToRemove)" />
   </Target>
 
   <Target Name="DeleteBuildDir">
     <ItemGroup>
-      <_FilesToDelete Include="$(_BuildDir)**\*"/>
+      <_FilesToRemove Include="$(_BuildDir)**\*"/>
     </ItemGroup>
 
-    <Delete Files="@(_FilesToDelete)" />
+    <Delete Files="@(_FilesToRemove)" />
 
     <RemoveDir Directories="$(_BuildDir)" Condition="Exists($(_BuildDir))" />
   </Target>

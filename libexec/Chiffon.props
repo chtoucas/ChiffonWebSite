@@ -9,6 +9,7 @@
 
     <_EtcDir>$(_RootDir)etc\</_EtcDir>
     <_SourceDir>$(_RootDir)src\</_SourceDir>
+    <_TestDir>$(_RootDir)test\</_TestDir>
     <_ToolsDir>$(_RootDir)tools\</_ToolsDir>
     <_PackageDir>$(_RootDir)_packages\</_PackageDir>
 

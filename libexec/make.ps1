@@ -26,11 +26,11 @@ Task Rebuild {
 }
 
 Task Milestone -depends ReadMilestoneConfig {
-  MSBuild $options $project /t:Milestone $properties
+  MSBuild $options $project /t:Milestone $msproperties
 }
 
 Task Package -depends ReadPackageConfig {
-  MSBuild $options $project /t:Package $properties
+  MSBuild $options $project /t:Package $msproperties
 }
 
 Task ReadMilestoneConfig {
@@ -57,7 +57,7 @@ Task ReadPackageConfig {
   [string] $PackageMediaSite = $config.PackageMediaSite
   [string] $PackageWebSite   = $config.PackageWebSite
 
-  $script:properties = "/p:PackageTarget=$PackageTarget",
+  $script:msproperties = "/p:PackageTarget=$PackageTarget",
     "/p:PackageAssets=$PackageAssets",
     "/p:PackageMediaSite=$PackageMediaSite",
     "/p:PackageWebSite=$PackageWebSite";

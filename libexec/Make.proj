@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BuildProperties>
+    <PublishProperties>
       $(BuildProperties);
       TransformsDir=$(_TransformsDir);
       PackageTarget=$(PackageTarget);
@@ -48,27 +48,34 @@
       PrecompileBeforePublish=true;
       UseMerge=true;
       WDPMergeOption=MergeAllOutputsToASingleAssembly
-    </BuildProperties>
+    </PublishProperties>
   </PropertyGroup>
 
   <ItemGroup>
+    <!--
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
                      Condition="'$(PackageAssets)' == 'true'">
       <AdditionalProperties>
         $(BuildProperties);
+        DeployOnBuild=true;
         PublishUrl=$(_StageDir)wznw.org_chiffon\
       </AdditionalProperties>
     </ProjectsToBuild>
+    -->
 
-    <ProjectsToBuild Include="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj"
-                     Condition="'$(RunTests)' == 'true'">
-      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
+    <ProjectsToBuild Include="$(_SourceDir)Wznw.Org\Wznw.Org.csproj"
+                     Condition="'$(PackageAssets)' == 'true'">
+      <AdditionalProperties>
+        $(PublishProperties);
+        PublishUrl=$(_StageDir)wznw.org\;
+        PublishProfile=$(_PublishProfileDir)Wznw.Org.pubxml
+      </AdditionalProperties>
     </ProjectsToBuild>
 
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
                      Condition="'$(PackageWebSite)' == 'true'">
       <AdditionalProperties>
-        $(BuildProperties);
+        $(PublishProperties);
         PublishUrl=$(_StageDir)pourquelmotifsimone.com\;
         PublishProfile=$(_PublishProfileDir)Chiffon.WebSite.pubxml
       </AdditionalProperties>
@@ -77,10 +84,15 @@
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
                      Condition="'$(PackageMediaSite)' == 'true'">
       <AdditionalProperties>
-        $(BuildProperties);
+        $(PublishProperties);
         PublishUrl=$(_StageDir)s.pourquelmotifsimone.com\;
         PublishProfile=$(_PublishProfileDir)Chiffon.MediaSite.pubxml
       </AdditionalProperties>
+    </ProjectsToBuild>
+
+    <ProjectsToBuild Include="$(_TestDir)Chiffon.Tests\Chiffon.Tests.csproj"
+                     Condition="'$(RunTests)' == 'true'">
+      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
     </ProjectsToBuild>
   </ItemGroup>
 
@@ -99,7 +111,7 @@
 
   <Target Name="Milestone" DependsOnTargets="_ValidateMilestone;UpdateVersionNumber" />
 
-  <Target Name="Package" DependsOnTargets="Rebuild;_ZipPackage" />
+  <Target Name="Package" DependsOnTargets="UpdateVersionNumber;Rebuild;_ZipPackage" />
 
   <!--
   <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Package" />

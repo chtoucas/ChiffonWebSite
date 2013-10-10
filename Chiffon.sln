@@ -28,10 +28,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narvalo.Build", "..\Narvalo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C3061B9-AD2F-4C18-B796-F5568736357D}"
 	ProjectSection(SolutionItems) = preProject
-		etc\Build.config = etc\Build.config
+		build.cmd = build.cmd
+		build.ps1 = build.ps1
+		make.cmd = make.cmd
 		make.ps1 = make.ps1
+		etc\Milestone.config = etc\Milestone.config
+		Minify.cmd = Minify.cmd
+		MvcBuildViews.cmd = MvcBuildViews.cmd
 		etc\Package.config = etc\Package.config
-		libexec\psake.ps1 = libexec\psake.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wznw.Org.csproj", "{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}"
@@ -42,18 +46,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishP
 	ProjectSection(SolutionItems) = preProject
 		libexec\Chiffon.MediaSite.pubxml = libexec\Chiffon.MediaSite.pubxml
 		libexec\Chiffon.WebSite.pubxml = libexec\Chiffon.WebSite.pubxml
+		libexec\Wznw.Org.pubxml = libexec\Wznw.Org.pubxml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{925044C1-66B2-4DE3-8FE9-F38BACB917F3}"
 	ProjectSection(SolutionItems) = preProject
+		libexec\Build.proj = libexec\Build.proj
 		src\Chiffon.WebSite\assets\Chiffon.Assets.proj = src\Chiffon.WebSite\assets\Chiffon.Assets.proj
 		libexec\Chiffon.common.targets = libexec\Chiffon.common.targets
+		libexec\Chiffon.common.tasks = libexec\Chiffon.common.tasks
 		libexec\Chiffon.helpers.targets = libexec\Chiffon.helpers.targets
-		libexec\Chiffon.proj = libexec\Chiffon.proj
-		libexec\Chiffon.properties.targets = libexec\Chiffon.properties.targets
-		libexec\Chiffon.settings.targets = libexec\Chiffon.settings.targets
-		libexec\Chiffon.tasks.targets = libexec\Chiffon.tasks.targets
-		libexec\Chiffon.xunit.targets = libexec\Chiffon.xunit.targets
+		libexec\Chiffon.props = libexec\Chiffon.props
+		libexec\Chiffon.xunit.tasks = libexec\Chiffon.xunit.tasks
+		libexec\Make.proj = libexec\Make.proj
+		libexec\Narvalo.Build.targets = libexec\Narvalo.Build.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInfo", "{CA1374AC-6B74-4840-8B92-4AB593FBA306}"
@@ -62,9 +68,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInf
 		etc\VersionInfo.xml = etc\VersionInfo.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "src\Chiffon.Tests\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.MediaSite", "src\Chiffon.MediaSite\Chiffon.MediaSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PSake", "PSake", "{FAE42803-CF89-4B43-825B-C1F215387FD5}"
+	ProjectSection(SolutionItems) = preProject
+		libexec\build.ps1 = libexec\build.ps1
+		libexec\make.ps1 = libexec\make.ps1
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "test\Chiffon.Tests\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,14 +112,14 @@ Global
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{764D63FC-2B67-45BB-8880-0C193A0C2149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,9 +130,9 @@ Global
 		{7B564B3C-CCCC-43CA-94B6-D375AA40F085} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{967FD938-F4FF-452B-9F9B-426D1F250BEB} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{AE69E1DD-A499-48E9-8BAA-B279E07F7DC7} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{D1E9C98A-55A2-4636-8FB0-D8874C9660C9} = {0C3061B9-AD2F-4C18-B796-F5568736357D}
 		{925044C1-66B2-4DE3-8FE9-F38BACB917F3} = {0C3061B9-AD2F-4C18-B796-F5568736357D}
 		{CA1374AC-6B74-4840-8B92-4AB593FBA306} = {0C3061B9-AD2F-4C18-B796-F5568736357D}
+		{FAE42803-CF89-4B43-825B-C1F215387FD5} = {0C3061B9-AD2F-4C18-B796-F5568736357D}
 	EndGlobalSection
 EndGlobal
