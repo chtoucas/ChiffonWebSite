@@ -12,6 +12,7 @@
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <!-- TODO: À vérifier -->
     <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
     <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
 

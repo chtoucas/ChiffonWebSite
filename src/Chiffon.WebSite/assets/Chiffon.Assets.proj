@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\libexec\Narvalo.Build.targets" />
   <Import Project="..\..\..\libexec\Chiffon.common.targets" />
-  <Import Project="..\..\..\libexec\Chiffon.settings.targets" />
 
   <PropertyGroup>
     <DeployOnBuild Condition="'$(DeployOnBuild)' != 'true'">false</DeployOnBuild>

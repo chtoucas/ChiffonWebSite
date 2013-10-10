@@ -8,7 +8,8 @@
   * IISExpress, configSource
  -->
 
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.common.targets" />
 
   <PropertyGroup>
@@ -42,7 +43,7 @@
       DeployTarget=WebPublish;
       EnableUpdateable=false;
       ExcludeApp_Data=true;
-      <!-- On garde aussi les fichiers debug des autres projets. -->
+      <!-- On garde les fichiers debug liés aux autres assemblées. -->
       ExcludeGeneratedDebugSymbol=false;
       PrecompileBeforePublish=true;
       UseMerge=true;
@@ -51,17 +52,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectsToBuild Include="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj"
-                     Condition="'$(RunTests)' == 'true'">
-      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
-    </ProjectsToBuild>
-
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
                      Condition="'$(PackageAssets)' == 'true'">
       <AdditionalProperties>
         $(BuildProperties);
         PublishUrl=$(_StageDir)wznw.org_chiffon\
       </AdditionalProperties>
+    </ProjectsToBuild>
+
+    <ProjectsToBuild Include="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj"
+                     Condition="'$(RunTests)' == 'true'">
+      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
     </ProjectsToBuild>
 
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
@@ -83,11 +84,8 @@
     </ProjectsToBuild>
   </ItemGroup>
 
-
-  <!-- ### Directives publiques ### -->
-
   <Target Name="Clean" DependsOnTargets="DeleteBuildDir">
-    <MSBuild Projects="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj" Targets="DeepClean" />
+    <MSBuild Projects="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="DeepClean" />
   </Target>
 
   <Target Name="Build">
@@ -97,14 +95,15 @@
   </Target>
   <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
-  <Target Name="Package" DependsOnTargets="_PrePackage;Clean;Build;_ZipPackage" />
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Repackage" DependsOnTargets="_PreRepackage;Clean;Build;_ZipPackage" />
+  <Target Name="Milestone" DependsOnTargets="_ValidateMilestone;UpdateVersionNumber" />
 
-  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Clean;Build" />
+  <Target Name="Package" DependsOnTargets="Rebuild;_ZipPackage" />
 
-
-  <!-- ### Directives connexes ### -->
+  <!--
+  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Package" />
+  -->
 
   <ItemGroup>
     <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
@@ -116,33 +115,19 @@
     <AfterBuildDependsOn>@(_AfterBuildTargets)</AfterBuildDependsOn>
   </PropertyGroup>
 
-
-  <!-- ### Directives privées ### -->
-
-  <Target Name="_PrePackage">
+  <Target Name="_ValidateMilestone">
     <!-- Lors de la création d'un package, "Milestone" doit être différent de "Build". -->
     <Error Text="The parameter 'Milestone' must not be set to 'Build'."
            Condition="'$(Milestone)' == 'Build'" />
   </Target>
 
-  <Target Name="_AfterPrePackage" AfterTargets="_PrePackage"
-          DependsOnTargets="UpdateVersionNumber" />
-
-  <Target Name="_PreRepackage">
-    <!-- Lors de la mise à jour d'un package, on incrémente uniquement le numéro de "Build". -->
-    <PropertyGroup>
-      <Milestone>Build</Milestone>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="_AfterPreRepackage" AfterTargets="_PreRepackage"
-          DependsOnTargets="UpdateVersionNumber" />
-
+  <!--
   <Target Name="_PreIntegrate">
     <PropertyGroup>
       <PackageTarget>Integration</PackageTarget>
     </PropertyGroup>
   </Target>
+  -->
 
   <Target Name="_ZipPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
     <PropertyGroup>
