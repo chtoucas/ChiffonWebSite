@@ -9,10 +9,56 @@
   <Import Project=".\Chiffon.common.tasks" />
   <Import Project=".\Chiffon.xunit.tasks" />
 
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
+    <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
+
+    <MvcBuildViews Condition="'$(MvcBuildViews)' != 'false'">true</MvcBuildViews>
+    <RunTests Condition="'$(RunTests)' != 'false'">true</RunTests>
+    <Analyze Condition="'$(Analyze)' != 'false'">true</Analyze>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_OutDir>$(_BaseOutDir)$(Configuration)\</_OutDir>
+    <_XunitXmlReport>$(_ReportsDir)xunit.xml</_XunitXmlReport>
+    <_buildTimestamp>$(_BuildDir).buildTime</_buildTimestamp>
+  </PropertyGroup>
+
+  <!--
+    On essaie au mieux d'isoler l'environnement de compilation, ie de définir
+    des répertoires complètement différents de ceux utilisés par VS.
+  -->
+  <PropertyGroup>
+    <BuildProperties>
+      Configuration=$(Configuration);
+      OutDir=$(_OutDir);
+      <!-- NB: D'après Microsoft.Common.targets, on doit utiliser "OutDir" plutôt qu'"OutputPath".
+           Pour les projets Web, utiliser la même valeur pour "OutDir" et "OutputPath" permet
+           d'éviter la création de "_PublishedWebsites". -->
+      OutputPath=$(_OutDir);
+      BaseIntermediateOutputPath=$(_BaseIntermediateOutDir);
+      Platform=$(Platform);
+      BuildInParallel=$(BuildInParallel);
+      MvcBuildViews=$(MvcBuildViews)
+    </BuildProperties>
+  </PropertyGroup>
+
+
   <!-- ### Création ou suppression des répertoires temporaires ### -->
 
   <!-- Supprime tous les fichiers temporaires créés pendant une compilation. -->
-  <Target Name="DeleteTempBuildDir">
+  <Target Name="DeleteTempFiles">
+    <ItemGroup>
+      <_TempFilesToDelete Include="$(_XunitXmlReport)"/>
+      <_TempFilesToDelete Include="$(_buildTimestamp)"/>
+    </ItemGroup>
+
+    <Delete Files="@(_TempFilesToDelete)" />
+  </Target>
+
+  <Target Name="DeleteBuildDir">
     <ItemGroup>
       <_FilesToDelete Include="$(_BuildDir)**\*"/>
     </ItemGroup>
@@ -65,14 +111,14 @@
   <!-- Tests unitaires via Xunit. -->
   <Target Name="RunXunitTests" DependsOnTargets="CreateReportsDir"
           Inputs="@(_BuildOutputs)"
-          Outputs="$(_ReportsDir)xunit.xml">
+          Outputs="$(_XunitXmlReport)">
     <ItemGroup>
       <!--<_TestAssemblies Include="$(_OutDir)**\*.Tests.dll" />-->
       <_TestAssemblies Include="%(_BuildOutputs.Identity)"
                        Condition="'@(_BuildOutputs->EndsWith('Tests.dll'))' == 'true'" />
     </ItemGroup>
 
-    <xunit Assemblies="@(_TestAssemblies)" Xml="$(_ReportsDir)xunit.xml" />
+    <xunit Assemblies="@(_TestAssemblies)" Xml="$(_XunitXmlReport)" />
   </Target>
 
 
@@ -80,7 +126,7 @@
 
   <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
           Inputs="@(_BuildOutputs)"
-          Outputs="$(_BuildDir).verifyTime">
+          Outputs="$(_buildTimestamp)">
     <!--
     <ItemGroup>
       <_BinaryFiles Include="$(_OutDir)**\Chiffon*.dll"
@@ -96,7 +142,7 @@
           ContinueOnError="false" />
 
     <!-- NB: Garder cette commande en fin de directive au cas où une des vérifications aie échoué -->
-    <Touch Files="$(_BuildDir).verifyTime" AlwaysCreate="true" />
+    <Touch Files="$(_buildTimestamp)" AlwaysCreate="true" />
   </Target>
 
   <Target Name="VerifyAspNetMergeOutputs" DependsOnTargets="GetPEVerify">

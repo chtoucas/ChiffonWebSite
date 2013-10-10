@@ -35,7 +35,7 @@ Task Integrate {
 
 
 Task DeepClean {
-  MSBuild $MSOptions $PackageProject /t:DeepClean
+  MSBuild $MSOptions $PackageProject /t:Clean
 }
 
 Task Package -depends ReadPackageConfig {
@@ -45,6 +45,7 @@ Task Package -depends ReadPackageConfig {
 Task Repackage -depends ReadPackageConfig {
   MSBuild $MSOptions $PackageProject /t:Repackage $MSProperties
 }
+
 
 Task ReadBuildConfig {
   $script:MSProperties = "/p:Configuration=$Configuration",

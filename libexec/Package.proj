@@ -10,7 +10,6 @@
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.common.targets" />
-  <Import Project=".\Chiffon.settings.targets" />
 
   <PropertyGroup>
     <!-- Valeurs possibles : Major, Minor, Patch, Build. -->
@@ -19,15 +18,13 @@
     <!-- Valeurs possibles : Production, Integration. -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
-    <!-- Packaging conditionnel. -->
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
     <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
-  <!-- Configuration de la publication. -->
   <PropertyGroup>
-    <PackageProperties>
+    <BuildProperties>
       $(BuildProperties);
       TransformsDir=$(_TransformsDir);
       PackageTarget=$(PackageTarget);
@@ -50,124 +47,86 @@
       PrecompileBeforePublish=true;
       UseMerge=true;
       WDPMergeOption=MergeAllOutputsToASingleAssembly
-    </PackageProperties>
+    </BuildProperties>
   </PropertyGroup>
 
-  <!-- Liste des fichiers de projets. -->
-  <PropertyGroup>
-    <_AssetsProject>$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj</_AssetsProject>
-    <_WebSiteProject>$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj</_WebSiteProject>
-    <_MediaSiteProject>$(_SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj</_MediaSiteProject>
-    <_TestsProject>$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj</_TestsProject>
-  </PropertyGroup>
+  <ItemGroup>
+    <ProjectsToBuild Include="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj"
+                     Condition="'$(RunTests)' == 'true'">
+      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
+    </ProjectsToBuild>
+
+    <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
+                     Condition="'$(PackageAssets)' == 'true'">
+      <AdditionalProperties>
+        $(BuildProperties);
+        PublishUrl=$(_StageDir)wznw.org_chiffon\
+      </AdditionalProperties>
+    </ProjectsToBuild>
+
+    <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
+                     Condition="'$(PackageWebSite)' == 'true'">
+      <AdditionalProperties>
+        $(BuildProperties);
+        PublishUrl=$(_StageDir)pourquelmotifsimone.com\;
+        PublishProfile=$(_PublishProfileDir)Chiffon.WebSite.pubxml
+      </AdditionalProperties>
+    </ProjectsToBuild>
+
+    <ProjectsToBuild Include="$(_SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
+                     Condition="'$(PackageMediaSite)' == 'true'">
+      <AdditionalProperties>
+        $(BuildProperties);
+        PublishUrl=$(_StageDir)s.pourquelmotifsimone.com\;
+        PublishProfile=$(_PublishProfileDir)Chiffon.MediaSite.pubxml
+      </AdditionalProperties>
+    </ProjectsToBuild>
+  </ItemGroup>
+
 
   <!-- ### Directives publiques ### -->
 
-  <Target Name="Clean" DependsOnTargets="DeleteTempBuildDir">
-    <!-- TODO: Supprimer .buildTime ? -->
-    <MSBuild Projects="$(_AssetsProject)" Targets="DeepClean" />
+  <Target Name="Clean" DependsOnTargets="DeleteBuildDir">
+    <MSBuild Projects="$(_SourceDir)Chiffon.Tests\Chiffon.Tests.csproj" Targets="DeepClean" />
   </Target>
 
-  <Target Name="CorePackage" DependsOnTargets="GetProjectsToPackage">
-    <MSBuild Projects="@(ProjectsToPackage)" Targets="Build" StopOnFirstFailure="true">
+  <Target Name="Build">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
+  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
 
-  <Target Name="Package" DependsOnTargets="_PrePackage;Clean;CorePackage;_PostPackage" />
+  <Target Name="Package" DependsOnTargets="_PrePackage;Clean;Build;_ZipPackage" />
 
-  <Target Name="Repackage" DependsOnTargets="_PreRepackage;Clean;CorePackage;_PostPackage" />
+  <Target Name="Repackage" DependsOnTargets="_PreRepackage;Clean;Build;_ZipPackage" />
 
-  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Clean;CorePackage" />
+  <Target Name="Integrate" DependsOnTargets="_PreIntegrate;Clean;Build" />
 
 
   <!-- ### Directives connexes ### -->
 
-  <Target Name="AfterCorePackage" AfterTargets="CorePackage"
-          DependsOnTargets="$(AfterCorePackageDependsOn)" />
+  <ItemGroup>
+    <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
+    <_AfterBuildTargets Include="VerifyAspNetMergeOutputs" Condition="'$(Analyze)' == 'true'" />
+    <_AfterBuildTargets Include="RunXunitTests" Condition="'$(RunTests)' == 'true'" />
+  </ItemGroup>
 
   <PropertyGroup>
-    <AfterCorePackageDependsOn>
-      _VerifyBuild;
-      VerifyAspNetMergeOutputs
-    </AfterCorePackageDependsOn>
+    <AfterBuildDependsOn>@(_AfterBuildTargets)</AfterBuildDependsOn>
   </PropertyGroup>
 
 
   <!-- ### Directives privées ### -->
 
-  <!-- Liste des projets à publier (vers le système de fichier). -->
-  <Target Name="GetProjectsToPackage"
-          DependsOnTargets="_AddAssetsToPackage;_AddTestsToPackage;_AddWebSiteToPackage;_AddMediaSiteToPackage" />
-
-  <!-- Ajoute le projet Assets à la liste des projets à packager. -->
-  <Target Name="_AddAssetsToPackage" Condition="'$(PackageAssets)' == 'true'"
-          DependsOnTargets="GetPackageProperties">
-    <ItemGroup>
-      <ProjectsToPackage Include="$(_AssetsProject)">
-        <AdditionalProperties>
-          $(PackageProperties);
-          PublishUrl=$(_StageDir)wznw.org_chiffon\
-        </AdditionalProperties>
-      </ProjectsToPackage>
-    </ItemGroup>
-  </Target>
-
-  <!-- Ajoute le projet de tests à la liste des projets à packager. -->
-  <Target Name="_AddTestsToPackage" Condition="'$(RunTests)' == 'true'"
-          DependsOnTargets="GetBuildProperties">
-    <ItemGroup>
-      <ProjectsToPackage Include="$(_TestsProject)">
-        <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
-      </ProjectsToPackage>
-    </ItemGroup>
-  </Target>
-
-  <!-- Ajoute le site web à la liste des projets à compiler. -->
-  <Target Name="_AddWebSiteToPackage" Condition="'$(PackageWebSite)' == 'true'"
-          DependsOnTargets="GetPackageProperties">
-    <ItemGroup>
-      <ProjectsToPackage Include="$(_WebSiteProject)">
-        <AdditionalProperties>
-          $(PackageProperties);
-          PublishUrl=$(_StageDir)pourquelmotifsimone.com\;
-          PublishProfile=$(_PublishProfileDir)Chiffon.WebSite.pubxml
-        </AdditionalProperties>
-      </ProjectsToPackage>
-    </ItemGroup>
-  </Target>
-
-  <!-- Ajoute le site media à la liste des projets à packager. -->
-  <Target Name="_AddMediaSiteToPackage" Condition="'$(PackageMediaSite)' == 'true'"
-          DependsOnTargets="GetPackageProperties">
-    <ItemGroup>
-      <ProjectsToPackage Include="$(_MediaSiteProject)">
-        <AdditionalProperties>
-          $(PackageProperties);
-          PublishUrl=$(_StageDir)s.pourquelmotifsimone.com\;
-          PublishProfile=$(_PublishProfileDir)Chiffon.MediaSite.pubxml
-        </AdditionalProperties>
-      </ProjectsToPackage>
-    </ItemGroup>
-  </Target>
-
-  <Target Name="_VerifyBuild"
-          Inputs="@(_BuildOutputs)"
-          Outputs="$(_RootDir).buildTime">
-
-    <Touch Files="$(_RootDir).buildTime" AlwaysCreate="true" />
-    <CallTarget Targets="RunXunitTests" RunEachTargetSeparately="true" Condition="'$(RunTests)' == 'true'" />
-    <CallTarget Targets="VerifyBuildOutputs" RunEachTargetSeparately="true" />
-  </Target>
-
-  <!-- Packaging -->
-
   <Target Name="_PrePackage">
     <!-- Lors de la création d'un package, "Milestone" doit être différent de "Build". -->
-    <Error Text="The parameter 'Milestone' must not be set to 'Build'." Condition="'$(Milestone)' == 'Build'" />
+    <Error Text="The parameter 'Milestone' must not be set to 'Build'."
+           Condition="'$(Milestone)' == 'Build'" />
   </Target>
 
-  <Target Name="_AfterPrePackage" AfterTargets="_PrePackage" DependsOnTargets="UpdateVersionNumber" />
+  <Target Name="_AfterPrePackage" AfterTargets="_PrePackage"
+          DependsOnTargets="UpdateVersionNumber" />
 
   <Target Name="_PreRepackage">
     <!-- Lors de la mise à jour d'un package, on incrémente uniquement le numéro de "Build". -->
@@ -176,9 +135,8 @@
     </PropertyGroup>
   </Target>
 
-  <!-- NB: On ne place la directive suivante dans "_PreRepackage" car "UpdateVersionNumber" n'utiliserait
-       pas la version mise à jour de "Milestone". -->
-  <Target Name="_AfterPreRepackage" AfterTargets="_PreRepackage" DependsOnTargets="UpdateVersionNumber" />
+  <Target Name="_AfterPreRepackage" AfterTargets="_PreRepackage"
+          DependsOnTargets="UpdateVersionNumber" />
 
   <Target Name="_PreIntegrate">
     <PropertyGroup>
@@ -186,7 +144,7 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="_PostPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
+  <Target Name="_ZipPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
     <PropertyGroup>
       <_PackageFile>$(_PackageDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>

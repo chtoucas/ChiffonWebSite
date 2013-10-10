@@ -15,9 +15,7 @@
 
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.common.targets" />
-  <Import Project=".\Chiffon.settings.targets" />
 
-  <!-- Liste des projets à compiler. -->
   <ItemGroup>
     <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" />
     <ProjectsToBuild Include="$(_RootDir)Chiffon.sln">
@@ -25,9 +23,7 @@
     </ProjectsToBuild>
   </ItemGroup>
 
-  <!-- ### Directives publiques ### -->
-
-  <Target Name="Clean">
+  <Target Name="Clean" DependsOnTargets="DeleteTempFiles">
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
   </Target>
 
@@ -36,15 +32,10 @@
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
+  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="EmitProjectSolution" />
+  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOnTarget)" />
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-
-
-  <!-- ### Directives connexes ### -->
-
-  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="EmitProjectSolution" />
-
-  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOnTarget)" />
 
   <ItemGroup>
     <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
