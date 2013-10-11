@@ -10,7 +10,7 @@ properties {
 Task default -depends Build
 
 Task Help {
-  Write-Host "Help not yet done..."
+  Write-Host "Sorry, help not yet available..."
 }
 
 Task Clean {

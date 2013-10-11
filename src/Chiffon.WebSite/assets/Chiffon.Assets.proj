@@ -40,7 +40,6 @@
           Inputs="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
           DependsOnTargets="_GetCssFiles">
-
     <MergeFiles Files="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
@@ -51,7 +50,6 @@
           Inputs="@(_JsFiles->'$(_JsDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
           DependsOnTargets="_GetJsFiles">
-
     <MergeFiles Files="@(_JsFiles->'$(_JsDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 

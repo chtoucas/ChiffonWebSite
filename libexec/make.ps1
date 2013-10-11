@@ -10,7 +10,7 @@ properties {
 Task default -depends Build
 
 Task Help {
-  Write-Host "Help not yet done..."
+  Write-Host "Sorry, help not yet available..."
 }
 
 Task Clean {
@@ -40,9 +40,9 @@ Task ReadMilestoneConfig {
 
   [System.Xml.XmlElement] $config = $configXml.configuration
 
-  [string] $Milestone = $config.Milestone
+  [string] $milestone = $config.Milestone
 
-  $script:properties = "/p:Milestone=$Milestone";
+  $script:properties = "/p:Milestone=$milestone";
 }
 
 Task ReadPackageConfig {
@@ -52,13 +52,13 @@ Task ReadPackageConfig {
 
   [System.Xml.XmlElement] $config = $configXml.configuration
 
-  [string] $PackageTarget    = $config.PackageTarget
-  [string] $PackageAssets    = $config.PackageAssets
-  [string] $PackageMediaSite = $config.PackageMediaSite
-  [string] $PackageWebSite   = $config.PackageWebSite
+  [string] $packageTarget    = $config.PackageTarget
+  [string] $packageAssets    = $config.PackageAssets
+  [string] $packageMediaSite = $config.PackageMediaSite
+  [string] $packageWebSite   = $config.PackageWebSite
 
-  $script:msproperties = "/p:PackageTarget=$PackageTarget",
-    "/p:PackageAssets=$PackageAssets",
-    "/p:PackageMediaSite=$PackageMediaSite",
-    "/p:PackageWebSite=$PackageWebSite";
+  $script:msproperties = "/p:PackageTarget=$packageTarget",
+    "/p:PackageAssets=$packageAssets",
+    "/p:PackageMediaSite=$packageMediaSite",
+    "/p:PackageWebSite=$packageWebSite";
 }
