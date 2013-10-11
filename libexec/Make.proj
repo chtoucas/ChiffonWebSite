@@ -11,6 +11,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.common.targets" />
+  <Import Project=".\Chiffon.tests.targets" />
 
   <PropertyGroup>
     <!-- Valeurs possibles : Major, Minor, Patch, Build. -->
@@ -20,7 +21,8 @@
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
-    <PackageMediaSite Condition="'$(PackageMediaSite)' != 'false'">true</PackageMediaSite>
+    <!-- WARNING: Pour le moment, on ne compile pas par défaut le site media. -->
+    <PackageMediaSite Condition="'$(PackageMediaSite)' != 'true'">false</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
@@ -79,7 +81,7 @@
       </AdditionalProperties>
     </ProjectsToBuild>
 
-    <ProjectsToBuild Include="$(_TestDir)Chiffon.Tests\*.Tests.csproj"
+    <ProjectsToBuild Include="$(_TestDir)**\*.Tests.csproj"
                      Condition="'$(RunTests)' == 'true'">
       <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
     </ProjectsToBuild>
@@ -98,9 +100,10 @@
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Milestone" DependsOnTargets="_ValidateMilestone;UpdateVersionNumber" />
+  <Target Name="Milestone"
+          DependsOnTargets="_ValidateMilestone;_UpdateVersionNumber;Rebuild;_ZipPackage" />
 
-  <Target Name="Package" DependsOnTargets="UpdateVersionNumber;Rebuild;_ZipPackage" />
+  <Target Name="Package" DependsOnTargets="_UpdateVersionNumber;Rebuild;_ZipPackage" />
 
   <ItemGroup>
     <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
@@ -115,6 +118,16 @@
   <Target Name="_ValidateMilestone">
     <Error Text="The parameter 'Milestone' must not be set to 'Build'."
            Condition="'$(Milestone)' == 'Build'" />
+  </Target>
+
+  <!-- Mise à jour du numéro de version des assemblées .NET. -->
+  <Target Name="_UpdateVersionNumber">
+    <UpdateVersion
+      VersionInfoXml="$(_EtcDir)VersionInfo.xml"
+      AssemblyInfoTemplate="$(_EtcDir)AssemblyInfo.Template.cs"
+      AssemblyInfoFile="$(_EtcDir)AssemblyInfo.Version.cs"
+      Milestone="$(Milestone)">
+    </UpdateVersion>
   </Target>
 
   <Target Name="_ZipPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project=".\Chiffon.xunit.tasks" />
+
+  <!-- ### Tests (White-box) ### -->
+
+  <!-- Tests unitaires via Xunit. -->
+  <Target Name="RunXunitTests" DependsOnTargets="CreateReportsDir"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(_XunitXmlReport)">
+    <Message Text="Running Xunit tests." Importance="Low" />
+    
+    <ItemGroup>
+      <!--<_TestAssemblies Include="$(_OutDir)**\*.Tests.dll" />-->
+      <_TestAssemblies Include="%(_BuildOutputs.Identity)"
+                       Condition="'@(_BuildOutputs->EndsWith('Tests.dll'))' == 'true'" />
+    </ItemGroup>
+
+    <xunit Assemblies="@(_TestAssemblies)" Xml="$(_XunitXmlReport)" />
+  </Target>
+
+
+  <!-- ### Analyses ### -->
+
+  <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(_buildTimestamp)">
+    <Message Text="Verifying build outputs with PEVerify." Importance="Low" />
+    
+    <!--
+    <ItemGroup>
+      <_BinaryFiles Include="$(_OutDir)**\Chiffon*.dll"
+                    Exclude="$(_OutDir)_PublishedWebsites\**\*"/>
+    </ItemGroup>
+
+    <RemoveDuplicates Inputs="@(_BinaryFiles)">
+      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
+    </RemoveDuplicates>
+    -->
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+
+    <!-- NB: Garder cette commande en fin de directive au cas où une des vérifications aie échoué -->
+    <Touch Files="$(_buildTimestamp)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="VerifyAspNetMergeOutputs" DependsOnTargets="GetPEVerify">
+    <Message Text="Verifying 'aspnet_merge' outputs with PEVerify." Importance="Low" />
+    
+    <ItemGroup>
+      <_AspNetMergeOutputs Include="$(_StageDir)**\Chiffon.*.AspNet.dll" />
+    </ItemGroup>
+
+    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
+         "incorrectes" de ce point de vue là. -->
+    <Exec Command="$(PEVerifyExe) &quot;%(_AspNetMergeOutputs.FullPath)&quot; /nologo /il /unique"
+          ContinueOnError="false" />
+  </Target>
+
+</Project>

@@ -7,7 +7,6 @@
   <Import Project=".\Chiffon.props" />
   <Import Project=".\Chiffon.helpers.targets" />
   <Import Project=".\Chiffon.common.tasks" />
-  <Import Project=".\Chiffon.xunit.tasks" />
 
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -45,7 +44,7 @@
   </PropertyGroup>
 
 
-  <!-- ### Création ou suppression des répertoires temporaires ### -->
+  <!-- ### Création ou suppression des fichiers temporaires ### -->
 
   <!-- Supprime tous les fichiers temporaires créés pendant une compilation. -->
   <Target Name="DeleteTempFiles">
@@ -78,7 +77,7 @@
   </Target>
 
 
-  <!-- ### Récupération ou mise à jour des numéros de version ### -->
+  <!-- ### Récupération des numéros de version ### -->
 
   <!-- Récupération du numéro de version sémantique. -->
   <Target Name="GetSemVer">
@@ -92,67 +91,6 @@
     <GetVersion VersionInfoXml="$(_EtcDir)VersionInfo.xml">
       <Output TaskParameter="VersionNumber" PropertyName="_VersionNumber" />
     </GetVersion>
-  </Target>
-
-  <!-- Mise à jour du numéro de version des assemblées .NET. -->
-  <Target Name="UpdateVersionNumber">
-    <UpdateVersion
-      VersionInfoXml="$(_EtcDir)VersionInfo.xml"
-      AssemblyInfoTemplate="$(_EtcDir)AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(_EtcDir)AssemblyInfo.Version.cs"
-      Milestone="$(Milestone)">
-    </UpdateVersion>
-  </Target>
-
-
-  <!-- ### Tests (Whitebox) ### -->
-
-  <!-- Tests unitaires via Xunit. -->
-  <Target Name="RunXunitTests" DependsOnTargets="CreateReportsDir"
-          Inputs="@(_BuildOutputs)"
-          Outputs="$(_XunitXmlReport)">
-    <ItemGroup>
-      <!--<_TestAssemblies Include="$(_OutDir)**\*.Tests.dll" />-->
-      <_TestAssemblies Include="%(_BuildOutputs.Identity)"
-                       Condition="'@(_BuildOutputs->EndsWith('Tests.dll'))' == 'true'" />
-    </ItemGroup>
-
-    <xunit Assemblies="@(_TestAssemblies)" Xml="$(_XunitXmlReport)" />
-  </Target>
-
-
-  <!-- ### Analyses ### -->
-
-  <Target Name="VerifyBuildOutputs" DependsOnTargets="GetPEVerify"
-          Inputs="@(_BuildOutputs)"
-          Outputs="$(_buildTimestamp)">
-    <!--
-    <ItemGroup>
-      <_BinaryFiles Include="$(_OutDir)**\Chiffon*.dll"
-                    Exclude="$(_OutDir)_PublishedWebsites\**\*"/>
-    </ItemGroup>
-
-    <RemoveDuplicates Inputs="@(_BinaryFiles)">
-      <Output TaskParameter="Filtered" ItemName="_AssemblyFiles"/>
-    </RemoveDuplicates>
-    -->
-
-    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
-          ContinueOnError="false" />
-
-    <!-- NB: Garder cette commande en fin de directive au cas où une des vérifications aie échoué -->
-    <Touch Files="$(_buildTimestamp)" AlwaysCreate="true" />
-  </Target>
-
-  <Target Name="VerifyAspNetMergeOutputs" DependsOnTargets="GetPEVerify">
-    <ItemGroup>
-      <_AspNetMergeOutputs Include="$(_StageDir)**\Chiffon.*.AspNet.dll" />
-    </ItemGroup>
-
-    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" produit des assemblées
-         "incorrectes" de ce point de vue là. -->
-    <Exec Command="$(PEVerifyExe) &quot;%(_AspNetMergeOutputs.FullPath)&quot; /nologo /il /unique"
-          ContinueOnError="false" />
   </Target>
 
 </Project>

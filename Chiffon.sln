@@ -44,7 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishP
 	ProjectSection(SolutionItems) = preProject
 		libexec\Chiffon.MediaSite.pubxml = libexec\Chiffon.MediaSite.pubxml
 		libexec\Chiffon.WebSite.pubxml = libexec\Chiffon.WebSite.pubxml
-		libexec\Wznw.Org.pubxml = libexec\Wznw.Org.pubxml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{925044C1-66B2-4DE3-8FE9-F38BACB917F3}"
@@ -55,6 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{9250
 		libexec\Chiffon.common.tasks = libexec\Chiffon.common.tasks
 		libexec\Chiffon.helpers.targets = libexec\Chiffon.helpers.targets
 		libexec\Chiffon.props = libexec\Chiffon.props
+		libexec\Chiffon.tests.targets = libexec\Chiffon.tests.targets
 		libexec\Chiffon.xunit.tasks = libexec\Chiffon.xunit.tasks
 		libexec\Make.proj = libexec\Make.proj
 		libexec\Narvalo.Build.targets = libexec\Narvalo.Build.targets
