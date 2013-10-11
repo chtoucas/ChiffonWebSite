@@ -21,8 +21,6 @@
 
   <PropertyGroup>
     <_OutDir>$(_BaseOutDir)$(Configuration)\</_OutDir>
-    <_XunitXmlReport>$(_ReportsDir)xunit.xml</_XunitXmlReport>
-    <_buildTimestamp>$(_BuildDir).buildTime</_buildTimestamp>
   </PropertyGroup>
 
   <!--
@@ -46,14 +44,9 @@
 
   <!-- ### Création ou suppression des fichiers temporaires ### -->
 
-  <!-- Supprime tous les fichiers temporaires créés pendant une compilation. -->
-  <Target Name="DeleteTempFiles">
-    <ItemGroup>
-      <_TempFilesToRemove Include="$(_XunitXmlReport)"/>
-      <_TempFilesToRemove Include="$(_buildTimestamp)"/>
-    </ItemGroup>
-
-    <Delete Files="@(_TempFilesToRemove)" />
+  <!-- Supprime tous les fichiers temporaires créés au cours d'une compilation. -->
+  <Target Name="DeleteTempBuildFiles">
+    <Delete Files="@(_TempBuildFiles)" />
   </Target>
 
   <Target Name="DeleteBuildDir">

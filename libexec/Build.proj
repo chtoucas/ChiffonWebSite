@@ -36,7 +36,7 @@
     </ProjectsToBuild>
   </ItemGroup>
 
-  <Target Name="Clean" DependsOnTargets="DeleteTempFiles">
+  <Target Name="Clean" DependsOnTargets="DeleteTempBuildFiles">
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
   </Target>
 
