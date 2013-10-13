@@ -1,19 +1,17 @@
-# First version:
-# - start/stop IIS AppPools
-#   Cf. http://technet.microsoft.com/en-us/library/ee790553.aspx
-#   Cf. http://www.iis.net/learn/manage/powershell/powershell-snap-in-using-the-task-based-cmdlets-of-the-iis-powershell-snap-in
-# - use transactions? sync?
-# Second version: use Web Deploy
-#   Use WDeploySnapin3.0
-#   Cf. http://msdn.microsoft.com/en-us/library/dd394698.aspx
-#   Cf. http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity_26.html
-
-if ((Get-PSSnapin -Name WebAdministration -ErrorAction SilentlyContinue) -eq $null ){
-    Add-PSSnapin WebAdministration -ErrorAction Stop
-}
+# MSDeploy -verb:sync -source:appHostConfig="XXX" -dest:auto -enableRule:AppOffline
 
 Properties {
-  $backupDir = "$PWD\_backup"
+  $scriptPath = $(Get-Location).Path
+
+  $backupDir = "$scriptPath\_backup"
+  $configPath = "$scriptPath\Deploy.config"
+
+  [xml] $configXml = Get-Content -Path $configPath
+
+  [System.Xml.XmlElement] $config = $configXml.configuration
+
+  $webSite = $config.WebSite
+  $assets  = $config.Assets
 }
 
 Task default -depends Help
@@ -22,80 +20,48 @@ Task Help {
   Write-Host "Sorry, help not yet available..."
 }
 
-Task Deploy -depends DeployWebSite, DeployAssets
+Task Deploy -depends DeployWebSite
 
-Task Rollback -depends RollbackWebSite, RollbackAssets
+Task Rollback -depends RollbackWebSite
 
-Task DeployWebSite -depends ReadConfig, CreateBackupDirectory {
-  if (-not(Test-Path $newWebSite)) {
-    throw "No new content to deploy..."
-  }
-  if (Test-Path $webSiteBackup) {
-    throw "Backup already exists..."
-  }
+Task DeployWebSite -depends BackupWebSite `
+  -precondition { $webSite.GetAttribute("deploy") -eq "true" } {
 
-  StopIISPool($webSitePool);
-
-  Write-Host "Deploying website..."
-
-  Move-Item $webSite    -Destination $webSiteBackup -Force
-  Move-Item $newWebSite -Destination $webSite -Force
-
-  StartIISPool($webSitePool);
+  Publish-WebSite -Website $webSite.IISWebSite `
+    -Source "$scriptPath\$($webSite.SourceRelativePath)" `
+    -Destination $webSite.IISPhysicalPath
 }
 
-Task RollbackWebSite -depends ReadConfig {
-  if (-not(Test-Path $webSiteBackup)) {
-    throw "Backup does not exist..."
+Task BackupWebSite -depends CreateBackupDirectory {
+  $backupPackage = "$backupDir\$($webSite.BackupPackage)"
+
+  if (Test-Path $backupPackage) {
+    Write-ColoredOutput "Backup skipped, it already exists..."  -foregroundcolor "Yellow"
+    Return
   }
-  if (Test-Path $newWebSite) {
-    throw "New content not yet deployed..."
-  }
 
-  StopIISPool($webSitePool);
-
-  Write-Host "Rollbacking website..."
-
-  Move-Item $webSite       -Destination $newWebSite -Force
-  Move-Item $webSiteBackup -Destination $webSite -Force
-
-  StartIISPool($webSitePool);
+  Backup-WebSite -Website $webSite.IISWebSite -BackupPackage $backupPackage
 }
 
-Task DeployAssets -depends ReadConfig, CreateBackupDirectory {
-  if (-not(Test-Path $newAssets)) {
-    throw "No new content to deploy..."
+Task RollbackWebSite {
+  $backupPackage = "$backupDir\$($webSite.BackupPackage)"
+
+  if (-not(Test-Path $backupPackage)) {
+    Write-ColoredOutput "Backup package does not exist..."  -foregroundcolor "Yellow"
+    Return
   }
-  if (Test-Path $assetsBackup) {
-    throw "Backup already exists..."
-  }
 
-  StopIISPool($assetsPool);
+  Rollback-WebSite -Website $webSite.IISWebSite -BackupPackage $backupPackage
+}
 
-  Write-Host "Deploying assets..."
+Task DeployAssets -depends BackupAssets `
+  -precondition { $assets.GetAttribute("deploy") -eq "true" } {
+}
 
-  Move-Item $assets    -Destination $assetsBackup -Force
-  Move-Item $newAssets -Destination $assets -Force
-
-  StartIISPool($assetsPool);
+Task BackupAssets -depends CreateBackupDirectory {
 }
 
 Task RollbackAssets -depends ReadConfig {
-  if (-not(Test-Path $assetsBackup)) {
-    throw "Backup does not exist..."
-  }
-  if (Test-Path $newAssets) {
-    throw "New content not yet deployed..."
-  }
-
-  StopIISPool($assetsPool);
-
-  Write-Host "Rollbacking assets..."
-
-  Move-Item $assets       -Destination $newAssets -Force
-  Move-Item $assetsBackup -Destination $assets -Force
-
-  StartIISPool($assetsPool);
 }
 
 Task CreateBackupDirectory {
@@ -106,33 +72,49 @@ Task CreateBackupDirectory {
   New-Item $backupDir -Type directory -ErrorAction SilentlyContinue | Out-Null
 }
 
-Task ReadConfig {
-  $sourceDir = "$PWD\_source"
-  $targetDir = "$PWD\_target"
+function Publish-WebSite {
+  param(
+    [string] $webSite,
+    [string] $source,
+    [string] $destination
+  )
 
-  $script:webSitePool   = "pourquelmotifsimone.com"
-  $script:webSite       = "$targetDir\chiffon\www\"
-  $script:newWebSite    = "$sourceDir\pourquelmotifsimone.com\"
-  $script:webSiteBackup = "$backupDir\pourquelmotifsimone.com\"
+  Write-ColoredOutput "Stopping $webSite..." -foregroundcolor "Yellow"
+  Stop-WebSite -Name $webSite
 
-  $script:assetsPool    = "wznw.org"
-  $script:assets        = "$targetDir\wznw\www\chiffon\"
-  $script:newAssets     = "$sourceDir\wznw.org_chiffon\"
-  $script:assetsBackup  = "$backupDir\wznw.org_chiffon\"
+  Exec { MSDeploy "-verb=sync", "-source=dirPath=$source", "-dest=dirPath=$destination" }
+  #if ($LastExitCode -ne 0) { throw "MSDeploy failed." }
+
+  Write-ColoredOutput "Starting $webSite..." -foregroundcolor "Yellow"
+  Start-WebSite -Name $webSite
 }
 
-function StopIISPool {
-  param($appPoolName)
+function Backup-WebSite {
+  param(
+    [string] $webSite,
+    [string] $backupPackage
+  )
 
-  Write-Host "Stopping '$appPoolName' pool."
+  Write-ColoredOutput "Backing up $webSite..." -foregroundcolor "Yellow"
 
-  Stop-WebAppPool -Name $appPoolName
+  Exec { MSDeploy "-verb:sync", "-source:appHostConfig=$webSite" "-dest:package=$backupPackage" }
+  #if ($LastExitCode -ne 0) { throw "MSDeploy failed." }
 }
 
-function StartIISPool {
-  param($appPool)
+function Rollback-WebSite {
+  param(
+    [string] $webSite,
+    [string] $backupPackage
+  )
 
-  Write-Host "Starting '$appPoolName' pool."
+  Write-ColoredOutput "Stopping $webSite..." -foregroundcolor "Yellow"
+  Stop-WebSite -Name $webSite
 
-  Start-WebAppPool -Name $appPoolName
+  Write-ColoredOutput "Rolling back $webSite..." -foregroundcolor "Yellow"
+
+  Exec { MSDeploy "-verb:sync", "-source:package=$backupPackage", "-dest:appHostConfig=$webSite" }
+  #if ($LastExitCode -ne 0) { throw "MSDeploy failed." }
+
+  Write-ColoredOutput "Starting $webSite..." -foregroundcolor "Yellow"
+  Start-WebSite -Name $webSite
 }

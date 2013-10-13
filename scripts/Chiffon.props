@@ -11,14 +11,14 @@
     <_SourceDir>$(_RootDir)src\</_SourceDir>
     <_TestDir>$(_RootDir)test\</_TestDir>
     <_ToolsDir>$(_RootDir)tools\</_ToolsDir>
-    <_PackageDir>$(_RootDir)_packages\</_PackageDir>
+    <_PackageDir>$(_RootDir)_build\</_PackageDir>
 
     <_PublishProfileDir>$(MSBuildThisFileDirectory)</_PublishProfileDir>
   </PropertyGroup>
 
   <!-- Répertoires temporaires créés au cours de la compilation. -->
   <PropertyGroup>
-    <_BuildDir>$(_RootDir)_build\</_BuildDir>
+    <_BuildDir>$(_RootDir)_work\</_BuildDir>
     <_BaseOutDir>$(_BuildDir)bin\</_BaseOutDir>
     <_BaseIntermediateOutDir>$(_BuildDir)obj\</_BaseIntermediateOutDir>
     <_ReportsDir>$(_BuildDir)reports\</_ReportsDir>

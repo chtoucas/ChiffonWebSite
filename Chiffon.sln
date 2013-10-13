@@ -30,26 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chiffon.csproj", "{1759636F-FE03-4DAA-87B7-895CEB3F8797}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishProfiles", "{D1E9C98A-55A2-4636-8FB0-D8874C9660C9}"
-	ProjectSection(SolutionItems) = preProject
-		libexec\Chiffon.MediaSite.pubxml = libexec\Chiffon.MediaSite.pubxml
-		libexec\Chiffon.WebSite.pubxml = libexec\Chiffon.WebSite.pubxml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{925044C1-66B2-4DE3-8FE9-F38BACB917F3}"
-	ProjectSection(SolutionItems) = preProject
-		libexec\Build.proj = libexec\Build.proj
-		src\Chiffon.WebSite\assets\Chiffon.Assets.proj = src\Chiffon.WebSite\assets\Chiffon.Assets.proj
-		libexec\Chiffon.common.targets = libexec\Chiffon.common.targets
-		libexec\Chiffon.common.tasks = libexec\Chiffon.common.tasks
-		libexec\Chiffon.helpers.targets = libexec\Chiffon.helpers.targets
-		libexec\Chiffon.props = libexec\Chiffon.props
-		libexec\Chiffon.tests.targets = libexec\Chiffon.tests.targets
-		libexec\Chiffon.xunit.tasks = libexec\Chiffon.xunit.tasks
-		libexec\Make.proj = libexec\Make.proj
-		libexec\Narvalo.Build.targets = libexec\Narvalo.Build.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInfo", "{CA1374AC-6B74-4840-8B92-4AB593FBA306}"
 	ProjectSection(SolutionItems) = preProject
 		etc\AssemblyInfo.Template.cs = etc\AssemblyInfo.Template.cs
@@ -57,12 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.MediaSite", "src\Chiffon.MediaSite\Chiffon.MediaSite.csproj", "{764D63FC-2B67-45BB-8880-0C193A0C2149}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PSake", "PSake", "{FAE42803-CF89-4B43-825B-C1F215387FD5}"
-	ProjectSection(SolutionItems) = preProject
-		libexec\build.ps1 = libexec\build.ps1
-		libexec\make.ps1 = libexec\make.ps1
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "test\Chiffon.Tests\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
 EndProject
@@ -120,9 +94,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CA1374AC-6B74-4840-8B92-4AB593FBA306} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
-		{925044C1-66B2-4DE3-8FE9-F38BACB917F3} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
-		{FAE42803-CF89-4B43-825B-C1F215387FD5} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
-		{D1E9C98A-55A2-4636-8FB0-D8874C9660C9} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 		{9858E246-3025-4B7E-B6CA-3BAFDF47C96C} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 		{56E3969F-5066-4702-A670-4C35FBD97201} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
 		{7B564B3C-CCCC-43CA-94B6-D375AA40F085} = {9C9A09C3-DAB9-4DD9-93DE-1D3CF1E54BC3}
