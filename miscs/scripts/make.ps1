@@ -9,6 +9,7 @@ Import-Module ".\utils.ps1"
 
 Import-WebAdministration
 
+# FIXME: Ne pas polluer PATH.
 $webDeployInstallPath = Get-WebDeployInstallPath
 $env:Path += (";", $webDeployInstallPath)
 
