@@ -20,7 +20,7 @@ Properties {
   $SourceDir = $BasePath
   $BackupDir = "$BasePath\_backup"
   $Logfile   = "$BasePath\msdeploy.log"
-  $Simulate  = $true
+  $Simulate  = $false
 
   $MainWebSiteConfig  = $Config.MainWebSite
   $MediaWebSiteConfig = $Config.MediaWebSite
@@ -36,13 +36,6 @@ Task default -depends Help
 Task Help {
   Write-Host "Sorry, help not yet available..."
 }
-
-#TaskTearDown  {
-#  if ($LastExitCode -ne 0) {
-#    Write-Host "Something went wrong in a task." -BackgroundColor Red -ForegroundColor White
-#    Exit 1
-#  }
-#}
 
 Task Deploy -depends DeployMainWebSite, DeployMediaWebSite, DeployAssetsWebApp
 Task Rollback -depends RollbackMainWebSite, RollbackMediaWebSite, RollbackAssetsWebApp
