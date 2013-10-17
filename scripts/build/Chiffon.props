@@ -5,7 +5,7 @@
 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_RootDir>$(MSBuildThisFileDirectory)..\</_RootDir>
+    <_RootDir>$(MSBuildThisFileDirectory)..\..\</_RootDir>
 
     <_EtcDir>$(_RootDir)etc\</_EtcDir>
     <_SourceDir>$(_RootDir)src\</_SourceDir>
