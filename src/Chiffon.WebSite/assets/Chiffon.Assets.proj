@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" DefaultTargets="Build"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--<Import Project="..\..\..\scripts\build\Narvalo.Build.tasks" />-->
-  <Import Project="..\..\..\scripts\build\Chiffon.narvalo.props" />
-  <Import Project="$(_NarvaloBuildTasks)" />
+  <Import Project="..\..\..\packages\Narvalo.Build.0.2.0.1\tools\Narvalo.Build.tasks" />
   <Import Project="..\..\..\scripts\build\Chiffon.common.targets" />
 
   <PropertyGroup>
@@ -42,10 +40,13 @@
           Inputs="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
           DependsOnTargets="_GetCssFiles">
+          <Message Text="%(_CssFiles.Bundle)" Importance="High" />
+    <!-- FIXME: La nouvelle version de YUICompressor ne comprend pas les chemins Windows ?
     <MergeFiles Files="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
     <CssYuiCompressor JarPath="$(_YuiCompressorJar)" Files="%(_CssFiles.Bundle)" />
+    -->
   </Target>
 
   <Target Name="MergeAndMinifyJs"
