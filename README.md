@@ -1,7 +1,7 @@
 ChiffonWebSite
 ==============
 
-WebSite for a textile design collective.
+WebSite for a textile design collective, available in French & English.
 
 
 Technology footprint
@@ -12,3 +12,5 @@ Technology footprint
 * Autofac
 * MEF
 * jQuery
+* MSBuild
+* PSake

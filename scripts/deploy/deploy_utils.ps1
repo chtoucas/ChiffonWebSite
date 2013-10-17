@@ -1,5 +1,5 @@
-# http://edgylogic.com/blog/powershell-and-external-commands-done-right/
 # WARNING: MSDeploy & Powershell n'interagissent pas bien quand il y a des espaces.
+# Cf. http://edgylogic.com/blog/powershell-and-external-commands-done-right/
 
 function Get-BackupPackage {
   param(
@@ -42,7 +42,7 @@ function Backup-WebSite {
   )
 
   if ($website.Contains(" ") -or $toPackage.Contains(" ")) {
-    throw "The parameters can not contain spaces."
+    throw 'The parameters can not contain spaces.'
   }
 
   # Si un backup existe déjà, on ne le recrée pas.
@@ -58,7 +58,7 @@ function Backup-WebSite {
   }
 
   Write-Host "Backing up '$webSite'." -ForegroundColor "Yellow"
-  MSDeploy $args >> ".\msdeploy-backup.log"
+  MSDeploy $args >> '.\msdeploy-backup.log'
 }
 
 function Publish-WebSite {
@@ -72,7 +72,7 @@ function Publish-WebSite {
   )
 
   if ($source.Contains(" ") -or $destination.Contains(" ")) {
-    throw "The parameters can not contain spaces."
+    throw 'The parameters can not contain spaces.'
   }
 
   Write-Host "Stopping '$webSite'." -ForegroundColor "Yellow"
@@ -84,7 +84,7 @@ function Publish-WebSite {
   }
 
   Write-Host "Publishing '$webSite'." -ForegroundColor "Yellow"
-  MSDeploy $args >> ".\msdeploy-publish.log"
+  MSDeploy $args >> '.\msdeploy-publish.log'
 
   Write-Host "Starting '$webSite'." -ForegroundColor "Yellow"
   Start-WebSite -Name $webSite
@@ -99,7 +99,7 @@ function Restore-WebSite {
   )
 
   if ($website.Contains(" ") -or $fromPackage.Contains(" ")) {
-    throw "The parameters can not contain spaces."
+    throw 'The parameters can not contain spaces.'
   }
 
   if (-not(Test-Path $fromPackage)) {
@@ -115,7 +115,7 @@ function Restore-WebSite {
   }
 
   Write-Host "Restoring '$webSite'." -ForegroundColor "Yellow"
-  MSDeploy $args >> ".\msdeploy-restore.log"
+  MSDeploy $args >> '.\msdeploy-restore.log'
 
   Write-Host "Starting '$webSite'." -ForegroundColor "Yellow"
   Start-WebSite -Name $webSite

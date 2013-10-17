@@ -2,15 +2,15 @@
 Properties {
   $project = '.\Build.proj'
 
-  $options = "/nologo", "/v:minimal", "/fl",
-    "/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8",
-    "/m", "/nodeReuse:false"
+  $options = '/nologo', '/v:minimal', '/fl',
+    '/flp:logfile=..\msbuild.log;verbosity=normal;encoding=utf-8',
+    '/m', '/nodeReuse:false'
 }
 
 Task default -depends Build
 
 Task Help {
-  Write-Host "Sorry, help not yet available..."
+  Write-Host 'Sorry, help not yet available...'
 }
 
 Task Clean {
@@ -26,5 +26,5 @@ Task Rebuild {
 }
 
 Task FastBuild {
-  MSBuild $options $project /t:Build "/p:MvcBuildViews=false;RunTests=false;Analyze=false"
+  MSBuild $options $project /t:Build '/p:MvcBuildViews=false;RunTests=false;Analyze=false'
 }

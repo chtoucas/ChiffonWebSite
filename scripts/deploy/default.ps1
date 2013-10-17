@@ -19,8 +19,7 @@ Properties {
 
   $SourceDir = $BasePath
   $BackupDir = "$BasePath\_backup"
-  $Logfile   = "$BasePath\msdeploy.log"
-  $Simulate  = $false
+  $Simulate  = $Config.GetAttribute("simulate") -eq "true"
 
   $MainWebSiteConfig  = $Config.MainWebSite
   $MediaWebSiteConfig = $Config.MediaWebSite
@@ -34,7 +33,7 @@ Properties {
 Task default -depends Help
 
 Task Help {
-  Write-Host "Sorry, help not yet available..."
+  Write-Host 'Sorry, help not yet available...'
 }
 
 Task Deploy -depends DeployMainWebSite, DeployMediaWebSite, DeployAssetsWebApp
