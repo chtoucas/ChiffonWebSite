@@ -3,34 +3,26 @@ function Get-WebDeployInstallPath {
      return (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy" | Select -last 1).GetValue("InstallPath")
 }
 
-# Web administration is loaded as a module on Windows 2008 R2 but as a set of snapins
-# for Windows 2008 (not R2).
-# Copied from:
+# WebAdministration est disponible sous deux formes : module ou snapin.
+# Copié depuis :
 #   http://stackoverflow.com/questions/10700660/add-pssnapin-webadministration-in-windows7
 function Import-WebAdministration {
   $moduleName = "WebAdministration"
-  $loadedAsModule = $false
-  $loadAsSnapin = $false
+  $loaded = $false
 
   if ($PSVersionTable.PSVersion.Major -ge 2) {
     if ((Get-Module -ListAvailable | ForEach-Object {$_.Name}) -contains $moduleName) {
       Import-Module $moduleName
 
       if ((Get-Module | ForEach-Object {$_.Name}) -contains $moduleName) {
-        $loadedAsModule = $true
-      } else {
-        $loadAsSnapin = $true
+        $loaded = $true
       }
     } elseif ((Get-Module | ForEach-Object {$_.Name}) -contains $moduleName) {
-      $loadedAsModule = $true
-    } else {
-      $loadAsSnapin = $true
+      $loaded = $true
     }
-  } else {
-    $loadAsSnapin = $true
   }
 
-  if ($loadAsSnapin) {
+  if (-not $loaded) {
     try {
       if ((Get-PSSnapin -Registered | ForEach-Object {$_.Name}) -contains $moduleName) {
         if ((Get-PSSnapin -Name $moduleName -ErrorAction SilentlyContinue) -eq $null) {
@@ -38,10 +30,10 @@ function Import-WebAdministration {
         }
 
         if ((Get-PSSnapin | ForEach-Object {$_.Name}) -contains $moduleName) {
-          $loadedAsModule = $true
+          $loaded = $true
         }
       } elseif ((Get-PSSnapin | ForEach-Object {$_.Name}) -contains $moduleName) {
-        $loadedAsModule = $true
+        $loaded = $true
       }
     } catch {
       Write-Error "`t`t$($MyInvocation.InvocationName): $_"

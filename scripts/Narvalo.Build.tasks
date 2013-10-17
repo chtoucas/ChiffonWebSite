@@ -7,5 +7,4 @@
   <UsingTask TaskName="Narvalo.Build.ClosureCompiler" AssemblyFile="$(AssemblyFile)" />
   <UsingTask TaskName="Narvalo.Build.CssYuiCompressor" AssemblyFile="$(AssemblyFile)" />
   <UsingTask TaskName="Narvalo.Build.MergeFiles" AssemblyFile="$(AssemblyFile)" />
-  <UsingTask TaskName="Narvalo.Build.UpdateVersionInfo" AssemblyFile="$(AssemblyFile)" />
 </Project>

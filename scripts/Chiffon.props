@@ -36,7 +36,7 @@
   <PropertyGroup>
     <_SevenZipExe>$(_ToolsDir)7-zip\7za.exe</_SevenZipExe>
     <_GoogleClosureJar>$(_ToolsDir)closure\compiler.jar</_GoogleClosureJar>
-    <_YuiCompressorJar>$(_ToolsDir)yuicompressor\build\yuicompressor-2.4.7.jar</_YuiCompressorJar>
+    <_YuiCompressorJar>$(_ToolsDir)yuicompressor-2.4.8.jar</_YuiCompressorJar>
   </PropertyGroup>
 
 </Project>

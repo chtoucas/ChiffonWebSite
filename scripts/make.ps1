@@ -1,5 +1,5 @@
 
-properties {
+Properties {
   $project = '.\Make.proj'
 
   $options = "/nologo", "/v:minimal", "/fl",

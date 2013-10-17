@@ -25,24 +25,21 @@
 
   <!--
     On essaie au mieux d'isoler l'environnement de compilation, ie de définir
-    des répertoires complètement différents de ceux utilisés par VS.
+    des répertoires complètement séparés de ceux utilisés par VS.
   -->
   <PropertyGroup>
     <BuildProperties>
       Configuration=$(Configuration);
       OutDir=$(_OutDir);
       <!-- NB: D'après Microsoft.Common.targets, on doit utiliser "OutDir" plutôt qu'"OutputPath".
-           Pour les projets Web, utiliser la même valeur pour "OutDir" et "OutputPath" permet
-           d'éviter la création de "_PublishedWebsites". -->
+           Pour les projets Web, choisir la même valeur pour "OutDir" et "OutputPath" permet
+           aussi d'éviter la création de "_PublishedWebsites". -->
       OutputPath=$(_OutDir);
       BaseIntermediateOutputPath=$(_BaseIntermediateOutDir);
       Platform=$(Platform);
       BuildInParallel=$(BuildInParallel)
     </BuildProperties>
   </PropertyGroup>
-
-
-  <!-- ### Création ou suppression des fichiers temporaires ### -->
 
   <!-- Supprime tous les fichiers temporaires créés au cours d'une compilation. -->
   <Target Name="DeleteTempBuildFiles">
@@ -68,9 +65,6 @@
   <Target Name="CreatePackageDir">
     <MakeDir Directories="$(_PackageDir)" Condition="!Exists($(_PackageDir))" />
   </Target>
-
-
-  <!-- ### Récupération des numéros de version ### -->
 
   <!-- Récupération du numéro de version sémantique. -->
   <Target Name="GetSemVer">
