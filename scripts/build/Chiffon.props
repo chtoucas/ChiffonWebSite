@@ -35,8 +35,8 @@
   <!-- Outils locaux (exe ou jar). -->
   <PropertyGroup>
     <_NuGetExe>$(_ToolsDir)nuget.exe</_NuGetExe>
-    <_SevenZipExe>$(_ToolsDir)7-zip\7za.exe</_SevenZipExe>
-    <_GoogleClosureJar>$(_ToolsDir)closure\compiler.jar</_GoogleClosureJar>
+    <_SevenZipExe>$(_ToolsDir)7za.exe</_SevenZipExe>
+    <_GoogleClosureJar>$(_ToolsDir)closure-compiler.jar</_GoogleClosureJar>
     <!-- FIXME: La version 2.4.8 de YUICompressor ne gère pas correctement les chemins Windows.
          Cf. https://github.com/yui/yuicompressor/issues/78 -->
     <_YuiCompressorJar>$(_ToolsDir)yuicompressor-2.4.7.jar</_YuiCompressorJar>

@@ -7,3 +7,8 @@ fonctionnalités d'optimisation Web (minification HTML, sprites) :
 * http://webgrease.codeplex.com/
 * http://bundletransformer.codeplex.com/
 * http://webmarkupmin.codeplex.com/
+
+Vérifier les CSS & JS :
+
+* CSSLint
+* JSLint
