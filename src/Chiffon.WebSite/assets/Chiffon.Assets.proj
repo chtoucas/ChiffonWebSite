@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" DefaultTargets="Build"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\Narvalo.Build.0.2.0.1\tools\Narvalo.Build.tasks" />
+  <Import Project="..\..\..\scripts\build\Narvalo.Build.tasks" />
   <Import Project="..\..\..\scripts\build\Chiffon.common.targets" />
 
   <PropertyGroup>
@@ -40,9 +40,6 @@
           Inputs="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
           DependsOnTargets="_GetCssFiles">
-          <Message Text="%(_CssFiles.Bundle)" Importance="High" />
-    <!-- FIXME: La version 2.4.8 de YUICompressor ne gère pas correctement les chemins Windows.
-         Cf. https://github.com/yui/yuicompressor/issues/78 -->
     <MergeFiles Files="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 

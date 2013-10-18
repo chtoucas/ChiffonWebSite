@@ -45,7 +45,8 @@
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
-  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="EmitProjectSolution" />
+  <Target Name="BeforeBuild" BeforeTargets="Build"
+          DependsOnTargets="EmitProjectSolution;RestorePackages" />
   <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOnTarget)" />
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />

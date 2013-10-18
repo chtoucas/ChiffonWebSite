@@ -56,6 +56,10 @@
     <RemoveDir Directories="$(_BuildDir)" Condition="Exists($(_BuildDir))" />
   </Target>
 
+  <Target Name="RestorePackages">
+    <Exec Command="&quot;$(_NuGetExe)&quot; restore &quot;$(_RootDir)Chiffon.sln&quot;" />
+  </Target>
+
   <!-- Création du répertoire contenant les rapports produits au cours de la compilation. -->
   <Target Name="CreateReportsDir">
     <MakeDir Directories="$(_ReportsDir)" Condition="!Exists($(_ReportsDir))" />
