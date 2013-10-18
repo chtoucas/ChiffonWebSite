@@ -41,12 +41,12 @@
           Outputs="%(Bundle)"
           DependsOnTargets="_GetCssFiles">
           <Message Text="%(_CssFiles.Bundle)" Importance="High" />
-    <!-- FIXME: La nouvelle version de YUICompressor ne comprend pas les chemins Windows ?
+    <!-- FIXME: La version 2.4.8 de YUICompressor ne gère pas correctement les chemins Windows.
+         Cf. https://github.com/yui/yuicompressor/issues/78 -->
     <MergeFiles Files="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
                 OutFile="%(Bundle)"/>
 
     <CssYuiCompressor JarPath="$(_YuiCompressorJar)" Files="%(_CssFiles.Bundle)" />
-    -->
   </Target>
 
   <Target Name="MergeAndMinifyJs"
