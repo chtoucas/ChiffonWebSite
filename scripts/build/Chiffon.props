@@ -11,6 +11,7 @@
     <_SourceDir>$(_RootDir)src\</_SourceDir>
     <_TestDir>$(_RootDir)test\</_TestDir>
     <_ToolsDir>$(_RootDir)tools\</_ToolsDir>
+    <_NuGetPackageDir>$(_RootDir)packages\</_NuGetPackageDir>
     <_PackageDir>$(_RootDir)_build\</_PackageDir>
 
     <_PublishProfileDir>$(MSBuildThisFileDirectory)</_PublishProfileDir>
