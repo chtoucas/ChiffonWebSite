@@ -88,13 +88,13 @@
     <Reference Include="Mvc.Mailer">
       <HintPath>..\..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Common, Version=0.2.0.0, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.2.1.0, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.2.0\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.2.1.0\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.2.0.0, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.2.1.0, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.2.0\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.2.1.0\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>

@@ -34,7 +34,7 @@ Task Package -depends ReadPackageConfig {
 }
 
 Task ReadMilestoneConfig {
-  $configPath = $(Get-Location).Path + "\..\etc\Milestone.config"
+  $configPath = $(Get-Location).Path + "\..\..\etc\Milestone.config"
 
   [xml] $configXml = Get-Content -Path $configPath
 
@@ -42,11 +42,11 @@ Task ReadMilestoneConfig {
 
   [string] $milestone = $config.Milestone
 
-  $script:properties = "/p:Milestone=$milestone";
+  $script:msproperties = "/p:Milestone=$milestone";
 }
 
 Task ReadPackageConfig {
-  $configPath = $(Get-Location).Path + '\..\etc\Package.config'
+  $configPath = $(Get-Location).Path + '\..\..\etc\Package.config'
 
   [xml] $configXml = Get-Content -Path $configPath
 
