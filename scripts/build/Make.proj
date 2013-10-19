@@ -101,8 +101,7 @@
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Milestone"
-          DependsOnTargets="_ValidateMilestone;_UpdateVersionNumber;Rebuild;_ZipPackage" />
+  <Target Name="Milestone" DependsOnTargets="_ValidateMilestone;_UpdateVersionNumber" />
 
   <Target Name="Package" DependsOnTargets="_UpdateVersionNumber;Rebuild;_ZipPackage" />
 
