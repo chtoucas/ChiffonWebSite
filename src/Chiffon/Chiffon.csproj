@@ -121,6 +121,8 @@
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
+    <Compile Include="Handlers\PatternImageHandler.cs" />
+    <Compile Include="Handlers\PatternImageQuery.cs" />
     <Compile Include="Infrastructure\Addressing\Constants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMapFactory.cs" />

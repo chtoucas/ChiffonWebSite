@@ -173,12 +173,6 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageHandler.cs">
-      <Link>Handlers\PatternImageHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\Chiffon.MediaSite\Handlers\PatternImageQuery.cs">
-      <Link>Handlers\PatternImageQuery.cs</Link>
-    </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
