@@ -1,6 +1,9 @@
 TODO
 ====
 
+Utiliser des routes I18N :
+http://attributerouting.net/
+
 Remplacer YUICompressor par une alternative .NET et éventuellement activer des nouvelles
 fonctionnalités d'optimisation Web (minification HTML, sprites) :
 

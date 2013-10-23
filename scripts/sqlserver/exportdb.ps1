@@ -10,7 +10,7 @@ param(
 Import-Module ".\SqlServer-Export.psm1"
 
 # Cf. http://technet.microsoft.com/en-us/library/hh847796.aspx
-$errorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"
 
 $outDir = $(Get-Location).Path + '\exports\'
 if (Test-Path -Path $outDir) {
@@ -29,11 +29,11 @@ $server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.StoredProcedure
 $db = New-Object Microsoft.SqlServer.Management.Smo.Database
 $db = $server.Databases[$databaseName]
 
-Export-DbCreation -Database $db -OutFile ($outDir + '\Create.sql')
 Export-Data -Server $server -Database $db -OutFile ($outDir + '\Data.sql')
 Export-Tables -Server $server -Database $db -OutFile ($outDir + '\Tables.sql')
 Export-StoredProcedures -Server $server -Database $db -OutFile ($outDir + '\StoredProcedures.sql')
 
+#Export-DbCreation -Database $db -OutFile ($outDir + '\Create.sql')
 #Export-Views -Server $server -Database $db -OutFile ($outDir + '\Views.sql')
 #Export-UserDefinedFunctions -Server $server -Database $db -OutFile ($outDir + '\UserDefinedFunctions.sql')
 #Export-Triggers -Server $server -Database $db -OutFile ($outDir + '\Triggers.sql')

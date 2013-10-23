@@ -30,7 +30,7 @@ function Export-DbCreation {
   )
 
   Write-Output "-> Exporting database creation."
-  $db.Script() | Out-File $outFile
+  $database.Script() | Out-File $outFile
 }
 
 function Export-Data {
