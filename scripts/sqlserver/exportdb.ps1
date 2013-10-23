@@ -2,9 +2,12 @@
 #   .\exportdb.ps1 "SERVERNAME" "DATABASE"
 #   .\exportdb.ps1 "(localdb)\v11.0" "Chiffon"
 
-param($serverName, $databaseName)
+param(
+  [Parameter(Mandatory = $true)] [string] $serverName,
+  [Parameter(Mandatory = $true)] [string] $databaseName
+)
 
-Import-Module ".\DBManip.psm1"
+Import-Module ".\SqlServer-Export.psm1"
 
 # Cf. http://technet.microsoft.com/en-us/library/hh847796.aspx
 $errorActionPreference = "Stop"
@@ -15,4 +18,23 @@ if (Test-Path -Path $outDir) {
 }
 md $outDir | Out-Null
 
-Export-DB -ServerName $serverName -DatabaseName $databaseName -OutDir $outDir
+[System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.Smo') | Out-Null
+[System.Reflection.Assembly]::LoadWithPartialName('System.Data') | Out-Null
+
+$server = New-Object Microsoft.SqlServer.Management.Smo.Server $serverName
+# La ligne suivante permet d'accélérer l'exécution de SMO.
+$server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.Table], "IsSystemObject")
+$server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.StoredProcedure], "IsSystemObject")
+
+$db = New-Object Microsoft.SqlServer.Management.Smo.Database
+$db = $server.Databases[$databaseName]
+
+Export-DbCreation -Database $db -OutFile ($outDir + '\Create.sql')
+Export-Data -Server $server -Database $db -OutFile ($outDir + '\Data.sql')
+Export-Tables -Server $server -Database $db -OutFile ($outDir + '\Tables.sql')
+Export-StoredProcedures -Server $server -Database $db -OutFile ($outDir + '\StoredProcedures.sql')
+
+#Export-Views -Server $server -Database $db -OutFile ($outDir + '\Views.sql')
+#Export-UserDefinedFunctions -Server $server -Database $db -OutFile ($outDir + '\UserDefinedFunctions.sql')
+#Export-Triggers -Server $server -Database $db -OutFile ($outDir + '\Triggers.sql')
+#Export-TableTriggers -Server $server -Database $db -OutFile ($outDir + '\TableTriggers.sql')

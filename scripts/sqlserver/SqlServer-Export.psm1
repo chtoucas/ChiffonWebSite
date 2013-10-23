@@ -21,6 +21,18 @@ function New-Scripter {
   Return $scripter
 }
 
+function Export-DbCreation {
+  param(
+    [Parameter(Mandatory = $true)]
+    [Microsoft.SqlServer.Management.Smo.Database] $database,
+    [Parameter(Mandatory = $true)]
+    [string] $outFile
+  )
+
+  Write-Output "-> Exporting database creation."
+  $db.Script() | Out-File $outFile
+}
+
 function Export-Data {
   param(
     [Parameter(Mandatory = $true)]
@@ -80,12 +92,12 @@ function Export-Tables {
   $opts.Indexes = $true
   $opts.NoCollation = $true
   $opts.NonClusteredIndexes = $true
-  $opts.Permissions = $true
-  $opts.SchemaQualify = $true
-  $opts.SchemaQualifyForeignKeysReferences = $true
+  $opts.Permissions = $false
+  $opts.SchemaQualify = $false
+  $opts.SchemaQualifyForeignKeysReferences = $false
   $opts.ScriptDrops = $false
   $opts.ScriptOwner = $false
-  $opts.WithDependencies = $true
+  $opts.WithDependencies = $false
 
   foreach ($tbl in $tables) {
     $scripter.Script($tbl)
@@ -227,38 +239,6 @@ function Export-TableTriggers {
   }
 }
 
-function Export-DB {
-  param(
-    [Parameter(Mandatory = $true)]
-    [string] $serverName,
-    [Parameter(Mandatory = $true)]
-    [string] $databaseName,
-    [Parameter(Mandatory = $true)]
-    [string] $outDir
-  )
-
-  [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.Smo') | Out-Null
-  [System.Reflection.Assembly]::LoadWithPartialName('System.Data') | Out-Null
-
-  $server = New-Object Microsoft.SqlServer.Management.Smo.Server $serverName
-  # La ligne suivante permet de booster un peu SMO.
-  $server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.Table], "IsSystemObject")
-  $server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.StoredProcedure], "IsSystemObject")
-
-  $db = New-Object Microsoft.SqlServer.Management.Smo.Database
-  $db = $server.Databases[$databaseName]
-
-  Write-Output "-> Exporting database creation."
-  $db.Script() | Out-File ($outDir + '\Create.sql')
-
-  Export-Data -Server $server -Database $db -OutFile ($outDir + '\Data.sql')
-
-  Export-Tables -Server $server -Database $db -OutFile ($outDir + '\Tables.sql')
-  Export-Views -Server $server -Database $db -OutFile ($outDir + '\Views.sql')
-  Export-StoredProcedures -Server $server -Database $db -OutFile ($outDir + '\StoredProcedures.sql')
-  Export-UserDefinedFunctions -Server $server -Database $db -OutFile ($outDir + '\Functions.sql')
-  Export-Triggers -Server $server -Database $db -OutFile ($outDir + '\Triggers.sql')
-  Export-TableTriggers -Server $server -Database $db -OutFile ($outDir + '\TableTriggers.sql')
-}
-
-Export-ModuleMember -function Export-DB
+Export-ModuleMember -function New-Scripter, Export-DbCreation, Export-Data, Export-Tables, `
+  Export-StoredProcedures, Export-Views, Export-UserDefinedFunctions, Export-Triggers, `
+  Export-TableTriggers
