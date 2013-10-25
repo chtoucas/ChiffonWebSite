@@ -1,6 +1,6 @@
 
 Properties {
-  $project = '.\Make.proj'
+  $project = '.\Release.proj'
 
   $options = '/nologo', '/v:minimal', '/fl',
     '/flp:logfile=..\..\msbuild.log;verbosity=normal;encoding=utf-8',

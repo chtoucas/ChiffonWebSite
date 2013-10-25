@@ -1,28 +1,29 @@
-;
+/*jshint laxcomma: true*/
+/*jslint nomen:true, white: true, todo: true*/
 
 this.App = (function(win, _, yepnope, undef) {
   'use strict';
 
   // Configuration par défaut.
   var defaults = {
-    baseUrl: undef
-    , debug: false
-    , version: undef
-  };
+      baseUrl: undef
+      , debug: false
+      , version: undef
+    }
+    // Langues supportées.
+    , locales = ['fr', 'en']
 
-  // Langues supportées.
-  var locales = ['fr', 'en'];
-
-  var loadJS = function(options) {
-    throw new Error('You can not use this method until the main() method has been called.');
-  };
+    , loadJS = function(/* options */) {
+      throw new Error('You can not use this method until the main() method has been called.');
+    };
 
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
 
     if (undef === settings.baseUrl) {
       throw new Error('The baseUrl is not defined.');
-    } else if ('/' !== settings.baseUrl.substring(-1, 1)) {
+    }
+    if ('/' !== settings.baseUrl.substring(-1, 1)) {
       settings.baseUrl = settings.baseUrl + '/';
     }
 
@@ -47,7 +48,7 @@ this.App = (function(win, _, yepnope, undef) {
       //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
       , jQueryValidate: function(locale) {
-        var scripts = ['jquery.validate.min.js']
+        var scripts = ['jquery.validate.min.js'];
         if ('en' !== locale) { scripts.push('localization/messages_' + locale + '.js'); }
         return scripts.map(function(src) { return vendor('jquery.validate-1.11.1/' + src); });
       }
@@ -60,9 +61,9 @@ this.App = (function(win, _, yepnope, undef) {
       });
     };
 
-    this.main = function(isAuth, locale, fn) {
-      var that = this;
-      var isAuth = true === isAuth;
+    this.main = function(isAuthenticated, locale, fn) {
+      var that = this
+        , isAuth = true === isAuthenticated;
 
       if (-1 === locales.indexOf(locale)) {
         throw new Error('The locale "' + locale + '" is not supported.');
@@ -100,6 +101,6 @@ this.App = (function(win, _, yepnope, undef) {
         }
       });
     };
-  }
+  };
 
-})(this, this._, this.yepnope);
+}(this, this._, this.yepnope));

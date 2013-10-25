@@ -3,7 +3,7 @@
 
 function Get-BackupPackage {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [System.Xml.XmlElement] $config
   )
 
@@ -12,7 +12,7 @@ function Get-BackupPackage {
 
 function Deploy-WebSite {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [System.Xml.XmlElement] $config
   )
 
@@ -25,7 +25,7 @@ function Deploy-WebSite {
 
 function Rollback-WebSite {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [System.Xml.XmlElement] $config
   )
 
@@ -35,9 +35,9 @@ function Rollback-WebSite {
 
 function Backup-WebSite {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $webSite,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $toPackage
   )
 
@@ -63,11 +63,11 @@ function Backup-WebSite {
 
 function Publish-WebSite {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $webSite,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $source,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $destination
   )
 
@@ -92,9 +92,9 @@ function Publish-WebSite {
 
 function Restore-WebSite {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $webSite,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $fromPackage
   )
 

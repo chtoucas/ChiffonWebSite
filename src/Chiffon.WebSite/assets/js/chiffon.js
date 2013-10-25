@@ -1,6 +1,7 @@
-;
+/*jshint laxcomma: true*/
+/*jslint nomen:true, white: true, todo: true*/
 
-this.Chiffon = (function(_, $, undef) {
+this.Chiffon = (function($) {
   'use strict';
 
   // Configuration par défaut.
@@ -27,7 +28,7 @@ this.Chiffon = (function(_, $, undef) {
   }
 
   Chiffon.prototype = {
-    handleCore: function(controllerName, actionName, params) {
+    handleCore: function(/* controllerName, actionName, params */) {
       throw new Error('You must override the "handleCore" method.');
     }
 
@@ -41,9 +42,9 @@ this.Chiffon = (function(_, $, undef) {
 
   return Chiffon;
 
-})(this._, this.jQuery);
+}(this.jQuery));
 
-this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
+this.Chiffon.Views = (function(win, doc, loc, _, $, undef) {
   'use strict';
 
   var Views = {};
@@ -98,16 +99,16 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
 
             $(this).modal({ closeText: l('%modal.close') });
           });
-        } else {
+        } /* else {
           // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
           //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
           //  .appendTo('body').modal({ closeText: l('%modal.close') });
-        }
+        } */
       }
     };
 
     return Layout;
-  })();
+  }());
 
   Views.DesignerLayout = (function() {
     function DesignerLayout(ctx) {
@@ -123,7 +124,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return DesignerLayout;
-  })();
+  }());
 
   function DefaultView(ctx) {
     BaseView.apply(this, arguments);
@@ -163,7 +164,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return HomeIndex;
-  })();
+  }());
 
   /* Pages Contact */
 
@@ -186,7 +187,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return AccountLogin;
-  })();
+  }());
 
   Views.AccountRegister = (function() {
     function AccountRegister(ctx) {
@@ -223,7 +224,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return AccountRegister;
-  })();
+  }());
 
   /* Pages Designer */
 
@@ -242,7 +243,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     };
 
     return DesignerPattern;
-  })();
+  }());
 
   /* Composants communs */
 
@@ -253,29 +254,29 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
         viewsSel: '.pattern'
         , navSel: '#nav_views'
         , currentSel: undef
-      };
+      }
 
-    // Liste des vues.
-    var $views;
-    // Lien 'Précédent'.
-    var $prev;
-    // Lien 'Précédent' désactivé.
-    var $prev_noop;
-    // Lien 'Suivant'.
-    var $next;
-    // Lien 'Suivant' désactivé.
-    var $next_noop;
-    // Conteneur HTML de la position courante.
-    var $pos;
+      // Liste des vues.
+      , $views
+      // Lien 'Précédent'.
+      , $prev
+      // Lien 'Précédent' désactivé.
+      , $prev_noop
+      // Lien 'Suivant'.
+      , $next
+      // Lien 'Suivant' désactivé.
+      , $next_noop
+      // Conteneur HTML de la position courante.
+      , $pos
 
-    // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
-    var pos = 1;
-    // Nombre de vues.
-    var length;
-    // Liste des sélecteurs de vue.
-    // Pour ne pas avoir à jongler entre index et position, on initialise la liste
-    // avec un élément factice en début de tableau.
-    var selectors = [undef];
+      // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
+      , pos = 1
+      // Nombre de vues.
+      , length
+      // Liste des sélecteurs de vue.
+      // Pour ne pas avoir à jongler entre index et position, on initialise la liste
+      // avec un élément factice en début de tableau.
+      , selectors = [undef];
 
     /* Actions sur l'objet $views */
 
@@ -427,9 +428,9 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
     }
 
     function initialize() {
-      var $nav;
-      var currentSel;
-      var callback;
+      var $nav
+        , currentSel
+        , callback;
 
       $views = $(settings.viewsSel);
       length = $views.length;
@@ -475,8 +476,8 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
         startAt(pos);
       }
       setupLinkHandlers();
-    }
-  })();
+    };
+  }());
 
   // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
   Views.StickyInfo = (function() {
@@ -485,27 +486,27 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       , defaults = {
         infoSel: '#info'
         , designerSel: '#designer'
-      };
+      }
 
-    var $info;
-    var $designer;
+      , $info
+      , $designer
 
-    // Géométrie du bloc #info.
-    var info_h;
-    var info_w;
-    var info_top;
-    var info_left;
+      // Géométrie du bloc #info.
+      , info_h
+      , info_w
+      , info_top
+      , info_left
 
-    // Géométrie du bloc #designer.
-    var designer_w;
+      // Géométrie du bloc #designer.
+      , designer_w
 
-    // Géométrie de la fenêtre.
-    var window_h;
+      // Géométrie de la fenêtre.
+      , window_h;
 
     function handleScrollEventForMediumBlock() {
-      var scroll_limit;
-      var sticky_class = 'sticky top';
-      var is_sticky = false;
+      var scroll_limit
+        , sticky_class = 'sticky top'
+        , is_sticky = false;
 
       function stick() {
         if (is_sticky) { return; }
@@ -524,7 +525,7 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       if ($(win).scrollTop() >= scroll_limit) { stick(); }
 
       $(win).scroll(function() {
-        $(win).scrollTop() >= scroll_limit ? stick() : unstick();
+        if ($(win).scrollTop() >= scroll_limit) { stick(); } else { unstick(); }
       });
     }
 
@@ -590,14 +591,14 @@ this.Chiffon.Views = (function(win, doc, loc, _, $, Chiffon, undef) {
       }
 
       handleResizeEvent();
-    }
-  })();
+    };
+  }());
 
   return Views;
 
-})(this, this.document, this.location, this._, this.jQuery, this.Chiffon);
+}(this, this.document, this.location, this._, this.jQuery));
 
-this.Chiffon.Controllers = (function($, Views, undef) {
+this.Chiffon.Controllers = (function($, Views) {
   'use strict';
 
   function extend(methods) { return $.extend({}, BaseController.prototype, methods); }
@@ -607,7 +608,6 @@ this.Chiffon.Controllers = (function($, Views, undef) {
   function BaseController(ctx) {
     this.ctx = ctx;
   }
-
   /* ContactController */
 
   function AccountController() {
@@ -650,26 +650,26 @@ this.Chiffon.Controllers = (function($, Views, undef) {
     , Home: HomeController
   };
 
-})(this.jQuery, this.Chiffon.Views);
+}(this.jQuery, this.Chiffon.Views));
 
-this.Chiffon.prototype.handleCore = (function(Controllers, undef) {
+this.Chiffon.prototype.handleCore = (function(Controllers) {
   'use strict';
 
   return function(controllerName, actionName, params) {
     if (Controllers.hasOwnProperty(controllerName)) {
-      var controller;
-      var controllerClass = Controllers[controllerName];
-      var controllerPrototype = controllerClass.prototype;
-      var actionMethod = actionName.toLowerCase();
+      var controller
+        , ControllerClass = Controllers[controllerName]
+        , controllerPrototype = ControllerClass.prototype
+        , actionMethod = actionName.toLowerCase();
 
       if (controllerPrototype.hasOwnProperty(actionMethod)) {
-        controller = new controllerClass(this.ctx);
+        controller = new ControllerClass(this.ctx);
         controllerPrototype[actionMethod].apply(controller, params);
       }
     }
   };
 
-})(this.Chiffon.Controllers);
+}(this.Chiffon.Controllers));
 
 //this.Chiffon.Presenters = (function($, undef) {
 //  'use strict';

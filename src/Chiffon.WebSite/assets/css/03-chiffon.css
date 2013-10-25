@@ -1,3 +1,5 @@
+/*csslint ids: false*/
+
 /*
  * TODO:
  * - no margin for paragraph in sidebar
@@ -237,7 +239,7 @@ INPUT.error { border: 1px solid #ff0000 !important; }
 /* 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; } */
 
 /* Absolutely centered */
-/* 
+/*
 .centered-container { position: relative; }
 .centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 */
