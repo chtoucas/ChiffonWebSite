@@ -3,7 +3,9 @@
 _build/
 _work/
 bin/
+node_modules/
 obj/
 packages/
+tools/
 msbuild.log
 Chiffon.sln.metaproj*

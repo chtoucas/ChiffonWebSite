@@ -1,6 +1,6 @@
 
 function Get-WebDeployInstallPath {
-     return (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy" | Select -last 1).GetValue("InstallPath")
+  return (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy" | Select -last 1).GetValue("InstallPath")
 }
 
 # WebAdministration est disponible sous deux formes : module ou snapin.
