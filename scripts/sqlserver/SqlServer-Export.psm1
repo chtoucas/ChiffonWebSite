@@ -239,6 +239,6 @@ function Export-TableTriggers {
   }
 }
 
-Export-ModuleMember -function New-Scripter, Export-DbCreation, Export-Data, Export-Tables, `
+Export-ModuleMember -function Export-DbCreation, Export-Data, Export-Tables, `
   Export-StoredProcedures, Export-Views, Export-UserDefinedFunctions, Export-Triggers, `
   Export-TableTriggers
