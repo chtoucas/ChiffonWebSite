@@ -1,16 +1,116 @@
+#Requires -Version 3.0
 
-[System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') | Out-Null
+#-- Variables publiques --#
 
-function GetToolPath {
-  param([Parameter(Mandatory = $true)] [System.Uri] $relativePath)
+[string] $ToolsDirectory = $null
 
-  "$($tools.directory)\$($relativePath)"
+#-- Fonctions publiques --#
+
+function Set-ToolsDirectory {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $value)
+
+  $script:ToolsDirectory = $value
+
+  return $ToolsDirectory
+}
+
+function Install-7Zip {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath '7-zip'
+
+  if (Test-Installed -Name '7-Zip' -Path $path) { return }
+
+  Install-ZipFile -Source $source -ExtractPath $path
+}
+
+function Install-GoogleClosureCompiler {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath 'closure-compiler'
+
+  if (Test-Installed -Name 'Google Closure Compiler' -Path $path) { return }
+
+  Install-ZipFile -Source $source -ExtractPath $path
+}
+
+function Install-Node {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath 'node.exe'
+
+  if (Test-Installed -Name 'NodeJS' -Path $path) { return }
+
+  Install-File -Source $source -TargetFile $path
+}
+
+function Install-Npm {
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath 'npm.cmd'
+
+  if (Test-Installed -Name 'npm' -Path $path) { return }
+
+  Install-ZipFile -Source $source -ExtractPath $ToolsDirectory
+}
+
+function Install-NuGet {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath 'nuget.exe'
+
+  if (Test-Installed -Name 'NuGet' -Path $path) { return }
+
+  Install-File -Source $source -TargetFile $path
+}
+
+function Install-YuiCompressor {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
+
+  $path = Get-ToolPath 'yuicompressor.jar'
+
+  if (Test-Installed -Name 'YUI Compressor' -Path $path) { return }
+
+  $tmpPath = Get-ToolPath -RelativePath 'yuicompressor-*\build\yuicompressor-*.jar'
+
+  if (!(Test-Path $tmpPath)) {
+    Install-ZipFile -Source $source -ExtractPath $ToolsDirectory
+  }
+
+  Move-Item $tmpPath $path
+  #Remove-Item $_.FullName -Force -Recurse
+}
+
+#-- Fonctions privées --#
+
+function Get-ToolsDirectory {
+  if ($ToolsDirectory -eq $null) {
+    Write-Error 'You must initialize $ToolsDirectory'
+    Exit
+  }
+
+  return $ToolsDirectory
+}
+
+function Get-ToolPath {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
+
+  $toolsDirectory = Get-ToolsDirectory
+  "$toolsDirectory\$relativePath"
 }
 
 function Download {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [System.Uri] $source,
-    [Parameter(Mandatory = $true)] [string] $outFile
+    [Parameter(Mandatory = $true, Position = 0)] [System.Uri] $source,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile
   )
 
   if (Test-Path $outFile) { return }
@@ -22,9 +122,10 @@ function Download {
 }
 
 function Unzip {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $file,
-    [Parameter(Mandatory = $true)] [string] $extractPath
+    [Parameter(Mandatory = $true, Position = 0)] [string] $file,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
   )
 
   Write-Host -NoNewline 'Unzipping...'
@@ -33,9 +134,10 @@ function Unzip {
 }
 
 function Install-File {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $source,
-    [Parameter(Mandatory = $true)] [string] $targetFile
+    [Parameter(Mandatory = $true, Position = 0)] [string] $source,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $targetFile
   )
 
   $uri = [System.Uri] $source
@@ -43,12 +145,13 @@ function Install-File {
 }
 
 function Install-ZipFile {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $source,
-    [Parameter(Mandatory = $true)] [string] $extractPath
+    [Parameter(Mandatory = $true, Position = 0)] [string] $source,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
   )
 
-  $distDir = New-Directory -Path "$($tools.directory)\dist"
+  $distDir = New-Directory -Path "$ToolsDirectory\dist"
 
   $uri = [System.Uri] $source
   $fileName = [System.IO.Path]::GetFileName($uri.AbsolutePath);
@@ -59,9 +162,10 @@ function Install-ZipFile {
 }
 
 function Test-Installed {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $name,
-    [Parameter(Mandatory = $true)] [string] $path
+    [Parameter(Mandatory = $true, Position = 0)] [string] $name,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $path
   )
 
   if (Test-Path $path) {
@@ -73,76 +177,7 @@ function Test-Installed {
   }
 }
 
-function Install-7Zip {
-  param([Parameter(Mandatory = $true)] [string] $source)
+#-- Directives --#
 
-  $path = GetToolPath -RelativePath '7-zip'
-
-  if (Test-Installed -Name '7-Zip' -Path $path) { return }
-
-  Install-ZipFile -Source $source -ExtractPath $path
-}
-
-function Install-GoogleClosureCompiler {
-  param([Parameter(Mandatory = $true)] [string] $source)
-
-  $path = GetToolPath -RelativePath 'closure-compiler'
-
-  if (Test-Installed -Name 'Google Closure Compiler' -Path $path) { return }
-
-  Install-ZipFile -Source $source -ExtractPath $path
-}
-
-function Install-Node {
-  param([Parameter(Mandatory = $true)] [string] $source)
-
-  $path = GetToolPath -RelativePath 'node.exe'
-
-  if (Test-Installed -Name 'nodejs' -Path $path) { return }
-
-  Install-File -Source $source -TargetFile $path
-}
-
-function Install-Npm {
-  param([Parameter(Mandatory = $true)] [string] $source)
-
-  $path = GetToolPath -RelativePath 'npm.cmd'
-
-  if (Test-Installed -Name 'npm' -Path $path) { return }
-
-  Install-ZipFile -Source $source -ExtractPath $tools.directory
-}
-
-function Install-NuGet {
-  param([Parameter(Mandatory = $true)] [string] $source)
-
-  $path = GetToolPath -RelativePath 'nuget.exe'
-
-  if (Test-Installed -Name 'NuGet' -Path $path) { return }
-
-  Install-File -Source $source -TargetFile $path
-}
-
-function Install-YuiCompressor {
-  param([Parameter(Mandatory = $true)] [string] $source)
-
-  $path = GetToolPath -RelativePath 'yuicompressor.jar'
-
-  if (Test-Installed -Name 'YUI Compressor' -Path $path) { return }
-
-  $tmpPath = GetToolPath -RelativePath 'yuicompressor-*\build\yuicompressor-*.jar'
-
-  if (!(Test-Path $tmpPath)) {
-    Install-ZipFile -Source $source -ExtractPath $tools.directory
-  }
-
-  Copy-Item $tmpPath $path
-}
-
-$script:tools = @{}
-$tools.directory = $null
-
-Export-ModuleMember `
-  -function Install-7Zip, Install-GoogleClosureCompiler, Install-Node, Install-Npm, `
-            Install-NuGet, Install-YuiCompressor, Test-Tools `
-  -variable tools
+Export-ModuleMember -function Set-ToolsDirectory, Install-7Zip, Install-GoogleClosureCompiler, `
+  Install-Node, Install-Npm, Install-NuGet, Install-YuiCompressor, Test-Tools

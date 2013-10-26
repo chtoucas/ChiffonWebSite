@@ -1,17 +1,22 @@
+#Requires -Version 3.0
+
 # Pré-requis : nodejs
 # Modules nodejs utilisés : clean-css, csslint, jshint, jslint, uglify-js
 # TODO: Google Closure Tools (utiliser IronPython via NuGet ?)
 
-function GetModulePath {
-  param([Parameter(Mandatory = $true)] [System.Uri] $relativePath)
+#-- Variables publiques --#
 
-  "$($nodejs.binPath)\$($relativePath)"
-}
+$script:assets = @{}
+$assets.binPath = $null
+$assets.reportsDir = $null
+
+#-- Fonctions publiques --#
 
 function LintCss {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $name
   )
 
   Write-Output "-> Processing $name.css"
@@ -20,9 +25,10 @@ function LintCss {
 }
 
 function LintJS {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $name
   )
 
   Write-Output "-> Processing $name.js"
@@ -33,10 +39,11 @@ function LintJS {
 }
 
 function MinifyCss {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $outFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile,
+    [Parameter(Mandatory = $true, Position = 2)] [string] $name
   )
 
   Write-Output "-> Processing $name.css"
@@ -45,10 +52,11 @@ function MinifyCss {
 }
 
 function MinifyJS {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $outFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile,
+    [Parameter(Mandatory = $true, Position = 2)] [string] $name
   )
 
   Write-Output "-> Processing $name.js"
@@ -56,13 +64,20 @@ function MinifyJS {
   MinifyJSViaUglifyJS -InFile $inFile -OutFile $outFile
 }
 
+#-- Fonctions privées --#
 
-### Fonction privées.
+function GetModulePath {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
+
+  "$($assets.binPath)\$($relativePath)"
+}
 
 function LintCssViaCssLint {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $name
   )
 
   $logfile = "$ReportsDir\csslint-$name.log"
@@ -74,9 +89,10 @@ function LintCssViaCssLint {
 }
 
 function LintJSViaJSHint {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $name
   )
 
   $logfile = "$ReportsDir\jshint-$name.log"
@@ -88,7 +104,8 @@ function LintJSViaJSHint {
 }
 
 function LintJSViaJSLint {
-  param([Parameter(Mandatory = $true)] [string] $inFile)
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $inFile)
 
   # NB: Pour une explication des erreurs jslint, cf. http://jslinterrors.com/
 
@@ -102,7 +119,8 @@ function LintJSViaJSLint {
 }
 
 function LintJSViaUglifyJS {
-  param([Parameter(Mandatory = $true)] [string] $inFile)
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $inFile)
 
   $uglifyjs = GetModulePath -RelativePath 'uglifyjs.cmd'
 
@@ -110,9 +128,10 @@ function LintJSViaUglifyJS {
 }
 
 function MinifyCssViaCleanCss {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $outFile
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile
   )
 
   $cleancss = GetModulePath -RelativePath 'cleancss.cmd'
@@ -121,9 +140,10 @@ function MinifyCssViaCleanCss {
 }
 
 function MinifyJSViaUglifyJS {
+  [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true)] [string] $inFile,
-    [Parameter(Mandatory = $true)] [string] $outFile
+    [Parameter(Mandatory = $true, Position = 0)] [string] $inFile,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile
   )
 
   $uglifyjs = GetModulePath -RelativePath 'uglifyjs.cmd'
@@ -132,11 +152,7 @@ function MinifyJSViaUglifyJS {
   & $uglifyjs $inFile --compress --mangle --output $outFile
 }
 
-$script:nodejs = @{}
-$nodejs.binPath = $null
-$nodejs.reportsDir = $null
-
-### Exports.
+#-- Directives --#
 
 Export-ModuleMember `
   -function LintCss, LintJS, MinifyCss, MinifyJS `
