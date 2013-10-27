@@ -8,15 +8,6 @@
 
 #-- Fonctions publiques --#
 
-function Set-ToolsDirectory {
-  [CmdletBinding()]
-  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $value)
-
-  $script:ToolsDirectory = $value
-
-  return $ToolsDirectory
-}
-
 function Install-7Zip {
   [CmdletBinding()]
   param(
@@ -24,15 +15,10 @@ function Install-7Zip {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = '7-Zip'
-  $path = Get-ToolPath '7za.exe'
+  $targetFile = Get-ToolPath '7za.exe'
 
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else { Remove-Item $path -Force }
-
-  Install-FileFromZip -Source $source -SourceFile '7za.exe' -TargetFile $path
-
-  Set-CurrentVersion $name $version
+  InstallFileFromZip -Source $source -SourceFile '7za.exe' -TargetFile $targetFile `
+    -Name '7-Zip' -Version $version
 }
 
 function Install-GoogleClosureCompiler {
@@ -42,15 +28,10 @@ function Install-GoogleClosureCompiler {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = 'Google Closure Compiler'
-  $path = Get-ToolPath 'closure-compiler.jar'
+  $targetFile = Get-ToolPath 'closure-compiler.jar'
 
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else { Remove-Item $path -Force }
-
-  Install-FileFromZip -Source $source -SourceFile 'compiler.jar' -TargetFile $path
-
-  Set-CurrentVersion $name $version
+  InstallFileFromZip -Source $source -SourceFile 'compiler.jar' -TargetFile $targetFile `
+    -Name 'Google Closure Compiler' -Version $version
 }
 
 function Install-Node {
@@ -60,15 +41,9 @@ function Install-Node {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = 'NodeJS'
-  $path = Get-ToolPath 'node.exe'
+  $targetFile = Get-ToolPath 'node.exe'
 
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else { Remove-Item $path -Force }
-
-  Install-File -Source $source -TargetFile $path
-
-  Set-CurrentVersion $name $version
+  InstallFile -Source $source -TargetFile $targetFile -Name 'NodeJS' -Version $version
 }
 
 function Install-Npm {
@@ -78,20 +53,13 @@ function Install-Npm {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = 'npm'
-  $path = Get-ToolPath 'npm.cmd'
-
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else {
-    Remove-Item $path -Force
-    $node_modules = Get-ToolPath 'node_modules'
-    Remove-Item $node_modules -Force -Recurse
-  }
-
+  $targetFile = Get-ToolPath 'npm.cmd'
   $extractPath = Get-ToolsDirectory
-  Install-ZipFile -Source $source -ExtractPath $extractPath
 
-  Set-CurrentVersion $name $version
+  InstallZipFile -Source $source -TargetFile $targetFile -ExtractPath $extractPath `
+    -Name 'npm' -Version $version {
+    Get-ToolPath 'node_modules' | Where-Object { Test-Path $_ } | Remove-Item -Force -Recurse
+  }
 }
 
 function Install-NuGet {
@@ -101,15 +69,9 @@ function Install-NuGet {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = 'NuGet'
-  $path = Get-ToolPath 'nuget.exe'
+  $targetFile = Get-ToolPath 'nuget.exe'
 
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else { Remove-Item $path -Force }
-
-  Install-File -Source $source -TargetFile $path
-
-  Set-CurrentVersion $name $version
+  InstallFile -Source $source -TargetFile $targetFile -Name 'NuGet' -Version $version
 }
 
 function Install-YuiCompressor {
@@ -119,36 +81,65 @@ function Install-YuiCompressor {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $name = 'YUI Compressor'
-  $path = Get-ToolPath 'yuicompressor.jar'
+  $targetFile = Get-ToolPath 'yuicompressor.jar'
 
-  if (Test-Installed -Name $name -Path $path -Version $version) { return }
-  else { Remove-Item $path -Force }
-
-  Install-FileFromZip -Source $source `
+  InstallFileFromZip -Source $source `
     -SourceFile 'yuicompressor-*\build\yuicompressor-*.jar' `
-    -TargetFile $path
+    -TargetFile $targetFile `
+    -Name 'YUI Compressor' `
+    -Version $version
+}
 
-  Set-CurrentVersion $name $version
+function Save-State {
+  if ($RequiresSavingState) {
+    Write-Host "Saving state"
+    $configPath = Get-ToolPath 'tools.config'
+    $config = Get-Config
+
+    $config.Save($configPath)
+  }
+}
+
+function Set-ToolsDirectory {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $value)
+
+  $script:ToolsDirectory = $value
 }
 
 #-- Fonctions privées --#
 
-function Get-CurrentVersion {
+function Download {
   [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true, Position = 0)] [string] $name
+    [Parameter(Mandatory = $true, Position = 0)] [System.Uri] $source,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile
   )
 
-  $config = Get-Config
+  if (Test-Path $outFile) { return }
 
-  foreach ($elt in $config.configuration.add) {
-    if ($elt.key -eq $name) {
-      return $elt.value
-    }
-  }
+  Write-Verbose "Downloading '$source'."
 
-  return $null
+  Write-Host -NoNewline 'Downloading...'
+  $wc = New-Object System.Net.WebClient
+  $wc.DownloadFile($source, $outFile)
+  Write-Host 'done'
+}
+
+function DownloadAndUnzip {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true, Position = 0)] [System.Uri] $source,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
+  )
+
+  $distDir = Get-ToolPath 'dist' | New-Directory
+
+  $fileName = [System.IO.Path]::GetFileName($source.AbsolutePath);
+  $outFile = "$distDir\$fileName"
+
+  Download -Source $source -OutFile $outFile
+  Unzip -File $outFile -ExtractPath $extractPath
 }
 
 function Get-Config {
@@ -169,26 +160,26 @@ function Get-Config {
     Add-Content $configPath $template
   }
 
-  $script:Config = Get-Content -Path $configPath
+  $script:Config = [xml] (Get-Content -Path $configPath)
 
-  return $script:Config
+  return $Config
 }
 
-function Download {
+function Get-CurrentVersion {
   [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true, Position = 0)] [System.Uri] $source,
-    [Parameter(Mandatory = $true, Position = 1)] [string] $outFile
+    [Parameter(Mandatory = $true, Position = 0)] [string] $name
   )
 
-  if (Test-Path $outFile) { return }
+  $config = Get-Config
 
-  Write-Verbose "Downloading '$source'."
+  foreach ($elt in $config.configuration.add) {
+    if ($elt.key -eq $name) {
+      return $elt.value
+    }
+  }
 
-  Write-Host -NoNewline 'Downloading...'
-  $wc = New-Object System.Net.WebClient
-  $wc.DownloadFile($source, $outFile)
-  Write-Host 'done'
+  return $null
 }
 
 function Get-ToolPath {
@@ -201,73 +192,106 @@ function Get-ToolPath {
 }
 
 function Get-ToolsDirectory {
-  if ($script:ToolsDirectory -eq $null) {
+  if ($ToolsDirectory -eq $null) {
     throw 'You must first initialize $ToolsDirectory via Set-ToolsDirectory.'
   }
 
-  return $script:ToolsDirectory
+  return $ToolsDirectory
 }
 
-function Install-File {
+function InstallFile {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)] [string] $source,
-    [Parameter(Mandatory = $true, Position = 1)] [string] $targetFile
+    [Parameter(Mandatory = $true, Position = 1)] [string] $targetFile,
+    [Parameter(Mandatory = $true, Position = 2)] [string] $name,
+    [Parameter(Mandatory = $true, Position = 3)] [string] $version,
+    [Parameter(Mandatory = $false, Position = 4)] [scriptblock] $remove
   )
+
+  if (Test-Installed -Name $name -Path $targetFile -Version $version) {
+    return
+  } else {
+    $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
+    if ($remove -ne $null) {
+      & $remove
+    }
+  }
 
   $uri = [System.Uri] $source
   Download -Source $uri -OutFile $targetFile
+
+  # On sauvegarde la version.
+  Set-CurrentVersion $name $version
 }
 
-function Install-FileFromZip {
+function InstallFileFromZip {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)] [string] $source,
     [Parameter(Mandatory = $true, Position = 1)] [string] $sourceFile,
-    [Parameter(Mandatory = $true, Position = 2)] [string] $targetFile
+    [Parameter(Mandatory = $true, Position = 2)] [string] $targetFile,
+    [Parameter(Mandatory = $true, Position = 3)] [string] $name,
+    [Parameter(Mandatory = $true, Position = 4)] [string] $version,
+    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $remove
   )
+
+  if (Test-Installed -Name $name -Path $targetFile -Version $version) {
+    return
+  } else {
+    $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
+    if ($remove -ne $null) {
+      & $remove
+    }
+  }
 
   $tmpPath = Get-ToolPath 'tmp'
   if (Test-Path $tmpPath) { Remove-Item $tmpPath -Force -Recurse }
   New-Directory $tmpPath | Out-Null
 
   # Extraction dans un répertoire temporaire.
-  Install-ZipFile -Source $source -ExtractPath $tmpPath
+  $uri = [System.Uri] $source
+  DownloadAndUnzip -Source $uri -ExtractPath $tmpPath
+
   # Installation.
   $file = "$tmpPath\$sourceFile"
   if (!(Test-Path $file)) {
     throw "The file '$sourceFile' does not exist."
   }
   Move-Item $file $targetFile
+
+  # On sauvegarde la version.
+  Set-CurrentVersion $name $version
+
   # Suppression du répertoire temporaire.
   Remove-Item $tmpPath -Force -Recurse
 }
 
-function Install-ZipFile {
+function InstallZipFile {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)] [string] $source,
-    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
+    [Parameter(Mandatory = $true, Position = 1)] [string] $targetFile,
+    [Parameter(Mandatory = $true, Position = 2)] [string] $extractPath,
+    [Parameter(Mandatory = $true, Position = 3)] [string] $name,
+    [Parameter(Mandatory = $true, Position = 4)] [string] $version,
+    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $remove
   )
 
-  $distDir = Get-ToolPath 'dist' | New-Directory
+  if (Test-Installed -Name $name -Path $targetFile -Version $version) {
+    return
+  } else {
+    $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
+    if ($remove -ne $null) {
+      & $remove
+    }
+  }
 
   $uri = [System.Uri] $source
-  $fileName = [System.IO.Path]::GetFileName($uri.AbsolutePath);
-  $outFile = "$distDir\$fileName"
+  DownloadAndUnzip -Source $uri -ExtractPath $extractPath
 
-  Download -Source $uri -OutFile $outFile
-  Unzip -File $outFile -ExtractPath $extractPath
-}
-
-function Save-State {
-  if ($RequiresSavingState) {
-    Write-Host "Saving state"
-    $configPath = Get-ToolPath 'tools.config'
-    $config = Get-Config
-
-    $config.Save($configPath)
-  }
+  # On sauvegarde la version.
+  Set-CurrentVersion $name $version
 }
 
 function Set-CurrentVersion {
@@ -278,8 +302,7 @@ function Set-CurrentVersion {
   )
 
   [bool] $found = $false
-
-  $config = Get-Config
+  [xml] $config = Get-Config
 
   foreach ($elt in $config.configuration.add) {
     if ($elt.key -eq $name) {
@@ -290,7 +313,7 @@ function Set-CurrentVersion {
   }
 
   if (!$found) {
-    # Si la configuration n'existait pas déjà, on la crée.
+    # Si la configuration n'existe pas déjà, on la crée.
     $elt = $config.CreateElement('add')
     $elt.SetAttribute('key', $name)
     $elt.SetAttribute('value', $version)
@@ -341,6 +364,4 @@ function Unzip {
 
 #-- Directives --#
 
-Export-ModuleMember -function Save-State, Set-ToolsDirectory, `
-  Install-7Zip, Install-GoogleClosureCompiler, `
-  Install-Node, Install-Npm, Install-NuGet, Install-YuiCompressor, Test-Tools
+Export-ModuleMember -function Save-State, Set-ToolsDirectory, Install-*
