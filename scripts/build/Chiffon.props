@@ -36,8 +36,8 @@
   <!-- Outils locaux (exe ou jar). -->
   <PropertyGroup>
     <_NuGetExe>$(_ToolsDir)nuget.exe</_NuGetExe>
-    <_SevenZipExe>$(_ToolsDir)7-zip\7za.exe</_SevenZipExe>
-    <_GoogleClosureJar>$(_ToolsDir)closure-compiler\compiler.jar</_GoogleClosureJar>
+    <_SevenZipExe>$(_ToolsDir)7za.exe</_SevenZipExe>
+    <_GoogleClosureJar>$(_ToolsDir)closure-compiler.jar</_GoogleClosureJar>
     <_YuiCompressorJar>$(_ToolsDir)yuicompressor.jar</_YuiCompressorJar>
   </PropertyGroup>
 

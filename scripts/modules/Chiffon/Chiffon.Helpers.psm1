@@ -1,16 +1,16 @@
-# NB: Toutes les fonctions dans ce module sont publiques.
-
 #Requires -Version 3.0
 
 # .SYNOPSIS
-# Returns the path to MSDeploy.
+# Retourne le chemin vers MSDeploy.
 function Get-WebDeployInstallPath {
   return (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy" | Select -last 1).GetValue("InstallPath")
 }
 
 # .SYNOPSIS
-# Import WebAdministration Module OR Snapin.
-# Borrowed from:
+# Importe WebAdministration, en tant que module ou snapin.
+#
+# .NOTES
+# Copié depuis :
 #   http://stackoverflow.com/questions/10700660/add-pssnapin-webadministration-in-windows7
 function Import-WebAdministration {
   $moduleName = "WebAdministration"
@@ -49,17 +49,21 @@ function Import-WebAdministration {
 }
 
 # .SYNOPSIS
-# Merge UTF-8 files.
+# Fusionne des fichiers UTF-8.
 #
 # .DESCRIPTION
-# This function merge UTF-8 even if they contain a BOM.
-# If the result file already exists, override it.
+# Cette fonction permet de fusionner des fichiers UTF-8(Y).
+#
+# Si un des fichiers à fusionner contient un BOM, ce dernier
+# n'apparaîtra pas au milieu du fichier fusionné.
+#
+# Si le fichier fusionné existe déjà il est écrasé.
 #
 # .PARAMETER inFiles
-# List of files to merge.
+# Liste des fichiers à fusionner.
 #
 # .PARAMETER outFile
-# Specified the merged file name.
+# Nom du fichier fusionné.
 function Merge-Utf8Files {
   [CmdletBinding()]
   param(
@@ -78,22 +82,22 @@ function Merge-Utf8Files {
 }
 
 # .SYNOPSIS
-# Create a directory.
+# Crée un répertoire.
 #
 # .DESCRIPTION
-# Create a directory if it does not already exist.
+# Crée un répertoire si il n'existe pas déjà.
 #
 # .PARAMETER path
-# Specified the path of the directory to create.
+# Chemin du répertoire à créer.
 #
 # .OUTPUTS
-# System.String. The path of the directory.
+# System.String. Chemin du répertoire.
 function New-Directory {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
 
   if (!(Test-Path $path)) {
-    Write-Verbose 'Creating directory'
+    Write-Verbose "Creating directory '$path'."
     New-Item $path -Type directory | Out-Null
   }
 
@@ -101,13 +105,14 @@ function New-Directory {
 }
 
 # .SYNOPSIS
-# Remove 'bin' and 'obj' directories created by Visual Studio.
+# Supprime les répertoires 'bin' and 'obj' créés par Visual Studio.
 #
 # .PARAMETER path
-# Specifies root path to Visual Studio projects.
+# Répertoire dans lequel résident les projets Visual Studio.
 function Remove-VisualStudioTmpFiles {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
 
-  Get-ChildItem $path -Include bin,obj -Recurse | foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
+  Get-ChildItem $path -Include bin,obj -Recurse |
+    foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
 }
