@@ -138,3 +138,15 @@ function Remove-VisualStudioTmpFiles {
   Get-ChildItem $path -Include bin,obj -Recurse |
     foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
 }
+
+function Unzip {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $file,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
+  )
+
+  Write-Host -NoNewline 'Unzipping...'
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($file, $extractPath)
+  Write-Host 'done'
+}
