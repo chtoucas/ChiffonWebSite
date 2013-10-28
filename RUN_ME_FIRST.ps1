@@ -27,4 +27,5 @@ Install-YuiCompressor -Version '2.4.7' `
 
 #-- Restauration des packages NuGet --#
 
+Write-Host 'Restoring NuGet packages.' -ForegroundColor 'Yellow'
 .\tools\NuGet.exe install .nuget\packages.config -OutputDirectory packages -Verbosity quiet

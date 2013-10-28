@@ -104,6 +104,28 @@ function New-Directory {
   return $path
 }
 
+function Remove-Directory {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
+
+  if (Test-Path $path) {
+    Remove-Item $path -Force -Recurse
+  }
+
+  return $path
+}
+
+function Remove-File {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
+
+  if (Test-Path $path) {
+    Remove-Item $path -Force
+  }
+
+  return $path
+}
+
 # .SYNOPSIS
 # Supprime les répertoires 'bin' and 'obj' créés par Visual Studio.
 #
