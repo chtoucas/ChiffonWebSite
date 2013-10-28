@@ -4,7 +4,6 @@
 
 [string] $ToolsDirectory = $null
 [xml] $Config = $null
-[bool] $RequiresSavingState = $false
 
 #-- Fonctions publiques --#
 
@@ -41,9 +40,7 @@ function Install-Node {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $targetFile = Get-ToolPath 'node.exe'
-
-  InstallFile -Source $source -TargetFile $targetFile -Name 'NodeJS' -Version $version
+  Invoke-InstallFile -Name 'NodeJS' -Version $version -Source $source -TargetFile 'node.exe'
 }
 
 function Install-Npm {
@@ -69,9 +66,7 @@ function Install-NuGet {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  $targetFile = Get-ToolPath 'nuget.exe'
-
-  InstallFile -Source $source -TargetFile $targetFile -Name 'NuGet' -Version $version
+  Invoke-InstallFile -Name 'NuGet' -Version $version -Source $source -TargetFile 'nuget.exe'
 }
 
 function Install-YuiCompressor {
@@ -88,16 +83,6 @@ function Install-YuiCompressor {
     -TargetFile $targetFile `
     -Name 'YUI Compressor' `
     -Version $version
-}
-
-function Save-State {
-  if ($RequiresSavingState) {
-    Write-Host "Saving state"
-    $configPath = Get-ToolPath 'tools.config'
-    $config = Get-Config
-
-    $config.Save($configPath)
-  }
 }
 
 function Set-ToolsDirectory {
@@ -135,7 +120,7 @@ function DownloadAndUnzip {
 
   $distDir = Get-ToolPath 'dist' | New-Directory
 
-  $fileName = [System.IO.Path]::GetFileName($source.AbsolutePath);
+  $fileName = [System.IO.Path]::GetFileName($source.AbsolutePath)
   $outFile = "$distDir\$fileName"
 
   Download -Source $source -OutFile $outFile
@@ -154,6 +139,8 @@ function Get-Config {
     $template = @'
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
+  <tools>
+  </tools>
 </configuration>
 '@
 
@@ -167,19 +154,17 @@ function Get-Config {
 
 function Get-CurrentVersion {
   [CmdletBinding()]
-  param(
-    [Parameter(Mandatory = $true, Position = 0)] [string] $name
-  )
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
-  $config = Get-Config
+  [xml] $config = Get-Config
 
-  foreach ($elt in $config.configuration.add) {
-    if ($elt.key -eq $name) {
-      return $elt.value
-    }
+  $elt = $config.SelectSingleNode("/configuration/tools/add[@key='$name']")
+
+  if ($elt -eq $null) {
+    return $null
+  } else {
+    return $elt.value
   }
-
-  return $null
 }
 
 function Get-ToolPath {
@@ -199,27 +184,29 @@ function Get-ToolsDirectory {
   return $ToolsDirectory
 }
 
-function InstallFile {
+function Invoke-InstallFile {
   [CmdletBinding()]
   param(
-    [Parameter(Mandatory = $true, Position = 0)] [string] $source,
-    [Parameter(Mandatory = $true, Position = 1)] [string] $targetFile,
-    [Parameter(Mandatory = $true, Position = 2)] [string] $name,
-    [Parameter(Mandatory = $true, Position = 3)] [string] $version,
-    [Parameter(Mandatory = $false, Position = 4)] [scriptblock] $remove
+    [Parameter(Mandatory = $true, Position = 0)] [string] $name,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $version,
+    [Parameter(Mandatory = $true, Position = 2)] [string] $source,
+    [Parameter(Mandatory = $true, Position = 3)] [string] $targetFile,
+    [Parameter(Mandatory = $false, Position = 4)] [scriptblock] $cleanup
   )
 
-  if (Test-Installed -Name $name -Path $targetFile -Version $version) {
+  $targetPath = Get-ToolPath $targetFile
+
+  if (Test-Installed -Name $name -Path $targetPath -Version $version) {
     return
   } else {
-    $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
-    if ($remove -ne $null) {
-      & $remove
+    $targetPath | Where-Object { Test-Path $_ } | Remove-Item -Force
+    if ($cleanup -ne $null) {
+      & $cleanup
     }
   }
 
   $uri = [System.Uri] $source
-  Download -Source $uri -OutFile $targetFile
+  Download -Source $uri -OutFile $targetPath
 
   # On sauvegarde la version.
   Set-CurrentVersion $name $version
@@ -233,15 +220,15 @@ function InstallFileFromZip {
     [Parameter(Mandatory = $true, Position = 2)] [string] $targetFile,
     [Parameter(Mandatory = $true, Position = 3)] [string] $name,
     [Parameter(Mandatory = $true, Position = 4)] [string] $version,
-    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $remove
+    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $cleanup
   )
 
   if (Test-Installed -Name $name -Path $targetFile -Version $version) {
     return
   } else {
     $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
-    if ($remove -ne $null) {
-      & $remove
+    if ($cleanup -ne $null) {
+      & $cleanup
     }
   }
 
@@ -275,15 +262,15 @@ function InstallZipFile {
     [Parameter(Mandatory = $true, Position = 2)] [string] $extractPath,
     [Parameter(Mandatory = $true, Position = 3)] [string] $name,
     [Parameter(Mandatory = $true, Position = 4)] [string] $version,
-    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $remove
+    [Parameter(Mandatory = $false, Position = 5)] [scriptblock] $cleanup
   )
 
   if (Test-Installed -Name $name -Path $targetFile -Version $version) {
     return
   } else {
     $targetFile | Where-Object { Test-Path $_ } | Remove-Item -Force
-    if ($remove -ne $null) {
-      & $remove
+    if ($cleanup -ne $null) {
+      & $cleanup
     }
   }
 
@@ -301,26 +288,22 @@ function Set-CurrentVersion {
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  [bool] $found = $false
   [xml] $config = Get-Config
 
-  foreach ($elt in $config.configuration.add) {
-    if ($elt.key -eq $name) {
-      $elt.value = $version
-      $found = $true
-      break
-    }
-  }
+  $elt = $config.SelectSingleNode("/configuration/tools/add[@key='$name']")
 
-  if (!$found) {
-    # Si la configuration n'existe pas déjà, on la crée.
+  if ($elt -eq $null) {
     $elt = $config.CreateElement('add')
     $elt.SetAttribute('key', $name)
     $elt.SetAttribute('value', $version)
-    $config.configuration.AppendChild($elt) | Out-Null
+    $tools = $config.SelectSingleNode('/configuration/tools')
+    $tools.AppendChild($elt) | Out-Null
+  } else {
+    $elt.value = $version
   }
 
-  $script:RequiresSavingState = $true
+  $configPath = Get-ToolPath 'tools.config'
+  $config.Save($configPath)
 }
 
 function Test-Installed {
@@ -364,4 +347,4 @@ function Unzip {
 
 #-- Directives --#
 
-Export-ModuleMember -function Save-State, Set-ToolsDirectory, Install-*
+Export-ModuleMember -function Set-ToolsDirectory, Install-*
