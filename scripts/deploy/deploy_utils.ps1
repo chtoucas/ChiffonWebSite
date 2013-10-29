@@ -1,3 +1,5 @@
+#Requires -Version 3.0
+
 # WARNING: MSDeploy & Powershell n'interagissent pas bien quand il y a des espaces.
 # Cf. http://edgylogic.com/blog/powershell-and-external-commands-done-right/
 

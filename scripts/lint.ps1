@@ -1,7 +1,13 @@
+#Requires -Version 3.0
 
-Import-Module '.\assets.psm1'
+Get-Module Chiffon | Remove-Module
+Import-Module Chiffon
 
-$global:NodeModulesBinPath = "$PSScriptRoot\node_modules\.bin"
+. .\BEGIN.ps1
+
+Exit
+
+Set-NodeModulesDirectory "$PSScriptRoot\node_modules\.bin"
 
 $global:ReportsDir = "$PSScriptRoot\reports"
 if (!(Test-Path $ReportsDir)) { New-Item $ReportsDir -Type directory | Out-Null }

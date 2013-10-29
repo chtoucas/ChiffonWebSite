@@ -1,11 +1,17 @@
 #Requires -Version 3.0
 
-#-- Variables privées --#
+#Set-StrictMode -Version Latest
 
-[string] $ToolsDirectory = $null
-[xml] $ToolsState = $null
+# --------------------------------------------------------------------------------------------------
+# Variables privées
+# --------------------------------------------------------------------------------------------------
 
-#-- Fonctions publiques --#
+[string] $script:ToolsStatePath = "$($global:Chiffon.ToolsDirectory)\tools.config"
+[xml] $script:ToolsState = $null
+
+# --------------------------------------------------------------------------------------------------
+# Fonctions publiques
+# --------------------------------------------------------------------------------------------------
 
 # .SYNOPSIS
 # Installe un outil dans le projet.
@@ -63,9 +69,9 @@ function Copy-ToolFromZip {
 
   $tmpPath = Get-ToolPath 'tmp' | Remove-Directory | New-Directory
 
-  Expand-ZipFile $file $tmpPath
+  Expand-ZipArchive $file $tmpPath
 
-  "$tmpPath\$source" | Move-Item -Destination $destination
+  Move-Item "$tmpPath\$source" -Destination $destination
 
   Remove-Directory $tmpPath | Out-Null
 }
@@ -74,32 +80,16 @@ function Get-ToolPath {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
 
-  $toolsDirectory = Get-ToolsDirectory
-
-  return "$toolsDirectory\$relativePath"
+  return "$($Chiffon.ToolsDirectory)\$relativePath"
 }
 
-function Get-ToolsDirectory {
-  if ($ToolsDirectory -eq $null) {
-    throw 'You must first initialize $ToolsDirectory via Set-ToolsDirectory.'
-  }
-
-  return $ToolsDirectory
-}
-
-function Set-ToolsDirectory {
-  [CmdletBinding()]
-  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $value)
-
-  $script:ToolsDirectory = $value
-}
-
-#-- Fonctions privées --#
+# --------------------------------------------------------------------------------------------------
+# Fonctions privées
+# --------------------------------------------------------------------------------------------------
 
 # .SYNOPSIS
 # Normalise le nom d'un outil afin de pouvoir l'utiliser dans un nom de fonction.
 function Format-ToolName {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   # On supprime les espaces et les tirets.
@@ -109,7 +99,6 @@ function Format-ToolName {
 # .SYNOPSIS
 # Crée un processus d'installation par défaut.
 function New-InstallCore {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   $qname = Format-ToolName $name
@@ -131,7 +120,6 @@ function New-InstallCore {
 # .SYNOPSIS
 # Crée un processus de suppression par défaut.
 function New-UninstallCore {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   $qname = Format-ToolName $name
@@ -148,22 +136,16 @@ function New-UninstallCore {
 #-- Gestion de la persistence --#
 
 function Get-ToolsState {
-  if ($ToolsState -ne $null) {
-    return $ToolsState
+  if ($script:ToolsState -ne $null) {
+    return $script:ToolsState
   } else {
     $script:ToolsState = Read-ToolsState
 
-    return $ToolsState
+    return $script:ToolsState
   }
 }
 
-function Get-ToolsStatePath {
-  return Get-ToolPath 'tools.config'
-}
-
 function Initialize-ToolsState {
-  $path = Get-ToolsStatePath
-
   $template = @'
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
@@ -172,28 +154,25 @@ function Initialize-ToolsState {
 </configuration>
 '@
 
-  Add-Content $path $template
+  Add-Content $script:ToolsStatePath $template
 }
 
 function Read-ToolsState {
-  $path = Get-ToolsStatePath
-
-  if (!(Test-Path $path)) {
+  if (!(Test-Path $script:ToolsStatePath)) {
     Initialize-ToolsState
   }
 
-  return [xml] (Get-Content -Path $path)
+  return [xml] (Get-Content -Path $script:ToolsStatePath)
 }
 
 function Save-ToolsState {
   [xml] $state = Get-ToolsState
-  $state.Save((Get-ToolsStatePath))
+  $state.Save($script:ToolsStatePath)
 }
 
 #-- Gestion des numéros de version --#
 
 function Read-Config {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   [xml] $state = Get-ToolsState
@@ -201,7 +180,6 @@ function Read-Config {
 }
 
 function Read-CurrentVersion {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   $elt = Read-Config $name
@@ -214,7 +192,6 @@ function Read-CurrentVersion {
 }
 
 function Unregister-Tool {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
   $elt = Read-Config $name
@@ -228,7 +205,6 @@ function Unregister-Tool {
 }
 
 function Register-Tool {
-  [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)] [string] $name,
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
@@ -255,7 +231,6 @@ function Register-Tool {
 #-- Utilitaires --#
 
 function Download-Tool {
-  [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [System.Uri] $source)
 
   $distDir = Get-ToolPath 'dist' | New-Directory
@@ -273,7 +248,8 @@ function Download-Tool {
   return $outFile
 }
 
-#-- Directives --#
+# --------------------------------------------------------------------------------------------------
+# Directives
+# --------------------------------------------------------------------------------------------------
 
-Export-ModuleMember -function Get-ToolsDirectory, Set-ToolsDirectory, Get-ToolPath, `
-  Copy-ToolFromZip, Install-Tool, Uninstall-Tool
+Export-ModuleMember -Function Copy-ToolFromZip, Get-ToolPath, Install-Tool, Uninstall-Tool

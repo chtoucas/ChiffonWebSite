@@ -1,6 +1,10 @@
 #Requires -Version 3.0
 
-#-- Fonctions publiques --#
+Set-StrictMode -Version Latest
+
+function Get-7Zip {
+  (Get-ToolPath '7za.exe')
+}
 
 function Publish-7Zip {
   [CmdletBinding()]
@@ -11,6 +15,10 @@ function Publish-7Zip {
 
 function Unpublish-7Zip {
   Get-ToolPath '7za.exe' | Remove-File | Out-Null
+}
+
+function Get-GoogleClosureCompiler {
+  (Get-ToolPath 'closure-compiler.jar')
 }
 
 function Publish-GoogleClosureCompiler {
@@ -24,6 +32,10 @@ function Unpublish-GoogleClosureCompiler {
   Get-ToolPath 'closure-compiler.jar' | Remove-File | Out-Null
 }
 
+function Get-Node {
+  (Get-ToolPath 'node.exe')
+}
+
 function Publish-Node {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
@@ -35,16 +47,24 @@ function Unpublish-Node {
   Get-ToolPath 'node.exe' | Remove-File | Out-Null
 }
 
+function Get-NodePackageManager {
+  (Get-ToolPath 'npm.cmd')
+}
+
 function Publish-NodePackageManager {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
 
-  Expand-ZipFile $source (Get-ToolsDirectory)
+  Expand-ZipArchive $source $global:Chiffon.ToolsDirectory
 }
 
 function Unpublish-NodePackageManager {
   Get-ToolPath 'npm.cmd' | Remove-File | Out-Null
   Get-ToolPath 'node_modules' | Remove-Directory | Out-Null
+}
+
+function Get-NuGet {
+  (Get-ToolPath 'nuget.exe')
 }
 
 function Publish-NuGet {
@@ -56,6 +76,10 @@ function Publish-NuGet {
 
 function Unpublish-NuGet {
   Get-ToolPath 'nuget.exe' | Remove-File | Out-Null
+}
+
+function Get-YuiCompressor {
+  (Get-ToolPath 'yuicompressor.jar')
 }
 
 function Publish-YuiCompressor {
@@ -70,8 +94,6 @@ function Unpublish-YuiCompressor {
   Get-ToolPath 'yuicompressor.jar' | Remove-File | Out-Null
 }
 
-#-- Directives --#
-
 # NB: Toutes ces méthodes doivent rester publiques car elles peuvent partie d'un
 # bloc anonyme appelé dans un autre contexte.
-Export-ModuleMember -function Publish-*, Unpublish-*
+Export-ModuleMember -function Get-*, Publish-*, Unpublish-*

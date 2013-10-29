@@ -1,9 +1,16 @@
 #Requires -Version 3.0
 
-Get-Module Chiffon | Remove-Module
-Import-Module Chiffon
+Set-StrictMode -Version Latest
 
-New-Directory "$PSScriptRoot\tools" | Set-ToolsDirectory
+Get-Module Chiffon | Remove-Module
+Import-Module Chiffon -args @{ ProjectDirectory = $PSScriptRoot }
+
+Write-Host $Chiffon.ToolsDirectory
+
+Exit
+
+
+New-Directory $ToolsDirectory | Set-ToolsDirectory
 
 #-- Installation ou mise à jour des outils --#
 
@@ -14,7 +21,7 @@ Install-Tool 'NuGet' '2.7.1' 'http://www.nuget.org/nuget.exe'
 
 Install-Tool 'Node' '0.10.21' 'http://nodejs.org/dist/v0.10.21/node.exe'
 
-Install-Tool 'Node Package Manager' '1.3.9' 'http://nodejs.org/dist/npm/npm-1.3.9.zip'
+Install-Tool 'Node Package Manager' '1.3.13' 'http://nodejs.org/dist/npm/npm-1.3.13.zip'
 
 # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
 Install-Tool 'Google Closure Compiler' '20131014' `

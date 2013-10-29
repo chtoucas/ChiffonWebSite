@@ -1,22 +1,10 @@
 #Requires -Version 3.0
 
-# http://technet.microsoft.com/en-us/library/hh245202.aspx
-#Add-Type -AssemblyName 'System.IO.Compression.FileSystem'
+Add-Type -AssemblyName 'Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91'
 
-#-- Fonctions publiques --#
-
-function Export-DbCreation {
-  [CmdletBinding()]
-  param(
-    [Parameter(Mandatory = $true, Position = 0)]
-    [Microsoft.SqlServer.Management.Smo.Database] $database,
-    [Parameter(Mandatory = $true, Position = 1)]
-    [string] $outFile
-  )
-
-  Write-Output "-> Exporting database creation."
-  $database.Script() | Out-File $outFile
-}
+# --------------------------------------------------------------------------------------------------
+# Fonctions publiques
+# --------------------------------------------------------------------------------------------------
 
 function Export-Data {
   [CmdletBinding()]
@@ -32,11 +20,9 @@ function Export-Data {
   $tables = $database.Tables | Where { $_.IsSystemObject -eq $false }
 
   if ($tables.count -eq 0) {
-    Write-Output '!! There are no data to export.'
-    Return
+    Write-Verbose 'There are no data to export.'
+    return
   }
-
-  Write-Output "-> Exporting data."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -46,6 +32,18 @@ function Export-Data {
   $opts.NoCommandTerminator = $true;
 
   $scripter.EnumScript($tables)
+}
+
+function Export-DbCreation {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true, Position = 0)]
+    [Microsoft.SqlServer.Management.Smo.Database] $database,
+    [Parameter(Mandatory = $true, Position = 1)]
+    [string] $outFile
+  )
+
+  $database.Script() | Out-File $outFile
 }
 
 function Export-Tables {
@@ -62,11 +60,11 @@ function Export-Tables {
   $tables = $database.Tables | Where { $_.IsSystemObject -eq $false }
 
   if ($tables.count -eq 0) {
-    Write-Output '!! There are no tables to export.'
-    Return
+    Write-Verbose 'There are no tables to export.'
+    return
   }
 
-  Write-Output "-> Exporting $($tables.Count) tables."
+  Write-Verbose "Exporting $($tables.Count) tables."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -105,11 +103,11 @@ function Export-StoredProcedures {
   $procedures = $database.StoredProcedures | Where { $_.IsSystemObject -eq $false }
 
   if ($procedures.Count -eq 0) {
-    Write-Output '!! There are no stored procedures to export.'
-    Return
+    Write-Verbose 'There are no stored procedures to export.'
+    return
   }
 
-  Write-Output "-> Exporting $($procedures.Count) stored procedures."
+  Write-Verbose "Exporting $($procedures.Count) stored procedures."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -142,11 +140,11 @@ function Export-Views {
   $views = $database.Views | Where { $_.IsSystemObject -eq $false }
 
   if ($views.count -eq 0) {
-    Write-Output '!! There are no views to export.'
-    Return
+    Write-Verbose 'There are no views to export.'
+    return
   }
 
-  Write-Output "-> Exporting $($views.Count) views."
+  Write-Verbose "Exporting $($views.Count) views."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -169,11 +167,11 @@ function Export-UserDefinedFunctions {
   $udfs = $database.UserDefinedFunctions | Where { $_.IsSystemObject -eq $false }
 
   if ($udfs.count -eq 0) {
-    Write-Output '!! There are no user defined functions to export.'
-    Return
+    Write-Verbose 'There are no user defined functions to export.'
+    return
   }
 
-  Write-Output "-> Exporting $($udfs.Count) views."
+  Write-Verbose "Exporting $($udfs.Count) views."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -196,11 +194,11 @@ function Export-Triggers {
   $triggers = $database.Triggers | Where { $_.IsSystemObject -eq $false }
 
   if ($triggers.count -eq 0) {
-    Write-Output '!! There are no triggers to export.'
-    Return
+    Write-Verbose 'There are no triggers to export.'
+    return
   }
 
-  Write-Output "-> Exporting $($triggers.Count) views."
+  Write-Verbose "Exporting $($triggers.Count) views."
 
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
@@ -220,18 +218,18 @@ function Export-TableTriggers {
     [string] $outFile
   )
 
-  Write-Output "-> Exporting table triggers."
-
   $scripter = New-Scripter -Server $server -OutFile $outFile
 
   foreach ($tbl in $db.Tables) {
     foreach ($trigger in $tbl.triggers) {
       $scripter.Script($trigger)
-      }
+    }
   }
 }
 
-#-- Fonctions privées --#
+# --------------------------------------------------------------------------------------------------
+# Fonctions privées
+# --------------------------------------------------------------------------------------------------
 
 function New-Scripter {
   [CmdletBinding()]
@@ -253,9 +251,11 @@ function New-Scripter {
   $scripter.Server = $server
   $scripter.Options = $opts
 
-  Return $scripter
+  return $scripter
 }
 
-#-- Directives --#
+# --------------------------------------------------------------------------------------------------
+# Directives
+# --------------------------------------------------------------------------------------------------
 
 Export-ModuleMember -function Export-*

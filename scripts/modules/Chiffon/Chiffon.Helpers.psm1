@@ -1,11 +1,13 @@
 #Requires -Version 3.0
 
+Add-Type -AssemblyName 'System.IO.Compression.FileSystem'
+
 # .SYNOPSIS
 # Décompresse un fichier au format ZIP.
 #
 # .PARAMETER path
 # Chemin du fichier à décompresser.
-function Expand-ZipFile {
+function Expand-ZipArchive {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $file,
@@ -177,3 +179,5 @@ function Remove-VisualStudioTmpFiles {
   Get-ChildItem $path -Include bin,obj -Recurse |
     foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
 }
+
+Export-ModuleMember -Function *

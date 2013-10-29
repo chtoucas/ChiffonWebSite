@@ -33,6 +33,6 @@ MergeFiles -InFiles $appjsfiles -OutFile "$tmpDir\app.js"
 MergeFiles -InFiles $jsfiles -OutFile "$tmpDir\chiffon.js"
 MergeFiles -InFiles $cssfiles -OutFile "$tmpDir\chiffon.css"
 
-MinifyJS -InFile "$tmpDir\app.js" -OutFile "$tmpDir\app.min.js" -Name 'app'
-MinifyJS -InFile "$tmpDir\chiffon.js" -OutFile "$tmpDir\chiffon.min.js" -Name 'chiffon'
-MinifyCss -InFile "$tmpDir\chiffon.css" -OutFile "$tmpDir\chiffon.min.css" -Name 'chiffon'
+Compress-JavaScript "$tmpDir\app.js" -OutFile "$tmpDir\app.min.js"
+Compress-JavaScript "$tmpDir\chiffon.js" -OutFile "$tmpDir\chiffon.min.js"
+Compress-Css "$tmpDir\chiffon.css" -OutFile "$tmpDir\chiffon.min.css"
