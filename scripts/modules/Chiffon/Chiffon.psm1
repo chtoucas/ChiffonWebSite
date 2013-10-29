@@ -21,15 +21,15 @@ $Chiffon.NodeModulesDirectory = "$($Chiffon.ProjectDirectory)\scripts\node_modul
 
 Export-ModuleMember -Alias * -Function * -Cmdlet *
 
-# Initialisation des modules
+# Initialisation des modules.
+# NB: Le module racine est chargé après les modules imbriqués. En conséquence, ces derniers n'ont
+# pas accès à la variable globale $Chiffon.
 & {
-  Write-Host "Loading the Chiffon modules."
+  Write-Verbose "Loading the Chiffon modules."
 
-  $mod = Get-Module Chiffon.Tools
-
-  & $mod { Initialize }
+  & (Get-Module Chiffon.Tools) { Initialize }
 }
 
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  Write-Host "Unloading the Chiffon modules."
+  Write-Verbose "Unloading the Chiffon modules."
 }
