@@ -1,5 +1,7 @@
 #Requires -Version 3.0
 
+Set-StrictMode -Version Latest
+
 Add-Type -AssemblyName 'Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91'
 
 # --------------------------------------------------------------------------------------------------
@@ -232,7 +234,6 @@ function Export-TableTriggers {
 # --------------------------------------------------------------------------------------------------
 
 function New-Scripter {
-  [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)]
     [Microsoft.SqlServer.Management.Smo.Server] $server,

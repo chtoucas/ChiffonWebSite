@@ -1,5 +1,7 @@
 #Requires -Version 3.0
 
+Set-StrictMode -Version Latest
+
 # TODO: Google Closure Tools (utiliser IronPython via NuGet ?)
 
 function Compress-Css {

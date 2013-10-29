@@ -1,13 +1,9 @@
 #Requires -Version 3.0
 
+Set-StrictMode -Version Latest
+
 # Pré-requis : nodejs
 # Modules nodejs utilisés : clean-css, csslint, jshint, jslint, uglify-js
-
-# --------------------------------------------------------------------------------------------------
-# Variables privées
-# --------------------------------------------------------------------------------------------------
-
-[string] $NodeModulesDirectory = $null
 
 # --------------------------------------------------------------------------------------------------
 # Fonctions publiques
@@ -92,13 +88,6 @@ function Invoke-UglifyJS {
   & $uglifyjs $source --compress --mangle --output $outFile
 }
 
-function Set-NodeModulesDirectory {
-  [CmdletBinding()]
-  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $value)
-
-  $script:NodeModulesDirectory = $value
-}
-
 # --------------------------------------------------------------------------------------------------
 # Fonctions privées
 # --------------------------------------------------------------------------------------------------
@@ -107,21 +96,11 @@ function Get-NodeModuleBinPath {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
 
-  $nodeModulesDirectory = Get-ToolsDirectory
-
-  return "$nodeModulesDirectory\$relativePath"
-}
-
-function Get-NodeModulesDirectory {
-  if (!$NodeModulesDirectory) {
-    throw 'You must first initialize $NodeModulesDirectory via Set-NodeModulesDirectory.'
-  }
-
-  return $NodeModulesDirectory
+  return "$($GLOBAL:Chiffon:NodeModulesDirectory)\.bin\$relativePath"
 }
 
 # --------------------------------------------------------------------------------------------------
 # Directives
 # --------------------------------------------------------------------------------------------------
 
-Export-ModuleMember -function Set-NodeModulesDirectory, Get-NodeModulesDirectory, Invoke-*
+Export-ModuleMember -function Invoke-*

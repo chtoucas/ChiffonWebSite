@@ -1,13 +1,17 @@
 #Requires -Version 3.0
 
-#Set-StrictMode -Version Latest
+Set-StrictMode -Version Latest
 
 # --------------------------------------------------------------------------------------------------
 # Variables privées
 # --------------------------------------------------------------------------------------------------
 
-[string] $script:ToolsStatePath = "$($global:Chiffon.ToolsDirectory)\tools.config"
+[string] $script:ToolsStatePath = $null
 [xml] $script:ToolsState = $null
+
+function Initialize {
+  $script:ToolsStatePath = "$($GLOBAL:Chiffon.ToolsDirectory)\tools.config"
+}
 
 # --------------------------------------------------------------------------------------------------
 # Fonctions publiques
@@ -80,7 +84,7 @@ function Get-ToolPath {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
 
-  return "$($Chiffon.ToolsDirectory)\$relativePath"
+  return "$($GLOBAL:Chiffon.ToolsDirectory)\$relativePath"
 }
 
 # --------------------------------------------------------------------------------------------------

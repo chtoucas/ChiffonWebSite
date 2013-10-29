@@ -2,15 +2,10 @@
 
 Set-StrictMode -Version Latest
 
-Get-Module Chiffon | Remove-Module
+#Get-Module Chiffon | Remove-Module
 Import-Module Chiffon -args @{ ProjectDirectory = $PSScriptRoot }
 
-Write-Host $Chiffon.ToolsDirectory
-
-Exit
-
-
-New-Directory $ToolsDirectory | Set-ToolsDirectory
+New-Directory $Chiffon.ToolsDirectory | Out-Null
 
 #-- Installation ou mise à jour des outils --#
 

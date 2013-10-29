@@ -10,7 +10,7 @@ param(
   [Parameter(Mandatory = $true, Position = 2)] [string] $outDir
 )
 
-Get-Module Chiffon | Remove-Module
+#Get-Module Chiffon | Remove-Module
 Import-Module Chiffon
 
 $outPath = (Get-Item $outDir).FullName
