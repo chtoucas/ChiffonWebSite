@@ -35,14 +35,14 @@ function Unpublish-Node {
   Get-ToolPath 'node.exe' | Remove-File | Out-Null
 }
 
-function Publish-Npm {
+function Publish-NodePackageManager {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
 
-  Unzip $source -ExtractPath (Get-ToolsDirectory)
+  Expand-ZipFile $source (Get-ToolsDirectory)
 }
 
-function Unpublish-Npm {
+function Unpublish-NodePackageManager {
   Get-ToolPath 'npm.cmd' | Remove-File | Out-Null
   Get-ToolPath 'node_modules' | Remove-Directory | Out-Null
 }
@@ -72,6 +72,6 @@ function Unpublish-YuiCompressor {
 
 #-- Directives --#
 
-# NB: Toutes ces méthodes doivent rester publiques car elles font partie d'un
+# NB: Toutes ces méthodes doivent rester publiques car elles peuvent partie d'un
 # bloc anonyme appelé dans un autre contexte.
 Export-ModuleMember -function Publish-*, Unpublish-*

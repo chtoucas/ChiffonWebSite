@@ -3,10 +3,12 @@
 #-- Variables privées --#
 
 [string] $ToolsDirectory = $null
-[xml] $Config = $null
+[xml] $ToolsState = $null
 
 #-- Fonctions publiques --#
 
+# .SYNOPSIS
+# Installe un outil dans le projet.
 function Install-Tool  {
   [CmdletBinding()]
   param(
@@ -16,7 +18,7 @@ function Install-Tool  {
     [Parameter(Mandatory = $false, Position = 3)] [scriptblock] $installCore = $null
   )
 
-  $currentVersion = Get-CurrentVersion $name
+  $currentVersion = Read-CurrentVersion $name
   if ($currentVersion -eq $null) {
     Write-Host "Installing $name." -ForegroundColor 'Yellow'
   } elseif ($version -ne $currentVersion) {
@@ -26,12 +28,14 @@ function Install-Tool  {
     return
   }
 
-  if (!$installCore) { $installCore = Get-InstallCore $name }
-  [System.Uri] $source | Download | %{ & $installCore $_ }
+  if (!$installCore) { $installCore = New-InstallCore $name }
+  [System.Uri] $source | Download-Tool | %{ & $installCore $_ }
 
-  Set-CurrentVersion $name $version
+  Register-Tool $name $version
 }
 
+# .SYNOPSIS
+# Supprime un outil du projet.
 function Uninstall-Tool {
   [CmdletBinding()]
   param(
@@ -41,12 +45,14 @@ function Uninstall-Tool {
 
   Write-Host "Removing $name." -ForegroundColor 'Yellow'
 
-  if (!$uninstallCore) { $uninstallCore = Get-UninstallCore $name }
+  if (!$uninstallCore) { $uninstallCore = New-UninstallCore $name }
   & $uninstallCore
 
-  Remove-CurrentVersion $name
+  Unregister-Tool $name
 }
 
+# .SYNOPSIS
+# Copie un fichier inclus dans un fichier ZIP.
 function Copy-ToolFromZip {
   [CmdletBinding()]
   param(
@@ -57,9 +63,7 @@ function Copy-ToolFromZip {
 
   $tmpPath = Get-ToolPath 'tmp' | Remove-Directory | New-Directory
 
-  Write-Host -NoNewline 'Unzipping...'
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($file, $tmpPath)
-  Write-Host 'done'
+  Expand-ZipFile $file $tmpPath
 
   "$tmpPath\$source" | Move-Item -Destination $destination
 
@@ -90,64 +94,77 @@ function Set-ToolsDirectory {
   $script:ToolsDirectory = $value
 }
 
-#-- Fonctions primaires de publication --#
+#-- Fonctions privées --#
 
-function NormalizeName {
+# .SYNOPSIS
+# Normalise le nom d'un outil afin de pouvoir l'utiliser dans un nom de fonction.
+function Format-ToolName {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
+  # On supprime les espaces et les tirets.
   return $name.Replace(' ', '').Replace('-', '')
 }
 
-function Get-InstallCore {
+# .SYNOPSIS
+# Crée un processus d'installation par défaut.
+function New-InstallCore {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
-  $qname = NormalizeName $name
+  $qname = Format-ToolName $name
 
   return {
     param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $source)
 
+    # WARNING: Les tests suivants doivent rester dans ce bloc car ils dépendent du contexte.
     $publish = "Publish-$qname"
-    if (!(Test-Path Function:\$publish)) { throw "No publish method found for $name." }
+    if (!(Test-Path Function:\$publish)) { throw "No 'publish' function found for $name." }
     $unpublish = "Unpublish-$qname"
-    if (!(Test-Path Function:\$unpublish)) { throw "No unpublish method found for $name." }
+    if (!(Test-Path Function:\$unpublish)) { throw "No 'unpublish' function found for $name." }
 
     & $unpublish
     & $publish $source
   }.GetNewClosure()
 }
 
-function Get-UninstallCore {
+# .SYNOPSIS
+# Crée un processus de suppression par défaut.
+function New-UninstallCore {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
-  $qname = NormalizeName $name
-
-  $unpublish = "Unpublish-$qname"
-
-  if (!(Test-Path Function:\$unpublish)) { throw "No unpublish method found for $name" }
+  $qname = Format-ToolName $name
 
   return {
+    # WARNING: Les tests suivants doivent rester dans ce bloc car ils dépendent du contexte.
     $unpublish = "Unpublish-$qname"
-    if (!(Test-Path Function:\$unpublish)) { throw "No unpublish method found for $name." }
+    if (!(Test-Path Function:\$unpublish)) { throw "No 'unpublish' method found for $name." }
 
     & $unpublish
   }.GetNewClosure()
 }
 
-#-- Gestion des numéros de version --#
+#-- Gestion de la persistence --#
 
-function Get-Config {
-  if ($Config -ne $null) {
-    return $Config
+function Get-ToolsState {
+  if ($ToolsState -ne $null) {
+    return $ToolsState
+  } else {
+    $script:ToolsState = Read-ToolsState
+
+    return $ToolsState
   }
+}
 
-  $configPath = Get-ToolPath 'tools.config'
+function Get-ToolsStatePath {
+  return Get-ToolPath 'tools.config'
+}
 
-  if (!(Test-Path $configPath)) {
-    # Si le fichier de configuration n'existe pas, on le crée.
-    $template = @'
+function Initialize-ToolsState {
+  $path = Get-ToolsStatePath
+
+  $template = @'
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <tools>
@@ -155,21 +172,39 @@ function Get-Config {
 </configuration>
 '@
 
-    Add-Content $configPath $template
-  }
-
-  $script:Config = [xml] (Get-Content -Path $configPath)
-
-  return $Config
+  Add-Content $path $template
 }
 
-function Get-CurrentVersion {
+function Read-ToolsState {
+  $path = Get-ToolsStatePath
+
+  if (!(Test-Path $path)) {
+    Initialize-ToolsState
+  }
+
+  return [xml] (Get-Content -Path $path)
+}
+
+function Save-ToolsState {
+  [xml] $state = Get-ToolsState
+  $state.Save((Get-ToolsStatePath))
+}
+
+#-- Gestion des numéros de version --#
+
+function Read-Config {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
-  [xml] $config = Get-Config
+  [xml] $state = Get-ToolsState
+  return $state.SelectSingleNode("/configuration/tools/add[@key='$name']")
+}
 
-  $elt = $config.SelectSingleNode("/configuration/tools/add[@key='$name']")
+function Read-CurrentVersion {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
+
+  $elt = Read-Config $name
 
   if ($elt -eq $null) {
     return $null
@@ -178,49 +213,48 @@ function Get-CurrentVersion {
   }
 }
 
-function Remove-CurrentVersion {
+function Unregister-Tool {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $name)
 
-  [xml] $config = Get-Config
-
-  $elt = $config.SelectSingleNode("/configuration/tools/add[@key='$name']")
+  $elt = Read-Config $name
 
   if ($elt -eq $null) { return }
 
   $elt.ParentNode.RemoveChild($elt) | Out-Null
-  $configPath = Get-ToolPath 'tools.config'
-  $config.Save($configPath)
+
+  # Sauvegarde.
+  Save-ToolsState
 }
 
-function Set-CurrentVersion {
+function Register-Tool {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true, Position = 0)] [string] $name,
     [Parameter(Mandatory = $true, Position = 1)] [string] $version
   )
 
-  [xml] $config = Get-Config
-
-  $elt = $config.SelectSingleNode("/configuration/tools/add[@key='$name']")
+  $elt = Read-Config $name
 
   if ($elt -eq $null) {
-    $elt = $config.CreateElement('add')
+    # Création.
+    [xml] $state = Get-ToolsState
+    $elt = $state.CreateElement('add')
     $elt.SetAttribute('key', $name)
     $elt.SetAttribute('value', $version)
-    $tools = $config.SelectSingleNode('/configuration/tools')
-    $tools.AppendChild($elt) | Out-Null
+    $state.SelectSingleNode('/configuration/tools').AppendChild($elt) | Out-Null
   } else {
+    # Mise à jour.
     $elt.value = $version
   }
 
-  $configPath = Get-ToolPath 'tools.config'
-  $config.Save($configPath)
+  # Sauvegarde.
+  Save-ToolsState
 }
 
 #-- Utilitaires --#
 
-function Download {
+function Download-Tool {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [System.Uri] $source)
 

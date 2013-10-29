@@ -258,6 +258,4 @@ function New-Scripter {
 
 #-- Directives --#
 
-Export-ModuleMember -function Export-DbCreation, Export-Data, Export-Tables, `
-  Export-StoredProcedures, Export-Views, Export-UserDefinedFunctions, Export-Triggers, `
-  Export-TableTriggers
+Export-ModuleMember -function Export-*

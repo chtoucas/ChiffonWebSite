@@ -25,4 +25,11 @@ Requirements
 Setup
 -----
 
-Add 'scripts\modules' to your PowerShell module path.
+Add 'scripts\modules' to your PowerShell module path, then launch RUN_ME_FIRST.ps1 in a PowerShell
+session. This script will download then install all third-party tools, namely:
+* 7-Zip
+* NuGet exe
+* Node.js
+* Node Package Manager
+* Google Closure Compiler
+* YUI Compressor

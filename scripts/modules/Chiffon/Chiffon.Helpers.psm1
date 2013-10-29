@@ -1,6 +1,23 @@
 #Requires -Version 3.0
 
 # .SYNOPSIS
+# Décompresse un fichier au format ZIP.
+#
+# .PARAMETER path
+# Chemin du fichier à décompresser.
+function Expand-ZipFile {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $file,
+    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
+  )
+
+  Write-Host -NoNewline 'Unzipping...'
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($file, $extractPath)
+  Write-Host 'done'
+}
+
+# .SYNOPSIS
 # Retourne le chemin vers MSDeploy.
 function Get-WebDeployInstallPath {
   return (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy" | Select -last 1).GetValue("InstallPath")
@@ -104,6 +121,17 @@ function New-Directory {
   return $path
 }
 
+# .SYNOPSIS
+# Supprime un répertoire.
+#
+# .DESCRIPTION
+# Supprime un répertoire (et son contenu) si il existe.
+#
+# .PARAMETER path
+# Chemin du répertoire à supprimer.
+#
+# .OUTPUTS
+# System.String. Chemin du répertoire.
 function Remove-Directory {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
@@ -115,6 +143,17 @@ function Remove-Directory {
   return $path
 }
 
+# .SYNOPSIS
+# Supprime un fichier.
+#
+# .DESCRIPTION
+# Supprime un fichier si il existe.
+#
+# .PARAMETER path
+# Chemin du fichier à supprimer.
+#
+# .OUTPUTS
+# System.String. Chemin du fichier.
 function Remove-File {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
@@ -137,16 +176,4 @@ function Remove-VisualStudioTmpFiles {
 
   Get-ChildItem $path -Include bin,obj -Recurse |
     foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
-}
-
-function Unzip {
-  [CmdletBinding()]
-  param(
-    [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $file,
-    [Parameter(Mandatory = $true, Position = 1)] [string] $extractPath
-  )
-
-  Write-Host -NoNewline 'Unzipping...'
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($file, $extractPath)
-  Write-Host 'done'
 }
