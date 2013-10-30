@@ -2,34 +2,26 @@
 
 Set-StrictMode -Version Latest
 
-# On définit une seule variable globale.
-$GLOBAL:Chiffon = @{}
+# TODO: S'inspirer de Pscx pour offrir la possibilité de ne charger que certains modules.
 
-if ($args.Length -gt 0) {
-  if ($args[0] -is [hashtable]) {
-    # FIXME: Vérifier le répertoire en question.
-    $Chiffon.ProjectDirectory = $args[0].ProjectDirectory
-  } else {
-    throw "FIXME: Option not found"
-  }
-} else {
-  throw "FIXME: No arg given"
-}
+# On ne définit qu'une seule variable globale.
+$script:Chiffon = @{}
 
-$Chiffon.ToolsDirectory = "$($Chiffon.ProjectDirectory)\tools"
-$Chiffon.NodeModulesDirectory = "$($Chiffon.ProjectDirectory)\scripts\node_modules"
+$Chiffon.ProjectDirectory = "$PSScriptRoot\..\..\.."
+
+Set-Variable -Name Chiffon -Value $Chiffon -Scope GLOBAL -Option ReadOnly
 
 Export-ModuleMember -Alias * -Function * -Cmdlet *
 
-# Initialisation des modules.
+# Initialisation des modules imbriqués.
 # NB: Le module racine est chargé après les modules imbriqués. En conséquence, ces derniers n'ont
-# pas accès à la variable globale $Chiffon.
+# pas accès à la variable globale $Chiffon lorsqu'ils sont importés.
 & {
-  Write-Verbose "Loading the Chiffon modules."
-
-  & (Get-Module Chiffon.Tools) { Initialize }
+  & (Get-Module Chiffon.NodeModules) { Initialize $Chiffon.ProjectDirectory }
+  & (Get-Module Chiffon.Tools) { Initialize $Chiffon.ProjectDirectory }
 }
 
+# Déchargement du module Chiffon.
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  Write-Verbose "Unloading the Chiffon modules."
+  Remove-Variable Chiffon -Scope GLOBAL -Force
 }

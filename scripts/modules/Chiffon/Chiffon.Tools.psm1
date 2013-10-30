@@ -6,11 +6,21 @@ Set-StrictMode -Version Latest
 # Variables privées
 # --------------------------------------------------------------------------------------------------
 
+# True si le module a été initialisé (via Initialize), False sinon.
+[bool] $script:Initialized = $false
+# Chemin absolu du répertoire contenant tous les outils.
+[string] $script:ToolsDirectory = $null
+# Chemin absolu du fichier d'état.
 [string] $script:ToolsStatePath = $null
+# Document XML contenant la liste des outils installés.
 [xml] $script:ToolsState = $null
 
 function Initialize {
-  $script:ToolsStatePath = "$($GLOBAL:Chiffon.ToolsDirectory)\tools.config"
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $projectDirectory)
+
+  $script:ToolsDirectory = "$projectDirectory\tools"
+  $script:ToolsStatePath = "$($script:ToolsDirectory)\tools.config"
+  $script:Initialized = $true
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -27,6 +37,11 @@ function Install-Tool  {
     [Parameter(Mandatory = $true, Position = 2)] [string] $source,
     [Parameter(Mandatory = $false, Position = 3)] [scriptblock] $installCore = $null
   )
+
+  Assert-Initialized
+
+  # Si le répertoire contenant les outils n'existe pas on le crée.
+  New-Directory $script:ToolsDirectory | Out-Null
 
   $currentVersion = Read-CurrentVersion $name
   if ($currentVersion -eq $null) {
@@ -53,6 +68,8 @@ function Uninstall-Tool {
     [Parameter(Mandatory = $false, Position = 1)] [scriptblock] $uninstallCore = $null
   )
 
+  Assert-Initialized
+
   Write-Host "Removing $name." -ForegroundColor 'Yellow'
 
   if (!$uninstallCore) { $uninstallCore = New-UninstallCore $name }
@@ -71,6 +88,8 @@ function Copy-ToolFromZip {
     [Parameter(Mandatory = $true, Position = 2)] [string] $destination
   )
 
+  Assert-Initialized
+
   $tmpPath = Get-ToolPath 'tmp' | Remove-Directory | New-Directory
 
   Expand-ZipArchive $file $tmpPath
@@ -84,12 +103,20 @@ function Get-ToolPath {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
 
-  return "$($GLOBAL:Chiffon.ToolsDirectory)\$relativePath"
+  Assert-Initialized
+
+  return "$($script:ToolsDirectory)\$relativePath"
 }
 
 # --------------------------------------------------------------------------------------------------
 # Fonctions privées
 # --------------------------------------------------------------------------------------------------
+
+function Assert-Initialized {
+  if (!$script:Initialized) {
+    throw 'You forgot to initialize Chiffon.Tools.'
+  }
+}
 
 # .SYNOPSIS
 # Normalise le nom d'un outil afin de pouvoir l'utiliser dans un nom de fonction.

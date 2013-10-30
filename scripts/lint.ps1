@@ -1,13 +1,11 @@
 #Requires -Version 3.0
 
-Get-Module Chiffon | Remove-Module
+Set-StrictMode -Version Latest
+
+#Get-Module Chiffon | Remove-Module
 Import-Module Chiffon
 
-. .\BEGIN.ps1
-
 Exit
-
-Set-NodeModulesDirectory "$PSScriptRoot\node_modules\.bin"
 
 $global:ReportsDir = "$PSScriptRoot\reports"
 if (!(Test-Path $ReportsDir)) { New-Item $ReportsDir -Type directory | Out-Null }

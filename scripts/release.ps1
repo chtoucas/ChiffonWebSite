@@ -1,5 +1,10 @@
 #Requires -Version 3.0
 
+Set-StrictMode -Version Latest
+
+#Get-Module Chiffon | Remove-Module
+Import-Module Chiffon
+
 param($task = 'default')
 
 Get-Module psake | Remove-Module

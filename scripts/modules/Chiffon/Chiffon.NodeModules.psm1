@@ -6,6 +6,18 @@ Set-StrictMode -Version Latest
 # Modules nodejs utilisés : clean-css, csslint, jshint, jslint, uglify-js
 
 # --------------------------------------------------------------------------------------------------
+# Variables privées
+# --------------------------------------------------------------------------------------------------
+
+[string] $script:NodeModulesDirectory = $null
+
+function Initialize {
+  param([Parameter(Mandatory = $true, Position = 0)] [string] $projectDirectory)
+
+  $script:NodeModulesDirectory = "$projectDirectory\scripts\node_modules"
+}
+
+# --------------------------------------------------------------------------------------------------
 # Fonctions publiques
 # --------------------------------------------------------------------------------------------------
 
@@ -96,7 +108,7 @@ function Get-NodeModuleBinPath {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
 
-  return "$($GLOBAL:Chiffon:NodeModulesDirectory)\.bin\$relativePath"
+  return "$($script:NodeModulesDirectory)\.bin\$relativePath"
 }
 
 # --------------------------------------------------------------------------------------------------

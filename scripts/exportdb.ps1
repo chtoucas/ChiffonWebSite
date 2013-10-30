@@ -4,6 +4,8 @@
 #   .\exportdb.ps1 'SERVERNAME' 'DATABASE' '.\exports\'
 #   .\exportdb.ps1 '(localdb)\v11.0' 'Chiffon' '.\exports\'
 
+Set-StrictMode -Version Latest
+
 param(
   [Parameter(Mandatory = $true, Position = 0)] [string] $serverName,
   [Parameter(Mandatory = $true, Position = 1)] [string] $databaseName,

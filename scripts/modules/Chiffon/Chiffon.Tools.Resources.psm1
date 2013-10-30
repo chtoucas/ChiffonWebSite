@@ -55,7 +55,7 @@ function Publish-NodePackageManager {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
 
-  Expand-ZipArchive $source $global:Chiffon.ToolsDirectory
+  Expand-ZipArchive $source (Get-ToolPath '')
 }
 
 function Unpublish-NodePackageManager {
