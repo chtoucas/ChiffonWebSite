@@ -14,7 +14,7 @@ Set-StrictMode -Version Latest
 function Initialize {
   param([Parameter(Mandatory = $true, Position = 0)] [string] $projectDirectory)
 
-  $script:NodeModulesDirectory = "$projectDirectory\scripts\node_modules"
+  $script:NodeModulesDirectory = "$projectDirectory\node_modules"
 }
 
 # --------------------------------------------------------------------------------------------------

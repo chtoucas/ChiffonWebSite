@@ -2,8 +2,8 @@
 
 Set-StrictMode -Version Latest
 
-#Get-Module Chiffon | Remove-Module
-Import-Module Chiffon
+#Get-Module Narvalo | Remove-Module
+Import-Module Narvalo
 
 # On supprime les fichiers temporaires créés par Visual Studio.
 Remove-VisualStudioTmpFiles "$PSScriptRoot\..\src"

@@ -28,7 +28,7 @@ Setup
 Add 'scripts\modules' to your PowerShell module path, then launch RUN_ME_FIRST.ps1 in a PowerShell
 session. This script will download then install all third-party tools, namely:
 * 7-Zip
-* NuGet exe
+* NuGet
 * Node.js
 * Node Package Manager
 * Google Closure Compiler

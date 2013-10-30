@@ -1,10 +1,8 @@
 #Requires -Version 3.0
-#
+
 # Usage:
 #   .\exportdb.ps1 'SERVERNAME' 'DATABASE' '.\exports\'
 #   .\exportdb.ps1 '(localdb)\v11.0' 'Chiffon' '.\exports\'
-
-Set-StrictMode -Version Latest
 
 param(
   [Parameter(Mandatory = $true, Position = 0)] [string] $serverName,
@@ -12,8 +10,10 @@ param(
   [Parameter(Mandatory = $true, Position = 2)] [string] $outDir
 )
 
-#Get-Module Chiffon | Remove-Module
-Import-Module Chiffon
+Set-StrictMode -Version Latest
+
+#Get-Module Narvalo | Remove-Module
+Import-Module Narvalo
 
 $outPath = (Get-Item $outDir).FullName
 

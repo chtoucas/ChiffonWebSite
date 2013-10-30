@@ -22,7 +22,7 @@ function Export-Data {
   $tables = $database.Tables | Where { $_.IsSystemObject -eq $false }
 
   if ($tables.count -eq 0) {
-    Write-Verbose 'There are no data to export.'
+    Write-Verbose 'No data to export.'
     return
   }
 

@@ -7,6 +7,8 @@ Import-Module Chiffon
 
 #-- Installation ou mise à jour des outils --#
 
+Write-Host 'Restoring tools.' -ForegroundColor 'Yellow'
+
 Install-Tool '7-Zip' '9.20' 'http://downloads.sourceforge.net/sevenzip/7za920.zip'
 
 # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement vers une version spécifique.
@@ -29,3 +31,8 @@ Install-Tool 'YUI Compressor' '2.4.7' `
 
 Write-Host 'Restoring NuGet packages.' -ForegroundColor 'Yellow'
 .\tools\NuGet.exe install .nuget\packages.config -OutputDirectory packages -Verbosity quiet
+
+#-- Installation ou mise à jour des modules Node.js --#
+
+Write-Host 'Restoring Node.js modules.' -ForegroundColor 'Yellow'
+.\tools\npm.cmd install

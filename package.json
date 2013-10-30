@@ -1,0 +1,33 @@
+{
+  "name": "Chiffon",
+  "version": "0.0.0",
+  "description": "Assets",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-cli": "~0.1.9",
+    "grunt": "~0.4.1",
+    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-cssmin": "~0.6.2",
+    "grunt-contrib-uglify": "~0.2.5",
+    "grunt-contrib-jshint": "~0.7.0",
+    "grunt-jslint": "~1.1.1",
+    "grunt-contrib-concat": "~0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chtoucas/ChiffonWebSite.git"
+  },
+  "author": "chtoucas",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/chtoucas/ChiffonWebSite/issues"
+  },
+  "homepage": "https://github.com/chtoucas/ChiffonWebSite"
+}
