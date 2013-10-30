@@ -1,25 +1,8 @@
-#Requires -Version 3.0
 
-Set-StrictMode -Version Latest
+Exit
 
 # Pré-requis : nodejs
 # Modules nodejs utilisés : clean-css, csslint, jshint, jslint, uglify-js
-
-# --------------------------------------------------------------------------------------------------
-# Variables privées
-# --------------------------------------------------------------------------------------------------
-
-[string] $script:NodeModulesDirectory = $null
-
-function Initialize {
-  param([Parameter(Mandatory = $true, Position = 0)] [string] $projectDirectory)
-
-  $script:NodeModulesDirectory = "$projectDirectory\node_modules"
-}
-
-# --------------------------------------------------------------------------------------------------
-# Fonctions publiques
-# --------------------------------------------------------------------------------------------------
 
 function Invoke-CleanCss {
   [CmdletBinding()]
@@ -74,6 +57,7 @@ function Invoke-JSLint {
   # ce problème :
   #   http://stackoverflow.com/questions/9846326/node-console-log-behavior-and-windows-stdout
   # Pour contourner ce problème, on utilise donc un script intermédiaire :
+  # .\node_modules\.bin\jslint.cmd %* >> .\reports\jslint.log
 
   #FIXME .\jslint.cmd --maxerr 100 $source
 }
@@ -99,20 +83,5 @@ function Invoke-UglifyJS {
   # TODO: source-map
   & $uglifyjs $source --compress --mangle --output $outFile
 }
-
-# --------------------------------------------------------------------------------------------------
-# Fonctions privées
-# --------------------------------------------------------------------------------------------------
-
-function Get-NodeModuleBinPath {
-  [CmdletBinding()]
-  param([Parameter(Mandatory = $true, Position = 0)] [System.Uri] $relativePath)
-
-  return "$($script:NodeModulesDirectory)\.bin\$relativePath"
-}
-
-# --------------------------------------------------------------------------------------------------
-# Directives
-# --------------------------------------------------------------------------------------------------
 
 Export-ModuleMember -function Invoke-*

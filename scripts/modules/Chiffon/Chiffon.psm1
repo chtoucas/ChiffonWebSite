@@ -17,7 +17,6 @@ Export-ModuleMember -Alias * -Function * -Cmdlet *
 # NB: Le module racine est chargé après les modules imbriqués. En conséquence, ces derniers n'ont
 # pas accès à la variable globale $Chiffon lorsqu'ils sont importés.
 & {
-  & (Get-Module Chiffon.NodeModules) { Initialize $Chiffon.ProjectDirectory }
   & (Get-Module Chiffon.Tools) { Initialize $Chiffon.ProjectDirectory }
 }
 

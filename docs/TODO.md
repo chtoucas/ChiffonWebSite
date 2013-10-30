@@ -1,6 +1,10 @@
 TODO
 ====
 
+* Revoir Gruntfile.js
+* Revoir package.json
+* Cf. CommerceShop
+
 Pour les déploiements, peut-être s'inspirer de :
 * https://github.com/AppVeyor/AppRolla
 * http://www.infoq.com/articles/AppVeyor-CI
@@ -10,6 +14,7 @@ Intégrer les outils nodejs suivants :
 * JSLint
 * CSSLint
 * Clean-CSS
+* Google Closure Tools (utiliser IronPython via NuGet ?)
 
 Remplacer YUICompressor par une alternative .NET et éventuellement activer des nouvelles
 fonctionnalités d'optimisation Web (minification HTML, sprites) :
