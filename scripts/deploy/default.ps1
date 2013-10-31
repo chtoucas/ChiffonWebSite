@@ -9,7 +9,7 @@
 # - regarder WDeploySnapin3.0
 # - cf. http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity_26.html
 
-Include ".\deploy_utils.ps1"
+#Include ".\deploy_utils.ps1"
 
 Properties {
   $BasePath = $(Get-Location).Path

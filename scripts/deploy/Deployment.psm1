@@ -1,5 +1,7 @@
 #Requires -Version 3.0
 
+Set-StrictMode -Version Latest
+
 # WARNING: MSDeploy & Powershell n'interagissent pas bien quand il y a des espaces.
 # Cf. http://edgylogic.com/blog/powershell-and-external-commands-done-right/
 
@@ -122,3 +124,5 @@ function Restore-WebSite {
   Write-Host "Starting '$webSite'." -ForegroundColor "Yellow"
   Start-WebSite -Name $webSite
 }
+
+Export-ModuleMember -Function *

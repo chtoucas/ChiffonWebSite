@@ -14,6 +14,7 @@ Technology footprint
 * PowerShell
 * MSBuild
 * PSake
+* Grunt
 
 Requirements
 ------------

@@ -17,7 +17,7 @@
     var settings = $.extend({}, $.fn.watermark.defaults, options);
 
     var getWatermak = undef !== watermark
-      ? function($elmt) { return watermark; }
+      ? function() { return watermark; }
       // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
       : function($elmt) { return $elmt.data('watermark'); };
 

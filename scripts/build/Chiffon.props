@@ -10,6 +10,7 @@
     <_EtcDir>$(_RootDir)etc\</_EtcDir>
     <_SourceDir>$(_RootDir)src\</_SourceDir>
     <_TestDir>$(_RootDir)test\</_TestDir>
+    <_ScriptsDir>$(_RootDir)scripts\</_ScriptsDir>
     <_ToolsDir>$(_RootDir)tools\</_ToolsDir>
     <_NuGetPackageDir>$(_RootDir)packages\</_NuGetPackageDir>
     <_PackageDir>$(_RootDir)_build\</_PackageDir>
@@ -35,9 +36,11 @@
 
   <!-- Outils locaux (exe ou jar). -->
   <PropertyGroup>
+    <_GoogleClosureJar>$(_ToolsDir)closure-compiler.jar</_GoogleClosureJar>
+    <_GruntCmd>$(_ScriptsDir)grunt.cmd</_GruntCmd>
+    <_NodeExe>$(_ToolsDir)node.exe</_NodeExe>
     <_NuGetExe>$(_ToolsDir)nuget.exe</_NuGetExe>
     <_SevenZipExe>$(_ToolsDir)7za.exe</_SevenZipExe>
-    <_GoogleClosureJar>$(_ToolsDir)closure-compiler.jar</_GoogleClosureJar>
     <_YuiCompressorJar>$(_ToolsDir)yuicompressor.jar</_YuiCompressorJar>
   </PropertyGroup>
 

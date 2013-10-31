@@ -1,8 +1,6 @@
 TODO
 ====
 
-* Revoir Gruntfile.js
-* Revoir package.json
 * Cf. CommerceShop
 
 Pour les déploiements, peut-être s'inspirer de :
@@ -10,14 +8,10 @@ Pour les déploiements, peut-être s'inspirer de :
 * http://www.infoq.com/articles/AppVeyor-CI
 * http://psappdeploytoolkit.codeplex.com/
 
-Intégrer les outils nodejs suivants :
-* JSLint
-* CSSLint
-* Clean-CSS
-* Google Closure Tools (utiliser IronPython via NuGet ?)
+Utiliser Google Closure Tools (IronPython via NuGet ?)
 
-Remplacer YUICompressor par une alternative .NET et éventuellement activer des nouvelles
-fonctionnalités d'optimisation Web (minification HTML, sprites) :
+Remplacer YUICompressor par une alternative .NET (?) et éventuellement activer de nouvelles
+optimisations Web (minification HTML, sprites) :
 * http://webgrease.codeplex.com/
 * http://bundletransformer.codeplex.com/
 * http://webmarkupmin.codeplex.com/
@@ -26,7 +20,6 @@ fonctionnalités d'optimisation Web (minification HTML, sprites) :
 * https://github.com/paulcbetts/SassAndCoffee
 
 Vérifier les CSS & JS :
-* CSSLint
 * JSLint
 - http://jslintnet.codeplex.com/
 - http://jslint4vs2010.codeplex.com/
