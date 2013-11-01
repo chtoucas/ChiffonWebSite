@@ -1,5 +1,7 @@
+/*jshint laxcomma: true*/
+/*jslint white: true, todo: true*/
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   var config = {
@@ -12,8 +14,7 @@ module.exports = function(grunt) {
   function mapLog(value) { return config.reportsDir + '/' + value; }
 
   function readVersion() {
-    var fs = require('fs')
-      , parseString = require('xml2js').parseString
+    var parseString = require('xml2js').parseString
       , version;
 
     var xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
@@ -39,7 +40,7 @@ module.exports = function(grunt) {
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
       // TODO: ajouter Gruntfile.js
-      , js: ['app.js', 'chiffon.js'].map(mapJs)
+      , js: ['app.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
     }
 
     , bundles: {
