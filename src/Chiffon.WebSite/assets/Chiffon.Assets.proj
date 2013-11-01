@@ -70,7 +70,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <_CssFiles Include="normalize-1.1.3.css">
+      <_CssFiles Include="normalize-2.1.3.css">
         <Bundle>$(_CssScreenBundle)</Bundle>
       </_CssFiles>
       <_CssFiles Include="01-chiffon.base.css">

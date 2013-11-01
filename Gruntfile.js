@@ -38,6 +38,7 @@ module.exports = function(grunt) {
         , '03-chiffon.css'
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
+      // TODO: ajouter Gruntfile.js
       , js: ['app.js', 'chiffon.js'].map(mapJs)
     }
 
@@ -47,7 +48,7 @@ module.exports = function(grunt) {
         // Screen CSS bundle.
         screen: {
           src: [
-            'normalize-1.1.3.css'
+            'normalize-2.1.3.css'
             , '01-chiffon.base.css'
             , '02-chiffon.helpers.css'
             , '03-chiffon.css'
@@ -162,6 +163,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('analyze', ['jshint', 'jslint', 'csslint']);
-  grunt.registerTask('minify', ['uglify', 'cssmin']);
-  grunt.registerTask('default', ['minify']);
+  grunt.registerTask('build', ['uglify', 'cssmin']);
+  grunt.registerTask('default', ['build']);
 };
