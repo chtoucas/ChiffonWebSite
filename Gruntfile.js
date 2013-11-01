@@ -13,7 +13,7 @@ module.exports = function (grunt) {
   function mapJs(value) { return config.projectDir + '/js/' + value; }
   function mapLog(value) { return config.reportsDir + '/' + value; }
 
-  function readVersion() {
+  function readSemVer() {
     var parseString = require('xml2js').parseString
       , version;
 
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json')
 
-    , version: readVersion()
+    , version: readSemVer()
 
     , filesToLint: {
       // Fichiers CSS à analyser.
@@ -39,14 +39,13 @@ module.exports = function (grunt) {
         , '03-chiffon.css'
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
-      // TODO: ajouter Gruntfile.js
       , js: ['app.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
     }
 
     , bundles: {
-      // CSS bundles.
+      // Groupes CSS.
       css: {
-        // Screen CSS bundle.
+        // Groupe CSS pour les écrans.
         screen: {
           src: [
             'normalize-2.1.3.css'
@@ -57,9 +56,9 @@ module.exports = function (grunt) {
           , dest: mapCss('chiffon-<%= version %>.min.css')
         }
       }
-      // JavaScript bundles.
+      // Groupes JavaScript.
       , js: {
-        // Application JavaScript bundle.
+        // Groupe JavaScript de démarrage.
         app: {
           src: [
             'vendor/yepnope-1.5.4.js'
@@ -68,7 +67,7 @@ module.exports = function (grunt) {
           ].map(mapJs)
           , dest: mapJs('app-<%= version %>.min.js')
         }
-        // Chiffon JavaScript bundle.
+        // Groupe JavaScript chargé en différé.
         , chiffon: {
           src: [
             'jquery.plugins.js'
@@ -134,6 +133,7 @@ module.exports = function (grunt) {
      */
     , uglify: {
       options: {
+        // TODO: On ne peut pas combiner les options banner et minification.
         //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */\n'
         compress: { unused: false }
         , mangle: true
