@@ -15,7 +15,9 @@
     <ItemGroup>
       <_FilesToRemove Include="$(_CssDir)\chiffon-*.css" />
       <_FilesToRemove Include="$(_JsDir)\app-*.js" />
+      <_FilesToRemove Include="$(_JsDir)\app-*.map" />
       <_FilesToRemove Include="$(_JsDir)\chiffon-*.js" />
+      <_FilesToRemove Include="$(_JsDir)\chiffon-*.map" />
     </ItemGroup>
 
     <Delete Files="@(_FilesToRemove)" />
