@@ -1,0 +1,22 @@
+{
+  "name": "chiffon",
+  "version": "0.0.0",
+  "description": "Chiffon website",
+  "authors": [
+    "chtoucas <chtoucas@narvalo.org> (http://narvalo.org)"
+  ],
+  "license": "BSD-2-Clause",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "yepnope": "~1.5.4",
+    "lodash": "~2.2.1"
+  }
+}
