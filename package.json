@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Task runner for optimizing Chiffon WebSite assets.",
   "directories": {
-    "doc": "docs",
+    "doc": "doc",
     "test": "test"
   },
   "dependencies": {},
