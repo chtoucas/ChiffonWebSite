@@ -17,6 +17,10 @@ Import-Module Narvalo
 
 $outPath = (Get-Item $outDir).FullName
 
+if (!(Test-Path $outPath)) {
+  throw "$outDir does not exist"
+}
+
 $server = New-Object Microsoft.SqlServer.Management.Smo.Server $serverName
 # La ligne suivante permet d'accélérer l'exécution de SMO.
 $server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.Table], "IsSystemObject")
