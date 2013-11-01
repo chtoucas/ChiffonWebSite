@@ -37,3 +37,20 @@ Améliorer l'internationalisation :
 MSBuild :
 * FxCop (via MSBuild.ExtensionPack)
 * StyleCop (via MSBuild.ExtensionPack)
+
+NOTES
+-----
+csslint --quiet
+cleancss -d -o
+Linting ? uglifyjs -b --lint
+
+# NB: Pour une explication des erreurs jslint, cf. http://jslinterrors.com/
+
+# WARNING: node-jslint utilise console.log et lorsqu'on redirige la sortie dans une fenêtre
+# PowerShell, le fichier cible est vide :-( Apparemment je ne suis pas le seul à rencontrer
+# ce problème :
+#   http://stackoverflow.com/questions/9846326/node-console-log-behavior-and-windows-stdout
+# Pour contourner ce problème, on utilise donc un script intermédiaire :
+# .\node_modules\.bin\jslint.cmd %* >> .\reports\jslint.log
+
+#FIXME .\jslint.cmd --maxerr 100 $source
