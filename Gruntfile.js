@@ -7,9 +7,9 @@ module.exports = function(grunt) {
     , reportsDir: __dirname + '/_work/reports'
   };
 
-  function jspath(src) { return config.projectDir + '/js/' + src; }
-  function csspath(src) { return config.projectDir + '/css/' + src; }
-  function logpath(src) { return config.reportsDir + '/' + src; }
+  function mapCss(value) { return config.projectDir + '/css/' + value; }
+  function mapJs(value) { return config.projectDir + '/js/' + value; }
+  function mapLog(value) { return config.reportsDir + '/' + value; }
 
   function readVersion() {
     var fs = require('fs')
@@ -30,18 +30,18 @@ module.exports = function(grunt) {
 
     , version: readVersion()
 
-    , _filesToLint: {
+    , filesToLint: {
       // Fichiers CSS à analyser.
       css: [
         '01-chiffon.base.css'
         , '02-chiffon.helpers.css'
         , '03-chiffon.css'
-      ].map(csspath)
+      ].map(mapCss)
       // Fichiers JavaScript à analyser.
-      , js: ['app.js', 'chiffon.js'].map(jspath)
+      , js: ['app.js', 'chiffon.js'].map(mapJs)
     }
 
-    , _bundles: {
+    , bundles: {
       // CSS bundles.
       css: {
         // Screen CSS bundle.
@@ -51,8 +51,8 @@ module.exports = function(grunt) {
             , '01-chiffon.base.css'
             , '02-chiffon.helpers.css'
             , '03-chiffon.css'
-          ].map(csspath)
-          , dest: csspath('chiffon-<%= version %>.min.css')
+          ].map(mapCss)
+          , dest: mapCss('chiffon-<%= version %>.min.css')
         }
       }
       // JavaScript bundles.
@@ -63,10 +63,8 @@ module.exports = function(grunt) {
             'vendor/yepnope-1.5.4.js'
             , 'vendor/lodash.compat-2.0.0.js'
             , 'app.js'
-          ].map(jspath)
-          , map: [
-          ]
-          , dest: jspath('app-<%= version %>.min.js')
+          ].map(mapJs)
+          , dest: mapJs('app-<%= version %>.min.js')
         }
         // Chiffon JavaScript bundle.
         , chiffon: {
@@ -75,8 +73,8 @@ module.exports = function(grunt) {
             , 'vendor/l10n-2013.09.19.js'
             , 'localization.js'
             , 'chiffon.js'
-          ].map(jspath)
-          , dest: jspath('chiffon-<%= version %>.min.js')
+          ].map(mapJs)
+          , dest: mapJs('chiffon-<%= version %>.min.js')
         }
       }
     }
@@ -87,8 +85,8 @@ module.exports = function(grunt) {
     , csslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       chiffon: {
-        options: { formatters: [ {id: 'text', dest: logpath('csslint.log') } ] }
-        , src: '<%= _filesToLint.css %>'
+        options: { formatters: [ {id: 'text', dest: mapLog('csslint.log')} ] }
+        , src: '<%= filesToLint.css %>'
       }
     }
 
@@ -102,7 +100,7 @@ module.exports = function(grunt) {
           , keepSpecialComments: 0
           , report: 'min'
         }
-        , files: { '<%= _bundles.css.screen.dest %>': '<%= _bundles.css.screen.src %>' }
+        , files: { '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>' }
       }
     }
 
@@ -111,7 +109,7 @@ module.exports = function(grunt) {
      */
     , jshint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
-      files: '<%= _filesToLint.js %>'
+      files: '<%= filesToLint.js %>'
     }
 
     /*
@@ -121,11 +119,11 @@ module.exports = function(grunt) {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       chiffon: {
         options: {
-          log: logpath('jslint.log')
+          log: mapLog('jslint.log')
           , errorsOnly: true
           , failOnError: false
         }
-        , src: '<%= _filesToLint.js %>'
+        , src: '<%= filesToLint.js %>'
       }
     }
 
@@ -140,19 +138,19 @@ module.exports = function(grunt) {
       }
       , app: {
         options: {
-          sourceMap: jspath('app-<%= version %>.min.map')
+          sourceMap: mapJs('app-<%= version %>.min.map')
           , sourceMappingURL: 'app-<%= version %>.min.map'
-          , sourceMapPrefix: 7
+          , sourceMapPrefix: 8
         }
-        , files: { '<%= _bundles.js.app.dest %>' : '<%= _bundles.js.app.src %>' }
+        , files: { '<%= bundles.js.app.dest %>' : '<%= bundles.js.app.src %>' }
       }
       , chiffon: {
         options: {
-          sourceMap: jspath('chiffon-<%= version %>.min.map')
+          sourceMap: mapJs('chiffon-<%= version %>.min.map')
           , sourceMappingURL: 'chiffon-<%= version %>.min.map'
-          , sourceMapPrefix: 7
+          , sourceMapPrefix: 8
         }
-        , files: { '<%= _bundles.js.chiffon.dest %>': '<%= _bundles.js.chiffon.src %>' }
+        , files: { '<%= bundles.js.chiffon.dest %>': '<%= bundles.js.chiffon.src %>' }
       }
     }
   });

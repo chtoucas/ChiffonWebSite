@@ -32,8 +32,10 @@
 
   <PropertyGroup>
     <BuildDependsOn>
+      <!--
       MergeAndMinifyCss;
       MergeAndMinifyJs;
+      -->
       _Publish
     </BuildDependsOn>
   </PropertyGroup>
