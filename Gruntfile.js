@@ -62,7 +62,7 @@ module.exports = function(grunt) {
         app: {
           src: [
             'vendor/yepnope-1.5.4.js'
-            , 'vendor/lodash.compat-2.0.0.js'
+            , 'vendor/lodash.compat-2.2.1.js'
             , 'app.js'
           ].map(mapJs)
           , dest: mapJs('app-<%= version %>.min.js')
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
         , chiffon: {
           src: [
             'jquery.plugins.js'
-            , 'vendor/l10n-2013.09.19.js'
+            , 'vendor/l10n-2013.09.12.js'
             , 'localization.js'
             , 'chiffon.js'
           ].map(mapJs)
