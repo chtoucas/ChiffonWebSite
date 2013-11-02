@@ -1,7 +1,7 @@
 {
-  "name": "chiffon",
+  "name": "chiffon-assets",
   "version": "0.0.0",
-  "description": "Chiffon website",
+  "description": "JavaScript assets for the Chiffon website",
   "authors": [
     "chtoucas <chtoucas@narvalo.org> (http://narvalo.org)"
   ],
@@ -17,6 +17,13 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "yepnope": "~1.5.4",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "jquery.validation": "~1.11.1",
+    "jquery.cookie": "~1.4.0",
+    "zepto": "~1.0.0",
+    "rgrove-lazyload": "*",
+    "jquery-modal": "~0.5.2",
+    "underscore": "~1.5.2",
+    "es5-shim": "~2.1.0"
   }
 }

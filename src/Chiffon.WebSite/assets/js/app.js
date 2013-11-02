@@ -10,7 +10,7 @@ this.App = (function(win, _, yepnope, undef) {
       , debug: false
       , version: undef
     }
-    // Langues supportées.
+    // Langues prises en charge.
     , locales = ['fr', 'en']
 
     , loadJS = function(/* options */) {
@@ -34,18 +34,13 @@ this.App = (function(win, _, yepnope, undef) {
     this.dependencies = {
       chiffon: function() {
         return settings.debug
-          ? ['jquery.plugins.js', 'vendor/l10n-2013.09.12.min.js', 'localization.js', 'chiffon.js'].map(rebase)
+          ? ['jquery.plugins.js', 'vendor/l10n-2013.09.12.js', 'localization.js', 'chiffon.js'].map(rebase)
           : rebase('chiffon-' + settings.version + '.min.js');
       }
 
       , jQuery: function() {
         return [vendor('__proto__' in {} ? 'jquery-2.0.3.min.js' : 'jquery-1.10.2.min.js')];
       }
-
-      // TODO: Minification.
-      //, jQueryCookie: function() { return vendor('jquery.cookie-1.3.1.js'); }
-
-      //, jQueryOutside: function() { return vendor('jquery.ba-outside-events-1.1.min.js'); }
 
       , jQueryValidate: function(locale) {
         var scripts = ['jquery.validate.min.js'];

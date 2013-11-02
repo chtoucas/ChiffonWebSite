@@ -7,7 +7,7 @@
 param(
   [Parameter(Mandatory = $true, Position = 0)] [string] $serverName,
   [Parameter(Mandatory = $true, Position = 1)] [string] $databaseName,
-  [Parameter(Mandatory = $true, Position = 2)] [string] $outDir
+  [Parameter(Mandatory = $false, Position = 2)] [string] $outDir = $null
 )
 
 Set-StrictMode -Version Latest
@@ -15,10 +15,14 @@ Set-StrictMode -Version Latest
 #Get-Module Narvalo | Remove-Module
 Import-Module Narvalo
 
-$outPath = (Get-Item $outDir).FullName
+if (!$outDir) {
+  $outPath = "$PSScriptRoot\..\_work\stage\sql"
+} else {
+  $outPath = (Get-Item $outDir).FullName
+}
 
 if (!(Test-Path $outPath)) {
-  throw "$outDir does not exist"
+  New-Directory $outPath | Out-Null
 }
 
 $server = New-Object Microsoft.SqlServer.Management.Smo.Server $serverName

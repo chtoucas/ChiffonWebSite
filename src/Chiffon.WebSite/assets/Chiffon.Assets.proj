@@ -40,6 +40,7 @@
     </BuildDependsOn>
   </PropertyGroup>
 
+  <!--
   <Target Name="MergeAndMinifyCss"
           Inputs="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
@@ -60,10 +61,12 @@
     <ClosureCompiler JarPath="$(_GoogleClosureJar)" Files="%(_JsFiles.Bundle)"
                      CompilationLevel="Simple" ProcessTimeout="10000" />
   </Target>
+  -->
 
 
   <!-- ### Directives privées ### -->
 
+  <!--
   <Target Name="_GetCssFiles" DependsOnTargets="GetSemVer">
     <PropertyGroup>
       <_CssScreenBundle>$(_CssDir)\chiffon-$(_SemVer).css</_CssScreenBundle>
@@ -116,12 +119,18 @@
       </_JsFiles>
     </ItemGroup>
   </Target>
+  -->
 
   <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
     <ItemGroup>
       <!-- On inclut tous les fichiers sauf le fichier de projet -->
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
-                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);$(MSBuildProjectDirectory)\**\*.gitignore" />
+                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
+                      $(MSBuildProjectDirectory)\**\*.gitignore;
+                      $(MSBuildProjectDirectory)\node_modules;
+                      $(MSBuildProjectDirectory)\bower_components;
+                      $(MSBuildProjectDirectory)\*.cmd;
+                      $(MSBuildProjectDirectory)\*.json" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_SourceFiles)"

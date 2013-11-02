@@ -1,5 +1,7 @@
 #Requires -Version 3.0
 
+# TODO: Restauration des modules Node et des composants Bower dans le site web.
+
 Set-StrictMode -Version Latest
 
 #Get-Module Chiffon | Remove-Module
