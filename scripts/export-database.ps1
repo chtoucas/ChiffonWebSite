@@ -1,8 +1,8 @@
 #Requires -Version 3.0
 
 # Usage:
-#   .\exportdb.ps1 'SERVERNAME' 'DATABASE' '.\exports\'
-#   .\exportdb.ps1 '(localdb)\v11.0' 'Chiffon' '.\exports\'
+#   .\export-database.ps1 'SERVERNAME' 'DATABASE' '.\exports\'
+#   .\export-database.ps1 '(localdb)\v11.0' 'Chiffon' '.\exports\'
 
 param(
   [Parameter(Mandatory = $true, Position = 0)] [string] $serverName,

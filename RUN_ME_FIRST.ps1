@@ -1,6 +1,6 @@
 #Requires -Version 3.0
 
-# TODO: Restauration des modules Node et des composants Bower dans le site web.
+# TODO: Restauration des composants Bower dans le site web.
 
 Set-StrictMode -Version Latest
 
@@ -63,3 +63,23 @@ Write-Host 'Restoring NuGet packages.' -ForegroundColor 'Yellow'
 
 Write-Host 'Restoring Node.js modules.' -ForegroundColor 'Yellow'
 .\tools\npm.cmd install
+
+# Installation des exécutables nodes.
+
+$modules = @(
+  @{ 'Name' = 'bower'; 'Command' = 'bower\bin\bower' }
+  @{ 'Name' = 'grunt'; 'Command' = 'grunt-cli\bin\grunt' }
+  @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
+)
+$template = @"
+@echo off
+
+"%~dp0\node.exe" "%~dp0\..\node_modules\{{command}}" %*
+"@
+
+foreach ($module in $modules) {
+  $path = ".\tools\$($module.Name).cmd"
+  if (!(Test-Path $path)) {
+    Add-Content ".\tools\$($module.Name).cmd" $template.Replace('{{command}}', $module.Command)
+  }
+}

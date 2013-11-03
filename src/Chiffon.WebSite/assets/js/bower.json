@@ -7,12 +7,6 @@
   ],
   "license": "BSD-2-Clause",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "vendor"
-  ],
   "devDependencies": {},
   "dependencies": {
     "jquery": "~2.0.3",

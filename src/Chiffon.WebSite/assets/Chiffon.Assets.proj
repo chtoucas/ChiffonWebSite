@@ -126,10 +126,8 @@
       <!-- On inclut tous les fichiers sauf le fichier de projet -->
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
                     Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
-                      $(MSBuildProjectDirectory)\**\*.gitignore;
-                      $(MSBuildProjectDirectory)\node_modules;
+                      $(MSBuildProjectDirectory)\**\.gitignore;
                       $(MSBuildProjectDirectory)\bower_components;
-                      $(MSBuildProjectDirectory)\*.cmd;
                       $(MSBuildProjectDirectory)\*.json" />
     </ItemGroup>
 
