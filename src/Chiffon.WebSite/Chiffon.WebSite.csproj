@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -267,9 +268,10 @@
     <Content Include="assets\js\vendor\jquery-2.0.3.min.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\jquery.validate.min.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\localization\messages_fr.js" />
-    <Content Include="assets\js\vendor\l10n-2013.09.19.min.js" />
-    <Content Include="assets\js\vendor\lodash.compat-2.0.0.min.js" />
-    <Content Include="assets\js\vendor\yepnope-1.5.4.min.js" />
+    <Content Include="assets\js\vendor\l10n-2013.09.12.js" />
+    <Content Include="assets\js\vendor\lodash.compat-2.2.1.js" />
+    <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="errors\index.html" />
     <Content Include="errors\not-found.html" />
@@ -340,6 +342,8 @@
     <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Account\PostRegister.cshtml" />
     <Content Include="Views\Account\RegisterTwice.cshtml" />
+    <Content Include="assets\js\vendor\jquery-1.10.2.min.map" />
+    <Content Include="assets\js\vendor\jquery-2.0.3.min.map" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -371,6 +375,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="assets\js\chiffon\chiffon.ts" />
+    <TypeScriptCompile Include="Scripts\typings\chiffon.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.validation\jquery.validation.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -382,6 +392,7 @@
     <AssemblyOriginatorKeyFile>..\..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- Compilation des vues -->
