@@ -36,7 +36,7 @@ class Chiffon {
   }
 
   private _setLocale(locale): void {
-    String.locale = locale;
+    //String.locale = locale;
   }
 
   // Configuration globale du comportement des appels Ajax via jQuery.

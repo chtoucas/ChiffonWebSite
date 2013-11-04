@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -47,7 +47,7 @@ define(["require", "exports"], function(require, exports) {
         };
 
         Chiffon.prototype._setLocale = function (locale) {
-            String.locale = locale;
+            //String.locale = locale;
         };
 
         // Configuration globale du comportement des appels Ajax via jQuery.
