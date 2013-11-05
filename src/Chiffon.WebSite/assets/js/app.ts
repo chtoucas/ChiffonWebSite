@@ -1,44 +1,54 @@
 ﻿/*jshint laxcomma: true, laxbreak:true*/
 /*jslint nomen:true, white: true, todo: true*/
 
-class User {
-  isAnonymous: boolean
+module Chiffon {
+  export interface User {
+    isAnonymous: boolean;
+    isAuth: boolean;
+  }
 
-  constructor(public isAuth: boolean) {
-    this.isAnonymous = !isAuth;
+  export interface Context {
+    locale: string;
+    user: User;
+    app: any;
+  }
+
+  export interface Settings {
+    baseUrl: string;
+    debug: boolean;
+    version: string;
+  }
+
+  export interface AppOptions {
+    ajaxTimeout: number;
+  }
+
+  // Configuration par défaut.
+  export var defaults: AppOptions = {
+    ajaxTimeout: 3000
+  };
+
+  export interface IApp {
+    handle(controllerName: string, actionName: string, params: any[]): void;
   }
 }
 
-interface Context {
-  locale: string;
-  user: User;
-  app: any;
-}
+// Dépendances : _ et yepnope.
 
-interface AppSettings {
-  baseUrl: string;
-  debug: boolean;
-  version: string;
-}
-
-this.App = ((win, _, yepnope) => {
+var App = ((win: Window) => {
   'use strict';
 
   // Configuration par défaut.
-  var defaults: AppSettings = {
+  var defaults: Chiffon.Settings = {
     baseUrl: null
     , debug: false
     , version: null
   }
   // Langues prises en charge.
-    , locales = ['fr', 'en']
+    , locales = ['fr', 'en'];
 
-    , loadJS = function(options: any) {
-      throw new Error('You can not use this method until the main() method has been called.');
-    };
-
-  return function(options: AppSettings) {
-    var settings: AppSettings = _.defaults(options || {}, defaults);
+  return function(options: Chiffon.Settings) {
+    var settings: Chiffon.Settings = _.defaults(options || {}, defaults);
 
     if (null === settings.baseUrl) {
       throw new Error('The baseUrl is not defined.');
@@ -55,7 +65,7 @@ this.App = ((win, _, yepnope) => {
       chiffon: function() {
         var result = settings.debug
           ? ['jquery.plugins.js', 'jquery.modal.js', 'vendor/l10n-2013.09.12.js',
-            'localization.js', 'chiffon.js'].map<string>(rebase)
+            'localization.js', 'chiffon.js'].map(rebase)
           : [rebase('chiffon-' + settings.version + '.min.js')];
       }
 
@@ -70,14 +80,14 @@ this.App = ((win, _, yepnope) => {
       }
     };
 
-    this.require = function(dependencies: string[], onComplete: any) {
-      loadJS({
+    this.require = function(dependencies: string[], onComplete: () => void) {
+      yepnope({
         load: dependencies
         , complete: onComplete
       });
     };
 
-    this.main = function(isAuthenticated, locale, fn) {
+    this.main = function(isAuthenticated: boolean, locale: string, fn: (app: Chiffon.IApp) => void) {
       var that = this
         , isAuth = true === isAuthenticated;
 
@@ -97,22 +107,23 @@ this.App = ((win, _, yepnope) => {
           yepnope({
             load: that.dependencies.chiffon()
             , complete: function() {
-              var Chiffon = win.Chiffon;
-              if (null === Chiffon) { return; }
+              var App = Chiffon.App;
+              if (null === App) { return; }
 
-              loadJS = function(options) { yepnope(options); };
-
-              var ctx: Context = {
+              var ctx: Chiffon.Context = {
                 locale: locale
                 , app: that
-                , user: new User(isAuth)
+                , user: {
+                  isAnonymous: !isAuth
+                  , isAuth: isAuth
+                }
               };
 
-              fn(new Chiffon(ctx));
+              fn(new App(ctx));
             }
           });
         }
       });
     };
   };
-} (this, this._, this.yepnope));
+} (this));

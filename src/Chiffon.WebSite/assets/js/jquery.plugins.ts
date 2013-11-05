@@ -10,7 +10,7 @@ interface JQuery {
   watermark(watermark?: string, options?: WatermarkOptions): any;
 }
 
-((win, $) => {
+((win: Window, $: JQueryStatic) => {
   'use strict';
 
   $.fn.external = function() {

@@ -1,6 +1,15 @@
 ﻿
 /// <reference path="jquery/jquery.d.ts"/>
 
+// Built-in types
+
+interface Window {
+  jQuery: JQueryStatic;
+  Chiffon: any;
+}
+
+// jquery.modal
+
 interface ModalOptions {
   clickClose?: boolean;
   closeText?: string;
@@ -26,3 +35,12 @@ interface JQuery {
 interface JQueryStatic {
   modal(elmt: any, options?: ModalOptions): Modal;
 }
+
+// yepnope (très simplifié)
+
+interface YepNopeOptions {
+  load: string[];
+  complete: () => void;
+}
+
+declare function yepnope(options: YepNopeOptions): void;
