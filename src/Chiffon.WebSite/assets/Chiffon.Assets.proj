@@ -66,7 +66,6 @@
 
   <!-- ### Directives privées ### -->
 
-  <!--
   <Target Name="_GetCssFiles" DependsOnTargets="GetSemVer">
     <PropertyGroup>
       <_CssScreenBundle>$(_CssDir)\chiffon-$(_SemVer).css</_CssScreenBundle>
@@ -119,7 +118,6 @@
       </_JsFiles>
     </ItemGroup>
   </Target>
-  -->
 
   <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
     <ItemGroup>

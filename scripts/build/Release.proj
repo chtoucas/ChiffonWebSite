@@ -33,9 +33,6 @@
       PackageTarget=$(PackageTarget);
       <!-- Configuration de MSBuild. -->
       DeployOnBuild=true;
-      <!-- On force la valeur de "VisualStudioVersion",
-           sinon MSBuild refuse de publier le projet. -->
-      VisualStudioVersion=11.0;
 
       <!-- Configuration commune à tous les profils. -->
       WebPublishMethod=FileSystem;

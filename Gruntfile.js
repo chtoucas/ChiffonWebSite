@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         , '03-chiffon.css'
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
-      , js: ['app.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
+      , js: ['jquery.plugins.js', 'app.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
     }
 
     , bundles: {
@@ -71,6 +71,7 @@ module.exports = function (grunt) {
         , chiffon: {
           src: [
             'jquery.plugins.js'
+            , 'jquery.modal.js'
             , 'vendor/l10n-2013.09.12.js'
             , 'localization.js'
             , 'chiffon.js'

@@ -1,4 +1,4 @@
-/*jshint laxcomma: true*/
+﻿/*jshint laxcomma: true*/
 /*jslint nomen:true, white: true, todo: true*/
 
 this.Chiffon = (function($) {

@@ -1,11 +1,6 @@
 ﻿
 /// <reference path="jquery/jquery.d.ts"/>
 
-interface WatermarkOptions {
-  wrapperStart?: string;
-  wrapperEnd?: string;
-}
-
 interface ModalOptions {
   clickClose?: boolean;
   closeText?: string;
@@ -25,9 +20,7 @@ interface Modal {
 }
 
 interface JQuery {
-  external(): any;
   modal(options?: ModalOptions): any;
-  watermark(watermark?: string, options?: WatermarkOptions): any;
 }
 
 interface JQueryStatic {

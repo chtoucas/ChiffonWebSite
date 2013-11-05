@@ -24,6 +24,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <WebGreaseLibPath>..\..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <TypeScriptTarget>ES3</TypeScriptTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -262,7 +263,7 @@
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\js\app.js" />
     <Content Include="assets\js\chiffon.js" />
-    <Content Include="assets\js\jquery.plugins.js" />
+    <Content Include="assets\js\jquery.modal.js" />
     <Content Include="assets\js\localization.js" />
     <Content Include="assets\js\vendor\jquery-1.10.2.min.js" />
     <Content Include="assets\js\vendor\jquery-2.0.3.min.js" />
@@ -376,6 +377,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="assets\js\chiffon\app.ts" />
+    <TypeScriptCompile Include="assets\js\jquery.plugins.ts" />
     <TypeScriptCompile Include="assets\js\chiffon\chiffon.ts" />
     <TypeScriptCompile Include="Scripts\typings\chiffon.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery.validation\jquery.validation.d.ts" />

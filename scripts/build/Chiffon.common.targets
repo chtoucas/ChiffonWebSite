@@ -37,7 +37,10 @@
       OutputPath=$(_OutDir);
       BaseIntermediateOutputPath=$(_BaseIntermediateOutDir);
       Platform=$(Platform);
-      BuildInParallel=$(BuildInParallel)
+      BuildInParallel=$(BuildInParallel);
+      <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refuse de publier le projet.
+           Cela est aussi nécessaire pour Typescript. -->
+      VisualStudioVersion=12.0
     </BuildProperties>
   </PropertyGroup>
 
