@@ -1,5 +1,7 @@
 ﻿/*global window: true, jQuery:true*/
 
+/// <reference path="../../Scripts/typings/jquery/jquery.d.ts"/>
+
 interface WatermarkOptions {
   wrapperStart?: string;
   wrapperEnd?: string;
