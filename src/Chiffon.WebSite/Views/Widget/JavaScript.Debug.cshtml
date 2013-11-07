@@ -1,15 +1,19 @@
-﻿@model CommonJavaScriptViewModel
+﻿@using Narvalo.Web.Html
 
-@Narvalo.Web.Html.AssetTag.JavaScript("vendor/yepnope-1.5.4.js")
-@Narvalo.Web.Html.AssetTag.JavaScript("vendor/lodash.compat-2.2.1.js")
-@Narvalo.Web.Html.AssetTag.JavaScript("app.js")
+@model CommonJavaScriptViewModel
 
 <script>
- (function(App) {
-  if (!App) { return; }
-  var options = { baseUrl: '@Model.ScriptBase', debug: true };
-  (new App(options)).main(@(Model.IsAuthenticated.ToString().ToLower()), '@Model.LanguageName', function(chiffon) {
-   chiffon.handle('@Model.ControllerName', '@Model.ActionName');
-  });
- })(this.App);
+  window.args = {
+    baseUrl: '@Model.ScriptBase'
+    , debug: true
+    , version: '@Model.Version'
+    , isAuth: @(Model.IsAuthenticated.ToString().ToLower())
+    , locale: '@Model.LanguageName'
+    , controller: '@Model.ControllerName'
+    , action: '@Model.ActionName'
+  };
 </script>
+
+@AssetTag.JavaScript("vendor/yepnope-1.5.4.js")
+@AssetTag.JavaScript("boot.resources.js")
+@AssetTag.JavaScript("boot.js")

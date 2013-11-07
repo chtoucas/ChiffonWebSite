@@ -9,13 +9,10 @@ this.App = (function(win, _, yepnope, undef) {
     baseUrl: undef
       , debug: false
       , version: undef
-  }
+    }
     // Langues prises en charge.
     , locales = ['fr', 'en']
-
-    , loadJS = function(/* options */) {
-      throw new Error('You can not use this method until the main() method has been called.');
-    };
+    ;
 
   return function(options) {
     var settings = _.defaults(options || {}, defaults);
@@ -51,7 +48,7 @@ this.App = (function(win, _, yepnope, undef) {
     };
 
     this.require = function(dependencies, onComplete) {
-      loadJS({
+      yepnope({
         load: dependencies
         , complete: onComplete
       });
@@ -79,8 +76,6 @@ this.App = (function(win, _, yepnope, undef) {
             , complete: function() {
               var Chiffon = win.Chiffon;
               if (undef === Chiffon) { return; }
-
-              loadJS = function(options) { yepnope(options); };
 
               var ctx = {
                 locale: locale

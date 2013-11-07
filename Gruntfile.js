@@ -1,7 +1,11 @@
 /*jshint laxcomma: true*/
 /*jslint white: true, todo: true*/
 
-module.exports = function (grunt) {
+//if (typeof exports !== 'undefined') {
+//  exports.BundlerFactory = BundlerFactory;
+//}
+
+module.exports = function(grunt) {
   'use strict';
 
   var config = {
@@ -39,7 +43,7 @@ module.exports = function (grunt) {
         , '03-chiffon.css'
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
-      , js: ['jquery.plugins.js', 'app.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
+      , js: ['jquery.plugins.js', 'boot.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
     }
 
     , bundles: {
@@ -59,20 +63,16 @@ module.exports = function (grunt) {
       // Groupes JavaScript.
       , js: {
         // Groupe JavaScript de démarrage.
-        app: {
-          src: [
-            'vendor/yepnope-1.5.4.js'
-            , 'vendor/lodash.compat-2.2.1.js'
-            , 'app.js'
-          ].map(mapJs)
-          , dest: mapJs('app-<%= version %>.min.js')
+        boot: {
+          src: ['vendor/yepnope-1.5.4.js', 'boot.js'].map(mapJs)
+          , dest: mapJs('boot-<%= version %>.min.js')
         }
         // Groupe JavaScript chargé en différé.
         , chiffon: {
           src: [
-            'jquery.plugins.js'
+            'vendor/l10n-2013.09.12.js'
+            , 'jquery.plugins.js'
             , 'jquery.modal.js'
-            , 'vendor/l10n-2013.09.12.js'
             , 'localization.js'
             , 'chiffon.js'
           ].map(mapJs)
@@ -139,13 +139,13 @@ module.exports = function (grunt) {
         compress: { unused: false }
         , mangle: true
       }
-      , app: {
+      , boot: {
         options: {
-          sourceMap: mapJs('app-<%= version %>.min.map')
-          , sourceMappingURL: 'app-<%= version %>.min.map'
+          sourceMap: mapJs('boot-<%= version %>.min.map')
+          , sourceMappingURL: 'boot-<%= version %>.min.map'
           , sourceMapPrefix: 8
         }
-        , files: { '<%= bundles.js.app.dest %>' : '<%= bundles.js.app.src %>' }
+        , files: { '<%= bundles.js.boot.dest %>' : '<%= bundles.js.boot.src %>' }
       }
       , chiffon: {
         options: {

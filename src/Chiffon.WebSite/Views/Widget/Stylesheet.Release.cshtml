@@ -1,5 +1,7 @@
-﻿@model CommonStylesheetViewModel
+﻿@using Narvalo.Web.Html
+
+@model CommonStylesheetViewModel
 
 <link href="//fonts.googleapis.com/css?family=Droid+Serif:400italic" rel=stylesheet />
-@Narvalo.Web.Html.AssetTag.Css("chiffon-" + Model.Version + ".min.css")
-@*@Narvalo.Web.Html.AssetTag.Css("print-" + Model.Version + ".min.css", "print")*@
+@AssetTag.Css("chiffon-" + Model.Version + ".min.css")
+@*@AssetTag.Css("print-" + Model.Version + ".min.css", "print")*@

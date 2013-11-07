@@ -9,4 +9,5 @@ obj/
 packages/
 tools/
 msbuild.log
+npm-debug.log
 Chiffon.sln.metaproj*
