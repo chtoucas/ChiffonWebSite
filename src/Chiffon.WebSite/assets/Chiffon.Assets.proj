@@ -11,36 +11,54 @@
     <_JsDir>$(MSBuildProjectDirectory)\js</_JsDir>
   </PropertyGroup>
 
-  <Target Name="DeepClean">
+  <Target Name="Clean">
     <ItemGroup>
-      <_FilesToRemove Include="$(_CssDir)\chiffon-*.css" />
-      <_FilesToRemove Include="$(_JsDir)\app-*.js" />
-      <_FilesToRemove Include="$(_JsDir)\app-*.map" />
-      <_FilesToRemove Include="$(_JsDir)\chiffon-*.js" />
-      <_FilesToRemove Include="$(_JsDir)\chiffon-*.map" />
+      <_FilesToRemove Include="$(_CssDir)\_*.css" />
+      <_FilesToRemove Include="$(_JsDir)\_*.js" />
+      <_FilesToRemove Include="$(_JsDir)\_*.map" />
+      <_FilesToRemove Include="$(_JsDir)\_*.d.ts" />
     </ItemGroup>
 
     <Delete Files="@(_FilesToRemove)" />
-  </Target>
-
-  <Target Name="Clean" DependsOnTargets="_GetCssFiles;_GetJsFiles">
-    <Delete Files="%(_CssFiles.Bundle)" />
-    <Delete Files="%(_JsFiles.Bundle)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
 
   <PropertyGroup>
     <BuildDependsOn>
-      <!--
-      MergeAndMinifyCss;
-      MergeAndMinifyJs;
-      -->
       _Publish
     </BuildDependsOn>
   </PropertyGroup>
 
+  <!-- ### Directives privées ### -->
+
+  <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
+    <ItemGroup>
+      <!-- On inclut tous les fichiers sauf le fichier de projet -->
+      <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
+                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
+                      $(MSBuildProjectDirectory)\**\.gitignore;
+                      $(MSBuildProjectDirectory)\bower_components;
+                      $(MSBuildProjectDirectory)\*.json" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_SourceFiles)"
+          DestinationFiles="@(_SourceFiles->'$(PublishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <!-- Validation des propriétés -->
+
+  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
+    <Error Text="The property 'PublishUrl' must be set." Condition="'$(PublishUrl)' == ''"/>
+  </Target>
+
   <!--
+
+  <Target Name="Clean" DependsOnTargets="_GetCssFiles;_GetJsFiles">
+    <Delete Files="%(_CssFiles.Bundle)" />
+    <Delete Files="%(_JsFiles.Bundle)" />
+  </Target>
+
   <Target Name="MergeAndMinifyCss"
           Inputs="@(_CssFiles->'$(_CssDir)\%(RelativeDir)%(Filename)%(Extension)')"
           Outputs="%(Bundle)"
@@ -61,31 +79,6 @@
     <ClosureCompiler JarPath="$(_GoogleClosureJar)" Files="%(_JsFiles.Bundle)"
                      CompilationLevel="Simple" ProcessTimeout="10000" />
   </Target>
-  -->
-
-
-  <!-- ### Directives privées ### -->
-
-  <Target Name="_GetCssFiles" DependsOnTargets="GetSemVer">
-    <PropertyGroup>
-      <_CssScreenBundle>$(_CssDir)\chiffon-$(_SemVer).css</_CssScreenBundle>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <_CssFiles Include="normalize-2.1.3.css">
-        <Bundle>$(_CssScreenBundle)</Bundle>
-      </_CssFiles>
-      <_CssFiles Include="01-chiffon.base.css">
-        <Bundle>$(_CssScreenBundle)</Bundle>
-      </_CssFiles>
-      <_CssFiles Include="02-chiffon.helpers.css">
-        <Bundle>$(_CssScreenBundle)</Bundle>
-      </_CssFiles>
-      <_CssFiles Include="03-chiffon.css">
-        <Bundle>$(_CssScreenBundle)</Bundle>
-      </_CssFiles>
-    </ItemGroup>
-  </Target>
 
   <Target Name="_GetJsFiles" DependsOnTargets="GetSemVer">
     <PropertyGroup>
@@ -95,9 +88,6 @@
 
     <ItemGroup>
       <_JsFiles Include="vendor\yepnope-1.5.4.js">
-        <Bundle>$(_JsAppBundle)</Bundle>
-      </_JsFiles>
-      <_JsFiles Include="vendor\lodash.compat-2.2.1.js">
         <Bundle>$(_JsAppBundle)</Bundle>
       </_JsFiles>
       <_JsFiles Include="app.js">
@@ -119,28 +109,27 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
+  <Target Name="_GetCssFiles" DependsOnTargets="GetSemVer">
+    <PropertyGroup>
+      <_CssScreenBundle>$(_CssDir)\_screen-$(_SemVer).css</_CssScreenBundle>
+    </PropertyGroup>
+
     <ItemGroup>
-      <!-- On inclut tous les fichiers sauf le fichier de projet -->
-      <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
-                    Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
-                      $(MSBuildProjectDirectory)\**\.gitignore;
-                      $(MSBuildProjectDirectory)\bower_components;
-                      $(MSBuildProjectDirectory)\*.json" />
+      <_CssFiles Include="normalize-2.1.3.css">
+        <Bundle>$(_CssScreenBundle)</Bundle>
+      </_CssFiles>
+      <_CssFiles Include="01-chiffon.base.css">
+        <Bundle>$(_CssScreenBundle)</Bundle>
+      </_CssFiles>
+      <_CssFiles Include="02-chiffon.helpers.css">
+        <Bundle>$(_CssScreenBundle)</Bundle>
+      </_CssFiles>
+      <_CssFiles Include="03-chiffon.css">
+        <Bundle>$(_CssScreenBundle)</Bundle>
+      </_CssFiles>
     </ItemGroup>
-
-    <Copy SourceFiles="@(_SourceFiles)"
-          DestinationFiles="@(_SourceFiles->'$(PublishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
-  <!-- Validation des propriétés -->
-
-  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
-    <Error Text="The property 'PublishUrl' must be set."
-           Condition="'$(PublishUrl)' == ''"/>
-  </Target>
-
-  <!--
   <Target Name="_BeforeMergeAndMinifyJs" BeforeTargets="MergeAndMinifyJs">
     <ClosureCompiler JarPath="$(GoogleClosureJar)" Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename)%(Extension)')" CompilationLevel="Simple" />
   </Target>
@@ -152,5 +141,4 @@
     <Delete Files="@(JsSources->'$(JsDirectory)\%(RelativeDir)%(Filename).min%(Extension)')" />
   </Target>
   -->
-
 </Project>

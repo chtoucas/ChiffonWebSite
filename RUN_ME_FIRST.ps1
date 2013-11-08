@@ -72,6 +72,7 @@ $modules = @(
   @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
 )
 $template = @"
+:: WARNING: Ne pas modifier ce fichier car il est généré automatiquement.
 @echo off
 
 "%~dp0\node.exe" "%~dp0\..\node_modules\{{command}}" %*

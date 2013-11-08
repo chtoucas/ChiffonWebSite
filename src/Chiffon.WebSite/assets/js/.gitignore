@@ -1,13 +1,3 @@
 bower_components/
-boot-*.js
-boot-*.min.js
-boot-*.min.map
-boot.*.js
-boot.*.min.js
-boot.*.min.map
-chiffon-*.js
-chiffon-*.min.js
-chiffon-*.min.map
-chiffon.*.js
-chiffon.*.min.js
-chiffon.*.min.map
+_*.js
+_*.map

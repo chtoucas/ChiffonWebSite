@@ -85,7 +85,7 @@
   </ItemGroup>
 
   <Target Name="Clean" DependsOnTargets="DeleteBuildDir">
-    <MSBuild Projects="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="DeepClean" />
+    <MSBuild Projects="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
   </Target>
 
   <Target Name="Build">

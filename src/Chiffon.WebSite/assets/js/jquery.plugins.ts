@@ -1,4 +1,6 @@
-﻿/*global window: true, jQuery:true*/
+﻿/*global jQuery*/
+
+// TODO: null vs undefined.
 
 /// <reference path="../../Scripts/typings/jquery/jquery.d.ts"/>
 
@@ -12,13 +14,13 @@ interface JQuery {
   watermark(watermark?: string, options?: WatermarkOptions): any;
 }
 
-((win: Window, $: JQueryStatic) => {
+(($: JQueryStatic) => {
   'use strict';
 
   $.fn.external = function() {
     return this.each(function() {
       $(this).click(function() {
-        win.open(this.href);
+        window.open(this.href);
         return false;
       });
     });
@@ -26,14 +28,14 @@ interface JQuery {
 
   $.fn.watermark = function(watermark?: string, options?: WatermarkOptions) {
     var settings: WatermarkOptions = $.extend({}, $.fn.watermark.defaults, options)
-      , getWatermak = null !== watermark
-      ? () => { return watermark; }
-      // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
-      : ($elmt: JQuery) => { return $elmt.data('watermark'); };
+      , get_watermak = null !== watermark
+        ? () => { return watermark; }
+        // Si aucun texte n'est fourni, on utilise la valeur de l'attribut 'data-watermark'.
+        : ($elmt: JQuery) => { return $elmt.data('watermark'); };
 
     return this.each(function() {
       var $this = $(this);
-      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
+      $this.append(settings.wrapperStart + get_watermak($this) + settings.wrapperEnd);
     });
   };
 
@@ -41,4 +43,4 @@ interface JQuery {
     wrapperStart: '<div class=watermark><span>'
     , wrapperEnd: '</span></div>'
   };
-})(this, jQuery);
+})(jQuery);

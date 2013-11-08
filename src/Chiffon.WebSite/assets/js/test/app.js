@@ -1,6 +1,4 @@
-﻿/*jshint laxcomma: true, laxbreak:true*/
-/*jslint nomen:true, white: true, todo: true*/
-
+﻿
 this.App = (function(win, _, yepnope, undef) {
   'use strict';
 

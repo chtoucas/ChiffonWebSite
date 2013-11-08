@@ -1,5 +1,5 @@
-/*jshint laxcomma: true*/
-/*jslint white: true, todo: true*/
+/*jshint node:true*/
+/*jslint node:true*/
 
 //if (typeof exports !== 'undefined') {
 //  exports.BundlerFactory = BundlerFactory;
@@ -9,7 +9,7 @@ module.exports = function(grunt) {
   'use strict';
 
   var config = {
-    projectDir: __dirname + '/src/Chiffon.WebSite/assets'
+    projectDir: './src/Chiffon.WebSite/assets'
     , reportsDir: __dirname + '/_work/reports'
   };
 
@@ -18,16 +18,16 @@ module.exports = function(grunt) {
   function mapLog(value) { return config.reportsDir + '/' + value; }
 
   function readSemVer() {
-    var parseString = require('xml2js').parseString
-      , version;
+    var semVer
+      , parseString = require('xml2js').parseString
+      , xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
 
-    var xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
     parseString(xml, function(err, result) {
       var versionNumber = result.VersionNumber;
-      version = versionNumber.Major + '.' + versionNumber.Minor + '.' + versionNumber.Build;
+      semVer = versionNumber.Major + '.' + versionNumber.Minor + '.' + versionNumber.Build;
     });
 
-    return version;
+    return semVer;
   }
 
   grunt.initConfig({
@@ -43,7 +43,19 @@ module.exports = function(grunt) {
         , '03-chiffon.css'
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
-      , js: ['jquery.plugins.js', 'boot.js', 'chiffon.js'].map(mapJs).concat('Gruntfile.js')
+      , js: [
+        'jquery.plugins.js'
+        , 'chiffon.es5.js'
+        , 'chiffon.boot.js'
+        , 'chiffon.localization.js'
+        , 'chiffon.js'
+      ].map(mapJs).concat('Gruntfile.js')
+      , jslint: [
+        'jquery.plugins.js'
+        , 'chiffon.boot.js'
+        , 'chiffon.localization.js'
+        , 'chiffon.js'
+      ].map(mapJs).concat('Gruntfile.js')
     }
 
     , bundles: {
@@ -57,26 +69,37 @@ module.exports = function(grunt) {
             , '02-chiffon.helpers.css'
             , '03-chiffon.css'
           ].map(mapCss)
-          , dest: mapCss('chiffon-<%= version %>.min.css')
+          , dest: mapCss('_screen-<%= version %>.css')
         }
       }
       // Groupes JavaScript.
       , js: {
         // Groupe JavaScript de démarrage.
-        boot: {
-          src: ['vendor/yepnope-1.5.4.js', 'boot.js'].map(mapJs)
-          , dest: mapJs('boot-<%= version %>.min.js')
+        chiffon_boot: {
+          src: ['vendor/yepnope-1.5.4.js', 'chiffon.es5.js', 'chiffon.boot.js'].map(mapJs)
+          , dest: mapJs('_boot-<%= version %>.js')
+          , srcmap: '_boot-<%= version %>.map'
+        }
+        // Groupe JavaScript des librairies externes.
+        , libraries_modern: {
+          src: ['vendor/jquery-2.0.3.min.js', 'vendor/lodash-2.2.1.min.js'].map(mapJs)
+          , dest: mapJs('_lib-<%= version %>.js')
+        }
+        , libraries_compat: {
+          src: ['vendor/jquery-1.10.2.min.js', 'vendor/lodash.compat-2.2.1.min.js'].map(mapJs)
+          , dest: mapJs('_lib.compat-<%= version %>.js')
         }
         // Groupe JavaScript chargé en différé.
-        , chiffon: {
+        , chiffon_core: {
           src: [
             'vendor/l10n-2013.09.12.js'
             , 'jquery.plugins.js'
             , 'jquery.modal.js'
-            , 'localization.js'
+            , 'chiffon.localization.js'
             , 'chiffon.js'
           ].map(mapJs)
-          , dest: mapJs('chiffon-<%= version %>.min.js')
+          , dest: mapJs('_core-<%= version %>.js')
+          , srcmap: '_core-<%= version %>.map'
         }
       }
     }
@@ -98,8 +121,8 @@ module.exports = function(grunt) {
     , cssmin: {
       chiffon: {
         options: {
-          banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */'
-          , keepSpecialComments: 0
+          //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */'
+          keepSpecialComments: 0
           , report: 'min'
         }
         , files: { '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>' }
@@ -107,15 +130,50 @@ module.exports = function(grunt) {
     }
 
     /*
-     * Analyse des fichiers JavaScript via JSLint.
+     * Analyse des fichiers JavaScript via JSHint.
      */
     , jshint: {
+      options: {
+        // Règles strictes.
+        bitwise: true             // À dséactiver si besoin est.
+        //, camelcase: true       // Ne peut pas la différence entre fonctions & variables "pures".
+        , curly: true
+        , eqeqeq: true
+        , es3: true
+        , forin: true
+        , freeze: true
+        , immed: true
+        //, indent: 2             // Incompatible avec laxcomma et laxbreak.
+        , latedef: true
+        //, maxcomplexity: true
+        , maxdepth: 2
+        //, maxlen:
+        , maxparams: 3
+        //, maxstatements: 10
+        , newcap: true
+        , noarg: true
+        , noempty: true
+        , nonew: true
+        //, plusplus: true
+        , quotmark: 'single'
+        , strict: true
+        , trailing: true
+        , undef: true
+        , unused: true
+
+        // Règles désactivées.
+        , laxcomma: true
+        , laxbreak:true
+
+        // Environnement
+        , browser:true
+      }
       // NB: Chaque fichier contient ses propres instructions d'analyse.
-      files: '<%= filesToLint.js %>'
+      , files: '<%= filesToLint.js %>'
     }
 
     /*
-     * Analyse des fichiers JavaScript via JSHint.
+     * Analyse des fichiers JavaScript via JSLint.
      */
     , jslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
@@ -125,7 +183,33 @@ module.exports = function(grunt) {
           , errorsOnly: true
           , failOnError: false
         }
-        , src: '<%= filesToLint.js %>'
+        , directives: {
+          nomen: true
+          , white: true
+          , todo: true
+          , plusplus: true
+          , browser: true
+        }
+        , src: '<%= filesToLint.jslint %>'
+      }
+    }
+
+    /*
+     * Fusion des fichiers JavaScript.
+     */
+    , concat: {
+      options: {
+        stripBanners: true
+        , block: true
+        , line: true
+      }
+      , libraries_modern: {
+        src: '<%= bundles.js.libraries_modern.src %>'
+        , dest: '<%= bundles.js.libraries_modern.dest %>'
+      }
+      , libraries_compat: {
+        src: '<%= bundles.js.libraries_compat.src %>'
+        , dest: '<%= bundles.js.libraries_compat.dest %>'
       }
     }
 
@@ -138,33 +222,39 @@ module.exports = function(grunt) {
         //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */\n'
         compress: { unused: false }
         , mangle: true
+        , sourceMapPrefix: 5
       }
-      , boot: {
+      , chiffon_boot: {
         options: {
-          sourceMap: mapJs('boot-<%= version %>.min.map')
-          , sourceMappingURL: 'boot-<%= version %>.min.map'
-          , sourceMapPrefix: 8
+          preserveComments: false
+          , sourceMap: mapJs('<%= bundles.js.chiffon_boot.srcmap %>')
+          , sourceMappingURL: '<%= bundles.js.chiffon_boot.srcmap %>'
         }
-        , files: { '<%= bundles.js.boot.dest %>' : '<%= bundles.js.boot.src %>' }
+        , files: {
+          '<%= bundles.js.chiffon_boot.dest %>' : '<%= bundles.js.chiffon_boot.src %>'
+        }
       }
-      , chiffon: {
+      , chiffon_core: {
         options: {
-          sourceMap: mapJs('chiffon-<%= version %>.min.map')
-          , sourceMappingURL: 'chiffon-<%= version %>.min.map'
-          , sourceMapPrefix: 8
+          preserveComments: false
+          , sourceMap: mapJs('<%= bundles.js.chiffon_core.srcmap %>')
+          , sourceMappingURL: '<%= bundles.js.chiffon_core.srcmap %>'
         }
-        , files: { '<%= bundles.js.chiffon.dest %>': '<%= bundles.js.chiffon.src %>' }
+        , files: {
+          '<%= bundles.js.chiffon_core.dest %>': '<%= bundles.js.chiffon_core.src %>'
+        }
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('analyze', ['jshint', 'jslint', 'csslint']);
-  grunt.registerTask('build', ['uglify', 'cssmin']);
+  grunt.registerTask('analyze', ['jshint', 'csslint']);
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['build']);
 };
