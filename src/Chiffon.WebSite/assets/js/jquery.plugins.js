@@ -29,4 +29,3 @@
         wrapperEnd: '</span></div>'
     };
 })(jQuery);
-//# sourceMappingURL=jquery.plugins.js.map

@@ -1,4 +1,5 @@
-﻿
+﻿// Messages adaptés à la langue en cours d'utilisation.
+
 String.toLocaleString({
   'fr': {
     '%ajax.loading': 'En cours'

@@ -1,10 +1,6 @@
 /*jshint node:true*/
 /*jslint node:true*/
 
-//if (typeof exports !== 'undefined') {
-//  exports.BundlerFactory = BundlerFactory;
-//}
-
 module.exports = function(grunt) {
   'use strict';
 
@@ -45,13 +41,6 @@ module.exports = function(grunt) {
       // Fichiers JavaScript à analyser.
       , js: [
         'jquery.plugins.js'
-        , 'chiffon.es5.js'
-        , 'chiffon.boot.js'
-        , 'chiffon.localization.js'
-        , 'chiffon.js'
-      ].map(mapJs).concat('Gruntfile.js')
-      , jslint: [
-        'jquery.plugins.js'
         , 'chiffon.boot.js'
         , 'chiffon.localization.js'
         , 'chiffon.js'
@@ -76,18 +65,14 @@ module.exports = function(grunt) {
       , js: {
         // Groupe JavaScript de démarrage.
         chiffon_boot: {
-          src: ['vendor/yepnope-1.5.4.js', 'chiffon.es5.js', 'chiffon.boot.js'].map(mapJs)
+          src: ['vendor/yepnope-1.5.4.js', 'chiffon.boot.js'].map(mapJs)
           , dest: mapJs('_boot-<%= version %>.js')
           , srcmap: '_boot-<%= version %>.map'
         }
         // Groupe JavaScript des librairies externes.
-        , libraries_modern: {
+        , libraries: {
           src: ['vendor/jquery-2.0.3.min.js', 'vendor/lodash-2.2.1.min.js'].map(mapJs)
           , dest: mapJs('_lib-<%= version %>.js')
-        }
-        , libraries_compat: {
-          src: ['vendor/jquery-1.10.2.min.js', 'vendor/lodash.compat-2.2.1.min.js'].map(mapJs)
-          , dest: mapJs('_lib.compat-<%= version %>.js')
         }
         // Groupe JavaScript chargé en différé.
         , chiffon_core: {
@@ -135,26 +120,26 @@ module.exports = function(grunt) {
     , jshint: {
       options: {
         // Règles strictes.
-        bitwise: true             // À dséactiver si besoin est.
-        //, camelcase: true       // Ne peut pas la différence entre fonctions & variables "pures".
+        bitwise: true             // À désactiver au cas par cas.
+        //, camelcase: true
         , curly: true
         , eqeqeq: true
         , es3: true
         , forin: true
         , freeze: true
         , immed: true
-        //, indent: 2             // Incompatible avec laxcomma et laxbreak.
+        //, indent: 2             // Incompatible avec laxcomma et laxbreak ?
         , latedef: true
         //, maxcomplexity: true
         , maxdepth: 2
-        //, maxlen:
-        , maxparams: 3
+        //, maxlen: 1000
+        , maxparams: 3            // À désactiver au cas par cas.
         //, maxstatements: 10
         , newcap: true
         , noarg: true
         , noempty: true
         , nonew: true
-        //, plusplus: true
+        //, plusplus: true        // Aucune raison de ne pas utiliser les opérateurs ++ et --.
         , quotmark: 'single'
         , strict: true
         , trailing: true
@@ -176,7 +161,6 @@ module.exports = function(grunt) {
      * Analyse des fichiers JavaScript via JSLint.
      */
     , jslint: {
-      // NB: Chaque fichier contient ses propres instructions d'analyse.
       chiffon: {
         options: {
           log: mapLog('jslint.log')
@@ -190,7 +174,7 @@ module.exports = function(grunt) {
           , plusplus: true
           , browser: true
         }
-        , src: '<%= filesToLint.jslint %>'
+        , src: '<%= filesToLint.js %>'
       }
     }
 
@@ -203,13 +187,9 @@ module.exports = function(grunt) {
         , block: true
         , line: true
       }
-      , libraries_modern: {
-        src: '<%= bundles.js.libraries_modern.src %>'
-        , dest: '<%= bundles.js.libraries_modern.dest %>'
-      }
-      , libraries_compat: {
-        src: '<%= bundles.js.libraries_compat.src %>'
-        , dest: '<%= bundles.js.libraries_compat.dest %>'
+      , libraries: {
+        src: '<%= bundles.js.libraries.src %>'
+        , dest: '<%= bundles.js.libraries.dest %>'
       }
     }
 
@@ -245,6 +225,28 @@ module.exports = function(grunt) {
         }
       }
     }
+  });
+
+  // Emprunté à https://github.com/david-driscoll/grunt-bom/
+  // Cf. https://github.com/zandroid/grunt-bom-removal/blob/master/tasks/bom.js
+  grunt.registerMultiTask('bom', 'byte order mark remove files.', function() {
+    var files = this.file.src;
+    files.map(function (filepath) {
+      if (!grunt.file.exists(filepath)) {
+        grunt.log.error('Source file "' + filepath + '" not found.');
+        return '';
+      }
+
+      var content = grunt.file.read(filepath);
+      if (/^\uFEFF/.test(content)) {
+        content = content.replace(/^\uFEFF/, '');
+        grunt.file.write(filepath, content);
+        grunt.log.writeln('File "' + filepath + '" rewritten.');
+      }
+    });
+
+    // Fail task if errors were logged.
+    if (this.errorCount) { return false; }
   });
 
   grunt.loadNpmTasks('grunt-jslint');
