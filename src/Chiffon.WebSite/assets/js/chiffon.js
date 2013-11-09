@@ -1,4 +1,4 @@
-﻿/*global _, jQuery*/
+/*global _, jQuery*/
 
 var Chiffon = (function($) {
   'use strict';

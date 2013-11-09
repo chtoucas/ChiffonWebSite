@@ -1,4 +1,4 @@
-﻿// Messages adaptés à la langue en cours d'utilisation.
+// Messages adaptés à la langue en cours d'utilisation.
 
 String.toLocaleString({
   'fr': {

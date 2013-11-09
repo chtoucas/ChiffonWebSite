@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 
     , version: readSemVer()
 
-    , filesToLint: {
+    , sources: {
       // Fichiers CSS à analyser.
       css: [
         '01-chiffon.base.css'
@@ -89,6 +89,11 @@ module.exports = function(grunt) {
       }
     }
 
+    , bom: {
+      js: { src: '<%= sources.js %>' }
+      , css: { src: '<%= sources.css %>' }
+    }
+
     /*
      * Analyse des fichiers CSS via CSSLint.
      */
@@ -96,7 +101,7 @@ module.exports = function(grunt) {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       chiffon: {
         options: { formatters: [ {id: 'text', dest: mapLog('csslint.log')} ] }
-        , src: '<%= filesToLint.css %>'
+        , src: '<%= sources.css %>'
       }
     }
 
@@ -154,7 +159,7 @@ module.exports = function(grunt) {
         , browser:true
       }
       // NB: Chaque fichier contient ses propres instructions d'analyse.
-      , files: '<%= filesToLint.js %>'
+      , files: '<%= sources.js %>'
     }
 
     /*
@@ -174,7 +179,7 @@ module.exports = function(grunt) {
           , plusplus: true
           , browser: true
         }
-        , src: '<%= filesToLint.js %>'
+        , src: '<%= sources.js %>'
       }
     }
 
@@ -230,19 +235,25 @@ module.exports = function(grunt) {
   // Emprunté à https://github.com/david-driscoll/grunt-bom/
   // Cf. https://github.com/zandroid/grunt-bom-removal/blob/master/tasks/bom.js
   grunt.registerMultiTask('bom', 'byte order mark remove files.', function() {
-    var files = this.file.src;
-    files.map(function (filepath) {
+    this.filesSrc.forEach(function(filepath) {
       if (!grunt.file.exists(filepath)) {
         grunt.log.error('Source file "' + filepath + '" not found.');
-        return '';
+        return false;
       }
 
-      var content = grunt.file.read(filepath);
+      var buf = grunt.file.read(filepath, { encoding: null });
+      if (buf[0] === 0xEF && buf[1] === 0xBB && buf[2] === 0xBF) {
+        buf = buf.slice(3);
+        grunt.file.write(filepath, buf);
+        grunt.log.writeln('File "' + filepath + '" rewritten.');
+      }
+
+      /* var content = grunt.file.read(filepath);
       if (/^\uFEFF/.test(content)) {
         content = content.replace(/^\uFEFF/, '');
         grunt.file.write(filepath, content);
         grunt.log.writeln('File "' + filepath + '" rewritten.');
-      }
+      } */
     });
 
     // Fail task if errors were logged.
@@ -257,6 +268,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('analyze', ['jshint', 'csslint']);
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('build', ['bom', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['analyze', 'build']);
 };
