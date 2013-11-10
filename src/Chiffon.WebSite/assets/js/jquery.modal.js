@@ -138,5 +138,5 @@
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
   $(document).on('click.modal', 'a[rel="modal:close"]', $.modal.close);
-})(this.jQuery);
+})(jQuery);
 

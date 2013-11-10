@@ -1,5 +1,5 @@
 ﻿
-/// <reference path="jquery/jquery.d.ts"/>
+/// <reference path="../../../Scripts/typings/jquery/jquery.d.ts"/>
 
 // jquery.modal
 
@@ -22,9 +22,9 @@ interface JQueryModal {
 }
 
 interface JQuery {
-  modal(options?: ModalOptions): any;
+  modal(options?: JQueryModalOptions): any;
 }
 
 interface JQueryStatic {
-  modal(elmt: any, options?: ModalOptions): Modal;
+  modal(elmt: any, options?: JQueryModalOptions): JQueryModal;
 }

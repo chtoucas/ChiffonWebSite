@@ -1,4 +1,4 @@
-/*jshint node:true*/
+/*jshint node:true, indent:false*/
 /*jslint node:true*/
 
 module.exports = function(grunt) {
@@ -14,9 +14,9 @@ module.exports = function(grunt) {
   function mapLog(value) { return config.reportsDir + '/' + value; }
 
   function readSemVer() {
-    var semVer
-      , parseString = require('xml2js').parseString
-      , xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
+    var semVer;
+    var parseString = require('xml2js').parseString;
+    var xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
 
     parseString(xml, function(err, result) {
       var versionNumber = result.VersionNumber;
@@ -40,10 +40,10 @@ module.exports = function(grunt) {
       ].map(mapCss)
       // Fichiers JavaScript à analyser.
       , js: [
-        'jquery.plugins.js'
-        , 'chiffon.boot.js'
+        'chiffon.jquery.js'
+        , 'chiffon.main.js'
         , 'chiffon.localization.js'
-        , 'chiffon.js'
+        , 'chiffon.core.js'
       ].map(mapJs).concat('Gruntfile.js')
     }
 
@@ -64,10 +64,10 @@ module.exports = function(grunt) {
       // Groupes JavaScript.
       , js: {
         // Groupe JavaScript de démarrage.
-        chiffon_boot: {
-          src: ['vendor/yepnope-1.5.4.js', 'chiffon.boot.js'].map(mapJs)
-          , dest: mapJs('_boot-<%= version %>.js')
-          , srcmap: '_boot-<%= version %>.map'
+        chiffon_main: {
+          src: ['vendor/yepnope-1.5.4.js', 'chiffon.main.js'].map(mapJs)
+          , dest: mapJs('_main-<%= version %>.js')
+          , srcmap: '_main-<%= version %>.map'
         }
         // Groupe JavaScript des librairies externes.
         , libraries: {
@@ -78,10 +78,10 @@ module.exports = function(grunt) {
         , chiffon_core: {
           src: [
             'vendor/l10n-2013.09.12.js'
-            , 'jquery.plugins.js'
             , 'jquery.modal.js'
+            , 'chiffon.jquery.js'
             , 'chiffon.localization.js'
-            , 'chiffon.js'
+            , 'chiffon.core.js'
           ].map(mapJs)
           , dest: mapJs('_core-<%= version %>.js')
           , srcmap: '_core-<%= version %>.map'
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
       }
     }
 
-    , bom: {
+    , nobom: {
       js: { src: '<%= sources.js %>' }
       , css: { src: '<%= sources.css %>' }
     }
@@ -125,7 +125,7 @@ module.exports = function(grunt) {
     , jshint: {
       options: {
         // Règles strictes.
-        bitwise: true             // À désactiver au cas par cas.
+        bitwise: true             // Peut être désactivé localement.
         //, camelcase: true
         , curly: true
         , eqeqeq: true
@@ -133,12 +133,12 @@ module.exports = function(grunt) {
         , forin: true
         , freeze: true
         , immed: true
-        //, indent: 2             // Incompatible avec laxcomma et laxbreak ?
+        , indent: 2             // Incompatible avec laxcomma et laxbreak ?
         , latedef: true
         //, maxcomplexity: true
         , maxdepth: 2
         //, maxlen: 1000
-        , maxparams: 3            // À désactiver au cas par cas.
+        , maxparams: 3            // Peut être désactivé localement.
         //, maxstatements: 10
         , newcap: true
         , noarg: true
@@ -156,7 +156,7 @@ module.exports = function(grunt) {
         , laxbreak:true
 
         // Environnement
-        , browser:true
+        //, browser:true
       }
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       , files: '<%= sources.js %>'
@@ -165,7 +165,7 @@ module.exports = function(grunt) {
     /*
      * Analyse des fichiers JavaScript via JSLint.
      */
-    , jslint: {
+    /* , jslint: {
       chiffon: {
         options: {
           log: mapLog('jslint.log')
@@ -181,7 +181,7 @@ module.exports = function(grunt) {
         }
         , src: '<%= sources.js %>'
       }
-    }
+    } */
 
     /*
      * Fusion des fichiers JavaScript.
@@ -205,18 +205,19 @@ module.exports = function(grunt) {
       options: {
         // TODO: On ne peut pas combiner les options banner et minification.
         //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */\n'
-        compress: { unused: false }
+        // TODO: Vérifier les options.
+        compress: { unused: true }
         , mangle: true
         , sourceMapPrefix: 5
       }
-      , chiffon_boot: {
+      , chiffon_main: {
         options: {
           preserveComments: false
-          , sourceMap: mapJs('<%= bundles.js.chiffon_boot.srcmap %>')
-          , sourceMappingURL: '<%= bundles.js.chiffon_boot.srcmap %>'
+          , sourceMap: mapJs('<%= bundles.js.chiffon_main.srcmap %>')
+          , sourceMappingURL: '<%= bundles.js.chiffon_main.srcmap %>'
         }
         , files: {
-          '<%= bundles.js.chiffon_boot.dest %>' : '<%= bundles.js.chiffon_boot.src %>'
+          '<%= bundles.js.chiffon_main.dest %>' : '<%= bundles.js.chiffon_main.src %>'
         }
       }
       , chiffon_core: {
@@ -234,11 +235,11 @@ module.exports = function(grunt) {
 
   // Emprunté à https://github.com/david-driscoll/grunt-bom/
   // Cf. https://github.com/zandroid/grunt-bom-removal/blob/master/tasks/bom.js
-  grunt.registerMultiTask('bom', 'byte order mark remove files.', function() {
+  grunt.registerMultiTask('nobom', 'byte order mark remove files.', function() {
     this.filesSrc.forEach(function(filepath) {
       if (!grunt.file.exists(filepath)) {
         grunt.log.error('Source file "' + filepath + '" not found.');
-        return false;
+        return;
       }
 
       var buf = grunt.file.read(filepath, { encoding: null });
@@ -256,7 +257,6 @@ module.exports = function(grunt) {
       } */
     });
 
-    // Fail task if errors were logged.
     if (this.errorCount) { return false; }
   });
 
@@ -267,7 +267,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('analyze', ['jshint', 'csslint']);
-  grunt.registerTask('build', ['bom', 'concat', 'uglify', 'cssmin']);
-  grunt.registerTask('default', ['analyze', 'build']);
+  grunt.registerTask('lint', ['jshint', 'csslint']);
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['lint', 'build']);
 };

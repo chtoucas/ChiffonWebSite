@@ -1,4 +1,4 @@
-/*global _, jQuery*/
+﻿/*global window, _, jQuery*/
 
 var Chiffon = (function($) {
   'use strict';
@@ -11,9 +11,9 @@ var Chiffon = (function($) {
   // Configuration globale du comportement des appels Ajax via jQuery.
   function setupAjax(timeout) {
     $.ajaxSetup({
-      timeout: timeout
-      , async: true
-      , cache: true
+      timeout: timeout,
+      async: true,
+      cache: true
     });
   }
 
@@ -24,9 +24,9 @@ var Chiffon = (function($) {
   Chiffon.prototype = {
     handleCore: function(/* controllerName, actionName, params */) {
       throw new Error('You must override the "handleCore" method.');
-    }
+    },
 
-    , handle: function(controllerName, actionName, params) {
+    handle: function(controllerName, actionName, params) {
       setupAjax(defaults.ajaxTimeout);
 
       this.handleCore(controllerName, actionName, params);
@@ -35,13 +35,13 @@ var Chiffon = (function($) {
 
   return Chiffon;
 
-}(jQuery));
+})(jQuery);
 
-/*jshint -W072 */
-Chiffon.Views = (function(window, document, location, $, undef) {
-/*jshint +W072 */
+Chiffon.Views = (function(window, $, undef) {
   'use strict';
 
+  var document = window.document;
+  var location = window.location;
   var Views = {};
 
   // L10N
@@ -51,15 +51,15 @@ Chiffon.Views = (function(window, document, location, $, undef) {
 
   // Chargement de jQuery.validate puis exécution d'un callback.
   function initializeValidation(context, fn) {
-    context.require(context.resources.jQueryValidate, function() {
+    context.require(context.resources.validation, function() {
       var $errContainer = $('#error_container');
 
       $.validator.setDefaults({
-        hightlight: function(elmt) { $(elmt).addClass('error'); }
-        , unhightlight: function(elmt) { $(elmt).removeClass('error'); }
-        , errorContainer: $errContainer
-        , errorLabelContainer: $errContainer
-        , invalidHandler: function() { $errContainer.fadeIn(); }
+        hightlight: function(elmt) { $(elmt).addClass('error'); },
+        unhightlight: function(elmt) { $(elmt).removeClass('error'); },
+        errorContainer: $errContainer,
+        errorLabelContainer: $errContainer,
+        invalidHandler: function() { $errContainer.fadeIn(); }
       });
 
       if (undef !== fn) { fn(); }
@@ -80,12 +80,12 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     Layout.prototype = {
-      initialize: function() {
+      init: function() {
         // On ouvre les liens externes dans une nouvelle fenêtre.
         $('A[rel=external]').external();
 
         // Pour les visiteurs anonymes uniquement, on active les modales.
-        if (this.context.user.isAnonymous) {
+        if (this.context.isAnonymous) {
           // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
           $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
             e.preventDefault();
@@ -101,7 +101,7 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     };
 
     return Layout;
-  }());
+  })();
 
   Views.DesignerLayout = (function() {
     function DesignerLayout(context) {
@@ -110,14 +110,14 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     DesignerLayout.prototype = {
-      initialize: function() {
-        this.layoutView.initialize();
+      init: function() {
+        this.layoutView.init();
         Views.StickyInfo();
       }
     };
 
     return DesignerLayout;
-  }());
+  })();
 
   function DefaultView(context) {
     BaseView.apply(this, arguments);
@@ -125,8 +125,8 @@ Chiffon.Views = (function(window, document, location, $, undef) {
   }
 
   DefaultView.prototype = {
-    initialize: function() {
-      this.layoutView.initialize();
+    init: function() {
+      this.layoutView.init();
     }
   };
 
@@ -136,8 +136,8 @@ Chiffon.Views = (function(window, document, location, $, undef) {
   }
 
   DesignerView.prototype = {
-    initialize: function() {
-      this.layoutView.initialize();
+    init: function() {
+      this.layoutView.init();
     }
   };
 
@@ -149,15 +149,15 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     HomeIndex.prototype = {
-      initialize: function() {
-        DefaultView.prototype.initialize.call(this);
+      init: function() {
+        DefaultView.prototype.init.call(this);
 
         $('.vignette').watermark(l('%preview.watermark'));
       }
     };
 
     return HomeIndex;
-  }());
+  })();
 
   /* Pages Contact */
 
@@ -167,20 +167,20 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     AccountLogin.prototype = {
-      initialize: function() {
-        DefaultView.prototype.initialize.call(this);
+      init: function() {
+        DefaultView.prototype.init.call(this);
 
         initializeValidation(this.context, function() {
           $('#login_form').validate({
-            messages: { token: l('%login.password_required') }
-            , rules: { token: { required: true, minlength: 10 } }
+            messages: { token: l('%login.password_required') },
+            rules: { token: { required: true, minlength: 10 } }
           });
         });
       }
     };
 
     return AccountLogin;
-  }());
+  })();
 
   Views.AccountRegister = (function() {
     function AccountRegister() {
@@ -188,8 +188,8 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     AccountRegister.prototype = {
-      initialize: function() {
-        DefaultView.prototype.initialize.call(this);
+      init: function() {
+        DefaultView.prototype.init.call(this);
 
         var $form = $('#register_form');
 
@@ -197,19 +197,19 @@ Chiffon.Views = (function(window, document, location, $, undef) {
           $form.validate({
             // NB: On ne veut pas de message d'erreur par "input".
             // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
-            errorPlacement: $.noop
-            , messages: {
-              Lastname: ''
-              , Firstname: ''
-              , CompanyName: ''
-              , EmailAddress: ''
-            }
-            , rules: {
-              Lastname: { required: true, minlength: 2, maxlength: 50 }
-              , Firstname: { required: true, minlength: 2, maxlength: 50 }
-              , CompanyName: { required: true, minlength: 2, maxlength: 100 }
-              , EmailAddress: { required: true, minlength: 5, maxlength: 200 }
-              , Message: { maxlength: 4000 }
+            errorPlacement: $.noop,
+            messages: {
+              Lastname: '',
+              Firstname: '',
+              CompanyName: '',
+              EmailAddress: ''
+            },
+            rules: {
+              Lastname: { required: true, minlength: 2, maxlength: 50 },
+              Firstname: { required: true, minlength: 2, maxlength: 50 },
+              CompanyName: { required: true, minlength: 2, maxlength: 100 },
+              EmailAddress: { required: true, minlength: 5, maxlength: 200 },
+              Message: { maxlength: 4000 }
             }
           });
         });
@@ -217,7 +217,7 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     };
 
     return AccountRegister;
-  }());
+  })();
 
   /* Pages Designer */
 
@@ -227,8 +227,8 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     }
 
     DesignerPattern.prototype = {
-      initialize: function() {
-        DesignerView.prototype.initialize.call(this);
+      init: function() {
+        DesignerView.prototype.init.call(this);
 
         // NB: location.hash contient le caractère '#'.
         Views.ViewNavigator({ currentSel: location.hash });
@@ -236,40 +236,40 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     };
 
     return DesignerPattern;
-  }());
+  })();
 
   /* Composants communs */
 
   // Navigation entre les vues d'un même motif.
   Views.ViewNavigator = (function() {
-    var settings
-      , defaults = {
-        viewsSel: '.pattern'
-        , navSel: '#nav_views'
-        , currentSel: undef
-      }
+    var settings;
+    var defaults = {
+      viewsSel: '.pattern',
+      navSel: '#nav_views',
+      currentSel: undef
+    };
 
-      // Liste des vues.
-      , $views
-      // Lien 'Précédent'.
-      , $prev
-      // Lien 'Précédent' désactivé.
-      , $prev_noop
-      // Lien 'Suivant'.
-      , $next
-      // Lien 'Suivant' désactivé.
-      , $next_noop
-      // Conteneur HTML de la position courante.
-      , $pos
+    // Liste des vues.
+    var $views;
+    // Lien 'Précédent'.
+    var $prev;
+    // Lien 'Précédent' désactivé.
+    var $prev_noop;
+    // Lien 'Suivant'.
+    var $next;
+    // Lien 'Suivant' désactivé.
+    var $next_noop;
+    // Conteneur HTML de la position courante.
+    var $pos;
 
-      // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
-      , pos = 1
-      // Nombre de vues.
-      , length
-      // Liste des sélecteurs de vue.
-      // Pour ne pas avoir à jongler entre index et position, on initialise la liste
-      // avec un élément factice en début de tableau.
-      , selectors = [undef];
+    // Numéro de la vue courante. NB: On démarre à 1, ce qui semble plus naturel.
+    var pos = 1;
+    // Nombre de vues.
+    var length;
+    // Liste des sélecteurs de vue.
+    // Pour ne pas avoir à jongler entre index et position, on initialise la liste
+    // avec un élément factice en début de tableau.
+    var selectors = [undef];
 
     /* Actions sur l'objet $views */
 
@@ -420,10 +420,10 @@ Chiffon.Views = (function(window, document, location, $, undef) {
       });
     }
 
-    function initialize() {
-      var $nav
-        , currentSel
-        , callback;
+    function init() {
+      var $nav;
+      var currentSel;
+      var callback;
 
       $views = $(settings.viewsSel);
       length = $views.length;
@@ -461,7 +461,7 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     return function(options) {
       settings = _.defaults(options || {}, defaults);
 
-      initialize();
+      init();
 
       if (length <= 1) { return; }
 
@@ -470,36 +470,36 @@ Chiffon.Views = (function(window, document, location, $, undef) {
       }
       setupLinkHandlers();
     };
-  }());
+  })();
 
   // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
   Views.StickyInfo = (function() {
     // Configuration par défaut.
-    var settings
-      , defaults = {
-        infoSel: '#info'
-        , designerSel: '#designer'
-      }
+    var settings;
+    var defaults = {
+      infoSel: '#info',
+      designerSel: '#designer'
+    };
 
-      , $info
-      , $designer
+    var $info;
+    var $designer;
 
-      // Géométrie du bloc #info.
-      , info_h
-      , info_w
-      , info_top
-      , info_left
+    // Géométrie du bloc #info.
+    var info_h;
+    var info_w;
+    var info_top;
+    var info_left;
 
-      // Géométrie du bloc #designer.
-      , designer_w
+    // Géométrie du bloc #designer.
+    var designer_w;
 
-      // Géométrie de la fenêtre.
-      , window_h;
+    // Géométrie de la fenêtre.
+    var window_h;
 
     function handleScrollEventForMediumBlock() {
-      var scroll_limit
-        , sticky_class = 'sticky top'
-        , is_sticky = false;
+      var scroll_limit;
+      var sticky_class = 'sticky top';
+      var is_sticky = false;
 
       function stick() {
         if (is_sticky) { return; }
@@ -550,7 +550,7 @@ Chiffon.Views = (function(window, document, location, $, undef) {
       handleScrollEventForMediumBlock();
     }
 
-    function initialize() {
+    function init() {
       var info_offset;
 
       $info = $(settings.infoSel);
@@ -570,7 +570,7 @@ Chiffon.Views = (function(window, document, location, $, undef) {
     return function(options) {
       settings = _.defaults(options || {}, defaults);
 
-      initialize();
+      init();
 
       if (window_h >= info_h + info_top) {
         setupSmallBlock();
@@ -585,11 +585,11 @@ Chiffon.Views = (function(window, document, location, $, undef) {
 
       handleResizeEvent();
     };
-  }());
+  })();
 
   return Views;
 
-}(window, document, location, jQuery));
+})(window, jQuery);
 
 Chiffon.Controllers = (function($, Views) {
   'use strict';
@@ -608,9 +608,9 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   AccountController.prototype = extend({
-    login: function() { (new Views.AccountLogin(this.context)).initialize(); }
-    , newsletter: function() { (new Views.Layout(this.context)).initialize(); }
-    , register: function() { (new Views.AccountRegister(this.context)).initialize(); }
+    login: function() { (new Views.AccountLogin(this.context)).init(); },
+    newsletter: function() { (new Views.Layout(this.context)).init(); },
+    register: function() { (new Views.AccountRegister(this.context)).init(); }
   });
 
   /* DesignerController */
@@ -620,9 +620,9 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   DesignerController.prototype = extend({
-    index: function() { (new Views.DesignerLayout(this.context)).initialize(); }
-    , category: function() { (new Views.DesignerLayout(this.context)).initialize(); }
-    , pattern: function() { (new Views.DesignerPattern(this.context)).initialize(); }
+    index: function() { (new Views.DesignerLayout(this.context)).init(); },
+    category: function() { (new Views.DesignerLayout(this.context)).init(); },
+    pattern: function() { (new Views.DesignerPattern(this.context)).init(); }
   });
 
   /* HomeController */
@@ -632,15 +632,15 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   HomeController.prototype = extend({
-    about: function() { (new Views.Layout(this.context)).initialize(); }
-    , contact: function() { (new Views.Layout(this.context)).initialize(); }
-    , index: function() { (new Views.HomeIndex(this.context)).initialize(); }
+    about: function() { (new Views.Layout(this.context)).init(); },
+    contact: function() { (new Views.Layout(this.context)).init(); },
+    index: function() { (new Views.HomeIndex(this.context)).init(); }
   });
 
   return {
-    Account: AccountController
-    , Designer: DesignerController
-    , Home: HomeController
+    Account: AccountController,
+    Designer: DesignerController,
+    Home: HomeController
   };
 
 }(jQuery, Chiffon.Views));
@@ -650,10 +650,10 @@ Chiffon.prototype.handleCore = (function(Controllers) {
 
   return function(controllerName, actionName, params) {
     if (Controllers.hasOwnProperty(controllerName)) {
-      var controller
-        , ControllerClass = Controllers[controllerName]
-        , controllerPrototype = ControllerClass.prototype
-        , actionMethod = actionName.toLowerCase();
+      var controller;
+      var ControllerClass = Controllers[controllerName];
+      var controllerPrototype = ControllerClass.prototype;
+      var actionMethod = actionName.toLowerCase();
 
       if (controllerPrototype.hasOwnProperty(actionMethod)) {
         controller = new ControllerClass(this.context);
@@ -662,4 +662,4 @@ Chiffon.prototype.handleCore = (function(Controllers) {
     }
   };
 
-}(Chiffon.Controllers));
+})(Chiffon.Controllers);
