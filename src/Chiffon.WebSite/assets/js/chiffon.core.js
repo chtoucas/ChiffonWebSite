@@ -1,6 +1,6 @@
-﻿/*global window, _, jQuery*/
+﻿/*global Chiffon, _, jQuery*/
 
-var Chiffon = (function($) {
+(function($, Chiffon) {
   'use strict';
 
   // Configuration par défaut.
@@ -8,240 +8,64 @@ var Chiffon = (function($) {
     ajaxTimeout: 3000
   };
 
-  // Configuration globale du comportement des appels Ajax via jQuery.
-  function setupAjax(timeout) {
-    $.ajaxSetup({
-      timeout: timeout,
-      async: true,
-      cache: true
-    });
-  }
-
-  function Chiffon(context) {
-    this.context = context;
+  function trace(controllerName, actionName) {
+    if (DEBUG) {
+      console.log('The requested action "' + controllerName + '.' + actionName + '" does not exist.');
+    }
   }
 
   Chiffon.prototype = {
-    handleCore: function(/* controllerName, actionName, params */) {
-      throw new Error('You must override the "handleCore" method.');
+    init: function(options) {
+      var settings = _.defaults(options || {}, defaults);
+
+      // Configuration de L10N.
+      String.locale = this.context.locale;
+
+      // Configuration globale du comportement des appels Ajax via jQuery.
+      $.ajaxSetup({
+        timeout: settings.ajaxTimeout,
+        async: true,
+        cache: true
+      });
+
+      return this;
     },
 
     handle: function(controllerName, actionName, params) {
-      setupAjax(defaults.ajaxTimeout);
+      var Controllers = Chiffon.Controllers;
+      if (!Controllers.hasOwnProperty(controllerName)) {
+        trace(controllerName, actionName);
+        return;
+      }
 
-      this.handleCore(controllerName, actionName, params);
+      var controller;
+      var ControllerClass = Controllers[controllerName];
+      var controllerPrototype = ControllerClass.prototype;
+
+      if (!controllerPrototype.hasOwnProperty(actionName)) {
+        trace(controllerName, actionName);
+        return;
+      }
+
+      controller = new ControllerClass(this.context);
+      controllerPrototype[actionName].apply(controller, params);
+
+      return;
     }
   };
 
-  return Chiffon;
+})(jQuery, Chiffon);
 
-})(jQuery);
-
-Chiffon.Views = (function(window, $, undef) {
+// Composants communs.
+/*jshint -W074*/
+Chiffon.Components = (function(window, $, undef) {
   'use strict';
 
-  var document = window.document;
-  var location = window.location;
-  var Views = {};
-
-  // L10N
-  function l(string) {
-    return string.toLocaleString();
-  }
-
-  // Chargement de jQuery.validate puis exécution d'un callback.
-  function initializeValidation(context, fn) {
-    context.require(context.resources.validation, function() {
-      var $errContainer = $('#error_container');
-
-      $.validator.setDefaults({
-        hightlight: function(elmt) { $(elmt).addClass('error'); },
-        unhightlight: function(elmt) { $(elmt).removeClass('error'); },
-        errorContainer: $errContainer,
-        errorLabelContainer: $errContainer,
-        invalidHandler: function() { $errContainer.fadeIn(); }
-      });
-
-      if (undef !== fn) { fn(); }
-    });
-  }
-
-  /* BaseView */
-
-  function BaseView(context) {
-    this.context = context;
-  }
-
-  /* Layouts */
-
-  Views.Layout = (function() {
-    function Layout() {
-      BaseView.apply(this, arguments);
-    }
-
-    Layout.prototype = {
-      init: function() {
-        // On ouvre les liens externes dans une nouvelle fenêtre.
-        $('A[rel=external]').external();
-
-        // Pour les visiteurs anonymes uniquement, on active les modales.
-        if (this.context.isAnonymous) {
-          // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
-          $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
-            e.preventDefault();
-
-            $(this).modal({ closeText: l('%modal.close') });
-          });
-        } /* else {
-          // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
-          //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
-          //  .appendTo('body').modal({ closeText: l('%modal.close') });
-        } */
-      }
-    };
-
-    return Layout;
-  })();
-
-  Views.DesignerLayout = (function() {
-    function DesignerLayout(context) {
-      BaseView.apply(this, arguments);
-      this.layoutView = new Views.Layout(context);
-    }
-
-    DesignerLayout.prototype = {
-      init: function() {
-        this.layoutView.init();
-        Views.StickyInfo();
-      }
-    };
-
-    return DesignerLayout;
-  })();
-
-  function DefaultView(context) {
-    BaseView.apply(this, arguments);
-    this.layoutView = new Views.Layout(context);
-  }
-
-  DefaultView.prototype = {
-    init: function() {
-      this.layoutView.init();
-    }
-  };
-
-  function DesignerView(context) {
-    BaseView.apply(this, arguments);
-    this.layoutView = new Views.DesignerLayout(context);
-  }
-
-  DesignerView.prototype = {
-    init: function() {
-      this.layoutView.init();
-    }
-  };
-
-  /* Pages Home */
-
-  Views.HomeIndex = (function() {
-    function HomeIndex() {
-      DefaultView.apply(this, arguments);
-    }
-
-    HomeIndex.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        $('.vignette').watermark(l('%preview.watermark'));
-      }
-    };
-
-    return HomeIndex;
-  })();
-
-  /* Pages Contact */
-
-  Views.AccountLogin = (function() {
-    function AccountLogin() {
-      DefaultView.apply(this, arguments);
-    }
-
-    AccountLogin.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        initializeValidation(this.context, function() {
-          $('#login_form').validate({
-            messages: { token: l('%login.password_required') },
-            rules: { token: { required: true, minlength: 10 } }
-          });
-        });
-      }
-    };
-
-    return AccountLogin;
-  })();
-
-  Views.AccountRegister = (function() {
-    function AccountRegister() {
-      DefaultView.apply(this, arguments);
-    }
-
-    AccountRegister.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        var $form = $('#register_form');
-
-        initializeValidation(this.context, function() {
-          $form.validate({
-            // NB: On ne veut pas de message d'erreur par "input".
-            // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
-            errorPlacement: $.noop,
-            messages: {
-              Lastname: '',
-              Firstname: '',
-              CompanyName: '',
-              EmailAddress: ''
-            },
-            rules: {
-              Lastname: { required: true, minlength: 2, maxlength: 50 },
-              Firstname: { required: true, minlength: 2, maxlength: 50 },
-              CompanyName: { required: true, minlength: 2, maxlength: 100 },
-              EmailAddress: { required: true, minlength: 5, maxlength: 200 },
-              Message: { maxlength: 4000 }
-            }
-          });
-        });
-      }
-    };
-
-    return AccountRegister;
-  })();
-
-  /* Pages Designer */
-
-  Views.DesignerPattern = (function() {
-    function DesignerPattern() {
-      DesignerView.apply(this, arguments);
-    }
-
-    DesignerPattern.prototype = {
-      init: function() {
-        DesignerView.prototype.init.call(this);
-
-        // NB: location.hash contient le caractère '#'.
-        Views.ViewNavigator({ currentSel: location.hash });
-      }
-    };
-
-    return DesignerPattern;
-  })();
-
-  /* Composants communs */
+  var Components = {};
 
   // Navigation entre les vues d'un même motif.
-  Views.ViewNavigator = (function() {
+  /*jshint -W071*/
+  Components.ViewNavigator = (function() {
     var settings;
     var defaults = {
       viewsSel: '.pattern',
@@ -254,11 +78,11 @@ Chiffon.Views = (function(window, $, undef) {
     // Lien 'Précédent'.
     var $prev;
     // Lien 'Précédent' désactivé.
-    var $prev_noop;
+    var $prevNoop;
     // Lien 'Suivant'.
     var $next;
     // Lien 'Suivant' désactivé.
-    var $next_noop;
+    var $nextNoop;
     // Conteneur HTML de la position courante.
     var $pos;
 
@@ -286,18 +110,18 @@ Chiffon.Views = (function(window, $, undef) {
       $pos.html(i);
     }
 
-    /* Actions sur les objets $prev et $prev_noop */
+    /* Actions sur les objets $prev et $prevNoop */
 
     // Désactive le lien 'Précédent'.
     function disablePreviousLink() {
       $prev.hide();
-      $prev_noop.show();
+      $prevNoop.show();
     }
 
     // Active le lien 'Précédent'.
     function enablePreviousLink() {
       $prev.show();
-      $prev_noop.hide();
+      $prevNoop.hide();
     }
 
     // Met à jour le lien 'Précédent' quand on arrive à la position 'i'.
@@ -305,18 +129,18 @@ Chiffon.Views = (function(window, $, undef) {
       $prev.attr('href', selectors[i - 1]);
     }
 
-    /* Actions sur les objets $next et $next_noop */
+    /* Actions sur les objets $next et $nextNoop */
 
     // Désactive le lien 'Suivant'.
     function disableNextLink() {
       $next.hide();
-      $next_noop.show();
+      $nextNoop.show();
     }
 
     // Active le lien 'Suivant'.
     function enableNextLink() {
       $next.show();
-      $next_noop.hide();
+      $nextNoop.hide();
     }
 
     // Met à jour le lien 'Suivant' quand on arrive à la position 'i'.
@@ -435,9 +259,9 @@ Chiffon.Views = (function(window, $, undef) {
 
       $nav = $(settings.navSel);
       $prev = $nav.find('.prev');
-      $prev_noop = $nav.find('.prev_noop');
+      $prevNoop = $nav.find('.prev_noop');
       $next = $nav.find('.next');
-      $next_noop = $nav.find('.next_noop');
+      $nextNoop = $nav.find('.next_noop');
       $pos = $nav.find('.pos');
 
       currentSel = settings.currentSel;
@@ -471,9 +295,10 @@ Chiffon.Views = (function(window, $, undef) {
       setupLinkHandlers();
     };
   })();
+  /*jshint +W071*/
 
   // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
-  Views.StickyInfo = (function() {
+  Components.StickyInfo = (function() {
     // Configuration par défaut.
     var settings;
     var defaults = {
@@ -485,40 +310,40 @@ Chiffon.Views = (function(window, $, undef) {
     var $designer;
 
     // Géométrie du bloc #info.
-    var info_h;
-    var info_w;
-    var info_top;
-    var info_left;
+    var infoHeight;
+    var infoWidth;
+    var infoTop;
+    var infoLeft;
 
     // Géométrie du bloc #designer.
-    var designer_w;
+    var designerWidth;
 
     // Géométrie de la fenêtre.
-    var window_h;
+    var windowHeight;
 
     function handleScrollEventForMediumBlock() {
-      var scroll_limit;
-      var sticky_class = 'sticky top';
-      var is_sticky = false;
+      var scrollLimit;
+      var stickyClass = 'sticky top';
+      var isSticky = false;
 
       function stick() {
-        if (is_sticky) { return; }
-        is_sticky = true;
-        $info.addClass(sticky_class);
+        if (isSticky) { return; }
+        isSticky = true;
+        $info.addClass(stickyClass);
       }
 
       function unstick() {
-        if (!is_sticky) { return; }
-        is_sticky = false;
-        $info.removeClass(sticky_class);
+        if (!isSticky) { return; }
+        isSticky = false;
+        $info.removeClass(stickyClass);
       }
 
-      scroll_limit = info_top - 23;
+      scrollLimit = infoTop - 23;
 
-      if ($(window).scrollTop() >= scroll_limit) { stick(); }
+      if ($(window).scrollTop() >= scrollLimit) { stick(); }
 
       $(window).scroll(function() {
-        if ($(window).scrollTop() >= scroll_limit) { stick(); } else { unstick(); }
+        if ($(window).scrollTop() >= scrollLimit) { stick(); } else { unstick(); }
       });
     }
 
@@ -527,7 +352,7 @@ Chiffon.Views = (function(window, $, undef) {
       // On utilise "_.debounce()" pour temporiser la prise en charge de l'évènement "resize"
       // pendant 150 millisecondes.
       $(window).resize(_.debounce(function() {
-        var left = $designer.offset().left + designer_w - info_w;
+        var left = $designer.offset().left + designerWidth - infoWidth;
 
         $info.css({ 'left': left + 'px' });
       }, 150));
@@ -537,7 +362,7 @@ Chiffon.Views = (function(window, $, undef) {
     // pour qu'il soit toujours visible on lui donne une position fixe.
     function setupSmallBlock() {
       $info.addClass('sticky');
-      $info.css({ top: info_top + 'px', left: info_left + 'px' });
+      $info.css({ top: infoTop + 'px', left: infoLeft + 'px' });
     }
 
     // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
@@ -545,26 +370,26 @@ Chiffon.Views = (function(window, $, undef) {
     function setupMediumBlock() {
       // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
       // plus tard lors d'un redimensionnement horizontal de la fenêtre.
-      $info.css('left', info_left + 'px');
+      $info.css('left', infoLeft + 'px');
 
       handleScrollEventForMediumBlock();
     }
 
     function init() {
-      var info_offset;
+      var infoOffset;
 
       $info = $(settings.infoSel);
       $designer = $(settings.designerSel);
 
-      info_h = $info.height();
-      info_w = $info.width();
+      infoHeight = $info.height();
+      infoWidth = $info.width();
 
-      info_offset = $info.offset();
-      info_top = info_offset.top;
-      info_left = info_offset.left;
+      infoOffset = $info.offset();
+      infoTop = infoOffset.top;
+      infoLeft = infoOffset.left;
 
-      designer_w = $designer.width();
-      window_h = $(window).height();
+      designerWidth = $designer.width();
+      windowHeight = $(window).height();
     }
 
     return function(options) {
@@ -572,9 +397,9 @@ Chiffon.Views = (function(window, $, undef) {
 
       init();
 
-      if (window_h >= info_h + info_top) {
+      if (windowHeight >= infoHeight + infoTop) {
         setupSmallBlock();
-      } else if (window_h >= info_h) {
+      } else if (windowHeight >= infoHeight) {
         setupMediumBlock();
       } else {
         // La fenêtre est trop petite pour contenir tout le bloc info.
@@ -587,9 +412,217 @@ Chiffon.Views = (function(window, $, undef) {
     };
   })();
 
+  return Components;
+
+})(this, jQuery);
+/*jshint +W074*/
+
+/*jshint -W072*/
+Chiffon.Views = (function(window, $, Components, undef) {
+  /*jshint +W072*/
+  'use strict';
+
+  var document = window.document;
+  var location = window.location;
+  var Views = {};
+
+  // L10N
+  function l(string) {
+    return string.toLocaleString();
+  }
+
+  // Chargement de jQuery.validate puis exécution d'un callback.
+  function initializeValidation(context, fn) {
+    context.require(context.resources.validation, function() {
+      var $errContainer = $('#error_container');
+
+      $.validator.setDefaults({
+        hightlight: function(elmt) { $(elmt).addClass('error'); },
+        unhightlight: function(elmt) { $(elmt).removeClass('error'); },
+        errorContainer: $errContainer,
+        errorLabelContainer: $errContainer,
+        invalidHandler: function() { $errContainer.fadeIn(); }
+      });
+
+      if (undef !== fn) { fn(); }
+    });
+  }
+
+  /* BaseView */
+
+  function BaseView(context) {
+    this.context = context;
+  }
+
+  /* Layouts */
+
+  Views.Layout = (function() {
+    function Layout() {
+      BaseView.apply(this, arguments);
+    }
+
+    Layout.prototype = {
+      init: function() {
+        // On ouvre les liens externes dans une nouvelle fenêtre.
+        $('A[rel=external]').external();
+
+        // Pour les visiteurs anonymes uniquement, on active les modales.
+        if (!this.context.isAuth) {
+          // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
+          $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
+            e.preventDefault();
+
+            $(this).modal({ closeText: l('%modal.close') });
+          });
+        } /* else {
+          // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
+          //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
+          //  .appendTo('body').modal({ closeText: l('%modal.close') });
+        } */
+      }
+    };
+
+    return Layout;
+  })();
+
+  Views.DesignerLayout = (function() {
+    function DesignerLayout(context) {
+      BaseView.apply(this, arguments);
+      this.layoutView = new Views.Layout(context);
+    }
+
+    DesignerLayout.prototype = {
+      init: function() {
+        this.layoutView.init();
+        Components.StickyInfo();
+      }
+    };
+
+    return DesignerLayout;
+  })();
+
+  function DefaultView(context) {
+    BaseView.apply(this, arguments);
+    this.layoutView = new Views.Layout(context);
+  }
+
+  DefaultView.prototype = {
+    init: function() {
+      this.layoutView.init();
+    }
+  };
+
+  function DesignerView(context) {
+    BaseView.apply(this, arguments);
+    this.layoutView = new Views.DesignerLayout(context);
+  }
+
+  DesignerView.prototype = {
+    init: function() {
+      this.layoutView.init();
+    }
+  };
+
+  /* Pages Home */
+
+  Views.HomeIndex = (function() {
+    function HomeIndex() {
+      DefaultView.apply(this, arguments);
+    }
+
+    HomeIndex.prototype = {
+      init: function() {
+        DefaultView.prototype.init.call(this);
+
+        $('.vignette').watermark(l('%preview.watermark'));
+      }
+    };
+
+    return HomeIndex;
+  })();
+
+  /* Pages Contact */
+
+  Views.AccountLogin = (function() {
+    function AccountLogin() {
+      DefaultView.apply(this, arguments);
+    }
+
+    AccountLogin.prototype = {
+      init: function() {
+        DefaultView.prototype.init.call(this);
+
+        initializeValidation(this.context, function() {
+          $('#login_form').validate({
+            messages: { token: l('%login.password_required') },
+            rules: { token: { required: true, minlength: 10 } }
+          });
+        });
+      }
+    };
+
+    return AccountLogin;
+  })();
+
+  Views.AccountRegister = (function() {
+    function AccountRegister() {
+      DefaultView.apply(this, arguments);
+    }
+
+    AccountRegister.prototype = {
+      init: function() {
+        DefaultView.prototype.init.call(this);
+
+        var $form = $('#register_form');
+
+        initializeValidation(this.context, function() {
+          $form.validate({
+            // NB: On ne veut pas de message d'erreur par "input".
+            // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+            errorPlacement: $.noop,
+            messages: {
+              Lastname: '',
+              Firstname: '',
+              CompanyName: '',
+              EmailAddress: ''
+            },
+            rules: {
+              Lastname: { required: true, minlength: 2, maxlength: 50 },
+              Firstname: { required: true, minlength: 2, maxlength: 50 },
+              CompanyName: { required: true, minlength: 2, maxlength: 100 },
+              EmailAddress: { required: true, minlength: 5, maxlength: 200 },
+              Message: { maxlength: 4000 }
+            }
+          });
+        });
+      }
+    };
+
+    return AccountRegister;
+  })();
+
+  /* Pages Designer */
+
+  Views.DesignerPattern = (function() {
+    function DesignerPattern() {
+      DesignerView.apply(this, arguments);
+    }
+
+    DesignerPattern.prototype = {
+      init: function() {
+        DesignerView.prototype.init.call(this);
+
+        // NB: location.hash contient le caractère '#'.
+        Components.ViewNavigator({ currentSel: location.hash });
+      }
+    };
+
+    return DesignerPattern;
+  })();
+
   return Views;
 
-})(window, jQuery);
+})(this, jQuery, Chiffon.Components);
 
 Chiffon.Controllers = (function($, Views) {
   'use strict';
@@ -601,6 +634,7 @@ Chiffon.Controllers = (function($, Views) {
   function BaseController(context) {
     this.context = context;
   }
+
   /* ContactController */
 
   function AccountController() {
@@ -608,9 +642,9 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   AccountController.prototype = extend({
-    login: function() { (new Views.AccountLogin(this.context)).init(); },
-    newsletter: function() { (new Views.Layout(this.context)).init(); },
-    register: function() { (new Views.AccountRegister(this.context)).init(); }
+    Login: function() { (new Views.AccountLogin(this.context)).init(); },
+    Newsletter: function() { (new Views.Layout(this.context)).init(); },
+    Register: function() { (new Views.AccountRegister(this.context)).init(); }
   });
 
   /* DesignerController */
@@ -620,9 +654,9 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   DesignerController.prototype = extend({
-    index: function() { (new Views.DesignerLayout(this.context)).init(); },
-    category: function() { (new Views.DesignerLayout(this.context)).init(); },
-    pattern: function() { (new Views.DesignerPattern(this.context)).init(); }
+    Index: function() { (new Views.DesignerLayout(this.context)).init(); },
+    Category: function() { (new Views.DesignerLayout(this.context)).init(); },
+    Pattern: function() { (new Views.DesignerPattern(this.context)).init(); }
   });
 
   /* HomeController */
@@ -632,9 +666,9 @@ Chiffon.Controllers = (function($, Views) {
   }
 
   HomeController.prototype = extend({
-    about: function() { (new Views.Layout(this.context)).init(); },
-    contact: function() { (new Views.Layout(this.context)).init(); },
-    index: function() { (new Views.HomeIndex(this.context)).init(); }
+    About: function() { (new Views.Layout(this.context)).init(); },
+    Contact: function() { (new Views.Layout(this.context)).init(); },
+    Index: function() { (new Views.HomeIndex(this.context)).init(); }
   });
 
   return {
@@ -644,22 +678,3 @@ Chiffon.Controllers = (function($, Views) {
   };
 
 }(jQuery, Chiffon.Views));
-
-Chiffon.prototype.handleCore = (function(Controllers) {
-  'use strict';
-
-  return function(controllerName, actionName, params) {
-    if (Controllers.hasOwnProperty(controllerName)) {
-      var controller;
-      var ControllerClass = Controllers[controllerName];
-      var controllerPrototype = ControllerClass.prototype;
-      var actionMethod = actionName.toLowerCase();
-
-      if (controllerPrototype.hasOwnProperty(actionMethod)) {
-        controller = new ControllerClass(this.context);
-        controllerPrototype[actionMethod].apply(controller, params);
-      }
-    }
-  };
-
-})(Chiffon.Controllers);

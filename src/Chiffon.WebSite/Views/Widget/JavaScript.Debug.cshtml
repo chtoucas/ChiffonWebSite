@@ -3,15 +3,14 @@
 @model CommonJavaScriptViewModel
 
 <script>
-  window.args = {
-    baseUrl: '@Model.ScriptBase'
-    , debug: true
-    , version: '@Model.Version'
-    , isAuth: @(Model.IsAuthenticated.ToString().ToLower())
-    , locale: '@Model.LanguageName'
-    , controller: '@Model.ControllerName'
-    , action: '@Model.ActionName'
-  };
+ window.args = {
+  action: '@Model.ActionName',
+  baseUrl: '@Model.ScriptBase',
+  controller: '@Model.ControllerName',
+  isAuth: @(Model.IsAuthenticated.ToString().ToLower()),
+  locale: '@Model.LanguageName'
+ };
+ window.DEBUG = true;
 </script>
 
 @AssetTag.JavaScript("vendor/yepnope-1.5.4.js")

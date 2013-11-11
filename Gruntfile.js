@@ -1,12 +1,16 @@
 /*jshint node:true*/
 /*jslint node:true*/
 
+// TODO: tests !
+
 module.exports = function(grunt) {
   'use strict';
 
   var config = {
+    // Utiliser un chemin relatif pour les sourcemaps.
     projectDir: './src/Chiffon.WebSite/assets',
-    reportsDir: __dirname + '/_work/reports'
+    reportsDir: __dirname + '/_work/reports',
+    tmpDir: __dirname + '/_work/tmp'
   };
 
   function mapCss(value) { return config.projectDir + '/css/' + value; }
@@ -40,20 +44,20 @@ module.exports = function(grunt) {
       ].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
-        'chiffon.jquery.js',
         'chiffon.main.js',
+        'chiffon.jquery.js',
         'chiffon.localization.js',
         'chiffon.core.js'
       ].map(mapJs).concat('Gruntfile.js')
     },
 
+    // WARNING: Conserver le même ordre que celui utilisé par le site web.
     bundles: {
       // Groupes CSS.
       css: {
-        // Groupe CSS pour les écrans.
         screen: {
           src: [
-            'normalize-2.1.3.css',
+            'normalize-1.1.3.css',
             '01-chiffon.base.css',
             '02-chiffon.helpers.css',
             '03-chiffon.css'
@@ -63,19 +67,16 @@ module.exports = function(grunt) {
       },
       // Groupes JavaScript.
       js: {
-        // Groupe JavaScript de démarrage.
-        chiffon_main: {
+        main: {
           src: ['vendor/yepnope-1.5.4.js', 'chiffon.main.js'].map(mapJs),
           dest: mapJs('_main-<%= version %>.js'),
           srcmap: '_main-<%= version %>.map'
         },
-        // Groupe JavaScript des librairies externes.
-        libraries: {
+        lib: {
           src: ['vendor/jquery-2.0.3.min.js', 'vendor/lodash-2.2.1.min.js'].map(mapJs),
           dest: mapJs('_lib-<%= version %>.js')
         },
-        // Groupe JavaScript chargé en différé.
-        chiffon_core: {
+        core: {
           src: [
             'vendor/l10n-2013.09.12.js',
             'jquery.modal.js',
@@ -89,10 +90,11 @@ module.exports = function(grunt) {
       }
     },
 
-    nobom: {
-      js: { src: '<%= sources.js %>' },
-      css: { src: '<%= sources.css %>' }
-    },
+    // NB: Désactivé pour le moment car Visual Studio ne gère pas les fichiers UTF8 sans BOM.
+    //nobom: {
+    //  js: { src: '<%= sources.js %>' },
+    //  css: { src: '<%= sources.css %>' }
+    //},
 
     /*
      * Analyse des fichiers CSS via CSSLint.
@@ -111,7 +113,7 @@ module.exports = function(grunt) {
     cssmin: {
       chiffon: {
         options: {
-          //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */'
+          banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
           keepSpecialComments: 0,
           report: 'min'
         },
@@ -125,36 +127,38 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         // Règles strictes.
-        bitwise: true,           // Peut être désactivé localement.
-        //camelcase: true,
+        bitwise: true,      // On peut désactiver cette directive localement (à justifer).
+        camelcase: true,
         curly: true,
         eqeqeq: true,
         es3: true,
         forin: true,
         freeze: true,
         immed: true,
-        indent: 2,               // WARNING: Incompatible avec laxcomma et laxbreak ?
+        indent: 2,          // WARNING: Cette directive semble incompatible avec laxcomma et laxbreak.
         latedef: true,
-        //maxcomplexity: true,
+        maxcomplexity: 3,   // On peut désactiver cette directive localement (à justifer).
         maxdepth: 2,
-        //maxlen: 1000,
-        maxparams: 3,            // Peut être désactivé localement.
-        //maxstatements: 10,
+        maxlen: 700,        // Ajuster ce chiffre.
+        maxparams: 3,       // On peut désactiver cette directive localement (à justifer).
+        maxstatements: 20,  // Ajuster ce chiffre.
         newcap: true,
         noarg: true,
         noempty: true,
         nonew: true,
-        //plusplus: true,        // Aucune raison de ne pas utiliser les opérateurs ++ et --.
+        //plusplus: true,
         quotmark: 'single',
         strict: true,
         trailing: true,
         undef: true,
-        unused: true
+        unused: true,
 
         // Règles désactivées.
         //laxcomma: true,
         //laxbreak: true,
         //browser: true
+
+        globals: { DEBUG: true, VERSION: true, console: true }
       },
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       files: '<%= sources.js %>'
@@ -162,26 +166,28 @@ module.exports = function(grunt) {
 
     /*
      * Analyse des fichiers JavaScript via JSLint.
+     * Désactivé car jslint ne permet pas d'exclure deux règles problématiques :
+     * - tous les fichiers sont sauvegardés en UTF8/BOM par Visual Studio ;
+     * - on préfère utiliser des déclarations de variables séparées
+     *   NB: UglifyJS s'occupe de ça automatiquement.
      */
-    /*
-    jslint: {
-      chiffon: {
-        options: {
-          log: mapLog('jslint.log'),
-          errorsOnly: true,
-          failOnError: false
-        },
-        directives: {
-          nomen: true,
-          white: true,
-          todo: true,
-          plusplus: true,
-          browser: true
-        },
-        src: '<%= sources.js %>'
-      }
-    },
-    */
+    //jslint: {
+    //  chiffon: {
+    //    options: {
+    //      log: mapLog('jslint.log'),
+    //      errorsOnly: true,
+    //      failOnError: false
+    //    },
+    //    directives: {
+    //      nomen: true,
+    //      white: true,
+    //      todo: true,
+    //      plusplus: true,
+    //      browser: true
+    //    },
+    //    src: '<%= sources.js %>'
+    //  }
+    //},
 
     /*
      * Fusion des fichiers JavaScript.
@@ -192,9 +198,9 @@ module.exports = function(grunt) {
         block: true,
         line: true
       },
-      libraries: {
-        src: '<%= bundles.js.libraries.src %>',
-        dest: '<%= bundles.js.libraries.dest %>'
+      lib: {
+        src: '<%= bundles.js.lib.src %>',
+        dest: '<%= bundles.js.lib.dest %>'
       }
     },
 
@@ -203,31 +209,39 @@ module.exports = function(grunt) {
      */
     uglify: {
       options: {
-        // TODO: On ne peut pas combiner les options banner et minification.
-        //banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */\n'
+        banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
         // TODO: Vérifier les options.
-        compress: { unused: true },
+        /*jshint -W106*/
+        compress: {
+          unused: true,
+          dead_code: true,
+          global_defs: {
+            DEBUG: false,
+            VERSION: '<%= version %>'
+          }
+        },
+        /*jshint +W106*/
         mangle: true,
         sourceMapPrefix: 5
       },
-      chiffon_main: {
+      main: {
         options: {
           preserveComments: false,
-          sourceMap: mapJs('<%= bundles.js.chiffon_main.srcmap %>'),
-          sourceMappingURL: '<%= bundles.js.chiffon_main.srcmap %>'
+          sourceMap: mapJs('<%= bundles.js.main.srcmap %>'),
+          sourceMappingURL: '<%= bundles.js.main.srcmap %>'
         },
         files: {
-          '<%= bundles.js.chiffon_main.dest %>' : '<%= bundles.js.chiffon_main.src %>'
+          '<%= bundles.js.main.dest %>' : '<%= bundles.js.main.src %>'
         }
       },
-      chiffon_core: {
+      core: {
         options: {
           preserveComments: false,
-          sourceMap: mapJs('<%= bundles.js.chiffon_core.srcmap %>'),
-          sourceMappingURL: '<%= bundles.js.chiffon_core.srcmap %>'
+          sourceMap: mapJs('<%= bundles.js.core.srcmap %>'),
+          sourceMappingURL: '<%= bundles.js.core.srcmap %>'
         },
         files: {
-          '<%= bundles.js.chiffon_core.dest %>': '<%= bundles.js.chiffon_core.src %>'
+          '<%= bundles.js.core.dest %>': '<%= bundles.js.core.src %>'
         }
       }
     }
@@ -244,6 +258,7 @@ module.exports = function(grunt) {
 
       var buf = grunt.file.read(filepath, { encoding: null });
       if (buf[0] === 0xEF && buf[1] === 0xBB && buf[2] === 0xBF) {
+        // XXX: Je pense que la vérification du premier charactère suffit.
         buf = buf.slice(3);
         grunt.file.write(filepath, buf);
         grunt.log.writeln('File "' + filepath + '" rewritten.');

@@ -3,14 +3,13 @@
 @model CommonJavaScriptViewModel
 
 <script>
-window.args = {
-    baseUrl: '@Model.ScriptBase'
-    , version: '@Model.Version'
-    , isAuth: @(Model.IsAuthenticated.ToString().ToLower())
-    , locale: '@Model.LanguageName'
-    , controller: '@Model.ControllerName'
-    , action: '@Model.ActionName'
-};
+ var args = {
+  action: '@Model.ActionName',
+  baseUrl: '@Model.ScriptBase',
+  controller: '@Model.ControllerName',
+  isAuth: @(Model.IsAuthenticated.ToString().ToLower()),
+  locale: '@Model.LanguageName'
+ };
 </script>
 
 @AssetTag.JavaScript("_main-" + Model.Version + ".js")

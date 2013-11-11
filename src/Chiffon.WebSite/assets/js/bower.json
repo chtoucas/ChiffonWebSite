@@ -7,17 +7,18 @@
   ],
   "license": "BSD-2-Clause",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "es5-shim": "~2.1.0",
+    "jquery.cookie": "~1.4.0",
+    "rgrove-lazyload": "*",
+    "underscore": "~1.5.2",
+    "zepto": "~1.0.0"
+  },
   "dependencies": {
     "jquery": "~2.0.3",
-    "yepnope": "~1.5.4",
     "lodash": "~2.2.1",
     "jquery.validation": "~1.11.1",
-    "jquery.cookie": "~1.4.0",
-    "zepto": "~1.0.0",
-    "rgrove-lazyload": "*",
     "jquery-modal": "~0.5.2",
-    "underscore": "~1.5.2",
-    "es5-shim": "~2.1.0"
+    "yepnope": "~1.5.4"
   }
 }

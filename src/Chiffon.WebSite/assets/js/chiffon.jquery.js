@@ -14,7 +14,7 @@
 
   $.fn.watermark = function(watermark, options) {
     var settings = $.extend({}, $.fn.watermark.defaults, options);
-    var get_watermak = null !== watermark ? function() {
+    var getWatermak = null !== watermark ? function() {
       return watermark;
     } : function($elmt) {
       return $elmt.data('watermark');
@@ -22,7 +22,7 @@
 
     return this.each(function() {
       var $this = $(this);
-      $this.append(settings.wrapperStart + get_watermak($this) + settings.wrapperEnd);
+      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
     });
   };
 
