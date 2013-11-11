@@ -5,24 +5,20 @@ var Chiffon = (function(window, undef) {
 
   var Chiffon;
   var getResources;
-  var defaults = {
-    action: '',
-    controller: '',
+  var defaultContext = {
     baseUrl: '//wznw.org/chiffon/',
     isAuth: false,
-    locale: 'fr',
-    params: {},
-    settings: {}
+    locale: 'fr'
   };
-  var baseUrls = [defaults.baseUrl, '/'];
-  var locales = [defaults.locale, 'en'];
+  var baseUrls = [defaultContext.baseUrl, '/'];
+  var locales = [defaultContext.locale, 'en'];
 
   // NB: On ne fait pas de fusion récursive.
-  function mergeDefaults(args) {
+  function merge(obj, defaults) {
     var result = defaults;
-    for (var prop in args) {
-      if (args.hasOwnProperty(prop)) {
-        result[prop] = args[prop];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        result[prop] = obj[prop];
       }
     }
     return result;
@@ -31,15 +27,7 @@ var Chiffon = (function(window, undef) {
   function validateBaseUrl(args) {
     if (-1 === baseUrls.indexOf(args.baseUrl)) {
       if (DEBUG) { console.log('The baseUrl "' + args.baseUrl + '" is not valid.'); }
-      args.baseUrl = defaults.baseUrl;
-    }
-    return args;
-  }
-
-  function validateLocale(args) {
-    if (-1 === locales.indexOf(args.locale)) {
-      if (DEBUG) { console.log('The locale "' + args.locale + '" is not supported.'); }
-      args.locale = defaults.locale;
+      args.baseUrl = defaultContext.baseUrl;
     }
     return args;
   }
@@ -49,15 +37,23 @@ var Chiffon = (function(window, undef) {
     return args;
   }
 
+  function validateLocale(args) {
+    if (-1 === locales.indexOf(args.locale)) {
+      if (DEBUG) { console.log('The locale "' + args.locale + '" is not supported.'); }
+      args.locale = defaultContext.locale;
+    }
+    return args;
+  }
+
   function getValidationResources(locale) {
     return ['jquery.validate.min.js']
       .concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
       .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
   }
 
-  Chiffon.validateArgs = function(args) {
+  Chiffon.validateContext = function(context) {
     // NB: controller et action seront validés dans Chiffon.handleCore.
-    return validateIsAuth(validateLocale(validateBaseUrl(mergeDefaults(args))));
+    return validateIsAuth(validateLocale(validateBaseUrl(context)));
   };
 
   if (DEBUG) {
@@ -92,26 +88,25 @@ var Chiffon = (function(window, undef) {
   };
 
   Chiffon.main = function(args) {
-    var opts = Chiffon.validateArgs(args);
-    var resources = getResources(opts.locale);
+    var context = Chiffon.validateContext(merge(args.context, defaultContext));
     // Mise en cache de la valeur de baseUrl.
-    var baseUrl = opts.baseUrl;
-    var require = function(resources, onComplete) {
+    var baseUrl = context.baseUrl;
+
+    context.resources = getResources(context.locale);
+    context.require = function(resources, onComplete) {
       yepnope({
         load: resources.map(function(src) { return baseUrl + src; }),
         complete: onComplete
       });
     };
 
-    require(resources.core, function() {
+    context.require(context.resources.core, function() {
       if (undef === Chiffon.prototype.handle) {
         if (DEBUG) { console.log('Could not load resources.core.'); }
         return;
       }
 
-      (new Chiffon({ isAuth: opts.isAuth, locale: opts.locale, require: require, resources: resources }))
-        .init(opts.settings)
-        .handle(opts.controller, opts.action, opts.params);
+      (new Chiffon(context)).init(args.settings).handle(args.request);
     });
   };
 

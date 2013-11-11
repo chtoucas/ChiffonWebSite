@@ -1,6 +1,6 @@
 ﻿/*global Chiffon, _, jQuery*/
 
-(function($, Chiffon) {
+(function($) {
   'use strict';
 
   // Configuration par défaut.
@@ -31,7 +31,13 @@
       return this;
     },
 
-    handle: function(controllerName, actionName, params) {
+    handle: function(request) {
+      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
+
+      this.handleCore(req.controller, req.action, req.params);
+    },
+
+    handleCore: function(controllerName, actionName, params) {
       var Controllers = Chiffon.Controllers;
       if (!Controllers.hasOwnProperty(controllerName)) {
         trace(controllerName, actionName);
@@ -49,12 +55,10 @@
 
       controller = new ControllerClass(this.context);
       controllerPrototype[actionName].apply(controller, params);
-
-      return;
     }
   };
 
-})(jQuery, Chiffon);
+})(jQuery);
 
 // Composants communs.
 /*jshint -W074*/
@@ -418,12 +422,13 @@ Chiffon.Components = (function(window, $, undef) {
 /*jshint +W074*/
 
 /*jshint -W072*/
-Chiffon.Views = (function(window, $, Components, undef) {
+Chiffon.Views = (function(window, $, undef) {
   /*jshint +W072*/
   'use strict';
 
   var document = window.document;
   var location = window.location;
+  var Components = Chiffon.Components;
   var Views = {};
 
   // L10N
@@ -622,10 +627,12 @@ Chiffon.Views = (function(window, $, Components, undef) {
 
   return Views;
 
-})(this, jQuery, Chiffon.Components);
+})(this, jQuery);
 
-Chiffon.Controllers = (function($, Views) {
+Chiffon.Controllers = (function($) {
   'use strict';
+
+  var Views = Chiffon.Views;
 
   function extend(methods) { return $.extend({}, BaseController.prototype, methods); }
 
@@ -677,4 +684,4 @@ Chiffon.Controllers = (function($, Views) {
     Home: HomeController
   };
 
-}(jQuery, Chiffon.Views));
+}(jQuery));

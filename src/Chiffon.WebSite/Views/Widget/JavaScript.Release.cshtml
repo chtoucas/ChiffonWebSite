@@ -4,11 +4,16 @@
 
 <script>
  var args = {
-  action: '@Model.ActionName',
-  baseUrl: '@Model.ScriptBase',
-  controller: '@Model.ControllerName',
-  isAuth: @(Model.IsAuthenticated.ToString().ToLower()),
-  locale: '@Model.LanguageName'
+  context: {
+   baseUrl: '@Model.ScriptBase',
+   locale: '@Model.LanguageName',
+   isAuth: @(Model.IsAuthenticated.ToString().ToLower())
+  },
+  request: {
+   action: '@Model.ActionName',
+   controller: '@Model.ControllerName',
+   params: {}
+  }
  };
 </script>
 
