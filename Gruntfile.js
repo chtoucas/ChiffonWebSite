@@ -127,7 +127,7 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         // Règles strictes.
-        bitwise: true,      // On peut désactiver cette directive localement (à justifer).
+        bitwise: true,      // On peut désactiver cette directive localement.
         camelcase: true,
         curly: true,
         eqeqeq: true,
@@ -137,10 +137,10 @@ module.exports = function(grunt) {
         immed: true,
         indent: 2,          // WARNING: Cette directive semble incompatible avec laxcomma et laxbreak.
         latedef: true,
-        maxcomplexity: 3,   // On peut désactiver cette directive localement (à justifer).
+        maxcomplexity: 5,   // On peut ajuster ce chiffre localement.
         maxdepth: 2,
         maxlen: 700,        // Ajuster ce chiffre.
-        maxparams: 3,       // On peut désactiver cette directive localement (à justifer).
+        maxparams: 3,       // On peut ajuster ce chiffre localement.
         maxstatements: 20,  // Ajuster ce chiffre.
         newcap: true,
         noarg: true,

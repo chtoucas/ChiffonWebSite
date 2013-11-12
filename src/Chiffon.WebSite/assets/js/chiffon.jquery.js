@@ -1,4 +1,4 @@
-/*global window, jQuery*/
+/*global jQuery*/
 
 (function(window, $) {
   'use strict';
@@ -30,4 +30,4 @@
     wrapperStart: '<div class=watermark><span>',
     wrapperEnd: '</span></div>'
   };
-})(window, jQuery);
+})(this, jQuery);

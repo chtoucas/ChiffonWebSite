@@ -1,65 +1,5 @@
 ﻿/*global Chiffon, _, jQuery*/
 
-(function($) {
-  'use strict';
-
-  // Configuration par défaut.
-  var defaults = {
-    ajaxTimeout: 3000
-  };
-
-  function trace(controllerName, actionName) {
-    if (DEBUG) {
-      console.log('The requested action "' + controllerName + '.' + actionName + '" does not exist.');
-    }
-  }
-
-  Chiffon.prototype = {
-    init: function(options) {
-      var settings = _.defaults(options || {}, defaults);
-
-      // Configuration de L10N.
-      String.locale = this.context.locale;
-
-      // Configuration globale du comportement des appels Ajax via jQuery.
-      $.ajaxSetup({
-        timeout: settings.ajaxTimeout,
-        async: true,
-        cache: true
-      });
-
-      return this;
-    },
-
-    handle: function(request) {
-      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
-
-      this.handleCore(req.controller, req.action, req.params);
-    },
-
-    handleCore: function(controllerName, actionName, params) {
-      var Controllers = Chiffon.Controllers;
-      if (!Controllers.hasOwnProperty(controllerName)) {
-        trace(controllerName, actionName);
-        return;
-      }
-
-      var controller;
-      var ControllerClass = Controllers[controllerName];
-      var controllerPrototype = ControllerClass.prototype;
-
-      if (!controllerPrototype.hasOwnProperty(actionName)) {
-        trace(controllerName, actionName);
-        return;
-      }
-
-      controller = new ControllerClass(this.context);
-      controllerPrototype[actionName].apply(controller, params);
-    }
-  };
-
-})(jQuery);
-
 // Composants communs.
 /*jshint -W074*/
 Chiffon.Components = (function(window, $, undef) {
@@ -421,267 +361,262 @@ Chiffon.Components = (function(window, $, undef) {
 })(this, jQuery);
 /*jshint +W074*/
 
-/*jshint -W072*/
 Chiffon.Views = (function(window, $, undef) {
-  /*jshint +W072*/
   'use strict';
 
   var document = window.document;
-  var location = window.location;
-  var Components = Chiffon.Components;
   var Views = {};
 
-  // L10N
-  function l(string) {
-    return string.toLocaleString();
-  }
-
-  // Chargement de jQuery.validate puis exécution d'un callback.
-  function initializeValidation(context, fn) {
-    context.require(context.resources.validation, function() {
-      var $errContainer = $('#error_container');
-
-      $.validator.setDefaults({
-        hightlight: function(elmt) { $(elmt).addClass('error'); },
-        unhightlight: function(elmt) { $(elmt).removeClass('error'); },
-        errorContainer: $errContainer,
-        errorLabelContainer: $errContainer,
-        invalidHandler: function() { $errContainer.fadeIn(); }
-      });
-
-      if (undef !== fn) { fn(); }
-    });
-  }
-
-  /* BaseView */
-
-  function BaseView(context) {
+  Views.View = function(context) {
     this.context = context;
-  }
 
-  /* Layouts */
+    this.init = function() { this.initLayout(); this.initCore(); };
+    //this.initLayout = $.noop;
+    //this.initCore = $.noop;
+  };
 
-  Views.Layout = (function() {
-    function Layout() {
-      BaseView.apply(this, arguments);
+  Views.ValidateMixin = {
+    // Chargement de jQuery.validate puis exécution d'un callback.
+    validate: function(fn) {
+      this.context.require(this.context.resources.validation, function() {
+        var $errContainer = $('#error_container');
+
+        $.validator.setDefaults({
+          hightlight: function(elmt) { $(elmt).addClass('error'); },
+          unhightlight: function(elmt) { $(elmt).removeClass('error'); },
+          errorContainer: $errContainer,
+          errorLabelContainer: $errContainer,
+          invalidHandler: function() { $errContainer.fadeIn(); }
+        });
+
+        if (undef !== fn) { fn(); }
+      });
     }
+  };
 
-    Layout.prototype = {
-      init: function() {
-        // On ouvre les liens externes dans une nouvelle fenêtre.
-        $('A[rel=external]').external();
+  Views.LayoutMixin = {
+    initLayout: function() {
+      // On ouvre les liens externes dans une nouvelle fenêtre.
+      $('A[rel=external]').external();
 
-        // Pour les visiteurs anonymes uniquement, on active les modales.
-        if (!this.context.isAuth) {
-          // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
-          $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
-            e.preventDefault();
+      // Pour les visiteurs anonymes uniquement, on active les modales.
+      if (!this.context.isAuth) {
+        // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
+        $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
+          e.preventDefault();
 
-            $(this).modal({ closeText: l('%modal.close') });
-          });
-        } /* else {
+          $(this).modal({ closeText: '%modal.close'.toLocaleString() });
+        });
+      } /* else {
           // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
           //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
-          //  .appendTo('body').modal({ closeText: l('%modal.close') });
+          //  .appendTo('body').modal({ closeText: '%modal.close'.toLocaleString() });
         } */
-      }
-    };
-
-    return Layout;
-  })();
-
-  Views.DesignerLayout = (function() {
-    function DesignerLayout(context) {
-      BaseView.apply(this, arguments);
-      this.layoutView = new Views.Layout(context);
-    }
-
-    DesignerLayout.prototype = {
-      init: function() {
-        this.layoutView.init();
-        Components.StickyInfo();
-      }
-    };
-
-    return DesignerLayout;
-  })();
-
-  function DefaultView(context) {
-    BaseView.apply(this, arguments);
-    this.layoutView = new Views.Layout(context);
-  }
-
-  DefaultView.prototype = {
-    init: function() {
-      this.layoutView.init();
     }
   };
-
-  function DesignerView(context) {
-    BaseView.apply(this, arguments);
-    this.layoutView = new Views.DesignerLayout(context);
-  }
-
-  DesignerView.prototype = {
-    init: function() {
-      this.layoutView.init();
-    }
-  };
-
-  /* Pages Home */
-
-  Views.HomeIndex = (function() {
-    function HomeIndex() {
-      DefaultView.apply(this, arguments);
-    }
-
-    HomeIndex.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        $('.vignette').watermark(l('%preview.watermark'));
-      }
-    };
-
-    return HomeIndex;
-  })();
-
-  /* Pages Contact */
-
-  Views.AccountLogin = (function() {
-    function AccountLogin() {
-      DefaultView.apply(this, arguments);
-    }
-
-    AccountLogin.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        initializeValidation(this.context, function() {
-          $('#login_form').validate({
-            messages: { token: l('%login.password_required') },
-            rules: { token: { required: true, minlength: 10 } }
-          });
-        });
-      }
-    };
-
-    return AccountLogin;
-  })();
-
-  Views.AccountRegister = (function() {
-    function AccountRegister() {
-      DefaultView.apply(this, arguments);
-    }
-
-    AccountRegister.prototype = {
-      init: function() {
-        DefaultView.prototype.init.call(this);
-
-        var $form = $('#register_form');
-
-        initializeValidation(this.context, function() {
-          $form.validate({
-            // NB: On ne veut pas de message d'erreur par "input".
-            // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
-            errorPlacement: $.noop,
-            messages: {
-              Lastname: '',
-              Firstname: '',
-              CompanyName: '',
-              EmailAddress: ''
-            },
-            rules: {
-              Lastname: { required: true, minlength: 2, maxlength: 50 },
-              Firstname: { required: true, minlength: 2, maxlength: 50 },
-              CompanyName: { required: true, minlength: 2, maxlength: 100 },
-              EmailAddress: { required: true, minlength: 5, maxlength: 200 },
-              Message: { maxlength: 4000 }
-            }
-          });
-        });
-      }
-    };
-
-    return AccountRegister;
-  })();
-
-  /* Pages Designer */
-
-  Views.DesignerPattern = (function() {
-    function DesignerPattern() {
-      DesignerView.apply(this, arguments);
-    }
-
-    DesignerPattern.prototype = {
-      init: function() {
-        DesignerView.prototype.init.call(this);
-
-        // NB: location.hash contient le caractère '#'.
-        Components.ViewNavigator({ currentSel: location.hash });
-      }
-    };
-
-    return DesignerPattern;
-  })();
 
   return Views;
 
 })(this, jQuery);
 
-Chiffon.Controllers = (function($) {
+Chiffon.Views.Home = (function(window, $) {
   'use strict';
 
   var Views = Chiffon.Views;
+  var View = Views.View;
+  var Home = {};
 
-  function extend(methods) { return $.extend({}, BaseController.prototype, methods); }
+  Home.About = (function() {
+    function About(context) { View.call(this, context); }
+    _.extend(About.prototype, Views.LayoutMixin);
+    return About;
+  })();
 
-  /* BaseController */
+  Home.Contact = (function() {
+    function Contact(context) { View.call(this, context); }
+    _.extend(Contact.prototype, Views.LayoutMixin);
+    return Contact;
+  })();
 
-  function BaseController(context) {
-    this.context = context;
-  }
+  Home.Index = (function() {
+    function Index(context) { View.call(this, context); }
+    Index.prototype.initCore = function() {
+      $('.vignette').watermark('%preview.watermark'.toLocaleString());
+    };
+    _.extend(Index.prototype, Views.LayoutMixin);
+    return Index;
+  })();
 
-  /* ContactController */
+  return Home;
 
-  function AccountController() {
-    BaseController.apply(this, arguments);
-  }
+})(this, jQuery);
 
-  AccountController.prototype = extend({
-    Login: function() { (new Views.AccountLogin(this.context)).init(); },
-    Newsletter: function() { (new Views.Layout(this.context)).init(); },
-    Register: function() { (new Views.AccountRegister(this.context)).init(); }
-  });
+Chiffon.Views.Account = (function(window, $) {
+  'use strict';
 
-  /* DesignerController */
+  var Views = Chiffon.Views;
+  var View = Views.View;
+  var Account = {};
 
-  function DesignerController() {
-    BaseController.apply(this, arguments);
-  }
+  Account.Newsletter = (function() {
+    function Newsletter(context) { View.call(this, context); }
+    _.extend(Newsletter.prototype, Views.LayoutMixin);
+    return Newsletter;
+  })();
 
-  DesignerController.prototype = extend({
-    Index: function() { (new Views.DesignerLayout(this.context)).init(); },
-    Category: function() { (new Views.DesignerLayout(this.context)).init(); },
-    Pattern: function() { (new Views.DesignerPattern(this.context)).init(); }
-  });
+  Account.Login = (function() {
+    function Login(context) { View.call(this, context); }
 
-  /* HomeController */
+    Login.prototype.initCore = function() {
+      this.validate(function() {
+        $('#login_form').validate({
+          messages: { token: '%login.password_required'.toLocaleString() },
+          rules: { token: { required: true, minlength: 10 } }
+        });
+      });
+    };
 
-  function HomeController() {
-    BaseController.apply(this, arguments);
-  }
+    _.extend(Login.prototype, Views.LayoutMixin, Views.ValidateMixin);
 
-  HomeController.prototype = extend({
-    About: function() { (new Views.Layout(this.context)).init(); },
-    Contact: function() { (new Views.Layout(this.context)).init(); },
-    Index: function() { (new Views.HomeIndex(this.context)).init(); }
-  });
+    return Login;
+  })();
 
-  return {
-    Account: AccountController,
-    Designer: DesignerController,
-    Home: HomeController
+  Account.Register = (function() {
+    function Register(context) { View.call(this, context); }
+
+    Register.prototype.initCore = function() {
+      var $form = $('#register_form');
+
+      this.validate(function() {
+        $form.validate({
+          // NB: On ne veut pas de message d'erreur par "input".
+          // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+          errorPlacement: $.noop,
+          messages: {
+            Lastname: '',
+            Firstname: '',
+            CompanyName: '',
+            EmailAddress: ''
+          },
+          rules: {
+            Lastname: { required: true, minlength: 2, maxlength: 50 },
+            Firstname: { required: true, minlength: 2, maxlength: 50 },
+            CompanyName: { required: true, minlength: 2, maxlength: 100 },
+            EmailAddress: { required: true, minlength: 5, maxlength: 200 },
+            Message: { maxlength: 4000 }
+          }
+        });
+      });
+    };
+
+    _.extend(Register.prototype, Views.LayoutMixin, Views.ValidateMixin);
+    return Register;
+  })();
+
+  return Account;
+
+})(this, jQuery);
+
+Chiffon.Views.Designer = (function(window) {
+  'use strict';
+
+  var location = window.location;
+  var Components = Chiffon.Components;
+  var Views = Chiffon.Views;
+  var View = Views.View;
+  var Designer = {};
+
+  //var DesignerLayoutMixin = (function() {
+  //  function DesignerLayout(context) {
+  //    BaseView.apply(this, arguments);
+  //    this.layoutView = new Views.Layout(context);
+  //  }
+
+  //  DesignerLayout.prototype = {
+  //    init: function() {
+  //      this.layoutView.init();
+  //      Components.StickyInfo();
+  //    }
+  //  };
+
+  //  return DesignerLayout;
+  //})();
+
+  var DesignerLayoutMixin;
+
+  Designer.Index = (function() {
+    function Index(context) { View.call(this, context); }
+    _.extend(Index.prototype, DesignerLayoutMixin);
+    return Index;
+  })();
+
+  Designer.Category = (function() {
+    function Category(context) { View.call(this, context); }
+    _.extend(Category.prototype, DesignerLayoutMixin);
+    return Category;
+  })();
+
+  Designer.Pattern = (function() {
+    function Pattern(context) { View.call(this, context); }
+
+    Pattern.prototype.initCore = function() {
+      // NB: location.hash contient le caractère '#'.
+      Components.ViewNavigator({ currentSel: location.hash });
+    };
+
+    _.extend(Pattern.prototype, DesignerLayoutMixin);
+    return Pattern;
+  })();
+
+  return Designer;
+
+})(this);
+
+(function($) {
+  'use strict';
+
+  // Configuration par défaut.
+  var defaults = {
+    ajaxTimeout: 3000
   };
 
-}(jQuery));
+  // Configuration globale de l'application.
+  Chiffon.init = function(options) {
+    var settings = _.defaults(options || {}, defaults);
+
+    // Comportement des appels Ajax via jQuery.
+    $.ajaxSetup({
+      timeout: settings.ajaxTimeout,
+      async: true,
+      cache: true
+    });
+  };
+
+  Chiffon.prototype = {
+    handle: function(request) {
+      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
+
+      // Configuration de L10N.
+      String.locale = this.context.locale;
+
+      this.handleCore(req.controller, req.action, req.params);
+    },
+
+    handleCore: function(controllerName, actionName, params) {
+      var Views = Chiffon.Views;
+
+      // On cherche l'objet Views.{controllerName}.
+      if (!Views.hasOwnProperty(controllerName)) { return; }
+
+      var ViewController = Views[controllerName];
+      var ViewClass;
+
+      // On cherche l'objet Views.{controllerName}.{actionName}.
+      if (!ViewController.hasOwnProperty(actionName)) { return; }
+
+      ViewClass = ViewController[actionName];
+      (new ViewClass(this.context)).init(params);
+    }
+  };
+
+})(jQuery);
