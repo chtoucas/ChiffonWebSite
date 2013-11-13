@@ -223,18 +223,14 @@ module.exports = function(grunt) {
      */
     uglify: {
       options: {
-        // TODO: Vérifier les options.
         /*jshint -W106*/
         compress: {
-          unused: true,
-          dead_code: true,
           global_defs: {
             DEBUG: false,
             VERSION: '<%= version %>'
           }
         },
         /*jshint +W106*/
-        mangle: true,
         sourceMapPrefix: 5
       },
       main: {
