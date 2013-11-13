@@ -1,36 +1,5 @@
 ﻿/*global Chiffon, _, $, ł*/
 
-(function(window) {
-  'use strict';
-
-  // Utilitaire de localisation.
-  window.ł = function(value) {
-    return value.toLocaleString();
-  };
-})(this);
-
-Chiffon.init = (function() {
-  'use strict';
-
-  // Configuration par défaut.
-  var defaults = {
-    ajaxTimeout: 3000
-  };
-
-  // Configuration globale de l'application.
-  return function(options) {
-    var settings = _.defaults(options || {}, defaults);
-
-    // Comportement des appels Ajax via jQuery.
-    $.ajaxSetup({
-      timeout: settings.ajaxTimeout,
-      async: true,
-      cache: true
-    });
-  };
-
-})();
-
 // Composants communs.
 /*jshint -W074*/
 Chiffon.Components = (function(window, undef) {
@@ -397,6 +366,7 @@ Chiffon.Views = (function(window, undef) {
 
   var document = window.document;
   var Views = {};
+  var validationResources;
 
   Views.View = function(context) {
     this.context = context;
@@ -409,7 +379,14 @@ Chiffon.Views = (function(window, undef) {
   Views.ValidateMixin = {
     // Chargement de jQuery.validate puis exécution d'un callback.
     validate: function(fn) {
-      this.context.require(this.context.resources.validation, function() {
+      var locale = this.context.locale;
+      if (undef === validationResources) {
+        validationResources = ['jquery.validate.min.js']
+          .concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
+          .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
+      }
+
+      this.context.require(validationResources, function() {
         var $errContainer = $('#error_container');
 
         $.validator.setDefaults({

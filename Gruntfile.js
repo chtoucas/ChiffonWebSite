@@ -117,7 +117,7 @@ module.exports = function(grunt) {
     cssmin: {
       chiffon: {
         options: {
-          banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
+          banner: '/* Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
           keepSpecialComments: 0,
           report: 'min'
         },
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
         latedef: true,
         maxcomplexity: 5,   // On peut ajuster ce chiffre localement.
         maxdepth: 2,
-        maxlen: 700,        // Ajuster ce chiffre.
+        maxlen: 500,        // Ce choix semble raisonnable.
         maxparams: 3,       // On peut ajuster ce chiffre localement.
         maxstatements: 20,  // Ajuster ce chiffre.
         newcap: true,
@@ -235,7 +235,7 @@ module.exports = function(grunt) {
       },
       main: {
         options: {
-          banner: '// Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %>. Contains yepnope & lodash.',
+          banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
           preserveComments: false,
           sourceMap: mapJs('<%= bundles.js.main.srcmap %>'),
           sourceMappingURL: '<%= bundles.js.main.srcmap %>'
@@ -246,7 +246,7 @@ module.exports = function(grunt) {
       },
       core: {
         options: {
-          banner: '// Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %>. Contains l10n & jquery.modal.',
+          banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
           preserveComments: false,
           sourceMap: mapJs('<%= bundles.js.core.srcmap %>'),
           sourceMappingURL: '<%= bundles.js.core.srcmap %>'
