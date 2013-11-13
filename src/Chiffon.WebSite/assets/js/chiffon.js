@@ -4,7 +4,6 @@ var Chiffon = (function(window, undef) {
   'use strict';
 
   var coreResources;
-  var bundlePostfix = '-' + VERSION + '.js';
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/',
     isAuth: false,
@@ -13,6 +12,7 @@ var Chiffon = (function(window, undef) {
   };
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
   var locales = [defaultContext.locale, 'en'];
+  var bundlePostfix = '-' + VERSION + '.js';
 
   // WARNING: La fusion ne se fait pas de manière récursive.
   function merge(obj, defaults) {
@@ -51,12 +51,6 @@ var Chiffon = (function(window, undef) {
     return args;
   }
 
-  function getValidationResources(locale) {
-    return ['jquery.validate.min.js']
-      .concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
-      .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
-  }
-
   if (DEBUG) {
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
     coreResources = [
@@ -69,7 +63,6 @@ var Chiffon = (function(window, undef) {
     ];
   } else {
     coreResources = ['vendor/jquery-2.0.3.min.js', getBundle('core')];
-      //.concat(['core'].map(getBundle));
   }
 
   function Chiffon(context) {
@@ -107,7 +100,9 @@ var Chiffon = (function(window, undef) {
       // Configuration de L10N.
       String.locale = locale;
 
-      this.context.resources.validation = getValidationResources(locale);
+      this.context.resources.validation = ['jquery.validate.min.js']
+        .concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
+        .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
     }
   };
 
