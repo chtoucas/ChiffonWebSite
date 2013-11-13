@@ -1,6 +1,6 @@
-/*global jQuery*/
+/*global $*/
 
-(function(window, $) {
+(function(window) {
   'use strict';
 
   $.fn.external = function() {
@@ -30,4 +30,4 @@
     wrapperStart: '<div class=watermark><span>',
     wrapperEnd: '</span></div>'
   };
-})(this, jQuery);
+})(this);
