@@ -19,6 +19,7 @@
     "lodash": "~2.2.1",
     "jquery.validation": "~1.11.1",
     "jquery-modal": "~0.5.2",
-    "yepnope": "~1.5.4"
+    "yepnope": "~1.5.4",
+    "normalize-css": "~2.1.3"
   }
 }

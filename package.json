@@ -10,7 +10,9 @@
     "xml2js": "~0.2.8",
     "typescript": "~0.9.1-1",
     "bower": "~1.2.7",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-concat": "~0.3.0",
+    "lodash-cli": "~2.3.0",
+    "grunt-lodash": "~0.3.0"
   },
   "private": true
 }

@@ -44,8 +44,8 @@ module.exports = function(grunt) {
       ].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
-        'chiffon.main.js',
         'chiffon.jquery.js',
+        'chiffon.js',
         'chiffon.localization.js',
         'chiffon.core.js'
       ].map(mapJs).concat('Gruntfile.js')
@@ -68,14 +68,18 @@ module.exports = function(grunt) {
       // Groupes JavaScript.
       js: {
         main: {
-          src: ['vendor/yepnope-1.5.4.js', 'chiffon.main.js'].map(mapJs),
+          src: [
+            'vendor/yepnope-1.5.4.js',
+            'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js',
+            'chiffon.js'
+          ].map(mapJs),
           dest: mapJs('_main-<%= version %>.js'),
           srcmap: '_main-<%= version %>.map'
         },
-        lib: {
-          src: ['vendor/jquery-2.0.3.min.js', 'vendor/lodash-2.2.1.min.js'].map(mapJs),
-          dest: mapJs('_lib-<%= version %>.js')
-        },
+        //lib: {
+        //  src: ['vendor/jquery-2.0.3.min.js'].map(mapJs),
+        //  dest: mapJs('_lib-<%= version %>.js')
+        //},
         core: {
           src: [
             'vendor/l10n-2013.09.12.js',
@@ -189,27 +193,35 @@ module.exports = function(grunt) {
     //  }
     //},
 
+    lodash: {
+      custom: {
+        dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js'),
+        options: {
+          modifier: 'modern',
+          include: ['defaults', 'extend', 'debounce'],
+          exports: ['none']
+        }
+      }
+    },
+
     /*
      * Fusion des fichiers JavaScript.
      */
-    concat: {
-      options: {
-        stripBanners: true,
-        block: true,
-        line: true
-      },
-      lib: {
-        src: '<%= bundles.js.lib.src %>',
-        dest: '<%= bundles.js.lib.dest %>'
-      }
-    },
+    //concat: {
+    //  options: {
+    //    stripBanners: true
+    //  },
+    //  lib: {
+    //    src: '<%= bundles.js.lib.src %>',
+    //    dest: '<%= bundles.js.lib.dest %>'
+    //  }
+    //},
 
     /*
      * Minification des fichiers JavaScript via UglifyJS.
      */
     uglify: {
       options: {
-        banner: '/*! Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
         // TODO: Vérifier les options.
         /*jshint -W106*/
         compress: {
@@ -226,6 +238,7 @@ module.exports = function(grunt) {
       },
       main: {
         options: {
+          banner: '// Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %>. Contains yepnope & lodash.',
           preserveComments: false,
           sourceMap: mapJs('<%= bundles.js.main.srcmap %>'),
           sourceMappingURL: '<%= bundles.js.main.srcmap %>'
@@ -236,6 +249,7 @@ module.exports = function(grunt) {
       },
       core: {
         options: {
+          banner: '// Generated on <%= grunt.template.today("yyyy-mm-dd HH:mm") %>. Contains l10n & jquery.modal.',
           preserveComments: false,
           sourceMap: mapJs('<%= bundles.js.core.srcmap %>'),
           sourceMappingURL: '<%= bundles.js.core.srcmap %>'
@@ -258,7 +272,7 @@ module.exports = function(grunt) {
 
       var buf = grunt.file.read(filepath, { encoding: null });
       if (buf[0] === 0xEF && buf[1] === 0xBB && buf[2] === 0xBF) {
-        // XXX: Je pense que la vérification du premier charactère suffit.
+        // XXX: Je pense que la vérification du premier caractère suffit.
         buf = buf.slice(3);
         grunt.file.write(filepath, buf);
         grunt.log.writeln('File "' + filepath + '" rewritten.');
@@ -275,14 +289,15 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
   });
 
-  grunt.loadNpmTasks('grunt-jslint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-lodash');
+  //grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-jslint');
 
   grunt.registerTask('lint', ['jshint', 'csslint']);
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
+  grunt.registerTask('build', ['lodash', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['lint', 'build']);
 };

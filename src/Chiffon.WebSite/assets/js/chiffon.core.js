@@ -1,8 +1,39 @@
-﻿/*global Chiffon, _, jQuery*/
+﻿/*global Chiffon, _, $, ł*/
+
+(function(window) {
+  'use strict';
+
+  // Utilitaire de localisation.
+  window.ł = function(value) {
+    return value.toLocaleString();
+  };
+})(this);
+
+Chiffon.init = (function() {
+  'use strict';
+
+  // Configuration par défaut.
+  var defaults = {
+    ajaxTimeout: 3000
+  };
+
+  // Configuration globale de l'application.
+  return function(options) {
+    var settings = _.defaults(options || {}, defaults);
+
+    // Comportement des appels Ajax via jQuery.
+    $.ajaxSetup({
+      timeout: settings.ajaxTimeout,
+      async: true,
+      cache: true
+    });
+  };
+
+})();
 
 // Composants communs.
 /*jshint -W074*/
-Chiffon.Components = (function(window, $, undef) {
+Chiffon.Components = (function(window, undef) {
   'use strict';
 
   var Components = {};
@@ -358,10 +389,10 @@ Chiffon.Components = (function(window, $, undef) {
 
   return Components;
 
-})(this, jQuery);
+})(this);
 /*jshint +W074*/
 
-Chiffon.Views = (function(window, $, undef) {
+Chiffon.Views = (function(window, undef) {
   'use strict';
 
   var document = window.document;
@@ -405,21 +436,21 @@ Chiffon.Views = (function(window, $, undef) {
         $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
           e.preventDefault();
 
-          $(this).modal({ closeText: '%modal.close'.toLocaleString() });
+          $(this).modal({ closeText: ł('%modal.close') });
         });
       } /* else {
           // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
           //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
-          //  .appendTo('body').modal({ closeText: '%modal.close'.toLocaleString() });
+          //  .appendTo('body').modal({ closeText: ł('%modal.close') });
         } */
     }
   };
 
   return Views;
 
-})(this, jQuery);
+})(this);
 
-Chiffon.Views.Home = (function(window, $) {
+Chiffon.Views.Home = (function() {
   'use strict';
 
   var Views = Chiffon.Views;
@@ -441,7 +472,7 @@ Chiffon.Views.Home = (function(window, $) {
   Home.Index = (function() {
     function Index(context) { View.call(this, context); }
     Index.prototype.initCore = function() {
-      $('.vignette').watermark('%preview.watermark'.toLocaleString());
+      $('.vignette').watermark(ł('%preview.watermark'));
     };
     _.extend(Index.prototype, Views.LayoutMixin);
     return Index;
@@ -449,9 +480,9 @@ Chiffon.Views.Home = (function(window, $) {
 
   return Home;
 
-})(this, jQuery);
+})();
 
-Chiffon.Views.Account = (function(window, $) {
+Chiffon.Views.Account = (function() {
   'use strict';
 
   var Views = Chiffon.Views;
@@ -470,7 +501,7 @@ Chiffon.Views.Account = (function(window, $) {
     Login.prototype.initCore = function() {
       this.validate(function() {
         $('#login_form').validate({
-          messages: { token: '%login.password_required'.toLocaleString() },
+          messages: { token: ł('%login.password_required') },
           rules: { token: { required: true, minlength: 10 } }
         });
       });
@@ -515,7 +546,7 @@ Chiffon.Views.Account = (function(window, $) {
 
   return Account;
 
-})(this, jQuery);
+})();
 
 Chiffon.Views.Designer = (function(window) {
   'use strict';
@@ -571,52 +602,3 @@ Chiffon.Views.Designer = (function(window) {
   return Designer;
 
 })(this);
-
-(function($) {
-  'use strict';
-
-  // Configuration par défaut.
-  var defaults = {
-    ajaxTimeout: 3000
-  };
-
-  // Configuration globale de l'application.
-  Chiffon.init = function(options) {
-    var settings = _.defaults(options || {}, defaults);
-
-    // Comportement des appels Ajax via jQuery.
-    $.ajaxSetup({
-      timeout: settings.ajaxTimeout,
-      async: true,
-      cache: true
-    });
-  };
-
-  Chiffon.prototype = {
-    handle: function(request) {
-      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
-
-      // Configuration de L10N.
-      String.locale = this.context.locale;
-
-      this.handleCore(req.controller, req.action, req.params);
-    },
-
-    handleCore: function(controllerName, actionName, params) {
-      var Views = Chiffon.Views;
-
-      // On cherche l'objet Views.{controllerName}.
-      if (!Views.hasOwnProperty(controllerName)) { return; }
-
-      var ViewController = Views[controllerName];
-      var ViewClass;
-
-      // On cherche l'objet Views.{controllerName}.{actionName}.
-      if (!ViewController.hasOwnProperty(actionName)) { return; }
-
-      ViewClass = ViewController[actionName];
-      (new ViewClass(this.context)).init(params);
-    }
-  };
-
-})(jQuery);

@@ -38,11 +38,10 @@ MSBuild :
 * FxCop (via MSBuild.ExtensionPack)
 * StyleCop (via MSBuild.ExtensionPack)
 
+Utiliser https://github.com/kozy4324/grunt-concat-sourcemap
+
 NOTES
 -----
-csslint --quiet
-cleancss -d -o
-Linting ? uglifyjs -b --lint
 
 # NB: Pour une explication des erreurs jslint, cf. http://jslinterrors.com/
 

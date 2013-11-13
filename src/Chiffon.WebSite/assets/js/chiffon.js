@@ -1,4 +1,4 @@
-﻿/*global args, yepnope*/
+﻿/*global args, yepnope, _*/
 
 var Chiffon = (function(window, undef) {
   'use strict';
@@ -60,7 +60,6 @@ var Chiffon = (function(window, undef) {
       return {
         core: [
           'vendor/jquery-2.0.3.js',
-          'vendor/lodash-2.2.1.js',
           'vendor/l10n-2013.09.12.js',
           'jquery.modal.js',
           'chiffon.jquery.js',
@@ -75,7 +74,7 @@ var Chiffon = (function(window, undef) {
       var bundlePostfix = '-' + VERSION + '.js';
 
       return {
-        core: ['lib', 'core'].map(function(name) { return '_' + name + bundlePostfix; }),
+        core: ['vendor/jquery-2.0.3.min.js'].concat(['core'].map(function(name) { return '_' + name + bundlePostfix; })),
         validation: getValidationResources(locale)
       };
     };
@@ -83,6 +82,33 @@ var Chiffon = (function(window, undef) {
 
   Chiffon = function(context) {
     this.context = context;
+  };
+
+  Chiffon.prototype = {
+    handle: function(request) {
+      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
+
+      // Configuration de L10N.
+      String.locale = this.context.locale;
+
+      this.handleCore(req.controller, req.action, req.params);
+    },
+
+    handleCore: function(controllerName, actionName, params) {
+      var Views = Chiffon.Views;
+
+      // On cherche l'objet Views.{controllerName}.
+      if (!Views.hasOwnProperty(controllerName)) { return; }
+
+      var ViewController = Views[controllerName];
+      var ViewClass;
+
+      // On cherche l'objet Views.{controllerName}.{actionName}.
+      if (!ViewController.hasOwnProperty(actionName)) { return; }
+
+      ViewClass = ViewController[actionName];
+      (new ViewClass(this.context)).init(params);
+    }
   };
 
   Chiffon.validateContext = function(context) {
