@@ -199,7 +199,8 @@ module.exports = function(grunt) {
         options: {
           modifier: 'modern',
           include: ['defaults', 'extend', 'debounce'],
-          exports: ['none']
+          exports: ['none'],
+          flags: ['source-map']
         }
       }
     },
