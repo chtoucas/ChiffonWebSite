@@ -1,14 +1,14 @@
-﻿/*csslint ids: false*/
+﻿/*csslint ids:false, box-model:false*/
 
 // TODO:
 // - no margin for paragraph in sidebar
 // - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
-// - http://webcodertools.com/imagetobase64converter/Create
 
 @black: #000;
 @darkgrey: #999;
 @grey: #ccc;
 @white: #fff;
+@red: #f00;
 
 /* Règles générales */
 
@@ -30,16 +30,18 @@ A {
       color: @black;
     }
   }
-
-  &.underline {
-    text-decoration: underline;
-  }
 }
 
 /* Régles réutilisables */
 
-P.tidy {
+// XXX: P
+.tidy {
   margin: 0;
+}
+
+// XXX: A
+.underline {
+  text-decoration: underline;
 }
 
 .darkgrey {
@@ -96,6 +98,13 @@ P.tidy {
 
 /* En-tête barrée */
 
+/***
+  title: Mon titre
+  section: Ma section
+  description: Ma description
+  example:
+    <a href="" class="strike">un lien barré</a>
+  ***/
 .strike {
   border-top: solid 2px @darkgrey;
   border-bottom: solid 2px @darkgrey;
@@ -333,11 +342,15 @@ H1 {
 #error_container {
   display: none;
   list-style-type: none;
-  color: #ff0000;
+  color: @red;
+
+  .error {
+    border: none;
+  }
 }
 
-INPUT.error {
-  border: 1px solid #ff0000 !important;
+FORM INPUT.error {
+  border: 1px solid @red;
 }
 //INPUT.valid { border: 1px solid green !important; }
 
@@ -458,7 +471,7 @@ INPUT.error {
   INPUT {
     text-transform: uppercase;
     width: 218px;
-    height: 24px;
+    //height: 24px;
     font-size: 1.4em;
     padding: .3em .5em;
     background-color: transparent;
@@ -598,7 +611,7 @@ INPUT.error {
       margin-bottom: 2em;
       font-size: 1.2em;
     }
-  /* 3-columns mosaic */
+  // 3-columns mosaic
   .mosaic {
     width: 720px;
 

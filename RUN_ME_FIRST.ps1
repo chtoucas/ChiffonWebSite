@@ -1,10 +1,11 @@
 #Requires -Version 3.0
 
 # TODO: Restauration des composants Bower dans le site web.
+# FIXME: Suppression des packages sans version avant la mise à jour (par ex. nuget).
 
 Set-StrictMode -Version Latest
 
-#Get-Module Chiffon | Remove-Module
+Get-Module Chiffon | Remove-Module
 Import-Module Chiffon
 
 # Configuration

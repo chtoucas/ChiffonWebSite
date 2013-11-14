@@ -38,8 +38,8 @@ module.exports = function(grunt) {
     sources: {
       // Fichiers CSS à analyser.
       css: [
-        '01-chiffon.base.css',
-        '02-chiffon.helpers.css',
+        //'01-chiffon.base.css',
+        //'02-chiffon.helpers.css',
         '03-chiffon.css'
       ].map(mapCss),
       // Fichiers JavaScript à analyser.
@@ -52,7 +52,11 @@ module.exports = function(grunt) {
     },
 
     lessSources: {
-      screen: { src: mapCss('03-chiffon.less'), dest: mapCss('03-chiffon.css') }
+      screen: {
+        src: mapCss('03-chiffon.less'),
+        dest: mapCss('03-chiffon.css'),
+        doc: mapLog('03-chiffon.html')
+      }
     },
 
     // WARNING: Conserver le même ordre que celui utilisé par le site web.
@@ -107,7 +111,7 @@ module.exports = function(grunt) {
     // Analyse des fichiers CSS via CSSLint.
     csslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
-      chiffon: {
+      default: {
         options: { formatters: [ {id: 'text', dest: mapLog('csslint.log')} ] },
         src: '<%= sources.css %>'
       }
@@ -115,13 +119,21 @@ module.exports = function(grunt) {
 
     // Minification des fichiers JavaScript via Clean-CSS.
     cssmin: {
-      chiffon: {
+      screen: {
         options: {
           banner: '/* Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
           keepSpecialComments: 0,
           report: 'min'
         },
         files: { '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>' }
+      }
+    },
+
+    styleguidejs: {
+      default: {
+        files: {
+          '<%= lessSources.screen.doc %>': ['<%= lessSources.screen.dest %>']
+        }
       }
     },
 
@@ -300,6 +312,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-styleguidejs');
 
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('buildcss', ['less', 'cssmin']);

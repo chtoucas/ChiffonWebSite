@@ -1,3 +1,4 @@
+*.log
 *.suo
 *.user
 _build/
@@ -8,6 +9,4 @@ node_modules/
 obj/
 packages/
 tools/
-msbuild.log
-npm-debug.log
 Chiffon.sln.metaproj*

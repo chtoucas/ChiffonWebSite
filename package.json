@@ -13,7 +13,8 @@
     "grunt-contrib-concat": "~0.3.0",
     "lodash-cli": "~2.3.0",
     "grunt-lodash": "~0.3.0",
-    "grunt-contrib-less": "~0.8.1"
+    "grunt-contrib-less": "~0.8.1",
+    "grunt-styleguidejs": "~0.1.1"
   },
   "private": true
 }

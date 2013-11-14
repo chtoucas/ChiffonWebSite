@@ -67,7 +67,6 @@ var Chiffon = (function(window, undef) {
       'chiffon.localization.js',
       'chiffon.views.js'
     ] : [
-      //'__proto__' in {} ? 'vendor/zepto-1.0.0.min.js' : 'vendor/jquery-2.0.3.min.js',
       'vendor/jquery-2.0.3.min.js',
       Chiffon.getBundle('views')
     ];

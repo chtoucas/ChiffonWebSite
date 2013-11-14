@@ -1,6 +1,8 @@
 TODO
 ====
 
+* Unkowned HTML5 elements to IE
+
 * Cf. CommerceShop
 
 Pour les déploiements, peut-être s'inspirer de :
