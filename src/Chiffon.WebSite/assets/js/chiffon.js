@@ -16,63 +16,41 @@ var Chiffon = (function(window, undef) {
   var locales = [defaultContext.locale, 'en'];
   var bundlePostfix = '-' + VERSION + '.js';
 
-  // Utilitaires de validation.
-
-  function validateBaseUrl(args) {
-    if (-1 === baseUrls.indexOf(args.baseUrl)) {
-      if (DEBUG) { console.log('The baseUrl "' + args.baseUrl + '" is not valid.'); }
-      args.baseUrl = defaultContext.baseUrl;
-    }
-    return args;
-  }
-
-  function validateIsAuth(args) {
-    args.isAuth = true === args.isAuth;
-    return args;
-  }
-
-  function validateLocale(args) {
-    if (-1 === locales.indexOf(args.locale)) {
-      if (DEBUG) { console.log('The locale "' + args.locale + '" is not supported.'); }
-      args.locale = defaultContext.locale;
-    }
-    return args;
-  }
-
   // Objet Chiffon.
 
   function Chiffon(context) {
     this.context = context;
   }
 
-  Chiffon.getBundle = function (name) { return '_' + name + bundlePostfix; };
+  Chiffon.getBundle = function(name) { return '_' + name + bundlePostfix; };
 
   // Configuration globale de l'application.
-  // WARNING: On suppose au préalable que jQuery a été chargé.
-  Chiffon.init = function(options) {
+  Chiffon.configure = function($, options) {
     var settings = _.defaults(options || {}, defaultSettings);
 
     // Comportement des appels Ajax via jQuery.
-    window.$.ajaxSetup({
+    $.ajaxSetup({
       timeout: settings.ajaxTimeout,
       async: true,
       cache: true
     });
   };
 
-  // Configuration de la langue en cours d'utilisation.
-  // WARNING: On définit ici une fonction dans le contexte global.
-  Chiffon.initLocale = function(locale) {
-    // Configuration de L10N.
-    String.locale = locale;
-
-    // Utilitaire de localisation d'une chaîne de caractères.
-    window.ł = function(value) { return value.toLocaleString(); };
-  };
-
-  // Valide et retourne le contexte de la requête.
+  // Valide puis retourne le contexte de la requête.
   Chiffon.validateContext = function(context) {
-    return validateIsAuth(validateLocale(validateBaseUrl(context)));
+    // URL de base.
+    if (-1 === baseUrls.indexOf(context.baseUrl)) {
+      if (DEBUG) { console.log('The baseUrl "' + context.baseUrl + '" is not valid.'); }
+      context.baseUrl = defaultContext.baseUrl;
+    }
+    // Authentifié ?
+    context.isAuth = true === context.isAuth;
+    // Langue demandée.
+    if (-1 === locales.indexOf(context.locale)) {
+      if (DEBUG) { console.log('The locale "' + context.locale + '" is not supported.'); }
+      context.locale = defaultContext.locale;
+    }
+    return context;
   };
 
   // Principal point d'entrée de l'application.
@@ -82,17 +60,16 @@ var Chiffon = (function(window, undef) {
     var baseUrl = context.baseUrl;
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
-      '__proto__' in {} ? 'vendor/zepto-1.0.0.js' : 'vendor/jquery-2.0.3.js',
-      //'vendor/jquery-2.0.3.js',
+      'vendor/jquery-2.0.3.js',
       'vendor/l10n-2013.09.12.js',
       'jquery.modal.js',
       'chiffon.jquery.js',
       'chiffon.localization.js',
-      'chiffon.core.js'
+      'chiffon.views.js'
     ] : [
-      '__proto__' in {} ? 'vendor/zepto-1.0.0.min.js' : 'vendor/jquery-2.0.3.min.js',
-      //'vendor/jquery-2.0.3.min.js',
-      Chiffon.getBundle('core')
+      //'__proto__' in {} ? 'vendor/zepto-1.0.0.min.js' : 'vendor/jquery-2.0.3.min.js',
+      'vendor/jquery-2.0.3.min.js',
+      Chiffon.getBundle('views')
     ];
 
     context.require = function(resources, onComplete) {
@@ -103,22 +80,21 @@ var Chiffon = (function(window, undef) {
     };
 
     context.require(coreResources, function() {
-      if (undef === window.$ || undef === Chiffon.Views) {
-        if (DEBUG) { console.log('Could not load core dependencies.'); }
+      var $ = window.$;
+      if (undef === $ || undef === Chiffon.Views) {
+        if (DEBUG) { console.log('Could not load resources.'); }
         return;
       }
 
-      Chiffon.init(args.settings);
+      Chiffon.configure($, args.settings);
 
-      (new Chiffon(context)).handle(args.request);
+      (new Chiffon(context)).init().handle(args.request);
     });
   };
 
   Chiffon.prototype = {
     handle: function(request) {
       var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
-
-      Chiffon.initLocale(this.context.locale);
 
       this.handleCore(req.controller, req.action, req.params);
     },
@@ -137,6 +113,17 @@ var Chiffon = (function(window, undef) {
 
       ViewClass = ViewController[actionName];
       (new ViewClass(this.context)).init(params);
+    },
+
+    // WARNING: On ajoute la fonction "ł" au contexte global.
+    init: function() {
+      // Configuration de L10N.
+      String.locale = this.context.locale;
+
+      // Utilitaire de localisation d'une chaîne de caractères.
+      window.ł = function(value) { return value.toLocaleString(); };
+
+      return this;
     }
   };
 

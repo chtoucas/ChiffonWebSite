@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "grunt-cli": "~0.1.10",
+    "grunt-cli": "~0.1.11",
     "grunt": "~0.4.1",
     "grunt-contrib-csslint": "~0.1.2",
     "grunt-contrib-cssmin": "~0.6.2",
@@ -12,7 +12,8 @@
     "bower": "~1.2.7",
     "grunt-contrib-concat": "~0.3.0",
     "lodash-cli": "~2.3.0",
-    "grunt-lodash": "~0.3.0"
+    "grunt-lodash": "~0.3.0",
+    "grunt-contrib-less": "~0.8.1"
   },
   "private": true
 }

@@ -1,0 +1,706 @@
+﻿/*csslint ids: false*/
+
+// TODO:
+// - no margin for paragraph in sidebar
+// - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
+// - http://webcodertools.com/imagetobase64converter/Create
+
+@black: #000;
+@darkgrey: #999;
+@grey: #ccc;
+@white: #fff;
+
+/* Règles générales */
+
+A {
+  color: @black;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+
+  &:hover, &:focus {
+    color: @grey;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, .25);
+  }
+
+  &.reverse {
+    color: @darkgrey;
+
+    &:hover {
+      color: @black;
+    }
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+}
+
+/* Régles réutilisables */
+
+P.tidy {
+  margin: 0;
+}
+
+.darkgrey {
+  color: @darkgrey;
+}
+
+.grey {
+  color: @grey;
+}
+
+.serif {
+  font-family: "Droid Serif", Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.serif_medium {
+  font-size: 2.8em;
+  line-height: 1.5em;
+}
+
+.serif_large {
+  font-size: 3.6em;
+  line-height: 1.5em;
+}
+
+.highlight:focus {
+  box-shadow: 0 0 12px rgba(204, 204, 204, 0.37);
+}
+
+/* Overlay */
+
+// TODO: width & height ne doivent pas être nécessaires
+//.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: @black; opacity: .8; z-index: 100; }
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  background-color: @black;
+  opacity: .8;
+  z-index: 100;
+}
+
+.watermark {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* En-tête barrée */
+
+.strike {
+  border-top: solid 2px @darkgrey;
+  border-bottom: solid 2px @darkgrey;
+  background: no-repeat center center data-uri("img/strike.png");
+}
+
+/* Motif */
+
+.pattern {
+  position: relative;
+  display: block;
+  width: 700px;
+  height: 520px;
+  // couleur par défaut visible quand l'image n'existe pas
+  //.pattern .watermark { background-color: #ddd; }
+  .watermark SPAN {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: @white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: .5em 1em;
+  }
+}
+
+/* Vignette */
+
+// #eee couleur par défaut visible quand l'image n'existe pas.
+.vignette {
+  position: relative;
+  display: block;
+  width: 220px;
+  height: 160px;
+  background-color: #eee;
+  transition: all .2s ease-in-out;
+
+  IMG {
+    width: 220px;
+    height: 160px;
+  }
+
+  SPAN {
+    display: none;
+    position: absolute;
+    right: 12px;
+    bottom: 9px;
+    color: @white;
+    font-weight: bold;
+  }
+
+  .overlay {
+    position: absolute;
+    z-index: 0;
+    opacity: .7;
+  }
+
+  &:hover SPAN, &:hover .overlay {
+    display: block;
+  }
+}
+
+.cl:hover .watermark {
+  background: data-uri("img/watermarks/cl.png");
+}
+
+.em:hover .watermark {
+  background: data-uri("img/watermarks/em.png");
+}
+
+.lr:hover .watermark {
+  background: data-uri("img/watermarks/lr.png");
+}
+
+.vd:hover .watermark {
+  background: data-uri("img/watermarks/vd.png");
+}
+
+/* Mosaïque */
+
+.mosaic {
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden;
+
+  LI {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+/* "Grille" */
+
+.len_100 {
+  width: 960px; // body.width(940px) + LI.margin-right(20px)
+}
+
+.len_75 {
+  width: 740px; // 3/4 * body.width(940px) + LI.margin-right(20px)
+}
+
+/* Disposition par défaut */
+
+BODY {
+  width: 940px;
+  margin: 0 auto;
+}
+
+HEADER {
+  padding-top: 19px;
+}
+
+FOOTER {
+  margin-bottom: 20px;
+  border-top: solid 2px @grey;
+  text-transform: uppercase;
+  font-variant: small-caps;
+
+  P {
+    margin: 20px 0 0;
+  }
+}
+
+/* Titre principal */
+
+H1 {
+  margin: 0 auto;
+  text-align: center;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 1.8em;
+
+  EM, STRONG {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
+/* Menu des langues */
+
+#nav_lang {
+  border-bottom: solid 2px @black;
+
+  UL {
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+
+  LI {
+    padding-left: 5px;
+  }
+}
+
+/* Menu principal */
+
+#nav_main {
+  UL {
+    position: relative;
+    height: 58px;
+    text-transform: uppercase;
+  }
+
+  LI {
+    margin: 22px 10px 0 0;
+  }
+
+  .right {
+    position: absolute;
+    right: 0;
+    margin-right: 0;
+  }
+  // Mise en valeur la page courante dans les menus.
+  &.index #nav_home,
+  &.about #nav_about,
+  &.contact #nav_contact,
+  &.newsletter #nav_newsletter {
+    color: #f00;
+  }
+}
+
+/* Menu des designers */
+
+#nav_designers {
+  UL {
+    height: 66px;
+    font-size: 1.8em;
+    font-style: italic;
+  }
+
+  LI {
+    width: 220px;
+    margin: 22px 20px 0 0;
+    text-align: center;
+  }
+
+  A {
+    padding: 0 .5em;
+    background: @white;
+  }
+
+  .last {
+    margin-right: 0;
+  }
+
+  &.cl #nav_designers_cl,
+  &.em #nav_designers_em,
+  &.vd #nav_designers_vd,
+  &.lr #nav_designers_lr {
+    color: #f00;
+  }
+}
+
+/* Statut ajax */
+
+#ajax_status {
+  background-color: #fef087; // border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px @grey;
+  display: none;
+  font-size: 1.3em;
+  font-weight: 700;
+  padding: .3em 1em;
+  position: fixed;
+  right: 45%;
+  top: 0;
+  z-index: 1000;
+
+  &.ajax_error {
+    background-color: red;
+    color: white;
+  }
+}
+
+/* Erreurs */
+
+#error_container {
+  display: none;
+  list-style-type: none;
+  color: #ff0000;
+}
+
+INPUT.error {
+  border: 1px solid #ff0000 !important;
+}
+//INPUT.valid { border: 1px solid green !important; }
+
+/* Page - Home */
+
+.home_index .mosaic {
+  margin: 23px 0 3px 0;
+}
+
+/* Page - About */
+
+.home_about {
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+/* Page - Contact */
+
+.home_contact {
+  margin-bottom: 5em;
+  text-align: center;
+
+  #designers {
+    font-style: italic;
+    font-size: 1.538em;
+
+    LI {
+      float: left;
+      width: 220px;
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  H2 {
+    margin: 0;
+    padding: .5em 0 1em 0;
+    border-top: 2px solid @darkgrey;
+    font-weight: normal;
+
+    A {
+      display: block;
+      font-size: .7em;
+    }
+  }
+
+  H3 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 1.2em;
+    padding: 1em 0;
+    font-weight: normal;
+    border-color: @grey;
+
+    A {
+      padding: 0 .5em;
+      background: @white;
+    }
+  }
+
+  UL {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .email {
+    padding: 2em 0;
+    border-top: 1px solid @grey;
+    border-bottom: 1px solid @grey;
+    font-size: 13px;
+  }
+
+  .img {
+    position: relative;
+    margin-bottom: 1.2em;
+  }
+
+  .web {
+    margin-top: 1em;
+    text-align: right;
+    font-size: 13px;
+    font-style: normal;
+  }
+}
+
+/* Page - Register */
+
+.account_register {
+  border-top: solid 2px @darkgrey;
+
+  #error_container {
+    text-align: center;
+  }
+
+  FORM {
+    width: 750px /*79%*/;
+    margin: 0 auto;
+    color: @darkgrey;
+
+    P {
+      margin-top: 0;
+    }
+
+    .left {
+      margin-top: 0;
+    }
+  }
+
+  LABEL {
+    text-transform: uppercase;
+    font-size: 1.1em;
+    padding-bottom: .5em;
+  }
+
+  INPUT {
+    text-transform: uppercase;
+    width: 218px;
+    height: 24px;
+    font-size: 1.4em;
+    padding: .3em .5em;
+    background-color: transparent;
+    border: 1px solid @darkgrey;
+
+    &[type=submit] {
+      width: 160px;
+      height: 32px;
+      color: @darkgrey;
+
+      &:hover {
+        color: @black;
+        border-color: @black;
+      }
+    }
+  }
+
+  TEXTAREA {
+    width: 434px;
+    height: 229px;
+    font-size: 1.4em;
+    font-style: italic;
+    padding: .2em;
+    background-color: transparent;
+    border: 1px solid @darkgrey;
+  }
+
+  .account_register INPUT[name="EmailAddress"] {
+    text-transform: none;
+  }
+
+  .public_key {
+    color: @black;
+    border: 1px @black solid;
+    padding: .1em .5em;
+  }
+
+  .submit {
+    text-align: right;
+    margin-top: 2em;
+  }
+
+  .validation-summary-errors {
+    font-size: 1.3em;
+    text-align: center;
+    margin-bottom: 2em;
+    color: red;
+
+    UL {
+      list-style-type: none;
+    }
+  }
+}
+
+.modal .account_register {
+  border-top: none;
+
+  INPUT[type=submit]:hover {
+    border-color: @white;
+  }
+}
+
+/* Page - Login */
+
+.account_login {
+  border-top: solid 2px @darkgrey;
+
+  #hello {
+    margin-bottom: 2em;
+  }
+
+  FORM {
+    margin-bottom: 7em;
+
+    A {
+      text-transform: none;
+    }
+  }
+
+  INPUT {
+    background-color: transparent;
+    border: 1px solid @darkgrey;
+
+    &[type=password] {
+      font-size: 1.8em;
+      text-align: center;
+      text-transform: uppercase;
+      padding: .5em .75em;
+      margin-bottom: 1.5em;
+      width: 16em;
+      color: @darkgrey;
+    }
+
+    &[type=submit] {
+      border: 0;
+      background: transparent;
+      color: @black;
+      margin-bottom: .9em;
+
+      &:hover {
+        color: @grey;
+      }
+    }
+
+    &[type=text]:focus {
+      color: @black;
+    }
+  }
+}
+
+.modal .account_login {
+  border-top: none;
+}
+
+/* Page - Designer */
+
+#designer {
+  padding-top: 23px;
+
+  #info {
+    width: 220px;
+    float: right;
+    font-size: 1.1em;
+
+    &.sticky {
+      position: fixed;
+      background-color: @white;
+
+      &.top {
+        top: 23px;
+      }
+    }
+  }
+
+    #info > P {
+      margin-top: 0;
+      margin-bottom: 2em;
+      font-size: 1.2em;
+    }
+  /* 3-columns mosaic */
+  .mosaic {
+    width: 720px;
+
+    LI {
+      margin-right: 20px;
+    }
+  }
+
+  NAV {
+    border-bottom: 1px solid @darkgrey;
+    margin-bottom: 2.5em;
+    font-size: 1.1em;
+
+    UL {
+      margin: 0;
+      padding: 0;
+    }
+
+    A {
+      padding: .5em 0;
+      width: 220px;
+      display: block;
+      text-transform: uppercase;
+      border-top: 1px solid @darkgrey;
+      color: @darkgrey;
+    }
+
+    LI:hover, LI.current {
+      background: no-repeat right center data-uri("img/arrow.png");
+    }
+
+      A:hover, LI.current A {
+        color: red;
+      }
+  }
+}
+
+/* En-tête statique */
+
+//#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: 940px; background-color: @white; }
+//  #sticky_header H1 { display: none; }
+//  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
+//    #sticky_header NAV LI { width: auto !important; font-style: initial; }*/
+
+/* Pagination */
+
+.pager {
+  width: 700px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.patterns {
+  height: 520px;
+}
+
+#nav_views {
+  width: 700px;
+  padding-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+// Old stuff
+//.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: @white; }
+//.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+// 79% MODAL .modal { display: none; z-index: 9999; width: 750px; margin: 0 auto auto auto; }
+
+// Absolutely centered
+
+//.centered-container { position: relative; }
+//.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+
+/* Modales */
+
+// FIXME: position sur BODY, Opera !
+//body { position: relative; }
+
+.modal {
+  display: table;
+  margin: auto;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  width: 940px;
+
+  &, A, INPUT, TEXTAREA, .grey {
+    color: @white !important;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background: url(img/close.png) no-repeat 0 0;
+  }
+}

@@ -47,8 +47,12 @@ module.exports = function(grunt) {
         'chiffon.jquery.js',
         'chiffon.js',
         'chiffon.localization.js',
-        'chiffon.core.js'
+        'chiffon.views.js'
       ].map(mapJs).concat('Gruntfile.js')
+    },
+
+    lessSources: {
+      screen: { src: mapCss('03-chiffon.less'), dest: mapCss('03-chiffon.css') }
     },
 
     // WARNING: Conserver le même ordre que celui utilisé par le site web.
@@ -80,16 +84,16 @@ module.exports = function(grunt) {
         //  src: ['vendor/jquery-2.0.3.min.js'].map(mapJs),
         //  dest: mapJs('_lib-<%= version %>.js')
         //},
-        core: {
+        views: {
           src: [
             'vendor/l10n-2013.09.12.js',
             'jquery.modal.js',
             'chiffon.jquery.js',
             'chiffon.localization.js',
-            'chiffon.core.js'
+            'chiffon.views.js'
           ].map(mapJs),
-          dest: mapJs('_core-<%= version %>.js'),
-          srcmap: '_core-<%= version %>.map'
+          dest: mapJs('_views-<%= version %>.js'),
+          srcmap: '_views-<%= version %>.map'
         }
       }
     },
@@ -100,9 +104,7 @@ module.exports = function(grunt) {
     //  css: { src: '<%= sources.css %>' }
     //},
 
-    /*
-     * Analyse des fichiers CSS via CSSLint.
-     */
+    // Analyse des fichiers CSS via CSSLint.
     csslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       chiffon: {
@@ -111,9 +113,7 @@ module.exports = function(grunt) {
       }
     },
 
-    /*
-     * Minification des fichiers JavaScript via Clean-CSS.
-     */
+    // Minification des fichiers JavaScript via Clean-CSS.
     cssmin: {
       chiffon: {
         options: {
@@ -125,9 +125,7 @@ module.exports = function(grunt) {
       }
     },
 
-    /*
-     * Analyse des fichiers JavaScript via JSHint.
-     */
+    // Analyse des fichiers JavaScript via JSHint.
     jshint: {
       options: {
         // Règles strictes.
@@ -168,13 +166,11 @@ module.exports = function(grunt) {
       files: '<%= sources.js %>'
     },
 
-    /*
-     * Analyse des fichiers JavaScript via JSLint.
-     * Désactivé car jslint ne permet pas d'exclure deux règles problématiques :
-     * - tous les fichiers sont sauvegardés en UTF8/BOM par Visual Studio ;
-     * - on préfère utiliser des déclarations de variables séparées
-     *   NB: UglifyJS s'occupe de ça automatiquement.
-     */
+    // Analyse des fichiers JavaScript via JSLint.
+    // Désactivé car jslint ne permet pas d'exclure deux règles problématiques :
+    // - tous les fichiers sont sauvegardés en UTF8/BOM par Visual Studio ;
+    // - on préfère utiliser des déclarations de variables séparées
+    //   NB: UglifyJS s'occupe de ça automatiquement.
     //jslint: {
     //  chiffon: {
     //    options: {
@@ -193,21 +189,33 @@ module.exports = function(grunt) {
     //  }
     //},
 
+    less: {
+      options: {
+        ieCompat: true,
+        strictMath: true,
+        strictUnits: true,
+        sourceMap: true
+      },
+      screen: {
+        files: {
+          '<%= lessSources.screen.dest %>': '<%= lessSources.screen.src %>'
+        }
+      }
+    },
+
     lodash: {
       custom: {
         dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js'),
         options: {
           modifier: 'modern',
           include: ['defaults', 'extend', 'debounce'],
-          exports: ['none'],
+          exports: ['global'],
           flags: ['source-map']
         }
       }
     },
 
-    /*
-     * Fusion des fichiers JavaScript.
-     */
+    // Fusion des fichiers JavaScript.
     //concat: {
     //  options: {
     //    stripBanners: true
@@ -218,9 +226,7 @@ module.exports = function(grunt) {
     //  }
     //},
 
-    /*
-     * Minification des fichiers JavaScript via UglifyJS.
-     */
+    // Minification des fichiers JavaScript via UglifyJS.
     uglify: {
       options: {
         /*jshint -W106*/
@@ -244,15 +250,15 @@ module.exports = function(grunt) {
           '<%= bundles.js.main.dest %>' : '<%= bundles.js.main.src %>'
         }
       },
-      core: {
+      views: {
         options: {
           banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
           preserveComments: false,
-          sourceMap: mapJs('<%= bundles.js.core.srcmap %>'),
-          sourceMappingURL: '<%= bundles.js.core.srcmap %>'
+          sourceMap: mapJs('<%= bundles.js.views.srcmap %>'),
+          sourceMappingURL: '<%= bundles.js.views.srcmap %>'
         },
         files: {
-          '<%= bundles.js.core.dest %>': '<%= bundles.js.core.src %>'
+          '<%= bundles.js.views.dest %>': '<%= bundles.js.views.src %>'
         }
       }
     }
@@ -291,10 +297,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-jslint');
 
   grunt.registerTask('lint', ['jshint', 'csslint']);
-  grunt.registerTask('build', ['lodash', 'uglify', 'cssmin']);
+  grunt.registerTask('buildcss', ['less', 'cssmin']);
+  grunt.registerTask('buildjs', ['lodash', 'uglify']);
+  grunt.registerTask('build', ['buildcss', 'buildjs']);
   grunt.registerTask('default', ['lint', 'build']);
 };
