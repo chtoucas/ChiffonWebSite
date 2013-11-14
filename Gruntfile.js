@@ -37,11 +37,7 @@ module.exports = function(grunt) {
 
     sources: {
       // Fichiers CSS à analyser.
-      css: [
-        //'01-chiffon.base.css',
-        //'02-chiffon.helpers.css',
-        '03-chiffon.css'
-      ].map(mapCss),
+      css: ['chiffon.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
         'chiffon.jquery.js',
@@ -53,9 +49,9 @@ module.exports = function(grunt) {
 
     lessSources: {
       screen: {
-        src: mapCss('03-chiffon.less'),
-        dest: mapCss('03-chiffon.css'),
-        doc: mapLog('03-chiffon.html')
+        src: mapCss('chiffon.less'),
+        dest: mapCss('chiffon.css'),
+        doc: mapLog('chiffon.html')
       }
     },
 
@@ -66,9 +62,8 @@ module.exports = function(grunt) {
         screen: {
           src: [
             'normalize-1.1.3.css',
-            '01-chiffon.base.css',
-            '02-chiffon.helpers.css',
-            '03-chiffon.css'
+            'chiffon.helpers.css',
+            'chiffon.css'
           ].map(mapCss),
           dest: mapCss('_screen-<%= version %>.css')
         }
@@ -126,14 +121,6 @@ module.exports = function(grunt) {
           report: 'min'
         },
         files: { '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>' }
-      }
-    },
-
-    styleguidejs: {
-      default: {
-        files: {
-          '<%= lessSources.screen.doc %>': ['<%= lessSources.screen.dest %>']
-        }
       }
     },
 
@@ -312,7 +299,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-jslint');
-  grunt.loadNpmTasks('grunt-styleguidejs');
 
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('buildcss', ['less', 'cssmin']);

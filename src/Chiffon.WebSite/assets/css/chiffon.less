@@ -1,8 +1,11 @@
 ﻿/*csslint ids:false, box-model:false*/
 
 // TODO:
+// - utiliser normalize v2 et h5bp v4.3
 // - no margin for paragraph in sidebar
 // - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
+
+// Couleurs de base.
 
 @black: #000;
 @darkgrey: #999;
@@ -10,7 +13,79 @@
 @white: #fff;
 @red: #f00;
 
+/* */
+
+BODY, INPUT, .sansserif {
+  font-size: 62.5%; /* 16px (default font size) * .625 = 10px */
+  line-height: 1.4;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+*, UL {
+  margin: 0;
+  padding: 0;
+}
+
+IMG, AUDIO, CANVAS, IMG, VIDEO {
+  vertical-align: middle;
+}
+
+FIELDSET {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+TEXTAREA {
+  resize: vertical;
+}
+
 /* Règles générales */
+
+.center {
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Terminaison manuelle des blocs flottants */
+/* .clear { height: auto; display: block; clear: both; } */
+/*.clear { clear: both; height: 1px; margin: 0; padding: 0; font-size: 1px; line-height: 0; display: block; }*/
+/* Terminaison automatique des blocs flottants */
+/*.clr:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }*/
+
+/* Liste horizontale : UL > LI > A */
+UL.inline LI {
+  float: left;
+}
+
+UL.inline A {
+  display: inline-block;
+}
+
+/* Liste centrée : UL > LI */
+UL.center LI {
+  display: inline-block;
+}
+
+/* Retour à la ligne */
+.break {
+  display: block;
+}
 
 A {
   color: @black;
@@ -34,12 +109,10 @@ A {
 
 /* Régles réutilisables */
 
-// XXX: P
-.tidy {
+.no_margin {
   margin: 0;
 }
 
-// XXX: A
 .underline {
   text-decoration: underline;
 }
@@ -98,13 +171,6 @@ A {
 
 /* En-tête barrée */
 
-/***
-  title: Mon titre
-  section: Ma section
-  description: Ma description
-  example:
-    <a href="" class="strike">un lien barré</a>
-  ***/
 .strike {
   border-top: solid 2px @darkgrey;
   border-bottom: solid 2px @darkgrey;
@@ -118,7 +184,7 @@ A {
   display: block;
   width: 700px;
   height: 520px;
-  // couleur par défaut visible quand l'image n'existe pas
+  // Couleur par défaut visible quand l'image n'existe pas
   //.pattern .watermark { background-color: #ddd; }
   .watermark SPAN {
     position: absolute;
@@ -142,6 +208,12 @@ A {
   background-color: #eee;
   transition: all .2s ease-in-out;
 
+  .overlay {
+    position: absolute;
+    z-index: 0;
+    opacity: .7;
+  }
+
   IMG {
     width: 220px;
     height: 160px;
@@ -154,12 +226,6 @@ A {
     bottom: 9px;
     color: @white;
     font-weight: bold;
-  }
-
-  .overlay {
-    position: absolute;
-    z-index: 0;
-    opacity: .7;
   }
 
   &:hover SPAN, &:hover .overlay {
@@ -262,6 +328,12 @@ H1 {
 /* Menu principal */
 
 #nav_main {
+  .right {
+    position: absolute;
+    right: 0;
+    margin-right: 0;
+  }
+
   UL {
     position: relative;
     height: 58px;
@@ -270,12 +342,6 @@ H1 {
 
   LI {
     margin: 22px 10px 0 0;
-  }
-
-  .right {
-    position: absolute;
-    right: 0;
-    margin-right: 0;
   }
   // Mise en valeur la page courante dans les menus.
   &.index #nav_home,
@@ -289,6 +355,10 @@ H1 {
 /* Menu des designers */
 
 #nav_designers {
+  .last {
+    margin-right: 0;
+  }
+
   UL {
     height: 66px;
     font-size: 1.8em;
@@ -306,10 +376,6 @@ H1 {
     background: @white;
   }
 
-  .last {
-    margin-right: 0;
-  }
-
   &.cl #nav_designers_cl,
   &.em #nav_designers_em,
   &.vd #nav_designers_vd,
@@ -320,8 +386,9 @@ H1 {
 
 /* Statut ajax */
 
-#ajax_status {
-  background-color: #fef087; // border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px @grey;
+/*#ajax_status {
+  background-color: #fef087; 
+  // border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px @grey;
   display: none;
   font-size: 1.3em;
   font-weight: 700;
@@ -335,7 +402,7 @@ H1 {
     background-color: red;
     color: white;
   }
-}
+}*/
 
 /* Erreurs */
 
@@ -352,6 +419,7 @@ H1 {
 FORM INPUT.error {
   border: 1px solid @red;
 }
+
 //INPUT.valid { border: 1px solid green !important; }
 
 /* Page - Home */
@@ -372,6 +440,25 @@ FORM INPUT.error {
 .home_contact {
   margin-bottom: 5em;
   text-align: center;
+
+  .email {
+    padding: 2em 0;
+    border-top: 1px solid @grey;
+    border-bottom: 1px solid @grey;
+    font-size: 13px;
+  }
+
+  .img {
+    position: relative;
+    margin-bottom: 1.2em;
+  }
+
+  .web {
+    margin-top: 1em;
+    text-align: right;
+    font-size: 13px;
+    font-style: normal;
+  }
 
   #designers {
     font-style: italic;
@@ -418,25 +505,6 @@ FORM INPUT.error {
     padding: 0;
     list-style-type: none;
   }
-
-  .email {
-    padding: 2em 0;
-    border-top: 1px solid @grey;
-    border-bottom: 1px solid @grey;
-    font-size: 13px;
-  }
-
-  .img {
-    position: relative;
-    margin-bottom: 1.2em;
-  }
-
-  .web {
-    margin-top: 1em;
-    text-align: right;
-    font-size: 13px;
-    font-style: normal;
-  }
 }
 
 /* Page - Register */
@@ -444,8 +512,30 @@ FORM INPUT.error {
 .account_register {
   border-top: solid 2px @darkgrey;
 
-  #error_container {
+  .account_register INPUT[name="EmailAddress"] {
+    text-transform: none;
+  }
+
+  .public_key {
+    color: @black;
+    border: 1px @black solid;
+    padding: .1em .5em;
+  }
+
+  .submit {
+    text-align: right;
+    margin-top: 2em;
+  }
+
+  .validation-summary-errors {
+    font-size: 1.3em;
     text-align: center;
+    margin-bottom: 2em;
+    color: red;
+
+    UL {
+      list-style-type: none;
+    }
   }
 
   FORM {
@@ -499,30 +589,8 @@ FORM INPUT.error {
     border: 1px solid @darkgrey;
   }
 
-  .account_register INPUT[name="EmailAddress"] {
-    text-transform: none;
-  }
-
-  .public_key {
-    color: @black;
-    border: 1px @black solid;
-    padding: .1em .5em;
-  }
-
-  .submit {
-    text-align: right;
-    margin-top: 2em;
-  }
-
-  .validation-summary-errors {
-    font-size: 1.3em;
+  #error_container {
     text-align: center;
-    margin-bottom: 2em;
-    color: red;
-
-    UL {
-      list-style-type: none;
-    }
   }
 }
 
@@ -538,10 +606,6 @@ FORM INPUT.error {
 
 .account_login {
   border-top: solid 2px @darkgrey;
-
-  #hello {
-    margin-bottom: 2em;
-  }
 
   FORM {
     margin-bottom: 7em;
@@ -580,6 +644,10 @@ FORM INPUT.error {
       color: @black;
     }
   }
+
+  #hello {
+    margin-bottom: 2em;
+  }
 }
 
 .modal .account_login {
@@ -611,7 +679,7 @@ FORM INPUT.error {
       margin-bottom: 2em;
       font-size: 1.2em;
     }
-  // 3-columns mosaic
+  // Mosaïque à trois colonnes.
   .mosaic {
     width: 720px;
 
@@ -630,6 +698,10 @@ FORM INPUT.error {
       padding: 0;
     }
 
+    LI:hover, LI.current {
+      background: no-repeat right center data-uri("img/arrow.png");
+    }
+
     A {
       padding: .5em 0;
       width: 220px;
@@ -637,10 +709,6 @@ FORM INPUT.error {
       text-transform: uppercase;
       border-top: 1px solid @darkgrey;
       color: @darkgrey;
-    }
-
-    LI:hover, LI.current {
-      background: no-repeat right center data-uri("img/arrow.png");
     }
 
       A:hover, LI.current A {

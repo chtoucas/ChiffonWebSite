@@ -258,8 +258,7 @@
     <Content Include="App_Data\Chiffon_log.ldf">
       <DependentUpon>Chiffon.mdf</DependentUpon>
     </Content>
-    <Content Include="assets\css\01-chiffon.base.css" />
-    <Content Include="assets\css\02-chiffon.helpers.css" />
+    <Content Include="assets\css\chiffon.helpers.css" />
     <Content Include="assets\css\normalize-1.1.3.css" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\js\chiffon.views.js" />
@@ -273,7 +272,7 @@
     <Content Include="assets\js\vendor\l10n-2013.09.12.js" />
     <Content Include="assets\js\vendor\lodash.custom-2.3.0.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
-    <Content Include="assets\css\03-chiffon.less" />
+    <Content Include="assets\css\chiffon.less" />
     <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="errors\index.html" />
