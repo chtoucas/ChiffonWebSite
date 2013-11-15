@@ -5,13 +5,7 @@
 // - no margin for paragraph in sidebar
 // - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
 
-// Couleurs de base.
-
-@black: #000;
-@darkgrey: #999;
-@grey: #ccc;
-@white: #fff;
-@red: #f00;
+@import "chiffon.common.less";
 
 /* */
 
@@ -69,12 +63,14 @@ TEXTAREA {
 /*.clr:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }*/
 
 /* Liste horizontale : UL > LI > A */
-UL.inline LI {
-  float: left;
-}
+UL.inline {
+  LI {
+    float: left;
+  }
 
-UL.inline A {
-  display: inline-block;
+  A {
+    display: inline-block;
+  }
 }
 
 /* Liste centrée : UL > LI */
@@ -141,7 +137,7 @@ A {
 }
 
 .highlight:focus {
-  box-shadow: 0 0 12px rgba(204, 204, 204, 0.37);
+  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
 }
 
 /* Overlay */
@@ -182,8 +178,8 @@ A {
 .pattern {
   position: relative;
   display: block;
-  width: 700px;
-  height: 520px;
+  width: @pattern_width;
+  height: @pattern_heigth;
   // Couleur par défaut visible quand l'image n'existe pas
   //.pattern .watermark { background-color: #ddd; }
   .watermark SPAN {
@@ -203,9 +199,9 @@ A {
 .vignette {
   position: relative;
   display: block;
-  width: 220px;
-  height: 160px;
-  background-color: #eee;
+  width: @preview_width;
+  height: @preview_height;
+  background-color: @lightgrey;
   transition: all .2s ease-in-out;
 
   .overlay {
@@ -215,8 +211,8 @@ A {
   }
 
   IMG {
-    width: 220px;
-    height: 160px;
+    width: @preview_width;
+    height: @preview_height;
   }
 
   SPAN {
@@ -258,25 +254,25 @@ A {
 
   LI {
     float: left;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin-right: @grid_inter_width;
+    margin-bottom: @grid_inter_width;
   }
 }
 
 /* "Grille" */
 
 .len_100 {
-  width: 960px; // body.width(940px) + LI.margin-right(20px)
+  width: (@grid_100_width + @grid_inter_width);
 }
 
 .len_75 {
-  width: 740px; // 3/4 * body.width(940px) + LI.margin-right(20px)
+  width: (@grid_75_width + @grid_inter_width);
 }
 
 /* Disposition par défaut */
 
 BODY {
-  width: 940px;
+  width: @grid_100_width;
   margin: 0 auto;
 }
 
@@ -348,7 +344,7 @@ H1 {
   &.about #nav_about,
   &.contact #nav_contact,
   &.newsletter #nav_newsletter {
-    color: #f00;
+    color: @current_link_color;
   }
 }
 
@@ -366,8 +362,8 @@ H1 {
   }
 
   LI {
-    width: 220px;
-    margin: 22px 20px 0 0;
+    width: @grid_column_width;
+    margin: 22px @grid_inter_width 0 0;
     text-align: center;
   }
 
@@ -380,7 +376,7 @@ H1 {
   &.em #nav_designers_em,
   &.vd #nav_designers_vd,
   &.lr #nav_designers_lr {
-    color: #f00;
+    color: @current_link_color;
   }
 }
 
@@ -399,7 +395,7 @@ H1 {
   z-index: 1000;
 
   &.ajax_error {
-    background-color: red;
+    background-color: @error_color;
     color: white;
   }
 }*/
@@ -409,7 +405,7 @@ H1 {
 #error_container {
   display: none;
   list-style-type: none;
-  color: @red;
+  color: @error_color;
 
   .error {
     border: none;
@@ -417,7 +413,7 @@ H1 {
 }
 
 FORM INPUT.error {
-  border: 1px solid @red;
+  border: 1px solid @error_color;
 }
 
 //INPUT.valid { border: 1px solid green !important; }
@@ -466,8 +462,8 @@ FORM INPUT.error {
 
     LI {
       float: left;
-      width: 220px;
-      margin-right: 20px;
+      width: @grid_column_width;
+      margin-right: @grid_inter_width;
 
       &:last-child {
         margin-right: 0;
@@ -531,7 +527,7 @@ FORM INPUT.error {
     font-size: 1.3em;
     text-align: center;
     margin-bottom: 2em;
-    color: red;
+    color: @error_color;
 
     UL {
       list-style-type: none;
@@ -660,7 +656,7 @@ FORM INPUT.error {
   padding-top: 23px;
 
   #info {
-    width: 220px;
+    width: @grid_column_width;
     float: right;
     font-size: 1.1em;
 
@@ -681,10 +677,10 @@ FORM INPUT.error {
     }
   // Mosaïque à trois colonnes.
   .mosaic {
-    width: 720px;
+    width: (@grid_75_width + @grid_inter_width);
 
     LI {
-      margin-right: 20px;
+      margin-right: @grid_inter_width;
     }
   }
 
@@ -704,7 +700,7 @@ FORM INPUT.error {
 
     A {
       padding: .5em 0;
-      width: 220px;
+      width: @grid_column_width;
       display: block;
       text-transform: uppercase;
       border-top: 1px solid @darkgrey;
@@ -712,7 +708,7 @@ FORM INPUT.error {
     }
 
       A:hover, LI.current A {
-        color: red;
+        color: @current_link_color;
       }
   }
 }
