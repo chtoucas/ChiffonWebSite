@@ -1,30 +1,17 @@
-﻿
-
-// TODO:
-// - utiliser normalize v2 ?
+﻿// TODO:
 // - no margin for paragraph in sidebar
 // - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
 
 @import "chiffon.common.less";
 
-/* Remise à plat de certains éléments */
+/* =========================================================================
+ * Valeurs par défaut (H5BP v4.3.0)
+ * ========================================================================= */
 
-NAV UL, NAV OL {
-  list-style: none;
-  list-style-image: none;
-}
-
-UL {
-  padding: 0;
-  margin: 0;
-}
-
-/* Valeurs par défaut (H5BP v4.3.0) */
-
-HTML {
-  font-size: 1em;
-  line-height: 1.4;
-}
+//HTML {
+//  font-size: 1em;
+//  line-height: 1.4;
+//}
 
 HTML, BUTTON, INPUT, SELECT, TEXTAREA {
   color: @text_color;
@@ -44,43 +31,40 @@ TEXTAREA {
   resize: vertical;
 }
 
-/* */
+/* =========================================================================
+ * Règles générales
+ * ========================================================================= */
 
+// XXX: À revoir ?
 BODY, INPUT, .sansserif {
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: @font_size;
   line-height: 1.4;
 }
 
-/* Règles générales */
+/* Listes
+ * ====== */
 
-.center {
-  text-align: center;
+UL {
+  padding: 0;
+  margin: 0;
 }
 
-.hide {
-  display: none;
+/* Liste centrée : UL > LI */
+UL.center LI {
+  display: inline-block;
 }
 
-.left {
-  float: left;
+/* Menus
+ * ===== */
+
+NAV UL, NAV OL {
+  list-style: none;
+  list-style-image: none;
 }
 
-.right {
-  float: right;
-}
-
-.clear {
-  clear: both;
-}
-
-/* Terminaison manuelle des blocs flottants */
-/* .clear { height: auto; display: block; clear: both; } */
-/*.clear { clear: both; height: 1px; margin: 0; padding: 0; font-size: 1px; line-height: 0; display: block; }*/
-/* Terminaison automatique des blocs flottants */
-/*.clr:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }*/
-
-/* Liste horizontale : UL > LI > A */
+/* Menu horizontal : UL > LI > A */
+// XXX: Utiliser plutôt le selecteur NAV.inline ?
 UL.inline {
   LI {
     float: left;
@@ -91,15 +75,8 @@ UL.inline {
   }
 }
 
-/* Liste centrée : UL > LI */
-UL.center LI {
-  display: inline-block;
-}
-
-/* Retour à la ligne */
-.break {
-  display: block;
-}
+/* Liens
+ * ----- */
 
 A {
   color: @black;
@@ -121,7 +98,33 @@ A {
   }
 }
 
-/* Régles réutilisables */
+/* =========================================================================
+ * Utilitaires
+ * ========================================================================= */
+
+.center {
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.break {
+  display: block;
+}
 
 .no_margin {
   margin: 0;
@@ -131,10 +134,12 @@ A {
   text-decoration: underline;
 }
 
+// XXX: À supprimer ?
 .darkgrey {
   color: @darkgrey;
 }
 
+// XXX: À supprimer ?
 .grey {
   color: @grey;
 }
@@ -158,9 +163,10 @@ A {
   box-shadow: 0 0 12px rgba(204, 204, 204, .37);
 }
 
-/* Overlay */
+/* Overlay
+ * ------- */
 
-// TODO: width & height ne doivent pas être nécessaires
+// TODO: width & height ne sont pas être nécessaires ?
 //.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: @black; opacity: .8; z-index: 100; }
 .overlay {
   position: fixed;
@@ -191,8 +197,11 @@ A {
   border-bottom: solid 2px @darkgrey;
 }
 
-/* Motif */
+/* =========================================================================
+ * Motifs
+ * ========================================================================= */
 
+// Motif en grand format.
 .pattern {
   position: relative;
   display: block;
@@ -211,14 +220,13 @@ A {
   }
 }
 
-/* Vignette */
-
-// #eee couleur par défaut visible quand l'image n'existe pas.
+// Aperçu d'un motif.
 .vignette {
   position: relative;
   display: block;
   width: @preview_width;
   height: @preview_height;
+  // Couleur par défaut quand l'image n'est pas chargée.
   background-color: @lightgrey;
   transition: all .2s ease-in-out;
 
@@ -327,6 +335,10 @@ H1 {
   }
 }
 
+/* =========================================================================
+ * Menus
+ * ========================================================================= */
+
 /* Menu des langues */
 
 NAV.lang {
@@ -387,7 +399,7 @@ NAV.lang {
   }
 }
 
-/* Mise en valeur la page courante dans les menus */
+/* Mise en valeur de la page courante dans les menus */
 
 NAV {
   &.index .index,
@@ -405,7 +417,7 @@ NAV {
 /* Statut ajax */
 
 /*#ajax_status {
-  background-color: #fef087; 
+  background-color: #fef087;
   // border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px @grey;
   display: none;
   font-size: 1.3em;
@@ -440,20 +452,26 @@ FORM INPUT.error {
 
 //INPUT.valid { border: 1px solid green !important; }
 
-/* Page - Home */
+/* =========================================================================
+ * Page d'accueil
+ * ========================================================================= */
 
 .home_index .mosaic {
   margin: 23px 0 3px 0;
 }
 
-/* Page - About */
+/* =========================================================================
+ * Page à propos
+ * ========================================================================= */
 
 .home_about {
   margin-top: 1em;
   margin-bottom: 2em;
 }
 
-/* Page - Contact */
+/* =========================================================================
+ * Page de contact
+ * ========================================================================= */
 
 .home_contact {
   margin-bottom: 5em;
@@ -525,7 +543,9 @@ FORM INPUT.error {
   }
 }
 
-/* Page - Register */
+/* =========================================================================
+ * Page d'enregistrement
+ * ========================================================================= */
 
 .account_register {
   border-top: solid 2px @darkgrey;
@@ -612,7 +632,9 @@ FORM INPUT.error {
   }
 }
 
-/* Page - Login */
+/* =========================================================================
+ * Page de connexion
+ * ========================================================================= */
 
 .account_login {
   border-top: solid 2px @darkgrey;
@@ -660,7 +682,9 @@ FORM INPUT.error {
   }
 }
 
-/* Page - Designer */
+/* =========================================================================
+ * Pages designer
+ * ========================================================================= */
 
 .designer {
   padding-top: 23px;
@@ -755,7 +779,9 @@ FORM INPUT.error {
 //.centered-container { position: relative; }
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 
-/* Modales */
+/* =========================================================================
+ * Modales
+ * ========================================================================= */
 
 // FIXME: position sur BODY, Opera !
 //body { position: relative; }
