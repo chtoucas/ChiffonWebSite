@@ -8,21 +8,36 @@
 @white: #fff;
 @red: #f00;
 
+// Fontes.
+
+// 16px (taille par défaut d'une fonte) * .625 = 10px
+@font_size: percentage(0.625);
+
+// Couleurs.
+
 @text_color: @black;
 @current_link_color: @red;
 @error_color: @red;
-         
+
 // Dimensions.
 
-@grid_column_width: 220px;
 @grid_inter_width: 20px;
-@grid_75_width: (3 * @grid_column_width + 2 * @grid_inter_width);
-@grid_100_width: (4 * @grid_column_width + 3 * @grid_inter_width);
-              
+@grid_1_width: 220px;
+@grid_2_width: (2 * @grid_1_width + @grid_inter_width);
+@grid_3_width: (3 * @grid_1_width + 2 * @grid_inter_width);
+@grid_4_width: (4 * @grid_1_width + 3 * @grid_inter_width);
+
+// Mosaïque de motifs.
+
+@mosaic_1_width: (@grid_1_width + 2 * @grid_inter_width);
+@mosaic_2_width: (@grid_2_width + @grid_inter_width);
+@mosaic_3_width: (@grid_3_width + @grid_inter_width);
+@mosaic_4_width: (@grid_4_width + @grid_inter_width);
+
 // Motifs.
-               
-@preview_width: @grid_column_width;
+
+@preview_width: @grid_1_width;
 @preview_height: 160px;
 
-@pattern_width: @grid_75_width;
+@pattern_width: @grid_3_width;
 @pattern_heigth: 520px;

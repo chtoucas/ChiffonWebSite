@@ -50,8 +50,7 @@ module.exports = function(grunt) {
     lessSources: {
       screen: {
         src: mapCss('chiffon.less'),
-        dest: mapCss('chiffon.css'),
-        doc: mapLog('chiffon.html')
+        dest: mapCss('chiffon.css')
       }
     },
 
@@ -61,8 +60,8 @@ module.exports = function(grunt) {
       css: {
         screen: {
           src: [
-            'normalize-1.1.3.css',
-            'chiffon.helpers.css',
+            'normalize-2.1.3.css',
+            'chiffon.h5bp.css',
             'chiffon.css'
           ].map(mapCss),
           dest: mapCss('_screen-<%= version %>.css')
@@ -103,12 +102,24 @@ module.exports = function(grunt) {
     //  css: { src: '<%= sources.css %>' }
     //},
 
+
     // Analyse des fichiers CSS via CSSLint.
     csslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
       default: {
         options: { formatters: [ {id: 'text', dest: mapLog('csslint.log')} ] },
         src: '<%= sources.css %>'
+      }
+    },
+
+    recess: {
+      options: {
+        noIDs: false,
+        noOverqualifying: false,
+        noUnderscores: false
+      },
+      screen: {
+        src: mapCss('chiffon.less')
       }
     },
 
@@ -120,7 +131,9 @@ module.exports = function(grunt) {
           keepSpecialComments: 0,
           report: 'min'
         },
-        files: { '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>' }
+        files: {
+          '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>'
+        }
       }
     },
 
@@ -291,7 +304,6 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
   });
 
-  grunt.loadNpmTasks('grunt-lodash');
   //grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -299,10 +311,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-lodash');
+  grunt.loadNpmTasks('grunt-recess');
 
-  grunt.registerTask('lint', ['jshint', 'csslint']);
+  grunt.registerTask('lintcss', ['recess', 'csslint']);
+  grunt.registerTask('lintjs', ['jshint']);
+  grunt.registerTask('lint', ['lintcss', 'lintjs']);
+
   grunt.registerTask('buildcss', ['less', 'cssmin']);
   grunt.registerTask('buildjs', ['lodash', 'uglify']);
   grunt.registerTask('build', ['buildcss', 'buildjs']);
+
   grunt.registerTask('default', ['lint', 'build']);
 };

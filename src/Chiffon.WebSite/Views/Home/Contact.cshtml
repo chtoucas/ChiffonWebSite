@@ -6,7 +6,7 @@
 <div class="home_contact grey clr">
  <h2 class="center serif serif_large">@VR.HomeContact_TitleStart <a href="mailto:contact@pourquelmotifsimone.com" class=underline>contact@pourquelmotifsimone.com</a> @VR.HomeContact_TitleEnd
  </h2>
- <ul id=designers>
+ <ul class=designers>
   @foreach (var designer in Model) {
    <li class=serif>
     <h3 class=strike><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h3>

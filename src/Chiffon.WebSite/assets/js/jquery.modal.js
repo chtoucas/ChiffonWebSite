@@ -88,7 +88,7 @@
 
     show: function() {
       if (this.options.showClose) {
-        this.closeButton = $('<a href="#" rel="modal:close" class=close>' + this.options.closeText + '</a>');
+        this.closeButton = $('<a href="#" rel="modal:close" class="close ir">' + this.options.closeText + '</a>');
         this.$elm.append(this.closeButton);
       }
       this.$elm.addClass(this.options.modalClass + ' current');

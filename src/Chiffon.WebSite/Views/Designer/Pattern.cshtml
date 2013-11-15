@@ -18,10 +18,10 @@
   </li>
  }
 </ul>
-@* 
+@*
  Navigation dans les différentes vues du motif.
- *@
-<p id=nav_views>
+*@
+<p id=nav_views class=nav_views>
  @if (viewCount > 1) {
   <span class=prev_noop>@VR.Pager_Previous</span>
   <a class="underline hide prev" href="#">@VR.Pager_Previous</a>
@@ -32,21 +32,23 @@
   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
   }
 </p>
-@* 
+@*
  Liste des motifs.
- *@
-<ul class="mosaic len_75 clr">
+*@
+<ul class="mosaic mosaic_75 clr">
  @foreach (var preview in Model.Previews) {
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
-  <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
-   <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
-   <div class=watermark><span>Ref @preview.Reference</span></div>
-  </a></li>
+  <li>
+   <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+    <div class=watermark><span>Ref @preview.Reference</span></div>
+   </a>
+  </li>
  }
 </ul>
-@* 
+@*
  Pagination.
- *@
+*@
 @if (Model.PageCount > 1) {
  @ViewHelpers.Pager(Url, Model)
 }

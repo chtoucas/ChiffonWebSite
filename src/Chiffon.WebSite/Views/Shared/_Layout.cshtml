@@ -21,24 +21,24 @@
 <body>
  <header>
   <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
-  <nav id=nav_lang class=clr>
+  <nav class="clr lang">
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
-  <nav id=nav_main class="clr @ViewBag.MainMenuClass">
+  <nav class="clr nav_main @ViewBag.MainMenuClass">
    <ul class=center>
-    <li><a href="@Url.RouteUrl(RouteName.Home.Index)" id=nav_home>@VR.Layout_Nav_Home</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Home.About)" id=nav_about>@VR.Layout_Nav_About</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.About)" class=about>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" id=nav_contact>@VR.Layout_Nav_Contact</a></li>
+    <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" class=contact>@VR.Layout_Nav_Contact</a></li>
     @*<li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" id=nav_newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+ <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
     <li class=right>
      @if (User.Identity.IsAuthenticated) {
       <a href="#" id=nav_account>Mon compte</a>
      }
      else {
-      <a href="@Url.RouteUrl(RouteName.Account.Login)" id=nav_login rel="modal:open">Login</a>
+      <a href="@Url.RouteUrl(RouteName.Account.Login)" class=login rel="modal:open">Login</a>
      }
     </li>
    </ul>

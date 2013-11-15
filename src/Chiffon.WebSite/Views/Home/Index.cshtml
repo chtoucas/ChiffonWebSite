@@ -5,11 +5,14 @@
 }
 
 <div class="home_index">
- <ul class="mosaic len_100 clr">
+ @* XXX: mosaic_100 *@
+ <ul class="mosaic clr">
   @foreach (var preview in Model) {
-   <li><a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" rel="@ViewBag.ModalRelation" class="vignette @preview.CssClass">
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
-   </a></li>
+   <li>
+    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" rel="@ViewBag.ModalRelation" class="vignette @preview.CssClass">
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+    </a>
+   </li>
   }
  </ul>
 </div>
