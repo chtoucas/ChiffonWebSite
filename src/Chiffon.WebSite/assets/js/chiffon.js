@@ -1,4 +1,4 @@
-﻿/*global args, yepnope, _*/
+﻿/*global yepnope, _*/
 
 var Chiffon = (function(window, undef) {
   'use strict';
@@ -137,6 +137,6 @@ var Chiffon = (function(window, undef) {
 //  Cf. http://kangax.github.io/es5-compat-table/
 // TODO: Désactiver aussi pour les petits écrans ?
 //  Cf. http://www.quirksmode.org/blog/archives/2012/03/windowouterwidt.html
-if (undefined !== args && typeof Function.prototype.bind === 'function') {
-  Chiffon.main(args);
+if (undefined !== this.args && typeof Function.prototype.bind === 'function') {
+  Chiffon.main(this.args);
 }

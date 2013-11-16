@@ -106,7 +106,7 @@ module.exports = function(grunt) {
     // Analyse des fichiers CSS via CSSLint.
     csslint: {
       // NB: Chaque fichier contient ses propres instructions d'analyse.
-      default: {
+      chiffon: {
         options: { formatters: [ {id: 'text', dest: mapLog('csslint.log')} ] },
         src: '<%= sources.css %>'
       }
@@ -220,7 +220,7 @@ module.exports = function(grunt) {
         dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js'),
         options: {
           modifier: 'modern',
-          include: ['defaults', 'extend', 'debounce'],
+          include: ['debounce', 'defaults', 'extend', 'rest'],
           exports: ['global'],
           flags: ['source-map']
         }
