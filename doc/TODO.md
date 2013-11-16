@@ -1,7 +1,8 @@
 TODO
 ====
 
-* Unkowned HTML5 elements to IE
+* Unknowned HTML5 elements to IE.
+* Supprimer un package PS avant la mise à jour.
 
 * Cf. CommerceShop
 

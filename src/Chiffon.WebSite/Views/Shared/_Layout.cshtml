@@ -24,7 +24,7 @@
   <nav class="clr lang">
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
-  <nav class="clr nav_main @ViewBag.MainMenuClass">
+  <nav class="clr main @ViewBag.MainMenuClass">
    <ul class=center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -46,7 +46,7 @@
   @RenderSection("SecondaryNav", false /* required */)
  </header>
  @RenderBody()
- <footer class=darkgrey>
+ <footer>
   <p>@Html.Raw(VR.Layout_DisclaimerHtml)</p>
   <p>@VR.Layout_Copyright</p>
  </footer>

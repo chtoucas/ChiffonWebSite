@@ -1,4 +1,6 @@
-﻿// TODO:
+﻿/*csslint box-model:false*/
+
+// TODO:
 // - no margin for paragraph in sidebar
 // - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
 
@@ -7,11 +9,6 @@
 /* =========================================================================
  * Valeurs par défaut (H5BP v4.3.0)
  * ========================================================================= */
-
-//HTML {
-//  font-size: 1em;
-//  line-height: 1.4;
-//}
 
 HTML, BUTTON, INPUT, SELECT, TEXTAREA {
   color: @text_color;
@@ -35,49 +32,45 @@ TEXTAREA {
  * Règles générales
  * ========================================================================= */
 
-// XXX: À revoir ?
-BODY, INPUT, .sansserif {
+// XXX: BODY, INPUT ?
+HTML {
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: @font_size;
   line-height: 1.4;
 }
-
 /* Listes
  * ====== */
 
 UL {
   padding: 0;
   margin: 0;
-}
-
-/* Liste centrée : UL > LI */
-UL.center LI {
-  display: inline-block;
+  // Liste horizontale.
+  &.inline LI {
+    float: left;
+  }
+  // Liste centrée. Dépend de la classe ".center" qui centre le texte.
+  &.center LI {
+    display: inline-block;
+  }
 }
 
 /* Menus
  * ===== */
 
-NAV UL, NAV OL {
-  list-style: none;
-  list-style-image: none;
-}
+NAV {
+  UL, OL {
+    list-style: none;
+    list-style-image: none;
 
-/* Menu horizontal : UL > LI > A */
-// XXX: Utiliser plutôt le selecteur NAV.inline ?
-UL.inline {
-  LI {
-    float: left;
-  }
-
-  A {
-    display: inline-block;
+    A {
+      // Dans un menu, on donne plus d'impact physique aux liens.
+      display: inline-block;
+    }
   }
 }
 
 /* Liens
  * ----- */
-
 A {
   color: @black;
   text-decoration: none;
@@ -133,30 +126,31 @@ A {
 .underline {
   text-decoration: underline;
 }
-
-// XXX: À supprimer ?
-.darkgrey {
-  color: @darkgrey;
-}
-
-// XXX: À supprimer ?
-.grey {
-  color: @grey;
-}
-
+      
+/* Fontes */
+     
 .serif {
   font-family: "Droid Serif", Georgia, "Times New Roman", serif;
   font-style: italic;
 }
 
 .serif_medium {
-  font-size: 2.8em;
+  font-size: @font_size_medium;
   line-height: 1.5em;
 }
 
 .serif_large {
-  font-size: 3.6em;
+  font-size: @font_size_large;
   line-height: 1.5em;
+}
+      
+.sansserif {
+  font-family: sans-serif;
+}
+
+// XXX: À supprimer ?
+.grey {
+  color: @grey;
 }
 
 .highlight:focus {
@@ -301,6 +295,7 @@ A {
 /* Disposition par défaut */
 
 BODY {
+  // On centre le corps de la page.
   width: @grid_4_width;
   margin: 0 auto;
 }
@@ -311,9 +306,10 @@ HEADER {
 
 FOOTER {
   margin-bottom: 20px;
+  color: @darkgrey;
   text-transform: uppercase;
   border-top: solid 2px @grey;
-  font-variant: small-caps;
+  font-variant: small-caps;  
 
   P {
     margin: 20px 0 0;
@@ -356,7 +352,7 @@ NAV.lang {
 
 /* Menu principal */
 
-.nav_main {
+NAV.main {
   .right {
     position: absolute;
     right: 0;
@@ -364,37 +360,41 @@ NAV.lang {
   }
 
   UL {
+    // On utilise une position relative pour que l'élément ".right" se positionne
+    // correctement à droite de la liste.
     position: relative;
-    height: 58px;
     text-transform: uppercase;
   }
 
   LI {
-    margin: 22px 10px 0 0;
+    margin: 12px 0;
+  }
+
+  A {
+    padding: 10px;
   }
 }
 
 /* Menu des designers */
 
-.nav_designers {
+NAV.designers {
   .last {
     margin-right: 0;
   }
 
   UL {
-    height: 66px;
     font-size: 1.8em;
     font-style: italic;
   }
 
   LI {
     width: @grid_1_width;
-    margin: 22px @grid_inter_width 0 0;
+    margin: 11px @grid_inter_width 11px 0;
     text-align: center;
   }
 
   A {
-    padding: 0 .5em;
+    padding: 10px .5em;
     background: @white;
   }
 }
@@ -689,26 +689,6 @@ FORM INPUT.error {
 .designer {
   padding-top: 23px;
 
-  #info {
-    float: right;
-    width: @grid_1_width;
-    font-size: 1.1em;
-
-    &.sticky {
-      position: fixed;
-      background-color: @white;
-
-      &.top {
-        top: 23px;
-      }
-    }
-
-    > P {
-      margin-top: 0;
-      margin-bottom: 2em;
-      font-size: 1.2em;
-    }
-  }
   // Mosaïque à trois colonnes.
   .mosaic {
     width: (@grid_3_width + @grid_inter_width);
@@ -744,6 +724,32 @@ FORM INPUT.error {
       A:hover, LI.current A {
         color: @current_link_color;
       }
+  }
+  
+  #info {
+    float: right;
+    width: @grid_1_width;
+    font-size: 1.1em;
+    color: @darkgrey;
+
+    &.sticky {
+      position: fixed;
+      background-color: @white;
+
+      &.top {
+        top: 23px;
+      }
+    }
+
+    > P {
+      margin-top: 0;
+      margin-bottom: 2em;
+      font-size: 1.2em;
+    }
+
+    A { 
+      color: @darkgrey;
+    }
   }
 }
 
