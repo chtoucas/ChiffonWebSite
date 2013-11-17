@@ -302,6 +302,7 @@
     <TypeScriptCompile Include="assets\js\typings\jquery.modal.d.ts" />
     <TypeScriptCompile Include="assets\js\typings\chiffon.jquery.d.ts" />
     <TypeScriptCompile Include="assets\js\typings\yepnope.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.validation\jquery.validation.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +383,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\typings\jquery.validation\jquery.validation.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>

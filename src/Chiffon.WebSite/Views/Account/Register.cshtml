@@ -5,7 +5,7 @@
   @Html.Raw(VR.AccountRegister_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
- <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=clr id=register_form>
+ <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=clearfix id=register_form>
   <p id=error_container class="serif serif_medium grey">@VR.AccountRegister_ValidationMessage</p>
   <div class=left>
    <p>

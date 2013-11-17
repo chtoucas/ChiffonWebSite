@@ -1,7 +1,7 @@
 ﻿
 /*
  * Adapté de H5BP v4.3.
- * On ne prend que la partie "Helpers" et on remplace "clearfix" par "clr".
+ * On ne garde que la partie "Helpers".
  */
 
 /*
@@ -50,14 +50,14 @@
  *    `:before` to contain the top-margins of child elements.
  */
 
-.clr:before,
-.clr:after { content: " "; /* 1 */ display: table; /* 2 */ }
+.clearfix:before,
+.clearfix:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
-.clr:after { clear: both; }
+.clearfix:after { clear: both; }
 
 /*
  * For IE 6/7 only
  * Include this rule to trigger hasLayout and contain floats.
  */
 
-.clr { *zoom: 1; }
+.clearfix { *zoom: 1; }

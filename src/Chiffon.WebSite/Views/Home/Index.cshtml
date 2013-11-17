@@ -6,7 +6,7 @@
 
 <div class="home_index">
  @* XXX: mosaic_100 *@
- <ul class="mosaic clr">
+ <ul class="mosaic clearfix">
   @foreach (var preview in Model) {
    <li>
     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" rel="@ViewBag.ModalRelation" class="vignette @preview.CssClass">

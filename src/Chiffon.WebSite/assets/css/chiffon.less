@@ -126,9 +126,9 @@ A {
 .underline {
   text-decoration: underline;
 }
-      
+
 /* Fontes */
-     
+
 .serif {
   font-family: "Droid Serif", Georgia, "Times New Roman", serif;
   font-style: italic;
@@ -143,7 +143,7 @@ A {
   font-size: @font_size_large;
   line-height: 1.5em;
 }
-      
+
 .sansserif {
   font-family: sans-serif;
 }
@@ -309,7 +309,7 @@ FOOTER {
   color: @darkgrey;
   text-transform: uppercase;
   border-top: solid 2px @grey;
-  font-variant: small-caps;  
+  font-variant: small-caps;
 
   P {
     margin: 20px 0 0;
@@ -688,7 +688,6 @@ FORM INPUT.error {
 
 .designer {
   padding-top: 23px;
-
   // Mosaïque à trois colonnes.
   .mosaic {
     width: (@grid_3_width + @grid_inter_width);
@@ -710,6 +709,10 @@ FORM INPUT.error {
 
     LI:hover, LI.current {
       background: no-repeat right center data-uri("img/arrow.png");
+
+      A {
+        color: @current_link_color;
+      }
     }
 
     A {
@@ -720,12 +723,8 @@ FORM INPUT.error {
       text-transform: uppercase;
       border-top: 1px solid @darkgrey;
     }
-
-      A:hover, LI.current A {
-        color: @current_link_color;
-      }
   }
-  
+
   #info {
     float: right;
     width: @grid_1_width;
@@ -747,7 +746,7 @@ FORM INPUT.error {
       font-size: 1.2em;
     }
 
-    A { 
+    P A {
       color: @darkgrey;
     }
   }
@@ -805,8 +804,7 @@ FORM INPUT.error {
   margin: auto;
 
   &, A, INPUT, TEXTAREA, .grey {
-    //color: @white !important;
-    color: @white;
+    color: @white !important;
   }
 
   .close {

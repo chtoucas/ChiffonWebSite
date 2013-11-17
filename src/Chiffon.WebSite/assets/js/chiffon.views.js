@@ -380,20 +380,16 @@ Chiffon.Views = (function(window, undef) {
     initCore: $.noop
   };
 
-  Views.Create = function(proto, layout) {
+  Views.Create = function(proto /*, mixins */) {
+    var mixins = _.rest(arguments, 1);
     var view = function(context) { View.call(this, context); };
-    var args = [view.prototype, proto, layout]
-      .concat(_.rest(arguments, 2))
-      .concat(View.prototype);
+    var args = [view.prototype, proto].concat(mixins).concat(View.prototype);
     _.defaults.apply(undef, args);
     return view;
   };
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      // On ouvre les liens externes dans une nouvelle fenêtre.
-      $('A[rel=external]').external();
-
       // Pour les visiteurs anonymes uniquement, on active les modales.
       if (!this.context.isAuth) {
         // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
@@ -402,11 +398,12 @@ Chiffon.Views = (function(window, undef) {
 
           $(this).modal({ closeText: ł('%modal.close') });
         });
-      } /* else {
-          // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
-          //$('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
-          //  .appendTo('body').modal({ closeText: ł('%modal.close') });
-        } */
+      }
+      //else {
+      // // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
+      // $('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
+      //   .appendTo('body').modal({ closeText: ł('%modal.close') });
+      //}
     }
   };
 
@@ -439,7 +436,8 @@ Chiffon.Views = (function(window, undef) {
   Views.Simple = Views.Create({}, LayoutMixin);
 
   Views.Simple.Create = function(fn) {
-    return Views.Create.apply(undef, [{ initCore: fn }, LayoutMixin].concat(_.rest(arguments, 1)));
+    var mixins = _.rest(arguments, 1);
+    return Views.Create.apply(undef, [{ initCore: fn }, LayoutMixin].concat(mixins));
   };
 
   return Views;
@@ -451,7 +449,10 @@ Chiffon.Views.Home = (function(Simple) {
 
   return {
     About: Simple,
-    Contact: Simple,
+    Contact: Simple.Create(function() {
+      // On ouvre les liens externes dans une nouvelle fenêtre.
+      $('A[rel=external]').external();
+    }),
 
     Index: Simple.Create(function() {
       $('.vignette').watermark(ł('%preview.watermark'));
@@ -515,7 +516,12 @@ Chiffon.Views.Designer = (function(window, Views) {
   var location = window.location;
   var create = Views.Create;
   var Components = Chiffon.Components;
-  var DesignerLayoutMixin;
+
+  var DesignerLayoutMixin = {
+    initLayout: function() {
+      Components.StickyInfo();
+    }
+  };
 
   var Designer = {
     Index: create({}, DesignerLayoutMixin),
