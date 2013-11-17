@@ -19,18 +19,18 @@ $tools = @(
   # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement vers une version spécifique.
   @{
     'Name' = 'NuGet'
-    'Version' = '2.7.2'
+    'Version' = '2.7.3'
     'Source' = 'http://www.nuget.org/nuget.exe'
   }
   @{
     'Name' = 'Node'
-    'Version' = '0.10.21'
+    'Version' = '0.10.22'
     'Source' = 'http://nodejs.org/dist/v0.10.21/node.exe'
   }
   @{
     'Name' = 'Node Package Manager'
-    'Version' = '1.3.13'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.13.zip'
+    'Version' = '1.3.14'
+    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.14.zip'
   }
   # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
   @{
