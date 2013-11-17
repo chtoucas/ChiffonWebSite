@@ -10,9 +10,9 @@
  * Valeurs par défaut (H5BP v4.3.0)
  * ========================================================================= */
 
-HTML, BUTTON, INPUT, SELECT, TEXTAREA {
+/*HTML, BUTTON, INPUT, SELECT, TEXTAREA {
   color: @text_color;
-}
+}*/
 
 AUDIO, CANVAS, IMG, VIDEO {
   vertical-align: middle;
@@ -38,6 +38,11 @@ HTML {
   font-size: @font_size;
   line-height: 1.4;
 }
+
+P {
+  color: @grey;
+}
+
 /* Listes
  * ====== */
 
@@ -146,11 +151,6 @@ A {
 
 .sansserif {
   font-family: sans-serif;
-}
-
-// XXX: À supprimer ?
-.grey {
-  color: @grey;
 }
 
 .highlight:focus {
@@ -269,7 +269,6 @@ A {
 
 .mosaic {
   width: @mosaic_4_width;
-  padding: 0;
   overflow: hidden;
   list-style-type: none;
 
@@ -306,13 +305,13 @@ HEADER {
 
 FOOTER {
   margin-bottom: 20px;
-  color: @darkgrey;
   text-transform: uppercase;
   border-top: solid 2px @grey;
   font-variant: small-caps;
 
   P {
     margin: 20px 0 0;
+    color: @darkgrey;
   }
 }
 
@@ -356,7 +355,6 @@ NAV.main {
   .right {
     position: absolute;
     right: 0;
-    margin-right: 0;
   }
 
   UL {
@@ -479,7 +477,7 @@ FORM INPUT.error {
 
   .email {
     padding: 2em 0;
-    font-size: 13px;
+    font-style: italic;
     border-top: 1px solid @grey;
     border-bottom: 1px solid @grey;
   }
@@ -491,19 +489,17 @@ FORM INPUT.error {
 
   .web {
     margin-top: 1em;
-    font-size: 13px;
-    font-style: normal;
     text-align: right;
   }
 
   .designers {
-    font-size: 1.538em;
-    font-style: italic;
-
     LI {
-      float: left;
       width: @grid_1_width;
       margin-right: @grid_inter_width;
+
+      LI {
+        font-size: 1.3em;
+      }
 
       &:last-child {
         margin-right: 0;
@@ -512,22 +508,11 @@ FORM INPUT.error {
   }
 
   H2 {
-    padding: .5em 0 1em 0;
-    margin: 0;
-    font-weight: normal;
-    border-top: 2px solid @darkgrey;
-
-    A {
-      display: block;
-      font-size: .7em;
-    }
-  }
-
-  H3 {
     width: 100%;
     padding: 1em 0;
     margin: 0;
     margin-bottom: 1.2em;
+    font-size: 1.8em;
     font-weight: normal;
     border-color: @grey;
 
@@ -537,8 +522,20 @@ FORM INPUT.error {
     }
   }
 
+  P {
+    padding: .5em 0 1em 0;
+    margin: 0;
+    font-weight: normal;
+    color: @grey;
+    border-top: 2px solid @darkgrey;
+
+    A {
+      display: block;
+      font-size: .7em;
+    }
+  }
+
   UL {
-    padding: 0;
     list-style-type: none;
   }
 }
@@ -702,11 +699,6 @@ FORM INPUT.error {
     font-size: 1.1em;
     border-bottom: 1px solid @darkgrey;
 
-    UL {
-      padding: 0;
-      margin: 0;
-    }
-
     LI:hover, LI.current {
       background: no-repeat right center data-uri("img/arrow.png");
 
@@ -803,8 +795,8 @@ FORM INPUT.error {
   height: auto;
   margin: auto;
 
-  &, A, INPUT, TEXTAREA, .grey {
-    color: @white !important;
+  &, P, A, LABEL, INPUT, TEXTAREA {
+    color: @white;
   }
 
   .close {
@@ -814,19 +806,27 @@ FORM INPUT.error {
     display: block;
     width: 30px;
     height: 30px;
-    //text-indent: -9999px;
     background: data-uri("img/close.png") no-repeat 0 0;
   }
 
   .account_login {
     border-top: none;
+
+    INPUT {
+      color: @white;
+    }
   }
 
   .account_register {
     border-top: none;
 
-    INPUT[type=submit]:hover {
-      border-color: @white;
+    INPUT {
+      color: @white;
+
+      &[type=submit]:hover {
+        color: @white;
+        border-color: @white;
+      }
     }
   }
 }

@@ -1,12 +1,12 @@
 ﻿@model RegisterViewModel
 
 <div class=account_register>
- <p class="serif serif_large grey center">
+ <p class="serif serif_large center">
   @Html.Raw(VR.AccountRegister_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=clearfix id=register_form>
-  <p id=error_container class="serif serif_medium grey">@VR.AccountRegister_ValidationMessage</p>
+  <p id=error_container class="serif serif_medium">@VR.AccountRegister_ValidationMessage</p>
   <div class=left>
    <p>
     <label for="name" class=break>* @VR.AccountRegister_Lastname</label>
@@ -34,7 +34,7 @@
    </p>
   </div>
  </form>
- <p class="serif serif_large grey center">
+ <p class="serif serif_large center">
   <a href="@Url.RouteUrl(RouteName.Account.Login)" class=underline rel="@ViewBag.ModalRelation">@VR.AccountRegister_Login</a>
  </p>
 </div>
