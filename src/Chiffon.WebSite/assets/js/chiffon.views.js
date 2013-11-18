@@ -267,7 +267,7 @@ Chiffon.Components = (function(window, undef) {
 
     function handleScrollEventForMediumBlock() {
       var scrollLimit;
-      var stickyClass = 'sticky top';
+      var stickyClass = 'info_sticky info_top';
       var isSticky = false;
 
       function stick() {
@@ -305,7 +305,7 @@ Chiffon.Components = (function(window, undef) {
     // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
     // pour qu'il soit toujours visible on lui donne une position fixe.
     function setupSmallBlock() {
-      $info.addClass('sticky');
+      $info.addClass('info_sticky');
       $info.css({ top: infoTop + 'px', left: infoLeft + 'px' });
     }
 

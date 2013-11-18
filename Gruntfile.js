@@ -114,7 +114,6 @@ module.exports = function(grunt) {
 
     recess: {
       options: {
-        noIDs: false,
         noOverqualifying: false,
         noUnderscores: false
       },
@@ -202,6 +201,7 @@ module.exports = function(grunt) {
     //},
 
     less: {
+      // TODO: Les chemins vers les sources sont incorrects.
       options: {
         ieCompat: true,
         strictMath: true,
@@ -213,6 +213,11 @@ module.exports = function(grunt) {
           '<%= lessSources.screen.dest %>': '<%= lessSources.screen.src %>'
         }
       }
+    },
+
+    watch: {
+      files:['<%= lessSources.screen.src %>'],
+      tasks: ['less']
     },
 
     lodash: {
@@ -310,6 +315,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jslint');
   grunt.loadNpmTasks('grunt-lodash');
   grunt.loadNpmTasks('grunt-recess');

@@ -68,24 +68,24 @@
 }
 
 @*@helper LanguageMenu(ChiffonLanguage language)
-{
- switch (language) {
-  case ChiffonLanguage.English:
- <ul class="inline right">
-  <li>EN</li>
-  <li class=sep>/</li>
-  <li><a class=reverse href="//pourquelmotifsimone.com">FR</a></li>
- </ul>
-   break;
-  case ChiffonLanguage.Default:
- <ul class="inline right">
-  <li><a class=reverse href="//en.pourquelmotifsimone.com">EN</a></li>
-  <li class=sep>/</li>
-  <li>FR</li>
- </ul>
-   break;
- }
-}*@
+ {
+  switch (language) {
+   case ChiffonLanguage.English:
+  <ul class="inline float_right">
+   <li>EN</li>
+   <li class=sep>/</li>
+   <li><a class=reverse href="//pourquelmotifsimone.com">FR</a></li>
+  </ul>
+    break;
+   case ChiffonLanguage.Default:
+  <ul class="inline float_right">
+   <li><a class=reverse href="//en.pourquelmotifsimone.com">EN</a></li>
+   <li class=sep>/</li>
+   <li>FR</li>
+  </ul>
+    break;
+  }
+ }*@
 
 @*@helper GoogleAnalytics(ChiffonConfig config)
 {

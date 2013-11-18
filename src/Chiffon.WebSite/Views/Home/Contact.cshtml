@@ -3,15 +3,15 @@
 
 @model IEnumerable<Designer>
 
-<div class="home_contact clearfix">
- <p class="center serif serif_large">
-  @VR.HomeContact_TitleStart <a href="mailto:contact@pourquelmotifsimone.com" class=underline>contact@pourquelmotifsimone.com</a> @VR.HomeContact_TitleEnd
+<div class=home_contact>
+ <p class="text_center serif serif_large">
+  @VR.HomeContact_TitleStart <a href="mailto:contact@pourquelmotifsimone.com" class="underline block">contact@pourquelmotifsimone.com</a> @VR.HomeContact_TitleEnd
  </p>
- <ul class="inline designers">
+ <ul class="inline designers clearfix">
   @foreach (var designer in Model) {
    <li>
-    <h2 class="serif strike"><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
-    <ul class=inline>
+    <h2 class="serif text_center strike"><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
+    <ul class="inline">
      <li class=img>
       <a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)" rel="@ViewBag.ModalRelation">
        <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" />
@@ -19,10 +19,10 @@
        <div class=watermark></div>
       </a>
      </li>
-     <li class=email><a class=underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
+     <li class="text_center email"><a class=underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
      @if (designer.WebSiteUrl.IsSome) {
       var website = designer.WebSiteUrl.Value.ToString().Replace("http://", String.Empty);
-      <li class="web sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
+      <li class="web text_right sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
      }
     </ul>
    </li>

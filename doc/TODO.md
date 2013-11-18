@@ -1,8 +1,15 @@
 TODO
 ====
 
-* Unknowned HTML5 elements to IE.
+Bugs
+----
 * Supprimer un package PS avant la mise à jour.
+
+1.1.0
+-----
+* Envoi d'un mail de confirmation à la création d'un compte.
+* Pages d'erreur.
+* Finaliser l'outil de déploiement.
 
 * Cf. CommerceShop
 
@@ -35,6 +42,7 @@ Migrer vers ASP.Net MVC 5 :
 
 Améliorer l'internationalisation :
 * http://afana.me/post/aspnet-mvc-internationalization.aspx
+* http://afana.me/post/aspnet-mvc-internationalization-store-strings-in-database-or-xml.aspx
 * http://attributerouting.net/
 
 MSBuild :

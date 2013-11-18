@@ -129,6 +129,12 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
+    <Compile Include="..\Chiffon.WebSite\Handlers\PatternImageHandler.cs">
+      <Link>Handlers\PatternImageHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Chiffon.WebSite\Handlers\PatternImageQuery.cs">
+      <Link>Handlers\PatternImageQuery.cs</Link>
+    </Compile>
     <Compile Include="App_Start\AppActivator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -158,9 +164,7 @@
       <Name>Chiffon</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
