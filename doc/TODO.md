@@ -11,6 +11,11 @@ Bugs
 * Pages d'erreur.
 * Finaliser l'outil de déploiement.
 
+
+Améliorer le design des CSS & des JS :
+* http://smacss.com/
+* http://javascriptweblog.wordpress.com/2011/05/31/a-fresh-look-at-javascript-mixins/
+
 * Cf. CommerceShop
 
 Pour les déploiements, peut-être s'inspirer de :
