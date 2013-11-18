@@ -8,7 +8,7 @@ var Chiffon = (function(window, undef) {
     ajaxTimeout: 3000
   };
   var defaultContext = {
-    baseUrl: '//wznw.org/chiffon/',
+    baseUrl: '//wznw.org/chiffon/js/',
     isAuth: false,
     locale: 'fr'
   };

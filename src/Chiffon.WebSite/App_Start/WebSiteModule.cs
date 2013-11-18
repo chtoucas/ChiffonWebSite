@@ -5,6 +5,7 @@
     using Chiffon.Data;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Mailers;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Web.Security;
@@ -37,6 +38,8 @@
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
 
             builder.RegisterType<QueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+
+            builder.RegisterType<AccountMailer>().As<IAccountMailer>().InstancePerHttpRequest();
 
             // > Data <
 

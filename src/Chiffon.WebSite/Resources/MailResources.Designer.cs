@@ -22,7 +22,7 @@ namespace Chiffon.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MailResources {
+    public class MailResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Chiffon.Resources {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chiffon.Resources.MailResources", typeof(MailResources).Assembly);
@@ -51,7 +51,7 @@ namespace Chiffon.Resources {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,11 +61,128 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Info.
+        /// </summary>
+        public static string Layout_Nav_About {
+            get {
+                return ResourceManager.GetString("Layout_Nav_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Contact.
+        /// </summary>
+        public static string Layout_Nav_Contact {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Se désinscrire.
+        /// </summary>
+        public static string Layout_Nav_Unsubscribe {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Unsubscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Le collectif pour quel motif, Simone ?.
+        /// </summary>
+        public static string Layout_Title {
+            get {
+                return ResourceManager.GetString("Layout_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à activé.
+        /// </summary>
+        public static string Welcome_ActivationLinkText {
+            get {
+                return ResourceManager.GetString("Welcome_ActivationLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre compte est.
+        /// </summary>
+        public static string Welcome_ActivationStart {
+            get {
+                return ResourceManager.GetString("Welcome_ActivationStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Je feuillette le portfolio.
+        /// </summary>
+        public static string Welcome_BrowseGallery {
+            get {
+                return ResourceManager.GetString("Welcome_BrowseGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nous vous informons que vos identifiants, dans un souci de confidentialité, ont un délai d&apos;expiration de 48H..
+        /// </summary>
+        public static string Welcome_ExpirationWarning {
+            get {
+                return ResourceManager.GetString("Welcome_ExpirationWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à renouveler votre mot de passe.
+        /// </summary>
+        public static string Welcome_RenewLinkText {
+            get {
+                return ResourceManager.GetString("Welcome_RenewLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Passé ce délai, il vous faudra.
+        /// </summary>
+        public static string Welcome_RenewStart {
+            get {
+                return ResourceManager.GetString("Welcome_RenewStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Bienvenue.
         /// </summary>
-        internal static string Welcome_Subject {
+        public static string Welcome_Subject {
             get {
                 return ResourceManager.GetString("Welcome_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simone vous remercient de l&apos;intérêt que vous avez souhaité leur accorder..
+        /// </summary>
+        public static string Welcome_Thanks {
+            get {
+                return ResourceManager.GetString("Welcome_Thanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre identifiant :.
+        /// </summary>
+        public static string Welcome_YourLogin {
+            get {
+                return ResourceManager.GetString("Welcome_YourLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre mot de passe :.
+        /// </summary>
+        public static string Welcome_YourPassword {
+            get {
+                return ResourceManager.GetString("Welcome_YourPassword", resourceCulture);
             }
         }
     }

@@ -7,7 +7,6 @@
     using Chiffon.Data;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Mailers;
     using Chiffon.Resources;
     using Narvalo;
 
@@ -15,7 +14,6 @@
     public class HomeController : PageController
     {
         readonly IQueries _queries;
-        IAccountMailer _accountMailer = new AccountMailer();
 
         public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IQueries queries)
             : base(environment, siteMap)
@@ -59,10 +57,6 @@
         public ActionResult Contact()
         {
             var model = _queries.ListDesigners(Culture).OrderBy(_ => _.Nickname.ValueOrElse(_.Lastname));
-
-            var mail = _accountMailer.Welcome();
-            mail.To.Add("Mon pseudo <mnomail@gmail.com>");
-            mail.Send();
 
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;

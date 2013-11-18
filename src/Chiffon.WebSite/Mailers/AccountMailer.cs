@@ -1,6 +1,7 @@
 namespace Chiffon.Mailers
 {
     using System;
+    using System.Net.Mail;
     using Chiffon.Resources;
     using Mvc.Mailer;
 
@@ -8,20 +9,23 @@ namespace Chiffon.Mailers
     public class AccountMailer : MailerBase, IAccountMailer
     {
         public AccountMailer()
+            : base()
         {
             MasterName = "_Layout";
         }
 
-        public virtual MvcMailMessage Welcome()
+        public virtual MvcMailMessage Welcome(MailAddress emailAddress, string publicKey, Uri baseUri, string languageName)
         {
-            ViewBag.EmailAddress = "monmail@gmail.com";
-            ViewBag.Password = "monmotdepasse";
+            ViewBag.LanguageName = languageName;
+            ViewBag.EmailAddress = emailAddress.Address;
+            ViewBag.Password = publicKey;
+            ViewBag.SiteUrl = baseUri.ToString();
 
             return Populate(x =>
             {
-                x.Subject = MailResources.Welcome_Subject;
                 x.ViewName = "Welcome";
-                //x.To.Add("some-email@example.com");
+                x.Subject = MailResources.Welcome_Subject;
+                x.To.Add(emailAddress);
             });
         }
     }

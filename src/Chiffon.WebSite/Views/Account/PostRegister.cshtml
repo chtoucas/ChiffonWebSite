@@ -1,6 +1,6 @@
 ﻿@model NewContactViewModel
 
-<div class=contact_register>
+<div class=account_register>
  <div class="serif serif_large text_center">
   <p>
    Bonjour @Model.Firstname @Model.Lastname,
@@ -14,7 +14,7 @@
    <span class=public_key>@Model.PublicKey</span>
   </p>
   <p>
-   Vous pouvez d'ores et déjà consulter notre <a href="/">catalogue</a>.
+   Vous pouvez d'ores et déjà consulter notre <a href="@Model.NextUrl">catalogue</a>.
   </p>
  </div>
 </div>

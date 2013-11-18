@@ -10,6 +10,7 @@ Bugs
 * Envoi d'un mail de confirmation à la création d'un compte.
 * Pages d'erreur.
 * Finaliser l'outil de déploiement.
+* L'enregistrement SPF semble incorrect.
 
 
 Améliorer le design des CSS & des JS :

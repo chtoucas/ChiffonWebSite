@@ -223,6 +223,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MailResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\MailResources.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailResources.en.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -358,10 +363,10 @@
     <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Account\PostRegister.cshtml" />
     <Content Include="Views\Account\RegisterTwice.cshtml" />
-    <Content Include="Views\AccountMailer\_Layout.cshtml" />
-    <Content Include="Views\AccountMailer\Welcome.cshtml" />
+    <Content Include="Views\AccountMailer\_LayoutX.cshtml" />
     <Content Include="Views\AccountMailer\_Layout.text.cshtml" />
     <Content Include="Views\AccountMailer\Welcome.text.cshtml" />
+    <Content Include="Views\AccountMailer\WelcomeX.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -374,9 +379,12 @@
     <Content Include="Views\Widget\LanguageMenu.en.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MailResources.en.resx" />
+    <EmbeddedResource Include="Resources\MailResources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailResources.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\MailResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MailResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SR.en.resx">

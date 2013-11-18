@@ -3,12 +3,13 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
-    //using System.Net.Mail;
+    using System.Net.Mail;
     //using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Mailers;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
@@ -16,18 +17,21 @@
     using Narvalo.Web.Security;
 
     [AllowAnonymous]
+    [CLSCompliant(false)]
     public class AccountController : PageController
     {
         //static readonly Regex EmailAddressRegex
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
 
         readonly ChiffonConfig _config;
+        readonly IAccountMailer _accountMailer;
         readonly IFormsAuthenticationService _formsService;
         readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
             ISiteMap siteMap,
+            IAccountMailer accountMailer,
             IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
@@ -37,6 +41,7 @@
             Requires.NotNull(memberService, "memberService");
 
             _config = config;
+            _accountMailer = accountMailer;
             _formsService = formsService;
             _memberService = memberService;
         }
@@ -89,8 +94,14 @@
                 if (contact.Message == null) { contact.Message = String.Empty; }
                 if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
 
-                //var publicKey = 
-                CreateContact_(contact);
+                var publicKey = CreateContact_(contact);
+
+                // Envoi de l'email de confirmation d'inscription.
+                var emailAddress = new MailAddress(
+                    contact.EmailAddress, contact.Firstname + " " + contact.Lastname);
+                _accountMailer
+                    .Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName)
+                    .SendAsync();
 
                 // FIXME: 
                 string userName = contact.Firstname + " " + contact.Lastname;
@@ -99,20 +110,21 @@
                 // FIXME: vérifier le contenu de l'URL.
                 // FIXME: rajouter un indicateur que tout s'est bien passé.
                 var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
-                if (nextUrl.IsSome) {
-                    return Redirect(nextUrl.ToString());
-                }
-                else {
-                    return RedirectToRoute(RouteName.Home.Index);
-                }
+                //if (nextUrl.IsSome) {
+                //    return Redirect(nextUrl.ToString());
+                //}
+                //else {
+                //    return RedirectToRoute(RouteName.Home.Index);
+                //}
 
-                //var model = new NewContactViewModel {
-                //    Firstname = contact.Firstname,
-                //    Lastname = contact.Lastname,
-                //    PublicKey = publicKey,
-                //};
+                var model = new NewContactViewModel {
+                    Firstname = contact.Firstname,
+                    Lastname = contact.Lastname,
+                    NextUrl = nextUrl.ValueOrElse(Environment.BaseUri).ToString(),
+                    PublicKey = publicKey,
+                };
 
-                //return View(ViewName.Contact.PostRegister, model);
+                return View(ViewName.Account.PostRegister, model);
             }
             else {
                 ViewBag.Title = SR.Account_Register_Title;
@@ -183,7 +195,7 @@
             return exists;
         }
 
-        void CreateContact_(RegisterViewModel contact)
+        string CreateContact_(RegisterViewModel contact)
         {
             var publicKey = CreateRandomPassword_(25);
 
@@ -206,7 +218,7 @@
                 }
             }
 
-            //return publicKey;
+            return publicKey;
         }
 
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx

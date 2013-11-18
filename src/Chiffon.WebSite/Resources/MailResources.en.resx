@@ -117,7 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Layout_Nav_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Layout_Nav_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Layout_Nav_Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="Layout_Title" xml:space="preserve">
+    <value>Pour quel motif, Simone ?</value>
+  </data>
+  <data name="Welcome_ActivationLinkText" xml:space="preserve">
+    <value>activation link</value>
+  </data>
+  <data name="Welcome_ActivationStart" xml:space="preserve">
+    <value>Here's your</value>
+  </data>
+  <data name="Welcome_BrowseGallery" xml:space="preserve">
+    <value>Browse the gallery</value>
+  </data>
+  <data name="Welcome_ExpirationWarning" xml:space="preserve">
+    <value>We remind you that you will have access to the collection for two days allowing you and your team to make a selection.</value>
+  </data>
+  <data name="Welcome_RenewLinkText" xml:space="preserve">
+    <value>renew your password.</value>
+  </data>
+  <data name="Welcome_RenewStart" xml:space="preserve">
+    <value>After this time, you will have to</value>
+  </data>
   <data name="Welcome_Subject" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="Welcome_ThanksHtml" xml:space="preserve">
+    <value>Welcome,&lt;br /&gt; Many thanks for your interest in the Simone project.</value>
+  </data>
+  <data name="Welcome_YourLogin" xml:space="preserve">
+    <value>Your login:</value>
+  </data>
+  <data name="Welcome_YourPassword" xml:space="preserve">
+    <value>Your password:</value>
   </data>
 </root>
