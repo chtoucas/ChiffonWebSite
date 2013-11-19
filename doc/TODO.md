@@ -1,16 +1,11 @@
 TODO
 ====
 
-Bugs
-----
-* Supprimer un package PS avant la mise à jour.
-
-1.1.0
------
-* Envoi d'un mail de confirmation à la création d'un compte.
 * Pages d'erreur.
 * Finaliser l'outil de déploiement.
 * L'enregistrement SPF semble incorrect.
+
+* link alternate (pour l'anglais & vice versa)
 
 
 Améliorer le design des CSS & des JS :

@@ -121,22 +121,22 @@
     <value>To browse our catalog, enter your password.</value>
   </data>
   <data name="AccountRegister_CompanyName" xml:space="preserve">
-    <value>Agency</value>
+    <value>Agency *</value>
   </data>
   <data name="AccountRegister_DescriptionHtml" xml:space="preserve">
-    <value>To obtain a password,&lt;span class=break /&gt; please fill out the form.</value>
+    <value>This catalog is reserved &lt;span&gt;to professionals&lt;/span&gt;.</value>
   </data>
   <data name="AccountRegister_EmailAddress" xml:space="preserve">
-    <value>Email</value>
+    <value>Email *</value>
   </data>
   <data name="AccountRegister_Firstname" xml:space="preserve">
-    <value>Firstname</value>
+    <value>Firstname *</value>
   </data>
   <data name="AccountRegister_Hello" xml:space="preserve">
     <value>Hello,</value>
   </data>
   <data name="AccountRegister_Lastname" xml:space="preserve">
-    <value>Name</value>
+    <value>Name *</value>
   </data>
   <data name="AccountRegister_Login" xml:space="preserve">
     <value>I already own a password</value>
@@ -151,13 +151,19 @@
     <value>Request your password</value>
   </data>
   <data name="AccountRegister_Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Register now</value>
   </data>
   <data name="AccountRegister_Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
   <data name="AccountRegister_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
+  </data>
+  <data name="AccountRegister_WarningHtml" xml:space="preserve">
+    <value>If this is your first time visiting, please &lt;span&gt;register&lt;/span&gt; using this form. Your new &lt;span&gt;account&lt;/span&gt; will be approved quickly.</value>
+  </data>
+  <data name="AccountRegister_Welcome" xml:space="preserve">
+    <value>Welcome</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>All</value>
@@ -181,7 +187,7 @@
     <value>© Pour quel motif, Simone ? 2013.</value>
   </data>
   <data name="Layout_DisclaimerHtml" xml:space="preserve">
-    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=break /&gt;Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
+    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
   </data>
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="Layout_Nav_Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Layout_Nav_Login" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>

@@ -10,6 +10,7 @@ var Chiffon = (function(window, undef) {
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
     isAuth: false,
+    isTouch: false,
     locale: 'fr'
   };
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
@@ -70,6 +71,11 @@ var Chiffon = (function(window, undef) {
       'vendor/jquery-2.0.3.min.js',
       Chiffon.getBundle('views')
     ];
+
+    // NB: Il n'est pas possible de détecter une tablette mais on peut s'approcher du résultat.
+    // Cf. https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+    // et http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+    context.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0;
 
     context.require = function(resources, onComplete) {
       yepnope({

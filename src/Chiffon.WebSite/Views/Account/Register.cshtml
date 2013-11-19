@@ -1,38 +1,52 @@
 ﻿@model RegisterViewModel
 
-<div class=account_register>
- <p class="serif serif_large text_center">
+<div class="account_register  text_center">
+ <p class="serif serif_large">
+  @Html.Raw(VR.AccountRegister_Welcome)
+ </p>
+ <p class="serif serif_large">
+  @Html.Raw(VR.AccountRegister_WarningHtml)
+ </p>
+ <p class="serif serif_medium">
   @Html.Raw(VR.AccountRegister_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
- <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=clearfix id=register_form>
+ <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" id=register_form>
   <p id=error_container class="serif serif_medium error_container">@VR.AccountRegister_ValidationMessage</p>
-  <div class=float_left>
-   <p>
-    <label for="name" class=block>* @VR.AccountRegister_Lastname</label>
-    @Html.TextBoxFor(_ => _.Lastname, new { @class = "highlight", @required = "required" })
-   </p>
-   <p>
-    <label for=firstname class=block>* @VR.AccountRegister_Firstname</label>
-    @Html.TextBoxFor(_ => _.Firstname, new { @class = "highlight", @required = "required" })
-   </p>
-   <p>
-    <label for=agency class=block>* @VR.AccountRegister_CompanyName</label>
-    @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required" })
-   </p>
-   <p>
-    <label for=email_address class=block>* @VR.AccountRegister_EmailAddress</label>
-    @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email" })
-   </p>
-  </div>
-  <div class=float_right>
-   <label for=subject class=block>@VR.AccountRegister_Message</label>
-   @Html.TextAreaFor(_ => _.Message)
-   @Html.HiddenFor(_ => _.ReturnUrl)
-   <p class=submit>
-    <input type=submit value="@VR.AccountRegister_Submit" />
-   </p>
-  </div>
+  @*<div class=float_left>*@
+  <p>
+   @*<label for=EmailAddress>@VR.AccountRegister_EmailAddress *</label>*@
+   @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.AccountRegister_EmailAddress })
+  </p>
+  <p>
+   @*<label for="Lastname">@VR.AccountRegister_Lastname *</label>*@
+   @Html.TextBoxFor(_ => _.Lastname, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_Lastname })
+  </p>
+  <p>
+   @*<label for=Firstname>@VR.AccountRegister_Firstname *</label>*@
+   @Html.TextBoxFor(_ => _.Firstname, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_Firstname })
+  </p>
+  <p>
+   @*<label for=CompanyName>@VR.AccountRegister_CompanyName *</label>*@
+   @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_CompanyName })
+  </p>
+  @*</div>*@
+  @*<div class=float_right>
+    <label for=subject class=block>@VR.AccountRegister_Message</label>
+    @Html.TextAreaFor(_ => _.Message)
+    <p class=submit>
+     <input type=submit value="@VR.AccountRegister_Submit" />
+    </p>
+   </div>*@
+  <p>
+   @*@Html.CheckBoxFor(_ => _.Newsletter)*@
+   <input type="checkbox" id="Newsletter" name="Newsletter" checked=checked />
+   <label for=Newsletter><span></span>Oui, je veux recevoir la gazette mensuelle des Simone !</label>
+  </p>
+  @Html.HiddenFor(_ => _.ReturnUrl)
+  <p>
+   <input type=submit value="@VR.AccountRegister_Submit" />
+  </p>
  </form>
  <p class="serif serif_large text_center">
   <a href="@Url.RouteUrl(RouteName.Account.Login)" class=underline rel="@ViewBag.ModalRelation">@VR.AccountRegister_Login</a>

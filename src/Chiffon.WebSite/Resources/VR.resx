@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
-    <value>Pour visualiser notre catalogue,&lt;span class=break /&gt; entrez le mot de passe qui vous a été attribué.</value>
+    <value>Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué.</value>
   </data>
   <data name="AccountRegister_CompanyName" xml:space="preserve">
-    <value>Agence</value>
+    <value>Agence *</value>
   </data>
   <data name="AccountRegister_DescriptionHtml" xml:space="preserve">
-    <value>Pour obtenir votre mot de passe,&lt;span class=break /&gt; veuillez remplir le formulaire.</value>
+    <value>Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous.</value>
   </data>
   <data name="AccountRegister_EmailAddress" xml:space="preserve">
-    <value>Email</value>
+    <value>Email *</value>
   </data>
   <data name="AccountRegister_Firstname" xml:space="preserve">
-    <value>Prénom</value>
+    <value>Prénom *</value>
   </data>
   <data name="AccountRegister_Hello" xml:space="preserve">
     <value>Bonjour,</value>
   </data>
   <data name="AccountRegister_Lastname" xml:space="preserve">
-    <value>Nom</value>
+    <value>Nom *</value>
   </data>
   <data name="AccountRegister_Login" xml:space="preserve">
     <value>J'ai déjà un mot de passe</value>
@@ -151,13 +151,19 @@
     <value>Demander un mot de passe</value>
   </data>
   <data name="AccountRegister_Submit" xml:space="preserve">
-    <value>Envoyer</value>
+    <value>Je m'inscris</value>
   </data>
   <data name="AccountRegister_Validate" xml:space="preserve">
     <value>Valider</value>
   </data>
   <data name="AccountRegister_ValidationMessage" xml:space="preserve">
     <value>Veuillez renseigner tous les champs entourés en rouge.</value>
+  </data>
+  <data name="AccountRegister_WarningHtml" xml:space="preserve">
+    <value>Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;.</value>
+  </data>
+  <data name="AccountRegister_Welcome" xml:space="preserve">
+    <value>Bienvenue,</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>Tous</value>
@@ -181,7 +187,7 @@
     <value>© Pour quel motif, Simone ? 2013.</value>
   </data>
   <data name="Layout_DisclaimerHtml" xml:space="preserve">
-    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=break /&gt;Conception graphique : Viviane Devaux. Mise en scène : chtoucas@narvalo.org.</value>
+    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Conception graphique : Viviane Devaux. Mise en scène : chtoucas@narvalo.org.</value>
   </data>
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="Layout_Nav_Home" xml:space="preserve">
     <value>Accueil</value>
+  </data>
+  <data name="Layout_Nav_Login" xml:space="preserve">
+    <value>Se connecter</value>
   </data>
   <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>

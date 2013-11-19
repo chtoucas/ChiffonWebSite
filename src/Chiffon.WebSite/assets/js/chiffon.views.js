@@ -370,6 +370,15 @@ Chiffon.Views = (function(window, undef) {
   var document = window.document;
   var Views = {};
 
+  function initModal() {
+    // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
+    $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
+      e.preventDefault();
+
+      $(this).modal({ closeText: ł('%modal.close') });
+    });
+  }
+
   Views.View = View = function(context) {
     this.context = context;
   };
@@ -390,14 +399,10 @@ Chiffon.Views = (function(window, undef) {
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      // Pour les visiteurs anonymes uniquement, on active les modales.
-      if (!this.context.isAuth) {
-        // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
-        $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
-          e.preventDefault();
-
-          $(this).modal({ closeText: ł('%modal.close') });
-        });
+      if (!this.context.isAuth && !this.context.isTouch) {
+        // Pour les visiteurs anonymes et n'utilisant pas une tablette, on active les modales.
+        // NB: L'assertion précédente n'est pas tout à fait juste (cf. remarque sur context.isTouch).
+        initModal();
       }
       //else {
       // // TODO: Utiliser un hashcode pour afficher la confirmation de compte.

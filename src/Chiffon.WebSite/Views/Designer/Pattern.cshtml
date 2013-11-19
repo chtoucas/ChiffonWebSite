@@ -41,7 +41,8 @@
   <li>
    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
-    <div class=watermark><span>Ref @preview.Reference</span></div>
+    @*<div class=watermark><span>Ref @preview.Reference</span></div>*@
+    <div class=watermark></div>
    </a>
   </li>
  }
