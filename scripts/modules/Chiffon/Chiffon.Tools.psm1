@@ -53,6 +53,9 @@ function Install-Tool  {
     return
   }
 
+  # On supprime la source locale (important au cas où celle-ci ne contient d'information de version)
+  Remove-Distfile $source
+
   if (!$installCore) { $installCore = New-InstallCore $name }
   [System.Uri] $source | Download-Tool | %{ & $installCore $_ }
 
@@ -277,6 +280,17 @@ function Download-Tool {
   Write-Host 'done'
 
   return $outFile
+}
+
+function Remove-Distfile {
+  param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [System.Uri] $source)
+
+  $distDir = Get-ToolPath 'dist' | New-Directory
+
+  $fileName = [System.IO.Path]::GetFileName($source.AbsolutePath)
+  $outFile = "$distDir\$fileName"
+
+  if (Test-Path $outFile) { Remove-File $outFile | Out-Null }
 }
 
 # --------------------------------------------------------------------------------------------------
