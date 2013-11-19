@@ -167,9 +167,9 @@ A {
   font-family: sans-serif;
 }
 
-.highlight:focus {
-  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
-}
+//.highlight:focus {
+//  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
+//}
 
 /* Overlay */
 
@@ -566,8 +566,9 @@ INPUT[type=checkbox] {
 
   + LABEL {
     font-size: 1.2em;
-    /*font-weight: normal;*/
+    font-weight: normal;
     text-transform: none;
+    cursor: pointer;
 
     SPAN {
       padding-left: 1em;
@@ -584,28 +585,21 @@ INPUT[type=checkbox] {
   }
 }
 
+.doubleline {
+  height: 1em;
+  background: data-uri("img/doubleline_grey.png") center no-repeat;
+}
+
 .account_register {
-  color: @grey;
   border-top: solid 2px @darkgrey;
 
-  .account_register INPUT[name="EmailAddress"] {
-    text-transform: none;
-  }
-
-  .public_key {
-    padding: .1em .5em;
-    color: @black;
-    border: 1px @black solid;
-  }
-  /*.submit {
-    margin-top: 2em;
-    text-align: right;
-  }*/
   .validation-summary-errors {
-    margin-bottom: 2em;
-    font-size: 1.3em;
     color: @error_color;
     text-align: center;
+  }
+
+  P.error_container {
+    margin: inherit;
   }
 
   P SPAN {
@@ -613,26 +607,21 @@ INPUT[type=checkbox] {
   }
 
   FORM {
-    /*width: 750px*/ /*79%*/
-    /*margin: 0 auto;*/
     color: @darkgrey;
 
     P {
       margin: 2em 0;
     }
-    /*.left {
-      margin-top: 0;
-    }*/
-  }
 
-  LABEL {
-    /*padding-bottom: .5em;*/
-    font-size: 1.2em;
-    font-weight: bold;
-    text-transform: uppercase;
+    LABEL:first-child {
+      display: none;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
   }
-
-  INPUT[type=text], INPUT[type=email], INPUT[type=submit] {
+  /*INPUT[type=text], INPUT[type=email], INPUT[type=submit] {*/
+  INPUT {
     width: 312px;
     height: 3.1em;
     padding: .5em 10px;
@@ -642,34 +631,29 @@ INPUT[type=checkbox] {
     background-color: transparent;
     border: 1px solid @darkgrey;
 
+    &:hover {
+      color: @darkgrey;
+      border-color: @grey;
+    }
+
     &[type=submit] {
-      /*width: 160px;*/
-      /*height: 32px;*/
       width: 334px;
       padding: 0;
-      font-weight: bold;
       font-size: 1.6em;
       color: @darkgrey;
 
-      &:hover {
+      /*&:hover {
         color: @black;
-        border-color: @black;
-      }
+        border-color: @grey;
+      }*/
     }
   }
-  /*TEXTAREA {
-    width: 434px;
-    height: 229px;
-    padding: .2em;
-    font-size: 1.4em;
-    font-style: italic;
-    background-color: transparent;
-    border: 1px solid @darkgrey;
-  }*/
+
   .error_container {
     text-align: center;
   }
 }
+
 /* =========================================================================
  * Page de connexion
  * ========================================================================= */
@@ -852,6 +836,10 @@ INPUT[type=checkbox] {
     background: data-uri("img/close.png") no-repeat 0 0;
   }
 
+  .doubleline {
+    background: data-uri("img/doubleline_white.png") center no-repeat;
+  }
+
   .account_login {
     border-top: none;
 
@@ -862,6 +850,14 @@ INPUT[type=checkbox] {
 
   .account_register {
     border-top: none;
+
+    P, LABEL {
+      color: @grey;
+    }
+
+      P SPAN {
+        color: @white;
+      }
 
     INPUT {
       color: @white;

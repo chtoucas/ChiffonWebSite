@@ -38,8 +38,8 @@
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
                     Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
                       $(MSBuildProjectDirectory)\**\.gitignore;
-                      $(MSBuildProjectDirectory)\bower_components;
-                      $(MSBuildProjectDirectory)\*.json" />
+                      $(MSBuildProjectDirectory)\js\bower_components;
+                      $(MSBuildProjectDirectory)\js\*.json" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_SourceFiles)"

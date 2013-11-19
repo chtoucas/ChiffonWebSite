@@ -61,6 +61,186 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
+        /// </summary>
+        public static string Account_PostRegister_BrowseGallery {
+            get {
+                return ResourceManager.GetString("Account_PostRegister_BrowseGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à À bientôt !.
+        /// </summary>
+        public static string Account_PostRegister_Byebye {
+            get {
+                return ResourceManager.GetString("Account_PostRegister_Byebye", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail..
+        /// </summary>
+        public static string Account_PostRegister_EmailHtml {
+            get {
+                return ResourceManager.GetString("Account_PostRegister_EmailHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte..
+        /// </summary>
+        public static string Account_PostRegister_Success {
+            get {
+                return ResourceManager.GetString("Account_PostRegister_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Agence *.
+        /// </summary>
+        public static string Account_Register_CompanyName {
+            get {
+                return ResourceManager.GetString("Account_Register_CompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous..
+        /// </summary>
+        public static string Account_Register_DescriptionHtml {
+            get {
+                return ResourceManager.GetString("Account_Register_DescriptionHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Email *.
+        /// </summary>
+        public static string Account_Register_EmailAddress {
+            get {
+                return ResourceManager.GetString("Account_Register_EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Prénom *.
+        /// </summary>
+        public static string Account_Register_Firstname {
+            get {
+                return ResourceManager.GetString("Account_Register_Firstname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bonjour,.
+        /// </summary>
+        public static string Account_Register_Hello {
+            get {
+                return ResourceManager.GetString("Account_Register_Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nom *.
+        /// </summary>
+        public static string Account_Register_Lastname {
+            get {
+                return ResourceManager.GetString("Account_Register_Lastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à J&apos;ai déjà un mot de passe.
+        /// </summary>
+        public static string Account_Register_Login {
+            get {
+                return ResourceManager.GetString("Account_Register_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à * Ces champs sont obligatoires.
+        /// </summary>
+        public static string Account_Register_MandatoryFields {
+            get {
+                return ResourceManager.GetString("Account_Register_MandatoryFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sujet.
+        /// </summary>
+        public static string Account_Register_Message {
+            get {
+                return ResourceManager.GetString("Account_Register_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mot de passe.
+        /// </summary>
+        public static string Account_Register_Password {
+            get {
+                return ResourceManager.GetString("Account_Register_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
+        /// </summary>
+        public static string Account_Register_RequestPassword {
+            get {
+                return ResourceManager.GetString("Account_Register_RequestPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Je m&apos;inscris.
+        /// </summary>
+        public static string Account_Register_Submit {
+            get {
+                return ResourceManager.GetString("Account_Register_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Valider.
+        /// </summary>
+        public static string Account_Register_Validate {
+            get {
+                return ResourceManager.GetString("Account_Register_Validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez renseigner tous les champs entourés en rouge..
+        /// </summary>
+        public static string Account_Register_ValidationMessage {
+            get {
+                return ResourceManager.GetString("Account_Register_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;..
+        /// </summary>
+        public static string Account_Register_WarningHtml {
+            get {
+                return ResourceManager.GetString("Account_Register_WarningHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bienvenue,.
+        /// </summary>
+        public static string Account_Register_Welcome {
+            get {
+                return ResourceManager.GetString("Account_Register_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué..
         /// </summary>
         public static string AccountLogin_DescriptionHtml {
@@ -70,155 +250,11 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Agence *.
-        /// </summary>
-        public static string AccountRegister_CompanyName {
-            get {
-                return ResourceManager.GetString("AccountRegister_CompanyName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous..
-        /// </summary>
-        public static string AccountRegister_DescriptionHtml {
-            get {
-                return ResourceManager.GetString("AccountRegister_DescriptionHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Email *.
-        /// </summary>
-        public static string AccountRegister_EmailAddress {
-            get {
-                return ResourceManager.GetString("AccountRegister_EmailAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prénom *.
-        /// </summary>
-        public static string AccountRegister_Firstname {
-            get {
-                return ResourceManager.GetString("AccountRegister_Firstname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bonjour,.
-        /// </summary>
-        public static string AccountRegister_Hello {
-            get {
-                return ResourceManager.GetString("AccountRegister_Hello", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nom *.
-        /// </summary>
-        public static string AccountRegister_Lastname {
-            get {
-                return ResourceManager.GetString("AccountRegister_Lastname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à J&apos;ai déjà un mot de passe.
-        /// </summary>
-        public static string AccountRegister_Login {
-            get {
-                return ResourceManager.GetString("AccountRegister_Login", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sujet.
-        /// </summary>
-        public static string AccountRegister_Message {
-            get {
-                return ResourceManager.GetString("AccountRegister_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mot de passe.
-        /// </summary>
-        public static string AccountRegister_Password {
-            get {
-                return ResourceManager.GetString("AccountRegister_Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
-        /// </summary>
-        public static string AccountRegister_RequestPassword {
-            get {
-                return ResourceManager.GetString("AccountRegister_RequestPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Je m&apos;inscris.
-        /// </summary>
-        public static string AccountRegister_Submit {
-            get {
-                return ResourceManager.GetString("AccountRegister_Submit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Valider.
-        /// </summary>
-        public static string AccountRegister_Validate {
-            get {
-                return ResourceManager.GetString("AccountRegister_Validate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veuillez renseigner tous les champs entourés en rouge..
-        /// </summary>
-        public static string AccountRegister_ValidationMessage {
-            get {
-                return ResourceManager.GetString("AccountRegister_ValidationMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;..
-        /// </summary>
-        public static string AccountRegister_WarningHtml {
-            get {
-                return ResourceManager.GetString("AccountRegister_WarningHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bienvenue,.
-        /// </summary>
-        public static string AccountRegister_Welcome {
-            get {
-                return ResourceManager.GetString("AccountRegister_Welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Tous.
         /// </summary>
         public static string Category_All {
             get {
                 return ResourceManager.GetString("Category_All", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Voir le motif &gt;.
-        /// </summary>
-        public static string Designer_SeePattern {
-            get {
-                return ResourceManager.GetString("Designer_SeePattern", resourceCulture);
             }
         }
         

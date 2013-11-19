@@ -120,56 +120,68 @@
   <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
     <value>Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué.</value>
   </data>
-  <data name="AccountRegister_CompanyName" xml:space="preserve">
+  <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
+    <value>Feuilleter le catalogue</value>
+  </data>
+  <data name="Account_PostRegister_Byebye" xml:space="preserve">
+    <value>À bientôt !</value>
+  </data>
+  <data name="Account_PostRegister_EmailHtml" xml:space="preserve">
+    <value>Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail.</value>
+  </data>
+  <data name="Account_PostRegister_Success" xml:space="preserve">
+    <value>Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte.</value>
+  </data>
+  <data name="Account_Register_CompanyName" xml:space="preserve">
     <value>Agence *</value>
   </data>
-  <data name="AccountRegister_DescriptionHtml" xml:space="preserve">
+  <data name="Account_Register_DescriptionHtml" xml:space="preserve">
     <value>Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous.</value>
   </data>
-  <data name="AccountRegister_EmailAddress" xml:space="preserve">
+  <data name="Account_Register_EmailAddress" xml:space="preserve">
     <value>Email *</value>
   </data>
-  <data name="AccountRegister_Firstname" xml:space="preserve">
+  <data name="Account_Register_Firstname" xml:space="preserve">
     <value>Prénom *</value>
   </data>
-  <data name="AccountRegister_Hello" xml:space="preserve">
+  <data name="Account_Register_Hello" xml:space="preserve">
     <value>Bonjour,</value>
   </data>
-  <data name="AccountRegister_Lastname" xml:space="preserve">
+  <data name="Account_Register_Lastname" xml:space="preserve">
     <value>Nom *</value>
   </data>
-  <data name="AccountRegister_Login" xml:space="preserve">
+  <data name="Account_Register_Login" xml:space="preserve">
     <value>J'ai déjà un mot de passe</value>
   </data>
-  <data name="AccountRegister_Message" xml:space="preserve">
+  <data name="Account_Register_MandatoryFields" xml:space="preserve">
+    <value>* Ces champs sont obligatoires</value>
+  </data>
+  <data name="Account_Register_Message" xml:space="preserve">
     <value>Sujet</value>
   </data>
-  <data name="AccountRegister_Password" xml:space="preserve">
+  <data name="Account_Register_Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
-  <data name="AccountRegister_RequestPassword" xml:space="preserve">
+  <data name="Account_Register_RequestPassword" xml:space="preserve">
     <value>Demander un mot de passe</value>
   </data>
-  <data name="AccountRegister_Submit" xml:space="preserve">
+  <data name="Account_Register_Submit" xml:space="preserve">
     <value>Je m'inscris</value>
   </data>
-  <data name="AccountRegister_Validate" xml:space="preserve">
+  <data name="Account_Register_Validate" xml:space="preserve">
     <value>Valider</value>
   </data>
-  <data name="AccountRegister_ValidationMessage" xml:space="preserve">
+  <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Veuillez renseigner tous les champs entourés en rouge.</value>
   </data>
-  <data name="AccountRegister_WarningHtml" xml:space="preserve">
+  <data name="Account_Register_WarningHtml" xml:space="preserve">
     <value>Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;.</value>
   </data>
-  <data name="AccountRegister_Welcome" xml:space="preserve">
+  <data name="Account_Register_Welcome" xml:space="preserve">
     <value>Bienvenue,</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>Tous</value>
-  </data>
-  <data name="Designer_SeePattern" xml:space="preserve">
-    <value>Voir le motif &gt;</value>
   </data>
   <data name="HomeAbout_ContactUs" xml:space="preserve">
     <value>Nous contacter</value>

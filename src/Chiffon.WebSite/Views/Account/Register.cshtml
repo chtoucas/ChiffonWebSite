@@ -2,53 +2,47 @@
 
 <div class="account_register  text_center">
  <p class="serif serif_large">
-  @Html.Raw(VR.AccountRegister_Welcome)
+  @Html.Raw(VR.Account_Register_Welcome)
  </p>
  <p class="serif serif_large">
-  @Html.Raw(VR.AccountRegister_WarningHtml)
+  @Html.Raw(VR.Account_Register_WarningHtml)
  </p>
+ <div class=doubleline></div>
  <p class="serif serif_medium">
-  @Html.Raw(VR.AccountRegister_DescriptionHtml)
+  @Html.Raw(VR.Account_Register_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" id=register_form>
-  <p id=error_container class="serif serif_medium error_container">@VR.AccountRegister_ValidationMessage</p>
-  @*<div class=float_left>*@
+  <p id=error_container class="serif serif_medium error_container">@VR.Account_Register_ValidationMessage</p>
   <p>
-   @*<label for=EmailAddress>@VR.AccountRegister_EmailAddress *</label>*@
-   @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.AccountRegister_EmailAddress })
+   <label for=EmailAddress>@VR.Account_Register_EmailAddress</label>
+   @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.Account_Register_EmailAddress })
   </p>
   <p>
-   @*<label for="Lastname">@VR.AccountRegister_Lastname *</label>*@
-   @Html.TextBoxFor(_ => _.Lastname, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_Lastname })
+   <label for="Lastname">@VR.Account_Register_Lastname</label>
+   @Html.TextBoxFor(_ => _.Lastname, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Lastname })
   </p>
   <p>
-   @*<label for=Firstname>@VR.AccountRegister_Firstname *</label>*@
-   @Html.TextBoxFor(_ => _.Firstname, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_Firstname })
+   <label for=Firstname>@VR.Account_Register_Firstname</label>
+   @Html.TextBoxFor(_ => _.Firstname, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Firstname })
   </p>
   <p>
-   @*<label for=CompanyName>@VR.AccountRegister_CompanyName *</label>*@
-   @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.AccountRegister_CompanyName })
+   <label for=CompanyName>@VR.Account_Register_CompanyName</label>
+   @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_CompanyName })
   </p>
-  @*</div>*@
-  @*<div class=float_right>
-    <label for=subject class=block>@VR.AccountRegister_Message</label>
-    @Html.TextAreaFor(_ => _.Message)
-    <p class=submit>
-     <input type=submit value="@VR.AccountRegister_Submit" />
-    </p>
-   </div>*@
   <p>
-   @*@Html.CheckBoxFor(_ => _.Newsletter)*@
-   <input type="checkbox" id="Newsletter" name="Newsletter" checked=checked />
+   <input type="checkbox" id="Newsletter" name="Newsletter" checked="checked" />
    <label for=Newsletter><span></span>Oui, je veux recevoir la gazette mensuelle des Simone !</label>
   </p>
   @Html.HiddenFor(_ => _.ReturnUrl)
   <p>
-   <input type=submit value="@VR.AccountRegister_Submit" />
+   <input type=submit value="@VR.Account_Register_Submit" />
+  </p>
+  <p>
+   * Ces champs sont obligatoires
   </p>
  </form>
  <p class="serif serif_large text_center">
-  <a href="@Url.RouteUrl(RouteName.Account.Login)" class=underline rel="@ViewBag.ModalRelation">@VR.AccountRegister_Login</a>
+  <a href="@Url.RouteUrl(RouteName.Account.Login)" class=underline rel="@ViewBag.ModalRelation">@VR.Account_Register_Login</a>
  </p>
 </div>

@@ -1,20 +1,18 @@
 ﻿@model NewContactViewModel
 
-<div class=account_register>
- <div class="serif serif_large text_center">
-  <p>
-   Bonjour @Model.Firstname @Model.Lastname,
+<div class=account_postregister>
+ <div class=text_center>
+  <p class="serif serif_large">
+   @VR.Account_PostRegister_Success
   </p>
-  <p>
-   Merci de vous être enregistré sur notre site.
-   <span class=block></span>
-   Votre mot de passe est le suivant&nbsp;:
+  <p class="serif serif_medium">
+   @Html.Raw(VR.Account_PostRegister_EmailHtml)
   </p>
-  <p>
-   <span class=public_key>@Model.PublicKey</span>
+  <p class="serif serif_medium">
+   <a href="@Model.NextUrl" class=underline>@VR.Account_PostRegister_BrowseGallery</a>
   </p>
-  <p>
-   Vous pouvez d'ores et déjà consulter notre <a href="@Model.NextUrl">catalogue</a>.
+  <p class="serif serif_large">
+   @VR.Account_PostRegister_Byebye
   </p>
  </div>
 </div>

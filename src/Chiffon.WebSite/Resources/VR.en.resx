@@ -120,56 +120,68 @@
   <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
     <value>To browse our catalog, enter your password.</value>
   </data>
-  <data name="AccountRegister_CompanyName" xml:space="preserve">
+  <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
+    <value>Browse the catalog.</value>
+  </data>
+  <data name="Account_PostRegister_Byebye" xml:space="preserve">
+    <value>See you soon!</value>
+  </data>
+  <data name="Account_PostRegister_EmailHtml" xml:space="preserve">
+    <value>Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail.</value>
+  </data>
+  <data name="Account_PostRegister_Success" xml:space="preserve">
+    <value>Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte.</value>
+  </data>
+  <data name="Account_Register_CompanyName" xml:space="preserve">
     <value>Agency *</value>
   </data>
-  <data name="AccountRegister_DescriptionHtml" xml:space="preserve">
+  <data name="Account_Register_DescriptionHtml" xml:space="preserve">
     <value>This catalog is reserved &lt;span&gt;to professionals&lt;/span&gt;.</value>
   </data>
-  <data name="AccountRegister_EmailAddress" xml:space="preserve">
+  <data name="Account_Register_EmailAddress" xml:space="preserve">
     <value>Email *</value>
   </data>
-  <data name="AccountRegister_Firstname" xml:space="preserve">
+  <data name="Account_Register_Firstname" xml:space="preserve">
     <value>Firstname *</value>
   </data>
-  <data name="AccountRegister_Hello" xml:space="preserve">
+  <data name="Account_Register_Hello" xml:space="preserve">
     <value>Hello,</value>
   </data>
-  <data name="AccountRegister_Lastname" xml:space="preserve">
+  <data name="Account_Register_Lastname" xml:space="preserve">
     <value>Name *</value>
   </data>
-  <data name="AccountRegister_Login" xml:space="preserve">
+  <data name="Account_Register_Login" xml:space="preserve">
     <value>I already own a password</value>
   </data>
-  <data name="AccountRegister_Message" xml:space="preserve">
+  <data name="Account_Register_MandatoryFields" xml:space="preserve">
+    <value>* Ces champs sont obligatoires</value>
+  </data>
+  <data name="Account_Register_Message" xml:space="preserve">
     <value>Subject</value>
   </data>
-  <data name="AccountRegister_Password" xml:space="preserve">
+  <data name="Account_Register_Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="AccountRegister_RequestPassword" xml:space="preserve">
+  <data name="Account_Register_RequestPassword" xml:space="preserve">
     <value>Request your password</value>
   </data>
-  <data name="AccountRegister_Submit" xml:space="preserve">
+  <data name="Account_Register_Submit" xml:space="preserve">
     <value>Register now</value>
   </data>
-  <data name="AccountRegister_Validate" xml:space="preserve">
+  <data name="Account_Register_Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="AccountRegister_ValidationMessage" xml:space="preserve">
+  <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
   </data>
-  <data name="AccountRegister_WarningHtml" xml:space="preserve">
+  <data name="Account_Register_WarningHtml" xml:space="preserve">
     <value>If this is your first time visiting, please &lt;span&gt;register&lt;/span&gt; using this form. Your new &lt;span&gt;account&lt;/span&gt; will be approved quickly.</value>
   </data>
-  <data name="AccountRegister_Welcome" xml:space="preserve">
+  <data name="Account_Register_Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>All</value>
-  </data>
-  <data name="Designer_SeePattern" xml:space="preserve">
-    <value>See the pattern</value>
   </data>
   <data name="HomeAbout_ContactUs" xml:space="preserve">
     <value>Contact us</value>
