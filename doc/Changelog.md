@@ -15,7 +15,8 @@ Version 1.1.1
 Changements techniques :
 * [DEV] Optimisation des images CSS.
 * [INFRA] Désactivation de la minification HTML en mode Release.
-* [TOOLS] Appeler le processus directement de MSBuild.
+* [TOOLS] Appeler Grunt directement de MSBuild.
+* [TOOLS] Ne pas inclure les fichiers statiques inutiles: bower_components, less...
 
 Correctifs :
 * La couleur utilisée dans les paginations était la couleur par défaut (gris).
