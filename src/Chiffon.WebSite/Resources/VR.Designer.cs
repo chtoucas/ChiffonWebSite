@@ -61,6 +61,51 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué..
+        /// </summary>
+        public static string Account_Login_DescriptionHtml {
+            get {
+                return ResourceManager.GetString("Account_Login_DescriptionHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mot de passe.
+        /// </summary>
+        public static string Account_Login_Password {
+            get {
+                return ResourceManager.GetString("Account_Login_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
+        /// </summary>
+        public static string Account_Login_RequestPassword {
+            get {
+                return ResourceManager.GetString("Account_Login_RequestPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Valider.
+        /// </summary>
+        public static string Account_Login_Validate {
+            get {
+                return ResourceManager.GetString("Account_Login_Validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bonjour,.
+        /// </summary>
+        public static string Account_Login_Welcome {
+            get {
+                return ResourceManager.GetString("Account_Login_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
         /// </summary>
         public static string Account_PostRegister_BrowseGallery {
@@ -133,15 +178,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bonjour,.
-        /// </summary>
-        public static string Account_Register_Hello {
-            get {
-                return ResourceManager.GetString("Account_Register_Hello", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Nom *.
         /// </summary>
         public static string Account_Register_Lastname {
@@ -187,15 +223,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
-        /// </summary>
-        public static string Account_Register_RequestPassword {
-            get {
-                return ResourceManager.GetString("Account_Register_RequestPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Je m&apos;inscris.
         /// </summary>
         public static string Account_Register_Submit {
@@ -205,16 +232,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Valider.
-        /// </summary>
-        public static string Account_Register_Validate {
-            get {
-                return ResourceManager.GetString("Account_Register_Validate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veuillez renseigner tous les champs entourés en rouge..
+        ///   Recherche une chaîne localisée semblable à Tous les champs entourés en rouge sont obligatoires..
         /// </summary>
         public static string Account_Register_ValidationMessage {
             get {
@@ -237,15 +255,6 @@ namespace Chiffon.Resources {
         public static string Account_Register_Welcome {
             get {
                 return ResourceManager.GetString("Account_Register_Welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué..
-        /// </summary>
-        public static string AccountLogin_DescriptionHtml {
-            get {
-                return ResourceManager.GetString("AccountLogin_DescriptionHtml", resourceCulture);
             }
         }
         

@@ -24,9 +24,9 @@
 <p id=nav_views class=nav_views>
  @if (viewCount > 1) {
   <span class=prev_noop>@VR.Pager_Previous</span>
-  <a class="underline hide prev" href="#">@VR.Pager_Previous</a>
+ <a class="hide prev" href="#">@VR.Pager_Previous</a>
   <span>/</span>
-  <a class="underline next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
+ <a class="next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
   <span class="hide next_noop">@VR.Pager_Next</span>
   @: -
   <span class=pos>1</span> @VR.Pager_Of @: @viewCount

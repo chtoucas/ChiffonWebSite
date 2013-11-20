@@ -1,4 +1,5 @@
-﻿/// <reference path="../assets/js/vendor/jquery.validate-1.11.1/localization/messages_fr.js" />
+﻿/// <autosync enabled="true" />
+/// <reference path="../assets/js/vendor/jquery.validate-1.11.1/localization/messages_fr.js" />
 /// <reference path="../assets/js/vendor/l10n-2013.09.12.js" />
 /// <reference path="../assets/js/vendor/yepnope-1.5.4.js" />
 /// <reference path="../assets/js/vendor/jquery-2.0.3.js" />

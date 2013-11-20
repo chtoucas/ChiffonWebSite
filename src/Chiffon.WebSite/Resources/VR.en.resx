@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
+  <data name="Account_Login_DescriptionHtml" xml:space="preserve">
     <value>To browse our catalog, enter your password.</value>
+  </data>
+  <data name="Account_Login_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Account_Login_RequestPassword" xml:space="preserve">
+    <value>Request your password</value>
+  </data>
+  <data name="Account_Login_Validate" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="Account_Login_Welcome" xml:space="preserve">
+    <value>Hello,</value>
   </data>
   <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
     <value>Browse the catalog.</value>
@@ -144,9 +156,6 @@
   <data name="Account_Register_Firstname" xml:space="preserve">
     <value>Firstname *</value>
   </data>
-  <data name="Account_Register_Hello" xml:space="preserve">
-    <value>Hello,</value>
-  </data>
   <data name="Account_Register_Lastname" xml:space="preserve">
     <value>Name *</value>
   </data>
@@ -162,14 +171,8 @@
   <data name="Account_Register_Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="Account_Register_RequestPassword" xml:space="preserve">
-    <value>Request your password</value>
-  </data>
   <data name="Account_Register_Submit" xml:space="preserve">
     <value>Register now</value>
-  </data>
-  <data name="Account_Register_Validate" xml:space="preserve">
-    <value>Validate</value>
   </data>
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>

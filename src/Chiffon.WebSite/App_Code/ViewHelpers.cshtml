@@ -10,18 +10,18 @@
 @helper Pager(UrlHelper Url, DesignerViewModel Model)
 {
  <p class=pager>
-  @if (Model.IsFirstPage) {  
+  @if (Model.IsFirstPage) {
    @VR.Pager_Previous
   }
   else {
-   <a class=underline href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+   <a href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
-  @if (Model.IsLastPage) {          
+  @if (Model.IsLastPage) {
    @VR.Pager_Next
   }
   else {
-   <a class="underline more" href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a class=more href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
@@ -34,14 +34,14 @@
    @VR.Pager_Previous
   }
   else {
-   <a class=underline href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+   <a href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
   @if (Model.IsLastPage) {
    @VR.Pager_Next
   }
   else {
-   <a class="underline more" href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a class=more href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
@@ -54,14 +54,14 @@
    @VR.Pager_Previous
   }
   else {
-   <a class=underline rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+   <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
   @if (Model.IsLastPage) {
    @VR.Pager_Next
   }
   else {
-   <a class="underline more" rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
@@ -88,23 +88,23 @@
  }*@
 
 @*@helper GoogleAnalytics(ChiffonConfig config)
-{
- if (!String.IsNullOrWhiteSpace(config.GoogleAnalytics)) {
- <script>
-  (function(i, s, o, g, r, a, m) {
-   i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
-    (i[r].q = i[r].q || []).push(arguments)
-   }, i[r].l = 1 * new Date(); a = s.createElement(o),
-   m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', '@config.GoogleAnalytics', 'pourquelmotifsimone.com');
-  ga('send', 'pageview');
- </script>
- }
-}*@
+ {
+  if (!String.IsNullOrWhiteSpace(config.GoogleAnalytics)) {
+  <script>
+   (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
+     (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+   })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+   ga('create', '@config.GoogleAnalytics', 'pourquelmotifsimone.com');
+   ga('send', 'pageview');
+  </script>
+  }
+ }*@
 
 @*@helper DesignerWebSite(Uri url)
-{
- var website = url.ToString().Replace("http://", String.Empty);
- <li class="web sansserif"><a href="//@website" rel=external target=_blank>@website</a></li>
-}*@
+ {
+  var website = url.ToString().Replace("http://", String.Empty);
+  <li class="web sansserif"><a href="//@website" rel=external target=_blank>@website</a></li>
+ }*@

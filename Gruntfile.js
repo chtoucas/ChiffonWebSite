@@ -85,6 +85,7 @@ module.exports = function(grunt) {
         views: {
           src: [
             'vendor/l10n-2013.09.12.js',
+            'vendor/nprogress-0.1.2.js',
             'jquery.modal.js',
             'chiffon.jquery.js',
             'chiffon.localization.js',

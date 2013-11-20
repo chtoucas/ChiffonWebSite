@@ -63,6 +63,7 @@ var Chiffon = (function(window, undef) {
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
       'vendor/jquery-2.0.3.js',
       'vendor/l10n-2013.09.12.js',
+      'vendor/nprogress-0.1.2.js',
       'jquery.modal.js',
       'chiffon.jquery.js',
       'chiffon.localization.js',
@@ -86,6 +87,7 @@ var Chiffon = (function(window, undef) {
 
     context.require(coreResources, function() {
       var $ = window.$;
+
       if (undef === $ || undef === Chiffon.Views) {
         if (DEBUG) { console.log('Could not load resources.'); }
         return;

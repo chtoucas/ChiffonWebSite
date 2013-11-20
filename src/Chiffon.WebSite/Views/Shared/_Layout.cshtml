@@ -25,7 +25,7 @@
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
   <nav class="clearfix main @ViewBag.MainMenuClass">
-   <ul class=center>
+   <ul class=li_center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
     <li><a href="@Url.RouteUrl(RouteName.Home.About)" class=about>@VR.Layout_Nav_About</a></li>

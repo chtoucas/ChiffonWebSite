@@ -5,8 +5,10 @@
 @import "chiffon.common.less";
 
 /* =========================================================================
- * Valeurs par défaut (H5BP v4.3.0)
+ * Règles de base
  * ========================================================================= */
+
+// H5BP v4.3.0 ----------------------------------------------------------------
 
 AUDIO, CANVAS, IMG, VIDEO {
   vertical-align: middle;
@@ -22,29 +24,28 @@ TEXTAREA {
   resize: vertical;
 }
 
-/* =========================================================================
- * Utilitaires
- * ========================================================================= */
+// Règles spécifiques au projet -----------------------------------------------
 
-/* Listes */
-
-UL {
-  // Liste horizontale.
-  // NB: À coupler avec "clearfix".
-  &.inline LI {
-    float: left;
-  }
-  // Liste centrée. Dépend de la classe ".center" qui centre le texte.
-  &.center {
-    text-align: center;
-
-    LI {
-      display: inline-block;
-    }
-  }
+// XXX: BODY, INPUT ?
+HTML {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: @font_size;
+  line-height: 1.4;
 }
 
-/* Menus */
+//HTML, BUTTON, INPUT, SELECT, TEXTAREA {
+//  color: @text_color;
+//}
+
+P {
+  color: @grey;
+}
+
+UL, OL {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
 NAV {
   UL, OL {
@@ -54,6 +55,88 @@ NAV {
     }
   }
 }
+
+A {
+  color: @black;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+
+  &:hover, &:focus {
+    color: @grey;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, .25);
+  }
+}
+
+/* =========================================================================
+ * Disposition globale
+ * ========================================================================= */
+
+BODY {
+  // On centre le corps de la page.
+  width: @grid_4_width;
+  margin: 0 auto;
+}
+
+HEADER {
+  padding-top: 1.9em;
+}
+
+H1 {
+  margin: 0 auto;
+  font-size: 1.8em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+
+  EM, STRONG {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
+FOOTER {
+  margin-bottom: 2em;
+  text-transform: uppercase;
+  border-top: solid 2px @grey;
+  font-variant: small-caps;
+
+  P {
+    margin: 2em 0 0;
+    color: @darkgrey;
+  }
+}
+
+/* =========================================================================
+ * Utilitaires
+ * ========================================================================= */
+
+// Listes ---------------------------------------------------------------------
+
+/* Liste horizontale */
+
+// WARNING: À coupler avec "clearfix".
+// NB: Utiliser "display: inline-block" semblerait plus naturel mais dans ce cas
+// les espaces blancs sont significatifs et, suivant le contenu HTML,
+// on peut avoir des espaces entre les blocs. On peut contourner ce problème en
+// minifiant le HTML (ie </li><li>) ou en supprimant la balise fermante mais,
+// dans les deux cas, la solution est fragile. On préfère donc utiliser
+// "float: left". Il ne faut alors pas oublier de rajouter un clearfix.
+.li_inline LI {
+  float: left;
+}
+
+/* Liste centrée */
+
+.li_center {
+  text-align: center;
+
+  LI {
+    display: inline-block;
+  }
+}
+
+// Textes ---------------------------------------------------------------------
 
 .text_center {
   text-align: center;
@@ -66,6 +149,13 @@ NAV {
 .text_left {
   text-align: left;
 }
+
+// FIXME: À supprimer.
+.text_underline {
+  text-decoration: underline;
+}
+
+// Blocs ----------------------------------------------------------------------
 
 .float_right {
   float: right;
@@ -87,66 +177,7 @@ NAV {
   display: none;
 }
 
-/* =========================================================================
- * Valeurs par défaut
- * ========================================================================= */
-
-// XXX: BODY, INPUT ?
-HTML {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-size: @font_size;
-  line-height: 1.4;
-}
-
-/*HTML, BUTTON, INPUT, SELECT, TEXTAREA {
-  color: @text_color;
-}*/
-
-P {
-  color: @grey;
-}
-
-UL, OL {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-/* Liens */
-
-A {
-  color: @black;
-  text-decoration: none;
-  transition: all .2s ease-in-out;
-
-  &:hover, &:focus {
-    color: @grey;
-    text-decoration: none;
-    text-shadow: 0 0 10px rgba(255, 255, 255, .25);
-  }
-  // FIXME
-  &.reverse {
-    color: @darkgrey;
-
-    &:hover {
-      color: @black;
-    }
-  }
-}
-
-/* =========================================================================
- * Utilitaires
- * ========================================================================= */
-
-.no_margin {
-  margin: 0;
-}
-
-.underline {
-  text-decoration: underline;
-}
-
-/* Fontes */
+// Fontes ---------------------------------------------------------------------
 
 .serif {
   font-family: "Droid Serif", Georgia, "Times New Roman", serif;
@@ -167,6 +198,17 @@ A {
   font-family: sans-serif;
 }
 
+A {
+  // FIXME: À supprimer.
+  &.reverse {
+    color: @darkgrey;
+
+    &:hover {
+      color: @black;
+    }
+  }
+}
+
 //.highlight:focus {
 //  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
 //}
@@ -181,7 +223,7 @@ A {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 100;
+  z-index: @overlay_zindex;
   display: none;
   margin: 0;
   background-color: @black;
@@ -196,12 +238,41 @@ A {
   height: 100%;
 }
 
-/* En-tête barrée */
-
-.strike {
+.ui_strike {
   background: no-repeat center center data-uri("img/strike.png");
   border-top: solid 2px @darkgrey;
   border-bottom: solid 2px @darkgrey;
+}
+
+.ui_topborder {
+  border-top: 2px solid @darkgrey;
+}
+
+.ui_doubleline {
+  height: 1em;
+  background: data-uri("img/doubleline_grey.png") center no-repeat;
+}
+
+INPUT[type=checkbox] {
+  // http://stackoverflow.com/questions/4148499/how-to-style-checkbox-using-css
+  display: none;
+
+  + LABEL {
+    cursor: pointer;
+
+    SPAN {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      cursor: pointer;
+      background: data-uri("img/unchecked.png") no-repeat;
+      padding-right: 1em;
+    }
+  }
+
+  &:checked + LABEL SPAN {
+    background: data-uri("img/checked.png") no-repeat;
+  }
 }
 
 /* =========================================================================
@@ -303,45 +374,6 @@ A {
   width: @mosaic_3_width;
 }
 
-/* Disposition par défaut */
-
-BODY {
-  // On centre le corps de la page.
-  width: @grid_4_width;
-  margin: 0 auto;
-}
-
-HEADER {
-  padding-top: 1.9em;
-}
-
-FOOTER {
-  margin-bottom: 2em;
-  text-transform: uppercase;
-  border-top: solid 2px @grey;
-  font-variant: small-caps;
-
-  P {
-    margin: 2em 0 0;
-    color: @darkgrey;
-  }
-}
-
-/* Titre principal */
-
-H1 {
-  margin: 0 auto;
-  font-size: 1.8em;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
-
-  EM, STRONG {
-    font-style: normal;
-    font-weight: bold;
-  }
-}
-
 /* =========================================================================
  * Menus
  * ========================================================================= */
@@ -391,10 +423,6 @@ NAV.main {
 /* Menu des designers */
 
 NAV.designers {
-  .last {
-    margin-right: 0;
-  }
-
   UL {
     font-size: 1.8em;
     font-style: italic;
@@ -405,6 +433,11 @@ NAV.designers {
     // XXX: font-size
     margin: 11px @grid_inter_width 11px 0;
     text-align: center;
+
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   A {
@@ -480,6 +513,18 @@ FORM INPUT.error {
 .home_about {
   margin-top: 1em;
   margin-bottom: 2em;
+
+  .presentation P {
+    margin: 0 auto;
+  }
+
+  .links {
+    text-align: center;
+
+    A {
+      text-decoration: underline;
+    }
+  }
 }
 
 /* =========================================================================
@@ -488,6 +533,46 @@ FORM INPUT.error {
 
 .home_contact {
   margin-bottom: 5em;
+
+  .cl:hover .watermark {
+    &:lang(fr) {
+      background: data-uri("img/contact/cl_fr.png");
+    }
+
+    &:lang(en) {
+      background: data-uri("img/contact/cl_en.png");
+    }
+  }
+
+  .em:hover .watermark {
+    &:lang(fr) {
+      background: data-uri("img/contact/em_fr.png");
+    }
+
+    &:lang(en) {
+      background: data-uri("img/contact/em_en.png");
+    }
+  }
+
+  .lr:hover .watermark {
+    &:lang(fr) {
+      background: data-uri("img/contact/lr_fr.png");
+    }
+
+    &:lang(en) {
+      background: data-uri("img/contact/lr_en.png");
+    }
+  }
+
+  .vd:hover .watermark {
+    &:lang(fr) {
+      background: data-uri("img/contact/vd_fr.png");
+    }
+
+    &:lang(en) {
+      background: data-uri("img/contact/vd_en.png");
+    }
+  }
 
   .img {
     margin-bottom: 1.2em;
@@ -544,11 +629,7 @@ FORM INPUT.error {
   }
 
   P {
-    padding: .5em 0 1em 0;
-    margin: 0;
-    font-weight: normal;
-    color: @grey;
-    border-top: 2px solid @darkgrey;
+    margin: .5em 0 1em 0;
 
     A {
       font-size: .7em;
@@ -560,39 +641,7 @@ FORM INPUT.error {
  * Page d'enregistrement
  * ========================================================================= */
 
-INPUT[type=checkbox] {
-  // http://stackoverflow.com/questions/4148499/how-to-style-checkbox-using-css
-  display: none;
-
-  + LABEL {
-    font-size: 1.2em;
-    font-weight: normal;
-    text-transform: none;
-    cursor: pointer;
-
-    SPAN {
-      padding-left: 1em;
-      display: inline-block;
-      width: 11px;
-      height: 11px;
-      background: data-uri("img/unchecked.png") no-repeat;
-      cursor: pointer;
-    }
-  }
-
-  &:checked + LABEL SPAN {
-    background: data-uri("img/checked.png") no-repeat;
-  }
-}
-
-.doubleline {
-  height: 1em;
-  background: data-uri("img/doubleline_grey.png") center no-repeat;
-}
-
 .account_register {
-  border-top: solid 2px @darkgrey;
-
   .validation-summary-errors {
     color: @error_color;
     text-align: center;
@@ -608,6 +657,7 @@ INPUT[type=checkbox] {
 
   FORM {
     color: @darkgrey;
+    font-style: normal;
 
     P {
       margin: 2em 0;
@@ -641,12 +691,17 @@ INPUT[type=checkbox] {
       padding: 0;
       font-size: 1.6em;
       color: @darkgrey;
-
       /*&:hover {
         color: @black;
         border-color: @grey;
       }*/
     }
+  }
+
+  LABEL.newsletter {
+    font-size: 1.2em;
+    font-weight: normal;
+    text-transform: none;
   }
 
   .error_container {
@@ -657,9 +712,8 @@ INPUT[type=checkbox] {
 /* =========================================================================
  * Page de connexion
  * ========================================================================= */
-.account_login {
-  border-top: solid 2px @darkgrey;
 
+.account_login {
   FORM {
     margin-bottom: 7em;
 
@@ -702,9 +756,11 @@ INPUT[type=checkbox] {
     margin-bottom: 2em;
   }
 }
+
 /* =========================================================================
  * Pages designer
  * ========================================================================= */
+
 .designer {
   padding-top: 2.3em;
 
@@ -780,8 +836,10 @@ INPUT[type=checkbox] {
 //#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: @grid_4_width; background-color: @white; }
 //  #sticky_header H1 { display: none; }
 //  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
-//    #sticky_header NAV LI { width: auto !important; font-style: initial; }*/
+//    #sticky_header NAV LI { width: auto !important; font-style: initial; }
+
 /* Pagination */
+
 .pager {
   width: @grid_3_width;
   margin-top: 0;
@@ -789,6 +847,10 @@ INPUT[type=checkbox] {
   color: @black;
   text-align: center;
   text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
 }
 
 .nav_views {
@@ -797,7 +859,12 @@ INPUT[type=checkbox] {
   color: @black;
   text-align: center;
   text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
 }
+
 // Old stuff
 //.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: @white; }
 //.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
@@ -805,18 +872,20 @@ INPUT[type=checkbox] {
 // Absolutely centered
 //.centered-container { position: relative; }
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+
 /* =========================================================================
  * Modales
  * ========================================================================= */
+
 // FIXME: position sur BODY, Opera !
-//body { position: relative; }
+/*body { position: relative; }*/
 .modal {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 9999;
+  z-index: @modal_zindex;
   display: table;
   width: @grid_4_width;
   height: auto;
@@ -836,22 +905,28 @@ INPUT[type=checkbox] {
     background: data-uri("img/close.png") no-repeat 0 0;
   }
 
-  .doubleline {
-    background: data-uri("img/doubleline_white.png") center no-repeat;
+  .ui_doubleline {
+    background-image: data-uri("img/doubleline_white.png");
+  }
+
+  .ui_topborder {
+    border-top: none;
   }
 
   .account_login {
-    border-top: none;
-
     INPUT {
       color: @white;
     }
   }
 
+
   .account_register {
-    border-top: none;
+    FORM P {
+      margin: 2em auto;
+    }
 
     P, LABEL {
+      margin: .5em auto;
       color: @grey;
     }
 

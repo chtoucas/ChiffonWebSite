@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountLogin_DescriptionHtml" xml:space="preserve">
+  <data name="Account_Login_DescriptionHtml" xml:space="preserve">
     <value>Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué.</value>
+  </data>
+  <data name="Account_Login_Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="Account_Login_RequestPassword" xml:space="preserve">
+    <value>Demander un mot de passe</value>
+  </data>
+  <data name="Account_Login_Validate" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="Account_Login_Welcome" xml:space="preserve">
+    <value>Bonjour,</value>
   </data>
   <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
     <value>Feuilleter le catalogue</value>
@@ -144,9 +156,6 @@
   <data name="Account_Register_Firstname" xml:space="preserve">
     <value>Prénom *</value>
   </data>
-  <data name="Account_Register_Hello" xml:space="preserve">
-    <value>Bonjour,</value>
-  </data>
   <data name="Account_Register_Lastname" xml:space="preserve">
     <value>Nom *</value>
   </data>
@@ -162,17 +171,11 @@
   <data name="Account_Register_Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
-  <data name="Account_Register_RequestPassword" xml:space="preserve">
-    <value>Demander un mot de passe</value>
-  </data>
   <data name="Account_Register_Submit" xml:space="preserve">
     <value>Je m'inscris</value>
   </data>
-  <data name="Account_Register_Validate" xml:space="preserve">
-    <value>Valider</value>
-  </data>
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
-    <value>Veuillez renseigner tous les champs entourés en rouge.</value>
+    <value>Tous les champs entourés en rouge sont obligatoires.</value>
   </data>
   <data name="Account_Register_WarningHtml" xml:space="preserve">
     <value>Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;.</value>

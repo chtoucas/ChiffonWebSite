@@ -284,6 +284,7 @@
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\localization\messages_fr.js" />
     <Content Include="assets\js\vendor\l10n-2013.09.12.js" />
     <Content Include="assets\js\vendor\lodash.custom-2.3.0.js" />
+    <Content Include="assets\js\vendor\nprogress-0.1.2.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="assets\css\chiffon.less" />
     <Content Include="assets\css\chiffon.common.less" />

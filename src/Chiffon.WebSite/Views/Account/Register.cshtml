@@ -1,18 +1,18 @@
 ﻿@model RegisterViewModel
 
-<div class="account_register  text_center">
- <p class="serif serif_large">
+<div class="account_register serif text_center ui_topborder">
+ <p class="serif_large">
   @Html.Raw(VR.Account_Register_Welcome)
  </p>
- <p class="serif serif_large">
+ <p class="serif_large">
   @Html.Raw(VR.Account_Register_WarningHtml)
  </p>
- <div class=doubleline></div>
- <p class="serif serif_medium">
+ <div class=ui_doubleline></div>
+ <p class="serif_medium">
   @Html.Raw(VR.Account_Register_DescriptionHtml)
  </p>
  @Html.ValidationSummary()
- <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" id=register_form>
+ <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=sansserif id=register_form>
   <p id=error_container class="serif serif_medium error_container">@VR.Account_Register_ValidationMessage</p>
   <p>
    <label for=EmailAddress>@VR.Account_Register_EmailAddress</label>
@@ -32,7 +32,7 @@
   </p>
   <p>
    <input type="checkbox" id="Newsletter" name="Newsletter" checked="checked" />
-   <label for=Newsletter><span></span>Oui, je veux recevoir la gazette mensuelle des Simone !</label>
+   <label for=Newsletter class=newsletter><span></span>Oui, je veux recevoir la gazette mensuelle des Simone !</label>
   </p>
   @Html.HiddenFor(_ => _.ReturnUrl)
   <p>
@@ -42,7 +42,7 @@
    * Ces champs sont obligatoires
   </p>
  </form>
- <p class="serif serif_large text_center">
-  <a href="@Url.RouteUrl(RouteName.Account.Login)" class=underline rel="@ViewBag.ModalRelation">@VR.Account_Register_Login</a>
- </p>
+ @*<p class="serif_large">
+  <a href="@Url.RouteUrl(RouteName.Account.Login)" class=text_underline rel="@ViewBag.ModalRelation">@VR.Account_Register_Login</a>
+ </p>*@
 </div>

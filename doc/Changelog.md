@@ -4,10 +4,13 @@ CHANGELOG
 Version 1.1.1
 -------------
 
-* Utilisation d'un texte différent par langue pour le bouton de connexion.
-* On utilise des images pour les watermarks des vignettes dans l'espace connecté.
-* Désactivation des modales pour les tablettes.
 * Nouvelle page d'inscription.
+* Utilisation d'un texte différent par langue pour le bouton de connexion.
+* À la place de textes, on utilise des images pour les watermarks des vignettes
+  dans l'espace connecté.
+* On change les watermarks dans la page contact.
+* Désactivation des modales pour les tablettes.
+* Pendant qu'une modale se charge on affiche un indicateur d'attente.
 
 Changements techniques :
 * [DEV] Optimisation des images CSS.
