@@ -81,13 +81,6 @@
         [HttpPost]
         public ActionResult Register(RegisterViewModel contact)
         {
-            var modelX = new NewContactViewModel
-            {
-                NextUrl = String.Empty,
-            };
-
-            return View(ViewName.Account.PostRegister, modelX);
-
             if (ModelState.IsValid) {
                 if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
                     return View(ViewName.Account.RegisterTwice);

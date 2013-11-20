@@ -89,6 +89,8 @@
   </Target>
 
   <Target Name="Build">
+    <Exec Command="$(_GruntCmd) --no-color build" ContinueOnError="false" />
+
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>

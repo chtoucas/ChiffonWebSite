@@ -232,7 +232,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tous les champs entourés en rouge sont obligatoires..
+        ///   Recherche une chaîne localisée semblable à Veuillez vérifier les champs entourés en rouge..
         /// </summary>
         public static string Account_Register_ValidationMessage {
             get {

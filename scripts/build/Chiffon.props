@@ -37,7 +37,7 @@
   <!-- Outils locaux (exe ou jar). -->
   <PropertyGroup>
     <_GoogleClosureJar>$(_ToolsDir)closure-compiler.jar</_GoogleClosureJar>
-    <_GruntCmd>$(_ScriptsDir)grunt.cmd</_GruntCmd>
+    <_GruntCmd>$(_ToolsDir)grunt.cmd</_GruntCmd>
     <_NodeExe>$(_ToolsDir)node.exe</_NodeExe>
     <_NuGetExe>$(_ToolsDir)nuget.exe</_NuGetExe>
     <_SevenZipExe>$(_ToolsDir)7za.exe</_SevenZipExe>

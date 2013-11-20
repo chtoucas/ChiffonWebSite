@@ -23,7 +23,8 @@
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Le champs \"Agence\" doit comporter au moins 2 caractères.")]
         public string CompanyName { get; set; }
 
-        public bool Newsletter { get; set; }
+        // FIXME
+        public string Newsletter { get; set; }
 
         public string Message { get; set; }
         public string ReturnUrl { get; set; }
