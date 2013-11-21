@@ -179,6 +179,16 @@ FOOTER {
 
 // Fontes ---------------------------------------------------------------------
 
+.sansserif {
+  font-family: sans-serif;
+}
+
+/* =========================================================================
+ * Modules
+ * ========================================================================= */
+
+// Fontes ---------------------------------------------------------------------
+
 .serif {
   font-family: "Droid Serif", Georgia, "Times New Roman", serif;
   font-style: italic;
@@ -194,28 +204,40 @@ FOOTER {
   line-height: 1.5em;
 }
 
-.sansserif {
-  font-family: sans-serif;
-}
+// Modales --------------------------------------------------------------------
 
-A {
-  // FIXME: À supprimer.
-  &.reverse {
-    color: @darkgrey;
+// FIXME: position sur BODY, Opera !
+/*body { position: relative; }*/
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @modal_zindex;
+  display: table;
+  width: @grid_4_width;
+  height: auto;
+  margin: auto;
 
-    &:hover {
-      color: @black;
-    }
+  &, P, A, LABEL, INPUT, TEXTAREA {
+    color: @white;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: data-uri("img/close.png") no-repeat 0 0;
   }
 }
 
-//.highlight:focus {
-//  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
-//}
+// Overlay --------------------------------------------------------------------
 
-/* Overlay */
-
-// TODO: width & height ne sont pas être nécessaires ?
+// FIXME: width & height sont-ils nécessaires ?
 //.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: @black; opacity: .8; z-index: 100; }
 .overlay {
   position: fixed;
@@ -230,6 +252,8 @@ A {
   opacity: .8;
 }
 
+// Watermark ------------------------------------------------------------------
+
 .watermark {
   position: absolute;
   top: 0;
@@ -238,20 +262,36 @@ A {
   height: 100%;
 }
 
+// Bloc avec bordures en haut et en bas, plus une ligne au milieu -------------
+
 .ui_strike {
   background: no-repeat center center data-uri("img/strike.png");
   border-top: solid 2px @darkgrey;
   border-bottom: solid 2px @darkgrey;
 }
 
+// Bloc avec une bordure en haut ----------------------------------------------
+
 .ui_topborder {
   border-top: 2px solid @darkgrey;
 }
+
+.modal .ui_topborder {
+  border-top: none;
+}
+
+// Ligne double courte --------------------------------------------------------
 
 .ui_doubleline {
   height: 1em;
   background: data-uri("img/doubleline_grey.png") center no-repeat;
 }
+
+.modal .ui_doubleline {
+  background-image: data-uri("img/doubleline_white.png");
+}
+
+// Checkbox -------------------------------------------------------------------
 
 INPUT[type=checkbox] {
   // http://stackoverflow.com/questions/4148499/how-to-style-checkbox-using-css
@@ -274,6 +314,21 @@ INPUT[type=checkbox] {
     background: data-uri("img/checked.png") no-repeat;
   }
 }
+
+A {
+  // FIXME: À supprimer.
+  &.reverse {
+    color: @darkgrey;
+
+    &:hover {
+      color: @black;
+    }
+  }
+}
+
+//.highlight:focus {
+//  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
+//}
 
 /* =========================================================================
  * Motifs
@@ -399,8 +454,8 @@ NAV.main {
   position: relative;
 
   .right {
-    /*float: right;*/
     position: absolute;
+    top: 0;
     right: 0;
   }
 
@@ -711,6 +766,30 @@ FORM INPUT.error {
   }
 }
 
+.modal .account_register {
+  FORM P {
+    margin: 2em auto;
+  }
+
+  P, LABEL {
+    margin: .5em auto;
+    color: @grey;
+  }
+
+    P SPAN {
+      color: @white;
+    }
+
+  INPUT {
+    color: @white;
+
+    &[type=submit]:hover {
+      color: @white;
+      border-color: @white;
+    }
+  }
+}
+
 /* =========================================================================
  * Page de connexion
  * ========================================================================= */
@@ -756,6 +835,12 @@ FORM INPUT.error {
 
   .hello {
     margin-bottom: 2em;
+  }
+}
+
+.modal .account_login {
+  INPUT {
+    color: @white;
   }
 }
 
@@ -874,75 +959,3 @@ FORM INPUT.error {
 // Absolutely centered
 //.centered-container { position: relative; }
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
-
-/* =========================================================================
- * Modales
- * ========================================================================= */
-
-// FIXME: position sur BODY, Opera !
-/*body { position: relative; }*/
-.modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: @modal_zindex;
-  display: table;
-  width: @grid_4_width;
-  height: auto;
-  margin: auto;
-
-  &, P, A, LABEL, INPUT, TEXTAREA {
-    color: @white;
-  }
-
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: block;
-    width: 30px;
-    height: 30px;
-    background: data-uri("img/close.png") no-repeat 0 0;
-  }
-
-  .ui_doubleline {
-    background-image: data-uri("img/doubleline_white.png");
-  }
-
-  .ui_topborder {
-    border-top: none;
-  }
-
-  .account_login {
-    INPUT {
-      color: @white;
-    }
-  }
-
-
-  .account_register {
-    FORM P {
-      margin: 2em auto;
-    }
-
-    P, LABEL {
-      margin: .5em auto;
-      color: @grey;
-    }
-
-      P SPAN {
-        color: @white;
-      }
-
-    INPUT {
-      color: @white;
-
-      &[type=submit]:hover {
-        color: @white;
-        border-color: @white;
-      }
-    }
-  }
-}
