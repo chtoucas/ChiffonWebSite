@@ -21,10 +21,10 @@
 <body>
  <header>
   <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
-  <nav class="clearfix lang">
+  <nav class="clearfix nav_lang">
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
-  <nav class="clearfix main @ViewBag.MainMenuClass">
+  <nav class="nav_main @ViewBag.MainMenuClass">
    <ul class=li_center>
     <li><a href="@Url.RouteUrl(RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -33,7 +33,7 @@
     <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" class=contact>@VR.Layout_Nav_Contact</a></li>
     @*<li class=sep>/</li>
      <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
-    <li class=right>
+    <li class=account>
      @if (User.Identity.IsAuthenticated) {
       @*<a href="#" id=nav_account>Mon compte</a>*@
      }

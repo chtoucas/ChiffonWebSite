@@ -122,7 +122,7 @@ FOOTER {
 // minifiant le HTML (ie </li><li>) ou en supprimant la balise fermante mais,
 // dans les deux cas, la solution est fragile. On préfère donc utiliser
 // "float: left". Il ne faut alors pas oublier de rajouter un clearfix.
-.li_inline LI {
+.li_inline > LI {
   float: left;
 }
 
@@ -131,8 +131,18 @@ FOOTER {
 .li_center {
   text-align: center;
 
-  LI {
+  > LI {
     display: inline-block;
+  }
+}
+
+.li_inline2center {
+  .li_inline {
+    .li_center;
+
+    > LI {
+      float: none;
+    }
   }
 }
 
@@ -264,7 +274,7 @@ FOOTER {
 
 // Bloc avec bordures en haut et en bas, plus une ligne au milieu -------------
 
-.ui_strike {
+.fx_strike {
   background: no-repeat center center data-uri("img/strike.png");
   border-top: solid 2px @darkgrey;
   border-bottom: solid 2px @darkgrey;
@@ -272,22 +282,22 @@ FOOTER {
 
 // Bloc avec une bordure en haut ----------------------------------------------
 
-.ui_topborder {
+.fx_topborder {
   border-top: 2px solid @darkgrey;
 }
 
-.modal .ui_topborder {
+.modal .fx_topborder {
   border-top: none;
 }
 
 // Ligne double courte --------------------------------------------------------
 
-.ui_doubleline {
+.fx_doubleline {
   height: 1em;
   background: data-uri("img/doubleline_grey.png") center no-repeat;
 }
 
-.modal .ui_doubleline {
+.modal .fx_doubleline {
   background-image: data-uri("img/doubleline_white.png");
 }
 
@@ -421,10 +431,6 @@ A {
   height: @pattern_heigth;
 }
 
-//.mosaic_100 {
-//  width: @mosaic_4_width;
-//}
-
 .mosaic_75 {
   width: @mosaic_3_width;
 }
@@ -435,7 +441,7 @@ A {
 
 /* Menu des langues */
 
-NAV.lang {
+.nav_lang {
   border-bottom: solid 2px @black;
 
   UL {
@@ -450,19 +456,18 @@ NAV.lang {
 
 /* Menu principal */
 
-NAV.main {
+.nav_main {
+  // On utilise une position relative pour que l'élément ".account" se place
+  // correctement à droite de la liste.
   position: relative;
 
-  .right {
+  .account {
     position: absolute;
     top: 0;
     right: 0;
   }
 
   UL {
-    // On utilise une position relative pour que l'élément ".right" se positionne
-    // correctement à droite de la liste.
-    /*position: relative;*/
     text-transform: uppercase;
   }
 
@@ -477,7 +482,7 @@ NAV.main {
 
 /* Menu des designers */
 
-NAV.designers {
+.nav_designers {
   UL {
     font-size: 1.8em;
     font-style: italic;
@@ -501,7 +506,7 @@ NAV.designers {
   }
 }
 
-/* Mise en valeur de la page courante dans les menus */
+/* Mise en avant de la page courante dans les menus */
 
 NAV {
   &.index .index,
@@ -629,7 +634,7 @@ FORM INPUT.error {
     }
   }
 
-  .img {
+  .avatar {
     margin-bottom: 1.2em;
   }
 
@@ -643,29 +648,29 @@ FORM INPUT.error {
     }
   }
 
-  .web {
+  .website {
     A {
       padding: 1em 0;
     }
   }
 
-  .designers {
-    LI {
+  .li_designers {
+    > LI {
       width: @grid_1_width;
       margin-right: @grid_inter_width;
 
       &:last-child {
         margin-right: 0;
       }
+    }
 
-      LI {
-        font-size: 1.3em;
+    UL LI {
+      font-size: 1.3em;
 
-        A {
-          // On veut donner plus d'impact au lien.
-          display: inline-block;
-          width: 100%;
-        }
+      A {
+        // On veut donner plus d'impact au lien.
+        display: inline-block;
+        width: 100%;
       }
     }
   }
@@ -789,11 +794,9 @@ FORM INPUT.error {
     }
   }
 }
-
 /* =========================================================================
  * Page de connexion
  * ========================================================================= */
-
 .account_login {
   FORM {
     margin-bottom: 7em;
@@ -843,11 +846,9 @@ FORM INPUT.error {
     color: @white;
   }
 }
-
 /* =========================================================================
  * Pages designer
  * ========================================================================= */
-
 .designer {
   padding-top: 2.3em;
 
@@ -924,9 +925,7 @@ FORM INPUT.error {
 //  #sticky_header H1 { display: none; }
 //  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
 //    #sticky_header NAV LI { width: auto !important; font-style: initial; }
-
 /* Pagination */
-
 .pager {
   width: @grid_3_width;
   margin-top: 0;
@@ -951,7 +950,6 @@ FORM INPUT.error {
     text-decoration: underline;
   }
 }
-
 // Old stuff
 //.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: @white; }
 //.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
@@ -959,3 +957,104 @@ FORM INPUT.error {
 // Absolutely centered
 //.centered-container { position: relative; }
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+
+/* =========================================================================
+ * Partie responsive
+ * ========================================================================= */
+
+@media (min-width: @grid_3_width) and (max-width: @grid_4_width) {
+  BODY {
+    width: @grid_3_width;
+  }
+
+  H1 EM:first-child, H1 STRONG:first-child {
+    display: block;
+  }
+
+  .nav_designers {
+    .li_inline2center;
+
+    LI {
+      width: auto;
+      margin: 11px;
+
+      &:last-child {
+        margin-right: 11px;
+      }
+    }
+  }
+
+  .mosaic {
+    width: @mosaic_3_width;
+  }
+
+  .mosaic_75 {
+    width: @mosaic_2_width;
+  }
+
+  .home_contact {
+    .li_inline2center;
+
+    .li_designers > LI {
+      vertical-align: text-top;
+      margin: 1.5em;
+    }
+  }
+}
+
+@media (max-width: @grid_3_width) {
+  BODY {
+    width: @grid_2_width;
+  }
+
+  H1 EM:first-child, H1 STRONG {
+    display: block;
+  }
+
+  .nav_main LI {
+    margin: .6em 0;
+  }
+
+  .nav_designers {
+    .li_inline2center;
+
+    &.fx_strike {
+      background: none;
+    }
+
+    UL {
+      font-size: 1.4em;
+    }
+
+    > LI:last-child {
+      margin-right: 11px;
+    }
+
+    LI {
+      width: auto;
+      margin: 11px 0;
+    }
+  }
+
+  .mosaic {
+    width: @mosaic_2_width;
+  }
+
+  .mosaic_75 {
+    width: @mosaic_1_width;
+  }
+
+  .home_contact {
+    .li_inline2center;
+
+    .li_designers {
+      width: @mosaic_2_width;
+      overflow-y: hidden;
+
+      > LI {
+        vertical-align: text-top;
+        margin: .8em;
+      }
+    }
+  }
+}

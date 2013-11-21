@@ -4,13 +4,12 @@
  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="home_index">
- @* XXX: mosaic_100 *@
+<div class=home_index>
  <ul class="mosaic clearfix">
   @foreach (var preview in Model) {
    <li>
     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" rel="@ViewBag.ModalRelation" class="vignette @preview.CssClass">
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div>
     </a>
    </li>
   }

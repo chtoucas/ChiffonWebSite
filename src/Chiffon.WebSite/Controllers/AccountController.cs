@@ -16,6 +16,8 @@
     using Narvalo;
     using Narvalo.Web.Security;
 
+    // FIXME: Cette classe est complètement bancale mais c'est voulu tant qu'on n'a pas 
+    // une idée plus précise du processus d'inscription.
     [AllowAnonymous]
     [CLSCompliant(false)]
     public class AccountController : PageController

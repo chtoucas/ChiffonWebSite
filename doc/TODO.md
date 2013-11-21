@@ -18,6 +18,7 @@ Pour les déploiements, peut-être s'inspirer de :
 * https://github.com/AppVeyor/AppRolla
 * http://www.infoq.com/articles/AppVeyor-CI
 * http://psappdeploytoolkit.codeplex.com/
+* http://octopusdeploy.com/
 
 Utiliser Google Closure Tools (IronPython via NuGet ?)
 

@@ -1,8 +1,20 @@
 CHANGELOG
 =========
 
-Version 1.1.1
--------------
+Version 1.2
+-----------
+
+Changements d'ordre technique :
+* [DEV] On réorganise la CSS de telle sorte que les blocs similaires soient proches dans le code.
+
+Correctifs :
+* Placement du lien "Se connecter". Le lien est positionné en absolu mais il manquait
+  une directive "top: 0". Par défaut, le bloc est alors positionné par rapport au bas
+  du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
+* [CSS] nprogress.css n'était pas inclus dans le build.
+
+Version 1.1.1 (2013-11-19)
+--------------------------
 
 * Nouvelle page d'inscription.
 * Utilisation d'un texte différent par langue pour le bouton de connexion.
@@ -12,8 +24,8 @@ Version 1.1.1
 * Désactivation des modales pour les tablettes.
 * Pendant qu'une modale se charge on affiche un indicateur d'attente.
 
-Changements techniques :
-* [DEV] Optimisation des images CSS.
+Changements d'ordre technique :
+* [CSS] Optimisation des images CSS.
 * [INFRA] Désactivation de la minification HTML en mode Release.
 * [TOOLS] Appeler Grunt directement de MSBuild.
 * [TOOLS] Ne pas inclure les fichiers statiques inutiles: bower_components, less...
@@ -31,12 +43,12 @@ Version 1.1.0.23 (2013-11-18)
 * Pour faciliter les clics dans les tablettes, on donne plus d'impact physique aux liens.
 * Mise à jour du watermark pour Christine Légeret -> Petroleum Blue.
 
-Changements techniques :
-* [DEV] Pour les navigateurs qui n'implémentent pas les API HTML5,
-        on valide les formulaires via jQuery.validate.
-* [DEV] Temporisation lors de la prise en charge de l'évènement "resize" de la fenêtre du navigateur.
-* [DEV] Réécriture des CSS en utilisant lesscss.
-* [DEV] Désactivation des JS pour les navigateurs ne supportant pas ECMA v5.
+Changements d'ordre technique :
+* [JS] Pour les navigateurs qui n'implémentent pas les API HTML5,
+       on valide les formulaires via jQuery.validate.
+* [JS] Temporisation lors de la prise en charge de l'évènement "resize" de la fenêtre du navigateur.
+* [JS] Désactivation des JS pour les navigateurs ne supportant pas ECMA v5.
+* [CSS] Réécriture des CSS à l'aide de lesscss.
 * [INFRA] Site séparé pour la distribution des motifs (non utilisé en production).
 * [INFRA] Configuration de IIS Application Initialization Module.
 * [TOOLS] Compilation des JS via UglifyJS.

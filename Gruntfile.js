@@ -62,7 +62,8 @@ module.exports = function(grunt) {
           src: [
             'normalize-2.1.3.css',
             'chiffon.h5bp.css',
-            'chiffon.css'
+            'chiffon.css',
+            'nprogress-0.1.2.css'
           ].map(mapCss),
           dest: mapCss('_screen-<%= version %>.css')
         }
@@ -217,7 +218,7 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files:['<%= lessSources.screen.src %>'],
+      files: ['<%= lessSources.screen.src %>'],
       tasks: ['less']
     },
 

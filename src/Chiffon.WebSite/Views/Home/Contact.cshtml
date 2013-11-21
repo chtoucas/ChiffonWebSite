@@ -3,16 +3,16 @@
 
 @model IEnumerable<Designer>
 
-<div class="home_contact text_center ui_topborder">
+<div class="home_contact text_center fx_topborder">
  <p class="serif serif_large">
   @VR.HomeContact_TitleStart <a href="mailto:contact@pourquelmotifsimone.com" class="text_underline block">contact@pourquelmotifsimone.com</a> @VR.HomeContact_TitleEnd
  </p>
- <ul class="li_inline designers clearfix">
+ <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
    <li>
-    <h2 class="serif ui_strike"><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
+    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
     <ul>
-     <li class=img>
+     <li class=avatar>
       <a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)" rel="@ViewBag.ModalRelation">
        <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" />
        <div class=overlay></div>
@@ -22,7 +22,7 @@
      <li class=email><a class=text_underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
      @if (designer.WebSiteUrl.IsSome) {
       var website = designer.WebSiteUrl.Value.ToString().Replace("http://", String.Empty);
-      <li class="web text_right sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
+      <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
      }
     </ul>
    </li>
