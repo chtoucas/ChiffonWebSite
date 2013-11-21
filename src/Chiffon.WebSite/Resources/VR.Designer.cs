@@ -286,7 +286,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à ou un membre du collectif ?.
+        ///   Recherche une chaîne localisée semblable à ou un membre du collectif&amp;nbsp;?.
         /// </summary>
         public static string HomeContact_TitleEnd {
             get {
@@ -295,7 +295,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Vous souhaitez contactez le collectif ?.
+        ///   Recherche une chaîne localisée semblable à Vous souhaitez contactez le collectif&amp;nbsp;?.
         /// </summary>
         public static string HomeContact_TitleStart {
             get {

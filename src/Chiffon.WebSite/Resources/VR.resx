@@ -193,10 +193,10 @@
     <value>Je demande un mot de passe</value>
   </data>
   <data name="HomeContact_TitleEnd" xml:space="preserve">
-    <value>ou un membre du collectif ?</value>
+    <value>ou un membre du collectif&amp;nbsp;?</value>
   </data>
   <data name="HomeContact_TitleStart" xml:space="preserve">
-    <value>Vous souhaitez contactez le collectif ?</value>
+    <value>Vous souhaitez contactez le collectif&amp;nbsp;?</value>
   </data>
   <data name="Layout_Copyright" xml:space="preserve">
     <value>© Pour quel motif, Simone ? 2013.</value>

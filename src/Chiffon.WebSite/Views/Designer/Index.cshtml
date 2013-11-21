@@ -12,7 +12,7 @@
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li>
    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" /><div class="overlay"></div>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div>
     <div class=watermark></div>
    </a>
   </li>

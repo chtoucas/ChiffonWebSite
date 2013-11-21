@@ -950,6 +950,7 @@ FORM INPUT.error {
     text-decoration: underline;
   }
 }
+
 // Old stuff
 //.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: @white; }
 //.modal { width: 50%; height: 50%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
@@ -988,16 +989,22 @@ FORM INPUT.error {
     width: @mosaic_3_width;
   }
 
-  .mosaic_75 {
-    width: @mosaic_2_width;
-  }
-
   .home_contact {
     .li_inline2center;
 
     .li_designers > LI {
       vertical-align: text-top;
       margin: 1.5em;
+    }
+  }
+
+  .designer {
+    .mosaic_75 {
+      width: @mosaic_2_width;
+    }
+
+    .pager {
+      width: @grid_2_width;
     }
   }
 }
@@ -1009,6 +1016,11 @@ FORM INPUT.error {
 
   H1 EM:first-child, H1 STRONG {
     display: block;
+  }
+
+  .serif_large {
+    font-size: @font_size_medium;
+    line-height: 1.5em;
   }
 
   .nav_main LI {
@@ -1040,10 +1052,6 @@ FORM INPUT.error {
     width: @mosaic_2_width;
   }
 
-  .mosaic_75 {
-    width: @mosaic_1_width;
-  }
-
   .home_contact {
     .li_inline2center;
 
@@ -1055,6 +1063,41 @@ FORM INPUT.error {
         vertical-align: text-top;
         margin: .8em;
       }
+    }
+  }
+
+  .designer {
+    .mosaic_75 {
+      width: @mosaic_2_width;
+    }
+
+    .mosaic {
+      width: @mosaic_2_width;
+    }
+
+    .patterns.mosaic {
+      height: 341px;
+    }
+
+    .pattern {
+      max-width: @grid_2_width;
+      height: 341px;
+
+      IMG {
+        max-width: 100%;
+      }
+    }
+
+    .info {
+      display: none;
+    }
+
+    .nav_views {
+      width: @grid_2_width;
+    }
+
+    .pager {
+      width: @grid_2_width;
     }
   }
 }

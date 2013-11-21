@@ -5,7 +5,7 @@
 
 <div class="home_contact text_center fx_topborder">
  <p class="serif serif_large">
-  @VR.HomeContact_TitleStart <a href="mailto:contact@pourquelmotifsimone.com" class="text_underline block">contact@pourquelmotifsimone.com</a> @VR.HomeContact_TitleEnd
+  @Html.Raw(VR.HomeContact_TitleStart) <a href="mailto:contact@pourquelmotifsimone.com" class="text_underline block">contact@pourquelmotifsimone.com</a> @Html.Raw(VR.HomeContact_TitleEnd)
  </p>
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
@@ -14,7 +14,7 @@
     <ul>
      <li class=avatar>
       <a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)" rel="@ViewBag.ModalRelation">
-       <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" />
+       <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
        <div class=overlay></div>
        <div class=watermark></div>
       </a>
