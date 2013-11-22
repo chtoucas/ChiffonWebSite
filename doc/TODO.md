@@ -53,6 +53,13 @@ MSBuild :
 
 Utiliser https://github.com/kozy4324/grunt-concat-sourcemap
 
+RxJS
+http://haacked.com/archive/2012/04/08/reactive-extensions-sample.aspx
+http://blogs.msdn.com/b/interoperability/archive/2013/02/05/netflix-solving-big-problems-with-reactive-extensions-rx.aspx
+
+I18N
+http://www.mediawiki.org/wiki/Localisation#Internationalization_hints
+
 NOTES
 -----
 

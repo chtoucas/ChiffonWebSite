@@ -313,7 +313,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Conception graphique : Viviane Devaux. Mise en scène : chtoucas@narvalo.org..
+        ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Conception graphique : Viviane Devaux. Mise en forme : chtoucas@narvalo.org..
         /// </summary>
         public static string Layout_DisclaimerHtml {
             get {

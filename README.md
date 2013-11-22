@@ -3,7 +3,7 @@ ChiffonWebSite
 
 WebSite for a textile design collective, available in French & English.
 
-The result can be seen here: [http://pourquelmotifsimone.com]{http://pourquelmotifsimone.com}.
+The result can be seen here: [http://pourquelmotifsimone.com](http://pourquelmotifsimone.com).
 
 Technology footprint
 --------------------
@@ -28,8 +28,9 @@ Requirements
 Setup
 -----
 
-Add 'scripts\modules' to your PowerShell module path, then launch RUN_ME_FIRST.ps1 in a PowerShell
+Add `scripts\modules` to your PowerShell module path, then launch `RUN_ME_FIRST.ps1` in a PowerShell
 session. This script will download then install all third-party tools, namely:
+
 * 7-Zip
 * NuGet
 * Node.js

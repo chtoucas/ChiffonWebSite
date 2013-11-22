@@ -9,10 +9,12 @@ var Chiffon = (function(window, undef) {
   };
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
+    device: {
+      isRich: false,
+      isTouch: false
+    },
     isAuth: false,
-    isTouch: false,
-    locale: 'fr',
-    width: 'Normal'
+    locale: 'fr'
   };
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
   var locales = [defaultContext.locale, 'en'];
@@ -77,7 +79,7 @@ var Chiffon = (function(window, undef) {
     // NB: Il n'est pas possible de détecter une tablette mais on peut s'approcher du résultat.
     // Cf. https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
     // et http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
-    //context.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0;
+    context.device.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0;
 
     context.require = function(resources, onComplete) {
       yepnope({
@@ -95,9 +97,8 @@ var Chiffon = (function(window, undef) {
         return;
       }
 
-      width = $(window).width();
-
-      context.width = (width >= 940 ? 'Normal' : (width >= 700 ? 'Medium' : 'Small'));
+      //width = $(window).width();
+      //context.device.width = (width >= 940 ? 'Normal' : (width >= 700 ? 'Medium' : 'Small'));
 
       Chiffon.configure($, args.settings);
 

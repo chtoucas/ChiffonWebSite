@@ -216,6 +216,7 @@ FOOTER {
 
 // Modales --------------------------------------------------------------------
 
+// Inspiré de http://coding.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
 // FIXME: position sur BODY, Opera !
 /*body { position: relative; }*/
 .modal {
@@ -898,7 +899,11 @@ FORM INPUT.error {
     float: right;
     width: @grid_1_width;
     font-size: 1.1em;
-    color: @darkgrey;
+
+    P {
+      // FIXME: Je ne comprends pas pourquoi la règle globales sur P prend précédence sur celle-ci.
+      color: @darkgrey;
+    }
 
     > P {
       margin-top: 0;
@@ -960,23 +965,35 @@ FORM INPUT.error {
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 
 /* =========================================================================
- * Partie responsive
+ * Partie "responsive"
  * ========================================================================= */
 
-@media (min-width: @grid_3_width) and (max-width: @grid_4_width) {
-  BODY {
-    width: @grid_3_width;
+@media (max-width: @grid_4_width) {
+  H1 {
+    // WARNING: Les sauts à la ligne deviennent importants !
+    white-space: pre-line;
   }
 
-  H1 EM:first-child, H1 STRONG:first-child {
-    display: block;
-  }
+  /*H1 EM:first-child, H1 STRONG {
+      display: block;
+    }*/
 
   .nav_designers {
     .li_inline2center;
 
     LI {
       width: auto;
+    }
+  }
+}
+
+@media (min-width: @grid_3_width) and (max-width: @grid_4_width) {
+  BODY {
+    width: @grid_3_width;
+  }
+
+  .nav_designers {
+    LI {
       margin: 11px;
 
       &:last-child {
@@ -989,6 +1006,7 @@ FORM INPUT.error {
     width: @mosaic_3_width;
   }
 
+  /* Page contact */
   .home_contact {
     .li_inline2center;
 
@@ -998,6 +1016,7 @@ FORM INPUT.error {
     }
   }
 
+  /* Pages designer */
   .designer {
     .mosaic_75 {
       width: @mosaic_2_width;
@@ -1009,13 +1028,9 @@ FORM INPUT.error {
   }
 }
 
-@media (max-width: @grid_3_width) {
+@media (min-width: @grid_2_width) and (max-width: @grid_3_width) {
   BODY {
     width: @grid_2_width;
-  }
-
-  H1 EM:first-child, H1 STRONG {
-    display: block;
   }
 
   .serif_large {
@@ -1028,8 +1043,6 @@ FORM INPUT.error {
   }
 
   .nav_designers {
-    .li_inline2center;
-
     &.fx_strike {
       background: none;
     }
@@ -1043,7 +1056,6 @@ FORM INPUT.error {
     }
 
     LI {
-      width: auto;
       margin: 11px 0;
     }
   }
@@ -1052,6 +1064,7 @@ FORM INPUT.error {
     width: @mosaic_2_width;
   }
 
+  /* Page contact */
   .home_contact {
     .li_inline2center;
 
@@ -1066,6 +1079,7 @@ FORM INPUT.error {
     }
   }
 
+  /* Pages designer */
   .designer {
     .mosaic_75 {
       width: @mosaic_2_width;
@@ -1098,6 +1112,51 @@ FORM INPUT.error {
 
     .pager {
       width: @grid_2_width;
+    }
+  }
+}
+
+@media (max-width: @grid_2_width) {
+  BODY {
+    width: @grid_1_width;
+  }
+
+  H1 {
+    display: none;
+  }
+
+  .serif_large {
+    font-size: 1.6em;
+    line-height: 1.5em;
+  }
+
+  .serif_medium {
+    font-size: 1.6em;
+    line-height: 1.5em;
+  }
+
+  .nav_designers {
+    &.fx_strike {
+      background: none;
+    }
+
+    UL {
+      font-size: 1.6em;
+    }
+
+    LI {
+      margin: 0;
+    }
+  }
+
+  .mosaic {
+    width: @mosaic_1_width;
+  }
+
+  /* Pages designer */
+  .designer {
+    .mosaic_75 {
+      width: @mosaic_1_width;
     }
   }
 }

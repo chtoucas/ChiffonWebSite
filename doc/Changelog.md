@@ -1,13 +1,20 @@
 CHANGELOG
 =========
 
-Version 1.2
+Version 1.3
 -----------
 
+Version 1.2 (2013-11-21)
+------------------------
+
+* Version minimale du site en Responsive Design.
+
 Changements d'ordre technique :
+
 * [DEV] On réorganise la CSS de telle sorte que les blocs similaires soient proches dans le code.
 
 Correctifs :
+
 * Placement du lien "Se connecter". Le lien est positionné en absolu mais il manquait
   une directive "top: 0". Par défaut, le bloc est alors positionné par rapport au bas
   du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
@@ -25,12 +32,14 @@ Version 1.1.1 (2013-11-19)
 * Pendant qu'une modale se charge on affiche un indicateur d'attente.
 
 Changements d'ordre technique :
+
 * [CSS] Optimisation des images CSS.
 * [INFRA] Désactivation de la minification HTML en mode Release.
 * [TOOLS] Appeler Grunt directement de MSBuild.
 * [TOOLS] Ne pas inclure les fichiers statiques inutiles: bower_components, less...
 
 Correctifs :
+
 * La couleur utilisée dans les paginations était la couleur par défaut (gris).
 * [TOOLS] Suppression du package source avant la mise à jour d'un outil.
 
@@ -44,6 +53,7 @@ Version 1.1.0.23 (2013-11-18)
 * Mise à jour du watermark pour Christine Légeret -> Petroleum Blue.
 
 Changements d'ordre technique :
+
 * [JS] Pour les navigateurs qui n'implémentent pas les API HTML5,
        on valide les formulaires via jQuery.validate.
 * [JS] Temporisation lors de la prise en charge de l'évènement "resize" de la fenêtre du navigateur.

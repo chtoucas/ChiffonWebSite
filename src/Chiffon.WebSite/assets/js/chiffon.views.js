@@ -399,9 +399,10 @@ Chiffon.Views = (function(window, undef) {
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      if (!this.context.isAuth && 'Normal' === this.context.width) {
+      if (!this.context.isAuth && !this.context.device.isTouch) {
         // Pour les visiteurs anonymes et n'utilisant pas une tablette, on active les modales.
         // NB: L'assertion précédente n'est pas tout à fait juste (cf. remarque sur context.isTouch).
+        // FIXME: On rétablira cette fonctionnalité quand on aura des modales plein écran.
         initModal();
       }
       //else {
@@ -524,9 +525,8 @@ Chiffon.Views.Designer = (function(window, Views) {
 
   var DesignerLayoutMixin = {
     initLayout: function() {
-      if ('Small' !== this.context.width) {
-        Components.StickyInfo();
-      }
+      // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
+      //Components.StickyInfo();
     }
   };
 
