@@ -315,9 +315,9 @@ INPUT[type=checkbox] {
       display: inline-block;
       width: 11px;
       height: 11px;
+      padding-right: 1em;
       cursor: pointer;
       background: data-uri("img/unchecked.png") no-repeat;
-      padding-right: 1em;
     }
   }
 
@@ -704,9 +704,9 @@ FORM INPUT.error {
 
 .account_register {
   .validation-summary-errors {
-    color: @error_color;
     font-size: @font_size_medium;
     line-height: 1.5em;
+    color: @error_color;
     text-align: center;
   }
 
@@ -719,8 +719,8 @@ FORM INPUT.error {
   }
 
   FORM {
-    color: @darkgrey;
     font-style: normal;
+    color: @darkgrey;
 
     P {
       margin: 2em 0;
@@ -733,7 +733,7 @@ FORM INPUT.error {
       text-transform: uppercase;
     }
   }
-  /*INPUT[type=text], INPUT[type=email], INPUT[type=submit] {*/
+  //INPUT[type=text], INPUT[type=email], INPUT[type=submit] {
   INPUT {
     width: 312px;
     height: 3.1em;
@@ -1018,8 +1018,16 @@ FORM INPUT.error {
 
   /* Pages designer */
   .designer {
+    position: relative;
+
     .mosaic_75 {
       width: @mosaic_2_width;
+    }
+
+    .info {
+      position: absolute;
+      top: 580px;
+      right: 0;
     }
 
     .pager {
@@ -1157,6 +1165,35 @@ FORM INPUT.error {
   .designer {
     .mosaic_75 {
       width: @mosaic_1_width;
+    }
+
+    .info {
+      display: none;
+    }
+         
+    .mosaic {
+      width: @mosaic_1_width;
+    }
+              
+    .nav_views {
+      width: @grid_1_width;
+    }
+
+    .patterns.mosaic {
+      max-height: 164px;
+    }
+
+    .pattern {
+      max-width: @grid_1_width;
+      max-height: 164px;
+
+      IMG {
+        max-width: 100%;
+      }
+    }
+
+    .pager {
+      width: @grid_1_width;
     }
   }
 }
