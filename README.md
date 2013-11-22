@@ -3,6 +3,8 @@ ChiffonWebSite
 
 WebSite for a textile design collective, available in French & English.
 
+The result can be seen here: [http://pourquelmotifsimone.com]{http://pourquelmotifsimone.com}.
+
 Technology footprint
 --------------------
 
