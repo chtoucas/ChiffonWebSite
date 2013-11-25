@@ -4,6 +4,10 @@ CHANGELOG
 Version 1.3
 -----------
 
+* Version stable de la feuille de style pour un site web adaptatif.
+* Désactivation de la gestion du bloc inof en JavaScript.
+
+
 Version 1.2 (2013-11-21)
 ------------------------
 

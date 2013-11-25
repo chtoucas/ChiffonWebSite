@@ -1008,9 +1008,21 @@ FORM INPUT.error {
       width: auto;
     }
   }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    display: block;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+  }
 }
 
-@media only screen and (min-width: @grid_3_width) and (max-width: @grid_4_width) {
+@media only screen and (min-width:(1px + @grid_3_width)) and (max-width: @grid_4_width) {
   BODY {
     width: @grid_3_width;
   }
@@ -1065,7 +1077,7 @@ FORM INPUT.error {
   }
 }
 
-@media only screen and (min-width: @grid_2_width) and (max-width: @grid_3_width) {
+@media only screen and (min-width: (1px + @grid_2_width)) and (max-width: @grid_3_width) {
   BODY {
     width: @grid_2_width;
   }
@@ -1077,8 +1089,14 @@ FORM INPUT.error {
 
   // Menu principal.
 
-  .nav_main LI {
-    margin: .6em 0;
+  .nav_main {
+    LI {
+      margin: 0;
+    }
+
+    A {
+      padding: 1.6em 1em;
+    }
   }
 
   // Menu des designers.
@@ -1150,14 +1168,30 @@ FORM INPUT.error {
     background-image: url(img/logo.png);
   }
 
-  .serif_large {
-    font-size: 1.6em;
+  .serif_large, .serif_medium {
+    font-size: 1.8em;
     line-height: 1.5em;
   }
 
   .serif_medium {
     font-size: 1.6em;
     line-height: 1.5em;
+  }
+
+  // Menu principal.
+
+  .nav_main {
+    .account {
+      position: initial;
+    }
+
+    UL {
+      padding: .6em 0;
+    }
+
+    LI {
+      margin: 0;
+    }
   }
 
   // Menu des designers.
@@ -1169,6 +1203,7 @@ FORM INPUT.error {
 
     UL {
       font-size: 1.6em;
+      padding: .5em 0;
     }
 
     LI {
@@ -1189,6 +1224,26 @@ FORM INPUT.error {
 
   .mosaic {
     width: @mosaic_1_width;
+  }
+
+  // Page contact.
+
+  .home_contact {
+    .li_inline2center;
+
+    .li_designers {
+      width: @grid_1_width;
+      overflow-y: hidden;
+
+      > LI {
+        vertical-align: text-top;
+        margin: .8em 0;
+      }
+    }
+
+    P A {
+      font-size: .7em;
+    }
   }
 
   // Pages designer.
