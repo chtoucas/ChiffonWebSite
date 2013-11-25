@@ -8,20 +8,27 @@
  var views = Model.PatternViews;
  var viewCount = views.Count();
 }
-
-@Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
-<ul class="mosaic patterns">
+@*
+ Informations sur le designer.
+*@
+<div class=info_pattern>
+ @Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
+</div>
+@*
+ Liste des vues du motif.
+*@
+<ul id=pattern class=pattern>
  @foreach (var view in Model.PatternViews) {
   var version = viewCount == 1 || String.IsNullOrWhiteSpace(@view.Version) ? "" : " (" + @view.Version + ")";
-  <li class=pattern id="@view.Version">
+  <li id="@view.Version">
    <img src="@Url.PatternContent(view.DesignerKey, view.Reference, view.Version)" alt="@view.Description" /><div class=watermark><span>Ref @Model.Reference @version</span></div>
   </li>
  }
 </ul>
 @*
- Navigation dans les différentes vues du motif.
+ Navigation dans les vues du motif.
 *@
-<p id=nav_views class=nav_views>
+<p id=pattern_nav class=pattern_nav>
  @if (viewCount > 1) {
   <span class=prev_noop>@VR.Pager_Previous</span>
   <a class="hide prev" href="#">@VR.Pager_Previous</a>
@@ -29,13 +36,13 @@
   <a class="next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
   <span class="hide next_noop">@VR.Pager_Next</span>
   @: -
-   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
+  <span class=pos>1</span> @VR.Pager_Of @: @viewCount
  }
 </p>
 @*
- Liste des motifs.
+ Liste des motifs dans la même catégorie.
 *@
-<ul class="mosaic mosaic_75 clearfix">
+<ul class="mosaic clearfix">
  @foreach (var preview in Model.Previews) {
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li>
@@ -48,7 +55,7 @@
  }
 </ul>
 @*
- Pagination.
+ Pagination pour la liste des motifs.
 *@
 @if (Model.PageCount > 1) {
  @ViewHelpers.Pager(Url, Model)

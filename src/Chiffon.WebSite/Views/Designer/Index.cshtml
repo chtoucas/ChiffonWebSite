@@ -7,7 +7,7 @@
 }
 
 @Html.Partial(ViewName.Shared.DesignerInfo, Model.Designer)
-<ul class="mosaic mosaic_75 clearfix">
+<ul class="mosaic clearfix">
  @foreach (var preview in Model.Previews) {
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li>

@@ -4,9 +4,9 @@
 
 @import "chiffon.common.less";
 
-/* =========================================================================
- * Règles de base
- * ========================================================================= */
+// ============================================================================
+// Règles de base
+// ============================================================================
 
 // H5BP v4.3.0 ----------------------------------------------------------------
 
@@ -68,9 +68,9 @@ A {
   }
 }
 
-/* =========================================================================
- * Disposition globale
- * ========================================================================= */
+// ============================================================================
+// Disposition globale
+// ============================================================================
 
 BODY {
   // On centre le corps de la page.
@@ -107,9 +107,9 @@ FOOTER {
   }
 }
 
-/* =========================================================================
- * Utilitaires
- * ========================================================================= */
+// ============================================================================
+// Utilitaires
+// ============================================================================
 
 // Listes ---------------------------------------------------------------------
 
@@ -122,8 +122,10 @@ FOOTER {
 // minifiant le HTML (ie </li><li>) ou en supprimant la balise fermante mais,
 // dans les deux cas, la solution est fragile. On préfère donc utiliser
 // "float: left". Il ne faut alors pas oublier de rajouter un clearfix.
-.li_inline > LI {
-  float: left;
+.li_inline {
+  > LI {
+    float: left;
+  }
 }
 
 /* Liste centrée */
@@ -193,9 +195,9 @@ FOOTER {
   font-family: sans-serif;
 }
 
-/* =========================================================================
- * Modules
- * ========================================================================= */
+// ============================================================================
+// Modules
+// ============================================================================
 
 // Fontes ---------------------------------------------------------------------
 
@@ -341,37 +343,17 @@ A {
 //  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
 //}
 
-/* =========================================================================
- * Motifs
- * ========================================================================= */
-
-// Motif en grand format.
-.pattern {
-  position: relative;
-  display: block;
-  width: @pattern_width;
-  height: @pattern_heigth;
-  // Couleur par défaut visible quand l'image n'existe pas
-  //.pattern .watermark { background-color: @missing_img_background; }
-  .watermark SPAN {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: .5em 1em;
-    font-weight: bold;
-    text-transform: uppercase;
-    background-color: @white;
-  }
-}
+// ============================================================================
+// Motifs
+// ============================================================================
 
 // Aperçu d'un motif.
 .vignette {
+  // On utilise une position relative pour le positionnement du watermark.
   position: relative;
   display: block;
   width: @preview_width;
   height: @preview_height;
-  // Couleur par défaut quand l'image n'est pas chargée.
-  background-color: @lightgrey;
   transition: all .2s ease-in-out;
 
   .overlay {
@@ -383,6 +365,8 @@ A {
   IMG {
     width: @preview_width;
     height: @preview_height;
+    // Couleur par défaut quand l'image n'est pas chargée.
+    background-color: @missing_img_background;
   }
 
   SPAN {
@@ -415,30 +399,78 @@ A {
   background: data-uri("img/watermarks/vd.png");
 }
 
-/* Mosaïque */
+// Motifs en grand format.
+
+.pattern {
+  width: @grid_3_width;
+  height: @pattern_heigth;
+  overflow: hidden;
+
+  LI {
+    // On utilise une position relative pour le positionnement du watermark.
+    position: relative;
+
+    .watermark SPAN {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: .5em 1em;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: @white;
+    }
+  }
+
+  IMG {
+    width: @pattern_width;
+    height: @pattern_heigth;
+    background-color: @missing_img_background;
+  }
+}
+
+.pattern_nav {
+  width: @grid_3_width;
+  padding-bottom: 2em;
+  color: @black;
+  text-align: center;
+  text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
+}
+
+// Mosaïque d'aperçus
 
 .mosaic {
   width: @mosaic_4_width;
   overflow: hidden;
+  .li_inline;
 
   LI {
-    float: left;
     margin-right: @grid_inter_width;
     margin-bottom: @grid_inter_width;
   }
 }
 
-.patterns {
-  height: @pattern_heigth;
+// Pagination (dans la page designer)
+
+.pager {
+  width: @grid_3_width;
+  margin-top: 0;
+  margin-bottom: 2em;
+  color: @black;
+  text-align: center;
+  text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
 }
 
-.mosaic_75 {
-  width: @mosaic_3_width;
-}
-
-/* =========================================================================
- * Menus
- * ========================================================================= */
+// ============================================================================
+// Menus
+// ============================================================================
 
 /* Menu des langues */
 
@@ -559,17 +591,17 @@ FORM INPUT.error {
 
 //INPUT.valid { border: 1px solid green !important; }
 
-/* =========================================================================
- * Page d'accueil
- * ========================================================================= */
+// ============================================================================
+// Page d'accueil
+// ============================================================================
 
 .home_index .mosaic {
   margin: 2.3em 0 .3em 0;
 }
 
-/* =========================================================================
- * Page à propos
- * ========================================================================= */
+// ============================================================================
+// Page à propos
+// ============================================================================
 
 .home_about {
   margin-top: 1em;
@@ -588,9 +620,9 @@ FORM INPUT.error {
   }
 }
 
-/* =========================================================================
- * Page de contact
- * ========================================================================= */
+// ============================================================================
+// Page de contact
+// ============================================================================
 
 .home_contact {
   margin-bottom: 5em;
@@ -698,9 +730,9 @@ FORM INPUT.error {
   }
 }
 
-/* =========================================================================
- * Page d'enregistrement
- * ========================================================================= */
+// ============================================================================
+// Page d'enregistrement
+// ============================================================================
 
 .account_register {
   .validation-summary-errors {
@@ -795,9 +827,11 @@ FORM INPUT.error {
     }
   }
 }
-/* =========================================================================
- * Page de connexion
- * ========================================================================= */
+
+// ============================================================================
+// Page de connexion
+// ============================================================================
+
 .account_login {
   FORM {
     margin-bottom: 7em;
@@ -847,21 +881,19 @@ FORM INPUT.error {
     color: @white;
   }
 }
-/* =========================================================================
- * Pages designer
- * ========================================================================= */
+
+// ============================================================================
+// Pages designer
+// ============================================================================
+
 .designer {
   padding-top: 2.3em;
 
   .mosaic {
     // Mosaïque à trois colonnes.
-    width: (@grid_3_width + @grid_inter_width);
-
-    LI {
-      margin-right: @grid_inter_width;
-    }
+    width: @mosaic_3_width;
   }
-  //HTML[lang="fr"]
+
   .vignette:hover .watermark {
     &:lang(fr) {
       background: data-uri("img/watermarks/seemore_fr.png");
@@ -874,8 +906,8 @@ FORM INPUT.error {
 
   NAV {
     margin-bottom: 2.5em;
-    font-size: 1.1em;
-    border-bottom: 1px solid @darkgrey;
+    font-size: 1.2em;
+    border-bottom: 1px solid @grey;
 
     LI:hover, LI.current {
       background: no-repeat right center data-uri("img/arrow.png");
@@ -891,28 +923,23 @@ FORM INPUT.error {
       padding: .5em 0;
       color: @darkgrey;
       text-transform: uppercase;
-      border-top: 1px solid @darkgrey;
+      border-top: 1px solid @grey;
     }
   }
 
   .info {
     float: right;
     width: @grid_1_width;
-    font-size: 1.1em;
 
     P {
-      // FIXME: Je ne comprends pas pourquoi la règle globales sur P prend précédence sur celle-ci.
-      color: @darkgrey;
-    }
-
-    > P {
       margin-top: 0;
       margin-bottom: 2em;
-      font-size: 1.2em;
-    }
-
-    P A {
       color: @darkgrey;
+      font-size: 1.3em;
+
+      A {
+        color: @darkgrey;
+      }
     }
   }
 
@@ -925,36 +952,12 @@ FORM INPUT.error {
     top: 2.3em;
   }
 }
+
 /* En-tête statique */
 //#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: @grid_4_width; background-color: @white; }
 //  #sticky_header H1 { display: none; }
 //  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
 //    #sticky_header NAV LI { width: auto !important; font-style: initial; }
-/* Pagination */
-.pager {
-  width: @grid_3_width;
-  margin-top: 0;
-  margin-bottom: 2em;
-  color: @black;
-  text-align: center;
-  text-transform: uppercase;
-
-  A {
-    text-decoration: underline;
-  }
-}
-
-.nav_views {
-  width: @grid_3_width;
-  padding-bottom: 20px;
-  color: @black;
-  text-align: center;
-  text-transform: uppercase;
-
-  A {
-    text-decoration: underline;
-  }
-}
 
 // Old stuff
 //.modal { display: none; position: absolute; left: 50%; top: 50%; z-index: 9999; color: @white; }
@@ -964,20 +967,40 @@ FORM INPUT.error {
 //.centered-container { position: relative; }
 //.centered { display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
 
-/* =========================================================================
- * Partie "responsive"
- * ========================================================================= */
+// ============================================================================
+// Règles pour un site web adaptatif
+// ============================================================================
 
-@media (max-width: @grid_4_width) {
+.short_designer_info {
+  .info {
+    float: none;
+    width: auto;
+
+    P:first-child {
+      margin-bottom: 1em;
+    }
+
+    NAV {
+      display: none;
+    }
+  }
+}
+
+// Règles communes.
+
+@media only screen and (max-width: @grid_4_width) {
   H1 {
     // WARNING: Les sauts à la ligne deviennent importants !
     white-space: pre-line;
   }
 
-  /*H1 EM:first-child, H1 STRONG {
+  /*
+    H1 EM:first-child, H1 STRONG {
       display: block;
-    }*/
+    }
+  */
 
+  // Le menu designer devient centré et chaque entrée prend une largeur automatique.
   .nav_designers {
     .li_inline2center;
 
@@ -987,11 +1010,12 @@ FORM INPUT.error {
   }
 }
 
-@media (min-width: @grid_3_width) and (max-width: @grid_4_width) {
+@media only screen and (min-width: @grid_3_width) and (max-width: @grid_4_width) {
   BODY {
     width: @grid_3_width;
   }
 
+  // Menu des designers
   .nav_designers {
     LI {
       margin: 11px;
@@ -1002,11 +1026,14 @@ FORM INPUT.error {
     }
   }
 
+  // Motifs.
+
   .mosaic {
     width: @mosaic_3_width;
   }
 
-  /* Page contact */
+  // Page contact.
+
   .home_contact {
     .li_inline2center;
 
@@ -1016,18 +1043,20 @@ FORM INPUT.error {
     }
   }
 
-  /* Pages designer */
+  // Pages designer.
+
   .designer {
+    // On utilise une position relative pour le positionnement du bloc info.
     position: relative;
 
-    .mosaic_75 {
-      width: @mosaic_2_width;
-    }
-
-    .info {
+    .info_pattern {
       position: absolute;
       top: 580px;
       right: 0;
+    }
+
+    .mosaic {
+      width: @mosaic_2_width;
     }
 
     .pager {
@@ -1036,7 +1065,7 @@ FORM INPUT.error {
   }
 }
 
-@media (min-width: @grid_2_width) and (max-width: @grid_3_width) {
+@media only screen and (min-width: @grid_2_width) and (max-width: @grid_3_width) {
   BODY {
     width: @grid_2_width;
   }
@@ -1046,9 +1075,13 @@ FORM INPUT.error {
     line-height: 1.5em;
   }
 
+  // Menu principal.
+
   .nav_main LI {
     margin: .6em 0;
   }
+
+  // Menu des designers.
 
   .nav_designers {
     &.fx_strike {
@@ -1059,20 +1092,23 @@ FORM INPUT.error {
       font-size: 1.4em;
     }
 
-    > LI:last-child {
-      margin-right: 11px;
-    }
-
     LI {
       margin: 11px 0;
     }
+  }
+
+  // Motifs.
+
+  .pattern, .pattern_nav {
+    width: @grid_2_width;
   }
 
   .mosaic {
     width: @mosaic_2_width;
   }
 
-  /* Page contact */
+  // Page contact.
+
   .home_contact {
     .li_inline2center;
 
@@ -1087,35 +1123,13 @@ FORM INPUT.error {
     }
   }
 
-  /* Pages designer */
+  // Pages designer.
+
   .designer {
-    .mosaic_75 {
-      width: @mosaic_2_width;
-    }
+    .short_designer_info;
 
     .mosaic {
       width: @mosaic_2_width;
-    }
-
-    .patterns.mosaic {
-      height: 341px;
-    }
-
-    .pattern {
-      max-width: @grid_2_width;
-      height: 341px;
-
-      IMG {
-        max-width: 100%;
-      }
-    }
-
-    .info {
-      display: none;
-    }
-
-    .nav_views {
-      width: @grid_2_width;
     }
 
     .pager {
@@ -1124,13 +1138,16 @@ FORM INPUT.error {
   }
 }
 
-@media (max-width: @grid_2_width) {
+@media only screen and (max-width: @grid_2_width) {
   BODY {
     width: @grid_1_width;
   }
 
   H1 {
-    display: none;
+    height: 57px;
+    width: 57px;
+    overflow: hidden;
+    background-image: url(img/logo.png);
   }
 
   .serif_large {
@@ -1142,6 +1159,8 @@ FORM INPUT.error {
     font-size: 1.6em;
     line-height: 1.5em;
   }
+
+  // Menu des designers.
 
   .nav_designers {
     &.fx_strike {
@@ -1157,39 +1176,28 @@ FORM INPUT.error {
     }
   }
 
+  // Motifs.
+
+  .pattern, .pattern_nav {
+    width: @grid_1_width;
+  }
+
+  // Pour ce type d'écran particulier on force la hauteur.
+  /*.pattern, .designer .watermark {
+    height: (1.5 * @preview_width);
+  }*/
+
   .mosaic {
     width: @mosaic_1_width;
   }
 
-  /* Pages designer */
-  .designer {
-    .mosaic_75 {
-      width: @mosaic_1_width;
-    }
+  // Pages designer.
 
-    .info {
-      display: none;
-    }
-         
+  .designer {
+    .short_designer_info;
+
     .mosaic {
       width: @mosaic_1_width;
-    }
-              
-    .nav_views {
-      width: @grid_1_width;
-    }
-
-    .patterns.mosaic {
-      max-height: 164px;
-    }
-
-    .pattern {
-      max-width: @grid_1_width;
-      max-height: 164px;
-
-      IMG {
-        max-width: 100%;
-      }
     }
 
     .pager {

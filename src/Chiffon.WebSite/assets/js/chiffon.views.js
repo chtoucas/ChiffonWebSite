@@ -12,8 +12,8 @@ Chiffon.Components = (function(window, undef) {
   Components.ViewNavigator = (function() {
     var settings;
     var defaults = {
-      viewsSel: '.pattern',
-      navSel: '#nav_views',
+      viewsSel: '#pattern LI',
+      navSel: '#pattern_nav',
       currentSel: undef
     };
 
