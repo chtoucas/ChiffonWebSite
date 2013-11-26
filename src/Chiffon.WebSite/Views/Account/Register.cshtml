@@ -1,15 +1,17 @@
-﻿@model RegisterViewModel
+﻿@using Chiffon.Infrastructure
+
+@model RegisterViewModel
 
 <div class="account_register serif text_center fx_topborder">
  <p class="serif_large">
-  @Html.Raw(VR.Account_Register_Welcome)
+  @VR.Account_Register_Welcome
  </p>
  <p class="serif_large">
-  @Html.Raw(VR.Account_Register_WarningHtml)
+  @Html.AccountRegisterWarning((ChiffonLanguage)ViewBag.Language)
  </p>
  <div class=fx_doubleline></div>
  <p class="serif_medium">
-  @Html.Raw(VR.Account_Register_DescriptionHtml)
+  @Html.AccountRegisterHelp((ChiffonLanguage)ViewBag.Language)
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=sansserif id=register_form>
@@ -33,14 +35,14 @@
   <p>
    @*@Html.CheckBoxFor(_ => _.Newsletter, new { @checked = "checked" })*@
    <input type="checkbox" id="Newsletter" name="Newsletter" checked="checked" />
-   <label for=Newsletter class=newsletter><span></span>Oui, je veux recevoir la gazette mensuelle des Simone !</label>
+   <label for=Newsletter class=newsletter><span></span>@VR.Account_Register_Newsletter</label>
   </p>
   @Html.HiddenFor(_ => _.ReturnUrl)
   <p>
    <input type=submit value="@VR.Account_Register_Submit" />
   </p>
   <p>
-   * Ces champs sont obligatoires
+   @VR.Account_Register_MandatoryFields
   </p>
  </form>
  @*<p class="serif_large">

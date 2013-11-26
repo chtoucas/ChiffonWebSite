@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_Login_DescriptionHtml" xml:space="preserve">
-    <value>To browse our catalog, enter your password.</value>
-  </data>
   <data name="Account_Login_Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -129,26 +126,17 @@
   <data name="Account_Login_Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="Account_Login_Welcome" xml:space="preserve">
-    <value>Hello,</value>
-  </data>
   <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
     <value>Browse the catalog.</value>
   </data>
   <data name="Account_PostRegister_Byebye" xml:space="preserve">
     <value>See you soon!</value>
   </data>
-  <data name="Account_PostRegister_EmailHtml" xml:space="preserve">
-    <value>Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail.</value>
-  </data>
   <data name="Account_PostRegister_Success" xml:space="preserve">
-    <value>Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte.</value>
+    <value>Les Simone are pleased to inform you that your request has been processed.</value>
   </data>
   <data name="Account_Register_CompanyName" xml:space="preserve">
     <value>Agency *</value>
-  </data>
-  <data name="Account_Register_DescriptionHtml" xml:space="preserve">
-    <value>This catalog is reserved &lt;span&gt;to professionals&lt;/span&gt;.</value>
   </data>
   <data name="Account_Register_EmailAddress" xml:space="preserve">
     <value>Email *</value>
@@ -163,10 +151,13 @@
     <value>I already own a password</value>
   </data>
   <data name="Account_Register_MandatoryFields" xml:space="preserve">
-    <value>* Ces champs sont obligatoires</value>
+    <value>* Mandatory fields</value>
   </data>
   <data name="Account_Register_Message" xml:space="preserve">
     <value>Subject</value>
+  </data>
+  <data name="Account_Register_Newsletter" xml:space="preserve">
+    <value>I want to receive la Gazette des Simone, a monthly email of fresh trends and patterns!</value>
   </data>
   <data name="Account_Register_Password" xml:space="preserve">
     <value>Password</value>
@@ -177,32 +168,20 @@
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
   </data>
-  <data name="Account_Register_WarningHtml" xml:space="preserve">
-    <value>If this is your first time visiting, please &lt;span&gt;register&lt;/span&gt; using this form. Your new &lt;span&gt;account&lt;/span&gt; will be approved quickly.</value>
-  </data>
   <data name="Account_Register_Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>All</value>
   </data>
-  <data name="HomeAbout_ContactUs" xml:space="preserve">
+  <data name="Home_About_ContactUs" xml:space="preserve">
     <value>Contact us</value>
   </data>
-  <data name="HomeAbout_PasswordRequest" xml:space="preserve">
+  <data name="Home_About_PasswordRequest" xml:space="preserve">
     <value>Request a password</value>
-  </data>
-  <data name="HomeContact_TitleEnd" xml:space="preserve">
-    <value>or a member of the collective ?</value>
-  </data>
-  <data name="HomeContact_TitleStart" xml:space="preserve">
-    <value>You wish to contact the collective ?</value>
   </data>
   <data name="Layout_Copyright" xml:space="preserve">
     <value>© Pour quel motif, Simone ? 2013.</value>
-  </data>
-  <data name="Layout_DisclaimerHtml" xml:space="preserve">
-    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Graphic Design by Viviane Devaux. Coding by chtoucas@narvalo.org</value>
   </data>
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>

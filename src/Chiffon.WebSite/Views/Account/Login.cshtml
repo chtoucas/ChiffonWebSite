@@ -1,7 +1,8 @@
-﻿<div class="account_login text_center serif fx_topborder">
+﻿@using Chiffon.Infrastructure
+
+<div class="account_login text_center serif fx_topborder">
  <div class="serif_large">
-  <p class=hello>@VR.Account_Login_Welcome</p>
-  <p>@Html.Raw(VR.Account_Login_DescriptionHtml)</p>
+  @Html.AccountLoginContent((ChiffonLanguage)ViewBag.Language)
  </div>
  <form method=post action="/connecte" id=login_form>
   <p id=error_container class="serif_medium error_container"></p>

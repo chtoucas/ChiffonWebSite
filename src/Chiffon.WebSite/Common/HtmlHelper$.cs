@@ -7,14 +7,44 @@
 
     public static class HtmlHelperExtensions
     {
-        public static IHtmlString ContactTitle(this HtmlHelper @this, ChiffonLanguage language)
+        public static IHtmlString AccountLoginContent(this HtmlHelper @this, ChiffonLanguage language)
         {
-            return @this.Partial(ViewUtility.Localize(ViewName.Shared.ContactTitle, language));
+            return @this.Partial(ViewUtility.Localize(ViewName.Account.LoginContent, language));
         }
 
-        public static IHtmlString PageTitle(this HtmlHelper @this, ChiffonLanguage language)
+        public static IHtmlString AccountPostRegisterEmail(this HtmlHelper @this, ChiffonLanguage language)
         {
-            return @this.Partial(ViewUtility.Localize(ViewName.Shared.PageTitle, language));
+            return @this.Partial(ViewUtility.Localize(ViewName.Account.PostRegisterEmail, language));
+        }
+
+        public static IHtmlString AccountRegisterHelp(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Account.RegisterHelp, language));
+        }
+
+        public static IHtmlString AccountRegisterWarning(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Account.RegisterWarning, language));
+        }
+
+        public static IHtmlString HomeAboutContent(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Home.AboutContent, language));
+        }
+
+        public static IHtmlString HomeContactTitle(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Home.ContactTitle, language));
+        }
+
+        public static IHtmlString LayoutTitle(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Shared.LayoutTitle, language));
+        }
+
+        public static IHtmlString LayoutAuthorsRights(this HtmlHelper @this, ChiffonLanguage language)
+        {
+            return @this.Partial(ViewUtility.Localize(ViewName.Shared.LayoutAuthorsRights, language));
         }
     }
 }

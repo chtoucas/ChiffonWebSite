@@ -9,7 +9,7 @@
  <title>@ViewBag.Title</title>
  <meta name=description content="@ViewBag.MetaDescription" />
  <meta name=keywords content="@ViewBag.MetaKeywords" />
- <meta name=copyright content="Copyright © 2013 Pour quel motif Simone ?" />
+ <meta name=copyright content="Copyright © 2013 Pour quel motif, Simone ?" />
  <meta name=robots content="@ViewBag.MetaRobots" />
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>*@
@@ -20,7 +20,7 @@
 </head>
 <body>
  <header>
-  <h1>@Html.PageTitle((ChiffonLanguage)ViewBag.Language)</h1>
+  <h1>@Html.LayoutTitle((ChiffonLanguage)ViewBag.Language)</h1>
   <nav class="clearfix nav_lang">
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
   </nav>
@@ -47,7 +47,7 @@
  </header>
  @RenderBody()
  <footer>
-  <p>@Html.Raw(VR.Layout_DisclaimerHtml)</p>
+  @Html.LayoutAuthorsRights((ChiffonLanguage)ViewBag.Language)
   <p>@VR.Layout_Copyright</p>
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new

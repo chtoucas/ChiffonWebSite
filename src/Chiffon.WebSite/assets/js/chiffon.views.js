@@ -399,9 +399,9 @@ Chiffon.Views = (function(window, undef) {
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      if (!this.context.isAuth && !this.context.device.isTouch) {
+      if (!this.context.isAuth) { // && !this.context.device.isTouch) {
         // Pour les visiteurs anonymes et n'utilisant pas une tablette, on active les modales.
-        // NB: L'assertion précédente n'est pas tout à fait juste (cf. remarque sur context.isTouch).
+        // NB: L'assertion précédente n'est pas tout à fait juste (cf. remarque sur context.device.isTouch).
         // FIXME: On rétablira cette fonctionnalité quand on aura des modales plein écran.
         initModal();
       }

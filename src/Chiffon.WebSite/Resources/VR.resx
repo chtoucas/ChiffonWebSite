@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_Login_DescriptionHtml" xml:space="preserve">
-    <value>Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué.</value>
-  </data>
   <data name="Account_Login_Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
@@ -129,26 +126,17 @@
   <data name="Account_Login_Validate" xml:space="preserve">
     <value>Valider</value>
   </data>
-  <data name="Account_Login_Welcome" xml:space="preserve">
-    <value>Bonjour,</value>
-  </data>
   <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
     <value>Feuilleter le catalogue</value>
   </data>
   <data name="Account_PostRegister_Byebye" xml:space="preserve">
     <value>À bientôt !</value>
   </data>
-  <data name="Account_PostRegister_EmailHtml" xml:space="preserve">
-    <value>Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail.</value>
-  </data>
   <data name="Account_PostRegister_Success" xml:space="preserve">
     <value>Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte.</value>
   </data>
   <data name="Account_Register_CompanyName" xml:space="preserve">
     <value>Agence *</value>
-  </data>
-  <data name="Account_Register_DescriptionHtml" xml:space="preserve">
-    <value>Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous.</value>
   </data>
   <data name="Account_Register_EmailAddress" xml:space="preserve">
     <value>Email *</value>
@@ -168,6 +156,9 @@
   <data name="Account_Register_Message" xml:space="preserve">
     <value>Sujet</value>
   </data>
+  <data name="Account_Register_Newsletter" xml:space="preserve">
+    <value>Oui, je veux recevoir la gazette mensuelle des Simone !</value>
+  </data>
   <data name="Account_Register_Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
@@ -177,32 +168,20 @@
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Veuillez vérifier les champs entourés en rouge.</value>
   </data>
-  <data name="Account_Register_WarningHtml" xml:space="preserve">
-    <value>Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;.</value>
-  </data>
   <data name="Account_Register_Welcome" xml:space="preserve">
     <value>Bienvenue,</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>Tous</value>
   </data>
-  <data name="HomeAbout_ContactUs" xml:space="preserve">
+  <data name="Home_About_ContactUs" xml:space="preserve">
     <value>Nous contacter</value>
   </data>
-  <data name="HomeAbout_PasswordRequest" xml:space="preserve">
+  <data name="Home_About_PasswordRequest" xml:space="preserve">
     <value>Je demande un mot de passe</value>
-  </data>
-  <data name="HomeContact_TitleEnd" xml:space="preserve">
-    <value>ou un membre du collectif&amp;nbsp;?</value>
-  </data>
-  <data name="HomeContact_TitleStart" xml:space="preserve">
-    <value>Vous souhaitez contactez le collectif&amp;nbsp;?</value>
   </data>
   <data name="Layout_Copyright" xml:space="preserve">
     <value>© Pour quel motif, Simone ? 2013.</value>
-  </data>
-  <data name="Layout_DisclaimerHtml" xml:space="preserve">
-    <value>Conformément aux lois régissants les droits d'auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l'auteur pourra donc faire l'objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Conception graphique : Viviane Devaux. Mise en forme : chtoucas@narvalo.org.</value>
   </data>
   <data name="Layout_Nav_About" xml:space="preserve">
     <value>Info</value>

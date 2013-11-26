@@ -61,15 +61,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pour visualiser notre catalogue,&lt;span class=block&gt;&lt;/span&gt; entrez le mot de passe qui vous a été attribué..
-        /// </summary>
-        public static string Account_Login_DescriptionHtml {
-            get {
-                return ResourceManager.GetString("Account_Login_DescriptionHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Mot de passe.
         /// </summary>
         public static string Account_Login_Password {
@@ -97,15 +88,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bonjour,.
-        /// </summary>
-        public static string Account_Login_Welcome {
-            get {
-                return ResourceManager.GetString("Account_Login_Welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
         /// </summary>
         public static string Account_PostRegister_BrowseGallery {
@@ -124,15 +106,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Vous recevrez très prochainement&lt;span class=block&gt;&lt;/span&gt; vos identifiants dans votre boîte mail..
-        /// </summary>
-        public static string Account_PostRegister_EmailHtml {
-            get {
-                return ResourceManager.GetString("Account_PostRegister_EmailHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte..
         /// </summary>
         public static string Account_PostRegister_Success {
@@ -147,15 +120,6 @@ namespace Chiffon.Resources {
         public static string Account_Register_CompanyName {
             get {
                 return ResourceManager.GetString("Account_Register_CompanyName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pour visualiser le catalogue et obtenir votre &lt;span&gt;mot de passe&lt;/span&gt;, veuillez remplir le formulaire ci-dessous..
-        /// </summary>
-        public static string Account_Register_DescriptionHtml {
-            get {
-                return ResourceManager.GetString("Account_Register_DescriptionHtml", resourceCulture);
             }
         }
         
@@ -214,6 +178,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Oui, je veux recevoir la gazette mensuelle des Simone !.
+        /// </summary>
+        public static string Account_Register_Newsletter {
+            get {
+                return ResourceManager.GetString("Account_Register_Newsletter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Mot de passe.
         /// </summary>
         public static string Account_Register_Password {
@@ -241,15 +214,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Notre &lt;span&gt;portfolio&lt;/span&gt; est réservé aux &lt;span&gt;professionels&lt;/span&gt;..
-        /// </summary>
-        public static string Account_Register_WarningHtml {
-            get {
-                return ResourceManager.GetString("Account_Register_WarningHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Bienvenue,.
         /// </summary>
         public static string Account_Register_Welcome {
@@ -270,36 +234,18 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Nous contacter.
         /// </summary>
-        public static string HomeAbout_ContactUs {
+        public static string Home_About_ContactUs {
             get {
-                return ResourceManager.GetString("HomeAbout_ContactUs", resourceCulture);
+                return ResourceManager.GetString("Home_About_ContactUs", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Je demande un mot de passe.
         /// </summary>
-        public static string HomeAbout_PasswordRequest {
+        public static string Home_About_PasswordRequest {
             get {
-                return ResourceManager.GetString("HomeAbout_PasswordRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à ou un membre du collectif&amp;nbsp;?.
-        /// </summary>
-        public static string HomeContact_TitleEnd {
-            get {
-                return ResourceManager.GetString("HomeContact_TitleEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Vous souhaitez contactez le collectif&amp;nbsp;?.
-        /// </summary>
-        public static string HomeContact_TitleStart {
-            get {
-                return ResourceManager.GetString("HomeContact_TitleStart", resourceCulture);
+                return ResourceManager.GetString("Home_About_PasswordRequest", resourceCulture);
             }
         }
         
@@ -309,15 +255,6 @@ namespace Chiffon.Resources {
         public static string Layout_Copyright {
             get {
                 return ResourceManager.GetString("Layout_Copyright", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Conformément aux lois régissants les droits d&apos;auteurs, les éléments du site (motifs, illustrations et maquette) pourquelmotifsimone ? sont la propriété exclusive de leurs auteurs. En conséquence toute image utilisée sans le consentement de l&apos;auteur pourra donc faire l&apos;objet de poursuite.&lt;span class=block&gt;&lt;/span&gt;Conception graphique : Viviane Devaux. Mise en forme : chtoucas@narvalo.org..
-        /// </summary>
-        public static string Layout_DisclaimerHtml {
-            get {
-                return ResourceManager.GetString("Layout_DisclaimerHtml", resourceCulture);
             }
         }
         

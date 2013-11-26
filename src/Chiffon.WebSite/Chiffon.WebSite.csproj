@@ -365,8 +365,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
-    <Content Include="Views\Shared\_PageTitle.cshtml" />
-    <Content Include="Views\Shared\_PageTitle.en.cshtml" />
+    <Content Include="Views\Shared\_LayoutTitle.cshtml" />
+    <Content Include="Views\Shared\_LayoutTitle.en.cshtml" />
     <Content Include="Views\Shared\_Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
@@ -376,6 +376,20 @@
     <Content Include="Views\AccountMailer\_Layout.text.cshtml" />
     <Content Include="Views\AccountMailer\Welcome.text.cshtml" />
     <Content Include="Views\AccountMailer\WelcomeX.cshtml" />
+    <Content Include="Views\Home\Resources\_ContactTitle.cshtml" />
+    <Content Include="Views\Home\Resources\_ContactTitle.en.cshtml" />
+    <Content Include="Views\Home\Resources\_AboutContent.cshtml" />
+    <Content Include="Views\Home\Resources\_AboutContent.en.cshtml" />
+    <Content Include="Views\Shared\_LayoutAuthorsRights.cshtml" />
+    <Content Include="Views\Shared\_LayoutAuthorsRights.en.cshtml" />
+    <Content Include="Views\Account\Resources\_LoginContent.cshtml" />
+    <Content Include="Views\Account\Resources\_LoginContent.en.cshtml" />
+    <Content Include="Views\Account\Resources\_RegisterWarning.cshtml" />
+    <Content Include="Views\Account\Resources\_RegisterWarning.en.cshtml" />
+    <Content Include="Views\Account\Resources\_RegisterHelp.cshtml" />
+    <Content Include="Views\Account\Resources\_RegisterHelp.en.cshtml" />
+    <Content Include="Views\Account\Resources\_PostRegisterEmail.cshtml" />
+    <Content Include="Views\Account\Resources\_PostRegisterEmail.en.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

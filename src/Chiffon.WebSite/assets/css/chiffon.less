@@ -163,6 +163,16 @@ FOOTER {
   text-decoration: underline;
 }
 
+// Paragraphes ----------------------------------------------------------------
+
+.noparsep {
+  margin-bottom: 0;
+}
+
+P + .noparsep {
+  margin-top: 0;
+}
+
 // Blocs ----------------------------------------------------------------------
 
 .float_right {
@@ -177,7 +187,7 @@ FOOTER {
   clear: both;
 }
 
-.block {
+.lbr {
   display: block;
 }
 
@@ -189,6 +199,11 @@ FOOTER {
 
 .sansserif {
   font-family: sans-serif;
+}
+
+.raw_text {
+  // WARNING: Les sauts à la ligne deviennent importants !
+  white-space: pre-line;
 }
 
 // ============================================================================
@@ -603,10 +618,6 @@ FORM INPUT.error {
   margin-top: 1em;
   margin-bottom: 2em;
 
-  .presentation P {
-    margin: 0 auto;
-  }
-
   .links {
     text-align: center;
 
@@ -743,7 +754,7 @@ FORM INPUT.error {
     margin: inherit;
   }
 
-  P SPAN {
+  EM {
     color: @darkgrey;
   }
 
@@ -999,8 +1010,7 @@ FORM INPUT.error {
 
 @media only screen and (max-width: @grid_4_width) {
   H1 {
-    // WARNING: Les sauts à la ligne deviennent importants !
-    white-space: pre-line;
+    .raw_text;
   }
 
   /*
@@ -1022,8 +1032,8 @@ FORM INPUT.error {
     position: fixed;
     top: 0;
     bottom: auto;
-    left: auto;
-    right: auto;
+    left: 0;
+    right: 0;
     display: block;
     width: 90%;
     height: 90%;
@@ -1182,6 +1192,10 @@ FORM INPUT.error {
     line-height: 1.5em;
   }
 
+  .lbr {
+    display: inline;
+  }
+
   // Menu principal.
 
   .nav_main {
@@ -1230,6 +1244,15 @@ FORM INPUT.error {
     width: @mosaic_1_width;
   }
 
+  // Pages account.
+
+  .account_login,
+  .account_register {
+    INPUT {
+      max-width: 80%;
+    }
+  }
+
   // Page contact.
 
   .home_contact {
@@ -1244,7 +1267,7 @@ FORM INPUT.error {
     }
 
     P A {
-      font-size: .7em;
+      font-size: .8em;
     }
   }
 

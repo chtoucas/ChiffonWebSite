@@ -1,11 +1,13 @@
-﻿@model NewContactViewModel
+﻿@using Chiffon.Infrastructure
+
+@model NewContactViewModel
 
 <div class="account_postregister text_center fx_topborder">
  <p class="serif serif_large">
   @VR.Account_PostRegister_Success
  </p>
  <p class="serif serif_medium">
-  @Html.Raw(VR.Account_PostRegister_EmailHtml)
+  @Html.AccountPostRegisterEmail((ChiffonLanguage)ViewBag.Language)
  </p>
  <p class="serif serif_medium">
   <a href="@Model.NextUrl" class=text_underline>@VR.Account_PostRegister_BrowseGallery</a>

@@ -5,7 +5,7 @@
 
 <div class="home_contact text_center fx_topborder">
  <p class="serif serif_large">
-  @Html.Raw(VR.HomeContact_TitleStart) <a href="mailto:contact@pourquelmotifsimone.com" class="text_underline block">contact@pourquelmotifsimone.com</a> @Html.Raw(VR.HomeContact_TitleEnd)
+  @Html.HomeContactTitle((ChiffonLanguage)ViewBag.Language)
  </p>
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
