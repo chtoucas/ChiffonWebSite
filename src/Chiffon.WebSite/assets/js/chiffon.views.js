@@ -516,7 +516,7 @@ Chiffon.Views.Account = (function(Views) {
 
 })(Chiffon.Views);
 
-Chiffon.Views.Designer = (function(window, Views) {
+Chiffon.Views.Designer = (function(window, Views, undef) {
   'use strict';
 
   var location = window.location;
@@ -527,6 +527,56 @@ Chiffon.Views.Designer = (function(window, Views) {
     initLayout: function() {
       // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
       //Components.StickyInfo();
+
+      // Pagination infinie.
+      // TODO: Revoir le traitement de la pagination -> revenir à "more".
+
+      var pagerSel = '.pager';
+      var moreSel = '.more';
+      var itemsSel = '.mosaic LI';
+      var $container = $('.mosaic');
+      var $pager = $(pagerSel);
+
+      this.context.require(['vendor/jquery.waypoints-2.0.3.min.js'], function() {
+        $container.waypoint({
+          offset: 'bottom-in-view',
+
+          handler: function(direction) {
+            var $this;
+
+            if (direction === 'down') {
+              $this = $(this);
+
+              // On désactive "waypoint".
+              $this.waypoint('disable');
+              // On cache la pagination.
+              $pager.hide();
+
+              return $.get($(moreSel).attr('href'), function(data) {
+                var $data = $($.parseHTML(data));
+                var $more = $data.find(moreSel);
+                var $newPager = $data.find(pagerSel);
+
+                $container.append($data.find(itemsSel));
+
+                if ($more.length > 0) {
+                  // On active "waypoint".
+                  $this.waypoint('enable');
+                  // On montre la pagination.
+                  $pager.replaceWith($newPager);
+                  $pager = $newPager;
+                  $pager.show();
+                } else {
+                  // On est arrivé en bout de course : on détruit "waypoint".
+                  $this.waypoint('destroy');
+                  $pager.replaceWith($newPager);
+                  $pager.show();
+                }
+              });
+            }
+          }
+        });
+      });
     }
   };
 

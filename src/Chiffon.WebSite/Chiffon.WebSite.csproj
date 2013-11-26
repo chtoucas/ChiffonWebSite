@@ -284,16 +284,13 @@
     <Content Include="assets\js\vendor\jquery-2.0.3.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\jquery.validate.min.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\localization\messages_fr.js" />
+    <Content Include="assets\js\vendor\jquery.waypoints-2.0.3.js" />
     <Content Include="assets\js\vendor\l10n-2013.09.12.js" />
     <Content Include="assets\js\vendor\lodash.custom-2.3.0.js" />
     <Content Include="assets\js\vendor\nprogress-0.1.2.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="assets\css\chiffon.less" />
     <Content Include="assets\css\chiffon.common.less" />
-    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="Scripts\jquery-2.0.3.js" />
-    <Content Include="Scripts\jquery-2.0.3.min.js" />
-    <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="errors\index.html" />
@@ -302,13 +299,6 @@
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
     <Content Include="robots.txt" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

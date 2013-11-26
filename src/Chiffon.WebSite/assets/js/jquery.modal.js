@@ -35,8 +35,6 @@
         this.open();
       } else {
         // AJAX
-        //XXX 
-        NProgress.start();
 
         this.$elm = $('<div>');
         this.$body.append(this.$elm);
@@ -45,13 +43,7 @@
         $.get(target).done(function(html) {
           if (!current) return;
           current.$elm.empty().append(html).on($.modal.CLOSE, remove);
-          //XXX 
-          NProgress.done();
           current.open();
-        }).fail(function() {
-          //
-          //XXX 
-          NProgress.done();
         });
       }
     } else {

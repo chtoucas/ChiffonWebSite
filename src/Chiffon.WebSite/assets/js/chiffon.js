@@ -1,4 +1,4 @@
-﻿/*global yepnope, _*/
+﻿/*global yepnope, _, NProgress*/
 
 var Chiffon = (function(window, undef) {
   'use strict';
@@ -37,6 +37,13 @@ var Chiffon = (function(window, undef) {
       timeout: settings.ajaxTimeout,
       async: true,
       cache: true
+    });
+
+    // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch de requêtes se termine.
+    $(document).ajaxStart(function() {
+      NProgress.start();
+    }).ajaxStop(function() {
+      NProgress.done();
     });
   };
 
