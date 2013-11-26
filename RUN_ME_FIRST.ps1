@@ -29,8 +29,8 @@ $tools = @(
   }
   @{
     'Name' = 'Node Package Manager'
-    'Version' = '1.3.14'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.14.zip'
+    'Version' = '1.3.15'
+    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.15.zip'
   }
   # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
   @{
