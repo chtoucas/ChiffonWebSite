@@ -1,5 +1,38 @@
 ﻿/*global Chiffon, _, $, ł*/
 
+
+Chiffon.Utils = (function(window, undef) {
+  'use strict';
+
+  var Utils = {};
+  var location = window.location;
+
+  // WARNING: cette fonction ne prend pas en compte les paramètres multiples.
+  Utils.parseQuery = function(value) {
+    // WARNING: window.location.search commence avec le caractère '?'.
+    if (undef === value) { value = location.search.substring(1); }
+
+    if (!value) { return {}; }
+
+    // TODO: /(?:^|&)([^&=]*)=?([^&]*)/g
+    var parser = /([^&=]+)=?([^&]*)/g;
+    var decode = function(s) {
+      return decodeURIComponent(s.replace(/\+/g, ' '));
+    };
+    var pairs = {};
+
+    value.replace(parser, function(match, k, v) {
+      var key = decode(k);
+      if (!key) { return; }
+      pairs[key] = decode(v);
+    });
+
+    return pairs;
+  };
+
+  return Utils;
+})(this);
+
 // Composants communs.
 /*jshint -W074*/
 Chiffon.Components = (function(window, undef) {
@@ -242,7 +275,7 @@ Chiffon.Components = (function(window, undef) {
   /*jshint +W071*/
 
   // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
-  Components.StickyInfo = (function() {
+  /*Components.StickyInfo = (function() {
     // Configuration par défaut.
     var settings;
     var defaults = {
@@ -355,6 +388,7 @@ Chiffon.Components = (function(window, undef) {
       handleResizeEvent();
     };
   })();
+  */
 
   return Components;
 
@@ -516,7 +550,7 @@ Chiffon.Views.Account = (function(Views) {
 
 })(Chiffon.Views);
 
-Chiffon.Views.Designer = (function(window, Views, undef) {
+Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
   'use strict';
 
   var location = window.location;
@@ -529,51 +563,58 @@ Chiffon.Views.Designer = (function(window, Views, undef) {
       //Components.StickyInfo();
 
       // Pagination infinie.
-      // TODO: Revoir le traitement de la pagination -> revenir à "more".
+
+      var page = Utils.parseQuery().p;
+
+      if (undef !== page && (!_.isFinite(page) || page > 1)) {
+        // NB: Si p > 1 on n'active pas la pagination infinie.
+        return;
+      }
 
       var pagerSel = '.pager';
+      var $pager = $(pagerSel);
+
+      if ($pager.length <= 0) {
+        return;
+      }
+
       var moreSel = '.more';
       var itemsSel = '.mosaic LI';
       var $container = $('.mosaic');
-      var $pager = $(pagerSel);
 
       this.context.require(['vendor/jquery.waypoints-2.0.3.min.js'], function() {
+        // On cache la pagination.
+        $pager.hide();
+
         $container.waypoint({
           offset: 'bottom-in-view',
 
           handler: function(direction) {
-            var $this;
-
-            if (direction === 'down') {
-              $this = $(this);
-
-              // On désactive "waypoint".
-              $this.waypoint('disable');
-              // On cache la pagination.
-              $pager.hide();
-
-              return $.get($(moreSel).attr('href'), function(data) {
-                var $data = $($.parseHTML(data));
-                var $more = $data.find(moreSel);
-                var $newPager = $data.find(pagerSel);
-
-                $container.append($data.find(itemsSel));
-
-                if ($more.length > 0) {
-                  // On active "waypoint".
-                  $this.waypoint('enable');
-                  // On montre la pagination.
-                  $pager.replaceWith($newPager);
-                  $pager = $newPager;
-                  $pager.show();
-                } else {
-                  // On est arrivé en bout de course : on détruit "waypoint".
-                  $this.waypoint('destroy');
-                  $pager.replaceWith($newPager);
-                  $pager.show();
-                }
-              });
+            if (direction !== 'down') {
+              return;
             }
+
+            var $this = $(this);
+            var $more = $(moreSel);
+
+            // On désactive "waypoint".
+            $this.waypoint('disable');
+
+            return $.get($more.attr('href'), function(data) {
+              var $data = $($.parseHTML(data));
+              var $newMore = $data.find(moreSel);
+
+              $container.append($data.find(itemsSel));
+
+              if ($newMore.length > 0) {
+                $more.replaceWith($newMore);
+                // On active "waypoint".
+                $this.waypoint('enable');
+              } else {
+                // On est arrivé en bout de course, on supprime "waypoint".
+                $this.waypoint('destroy');
+              }
+            });
           }
         });
       });
@@ -611,4 +652,4 @@ Chiffon.Views.Designer = (function(window, Views, undef) {
 
   return Designer;
 
-})(this, Chiffon.Views);
+})(this, Chiffon.Views, Chiffon.Utils);

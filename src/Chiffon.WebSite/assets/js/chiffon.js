@@ -40,7 +40,7 @@ var Chiffon = (function(window, undef) {
     });
 
     // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch de requêtes se termine.
-    $(document).ajaxStart(function() {
+    $(window.document).ajaxStart(function() {
       NProgress.start();
     }).ajaxStop(function() {
       NProgress.done();
@@ -86,7 +86,7 @@ var Chiffon = (function(window, undef) {
     // NB: Il n'est pas possible de détecter une tablette mais on peut s'approcher du résultat.
     // Cf. https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
     // et http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
-    context.device.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0;
+    context.device.isTouch = 'ontouchstart' in window || window.navigator.msMaxTouchPoints > 0;
 
     context.require = function(resources, onComplete) {
       yepnope({
@@ -97,14 +97,13 @@ var Chiffon = (function(window, undef) {
 
     context.require(coreResources, function() {
       var $ = window.$;
-      var width;
 
       if (undef === $ || undef === Chiffon.Views) {
         if (DEBUG) { console.log('Could not load resources.'); }
         return;
       }
 
-      //width = $(window).width();
+      //var width = $(window).width();
       //context.device.width = (width >= 940 ? 'Normal' : (width >= 700 ? 'Medium' : 'Small'));
 
       Chiffon.configure($, args.settings);

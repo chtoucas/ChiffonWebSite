@@ -227,7 +227,7 @@ module.exports = function(grunt) {
         dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js'),
         options: {
           modifier: 'modern',
-          include: ['debounce', 'defaults', 'extend', 'rest'],
+          include: ['debounce', 'defaults', 'extend', 'isFinite', 'rest'],
           exports: ['global'],
           flags: ['source-map']
         }
