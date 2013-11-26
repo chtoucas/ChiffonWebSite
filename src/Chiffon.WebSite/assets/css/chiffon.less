@@ -1,8 +1,4 @@
-﻿// TODO:
-// - no margin for paragraph in sidebar
-// - http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
-
-@import "chiffon.common.less";
+﻿@import "chiffon.common.less";
 
 // ============================================================================
 // Règles de base
@@ -113,7 +109,7 @@ FOOTER {
 
 // Listes ---------------------------------------------------------------------
 
-/* Liste horizontale */
+// Liste horizontale
 
 // WARNING: À coupler avec "clearfix".
 // NB: Utiliser "display: inline-block" semblerait plus naturel mais dans ce cas
@@ -128,7 +124,7 @@ FOOTER {
   }
 }
 
-/* Liste centrée */
+// Liste centrée
 
 .li_center {
   text-align: center;
@@ -138,7 +134,7 @@ FOOTER {
   }
 }
 
-.li_inline2center {
+.li_inline2center() {
   .li_inline {
     .li_center;
 
@@ -220,7 +216,7 @@ FOOTER {
 
 // Inspiré de http://coding.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
 // FIXME: position sur BODY, Opera !
-/*body { position: relative; }*/
+//body { position: relative; }
 .modal {
   position: fixed;
   top: 0;
@@ -472,7 +468,7 @@ A {
 // Menus
 // ============================================================================
 
-/* Menu des langues */
+// Menu des langues -----------------------------------------------------------
 
 .nav_lang {
   border-bottom: solid 2px @black;
@@ -487,7 +483,7 @@ A {
   }
 }
 
-/* Menu principal */
+// Menu principal -------------------------------------------------------------
 
 .nav_main {
   // On utilise une position relative pour que l'élément ".account" se place
@@ -513,7 +509,7 @@ A {
   }
 }
 
-/* Menu des designers */
+// Menu des designers ---------------------------------------------------------
 
 .nav_designers {
   UL {
@@ -539,7 +535,7 @@ A {
   }
 }
 
-/* Mise en avant de la page courante dans les menus */
+// Mise en avant de la page courante dans les menus ---------------------------
 
 NAV {
   &.index .index,
@@ -554,7 +550,7 @@ NAV {
   }
 }
 
-/* Statut ajax */
+// Statut ajax ----------------------------------------------------------------
 
 //#ajax_status {
 //  background-color: #fef087;
@@ -574,7 +570,7 @@ NAV {
 //  }
 //}
 
-/* Erreurs */
+// Erreurs --------------------------------------------------------------------
 
 .error_container {
   display: none;
@@ -691,6 +687,7 @@ FORM INPUT.error {
     > LI {
       width: @grid_1_width;
       margin-right: @grid_inter_width;
+      vertical-align: text-top;
 
       &:last-child {
         margin-right: 0;
@@ -934,8 +931,8 @@ FORM INPUT.error {
     P {
       margin-top: 0;
       margin-bottom: 2em;
-      color: @darkgrey;
       font-size: 1.3em;
+      color: @darkgrey;
 
       A {
         color: @darkgrey;
@@ -953,7 +950,7 @@ FORM INPUT.error {
   }
 }
 
-/* En-tête statique */
+// En-tête statique
 //#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: @grid_4_width; background-color: @white; }
 //  #sticky_header H1 { display: none; }
 //  #sticky_header NAV, #sticky_header UL { border: none; float: left; }
@@ -971,22 +968,34 @@ FORM INPUT.error {
 // Règles pour un site web adaptatif
 // ============================================================================
 
-.short_designer_info {
+// NB: Utiliser le mot clé "only" dans les media-queries pour cacher les règles suivantes aux anciens navigateurs.
+// WARNING: On peut utiliser des variables calculées dans les media-queries, mais "recess" n'aime pas cela.
+
+.mobile_designer(@mosaic_width, @pager_width) {
   .info {
     float: none;
     width: auto;
 
-    P:first-child {
-      margin-bottom: 1em;
-    }
-
     NAV {
       display: none;
     }
+
+    P:first-child {
+      margin-bottom: 1em;
+    }
+  }
+
+  .mosaic {
+    width: @mosaic_width;
+  }
+
+  .pager {
+    width: @pager_width;
   }
 }
 
 // Règles communes.
+// Largeur de l'écran < 4-colonnes.
 
 @media only screen and (max-width: @grid_4_width) {
   H1 {
@@ -1022,7 +1031,11 @@ FORM INPUT.error {
   }
 }
 
-@media only screen and (min-width:(1px + @grid_3_width)) and (max-width: @grid_4_width) {
+// Grille à 3 colonnes : largeur de l'écran < 4-colonnes et > 3-colonnes.
+
+@min_3_width: (1px + @grid_3_width);
+
+@media only screen and (min-width: @min_3_width) and (max-width: @grid_4_width) {
   BODY {
     width: @grid_3_width;
   }
@@ -1050,7 +1063,6 @@ FORM INPUT.error {
     .li_inline2center;
 
     .li_designers > LI {
-      vertical-align: text-top;
       margin: 1.5em;
     }
   }
@@ -1077,7 +1089,11 @@ FORM INPUT.error {
   }
 }
 
-@media only screen and (min-width: (1px + @grid_2_width)) and (max-width: @grid_3_width) {
+// Grille à 2 colonnes : largeur de l'écran < 3-colonnes et > 2-colonnes.
+
+@min_2_width: (1px + @grid_2_width);
+
+@media only screen and (min-width: @min_2_width) and (max-width: @grid_3_width) {
   BODY {
     width: @grid_2_width;
   }
@@ -1091,11 +1107,7 @@ FORM INPUT.error {
 
   .nav_main {
     LI {
-      margin: 0;
-    }
-
-    A {
-      padding: 1.6em 1em;
+      margin: .6em 0;
     }
   }
 
@@ -1132,10 +1144,8 @@ FORM INPUT.error {
 
     .li_designers {
       width: @mosaic_2_width;
-      overflow-y: hidden;
 
       > LI {
-        vertical-align: text-top;
         margin: .8em;
       }
     }
@@ -1144,17 +1154,11 @@ FORM INPUT.error {
   // Pages designer.
 
   .designer {
-    .short_designer_info;
-
-    .mosaic {
-      width: @mosaic_2_width;
-    }
-
-    .pager {
-      width: @grid_2_width;
-    }
+    .mobile_designer(@mosaic_2_width, @grid_2_width);
   }
 }
+
+// Grille à 1 colonne : Largeur de l'écran < 2-colonnes.
 
 @media only screen and (max-width: @grid_2_width) {
   BODY {
@@ -1182,7 +1186,7 @@ FORM INPUT.error {
 
   .nav_main {
     .account {
-      position: initial;
+      position: static;
     }
 
     UL {
@@ -1233,10 +1237,8 @@ FORM INPUT.error {
 
     .li_designers {
       width: @grid_1_width;
-      overflow-y: hidden;
 
       > LI {
-        vertical-align: text-top;
         margin: .8em 0;
       }
     }
@@ -1249,14 +1251,6 @@ FORM INPUT.error {
   // Pages designer.
 
   .designer {
-    .short_designer_info;
-
-    .mosaic {
-      width: @mosaic_1_width;
-    }
-
-    .pager {
-      width: @grid_1_width;
-    }
+    .mobile_designer(@mosaic_1_width, @grid_1_width);
   }
 }
