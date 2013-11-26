@@ -1,21 +1,20 @@
 {
   "devDependencies": {
-    "bower": "~1.2.7",
-    "grunt-cli": "~0.1.11",
     "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.11",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-csslint": "~0.1.2",
     "grunt-contrib-cssmin": "~0.6.2",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-less": "~0.8.2",
     "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
     "grunt-lodash": "~0.3.0",
     "grunt-jslint": "~1.1.1",
     "grunt-recess": "~0.4.0",
     "lodash-cli": "~2.3.0",
     "typescript": "~0.9.1-1",
-    "xml2js": "~0.2.8",
-    "grunt-contrib-watch": "~0.5.3"
+    "xml2js": "~0.2.8"
   },
   "private": true
 }

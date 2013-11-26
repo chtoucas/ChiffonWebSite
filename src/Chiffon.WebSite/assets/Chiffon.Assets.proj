@@ -39,10 +39,8 @@
                     Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
                       $(MSBuildProjectDirectory)\**\.gitignore;
                       $(MSBuildProjectDirectory)\css\*.less;
-                      $(MSBuildProjectDirectory)\js\*.json;
-                      $(MSBuildProjectDirectory)\js\test\**\*;
+                      $(MSBuildProjectDirectory)\js\old\**\*;
                       $(MSBuildProjectDirectory)\js\typings\**\*;
-                      $(MSBuildProjectDirectory)\js\bower_components\**\*;
                       " />
     </ItemGroup>
 
