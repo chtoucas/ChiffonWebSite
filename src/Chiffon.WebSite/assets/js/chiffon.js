@@ -1,4 +1,4 @@
-﻿/*global yepnope, _, NProgress*/
+﻿/*global  _, FastClick, NProgress, yepnope*/
 
 var Chiffon = (function(window, undef) {
   'use strict';
@@ -9,16 +9,16 @@ var Chiffon = (function(window, undef) {
   };
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
-    device: {
-      isRich: false,
-      isTouch: false
-    },
+    //device: {
+    //  isTouch: false
+    //},
     isAuth: false,
     locale: 'fr'
   };
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
   var locales = [defaultContext.locale, 'en'];
-  var bundlePostfix = '-' + VERSION + '.js';
+  var bundleSuffix = '-' + VERSION + '.js';
+  var document = window.document;
 
   // Objet Chiffon.
 
@@ -26,11 +26,17 @@ var Chiffon = (function(window, undef) {
     this.context = context;
   }
 
-  Chiffon.getBundle = function(name) { return '_' + name + bundlePostfix; };
+  Chiffon.getBundle = function(name) { return '_' + name + bundleSuffix; };
 
   // Configuration globale de l'application.
   Chiffon.configure = function($, options) {
     var settings = _.defaults(options || {}, defaultSettings);
+
+    // Pour les tablettes, on essaie d'éliminer le temps de latence entre l'événement "touch"
+    // et l'événement "click".
+    $(function() {
+      FastClick.attach(document.body);
+    });
 
     // Comportement des appels Ajax via jQuery.
     $.ajaxSetup({
@@ -40,7 +46,7 @@ var Chiffon = (function(window, undef) {
     });
 
     // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch de requêtes se termine.
-    $(window.document).ajaxStart(function() {
+    $(document).ajaxStart(function() {
       NProgress.start();
     }).ajaxStop(function() {
       NProgress.done();
@@ -86,7 +92,7 @@ var Chiffon = (function(window, undef) {
     // NB: Il n'est pas possible de détecter une tablette mais on peut s'approcher du résultat.
     // Cf. https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
     // et http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
-    context.device.isTouch = 'ontouchstart' in window || window.navigator.msMaxTouchPoints > 0;
+    //context.device.isTouch = 'ontouchstart' in window || window.navigator.msMaxTouchPoints > 0;
 
     context.require = function(resources, onComplete) {
       yepnope({
@@ -102,9 +108,6 @@ var Chiffon = (function(window, undef) {
         if (DEBUG) { console.log('Could not load resources.'); }
         return;
       }
-
-      //var width = $(window).width();
-      //context.device.width = (width >= 940 ? 'Normal' : (width >= 700 ? 'Medium' : 'Small'));
 
       Chiffon.configure($, args.settings);
 

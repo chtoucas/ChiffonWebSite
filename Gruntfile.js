@@ -61,9 +61,9 @@ module.exports = function(grunt) {
         screen: {
           src: [
             'normalize-2.1.3.css',
+            'nprogress-0.1.2.css',
             'chiffon.h5bp.css',
-            'chiffon.css',
-            'nprogress-0.1.2.css'
+            'chiffon.css'
           ].map(mapCss),
           dest: mapCss('_screen-<%= version %>.css')
         }
@@ -74,6 +74,7 @@ module.exports = function(grunt) {
           src: [
             'vendor/yepnope-1.5.4.js',
             'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js',
+            'vendor/fastclick-0.6.9.js',
             'chiffon.js'
           ].map(mapJs),
           dest: mapJs('_main-<%= version %>.js'),

@@ -1,11 +1,10 @@
-﻿/*global Chiffon, _, $, ł*/
-
+﻿/*global  _, $, ł, Chiffon*/
 
 Chiffon.Utils = (function(window, undef) {
   'use strict';
 
-  var Utils = {};
   var location = window.location;
+  var Utils = {};
 
   // WARNING: cette fonction ne prend pas en compte les paramètres multiples.
   Utils.parseQuery = function(value) {
@@ -274,121 +273,120 @@ Chiffon.Components = (function(window, undef) {
   })();
   /*jshint +W071*/
 
-  // Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
-  /*Components.StickyInfo = (function() {
-    // Configuration par défaut.
-    var settings;
-    var defaults = {
-      infoSel: '#info',
-      designerSel: '#designer'
-    };
+  //// Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
+  //Components.StickyInfo = (function() {
+  //  // Configuration par défaut.
+  //  var settings;
+  //  var defaults = {
+  //    infoSel: '#info',
+  //    designerSel: '#designer'
+  //  };
 
-    var $info;
-    var $designer;
+  //  var $info;
+  //  var $designer;
 
-    // Géométrie du bloc #info.
-    var infoHeight;
-    var infoWidth;
-    var infoTop;
-    var infoLeft;
+  //  // Géométrie du bloc #info.
+  //  var infoHeight;
+  //  var infoWidth;
+  //  var infoTop;
+  //  var infoLeft;
 
-    // Géométrie du bloc #designer.
-    var designerWidth;
+  //  // Géométrie du bloc #designer.
+  //  var designerWidth;
 
-    // Géométrie de la fenêtre.
-    var windowHeight;
+  //  // Géométrie de la fenêtre.
+  //  var windowHeight;
 
-    function handleScrollEventForMediumBlock() {
-      var scrollLimit;
-      var stickyClass = 'info_sticky info_top';
-      var isSticky = false;
+  //  function handleScrollEventForMediumBlock() {
+  //    var scrollLimit;
+  //    var stickyClass = 'info_sticky info_top';
+  //    var isSticky = false;
 
-      function stick() {
-        if (isSticky) { return; }
-        isSticky = true;
-        $info.addClass(stickyClass);
-      }
+  //    function stick() {
+  //      if (isSticky) { return; }
+  //      isSticky = true;
+  //      $info.addClass(stickyClass);
+  //    }
 
-      function unstick() {
-        if (!isSticky) { return; }
-        isSticky = false;
-        $info.removeClass(stickyClass);
-      }
+  //    function unstick() {
+  //      if (!isSticky) { return; }
+  //      isSticky = false;
+  //      $info.removeClass(stickyClass);
+  //    }
 
-      scrollLimit = infoTop - 23;
+  //    scrollLimit = infoTop - 23;
 
-      if ($(window).scrollTop() >= scrollLimit) { stick(); }
+  //    if ($(window).scrollTop() >= scrollLimit) { stick(); }
 
-      $(window).scroll(function() {
-        if ($(window).scrollTop() >= scrollLimit) { stick(); } else { unstick(); }
-      });
-    }
+  //    $(window).scroll(function() {
+  //      if ($(window).scrollTop() >= scrollLimit) { stick(); } else { unstick(); }
+  //    });
+  //  }
 
-    // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
-    function handleResizeEvent() {
-      // On utilise "_.debounce()" pour temporiser la prise en charge de l'évènement "resize"
-      // pendant 150 millisecondes.
-      $(window).resize(_.debounce(function() {
-        var left = $designer.offset().left + designerWidth - infoWidth;
+  //  // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
+  //  function handleResizeEvent() {
+  //    // On utilise "_.debounce()" pour temporiser la prise en charge de l'évènement "resize"
+  //    // pendant 150 millisecondes.
+  //    $(window).resize(_.debounce(function() {
+  //      var left = $designer.offset().left + designerWidth - infoWidth;
 
-        $info.css({ 'left': left + 'px' });
-      }, 150));
-    }
+  //      $info.css({ 'left': left + 'px' });
+  //    }, 150));
+  //  }
 
-    // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
-    // pour qu'il soit toujours visible on lui donne une position fixe.
-    function setupSmallBlock() {
-      $info.addClass('info_sticky');
-      $info.css({ top: infoTop + 'px', left: infoLeft + 'px' });
-    }
+  //  // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
+  //  // pour qu'il soit toujours visible on lui donne une position fixe.
+  //  function setupSmallBlock() {
+  //    $info.addClass('info_sticky');
+  //    $info.css({ top: infoTop + 'px', left: infoLeft + 'px' });
+  //  }
 
-    // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
-    // haut de la fenêtre.
-    function setupMediumBlock() {
-      // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
-      // plus tard lors d'un redimensionnement horizontal de la fenêtre.
-      $info.css('left', infoLeft + 'px');
+  //  // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
+  //  // haut de la fenêtre.
+  //  function setupMediumBlock() {
+  //    // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
+  //    // plus tard lors d'un redimensionnement horizontal de la fenêtre.
+  //    $info.css('left', infoLeft + 'px');
 
-      handleScrollEventForMediumBlock();
-    }
+  //    handleScrollEventForMediumBlock();
+  //  }
 
-    function init() {
-      var infoOffset;
+  //  function init() {
+  //    var infoOffset;
 
-      $info = $(settings.infoSel);
-      $designer = $(settings.designerSel);
+  //    $info = $(settings.infoSel);
+  //    $designer = $(settings.designerSel);
 
-      infoHeight = $info.height();
-      infoWidth = $info.width();
+  //    infoHeight = $info.height();
+  //    infoWidth = $info.width();
 
-      infoOffset = $info.offset();
-      infoTop = infoOffset.top;
-      infoLeft = infoOffset.left;
+  //    infoOffset = $info.offset();
+  //    infoTop = infoOffset.top;
+  //    infoLeft = infoOffset.left;
 
-      designerWidth = $designer.width();
-      windowHeight = $(window).height();
-    }
+  //    designerWidth = $designer.width();
+  //    windowHeight = $(window).height();
+  //  }
 
-    return function(options) {
-      settings = _.defaults(options || {}, defaults);
+  //  return function(options) {
+  //    settings = _.defaults(options || {}, defaults);
 
-      init();
+  //    init();
 
-      if (windowHeight >= infoHeight + infoTop) {
-        setupSmallBlock();
-      } else if (windowHeight >= infoHeight) {
-        setupMediumBlock();
-      } else {
-        // La fenêtre est trop petite pour contenir tout le bloc info.
-        // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
-        // On ne touche donc à rien.
-        return;
-      }
+  //    if (windowHeight >= infoHeight + infoTop) {
+  //      setupSmallBlock();
+  //    } else if (windowHeight >= infoHeight) {
+  //      setupMediumBlock();
+  //    } else {
+  //      // La fenêtre est trop petite pour contenir tout le bloc info.
+  //      // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
+  //      // On ne touche donc à rien.
+  //      return;
+  //    }
 
-      handleResizeEvent();
-    };
-  })();
-  */
+  //    handleResizeEvent();
+  //  };
+  //})();
 
   return Components;
 
@@ -433,10 +431,8 @@ Chiffon.Views = (function(window, undef) {
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      if (!this.context.isAuth) { // && !this.context.device.isTouch) {
-        // Pour les visiteurs anonymes et n'utilisant pas une tablette, on active les modales.
-        // NB: L'assertion précédente n'est pas tout à fait juste (cf. remarque sur context.device.isTouch).
-        // FIXME: On rétablira cette fonctionnalité quand on aura des modales plein écran.
+      if (!this.context.isAuth) {
+        // Pour les visiteurs anonymes, on active les modales.
         initModal();
       }
       //else {
@@ -452,7 +448,7 @@ Chiffon.Views = (function(window, undef) {
     validate: function(fn) {
       var locale = this.context.locale;
       if (undef === validationResources) {
-        validationResources = ['jquery.validate.min.js']
+        validationResources = [DEBUG ? 'jquery.validate.js' : 'jquery.validate.min.js']
           .concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
           .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
       }
@@ -484,8 +480,10 @@ Chiffon.Views = (function(window, undef) {
 
 })(this);
 
-Chiffon.Views.Home = (function(Simple) {
+Chiffon.Views.Home = (function() {
   'use strict';
+
+  var Simple = Chiffon.Views.Simple;
 
   return {
     About: Simple,
@@ -499,11 +497,12 @@ Chiffon.Views.Home = (function(Simple) {
     })
   };
 
-})(Chiffon.Views.Simple);
+})();
 
-Chiffon.Views.Account = (function(Views) {
+Chiffon.Views.Account = (function() {
   'use strict';
 
+  var Views = Chiffon.Views;
   var Simple = Views.Simple;
   var ValidateMixin = Views.ValidateMixin;
   var Account = {
@@ -548,22 +547,28 @@ Chiffon.Views.Account = (function(Views) {
 
   return Account;
 
-})(Chiffon.Views);
+})();
 
-Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
+Chiffon.Views.Designer = (function(window, undef) {
   'use strict';
 
   var location = window.location;
-  var create = Views.Create;
   var Components = Chiffon.Components;
+  var Utils = Chiffon.Utils;
+  var Views = Chiffon.Views;
+  var create = Views.Create;
 
   var DesignerLayoutMixin = {
     initLayout: function() {
       // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
       //Components.StickyInfo();
 
-      // Pagination infinie.
+      this.loadNextPageOnScroll();
+    },
 
+    // Pagination infinie.  
+    loadNextPageOnScroll: function() {
+      // TODO: Récupérer la page de this.context.params.p
       var page = Utils.parseQuery().p;
 
       if (undef !== page && (!_.isFinite(page) || page > 1)) {
@@ -571,18 +576,18 @@ Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
         return;
       }
 
-      var pagerSel = '.pager';
+      var pagerSel = '#pager';
       var $pager = $(pagerSel);
 
       if ($pager.length <= 0) {
         return;
       }
 
-      var moreSel = '.more';
-      var itemsSel = '.mosaic LI';
-      var $container = $('.mosaic');
+      var moreSel = '#next_page';
+      var itemsSel = '#patterns LI';
+      var $container = $('#patterns');
 
-      this.context.require(['vendor/jquery.waypoints-2.0.3.min.js'], function() {
+      this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.3.js' : 'vendor/jquery.waypoints-2.0.3.min.js'], function() {
         // On cache la pagination.
         $pager.hide();
 
@@ -597,7 +602,7 @@ Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
             var $this = $(this);
             var $more = $(moreSel);
 
-            // On désactive "waypoint".
+            // On désactive "waypoint" le temps de la récupération du contenu de la page suivante.
             $this.waypoint('disable');
 
             return $.get($more.attr('href'), function(data) {
@@ -611,7 +616,7 @@ Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
                 // On active "waypoint".
                 $this.waypoint('enable');
               } else {
-                // On est arrivé en bout de course, on supprime "waypoint".
+                // On est arrivé en bout de course, on peut supprimer complètement "waypoint".
                 $this.waypoint('destroy');
               }
             });
@@ -652,4 +657,4 @@ Chiffon.Views.Designer = (function(window, Views, Utils, undef) {
 
   return Designer;
 
-})(this, Chiffon.Views, Chiffon.Utils);
+})(this);

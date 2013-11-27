@@ -9,7 +9,7 @@
 
 @helper Pager(UrlHelper Url, DesignerViewModel Model)
 {
- <p class=pager>
+ <p id=pager class=pager>
   @if (Model.IsFirstPage) {
    @VR.Pager_Previous
   }
@@ -21,7 +21,7 @@
    @VR.Pager_Next
   }
   else {
-   <a class=more href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a id=next_page class=more href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
@@ -29,7 +29,7 @@
 
 @helper Pager(UrlHelper Url, CategoryViewModel Model)
 {
- <p class=pager>
+ <p id=pager class=pager>
   @if (Model.IsFirstPage) {
    @VR.Pager_Previous
   }
@@ -41,7 +41,7 @@
    @VR.Pager_Next
   }
   else {
-   <a class=more href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a id=next_page class=more href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
@@ -49,7 +49,8 @@
 
 @helper Pager(UrlHelper Url, PatternViewModel Model)
 {
- <p class=pager>
+ // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
+ <p id=pager class=pager>
   @if (Model.IsFirstPage) {
    @VR.Pager_Previous
   }
@@ -61,7 +62,7 @@
    @VR.Pager_Next
   }
   else {
-   <a class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
  </p>
