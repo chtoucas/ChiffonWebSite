@@ -11,7 +11,7 @@
  * A simple jQuery modal (http://github.com/kylefox/jquery-modal)
  * Version 0.5.4
  */
-(function($, undef) {
+(function(window, $, undef) {
   'use strict';
 
   var current = undef;
@@ -44,6 +44,9 @@
           if (!current) return;
           current.$elm.empty().append(html).on($.modal.CLOSE, remove);
           current.open();
+        }).fail(function() {
+          // NB: ne pas utiliser Location.href = url car cela ne marche pas dans les anciens IE.
+          window.location = target;
         });
       }
     } else {
@@ -136,5 +139,5 @@
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
   $(document).on('click.modal', 'a[rel="modal:close"]', $.modal.close);
-})(jQuery);
+})(this, jQuery);
 

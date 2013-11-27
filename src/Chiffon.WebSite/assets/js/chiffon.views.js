@@ -584,7 +584,7 @@ Chiffon.Views.Designer = (function(window, undef) {
       page = Utils.parseQuery().p;
 
       // On n'active pas la pagination infinie que si on en est à la première page.
-      return undef === page || (_.isFinite(page) && 1 === page);
+      return undef === page || (_.isFinite(page) && '1' === page);
     },
 
     // Descente infinie.  
@@ -597,7 +597,6 @@ Chiffon.Views.Designer = (function(window, undef) {
       this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.3.js' : 'vendor/jquery.waypoints-2.0.3.min.js'], function() {
         // On cache la pagination.
         $pager.hide();
-        $pager = undef;
 
         $container.waypoint({
           offset: 'bottom-in-view',
@@ -615,25 +614,32 @@ Chiffon.Views.Designer = (function(window, undef) {
             // On affiche un indicateur visuel de chargement.
             $loading.appendTo($container);
 
-            // TODO: Gérer les erreurs ajax.
-            return $.get($more.attr('href'), function(data) {
-              var $data = $($.parseHTML(data));
-              var $newMore = $data.find(moreSel);
+            return $.get($more.attr('href'))
+              .done(function(data) {
+                var $data = $($.parseHTML(data));
+                var $newMore = $data.find(moreSel);
 
-              // On cache l'indicateur visuel de chargement.
-              $loading.remove();
-              // On ajoute le contenu de la page suivante.
-              $container.append($data.find(itemsSel));
+                // On cache l'indicateur visuel de chargement.
+                $loading.remove();
+                // On ajoute le contenu de la page suivante.
+                $container.append($data.find(itemsSel));
 
-              if ($newMore.length > 0) {
-                $more.replaceWith($newMore);
-                // On active à nouveau "waypoint".
-                $this.waypoint('enable');
-              } else {
-                // On est arrivé en bout de course, on peut supprimer complètement "waypoint".
+                if ($newMore.length > 0) {
+                  $more.replaceWith($newMore);
+                  // On active à nouveau "waypoint".
+                  $this.waypoint('enable');
+                } else {
+                  // On est arrivé en bout de course, on peut supprimer complètement "waypoint".
+                  $this.waypoint('destroy');
+                }
+              })
+              .fail(function() {
+                $loading.remove();
+                // NB: On réactive la pagination, mais uniquement à partir de la page qui n'a
+                // pas pu être chargée.
+                $pager.show();
                 $this.waypoint('destroy');
-              }
-            });
+              });
           }
         });
       });
