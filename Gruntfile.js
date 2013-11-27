@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 
     sources: {
       // Fichiers CSS à analyser.
-      css: ['chiffon.css'].map(mapCss),
+      css: ['chiffon.css', 'chiffon.print.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
         'chiffon.jquery.js',
@@ -49,9 +49,13 @@ module.exports = function(grunt) {
     },
 
     lessSources: {
-      screen: {
+      main: {
         src: mapCss('chiffon.less'),
         dest: mapCss('chiffon.css')
+      },
+      print: {
+        src: mapCss('chiffon.print.less'),
+        dest: mapCss('chiffon.print.css')
       }
     },
 
@@ -59,14 +63,15 @@ module.exports = function(grunt) {
     bundles: {
       // Groupes CSS.
       css: {
-        screen: {
+        main: {
           src: [
             'normalize-2.1.3.css',
             'nprogress-0.1.2.css',
             'chiffon.h5bp.css',
-            'chiffon.css'
+            'chiffon.css',
+            'chiffon.print.css'
           ].map(mapCss),
-          dest: mapCss('_screen-<%= version %>.css')
+          dest: mapCss('_main-<%= version %>.css')
         }
       },
       // Groupes JavaScript.
@@ -121,21 +126,24 @@ module.exports = function(grunt) {
         noOverqualifying: false,
         noUnderscores: false
       },
-      screen: {
+      main: {
         src: mapCss('chiffon.less')
+      },
+      print: {
+        src: mapCss('chiffon.print.less')
       }
     },
 
-    // Minification des fichiers JavaScript via Clean-CSS.
+    // Minification des fichiers Css via Clean-CSS.
     cssmin: {
-      screen: {
+      main: {
         options: {
           banner: '/* Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %> */',
           keepSpecialComments: 0,
           report: 'min'
         },
         files: {
-          '<%= bundles.css.screen.dest %>': '<%= bundles.css.screen.src %>'
+          '<%= bundles.css.main.dest %>': '<%= bundles.css.main.src %>'
         }
       }
     },
@@ -212,15 +220,16 @@ module.exports = function(grunt) {
         strictUnits: true,
         sourceMap: true
       },
-      screen: {
+      main: {
         files: {
-          '<%= lessSources.screen.dest %>': '<%= lessSources.screen.src %>'
+          '<%= lessSources.main.dest %>': '<%= lessSources.main.src %>',
+          '<%= lessSources.print.dest %>': '<%= lessSources.print.src %>'
         }
       }
     },
 
     watch: {
-      files: ['<%= lessSources.screen.src %>'],
+      files: ['<%= lessSources.main.src %>', '<%= lessSources.print.src %>'],
       tasks: ['less']
     },
 

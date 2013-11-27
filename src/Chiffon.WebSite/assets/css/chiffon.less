@@ -64,6 +64,18 @@ A {
   }
 }
 
+HR {
+  display: block;
+  height: 1em;
+  margin: 1em 0;
+  border: none;
+  background: data-uri("img/doubleline_grey.png") center no-repeat;
+}
+
+.modal HR {
+  background-image: data-uri("img/doubleline_white.png");
+}
+
 // ============================================================================
 // Disposition globale
 // ============================================================================
@@ -191,7 +203,7 @@ P + .noparsep {
   display: block;
 }
 
-.hide {
+.nodisplay {
   display: none;
 }
 
@@ -326,17 +338,6 @@ P + .noparsep {
 
 .modal .fx_topborder {
   border-top: none;
-}
-
-// Ligne double courte --------------------------------------------------------
-
-.fx_doubleline {
-  height: 1em;
-  background: data-uri("img/doubleline_grey.png") center no-repeat;
-}
-
-.modal .fx_doubleline {
-  background-image: data-uri("img/doubleline_white.png");
 }
 
 // Checkbox -------------------------------------------------------------------

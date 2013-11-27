@@ -291,6 +291,7 @@
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="assets\css\chiffon.less" />
     <Content Include="assets\css\chiffon.common.less" />
+    <Content Include="assets\css\chiffon.print.less" />
     <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="errors\index.html" />

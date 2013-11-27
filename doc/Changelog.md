@@ -1,11 +1,38 @@
 CHANGELOG
 =========
 
-Version 1.3
+Version 1.5
 -----------
 
+* On affiche un indicateur visuel afin de signaler le chargement de la page suivante dans
+  une pagination infinie.
+
+Changements d'ordre technique :
+
+* [JS] Intégration de fastclick.js pour améliorer le temps de réaction des tablettes lors
+       d'un "clic".
+
+Version 1.4 (2013-11-26)
+------------------------
+
+* Réactivation des modales pour les tablettes.
+* Nouvelles traductions.
+* Pagination infinie de la liste des motifs.
+
+Changements d'ordre technique :
+
+* [DEV] On sépare les traductions contenant du HTML (vues partielles) et celles
+        n'en contenant pas (resources .NET).
+* [JS] Intégration de jQuery.Waypoints pour la pagination infinie.
+* [JS] On utilise NProgress pour signaler le début et la fin des appels Ajax.
+* [CSS] Pour les petits écrans, on adapte le fonctionnement des modales.
+
+
+Version 1.3 (2013-11-25)
+------------------------
+
 * Version stable de la feuille de style pour un site web adaptatif.
-* Désactivation de la gestion du bloc inof en JavaScript.
+* Désactivation de la gestion du bloc info en JavaScript.
 
 
 Version 1.2 (2013-11-21)

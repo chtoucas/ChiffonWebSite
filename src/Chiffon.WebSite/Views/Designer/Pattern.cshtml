@@ -31,10 +31,10 @@
 <p id=pattern_nav class=pattern_nav>
  @if (viewCount > 1) {
   <span class=prev_noop>@VR.Pager_Previous</span>
-  <a class="hide prev" href="#">@VR.Pager_Previous</a>
+ <a class="nodisplay prev" href="#">@VR.Pager_Previous</a>
   <span>/</span>
   <a class="next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
-  <span class="hide next_noop">@VR.Pager_Next</span>
+ <span class="nodisplay next_noop">@VR.Pager_Next</span>
   @: -
   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
  }
