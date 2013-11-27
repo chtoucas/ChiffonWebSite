@@ -564,6 +564,12 @@ Chiffon.Views.Designer = (function(window, undef) {
       // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
       //Components.StickyInfo();
 
+      // Toutes les pages "designer" contiennent une liste de motifs et on essaie
+      // de rendre la pagination plus ergonomique. Ainsi, on charge automatiquement 
+      // le contenu de la page suivante et on affiche le résultat en bas de page.
+      // NB: Si on clique dans un motif on garde la pagination d'origine pour ne pas perdre
+      // le visiteur. On ne doit donc pas redescendre tout en base de la page pour retrouver
+      // là où on en était.
       if (this.canScrollInfinitely()) {
         this.scrollInfinitely();
       }
@@ -584,7 +590,7 @@ Chiffon.Views.Designer = (function(window, undef) {
       page = Utils.parseQuery().p;
 
       // On n'active pas la pagination infinie que si on en est à la première page.
-      return undef === page || (_.isFinite(page) && '1' === page);
+      return undef === page || '1' === page;
     },
 
     // Descente infinie.  
@@ -625,6 +631,7 @@ Chiffon.Views.Designer = (function(window, undef) {
                 $container.append($data.find(itemsSel));
 
                 if ($newMore.length > 0) {
+                  // On met à jour le lien "page suivante".
                   $more.replaceWith($newMore);
                   // On active à nouveau "waypoint".
                   $this.waypoint('enable');

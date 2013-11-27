@@ -31,10 +31,10 @@
 <p id=pattern_nav class=pattern_nav>
  @if (viewCount > 1) {
   <span class=prev_noop>@VR.Pager_Previous</span>
- <a class="nodisplay prev" href="#">@VR.Pager_Previous</a>
+  <a class="nodisplay prev" href="#">@VR.Pager_Previous</a>
   <span>/</span>
   <a class="next" href="#@views.Skip(1).Take(1).Single().Version">@VR.Pager_Next</a>
- <span class="nodisplay next_noop">@VR.Pager_Next</span>
+  <span class="nodisplay next_noop">@VR.Pager_Next</span>
   @: -
   <span class=pos>1</span> @VR.Pager_Of @: @viewCount
  }
@@ -46,11 +46,17 @@
  @foreach (var preview in Model.Previews) {
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
   <li>
-   <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div>
-    @*<div class=watermark><span>Ref @preview.Reference</span></div>*@
-    <div class=watermark></div>
-   </a>
+   @if (preview.Reference != Model.Reference) {
+    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+     <div class="overlay"></div>
+     <div class=watermark></div>
+     @*<div class=watermark><span>Ref @preview.Reference</span></div>*@
+    </a>
+   }
+   else {
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+   }
   </li>
  }
 </ul>
