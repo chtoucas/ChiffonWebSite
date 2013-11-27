@@ -552,6 +552,7 @@ Chiffon.Views.Account = (function() {
 Chiffon.Views.Designer = (function(window, undef) {
   'use strict';
 
+  var $pager;
   var location = window.location;
   var Components = Chiffon.Components;
   var Utils = Chiffon.Utils;
@@ -563,33 +564,40 @@ Chiffon.Views.Designer = (function(window, undef) {
       // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
       //Components.StickyInfo();
 
-      this.loadNextPageOnScroll();
+      if (this.canScrollInfinitely()) {
+        this.scrollInfinitely();
+      }
     },
 
-    // Pagination infinie.  
-    loadNextPageOnScroll: function() {
-      // TODO: Récupérer la page de this.context.params.p
-      var page = Utils.parseQuery().p;
+    // On peut utiliser la descente infinie quand il y a pagination et qu'on est à la première page.
+    canScrollInfinitely: function() {
+      var page;
 
-      if (undef !== page && (!_.isFinite(page) || page > 1)) {
-        // NB: Si p > 1 on n'active pas la pagination infinie.
-        return;
+      // On vérifie qu'il y a un pager.
+      $pager = $('#pager');
+
+      if (1 !== $pager.length) {
+        return false;
       }
 
-      var pagerSel = '#pager';
-      var $pager = $(pagerSel);
+      // TODO: Récupérer la page de "this.context.params.p".
+      page = Utils.parseQuery().p;
 
-      if ($pager.length <= 0) {
-        return;
-      }
+      // On n'active pas la pagination infinie que si on en est à la première page.
+      return undef === page || (_.isFinite(page) && 1 === page);
+    },
 
+    // Descente infinie.  
+    scrollInfinitely: function() {
       var moreSel = '#next_page';
       var itemsSel = '#patterns LI';
       var $container = $('#patterns');
+      var $loading = $('<li class=loading></li>');
 
       this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.3.js' : 'vendor/jquery.waypoints-2.0.3.min.js'], function() {
         // On cache la pagination.
         $pager.hide();
+        $pager = undef;
 
         $container.waypoint({
           offset: 'bottom-in-view',
@@ -604,16 +612,22 @@ Chiffon.Views.Designer = (function(window, undef) {
 
             // On désactive "waypoint" le temps de la récupération du contenu de la page suivante.
             $this.waypoint('disable');
+            // On affiche un indicateur visuel de chargement.
+            $loading.appendTo($container);
 
+            // TODO: Gérer les erreurs ajax.
             return $.get($more.attr('href'), function(data) {
               var $data = $($.parseHTML(data));
               var $newMore = $data.find(moreSel);
 
+              // On cache l'indicateur visuel de chargement.
+              $loading.remove();
+              // On ajoute le contenu de la page suivante.
               $container.append($data.find(itemsSel));
 
               if ($newMore.length > 0) {
                 $more.replaceWith($newMore);
-                // On active "waypoint".
+                // On active à nouveau "waypoint".
                 $this.waypoint('enable');
               } else {
                 // On est arrivé en bout de course, on peut supprimer complètement "waypoint".

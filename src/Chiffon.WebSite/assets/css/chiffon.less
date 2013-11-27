@@ -207,6 +207,30 @@ P + .noparsep {
 }
 
 // ============================================================================
+// Animations
+// ============================================================================
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: .1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: .1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+// ============================================================================
 // Modules
 // ============================================================================
 
@@ -461,6 +485,15 @@ A {
   LI {
     margin-right: @grid_inter_width;
     margin-bottom: @grid_inter_width;
+  }
+
+  .loading {
+    width: 220px;
+    height: 160px;
+    background: url(img/logo.png) center center no-repeat;
+    -webkit-animation: fadeIn 2s ease-in-out 0s infinite alternate;
+    -moz-animation: fadeIn 2s ease-in-out 0s infinite alternate;
+    animation: fadeIn 2s ease-in-out 0s infinite alternate;
   }
 }
 
