@@ -3,6 +3,7 @@
 
 // TODO: tests !
 
+/*jshint -W071*/
 module.exports = function(grunt) {
   'use strict';
 
@@ -333,3 +334,4 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['lint', 'build']);
 };
+/*jshint +W071*/
