@@ -29,8 +29,12 @@ var Chiffon = (function(window, undef) {
   Chiffon.getBundle = function(name) { return '_' + name + bundleSuffix; };
 
   // Configuration globale de l'application.
+  // WARNING: On ajoute la fonction "ł" au contexte global.
   Chiffon.configure = function($, options) {
     var settings = _.defaults(options || {}, defaultSettings);
+
+    // Utilitaire de localisation d'une chaîne de caractères.
+    window.ł = function(value) { return value.toLocaleString(); };
 
     // Pour les tablettes, on essaie d'éliminer le temps de latence entre l'événement "touch"
     // et l'événement "click".
@@ -138,13 +142,9 @@ var Chiffon = (function(window, undef) {
       (new ViewClass(this.context)).init(params);
     },
 
-    // WARNING: On ajoute la fonction "ł" au contexte global.
     init: function() {
       // Configuration de L10N.
       String.locale = this.context.locale;
-
-      // Utilitaire de localisation d'une chaîne de caractères.
-      window.ł = function(value) { return value.toLocaleString(); };
 
       return this;
     }

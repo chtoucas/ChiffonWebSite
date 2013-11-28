@@ -372,9 +372,10 @@ INPUT[type=checkbox] {
   }
 }
 
+// Lien -------------------------------------------------------------------
+
 A {
-  // FIXME: À supprimer.
-  &.reverse {
+  &.loose {
     color: @darkgrey;
 
     &:hover {
@@ -922,6 +923,26 @@ FORM INPUT.error {
   .mosaic {
     // Mosaïque à trois colonnes.
     width: @mosaic_3_width;
+
+    .current {
+      A::before, &::before {
+        display: block;
+        content: '';
+        position: absolute;
+        width: @preview_width;
+        height: @preview_height;
+        z-index: 1;
+        -webkit-box-shadow: inset 0 0 5px @red;
+        box-shadow: inset 0 0 5px @red;
+      }
+    }
+
+    .watermark SPAN {
+      right: 0;
+      bottom: 0;
+      padding: .5em 1em;
+      text-transform: uppercase;
+    }
   }
 
   .vignette:hover .watermark {
@@ -932,13 +953,6 @@ FORM INPUT.error {
     &:lang(en) {
       background: data-uri("img/watermarks/seemore_en.png");
     }
-  }
-
-  .watermark SPAN {
-    right: 0;
-    bottom: 0;
-    padding: .5em 1em;
-    text-transform: uppercase;
   }
 
   NAV {

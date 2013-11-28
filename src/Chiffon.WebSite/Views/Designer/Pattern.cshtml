@@ -19,7 +19,7 @@
 *@
 <ul id=pattern class=pattern>
  @foreach (var view in Model.PatternViews) {
-  var version = viewCount == 1 || String.IsNullOrWhiteSpace(@view.Version) ? "" : " (" + @view.Version + ")";
+  var version = viewCount == 1 || String.IsNullOrWhiteSpace(view.Version) ? "" : " (" + view.Version + ")";
   <li id="@view.Version">
    <img src="@Url.PatternContent(view.DesignerKey, view.Reference, view.Version)" alt="@view.Description" width=@ImageGeometry.PatternWidth height=@ImageGeometry.PatternHeight /><div class=watermark><span>@VR.Pattern_Ref @Model.Reference @version</span></div>
   </li>
@@ -44,20 +44,27 @@
 *@
 <ul id=patterns class="mosaic clearfix">
  @foreach (var preview in Model.Previews) {
-  var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
-  var version = String.IsNullOrWhiteSpace(@preview.Version) ? "" : " (" + @preview.Version + ")";
-  <li>
-   @if (preview.Reference != Model.Reference) {
+  var anchor = String.IsNullOrWhiteSpace(preview.Version) ? "" : "#" + preview.Version;
+  var version = String.IsNullOrWhiteSpace(preview.Version) ? "" : " (" + preview.Version + ")";
+  if (preview.Reference == Model.Reference) {
+   <li class=current>
+    @if (viewCount > 1) {
+     <a href="@anchor" class=vignette>
+      <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
+     </a>
+    }
+    else {
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+    }
+   </li>
+  }
+  else {
+   <li>
     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
      <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
     </a>
-   }
-   else {
-    <a href="@anchor" class=vignette>
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
-    </a>
-   }
-  </li>
+   </li>
+  }
  }
 </ul>
 @*

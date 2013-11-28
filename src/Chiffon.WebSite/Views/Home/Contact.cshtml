@@ -10,7 +10,7 @@
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
    <li>
-    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=reverse rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
+    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=loose rel="@ViewBag.ModalRelation">@designer.DisplayName</a></h2>
     <ul>
      <li class=avatar>
       <a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)" rel="@ViewBag.ModalRelation">
@@ -22,7 +22,7 @@
      <li class=email><a class=text_underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
      @if (designer.WebSiteUrl.IsSome) {
       var website = designer.WebSiteUrl.Value.ToString().Replace("http://", String.Empty);
-      <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=reverse>@website.Replace("/", String.Empty)</a></li>
+      <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose>@website.Replace("/", String.Empty)</a></li>
      }
     </ul>
    </li>
