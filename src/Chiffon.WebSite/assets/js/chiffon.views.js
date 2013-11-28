@@ -620,7 +620,8 @@ Chiffon.Views.Designer = (function(window, undef) {
             // On affiche un indicateur visuel de chargement.
             $loading.appendTo($container);
 
-            return $.get($more.attr('href'))
+            // NB: On n'utilise pas la configuration global.
+            return $.ajax({ url: $more.attr('href'), global: false })
               .done(function(data) {
                 var $data = $($.parseHTML(data));
                 var $newMore = $data.find(moreSel);
