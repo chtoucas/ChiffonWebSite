@@ -1,8 +1,9 @@
-/*global $*/
+﻿/*global $*/
 
 (function(window) {
   'use strict';
 
+  // Ouverture dans une nouvelle fenêtre au moment du clic.
   $.fn.external = function() {
     return this.each(function() {
       $(this).click(function() {
@@ -12,6 +13,7 @@
     });
   };
 
+  // Ajout à un élément d'un calque contenant un texte.
   $.fn.watermark = function(watermark, options) {
     var settings = $.extend({}, $.fn.watermark.defaults, options);
     var getWatermak = null !== watermark ? function() {

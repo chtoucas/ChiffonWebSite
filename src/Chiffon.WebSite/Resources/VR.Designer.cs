@@ -329,5 +329,14 @@ namespace Chiffon.Resources {
                 return ResourceManager.GetString("Pager_Previous", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Réf.
+        /// </summary>
+        public static string Pattern_Ref {
+            get {
+                return ResourceManager.GetString("Pattern_Ref", resourceCulture);
+            }
+        }
     }
 }

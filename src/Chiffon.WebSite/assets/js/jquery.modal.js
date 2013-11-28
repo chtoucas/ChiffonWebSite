@@ -1,58 +1,50 @@
-﻿;
+﻿/*global $*/
 
 /*
- * TODO:
- * - configuration d'ajax (timeout & co)
- * - slider quand on reste dans la modale ?
- * - meilleur indicateur de chargement ?
- * - utiliser RxJS ?
+ * Adapté de http://github.com/kylefox/jquery-modal
  */
-/*
- * A simple jQuery modal (http://github.com/kylefox/jquery-modal)
- * Version 0.5.4
- */
-(function(window, $, undef) {
+(function(window, undef) {
   'use strict';
 
+  var ESC_KEYCODE = 27;
+  var MODAL_KEYDOWN_EVENT = 'keydown.modal';
+  //var MODAL_CLOSE_EVENT = 'modal:close';
+
+  var document = window.document;
+  var location = window.location;
   var current = undef;
 
   $.modal = function(elmt, options) {
-    var remove, target;
+    var target;
 
-    $.modal.close(); // Close any open modals.
+    if (!elmt.is('a')) {
+      return;
+    }
+
+    // On ferme toutes les modales.
+    $.modal.close();
 
     this.options = $.extend({}, $.modal.defaults, options);
 
     this.$body = $('body');
+    this.$elm = $('<div>');
+    this.$body.append(this.$elm);
 
-    if (elmt.is('a')) {
-      target = elmt.attr('href');
-      if (/^#/.test(target)) {
-        // Select element by id from href
+    target = elmt.attr('href');
 
-        this.$elm = $(target);
-        if (this.$elm.length !== 1) return undef;
-        this.open();
-      } else {
-        // AJAX
+    $.get(target).done(function(data) {
+      if (!current) { return; }
 
-        this.$elm = $('<div>');
-        this.$body.append(this.$elm);
-        remove = function(event, modal) { modal.elm.remove(); };
-
-        $.get(target).done(function(html) {
-          if (!current) return;
-          current.$elm.empty().append(html).on($.modal.CLOSE, remove);
-          current.open();
-        }).fail(function() {
-          // NB: ne pas utiliser Location.href = url car cela ne marche pas dans les anciens IE.
-          window.location = target;
-        });
-      }
-    } else {
-      this.$elm = elmt;
-      this.open();
-    }
+      current.$elm.empty().append(data);
+      //.on(MODAL_CLOSE_EVENT, function(e, modal) {
+      //  modal.elm.remove();
+      //});
+      current.open();
+    }).fail(function() {
+      // NB: ne pas utiliser location.href = target car cela ne marche pas
+      // dans les anciens IE.
+      location = target;
+    });
   };
 
   $.modal.prototype = {
@@ -63,28 +55,30 @@
       this.show();
 
       if (this.options.escapeClose) {
-        $(document).on('keydown.modal', function(e) {
-          if (e.which == 27) $.modal.close();
+        $(document).on(MODAL_KEYDOWN_EVENT, function(e) {
+          if (ESC_KEYCODE === e.which) {
+            $.modal.close();
+          }
         });
       }
 
-      if (this.options.clickClose) this.blocker.click($.modal.close);
+      if (this.options.clickClose) {
+        this.$overlay.on('click', $.modal.close);
+      }
     },
 
     close: function() {
       this.unblock();
       this.hide();
-      $(document).off('keydown.modal');
+      $(document).off(MODAL_KEYDOWN_EVENT);
     },
 
     block: function() {
-      this.blocker = $('<div class="overlay"></div>');
-      this.$body.append(this.blocker);
-      this.blocker.show();
+      this.$overlay = $('<div class=overlay></div>').appendTo(this.$body).show();
     },
 
     unblock: function() {
-      this.blocker.remove();
+      this.$overlay.remove();
     },
 
     show: function() {
@@ -92,26 +86,26 @@
         this.closeButton = $('<a href="#" rel="modal:close" class="close ir">' + this.options.closeText + '</a>');
         this.$elm.append(this.closeButton);
       }
+
       this.$elm.addClass(this.options.modalClass + ' current');
-      this.center();
       this.$elm.show();
     },
 
     hide: function() {
-      if (this.closeButton) this.closeButton.remove();
+      if (this.closeButton) {
+        this.closeButton.remove();
+      }
+
       this.$elm.removeClass('current');
 
       this.$elm.hide();
-    },
-
-    center: function() {
-      this.$elm.css({ top: '50%', marginTop: -(this.$elm.outerHeight() / 2) });
     }
   };
 
   $.modal.close = function(e) {
-    if (!current) return;
-    if (e) e.preventDefault();
+    if (undef === current) { return; }
+    if (e) { e.preventDefault(); }
+
     current.close();
     var that = current.$elm;
     current = undef;
@@ -119,25 +113,22 @@
   };
 
   $.modal.defaults = {
-    escapeClose: true,
     clickClose: true,
     closeText: 'Close',
+    escapeClose: true,
     modalClass: 'modal',
     showClose: true
   };
 
-  // Event constants
-  $.modal.OPEN = 'modal:open';
-  $.modal.CLOSE = 'modal:close';
-
   $.fn.modal = function(options) {
-    if (this.length === 1) {
+    if (1 === this.length) {
       current = new $.modal(this, options);
     }
+
     return this;
   };
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
   $(document).on('click.modal', 'a[rel="modal:close"]', $.modal.close);
-})(this, jQuery);
+})(this);
 

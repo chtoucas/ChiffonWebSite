@@ -41,6 +41,7 @@ module.exports = function(grunt) {
       css: ['chiffon.css', 'chiffon.print.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
+        'jquery.modal.js',
         'chiffon.jquery.js',
         'chiffon.js',
         'chiffon.localization.js',

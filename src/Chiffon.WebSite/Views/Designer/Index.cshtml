@@ -10,10 +10,10 @@
 <ul id=patterns class="mosaic clearfix">
  @foreach (var preview in Model.Previews) {
   var anchor = String.IsNullOrWhiteSpace(@preview.Version) ? "" : "#" + @preview.Version;
+  var version = String.IsNullOrWhiteSpace(@preview.Version) ? "" : " (" + @preview.Version + ")";
   <li>
    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)@anchor" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div>
-    <div class=watermark></div>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
    </a>
   </li>
  }

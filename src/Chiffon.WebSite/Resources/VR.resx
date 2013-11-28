@@ -207,4 +207,7 @@
   <data name="Pager_Previous" xml:space="preserve">
     <value>Préc</value>
   </data>
+  <data name="Pattern_Ref" xml:space="preserve">
+    <value>Réf</value>
+  </data>
 </root>

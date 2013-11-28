@@ -607,26 +607,6 @@ NAV {
   }
 }
 
-// Statut ajax ----------------------------------------------------------------
-
-//#ajax_status {
-//  background-color: #fef087;
-//  // border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0 5px 15px @grey;
-//  display: none;
-//  font-size: 1.3em;
-//  font-weight: 700;
-//  padding: .3em 1em;
-//  position: fixed;
-//  right: 45%;
-//  top: 0;
-//  z-index: 1000;
-//
-//  &.ajax_error {
-//    background-color: @error_color;
-//    color: white;
-//  }
-//}
-
 // Erreurs --------------------------------------------------------------------
 
 .error_container {
@@ -952,6 +932,13 @@ FORM INPUT.error {
     &:lang(en) {
       background: data-uri("img/watermarks/seemore_en.png");
     }
+  }
+
+  .watermark SPAN {
+    right: 0;
+    bottom: 0;
+    padding: .5em 1em;
+    text-transform: uppercase;
   }
 
   NAV {
