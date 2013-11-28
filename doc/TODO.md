@@ -22,7 +22,7 @@ Pour les déploiements, peut-être s'inspirer de :
 
 Utiliser Google Closure Tools (IronPython via NuGet ?)
 
-Remplacer YUICompressor par une alternative .NET (?) et éventuellement activer de nouvelles
+Remplacer YUICompressor par une alternative .NET (?) et Ã©ventuellement activer de nouvelles
 optimisations Web (minification HTML, sprites) :
 * http://webgrease.codeplex.com/
 * http://bundletransformer.codeplex.com/
@@ -69,7 +69,7 @@ NOTES
 # PowerShell, le fichier cible est vide :-( Apparemment je ne suis pas le seul à rencontrer
 # ce problème :
 #   http://stackoverflow.com/questions/9846326/node-console-log-behavior-and-windows-stdout
-# Pour contourner ce problème, on utilise donc un script intermédiaire :
+# Pour contourner ce problÃ¨me, on utilise donc un script intermÃ©diaire :
 # .\node_modules\.bin\jslint.cmd %* >> .\reports\jslint.log
 
 #FIXME .\jslint.cmd --maxerr 100 $source

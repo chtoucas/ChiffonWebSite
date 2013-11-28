@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Version 1.5
------------
+Version 1.5.0.1 (2013-11-27)
+----------------------------
 
 * On affiche un indicateur visuel afin de signaler le chargement de la page suivante dans
   une pagination infinie.
@@ -12,8 +12,8 @@ Changements d'ordre technique :
 * [JS] Intégration de fastclick.js pour améliorer le temps de réaction des tablettes lors
        d'un "clic".
 
-Version 1.4 (2013-11-26)
-------------------------
+Version 1.4.0.3 (2013-11-26)
+----------------------------
 
 * Réactivation des modales pour les tablettes.
 * Nouvelles traductions.
@@ -28,15 +28,15 @@ Changements d'ordre technique :
 * [CSS] Pour les petits écrans, on adapte le fonctionnement des modales.
 
 
-Version 1.3 (2013-11-25)
-------------------------
+Version 1.3.0.1 (2013-11-25)
+----------------------------
 
 * Version stable de la feuille de style pour un site web adaptatif.
 * Désactivation de la gestion du bloc info en JavaScript.
 
 
-Version 1.2 (2013-11-21)
-------------------------
+Version 1.2.0.1 (2013-11-21)
+----------------------------
 
 * Version minimale du site en Responsive Design.
 
@@ -51,8 +51,8 @@ Correctifs :
   du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
 * [CSS] nprogress.css n'était pas inclus dans le build.
 
-Version 1.1.1 (2013-11-19)
---------------------------
+Version 1.1.1.1 (2013-11-19)
+----------------------------
 
 * Nouvelle page d'inscription.
 * Utilisation d'un texte différent par langue pour le bouton de connexion.
@@ -107,5 +107,7 @@ Version 1.0.26 (2013-09-19)
 * Au lieu de préciser manuellement le numéro de version des JS et des CSS, on utilise par défaut
   le numéro de version de l'assemblée.
 * Il est dorénavant possible d'utiliser un serveur de statiques.
-* BUG: La minification du HTML était trop agressive, vu qu'elle remplacer certains espaces blancs
+
+Correctifs :
+* La minification du HTML était trop agressive, vu qu'elle remplacer certains espaces blancs
   par une chaîne vide.
