@@ -1,4 +1,8 @@
-﻿
+﻿/*csslint box-model:false, adjoining-classes:false*/
+
+// NB: On désactive les warnings pour les deux règles CSSLint précédentes
+// car on ne supporte pas IE 6-
+
 @import "chiffon.vars.less";
 @import "chiffon.base.less";
 @import "chiffon.layout.less";
@@ -6,7 +10,24 @@
 @import "chiffon.keyframes.less";
 @import "chiffon.modules.less";
 @import "chiffon.pages.less";
-@import "chiffon.responsive.less";
+
+// ============================================================================
+// Règles pour un site web adaptatif.
+// ============================================================================
+
+@import "chiffon.responsive.mixins.less";
+
+@import "chiffon.responsive.less" only screen and (max-width: @grid_4_width);
+
+@min_3_width: (1px + @grid_3_width);
+@import "chiffon.responsive.3.less" only screen and (min-width: @min_3_width) and (max-width: @grid_4_width);
+
+@min_2_width: (1px + @grid_2_width);
+@import "chiffon.responsive.2.less" only screen and (min-width: @min_2_width) and (max-width: @grid_3_width);
+
+@import "chiffon.responsive.1.less" only screen and (max-width: @grid_2_width);
+
+
 
 // En-tête statique
 //#sticky_header { display: none; position: fixed; top: 0; z-index: 1000; width: @grid_4_width; background-color: @white; }

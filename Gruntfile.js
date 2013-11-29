@@ -230,7 +230,18 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files: ['<%= lessSources.main.src %>', '<%= lessSources.print.src %>'],
+      files: [
+        'chiffon.vars.less',
+        'chiffon.base.less',
+        'chiffon.layout.less',
+        'chiffon.utils.less',
+        'chiffon.keyframes.less',
+        'chiffon.modules.less',
+        'chiffon.pages.less',
+        'chiffon.responsive.less',
+        'chiffon.less',
+        'chiffon.print.less'
+      ].map(mapCss),
       tasks: ['less']
     },
 

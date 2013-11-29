@@ -1,0 +1,33 @@
+﻿
+@import "chiffon.vars.less";
+@import "chiffon.utils.less";
+
+// ============================================================================
+// Règles pour un site web adaptatif
+// ============================================================================
+
+// NB: Utiliser le mot clé "only" dans les media-queries pour cacher les règles suivantes aux anciens navigateurs.
+// WARNING: On peut utiliser des variables calculées dans les media-queries, mais "recess" n'aime pas cela.
+
+.mobile_designer(@mosaic_width, @pager_width) {
+  .info {
+    float: none;
+    width: auto;
+
+    NAV {
+      display: none;
+    }
+
+    P:first-child {
+      margin-bottom: 1em;
+    }
+  }
+
+  .mosaic {
+    width: @mosaic_width;
+  }
+
+  .pager {
+    width: @pager_width;
+  }
+}

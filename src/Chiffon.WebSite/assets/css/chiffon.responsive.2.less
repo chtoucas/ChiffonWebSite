@@ -1,0 +1,70 @@
+﻿
+@import "chiffon.vars.less";
+@import "chiffon.utils.less";
+
+// ============================================================================
+// Grille à 2 colonnes : largeur de l'écran < 3-colonnes et > 2-colonnes.
+// ============================================================================
+
+BODY {
+  width: @grid_2_width;
+}
+
+.serif_large {
+  font-size: @font_size_medium;
+  line-height: 1.5em;
+}
+
+// Menu principal.
+
+.nav_main {
+  LI {
+    margin: .6em 0;
+  }
+}
+
+// Menu des designers.
+
+.nav_designers {
+  &.fx_strike {
+    background: none;
+  }
+
+  UL {
+    font-size: 1.4em;
+  }
+
+  LI {
+    margin: 11px 0;
+  }
+}
+
+// Motifs.
+
+.pattern, .pattern_nav {
+  width: @grid_2_width;
+}
+
+.mosaic {
+  width: @mosaic_2_width;
+}
+
+// Page contact.
+
+.home_contact {
+  .li_inline2center;
+
+  .li_designers {
+    width: @mosaic_2_width;
+
+    > LI {
+      margin: .8em;
+    }
+  }
+}
+
+// Pages designer.
+
+.designer {
+  .mobile_designer(@mosaic_2_width, @grid_2_width);
+}

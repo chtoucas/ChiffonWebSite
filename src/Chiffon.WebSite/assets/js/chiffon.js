@@ -1,4 +1,4 @@
-﻿/*global  _, FastClick, NProgress, yepnope*/
+﻿/*global  _, FastClick, yepnope*/
 
 var Chiffon = (function(window, undef) {
   'use strict';
@@ -30,8 +30,10 @@ var Chiffon = (function(window, undef) {
 
   // Configuration globale de l'application.
   // WARNING: On ajoute la fonction "ł" au contexte global.
-  Chiffon.configure = function($, options) {
+  Chiffon.configure = function(options) {
     var settings = _.defaults(options || {}, defaultSettings);
+    var $ = window.$;
+    var nprogress = window.NProgress;
 
     // Utilitaire de localisation d'une chaîne de caractères.
     window.ł = function(value) { return value.toLocaleString(); };
@@ -51,9 +53,9 @@ var Chiffon = (function(window, undef) {
 
     // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch de requêtes se termine.
     $(document).ajaxStart(function() {
-      NProgress.start();
+      nprogress.start();
     }).ajaxStop(function() {
-      NProgress.done();
+      nprogress.done();
     });
   };
 
@@ -113,7 +115,7 @@ var Chiffon = (function(window, undef) {
         return;
       }
 
-      Chiffon.configure($, args.settings);
+      Chiffon.configure(args.settings);
 
       (new Chiffon(context)).init().handle(args.request);
     });

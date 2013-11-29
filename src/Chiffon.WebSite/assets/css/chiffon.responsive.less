@@ -2,305 +2,36 @@
 @import "chiffon.vars.less";
 @import "chiffon.utils.less";
 
-// ============================================================================
-// Règles pour un site web adaptatif
-// ============================================================================
-
-// NB: Utiliser le mot clé "only" dans les media-queries pour cacher les règles suivantes aux anciens navigateurs.
-// WARNING: On peut utiliser des variables calculées dans les media-queries, mais "recess" n'aime pas cela.
-
-.mobile_designer(@mosaic_width, @pager_width) {
-  .info {
-    float: none;
-    width: auto;
-
-    NAV {
-      display: none;
-    }
-
-    P:first-child {
-      margin-bottom: 1em;
-    }
-  }
-
-  .mosaic {
-    width: @mosaic_width;
-  }
-
-  .pager {
-    width: @pager_width;
-  }
-}
-
 // Règles communes.
 // Largeur de l'écran < 4-colonnes.
 
-@media only screen and (max-width: @grid_4_width) {
-  H1 {
-    .raw_text;
-  }
+H1 {
+  .raw_text;
+}
 
-  /*
-    H1 EM:first-child, H1 STRONG {
-      display: block;
-    }
-  */
-
-  // Le menu designer devient centré et chaque entrée prend une largeur automatique.
-  .nav_designers {
-    .li_inline2center;
-
-    LI {
-      width: auto;
-    }
-  }
-
-  .modal {
-    position: fixed;
-    top: 0;
-    bottom: auto;
-    left: 0;
-    right: 0;
+/*
+  H1 EM:first-child, H1 STRONG {
     display: block;
-    width: 90%;
-    height: 90%;
-    margin: auto;
+  }
+*/
+
+// Le menu designer devient centré et chaque entrée prend une largeur automatique.
+.nav_designers {
+  .li_inline2center;
+
+  LI {
+    width: auto;
   }
 }
 
-// Grille à 3 colonnes : largeur de l'écran < 4-colonnes et > 3-colonnes.
-
-@min_3_width: (1px + @grid_3_width);
-
-@media only screen and (min-width: @min_3_width) and (max-width: @grid_4_width) {
-  BODY {
-    width: @grid_3_width;
-  }
-
-  // Menu des designers
-  .nav_designers {
-    LI {
-      margin: 11px;
-
-      &:last-child {
-        margin-right: 11px;
-      }
-    }
-  }
-
-  // Motifs.
-
-  .mosaic {
-    width: @mosaic_3_width;
-  }
-
-  // Page contact.
-
-  .home_contact {
-    .li_inline2center;
-
-    .li_designers > LI {
-      margin: 1.5em;
-    }
-  }
-
-  // Pages designer.
-
-  .designer {
-    // On utilise une position relative pour le positionnement du bloc info.
-    position: relative;
-
-    .info_pattern {
-      position: absolute;
-      top: 580px;
-      right: 0;
-    }
-
-    .mosaic {
-      width: @mosaic_2_width;
-    }
-
-    .pager {
-      width: @grid_2_width;
-    }
-  }
-}
-
-// Grille à 2 colonnes : largeur de l'écran < 3-colonnes et > 2-colonnes.
-
-@min_2_width: (1px + @grid_2_width);
-
-@media only screen and (min-width: @min_2_width) and (max-width: @grid_3_width) {
-  BODY {
-    width: @grid_2_width;
-  }
-
-  .serif_large {
-    font-size: @font_size_medium;
-    line-height: 1.5em;
-  }
-
-  // Menu principal.
-
-  .nav_main {
-    LI {
-      margin: .6em 0;
-    }
-  }
-
-  // Menu des designers.
-
-  .nav_designers {
-    &.fx_strike {
-      background: none;
-    }
-
-    UL {
-      font-size: 1.4em;
-    }
-
-    LI {
-      margin: 11px 0;
-    }
-  }
-
-  // Motifs.
-
-  .pattern, .pattern_nav {
-    width: @grid_2_width;
-  }
-
-  .mosaic {
-    width: @mosaic_2_width;
-  }
-
-  // Page contact.
-
-  .home_contact {
-    .li_inline2center;
-
-    .li_designers {
-      width: @mosaic_2_width;
-
-      > LI {
-        margin: .8em;
-      }
-    }
-  }
-
-  // Pages designer.
-
-  .designer {
-    .mobile_designer(@mosaic_2_width, @grid_2_width);
-  }
-}
-
-// Grille à 1 colonne : Largeur de l'écran < 2-colonnes.
-
-@media only screen and (max-width: @grid_2_width) {
-  BODY {
-    width: @grid_1_width;
-  }
-
-  H1 {
-    height: 57px;
-    width: 57px;
-    overflow: hidden;
-    background-image: url(img/logo.png);
-  }
-
-  .serif_large, .serif_medium {
-    font-size: 1.8em;
-    line-height: 1.5em;
-  }
-
-  .serif_medium {
-    font-size: 1.6em;
-    line-height: 1.5em;
-  }
-
-  .lbr {
-    display: inline;
-  }
-
-  // Menu principal.
-
-  .nav_main {
-    .account {
-      position: static;
-    }
-
-    UL {
-      padding: .6em 0;
-    }
-
-    LI {
-      margin: 0;
-    }
-  }
-
-  // Menu des designers.
-
-  .nav_designers {
-    &.fx_strike {
-      background: none;
-    }
-
-    UL {
-      font-size: 1.6em;
-      padding: .5em 0;
-    }
-
-    LI {
-      margin: 0;
-    }
-  }
-
-  // Motifs.
-
-  .pattern, .pattern_nav {
-    width: @grid_1_width;
-  }
-
-  // Pour ce type d'écran particulier on force la hauteur.
-  /*.pattern, .designer .watermark {
-    height: (1.5 * @preview_width);
-  }*/
-
-  .mosaic {
-    width: @mosaic_1_width;
-  }
-
-  // Pages account.
-
-  .account_login,
-  .account_register {
-    INPUT {
-      max-width: 80%;
-    }
-  }
-
-  // Page contact.
-
-  .home_contact {
-    .li_inline2center;
-
-    .li_designers {
-      width: @grid_1_width;
-
-      > LI {
-        margin: .8em 0;
-      }
-    }
-
-    P A {
-      font-size: .8em;
-    }
-  }
-
-  // Pages designer.
-
-  .designer {
-    .mobile_designer(@mosaic_1_width, @grid_1_width);
-  }
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 90%;
+  height: 90%;
+  margin: auto;
 }

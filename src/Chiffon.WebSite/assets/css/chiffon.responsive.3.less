@@ -1,0 +1,59 @@
+﻿
+@import "chiffon.vars.less";
+@import "chiffon.utils.less";
+
+// ============================================================================
+// Grille à 3 colonnes : largeur de l'écran < 4-colonnes et > 3-colonnes.
+// ============================================================================
+
+BODY {
+  width: @grid_3_width;
+}
+
+// Menu des designers
+.nav_designers {
+  LI {
+    margin: 11px;
+
+    &:last-child {
+      margin-right: 11px;
+    }
+  }
+}
+
+// Motifs.
+
+.mosaic {
+  width: @mosaic_3_width;
+}
+
+// Page contact.
+
+.home_contact {
+  .li_inline2center;
+
+  .li_designers > LI {
+    margin: 1.5em;
+  }
+}
+
+// Pages designer.
+
+.designer {
+  // On utilise une position relative pour le positionnement du bloc info.
+  position: relative;
+
+  .info_pattern {
+    position: absolute;
+    top: 580px;
+    right: 0;
+  }
+
+  .mosaic {
+    width: @mosaic_2_width;
+  }
+
+  .pager {
+    width: @grid_2_width;
+  }
+}

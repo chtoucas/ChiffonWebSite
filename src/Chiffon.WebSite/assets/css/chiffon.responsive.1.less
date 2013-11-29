@@ -1,0 +1,114 @@
+﻿
+@import "chiffon.vars.less";
+@import "chiffon.utils.less";
+
+// ============================================================================
+// Grille à 1 colonne : Largeur de l'écran < 2-colonnes.
+// ============================================================================
+
+BODY {
+  width: @grid_1_width;
+}
+
+H1 {
+  height: 57px;
+  width: 57px;
+  overflow: hidden;
+  // NB: Evitons une requête HTTP supplémentaire pour les smartphones.
+  background-image: data-uri("img/logo.png");
+}
+
+.serif_large, .serif_medium {
+  font-size: 1.8em;
+  line-height: 1.5em;
+}
+
+.serif_medium {
+  font-size: 1.6em;
+  line-height: 1.5em;
+}
+
+.lbr {
+  display: inline;
+}
+
+// Menu principal.
+
+.nav_main {
+  .account {
+    position: static;
+  }
+
+  UL {
+    padding: .6em 0;
+  }
+
+  LI {
+    margin: 0;
+  }
+}
+
+// Menu des designers.
+
+.nav_designers {
+  &.fx_strike {
+    background: none;
+  }
+
+  UL {
+    font-size: 1.6em;
+    padding: .5em 0;
+  }
+
+  LI {
+    margin: 0;
+  }
+}
+
+// Motifs.
+
+.pattern, .pattern_nav {
+  width: @grid_1_width;
+}
+
+// Pour ce type d'écran particulier on force la hauteur.
+/*.pattern, .designer .watermark {
+    height: (1.5 * @preview_width);
+  }*/
+
+.mosaic {
+  width: @mosaic_1_width;
+}
+
+// Pages account.
+
+.account_login,
+.account_register {
+  INPUT {
+    max-width: 80%;
+  }
+}
+
+// Page contact.
+
+.home_contact {
+  .li_inline2center;
+
+  .li_designers {
+    width: @grid_1_width;
+
+    > LI {
+      margin: .8em 0;
+    }
+  }
+
+  P A {
+    font-size: .8em;
+  }
+}
+
+// Pages designer.
+
+.designer {
+  .mobile_designer(@mosaic_1_width, @grid_1_width);
+}
