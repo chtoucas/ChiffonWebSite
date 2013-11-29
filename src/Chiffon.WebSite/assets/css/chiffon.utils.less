@@ -1,0 +1,102 @@
+﻿
+// ============================================================================
+// Utilitaires
+// ============================================================================
+
+// Listes ---------------------------------------------------------------------
+
+// Liste horizontale
+
+// WARNING: À coupler avec "clearfix".
+// NB: Utiliser "display: inline-block" semblerait plus naturel mais dans ce cas
+// les espaces blancs sont significatifs et, suivant le contenu HTML,
+// on peut avoir des espaces entre les blocs. On peut contourner ce problème en
+// minifiant le HTML (ie </li><li>) ou en supprimant la balise fermante mais,
+// dans les deux cas, la solution est fragile. On préfère donc utiliser
+// "float: left". Il ne faut alors pas oublier de rajouter un clearfix.
+.li_inline {
+  > LI {
+    float: left;
+  }
+}
+
+// Liste centrée
+
+.li_center {
+  text-align: center;
+
+  > LI {
+    display: inline-block;
+  }
+}
+
+.li_inline2center() {
+  .li_inline {
+    .li_center;
+
+    > LI {
+      float: none;
+    }
+  }
+}
+
+// Textes ---------------------------------------------------------------------
+
+.text_center {
+  text-align: center;
+}
+
+.text_right {
+  text-align: right;
+}
+
+.text_left {
+  text-align: left;
+}
+
+.text_underline {
+  text-decoration: underline;
+}
+
+// Paragraphes ----------------------------------------------------------------
+
+.noparsep {
+  margin-bottom: 0;
+}
+
+P + .noparsep {
+  margin-top: 0;
+}
+
+// Blocs ----------------------------------------------------------------------
+
+.float_right {
+  float: right;
+}
+
+.float_left {
+  float: left;
+}
+
+.float_clear {
+  clear: both;
+}
+
+.lbr {
+  display: block;
+}
+
+.nodisplay {
+  display: none;
+}
+
+// Fontes ---------------------------------------------------------------------
+
+.sansserif {
+  font-family: sans-serif;
+}
+
+.raw_text {
+  // WARNING: Les sauts à la ligne deviennent importants !
+  white-space: pre-line;
+}

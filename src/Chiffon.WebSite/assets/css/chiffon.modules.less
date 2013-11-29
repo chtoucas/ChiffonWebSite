@@ -1,0 +1,378 @@
+﻿
+@import "chiffon.vars.less";
+@import "chiffon.utils.less";
+
+// ============================================================================
+// Modules
+// ============================================================================
+
+// Fontes ---------------------------------------------------------------------
+
+.serif {
+  font-family: "Droid Serif", Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.serif_medium {
+  font-size: @font_size_medium;
+  line-height: 1.5em;
+}
+
+.serif_large {
+  font-size: @font_size_large;
+  line-height: 1.5em;
+}
+
+// Modales --------------------------------------------------------------------
+
+// Inspiré de http://coding.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
+// FIXME: position sur BODY, Opera !
+//body { position: relative; }
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @modal_zindex;
+  display: table;
+  width: @grid_4_width;
+  height: auto;
+  margin: auto;
+
+  &, P, A, LABEL, INPUT, TEXTAREA {
+    color: @white;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(img/close.png) no-repeat 0 0;
+  }
+}
+
+// Overlay --------------------------------------------------------------------
+
+// FIXME: width & height sont-ils nécessaires ?
+//.overlay { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: @black; opacity: .8; z-index: 100; }
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @overlay_zindex;
+  display: none;
+  margin: 0;
+  background-color: @black;
+  opacity: .8;
+}
+
+// Watermark ------------------------------------------------------------------
+
+.watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Bloc avec bordures en haut et en bas, plus une ligne au milieu -------------
+
+.fx_strike {
+  background: no-repeat center center data-uri("img/strike.png");
+  border-top: solid 2px @darkgrey;
+  border-bottom: solid 2px @darkgrey;
+}
+
+// Bloc avec une bordure en haut ----------------------------------------------
+
+.fx_topborder {
+  border-top: 2px solid @darkgrey;
+}
+
+.modal .fx_topborder {
+  border-top: none;
+}
+
+// Checkbox -------------------------------------------------------------------
+
+INPUT[type=checkbox] {
+  // http://stackoverflow.com/questions/4148499/how-to-style-checkbox-using-css
+  display: none;
+
+  + LABEL {
+    cursor: pointer;
+
+    SPAN {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      padding-right: 1em;
+      cursor: pointer;
+      background: data-uri("img/unchecked.png") no-repeat;
+    }
+  }
+
+  &:checked + LABEL SPAN {
+    background: data-uri("img/checked.png") no-repeat;
+  }
+}
+
+// Lien -------------------------------------------------------------------
+
+A {
+  &.loose {
+    color: @darkgrey;
+
+    &:hover {
+      color: @black;
+    }
+  }
+}
+
+//.highlight:focus {
+//  box-shadow: 0 0 12px rgba(204, 204, 204, .37);
+//}
+
+// ============================================================================
+// Motifs
+// ============================================================================
+
+// Aperçu d'un motif.
+.vignette {
+  // On utilise une position relative pour le positionnement du watermark.
+  position: relative;
+  display: block;
+  width: @preview_width;
+  height: @preview_height;
+  transition: all .2s ease-in-out;
+
+  .overlay {
+    position: absolute;
+    z-index: 0;
+    opacity: .7;
+  }
+
+  IMG {
+    width: @preview_width;
+    height: @preview_height;
+    // Couleur par défaut quand l'image n'est pas chargée.
+    background-color: @missing_img_background;
+  }
+
+  SPAN {
+    position: absolute;
+    right: 1.2em;
+    bottom: .9em;
+    display: none;
+    font-weight: bold;
+    color: @white;
+  }
+
+  &:hover SPAN, &:hover .overlay {
+    display: block;
+  }
+}
+
+.cl:hover .watermark {
+  background: data-uri("img/watermarks/cl.png");
+}
+
+.em:hover .watermark {
+  background: data-uri("img/watermarks/em.png");
+}
+
+.lr:hover .watermark {
+  background: data-uri("img/watermarks/lr.png");
+}
+
+.vd:hover .watermark {
+  background: data-uri("img/watermarks/vd.png");
+}
+
+// Motifs en grand format.
+
+.pattern {
+  width: @grid_3_width;
+  height: @pattern_heigth;
+  overflow: hidden;
+
+  LI {
+    // On utilise une position relative pour le positionnement du watermark.
+    position: relative;
+
+    .watermark SPAN {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: .5em 1em;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: @white;
+    }
+  }
+
+  IMG {
+    width: @pattern_width;
+    height: @pattern_heigth;
+    background-color: @missing_img_background;
+  }
+}
+
+.pattern_nav {
+  width: @grid_3_width;
+  padding-bottom: 2em;
+  color: @black;
+  text-align: center;
+  text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
+}
+
+// Mosaïque d'aperçus
+
+.mosaic {
+  width: @mosaic_4_width;
+  overflow: hidden;
+  .li_inline;
+
+  LI {
+    margin-right: @grid_inter_width;
+    margin-bottom: @grid_inter_width;
+  }
+
+  .loading {
+    width: 220px;
+    height: 160px;
+    background: url(img/logo.png) center center no-repeat;
+    -webkit-animation: fadeIn 3s ease-in-out 0s infinite alternate;
+    -moz-animation: fadeIn 3s ease-in-out 0s infinite alternate;
+    animation: fadeIn 3s ease-in-out 0s infinite alternate;
+  }
+}
+
+// Pagination (dans la page designer)
+
+.pager {
+  width: @grid_3_width;
+  margin-top: 0;
+  margin-bottom: 2em;
+  color: @black;
+  text-align: center;
+  text-transform: uppercase;
+
+  A {
+    text-decoration: underline;
+  }
+}
+
+// ============================================================================
+// Menus
+// ============================================================================
+
+// Menu des langues -----------------------------------------------------------
+
+.nav_lang {
+  border-bottom: solid 2px @black;
+
+  UL {
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+
+  LI {
+    padding-left: .5em;
+  }
+}
+
+// Menu principal -------------------------------------------------------------
+
+.nav_main {
+  // On utilise une position relative pour que l'élément ".account" se place
+  // correctement à droite de la liste.
+  position: relative;
+
+  .account {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  UL {
+    text-transform: uppercase;
+  }
+
+  LI {
+    margin: 1.2em 0;
+  }
+
+  A {
+    padding: 1em;
+  }
+}
+
+// Menu des designers ---------------------------------------------------------
+
+.nav_designers {
+  UL {
+    font-size: 1.8em;
+    font-style: italic;
+  }
+
+  LI {
+    width: @grid_1_width;
+    // XXX: font-size
+    margin: 11px @grid_inter_width 11px 0;
+    text-align: center;
+
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  A {
+    padding: .5em;
+    background: @white;
+  }
+}
+
+// Mise en avant de la page courante dans les menus ---------------------------
+
+NAV {
+  &.index .index,
+  &.about .about,
+  &.contact .contact,
+  &.newsletter .newsletter,
+  &.cl .cl,
+  &.em .em,
+  &.vd .vd,
+  &.lr .lr {
+    color: @current_link_color;
+  }
+}
+
+// Erreurs --------------------------------------------------------------------
+
+.error_container {
+  display: none;
+  color: @error_color;
+
+  .error {
+    border: none;
+  }
+}
+
+FORM INPUT.error {
+  border: 1px solid @error_color;
+}
+
+//INPUT.valid { border: 1px solid green !important; }

@@ -1,0 +1,41 @@
+﻿
+@import "chiffon.vars.less";
+
+// ============================================================================
+// Disposition globale
+// ============================================================================
+
+BODY {
+  // On centre le corps de la page.
+  width: @grid_4_width;
+  margin: 0 auto;
+}
+
+HEADER {
+  padding-top: 1.9em;
+}
+
+H1 {
+  margin: 0 auto;
+  font-size: 1.8em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+
+  EM, STRONG {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
+FOOTER {
+  margin-bottom: 2em;
+  text-transform: uppercase;
+  border-top: solid 2px @grey;
+  font-variant: small-caps;
+
+  P {
+    margin: 2em 0 0;
+    color: @darkgrey;
+  }
+}

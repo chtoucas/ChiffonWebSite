@@ -1,0 +1,78 @@
+﻿
+@import "chiffon.vars.less";
+
+// ============================================================================
+// Règles de base
+// ============================================================================
+
+// H5BP v4.3.0 ----------------------------------------------------------------
+
+AUDIO, CANVAS, IMG, VIDEO {
+  vertical-align: middle;
+}
+
+FIELDSET {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+TEXTAREA {
+  resize: vertical;
+}
+
+// Règles spécifiques au projet -----------------------------------------------
+
+// XXX: BODY, INPUT ?
+HTML {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: @font_size;
+  line-height: 1.4;
+}
+
+//HTML, BUTTON, INPUT, SELECT, TEXTAREA {
+//  color: @text_color;
+//}
+
+P {
+  color: @grey;
+}
+
+UL, OL {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+NAV {
+  UL, OL {
+    A {
+      // Dans un menu, on donne plus d'impact physique aux liens.
+      display: inline-block;
+    }
+  }
+}
+
+A {
+  color: @black;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+
+  &:hover, &:focus {
+    color: @grey;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, .25);
+  }
+}
+
+HR {
+  display: block;
+  height: 1em;
+  margin: 1em 0;
+  background: data-uri("img/doubleline_grey.png") center no-repeat;
+  border: none;
+}
+
+.modal HR {
+  background-image: data-uri("img/doubleline_white.png");
+}
