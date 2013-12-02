@@ -1,7 +1,12 @@
 CHANGELOG
 =========
 
-Version 1.5.0.1 (2013-11-27)
+[2013-12-02]
+----------
+
+Mise à jour du serveur vers .NET 4.5.1
+
+[2013-11-27] Version 1.5.0.1
 ----------------------------
 
 * On affiche un indicateur visuel afin de signaler le chargement de la page suivante dans
@@ -11,7 +16,7 @@ Changements d'ordre technique :
 * [JS] Intégration de fastclick.js pour améliorer le temps de réaction des tablettes lors
        d'un "clic".
 
-Version 1.4.0.3 (2013-11-26)
+[2013-11-26] Version 1.4.0.3
 ----------------------------
 
 * Réactivation des modales pour les tablettes.
@@ -26,14 +31,14 @@ Changements d'ordre technique :
 * [CSS] Pour les petits écrans, on adapte le fonctionnement des modales.
 
 
-Version 1.3.0.1 (2013-11-25)
+[2013-11-25] Version 1.3.0.1
 ----------------------------
 
 * Version stable de la feuille de style pour un site web adaptatif.
 * Désactivation de la gestion du bloc info en JavaScript.
 
 
-Version 1.2.0.1 (2013-11-21)
+[2013-11-21] Version 1.2.0.1
 ----------------------------
 
 * Version minimale du site en Responsive Design.
@@ -47,7 +52,7 @@ Correctifs :
   du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
 * [CSS] nprogress.css n'était pas inclus dans le build.
 
-Version 1.1.1.1 (2013-11-19)
+[2013-11-19] Version 1.1.1.1
 ----------------------------
 
 * Nouvelle page d'inscription.
@@ -68,7 +73,7 @@ Correctifs :
 * La couleur utilisée dans les paginations était la couleur par défaut (gris).
 * [TOOLS] Suppression du package source avant la mise à jour d'un outil.
 
-Version 1.1.0.23 (2013-11-18)
+[2013-11-18] Version 1.1.0.23
 -----------------------------
 
 * Ajout d'un lien de connexion dans le menu principal.
@@ -94,7 +99,7 @@ Changements d'ordre technique :
 * [TOOLS] Utilitaire de déploiement.
 * [TOOLS] Utilitaire de sauvegarde de la base de données.
 
-Version 1.0.26 (2013-09-19)
+[2013-09-19] Version 1.0.26
 ---------------------------
 
 * Au lieu de préciser manuellement le numéro de version des JS et des CSS, on utilise par défaut
