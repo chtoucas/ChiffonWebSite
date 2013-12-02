@@ -12,7 +12,7 @@ function Remove-VisualStudioTmpFiles {
   param([Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)] [string] $path)
 
   Get-ChildItem $path -Include bin,obj -Recurse |
-    foreach ($_) { Remove-Item $_.FullName -Force -Recurse }
+    Where-Object { Remove-Item $_.FullName -Force -Recurse }
 }
 
 Export-ModuleMember -Function *
