@@ -12,12 +12,14 @@
     public static class ChiffonEnvironmentResolver
     {
         static string SessionKey_ = "Language";
+        static ChiffonEnvironment DefaultEnvironment_
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
 
         public static IEnumerable<ChiffonEnvironment> Environments
         {
             get
             {
-                yield return new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
+                yield return DefaultEnvironment_;
                 yield return new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
             }
         }
@@ -41,7 +43,7 @@
         {
             var uri = GetBaseUri_(request.Url);
 
-            ChiffonEnvironment environment;
+            ChiffonEnvironment environment = null;
 
             if (uri.IsLoopback) {
                 var language = MayGetLanguageFromQueryString_(request);
@@ -57,7 +59,9 @@
 
                 environment = new ChiffonEnvironment(language.ValueOrElse(ChiffonLanguage.Default), uri);
             }
-            else {
+            else if (ChiffonRuntime.Environment == null) {
+                // NB: Ce cas ne devrait jamais se présenter car on charge le module InitializeRuntimeModule
+                // au début de n'importe quelle requête .
                 environment = Resolve(request);
             }
 
@@ -68,7 +72,7 @@
         {
             var q = from _ in Environments where _.BaseUri.Host == host select _;
 
-            return q.SingleOrNone().ValueOrThrow(() => new NotSupportedException());
+            return q.SingleOrNone().ValueOrElse(DefaultEnvironment_);
         }
 
         static Maybe<ChiffonLanguage> MayGetLanguageFromQueryString_(HttpRequest request)

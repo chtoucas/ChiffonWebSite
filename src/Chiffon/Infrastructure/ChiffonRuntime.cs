@@ -1,20 +1,33 @@
 ﻿namespace Chiffon.Infrastructure
 {
-    using System;
+    //using System;
     using System.Threading;
     using System.Web;
     using System.Web.SessionState;
 
     public static class ChiffonRuntime
     {
-        static object Lock_ = new Object();
-        static ChiffonEnvironment Current_;
+        static string HttpContextKey_ = "ChiffonEnvironment";
+        //static object Lock_ = new Object();
+        //static ChiffonEnvironment Current_;
 
-        // NB: Le seul endroit où cette propriété est utilisée est lors de la configuration d'Autofac.
+        //public static ChiffonEnvironment Environment
+        //{
+        //    get { return Current_; }
+        //    private set { lock (Lock_) { Current_ = value; } }
+        //}
+
+        // FIXME: Je n'aime pas utiliser HttpContext.Current
         public static ChiffonEnvironment Environment
         {
-            get { return Current_; }
-            private set { lock (Lock_) { Current_ = value; } }
+            get
+            {
+                return HttpContext.Current.Items[HttpContextKey_] as ChiffonEnvironment;
+            }
+            private set
+            {
+                HttpContext.Current.Items[HttpContextKey_] = value;
+            }
         }
 
         // NB: Cette méthode est invoquée par un module HTTP (InitializeRuntimeModule) en tout début de requête.
@@ -31,7 +44,9 @@
         {
             var environment = ChiffonEnvironmentResolver.Resolve(request, session);
 
-            Initialize_(environment);
+            if (environment != null) {
+                Initialize_(environment);
+            }
         }
 
         static void Initialize_(ChiffonEnvironment environment)

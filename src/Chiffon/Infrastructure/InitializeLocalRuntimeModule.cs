@@ -5,7 +5,7 @@
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 
-    public class InitializeRuntimeModule : IHttpModule
+    public class InitializeLocalRuntimeModule : IHttpModule
     {
         #region IHttpModule
 
@@ -13,7 +13,7 @@
         {
             Requires.NotNull(context, "context");
 
-            context.BeginRequest += OnBeginRequest;
+            context.PostAcquireRequestState += OnPostAcquireRequestState;
         }
 
         public void Dispose()
@@ -25,14 +25,14 @@
 
         public static void Register()
         {
-            DynamicModuleUtility.RegisterModule(typeof(InitializeRuntimeModule));
+            DynamicModuleUtility.RegisterModule(typeof(InitializeLocalRuntimeModule));
         }
 
-        void OnBeginRequest(object sender, EventArgs e)
+        void OnPostAcquireRequestState(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 
-            ChiffonRuntime.Initialize(app.Request);
+            ChiffonRuntime.Initialize(app.Request, app.Session);
         }
     }
 }

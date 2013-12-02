@@ -1,12 +1,16 @@
 CHANGELOG
 =========
 
+Release 1.7
+-----------
+
 * Si le visiteur est connecté on utilise un texte différent dans la page information.
 
 Changements d'ordre technique :
 * Mise à jour de tous les projets vers .NET 4.5.1 et VS 2013.
 * Mise à jour vers la dernière version de ASP.NET.
 * Dans mode Debug, on garde le choix de la langue en session.
+* On scinde le fichier less.
 
 
 [2013-12-02]

@@ -138,6 +138,7 @@
     <Compile Include="Infrastructure\HttpHeaderPolicyModule.cs" />
     <Compile Include="Infrastructure\HttpRequestEnricher.cs" />
     <Compile Include="Infrastructure\ILogService.cs" />
+    <Compile Include="Infrastructure\InitializeLocalRuntimeModule.cs" />
     <Compile Include="Infrastructure\InitializeRuntimeModule.cs" />
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
     <Compile Include="Infrastructure\LogConfigurator.cs" />
