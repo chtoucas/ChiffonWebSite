@@ -5,6 +5,7 @@
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 
+    // FIXME: Supprimer l'instruction #if, Pour le moment, je ne vois pas une autre manière simple de faire.
     public class InitializeRuntimeModule : IHttpModule
     {
         #region IHttpModule
@@ -13,7 +14,11 @@
         {
             Requires.NotNull(context, "context");
 
+#if RELEASE
             context.BeginRequest += OnBeginRequest;
+#else
+            context.PostAcquireRequestState += OnPostAcquireRequestState;
+#endif
         }
 
         public void Dispose()
@@ -28,11 +33,20 @@
             DynamicModuleUtility.RegisterModule(typeof(InitializeRuntimeModule));
         }
 
+#if RELEASE
         void OnBeginRequest(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 
             ChiffonRuntime.Initialize(app.Request);
         }
+#else
+        void OnPostAcquireRequestState(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+
+            ChiffonRuntime.Initialize(app.Request, app.Session);
+        }
+#endif
     }
 }

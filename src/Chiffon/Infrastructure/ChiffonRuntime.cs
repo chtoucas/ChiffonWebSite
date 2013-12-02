@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Web;
+    using System.Web.SessionState;
 
     public static class ChiffonRuntime
     {
@@ -21,6 +22,20 @@
         {
             var environment = ChiffonEnvironmentResolver.Resolve(request);
 
+            Initialize_(environment);
+        }
+
+        // NB: Cette méthode est invoquée par un module HTTP (InitializeRuntimeModule) quand l'état
+        // de la requête ASP.NET a été acquis.
+        public static void Initialize(HttpRequest request, HttpSessionState session)
+        {
+            var environment = ChiffonEnvironmentResolver.Resolve(request, session);
+
+            Initialize_(environment);
+        }
+
+        static void Initialize_(ChiffonEnvironment environment)
+        {
             if (environment.Language != ChiffonLanguage.Default) {
                 InitializeCulture_(environment.Culture);
             }
