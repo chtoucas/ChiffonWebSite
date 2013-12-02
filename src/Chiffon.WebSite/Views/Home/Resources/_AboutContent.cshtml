@@ -1,9 +1,16 @@
 ﻿<p class=noparsep>
  Inspirés par la nature, l'enfance, les fifties ou la rue, les travaux graphiques et illustratifs de notre collectif s'adressent aux secteurs de la lingerie, de la mode, de la papeterie ou de l'art de vivre.
 </p>
-<p class=noparsep>
- Nous espérons que ce catalogue saura répondre à vos attentes et à vos envies. La consultation est en accès privé. N'hésitez pas à demander votre mot de passe.
-</p>
+@if (User.Identity.IsAuthenticated) {
+ <p class=noparsep>
+  Nous espérons que ce catalogue saura répondre à vos attentes et à vos envies.
+ </p>
+}
+else {
+  <p class=noparsep>
+  Nous espérons que ce catalogue saura répondre à vos attentes et à vos envies. La consultation est en accès privé. N'hésitez pas à demander votre mot de passe.
+ </p>
+}
 <p class=noparsep>
  Bonne visite.
 </p>
