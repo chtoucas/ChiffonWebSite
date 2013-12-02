@@ -44,13 +44,13 @@
             // DesignerController.
             _routes.MapRoute(RouteName.Designer.Index, "{designerKey}",
                 new { controller = ControllerName.Designer, action = ActionName.Designer.Index },
-                new { designerKey = new DesignerKeyConstraint()});
+                new { designerKey = new DesignerKeyConstraint() });
             _routes.MapRoute(RouteName.Designer.Category, "{designerKey}/{categoryKey}",
                 new { controller = ControllerName.Designer, action = ActionName.Designer.Category },
-                new { designerKey = new DesignerKeyConstraint()});
+                new { designerKey = new DesignerKeyConstraint() });
             _routes.MapRoute(RouteName.Designer.Pattern, "{designerKey}/{categoryKey}/{reference}",
                 new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern },
-                new { designerKey = new DesignerKeyConstraint()});
+                new { designerKey = new DesignerKeyConstraint() });
 
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 

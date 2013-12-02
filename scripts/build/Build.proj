@@ -13,7 +13,7 @@
   devient obsolète.
  -->
 
-<Project ToolsVersion="4.0" DefaultTargets="Build"
+<Project ToolsVersion="12.0" DefaultTargets="Build"
          xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project=".\Chiffon.common.targets" />
   <Import Project=".\Chiffon.tests.targets" />
