@@ -31,8 +31,14 @@
         void OnPostAcquireRequestState(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
+            var context = app.Context;
+            var session = app.Session;
 
-            ChiffonContext.Initialize(app.Context, app.Session);
+            var environment = ChiffonEnvironmentResolver.Resolve(context.Request, session);
+
+            if (environment != null) {
+                ChiffonContext.Initialize(new ChiffonContext(environment), context);
+            }
         }
     }
 }

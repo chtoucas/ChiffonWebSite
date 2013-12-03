@@ -31,8 +31,11 @@
         void OnBeginRequest(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
+            var context = app.Context;
 
-            ChiffonContext.Initialize(app.Context);
+            var environment = ChiffonEnvironmentResolver.Resolve(context.Request);
+
+            ChiffonContext.Initialize(new ChiffonContext(environment), context);
         }
     }
 }
