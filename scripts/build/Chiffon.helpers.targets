@@ -21,9 +21,10 @@
 
   <Target Name="GetPEVerify">
     <!--
+    Au lieu de déterminer manuellement $(_NetFxTools), il est maintenant possible
+    d'utiliser directement la variable $(SDK40ToolsPath).
     http://connect.microsoft.com/VisualStudio/feedback/details/799353/cant-compile-our-csproj-file-with-visualstudio-2013-preview-because-of-a-breaking-change-in-the-msbuild-task-getframeworksdkpath
-    -->
-    <!--
+
     <GetFrameworkSdkPath>
       <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="_SdkPath" />
     </GetFrameworkSdkPath>
@@ -34,7 +35,6 @@
     -->
 
     <PropertyGroup>
-      <!--<PEVerifyExe>&quot;$(_NetFxTools)peverify.exe&quot;</PEVerifyExe>-->
       <PEVerifyExe>&quot;$(SDK40ToolsPath)peverify.exe&quot;</PEVerifyExe>
     </PropertyGroup>
   </Target>

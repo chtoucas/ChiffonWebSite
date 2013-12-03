@@ -32,7 +32,7 @@
         {
             var app = sender as HttpApplication;
 
-            ChiffonContext.Initialize(app.Request, app.Session);
+            ChiffonContext.Initialize(app.Context, app.Session);
         }
     }
 }

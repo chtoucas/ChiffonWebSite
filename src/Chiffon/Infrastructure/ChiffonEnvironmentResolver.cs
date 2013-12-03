@@ -23,16 +23,6 @@
                 yield return new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
             }
         }
-
-        static Uri GetBaseUri_(Uri uri)
-        {
-            return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
-
-            // return VirtualPathUtility.ToAbsolute("~/") -> "/";
-            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
-        }
-
         public static ChiffonEnvironment Resolve(HttpRequest request)
         {
             Requires.NotNull(request, "request");
@@ -41,42 +31,38 @@
             return ResolveFromHost_(uri.Host);
         }
 
-        public static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
+        internal static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
         {
             Requires.NotNull(request, "request");
 
             var uri = GetBaseUri_(request.Url);
 
-            ChiffonEnvironment environment = null;
-
-            if (uri.IsLoopback) {
-                var language = MayGetLanguageFromQueryString_(request);
-
-                // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
-                // la demande en session.
-                language.WhenSome(_ => { UpdateLanguageSession_(session, _); });
-
-                if (language.IsNone) {
-                    // On regarde dans la session si on n'a pas une langue déjà définie.
-                    language = MayGetLanguageFromSession_(session);
-                }
-
-                environment = new ChiffonEnvironment(language.ValueOrElse(ChiffonLanguage.Default), uri);
-            }
-            else if (ChiffonContext.Environment == null) {
-                // NB: Ce cas ne devrait jamais se présenter car on charge le module InitializeContextModule
-                // au début de n'importe quelle requête .
-                environment = Resolve(request);
+            if (!uri.IsLoopback) {
+                throw new InvalidOperationException(
+                    "This method is only available when run locally.");
             }
 
-            return environment;
+            var language = MayGetLanguageFromQueryString_(request);
+
+            // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
+            // la demande en session.
+            language.WhenSome(_ => { UpdateLanguageSession_(session, _); });
+
+            if (language.IsNone) {
+                // On regarde dans la session si on n'a pas une langue déjà définie.
+                language = MayGetLanguageFromSession_(session);
+            }
+
+            return new ChiffonEnvironment(language.ValueOrElse(ChiffonLanguage.Default), uri);
         }
 
-        static ChiffonEnvironment ResolveFromHost_(string host)
+        static Uri GetBaseUri_(Uri uri)
         {
-            var q = from _ in Environments where _.BaseUri.Host == host select _;
+            return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
 
-            return q.SingleOrNone().ValueOrElse(DefaultEnvironment_);
+            // return VirtualPathUtility.ToAbsolute("~/") -> "/";
+            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
         }
 
         static Maybe<ChiffonLanguage> MayGetLanguageFromQueryString_(HttpRequest request)
@@ -92,6 +78,13 @@
             return value == null
                 ? Maybe<ChiffonLanguage>.None
                 : EnumUtility.MayConvert<ChiffonLanguage>(value);
+        }
+
+        static ChiffonEnvironment ResolveFromHost_(string host)
+        {
+            var q = from _ in Environments where _.BaseUri.Host == host select _;
+
+            return q.SingleOrNone().ValueOrElse(DefaultEnvironment_);
         }
 
         static void UpdateLanguageSession_(HttpSessionState session, ChiffonLanguage language)

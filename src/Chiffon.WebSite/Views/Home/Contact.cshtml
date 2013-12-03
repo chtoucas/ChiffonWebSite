@@ -20,8 +20,8 @@
       </a>
      </li>
      <li class=email><a class=text_underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
-     @if (designer.WebSiteUrl.IsSome) {
-      var website = designer.WebSiteUrl.Value.ToString().Replace("http://", String.Empty);
+     @if (designer.WebsiteUrl.IsSome) {
+      var website = designer.WebsiteUrl.Value.ToString().Replace("http://", String.Empty);
       <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose>@website.Replace("/", String.Empty)</a></li>
      }
     </ul>

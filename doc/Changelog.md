@@ -1,22 +1,22 @@
 CHANGELOG
 =========
 
-Release 1.7
------------
+[XXXX-XX-XX] Release 1.7
+------------------------
 
 * Si le visiteur est connecté on utilise un texte différent dans la page information.
 
 Changements d'ordre technique :
 * Mise à jour de tous les projets vers .NET 4.5.1 et VS 2013.
 * Mise à jour vers la dernière version de ASP.NET.
-* Dans mode Debug, on garde le choix de la langue en session.
+* Lorsqu'on travaille dans VS, on garde le choix de la langue en session.
 * On scinde le fichier less.
 
 
-[2013-12-02]
-------------
+[2013-12-02] Infrastructure
+---------------------------
 
-Mise à jour du serveur vers .NET 4.5.1
+Installation en production de .NET 4.5.1
 
 
 [2013-11-28] Release 1.6.0.1
@@ -132,3 +132,29 @@ Changements d'ordre technique :
 Correctifs :
 * La minification du HTML était trop agressive, vu qu'elle remplacer certains espaces blancs
   par une chaîne vide.
+
+
+[2013-08-22]
+------------
+
+* Création d'un fichier humantxt.
+* On n'utilise plus les ViewHelpers pour Google Analytics.
+
+
+[2013-08-21]
+------------
+
+* Code JavaScript permettant à IE de reconnaite les éléments HTML5.
+* Utilisation de l'encodeur AntiXSS qui en plus ne pourrit pas les attributs en UTF-8.
+* On sépare les configurations de développement et de production.
+* Activation de Google Analytics en production.
+* Via l'outil d'administration de IIS, création d'une machineKey.
+
+
+[2013-08-21] Infrastructure
+---------------------------
+
+* Déclaration du sous-domaine anglais.
+* Configuration de Google Webmaster Tools.
+* Configuration de Google Analytics.
+* Mise en place du serveur Azure.

@@ -38,7 +38,7 @@
       BaseIntermediateOutputPath=$(_BaseIntermediateOutDir);
       Platform=$(Platform);
       BuildInParallel=$(BuildInParallel);
-      <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refuse de publier le projet.
+      <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refusera de publier le projet.
            Cela est aussi nécessaire pour Typescript.
            Cf. http://sedodream.com/2012/08/19/VisualStudioProjectCompatabilityAndVisualStudioVersion.aspx -->
       VisualStudioVersion=12.0
