@@ -5,6 +5,7 @@
     using System.Data.SqlClient;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Narvalo;
     using Narvalo.Data;
 
     public class ListCategoriesQuery : StoredProcedure<IEnumerable<Category>>
@@ -19,6 +20,8 @@
 
         protected override IEnumerable<Category> Execute(SqlDataReader rdr)
         {
+            Requires.NotNull(rdr, "rdr");
+
             var categories = new List<Category>();
 
             // Catégories du designer (avec au moins un motif).

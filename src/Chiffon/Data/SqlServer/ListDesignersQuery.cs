@@ -7,6 +7,7 @@
     using System.Net.Mail;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Narvalo;
     using Narvalo.Data;
 
     public class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
@@ -21,6 +22,8 @@
 
         protected override IEnumerable<Designer> Execute(SqlDataReader rdr)
         {
+            Requires.NotNull(rdr, "rdr");
+
             var designers = new List<Designer>();
 
             while (rdr.Read()) {
@@ -31,11 +34,11 @@
                     AvatarReference = rdr.GetString("avatar_reference"),
                     AvatarVersion = rdr.GetString("avatar_version"),
                     EmailAddress = new MailAddress(rdr.GetString("email_address")),
-                    Firstname = rdr.GetString("firstname"),
-                    Lastname = rdr.GetString("lastname"),
+                    FirstName = rdr.GetString("firstname"),
+                    LastName = rdr.GetString("lastname"),
                     Nickname = rdr.MayGetString("nickname"),
                     Presentation = rdr.GetString("presentation"),
-                    WebSiteUrl = rdr.MayGetString("website").Map(_ => new Uri(_)),
+                    WebsiteUrl = rdr.MayGetString("website").Map(_ => new Uri(_)),
                 };
 
                 designers.Add(designer);

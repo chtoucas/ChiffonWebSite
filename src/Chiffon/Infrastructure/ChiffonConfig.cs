@@ -16,7 +16,7 @@
         const string SqlConnectionStringName_ = "SqlServer";
 
         const bool DefaultDebugCss_ = false;
-        const bool DefaultDebugJs_ = false;
+        const bool DefaultDebugJavaScript_ = false;
         const bool DefaultEnableClientCache_ = true;
         const bool DefaultEnableServerCache_ = true;
 
@@ -26,18 +26,18 @@
             = Assembly.GetExecutingAssembly().GetName().Version;
 
         bool _debugCss = DefaultDebugCss_;
-        bool _debugJs = DefaultDebugJs_;
+        bool _debugJavaScript = DefaultDebugJavaScript_;
         bool _enableClientCache = DefaultEnableClientCache_;
         bool _enableServerCache = DefaultEnableServerCache_;
         string _googleAnalyticsKey = DefaultGoogleAnalyticsKey_;
 
         public string CssVersion { get; set; }
         public bool DebugCss { get { return _debugCss; } set { _debugCss = value; } }
-        public bool DebugJs { get { return _debugJs; } set { _debugJs = value; } }
+        public bool DebugJavaScript { get { return _debugJavaScript; } set { _debugJavaScript = value; } }
         public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
         public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
         public string GoogleAnalyticsKey { get { return _googleAnalyticsKey; } set { _googleAnalyticsKey = value; } }
-        public string JsVersion { get; set; }
+        public string JavaScriptVersion { get; set; }
         public string LogProfile { get; set; }
         [CLSCompliant(false)]
         public LogEventLevel LogMinimumLevel { get; set; }
@@ -60,9 +60,9 @@
         void LoadSettings_(NameValueCollection settings)
         {
             var chiffonKeys = settings.AllKeys
-                .Where(_ => _.StartsWith(SettingPrefix_, StringComparison.InvariantCultureIgnoreCase));
+                .Where(_ => _.StartsWith(SettingPrefix_, StringComparison.OrdinalIgnoreCase));
 
-            var chiffonSettings = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
+            var chiffonSettings = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
 
             foreach (var key in chiffonKeys) {
                 chiffonSettings[key] = settings[key];
@@ -112,13 +112,13 @@
 
             CssVersion = nvc.MayGetValue("chiffon:CssVersion").ValueOrElse(version);
 
-            JsVersion = nvc.MayGetValue("chiffon:JsVersion").ValueOrElse(version);
+            JavaScriptVersion = nvc.MayGetValue("chiffon:JavaScriptVersion").ValueOrElse(version);
 
             DebugCss = nvc.MayParseValue("chiffon:DebugCss", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(DefaultDebugCss_);
 
-            DebugJs = nvc.MayParseValue("chiffon:DebugJs", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultDebugJs_);
+            DebugJavaScript = nvc.MayParseValue("chiffon:DebugJavaScript", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
+                .ValueOrElse(DefaultDebugJavaScript_);
 
             EnableClientCache = nvc.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
                 .ValueOrElse(DefaultEnableClientCache_);

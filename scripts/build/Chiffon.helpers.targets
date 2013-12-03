@@ -20,6 +20,10 @@
   </Target>
 
   <Target Name="GetPEVerify">
+    <!--
+    http://connect.microsoft.com/VisualStudio/feedback/details/799353/cant-compile-our-csproj-file-with-visualstudio-2013-preview-because-of-a-breaking-change-in-the-msbuild-task-getframeworksdkpath
+    -->
+    <!--
     <GetFrameworkSdkPath>
       <Output TaskParameter="FrameworkSdkVersion40Path" PropertyName="_SdkPath" />
     </GetFrameworkSdkPath>
@@ -27,9 +31,11 @@
     <PropertyGroup>
       <_NetFxTools>$(_SdkPath)Bin\NETFX 4.0 Tools\</_NetFxTools>
     </PropertyGroup>
+    -->
 
     <PropertyGroup>
-      <PEVerifyExe>&quot;$(_NetFxTools)peverify.exe&quot;</PEVerifyExe>
+      <!--<PEVerifyExe>&quot;$(_NetFxTools)peverify.exe&quot;</PEVerifyExe>-->
+      <PEVerifyExe>&quot;$(SDK40ToolsPath)peverify.exe&quot;</PEVerifyExe>
     </PropertyGroup>
   </Target>
 

@@ -5,6 +5,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using Chiffon.Entities;
+    using Narvalo;
     using Narvalo.Data;
 
     public class ListPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
@@ -23,6 +24,8 @@
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
         {
+            Requires.NotNull(rdr, "rdr");
+
             var patterns = new List<Pattern>();
 
             while (rdr.Read()) {

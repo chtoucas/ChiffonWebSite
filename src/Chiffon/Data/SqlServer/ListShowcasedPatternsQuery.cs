@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using Chiffon.Entities;
+    using Narvalo;
     using Narvalo.Data;
 
     public class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
@@ -12,6 +13,8 @@
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
         {
+            Requires.NotNull(rdr, "rdr");
+
             var result = new List<Pattern>();
 
             while (rdr.Read()) {

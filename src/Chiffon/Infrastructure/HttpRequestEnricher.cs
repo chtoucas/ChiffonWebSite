@@ -4,14 +4,18 @@
     using System.Web;
     using Serilog.Core;
     using Serilog.Events;
+    using Narvalo;
 
+    [CLSCompliant(false)]
     public class HttpRequestEnricher : ILogEventEnricher
     {
         #region ILogEventEnricher
 
-        [CLSCompliant(false)]
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
+            Requires.NotNull(logEvent, "logEvent");
+            Requires.NotNull(propertyFactory, "propertyFactory");
+
             if (HttpContext.Current != null) {
                 // Cela peut arriver par exemple quand on utilise trySkipIisCustomErrors.
                 return;

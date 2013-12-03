@@ -3,6 +3,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using Chiffon.Entities;
+    using Narvalo;
     using Narvalo.Data;
 
     public class GetPatternQuery : StoredProcedure<Pattern>
@@ -23,6 +24,8 @@
 
         protected override Pattern Execute(SqlDataReader rdr)
         {
+            Requires.NotNull(rdr, "rdr");
+
             if (!rdr.Read()) { return null; }
 
             return new Pattern(new PatternId(DesignerKey, Reference), Version) {

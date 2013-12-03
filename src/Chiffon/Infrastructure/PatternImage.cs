@@ -23,13 +23,13 @@
             get
             {
                 if (_relativePath == null) {
-                    _relativePath = Path.Combine(DesignerDirectory, CategoryDirectory, Filename);
+                    _relativePath = Path.Combine(DesignerDirectory, CategoryDirectory, FileName);
                 }
                 return _relativePath;
             }
         }
 
-        public abstract string Filename { get; }
+        public abstract string FileName { get; }
         public abstract string MimeType { get; }
         public abstract PatternSize Size { get; }
 
@@ -65,18 +65,18 @@
 
         class Original : PatternImage
         {
-            string _filename;
+            string _fileName;
 
             public Original() : base() { }
 
-            public override string Filename
+            public override string FileName
             {
                 get
                 {
-                    if (_filename == null) {
-                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}.jpg", Reference, Version);
+                    if (_fileName == null) {
+                        _fileName = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}.jpg", Reference, Version);
                     }
-                    return _filename;
+                    return _fileName;
                 }
             }
 
@@ -90,7 +90,7 @@
 
             public Preview() : base() { }
 
-            public override string Filename
+            public override string FileName
             {
                 get
                 {

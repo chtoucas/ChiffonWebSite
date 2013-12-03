@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Chiffon.Entities;
 
     public interface ISiteMap
@@ -12,6 +13,7 @@
         Uri Contact();
         Uri Newsletter();
 
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         Uri Login();
         Uri Register();
         Uri LogOn();

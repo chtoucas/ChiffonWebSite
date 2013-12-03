@@ -30,17 +30,18 @@
         {
             get
             {
-                if (String.IsNullOrEmpty(_displayName)) {
-                    _displayName = Nickname.ValueOrElse(Firstname + " " + Lastname);
+                if (String.IsNullOrEmpty(_displayName))
+                {
+                    _displayName = Nickname.ValueOrElse(FirstName + " " + LastName);
                 }
                 return _displayName;
             }
         }
         public MailAddress EmailAddress { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public Maybe<string> Nickname { get; set; }
         public string Presentation { get; set; }
-        public Maybe<Uri> WebSiteUrl { get; set; }
+        public Maybe<Uri> WebsiteUrl { get; set; }
     }
 }

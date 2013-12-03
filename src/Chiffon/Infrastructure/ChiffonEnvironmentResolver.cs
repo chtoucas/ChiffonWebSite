@@ -35,12 +35,16 @@
 
         public static ChiffonEnvironment Resolve(HttpRequest request)
         {
+            Requires.NotNull(request, "request");
+
             var uri = GetBaseUri_(request.Url);
             return ResolveFromHost_(uri.Host);
         }
 
         public static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
         {
+            Requires.NotNull(request, "request");
+
             var uri = GetBaseUri_(request.Url);
 
             ChiffonEnvironment environment = null;

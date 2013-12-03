@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure.Addressing
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Net;
     using Chiffon.Entities;

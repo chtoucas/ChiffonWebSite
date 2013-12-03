@@ -28,10 +28,10 @@
                 IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
                 LanguageName = languageName,
                 ScriptBase = AssetManager.ScriptBase.ToProtocolLessString(),
-                Version = _config.JsVersion,
+                Version = _config.JavaScriptVersion,
             };
 
-            return _config.DebugJs
+            return _config.DebugJavaScript
                 ? PartialView(ViewName.Widget.CommonJavaScript_Debug, model)
                 : PartialView(ViewName.Widget.CommonJavaScript_Release, model);
         }

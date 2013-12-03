@@ -1,14 +1,19 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Narvalo.Fx;
 
     [Serializable]
     public struct DesignerKey : IEquatable<DesignerKey>
     {
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Légeret")]
         public static readonly DesignerKey ChristineLégeret = new DesignerKey("petroleum-blue");
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Marthi")]
         public static readonly DesignerKey EstherMarthi = new DesignerKey("chicamancha");
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Roussel")]
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Devaux")]
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
         string _value;
@@ -51,7 +56,7 @@
                 case "laure-roussel":
                     return LaureRoussel;
                 default:
-                    throw new ArgumentException();
+                    throw new ArgumentException("XXX");
             }
         }
 

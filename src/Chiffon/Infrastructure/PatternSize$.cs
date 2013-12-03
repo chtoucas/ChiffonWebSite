@@ -15,7 +15,7 @@
                 case PatternSize.Original:
                     return Original_;
                 default:
-                    throw new ArgumentException();
+                    throw new ArgumentException("XXX");
             }
         }
     }
