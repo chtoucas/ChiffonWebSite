@@ -11,16 +11,18 @@
 
     public class LogOffHandler : HttpHandlerBase, IRequiresSessionState
     {
-        readonly IMemberService _memberService;
+        //readonly IMemberService _memberService;
         readonly ISiteMap _siteMap;
 
-        public LogOffHandler(IMemberService memberService, ISiteMap siteMap)
+        public LogOffHandler(
+            //IMemberService memberService, 
+            ISiteMap siteMap)
             : base()
         {
-            Requires.NotNull(memberService, "memberService");
+            //Requires.NotNull(memberService, "memberService");
             Requires.NotNull(siteMap, "siteMap");
 
-            _memberService = memberService;
+            //_memberService = memberService;
             _siteMap = siteMap;
         }
 

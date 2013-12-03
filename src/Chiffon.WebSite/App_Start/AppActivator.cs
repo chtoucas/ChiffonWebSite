@@ -37,7 +37,7 @@ namespace Chiffon
             // Modules HTTP.
             HttpHeaderCleanupModule.Register();
             HttpHeaderPolicyModule.Register();
-            InitializeRuntimeModule.Register();
+            InitializeContextModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;

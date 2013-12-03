@@ -63,8 +63,8 @@
 
                 environment = new ChiffonEnvironment(language.ValueOrElse(ChiffonLanguage.Default), uri);
             }
-            else if (ChiffonRuntime.Environment == null) {
-                // NB: Ce cas ne devrait jamais se présenter car on charge le module InitializeRuntimeModule
+            else if (ChiffonContext.Environment == null) {
+                // NB: Ce cas ne devrait jamais se présenter car on charge le module InitializeContextModule
                 // au début de n'importe quelle requête .
                 environment = Resolve(request);
             }

@@ -30,8 +30,8 @@
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
             // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
-            // Cf. aussi les commentaires dans la classe ChiffonRuntime.
-            builder.Register(_ => ChiffonRuntime.Environment).AsSelf().InstancePerHttpRequest();
+            // Cf. aussi les commentaires dans la classe ChiffonContext.
+            builder.Register(_ => ChiffonContext.Environment).AsSelf().InstancePerHttpRequest();
 
             builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.

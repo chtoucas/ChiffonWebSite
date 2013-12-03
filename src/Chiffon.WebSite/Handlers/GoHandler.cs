@@ -15,24 +15,24 @@
 
     public class GoHandler : HttpHandlerBase<GoQuery>, IRequiresSessionState
     {
-        readonly ChiffonConfig _config;
+        //readonly ChiffonConfig _config;
         readonly IMemberService _memberService;
         readonly IFormsAuthenticationService _formsService;
         readonly ISiteMap _siteMap;
 
         public GoHandler(
-            ChiffonConfig config,
+            //ChiffonConfig config,
             IMemberService memberService,
             IFormsAuthenticationService formsService,
             ISiteMap siteMap)
             : base()
         {
-            Requires.NotNull(config, "config");
+            //Requires.NotNull(config, "config");
             Requires.NotNull(memberService, "memberService");
             Requires.NotNull(formsService, "formsService");
             Requires.NotNull(siteMap, "siteMap");
 
-            _config = config;
+            //_config = config;
             _memberService = memberService;
             _formsService = formsService;
             _siteMap = siteMap;
