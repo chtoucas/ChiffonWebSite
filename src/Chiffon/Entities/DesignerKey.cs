@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Narvalo.Fx;
 
     [Serializable]

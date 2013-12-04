@@ -4,6 +4,12 @@
 
     public static class ViewName
     {
+        public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
+        public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
+        public const string Html5Shim = "~/Views/Shared/_Html5Shim.cshtml";
+        public const string LayoutAuthorsRights = "~/Views/Shared/_LayoutAuthorsRights.cshtml";
+        public const string LayoutTitle = "~/Views/Shared/_LayoutTitle.cshtml";
+
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class Home
         {
@@ -47,16 +53,6 @@
             public const string CommonStyleSheetRelease = "~/Views/Widget/Stylesheet.Release.cshtml";
             public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
             public const string LanguageMenu = "~/Views/Widget/LanguageMenu.cshtml";
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public static class Shared
-        {
-            public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
-            public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
-            public const string Html5Shim = "~/Views/Shared/_Html5Shim.cshtml";
-            public const string LayoutAuthorsRights = "~/Views/Shared/_LayoutAuthorsRights.cshtml";
-            public const string LayoutTitle = "~/Views/Shared/_LayoutTitle.cshtml";
         }
     }
 }

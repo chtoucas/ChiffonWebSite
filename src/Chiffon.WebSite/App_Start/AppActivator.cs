@@ -26,7 +26,7 @@ namespace Chiffon
 
             // Résolution des dépendances (Autofac).
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new WebSiteModule(config));
+            builder.RegisterModule(new WebSiteAutofacModule(config));
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

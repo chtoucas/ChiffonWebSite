@@ -41,12 +41,12 @@
 
         public static IHtmlString LayoutTitle(this HtmlHelper @this, ChiffonLanguage language)
         {
-            return @this.Partial(ViewUtility.Localize(ViewName.Shared.LayoutTitle, language));
+            return @this.Partial(ViewUtility.Localize(ViewName.LayoutTitle, language));
         }
 
         public static IHtmlString LayoutAuthorsRights(this HtmlHelper @this, ChiffonLanguage language)
         {
-            return @this.Partial(ViewUtility.Localize(ViewName.Shared.LayoutAuthorsRights, language));
+            return @this.Partial(ViewUtility.Localize(ViewName.LayoutAuthorsRights, language));
         }
     }
 }

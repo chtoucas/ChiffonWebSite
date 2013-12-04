@@ -27,6 +27,9 @@
       <!-- Autoac, Serilog,... -->
       <Word>Autofac</Word>
       <Word>Enricher</Word>
+      
+      <!-- Mots du Web-->
+      <Word>Seo</Word>
     </Recognized>
     <Deprecated>
       <!-- 

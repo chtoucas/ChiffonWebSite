@@ -175,6 +175,13 @@
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="App_Start\DataAutofacModule.cs" />
+    <Compile Include="App_Start\ServicesAutofacModule.cs" />
+    <Compile Include="App_Start\InfrastructureAutofacModule.cs" />
+    <Compile Include="App_Start\WebAutofacModule.cs" />
+    <Compile Include="App_Start\WebSiteAutofacModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\ControllerName.cs" />
@@ -186,7 +193,6 @@
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
-    <Compile Include="App_Start\WebSiteModule.cs" />
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Handlers\GoQuery.cs" />
