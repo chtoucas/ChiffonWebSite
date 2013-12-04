@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
@@ -41,6 +42,8 @@
         }
 
         [HttpGet]
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Index(DesignerKey designerKey, int p = 1)
         {
             var pagedList = _patternService.ListPreviews(designerKey, p, PreviewsPageSize_);
@@ -68,6 +71,8 @@
         }
 
         [HttpGet]
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Category(DesignerKey designerKey, string categoryKey, int p = 1)
         {
             var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
@@ -98,6 +103,8 @@
         }
 
         [HttpGet]
+        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
             var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);

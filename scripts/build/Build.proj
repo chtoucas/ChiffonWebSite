@@ -25,6 +25,8 @@
   <PropertyGroup>
     <BuildProperties>
       $(BuildProperties);
+      RunCodeAnalysis=true;
+      CodeAnalysisRuleSet=AllRules.ruleset;
       MvcBuildViews=$(MvcBuildViews)
     </BuildProperties>
   </PropertyGroup>
