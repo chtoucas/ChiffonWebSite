@@ -19,7 +19,7 @@
         {
             Requires.NotNull(builder, "builder");
 
-            builder.RegisterModule(new WebAutofacModule());
+            builder.RegisterModule(new MvcAutofacModule());
             builder.RegisterModule(new InfrastructureAutofacModule(_config));
             builder.RegisterModule(new DataAutofacModule(_config));
             builder.RegisterModule(new ServicesAutofacModule());

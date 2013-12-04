@@ -86,9 +86,6 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mvc.Mailer">
-      <HintPath>..\..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
-    </Reference>
     <Reference Include="Narvalo.Common, Version=0.3.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Narvalo.Common.0.3.0.3\lib\net45\Narvalo.Common.dll</HintPath>
@@ -178,7 +175,7 @@
     <Compile Include="App_Start\DataAutofacModule.cs" />
     <Compile Include="App_Start\ServicesAutofacModule.cs" />
     <Compile Include="App_Start\InfrastructureAutofacModule.cs" />
-    <Compile Include="App_Start\WebAutofacModule.cs" />
+    <Compile Include="App_Start\MvcAutofacModule.cs" />
     <Compile Include="App_Start\WebSiteAutofacModule.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -220,8 +217,8 @@
     <Compile Include="Handlers\LogOnQuery.cs" />
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Mailers\AccountMailer.cs" />
-    <Compile Include="Mailers\IAccountMailer.cs" />
+    <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\IMailController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MailResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -443,7 +440,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\etc\Chiffon.snk</AssemblyOriginatorKeyFile>

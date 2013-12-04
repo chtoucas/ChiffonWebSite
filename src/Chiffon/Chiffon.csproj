@@ -160,6 +160,15 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
+    <Compile Include="_Aliens\MvcMailer\EmptyHttpContext.cs" />
+    <Compile Include="_Aliens\MvcMailer\ILinkedResourceProvider.cs" />
+    <Compile Include="_Aliens\MvcMailer\ISmtpClient.cs" />
+    <Compile Include="_Aliens\MvcMailer\LinkedResourceProvider.cs" />
+    <Compile Include="_Aliens\MvcMailer\MailerBase.cs" />
+    <Compile Include="_Aliens\MvcMailer\MvcMailMessage.cs" />
+    <Compile Include="_Aliens\MvcMailer\SmtpClientBase.cs" />
+    <Compile Include="_Aliens\MvcMailer\SmtpClientWrapper.cs" />
+    <Compile Include="_Aliens\MvcMailer\StringResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\etc\Chiffon.snk">

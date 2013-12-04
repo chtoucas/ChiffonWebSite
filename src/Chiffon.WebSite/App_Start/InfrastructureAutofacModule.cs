@@ -4,7 +4,6 @@
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Mailers;
     using Narvalo;
 
     public class InfrastructureAutofacModule : Module
@@ -27,8 +26,6 @@
             builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerHttpRequest();
-
-            builder.RegisterType<AccountMailer>().As<IAccountMailer>().InstancePerHttpRequest();
         }
 
         static ISiteMap ResolveSiteMap_(IComponentContext context)

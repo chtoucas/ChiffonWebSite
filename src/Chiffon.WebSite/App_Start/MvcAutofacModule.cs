@@ -2,12 +2,13 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Chiffon.Controllers;
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class WebAutofacModule : Module
+    public class MvcAutofacModule : Module
     {
-        public WebAutofacModule() { }
+        public MvcAutofacModule() { }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -16,6 +17,8 @@
             // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
             // Cf. aussi les commentaires dans la classe ChiffonContext.
             builder.Register(_ => ChiffonContext.Current.Environment).AsSelf().InstancePerHttpRequest();
+
+            //builder.RegisterType<MailController>().As<IAccountMailer>().InstancePerHttpRequest();
 
             // Composants MVC.
             builder.RegisterControllers(typeof(Global).Assembly);
