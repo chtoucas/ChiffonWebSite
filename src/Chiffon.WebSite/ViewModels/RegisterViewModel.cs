@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.ViewModels
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.ComponentModel.DataAnnotations;
 
     // FIXME: messages d'erreur en anglais.
@@ -13,11 +14,11 @@
 
         [Required(ErrorMessage = "Le champs \"Prénom\" est obligatoire.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le champs \"Prénom\" doit comporter au moins 2 caractères.")]
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Le champs \"Nom\" est obligatoire.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le champs \"Nom\" doit comporter au moins 2 caractères.")]
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Le champs \"Agence\" est obligatoire.")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Le champs \"Agence\" doit comporter au moins 2 caractères.")]
@@ -27,6 +28,8 @@
         public string Newsletter { get; set; }
 
         public string Message { get; set; }
+
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string ReturnUrl { get; set; }
     }
 }

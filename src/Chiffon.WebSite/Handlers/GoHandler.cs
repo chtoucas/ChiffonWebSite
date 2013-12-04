@@ -42,6 +42,8 @@
 
         protected override Outcome<GoQuery> Bind(HttpRequest request)
         {
+            Requires.NotNull(request, "request");
+
             var query = request.QueryString;
 
             var token = query.MayGetValue("token").Filter(_ => _.Length > 0);
@@ -54,6 +56,9 @@
 
         protected override void ProcessRequestCore(HttpContext context, GoQuery query)
         {
+            Requires.NotNull(context, "context");
+            Requires.NotNull(query, "query");
+
             var userName = _memberService.LogOn(query.Token);
 
             var succeed = !String.IsNullOrEmpty(userName);

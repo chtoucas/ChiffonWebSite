@@ -19,7 +19,7 @@ $tools = @(
   # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement vers une version spécifique.
   @{
     'Name' = 'NuGet'
-    'Version' = '2.7.3'
+    'Version' = '2.7.2'
     'Source' = 'http://www.nuget.org/nuget.exe'
   }
   @{

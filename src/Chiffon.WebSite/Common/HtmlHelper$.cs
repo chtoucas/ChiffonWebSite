@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Common
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
@@ -7,6 +8,7 @@
 
     public static class HtmlHelperExtensions
     {
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         public static IHtmlString AccountLoginContent(this HtmlHelper @this, ChiffonLanguage language)
         {
             return @this.Partial(ViewUtility.Localize(ViewName.Account.LoginContent, language));

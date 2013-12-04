@@ -32,7 +32,7 @@ namespace Chiffon
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             // Configuration du logger (Serilog).
-            (new LogConfigurator(config)).Configure();
+            (new LogConfig(config)).Configure();
 
             // Modules HTTP.
             HttpHeaderCleanupModule.Register();

@@ -188,9 +188,10 @@
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="App_Start\WebSiteModule.cs" />
     <Compile Include="Controllers\ObjectMapper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Handlers\GoQuery.cs" />
     <Compile Include="Handlers\GoHandler.cs" />
-    <Compile Include="Common\Filters\HtmlFilter.cs" />
+    <Compile Include="Common\Filters\HtmlFilterAttribute.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
     <Compile Include="Common\Filters\SeoPolicyAttribute.cs" />
@@ -249,7 +250,7 @@
     <Compile Include="ViewModels\CategoryViewItem.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
-    <Compile Include="ViewModels\CommonStylesheetViewModel.cs" />
+    <Compile Include="ViewModels\CommonStyleSheetViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
@@ -258,6 +259,9 @@
     <Compile Include="ViewModels\DesignerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <CodeAnalysisDictionary Include="..\..\etc\CodeAnalysisDictionary.xml">
+      <Link>Properties\CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
     <Content Include="apple-touch-icon-144x144-precomposed.png" />
     <Content Include="apple-touch-icon-57x57-precomposed.png" />
@@ -306,6 +310,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
+    <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
     <Content Include="robots.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

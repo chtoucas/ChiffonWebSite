@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Data;
     using System.Data.SqlClient;
     using System.Net.Mail;
@@ -28,26 +29,28 @@
         readonly ChiffonConfig _config;
         readonly IAccountMailer _accountMailer;
         readonly IFormsAuthenticationService _formsService;
-        readonly IMemberService _memberService;
+        //readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
             ISiteMap siteMap,
             IAccountMailer accountMailer,
-            IMemberService memberService,
+            //IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
             : base(environment, siteMap)
         {
             Requires.NotNull(config, "config");
-            Requires.NotNull(memberService, "memberService");
+            //Requires.NotNull(memberService, "memberService");
 
             _config = config;
             _accountMailer = accountMailer;
             _formsService = formsService;
-            _memberService = memberService;
+            //_memberService = memberService;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
@@ -66,7 +69,7 @@
         }
 
         [HttpGet]
-        public ActionResult Register(string returnUrl)
+        public ActionResult Register(/*string returnUrl*/)
         {
             ViewBag.Title = SR.Account_Register_Title;
             ViewBag.MetaDescription = SR.Account_Register_Description;
@@ -83,6 +86,8 @@
         [HttpPost]
         public ActionResult Register(RegisterViewModel contact)
         {
+            Requires.NotNull(contact, "contact");
+
             if (ModelState.IsValid) {
                 if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
                     return View(ViewName.Account.RegisterTwice);
@@ -100,13 +105,13 @@
 
                 // Envoi de l'email de confirmation d'inscription.
                 var emailAddress = new MailAddress(
-                    contact.EmailAddress, contact.Firstname + " " + contact.Lastname);
+                    contact.EmailAddress, contact.FirstName + " " + contact.LastName);
                 _accountMailer
                     .Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName)
                     .SendAsync();
 
                 // FIXME: 
-                string userName = contact.Firstname + " " + contact.Lastname;
+                string userName = contact.FirstName + " " + contact.LastName;
                 _formsService.SignIn(userName, false /* createPersistentCookie */);
 
                 // FIXME: vérifier le contenu de l'URL.
@@ -206,8 +211,8 @@
 
                     SqlParameterCollection p = cmd.Parameters;
                     p.Add("@email_address", SqlDbType.NVarChar).Value = contact.EmailAddress;
-                    p.Add("@firstname", SqlDbType.NVarChar).Value = contact.Firstname;
-                    p.Add("@lastname", SqlDbType.NVarChar).Value = contact.Lastname;
+                    p.Add("@firstname", SqlDbType.NVarChar).Value = contact.FirstName;
+                    p.Add("@lastname", SqlDbType.NVarChar).Value = contact.LastName;
                     p.Add("@company_name", SqlDbType.NVarChar).Value = contact.CompanyName;
                     p.Add("@public_key", SqlDbType.NVarChar).Value = publicKey;
                     p.Add("@message", SqlDbType.NVarChar).Value = contact.Message;

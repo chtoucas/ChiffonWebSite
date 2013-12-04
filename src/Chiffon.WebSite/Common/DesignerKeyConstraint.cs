@@ -2,12 +2,15 @@
 {
     using System.Web;
     using System.Web.Routing;
+    using Narvalo;
 
     public class DesignerKeyConstraint : IRouteConstraint
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName,
             RouteValueDictionary values, RouteDirection routeDirection)
         {
+            Requires.NotNull(values, "values");
+
             var value = (string)values["designerKey"];
             switch (value) {
                 case "chicamancha":

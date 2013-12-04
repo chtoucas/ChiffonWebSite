@@ -30,6 +30,8 @@
 
         protected override void ProcessRequestCore(HttpContext context)
         {
+            Requires.NotNull(context, "context");
+
             FormsAuthentication.SignOut();
 
             var nextUrl = _siteMap.Home();

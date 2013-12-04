@@ -4,11 +4,14 @@
     using System.Linq;
     using Chiffon.Entities;
     using Chiffon.ViewModels;
+    using Narvalo;
 
     public static class ObjectMapper
     {
         public static CategoryViewItem Map(Category category)
         {
+            Requires.NotNull(category, "category");
+
             return new CategoryViewItem {
                 DisplayName = category.DisplayName,
                 Key = category.Key,
@@ -18,6 +21,8 @@
 
         public static DesignerViewItem Map(Designer designer, IEnumerable<Category> categories)
         {
+            Requires.NotNull(designer, "designer");
+
             return new DesignerViewItem {
                 Categories = from _ in categories select Map(_),
                 DisplayName = designer.DisplayName,
@@ -29,6 +34,8 @@
 
         public static PatternViewItem Map(Pattern pattern, string designerName)
         {
+            Requires.NotNull(pattern, "pattern");
+
             return new PatternViewItem {
                 CategoryKey = pattern.CategoryKey,
                 DesignerKey = pattern.DesignerKey,

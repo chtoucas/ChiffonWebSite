@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary>
+  <Words>
+    <Recognized>
+      <!-- Clés de configuration -->
+      <Word>BaseUri</Word>
+      <Word>LogMinimumLevel</Word>
+      <Word>LogProfile</Word>
+      <Word>PatternDirectory</Word>
+      <Word>SqlServer</Word>
+    </Recognized>
+    <Compound>
+      <Term CompoundAlternate="BaseUri">BaseUri</Term>
+      <Term CompoundAlternate="LogMinimumLevel">LogMinimumLevel</Term>
+      <Term CompoundAlternate="LogProfile">LogProfile</Term>
+      <Term CompoundAlternate="PatternDirectory">PatternDirectory</Term>
+      <Term CompoundAlternate="SqlServer">SqlServer</Term>
+    </Compound>
+  </Words>
+</Dictionary>

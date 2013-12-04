@@ -32,21 +32,21 @@
             };
 
             return _config.DebugJavaScript
-                ? PartialView(ViewName.Widget.CommonJavaScript_Debug, model)
-                : PartialView(ViewName.Widget.CommonJavaScript_Release, model);
+                ? PartialView(ViewName.Widget.CommonJavaScriptDebug, model)
+                : PartialView(ViewName.Widget.CommonJavaScriptRelease, model);
         }
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none")]
-        public PartialViewResult CommonStylesheet()
+        public PartialViewResult CommonStyleSheet()
         {
-            var model = new CommonStylesheetViewModel {
+            var model = new CommonStyleSheetViewModel {
                 Version = _config.CssVersion,
             };
 
-            return _config.DebugCss
-                ? PartialView(ViewName.Widget.CommonStylesheet_Debug)
-                : PartialView(ViewName.Widget.CommonStylesheet_Release, model);
+            return _config.DebugStyleSheet
+                ? PartialView(ViewName.Widget.CommonStyleSheetDebug)
+                : PartialView(ViewName.Widget.CommonStyleSheetRelease, model);
         }
 
         [ChildActionOnly]

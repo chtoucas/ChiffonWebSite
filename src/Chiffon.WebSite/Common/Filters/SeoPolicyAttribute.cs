@@ -4,10 +4,12 @@
     using System.Diagnostics;
     using System.Web.Mvc;
     using Chiffon.Resources;
+    using Narvalo;
     using Serilog;
 
     // TODO: log & check in debug mode !
     // TODO: canonical attribute.
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class SeoPolicyAttribute : ActionFilterAttribute
     {
         string _robotsDirective = "noindex, nofollow";
@@ -18,11 +20,15 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            Requires.NotNull(filterContext, "filterContext");
+
             filterContext.Controller.ViewData["MetaRobots"] = RobotsDirective;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            Requires.NotNull(filterContext, "filterContext");
+
             var viewBag = filterContext.Controller.ViewBag;
             var viewData = filterContext.Controller.ViewData;
 
@@ -44,7 +50,7 @@
         }
 
         [Conditional("DEBUG")]
-        void __CheckCanonicalLink(ActionExecutedContext filterContext)
+        static void __CheckCanonicalLink(ActionExecutedContext filterContext)
         {
             //if (filterContext.HttpContext.IsDebuggingEnabled) {
             if (String.IsNullOrEmpty(filterContext.Controller.ViewBag.CanonicalLink)) {
@@ -54,7 +60,7 @@
         }
 
         [Conditional("DEBUG")]
-        void __Log(string message)
+        static void __Log(string message)
         {
             Log.Debug(message);
         }

@@ -37,6 +37,8 @@
 
         protected override Outcome<LogOnQuery> Bind(HttpRequest request)
         {
+            Requires.NotNull(request, "request");
+
             var form = request.Form;
 
             var token = form.MayGetValue("token").Filter(_ => _.Length > 0);
@@ -51,6 +53,9 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
+            Requires.NotNull(context, "context");
+            Requires.NotNull(query, "query");
+
             var userName = _memberService.LogOn(query.Token);
 
             var succeed = !String.IsNullOrEmpty(userName);

@@ -44,6 +44,8 @@
 
         protected override Outcome<PatternImageQuery> Bind(HttpRequest request)
         {
+            Requires.NotNull(request, "request");
+
             var nvc = request.QueryString;
 
             var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
@@ -70,6 +72,9 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
+            Requires.NotNull(context, "context");
+            Requires.NotNull(query, "query");
+
             var response = context.Response;
 
             var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Version);
@@ -109,7 +114,7 @@
         }
 
         // TODO: Il faut revoir les en-têtes de cache.
-        void CacheResponse_(HttpResponse response, PatternVisibility visibility)
+        static void CacheResponse_(HttpResponse response, PatternVisibility visibility)
         {
             if (visibility == PatternVisibility.Public) {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);

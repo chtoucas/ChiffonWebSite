@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.ViewModels
 {
-    public class CommonStylesheetViewModel
+    public class CommonStyleSheetViewModel
     {
         public string Version { get; set; }
     }

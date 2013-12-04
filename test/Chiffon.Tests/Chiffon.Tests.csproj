@@ -84,6 +84,9 @@
     <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>
+    <CodeAnalysisDictionary Include="..\..\etc\CodeAnalysisDictionary.xml">
+      <Link>Properties\CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

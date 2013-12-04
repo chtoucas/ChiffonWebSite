@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -31,10 +31,10 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -145,7 +145,7 @@
     <Compile Include="Infrastructure\InitializeVSContextModule.cs" />
     <Compile Include="Infrastructure\InitializeContextModule.cs" />
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
-    <Compile Include="Infrastructure\LogConfigurator.cs" />
+    <Compile Include="Infrastructure\LogConfig.cs" />
     <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\PatternImage.cs" />
     <Compile Include="Infrastructure\PatternImageSize.cs" />
@@ -165,6 +165,10 @@
     <Content Include="..\..\etc\Chiffon.snk">
       <Link>Properties\Chiffon.snk</Link>
     </Content>
+    <CodeAnalysisDictionary Include="..\..\etc\CodeAnalysisDictionary.xml">
+      <Link>Properties\CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+    <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

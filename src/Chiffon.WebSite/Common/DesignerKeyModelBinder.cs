@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Chiffon.Entities;
+    using Narvalo;
 
     public class DesignerKeyModelBinder : IModelBinder
     {
@@ -9,6 +10,8 @@
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
+            Requires.NotNull(controllerContext, "controllerContext");
+
             var value = controllerContext.RouteData.Values["designerKey"];
             if (value == null) {
                 return null;

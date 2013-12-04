@@ -23,6 +23,7 @@
                 yield return new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
             }
         }
+
         public static ChiffonEnvironment Resolve(HttpRequest request)
         {
             Requires.NotNull(request, "request");

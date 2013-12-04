@@ -8,7 +8,7 @@
     {
         static string HttpContextKey_ = "ChiffonContext";
 
-        ChiffonEnvironment _environment;
+        readonly ChiffonEnvironment _environment;
 
         internal ChiffonContext(ChiffonEnvironment environment)
         {
@@ -31,7 +31,6 @@
         public ChiffonEnvironment Environment
         {
             get { return _environment; }
-            private set { _environment = value; }
         }
 
         internal static void Initialize(ChiffonContext context, HttpContext httpContext)

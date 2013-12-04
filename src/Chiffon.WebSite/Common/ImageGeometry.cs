@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Common
 {
-
-    public class ImageGeometry
+    public static class ImageGeometry
     {
         public const int PatternWidth = 700;
         public const int PatternHeight = 520;
