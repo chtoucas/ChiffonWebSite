@@ -217,18 +217,7 @@
     <Compile Include="Handlers\LogOnQuery.cs" />
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Common\MailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\MailResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MailResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\MailResources.en.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MailResources.en.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\SR.en.Designer.cs">
       <DependentUpon>SR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -407,14 +396,6 @@
     <Content Include="Views\Widget\LanguageMenu.en.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MailResources.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MailResources.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MailResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MailResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\SR.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
