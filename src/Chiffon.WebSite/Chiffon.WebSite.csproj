@@ -217,8 +217,7 @@
     <Compile Include="Handlers\LogOnQuery.cs" />
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Controllers\MailController.cs" />
-    <Compile Include="Controllers\IMailController.cs" />
+    <Compile Include="Common\MailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MailResources.Designer.cs">
       <AutoGen>True</AutoGen>

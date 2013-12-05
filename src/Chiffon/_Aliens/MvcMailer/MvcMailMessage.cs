@@ -1,6 +1,5 @@
 ﻿namespace Mvc.Mailer
 {
-    using System.Collections.Generic;
     using System.Net.Mail;
     using System.Threading.Tasks;
 
@@ -8,7 +7,6 @@
     {
         public string ViewName { get; set; }
         public string MasterName { get; set; }
-        public Dictionary<string, string> LinkedResources { get; set; }
 
         /// <summary>
         /// Sends a MailMessage using smtpClient
@@ -37,11 +35,7 @@
 
         public ISmtpClient GetSmtpClient()
         {
-            //if (MailerBase.IsTestModeEnabled) {
-            //    return new TestSmtpClient();
-            //}
             return new SmtpClientWrapper();
         }
-
     }
 }

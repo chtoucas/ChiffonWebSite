@@ -37,7 +37,7 @@
             var environment = ChiffonEnvironmentResolver.Resolve(context.Request, session);
 
             if (environment != null) {
-                ChiffonContext.Initialize(new ChiffonContext(environment), context);
+                context.AddChiffonContext(new ChiffonContext(environment));
             }
         }
     }

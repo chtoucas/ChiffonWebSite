@@ -1,4 +1,4 @@
-namespace Chiffon.Controllers
+namespace Chiffon.Common
 {
     using System;
     using System.Net.Mail;
@@ -6,15 +6,19 @@ namespace Chiffon.Controllers
     using Mvc.Mailer;
     using Narvalo;
 
-    public class MailController : MailerBase, IMailController
+    public class MailService : MvcMailer
     {
-        public MailController()
+        public MailService()
             : base()
         {
             MasterName = "_Layout";
         }
 
-        public virtual MvcMailMessage Welcome(MailAddress emailAddress, string publicKey, Uri baseUri, string languageName)
+        public virtual MvcMailMessage Welcome(
+            MailAddress emailAddress,
+            string publicKey,
+            Uri baseUri,
+            string languageName)
         {
             Requires.NotNull(baseUri, "baseUri");
 

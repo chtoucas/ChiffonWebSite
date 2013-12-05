@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.SessionState;
@@ -12,17 +11,6 @@
     public static class ChiffonEnvironmentResolver
     {
         static string SessionKey_ = "Language";
-        static ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
-
-        public static IEnumerable<ChiffonEnvironment> Environments
-        {
-            get
-            {
-                yield return DefaultEnvironment_;
-                yield return new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
-            }
-        }
 
         public static ChiffonEnvironment Resolve(HttpRequest request)
         {
@@ -83,9 +71,9 @@
 
         static ChiffonEnvironment ResolveFromHost_(string host)
         {
-            var q = from _ in Environments where _.BaseUri.Host == host select _;
+            var q = from _ in ChiffonEnvironment.Environments where _.BaseUri.Host == host select _;
 
-            return q.SingleOrNone().ValueOrElse(DefaultEnvironment_);
+            return q.SingleOrNone().ValueOrElse(ChiffonEnvironment.Default);
         }
 
         static void UpdateLanguageSession_(HttpSessionState session, ChiffonLanguage language)

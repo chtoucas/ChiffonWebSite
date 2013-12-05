@@ -139,6 +139,7 @@
     <Compile Include="Infrastructure\ChiffonContext.cs" />
     <Compile Include="Infrastructure\ContainerBuilder%24.cs" />
     <Compile Include="Infrastructure\DevelopmentLogService.cs" />
+    <Compile Include="Infrastructure\HttpContext%24.cs" />
     <Compile Include="Infrastructure\HttpHeaderPolicyModule.cs" />
     <Compile Include="Infrastructure\HttpRequestEnricher.cs" />
     <Compile Include="Infrastructure\ILogService.cs" />
@@ -160,11 +161,8 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
-    <Compile Include="_Aliens\MvcMailer\EmptyHttpContext.cs" />
-    <Compile Include="_Aliens\MvcMailer\ILinkedResourceProvider.cs" />
     <Compile Include="_Aliens\MvcMailer\ISmtpClient.cs" />
-    <Compile Include="_Aliens\MvcMailer\LinkedResourceProvider.cs" />
-    <Compile Include="_Aliens\MvcMailer\MailerBase.cs" />
+    <Compile Include="_Aliens\MvcMailer\MvcMailer.cs" />
     <Compile Include="_Aliens\MvcMailer\MvcMailMessage.cs" />
     <Compile Include="_Aliens\MvcMailer\SmtpClientBase.cs" />
     <Compile Include="_Aliens\MvcMailer\SmtpClientWrapper.cs" />

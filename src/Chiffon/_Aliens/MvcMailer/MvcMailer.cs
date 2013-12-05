@@ -1,7 +1,6 @@
 ﻿namespace Mvc.Mailer
 {
     using System;
-    using System.Collections.Generic;
     using System.Net.Mail;
     using System.Net.Mime;
     using System.Web;
@@ -11,27 +10,16 @@
     /// <summary>
     /// The Base class for Mailers. Your mailer should subclass MailerBase:
     /// </summary>
-    public class MailerBase : ControllerBase
+    public class MvcMailer : ControllerBase
     {
         /// <summary>
         /// The parameterless constructor
         /// </summary>
-        public MailerBase()
+        public MvcMailer()
         {
             if (HttpContext.Current != null) {
                 CurrentHttpContext = new HttpContextWrapper(HttpContext.Current);
             }
-        }
-
-        ILinkedResourceProvider _linkedResourceProvider = new LinkedResourceProvider();
-
-        /// <summary>
-        /// Uses the ILinkedResourceProvider to produce inline linked resources
-        /// </summary>
-        public ILinkedResourceProvider LinkedResourceProvider
-        {
-            get { return _linkedResourceProvider; }
-            set { _linkedResourceProvider = value; }
         }
 
         /// <summary>
@@ -40,6 +28,13 @@
         /// e.g. Aspx: myMailer.MasterName = "_MyLayout.Master"
         /// </summary>
         public string MasterName { get; set; }
+
+        /// <summary>
+        /// The MailerName determines the folder that contains the views for this mailer
+        /// </summary>
+        protected string MailerName { get { return GetType().Name; } }
+
+        public HttpContextBase CurrentHttpContext { get; set; }
 
         /// <summary>
         /// Nothing to Execute at this point, left blank
@@ -58,14 +53,15 @@
         {
             masterName = masterName ?? MasterName;
 
-            var result = new StringResult {
-                ViewName = viewName,
+            var result = new StringResult(viewName) {
                 ViewData = ViewData,
                 MasterName = masterName ?? MasterName
             };
+
             if (ControllerContext == null) {
                 CreateControllerContext();
             }
+
             result.ExecuteResult(ControllerContext, MailerName);
             return result.Output;
         }
@@ -79,20 +75,9 @@
             var message = new MvcMailMessage();
 
             action(message);
-            PopulateBody(message, message.ViewName, message.MasterName, message.LinkedResources);
+            PopulateBody(message, message.ViewName, message.MasterName); //, message.LinkedResources);
 
             return message;
-        }
-
-        /// <summary>
-        /// Populates the mailMessage with content rendered from the view using the default masterName
-        /// </summary>
-        /// <param name="mailMessage">a non null System.Net.Mail.MailMessage reference</param>
-        /// <param name="viewName">The name of the view file, e.g. WelcomeMessage </param>
-        /// <param name="linkedResources">Key: linked resource id or CID, Value:Path to the resource</param>
-        public void PopulateBody(MailMessage mailMessage, string viewName, Dictionary<string, string> linkedResources)
-        {
-            PopulateBody(mailMessage, viewName, null, linkedResources);
         }
 
         /// <summary>
@@ -102,7 +87,7 @@
         /// <param name="viewName">The name of the view file, e.g. WelcomeMessage </param>
         /// <param name="masterName">The name of the master file, e.g. Layout </param>
         /// <param name="linkedResources">Key: linked resource id or CID, Value:Path to the resource</param>
-        public void PopulateBody(MailMessage mailMessage, string viewName, string masterName = null, Dictionary<string, string> linkedResources = null)
+        public void PopulateBody(MailMessage mailMessage, string viewName, string masterName = null)
         {
             if (mailMessage == null) {
                 throw new ArgumentNullException("mailMessage", "mailMessage cannot be null");
@@ -110,7 +95,6 @@
 
             masterName = masterName ?? MasterName;
 
-            var linkedResourcesPresent = linkedResources != null && linkedResources.Count > 0;
             var textExists = TextViewExists(viewName, masterName);
 
             //if Text exists, it always goes to the body
@@ -121,8 +105,8 @@
             // if html exists
             if (!HtmlViewExists(viewName, masterName)) return;
 
-            if (textExists || linkedResourcesPresent) {
-                PopulateHtmlPart(mailMessage, viewName, masterName, linkedResources);
+            if (textExists) {
+                PopulateHtmlPart(mailMessage, viewName, masterName);
             }
             else {
                 PopulateHtmlBody(mailMessage, viewName, masterName);
@@ -211,14 +195,9 @@
         /// <summary>
         /// Populates a text/html AlternateView inside the mailMessage
         /// </summary>
-        public AlternateView PopulateHtmlPart(MailMessage mailMessage, string viewName, string masterName, Dictionary<string, string> linkedResources)
+        public AlternateView PopulateHtmlPart(MailMessage mailMessage, string viewName, string masterName)
         {
-            var htmlPart = PopulatePart(mailMessage, viewName, "text/html", masterName);
-            if (htmlPart != null) {
-                PopulateLinkedResources(htmlPart, linkedResources);
-            }
-
-            return htmlPart;
+            return PopulatePart(mailMessage, viewName, "text/html", masterName);
         }
 
         /// <summary>
@@ -238,36 +217,7 @@
             return null;
         }
 
-        /// <summary>
-        /// Adds LinkedResources to the mailPart
-        /// </summary>
-        public IList<LinkedResource> PopulateLinkedResources(AlternateView mailPart, Dictionary<string, string> resources)
-        {
-            if (resources == null || resources.Count == 0) {
-                return new List<LinkedResource>();
-            }
-
-            var linkedResources = LinkedResourceProvider.GetAll(resources);
-
-            foreach (var item in linkedResources) {
-                mailPart.LinkedResources.Add(item);
-            }
-
-            return linkedResources;
-        }
-
-        /// <summary>
-        /// Adds a single LinkedResource to a mailPart
-        /// </summary>
-        public LinkedResource PopulateLinkedResource(AlternateView mailPart, string contentId, string fileName)
-        {
-            var linkedResource = LinkedResourceProvider.Get(contentId, fileName);
-            mailPart.LinkedResources.Add(linkedResource);
-
-            return linkedResource;
-        }
-
-        private void CreateControllerContext()
+        void CreateControllerContext()
         {
             if (CurrentHttpContext == null) {
                 throw new ArgumentNullException("CurrentHttpContext", "CurrentHttpContext cannot be null");
@@ -275,13 +225,6 @@
             var routeData = RouteTable.Routes.GetRouteData(CurrentHttpContext);
             ControllerContext = new ControllerContext(CurrentHttpContext, routeData, this);
         }
-
-        /// <summary>
-        /// The MailerName determines the folder that contains the views for this mailer
-        /// </summary>
-        protected string MailerName { get { return GetType().Name; } }
-
-        public HttpContextBase CurrentHttpContext { get; set; }
 
         /// <summary>
         /// If set to true, it will use TestSmtpClient instead of SmtpClient. Used solely for testing purpose

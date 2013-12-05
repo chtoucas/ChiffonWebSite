@@ -26,14 +26,14 @@
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
 
         readonly ChiffonConfig _config;
-        readonly IMailController _mailController;
+        readonly MailService _mailService;
         readonly IFormsAuthenticationService _formsService;
         //readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
             ISiteMap siteMap,
-            IMailController mailController,
+            MailService mailService,
             //IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
@@ -43,7 +43,7 @@
             //Requires.NotNull(memberService, "memberService");
 
             _config = config;
-            _mailController = mailController;
+            _mailService = mailService;
             _formsService = formsService;
             //_memberService = memberService;
         }
@@ -105,9 +105,9 @@
                 // Envoi de l'email de confirmation d'inscription.
                 var emailAddress = new MailAddress(
                     contact.EmailAddress, contact.FirstName + " " + contact.LastName);
-                _mailController
+                _mailService
                     .Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName)
-                    .SendAsync();
+                    .Send();
 
                 // FIXME: 
                 string userName = contact.FirstName + " " + contact.LastName;

@@ -1,9 +1,9 @@
 ﻿namespace Mvc.Mailer
 {
-    using System;
     using System.IO;
     using System.Text;
     using System.Web.Mvc;
+    using Narvalo;
 
     /// <summary>
     /// Mimics the ViewResult with an important difference - the view is only storted in the Output property insted of written to a
@@ -11,10 +11,6 @@
     /// </summary>
     public class StringResult : ViewResult
     {
-        public StringResult()
-        {
-        }
-
         public StringResult(string viewName)
         {
             ViewName = viewName;
@@ -43,12 +39,8 @@
 
         public override void ExecuteResult(ControllerContext context)
         {
-            if (context == null) {
-                throw new ArgumentNullException("context");
-            }
-            if (String.IsNullOrEmpty(ViewName)) {
-                throw new ArgumentNullException("ViewName of StringResult cannot be null or empty");
-            }
+            Requires.NotNull(context, "context");
+            Requires.NotNullOrEmpty(ViewName, "ViewName");
 
             if (View == null) {
                 var result = FindView(context);

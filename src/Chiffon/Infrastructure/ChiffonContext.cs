@@ -1,16 +1,16 @@
 ﻿namespace Chiffon.Infrastructure
 {
-    using System.Threading;
     using System.Web;
     using Narvalo;
 
     public class ChiffonContext
     {
-        static string HttpContextKey_ = "ChiffonContext";
-
         readonly ChiffonEnvironment _environment;
 
-        internal ChiffonContext(ChiffonEnvironment environment)
+        internal ChiffonContext()
+            : this(ChiffonEnvironment.Default) { }
+
+        public ChiffonContext(ChiffonEnvironment environment)
         {
             Requires.NotNull(environment, "environment");
 
@@ -23,8 +23,8 @@
         {
             get
             {
-                // TODO: Lever une exception si cette valeur n'existe pas ?
-                return HttpContext.Current.Items[HttpContextKey_] as ChiffonContext;
+                // XXX: Vérifier que HttpContext.Current existe bien.
+                return HttpContext.Current.GetChiffonContext();
             }
         }
 
@@ -32,25 +32,5 @@
         {
             get { return _environment; }
         }
-
-        internal static void Initialize(ChiffonContext context, HttpContext httpContext)
-        {
-            httpContext.Items[HttpContextKey_] = context;
-
-            if (context.Environment.Language != ChiffonLanguage.Default) {
-                InitializeCulture_(context.Environment.Culture);
-            }
-        }
-
-        // WARNING: Cette méthode ne convient pas avec les actions asynchrones 
-        // car on peut changer de Thread.
-        static void InitializeCulture_(ChiffonCulture culture)
-        {
-            // Culture utilisée par ResourceManager.
-            Thread.CurrentThread.CurrentUICulture = culture.UICulture;
-            // Culture utilisée par System.Globalization.
-            Thread.CurrentThread.CurrentCulture = culture.Culture;
-        }
     }
-
 }
