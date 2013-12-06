@@ -1,4 +1,4 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Modules
 {
     using Autofac;
     using Autofac.Integration.Mvc;
@@ -6,11 +6,11 @@
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class DataAutofacModule : Module
+    public class DataModule : Module
     {
         readonly ChiffonConfig _config;
 
-        public DataAutofacModule(ChiffonConfig config)
+        public DataModule(ChiffonConfig config)
         {
             Requires.NotNull(config, "config");
 

@@ -43,6 +43,7 @@
     }).fail(function() {
       // NB: ne pas utiliser location.href = target car cela ne marche pas
       // dans les anciens IE.
+      // TODO: Cela ne semble prendre en compte les erreurs 500+
       location = target;
     });
   };

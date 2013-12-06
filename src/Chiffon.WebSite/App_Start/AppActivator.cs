@@ -14,6 +14,7 @@ namespace Chiffon
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure;
+    using Chiffon.Modules;
     using Narvalo.Web;
     //using StackExchange.Profiling.MVCHelpers;
 
@@ -26,7 +27,10 @@ namespace Chiffon
 
             // Résolution des dépendances (Autofac).
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new WebSiteAutofacModule(config));
+            builder.RegisterModule(new InfrastructureModule(config));
+            builder.RegisterModule(new DataModule(config));
+            builder.RegisterModule(new ServicesModule());
+            builder.RegisterModule(new MvcModule());
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

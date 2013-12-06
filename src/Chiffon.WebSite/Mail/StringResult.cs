@@ -1,4 +1,4 @@
-﻿namespace Mvc.Mailer
+﻿namespace Chiffon.Mail
 {
     using System.IO;
     using System.Text;
@@ -6,8 +6,8 @@
     using Narvalo;
 
     /// <summary>
-    /// Mimics the ViewResult with an important difference - the view is only storted in the Output property insted of written to a
-    /// browser stream!
+    /// Mimics the ViewResult with an important difference - the view is only stored 
+    /// in the Output property instead of written to a browser stream!
     /// </summary>
     public class StringResult : ViewResult
     {

@@ -1,17 +1,17 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net.Mail;
     //using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Mail;
     using Chiffon.Resources;
-    using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Security;
@@ -26,14 +26,14 @@
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
 
         readonly ChiffonConfig _config;
-        readonly MailService _mailService;
+        readonly ISmtpClient _smtpClient;
         readonly IFormsAuthenticationService _formsService;
         //readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
+            ISmtpClient smtpClient,
             ISiteMap siteMap,
-            MailService mailService,
             //IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
@@ -43,7 +43,7 @@
             //Requires.NotNull(memberService, "memberService");
 
             _config = config;
-            _mailService = mailService;
+            _smtpClient = smtpClient;
             _formsService = formsService;
             //_memberService = memberService;
         }
@@ -105,9 +105,10 @@
                 // Envoi de l'email de confirmation d'inscription.
                 var emailAddress = new MailAddress(
                     contact.EmailAddress, contact.FirstName + " " + contact.LastName);
-                _mailService
-                    .Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName)
-                    .Send();
+
+                var message 
+                    = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName);
+                _smtpClient.Send(message);
 
                 // FIXME: 
                 string userName = contact.FirstName + " " + contact.LastName;
