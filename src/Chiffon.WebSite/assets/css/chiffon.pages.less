@@ -300,23 +300,23 @@
     // Mosaïque à trois colonnes.
     width: @mosaic_3_width;
 
-    .current {
-      .overlay {
-        background-color: @red;
-      }
-      // Quand il s'agit d'un motif sans variante, on a juste une image,
-      // sinon on a un lien.
-      A::before, &::before {
-        position: absolute;
-        display: block;
-        width: @preview_width;
-        height: @preview_height;
-        content: '';
-        -webkit-box-shadow: inset 0 0 3px @red;
-        -moz-box-shadow: inset 0 0 3px @red;
-        box-shadow: inset 0 0 3px @red;
-      }
-    }
+    //.current {
+    //  .overlay {
+    //    background-color: @red;
+    //  }
+    //  // Quand il s'agit d'un motif sans variante, on a juste une image,
+    //  // sinon on a un lien.
+    //  A::before, &::before {
+    //    position: absolute;
+    //    display: block;
+    //    width: @preview_width;
+    //    height: @preview_height;
+    //    content: '';
+    //    -webkit-box-shadow: inset 0 0 3px @red;
+    //    -moz-box-shadow: inset 0 0 3px @red;
+    //    box-shadow: inset 0 0 3px @red;
+    //  }
+    //}
 
     .watermark SPAN {
       right: 0;
