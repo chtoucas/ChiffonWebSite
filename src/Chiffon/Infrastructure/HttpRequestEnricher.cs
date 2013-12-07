@@ -16,22 +16,22 @@
             Requires.NotNull(logEvent, "logEvent");
             Requires.NotNull(propertyFactory, "propertyFactory");
 
-            if (HttpContext.Current != null) {
+            if (HttpContext.Current == null) {
                 // Cela peut arriver par exemple quand on utilise trySkipIisCustomErrors.
                 return;
             }
 
             var req = HttpContext.Current.Request;
 
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Domain", new ScalarValue(req.Url.Host)));
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("RawUrl", new ScalarValue(req.RawUrl)));
+            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Domain", req.Url.Host));
+            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("RawUrl", req.RawUrl));
             if (req.UrlReferrer != null) {
-                logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UrlReferrer", new ScalarValue(req.UrlReferrer.ToString())));
+                logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UrlReferrer", req.UrlReferrer.ToString()));
             }
             if (!String.IsNullOrEmpty(req.UserHostAddress)) {
-                logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UserHostAddress", new ScalarValue(req.UserHostAddress)));
+                logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UserHostAddress", req.UserHostAddress));
             }
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UserAgent", new ScalarValue(req.UserAgent)));
+            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UserAgent", req.UserAgent));
         }
 
         #endregion

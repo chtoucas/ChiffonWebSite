@@ -21,7 +21,7 @@
             return new LoggerConfiguration()
                 .MinimumLevel.Is(minimumLevel)
                 // On écrit dans un fichier de taille maximale 1Mo.
-                .WriteTo.File(logfile, fileSizeLimitBytes: 1048576)
+                .WriteTo.File(logfile, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] ({RawUrl}) {Message:l}{NewLine:l}{Exception:l}", fileSizeLimitBytes: 1048576)
                 .Enrich.With<HttpRequestEnricher>()
                 .CreateLogger();
         }

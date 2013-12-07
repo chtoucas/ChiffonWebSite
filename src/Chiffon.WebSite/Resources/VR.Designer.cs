@@ -304,11 +304,29 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Se déconnecter.
+        /// </summary>
+        public static string Layout_Nav_Logout {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Newsletter.
         /// </summary>
         public static string Layout_Nav_Newsletter {
             get {
                 return ResourceManager.GetString("Layout_Nav_Newsletter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à S&apos;enregistrer.
+        /// </summary>
+        public static string Layout_Nav_Register {
+            get {
+                return ResourceManager.GetString("Layout_Nav_Register", resourceCulture);
             }
         }
         

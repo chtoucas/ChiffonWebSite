@@ -4,26 +4,26 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using System.Web.SessionState;
+    using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Services;
     using Narvalo;
     using Narvalo.Web;
 
     public class LogOffHandler : HttpHandlerBase, IRequiresSessionState
     {
         //readonly IMemberService _memberService;
-        readonly ISiteMap _siteMap;
+        readonly ISiteMapFactory _siteMapFactory;
 
         public LogOffHandler(
             //IMemberService memberService, 
-            ISiteMap siteMap)
+            ISiteMapFactory siteMapFactory)
             : base()
         {
             //Requires.NotNull(memberService, "memberService");
-            Requires.NotNull(siteMap, "siteMap");
+            Requires.NotNull(siteMapFactory, "siteMapFactory");
 
             //_memberService = memberService;
-            _siteMap = siteMap;
+            _siteMapFactory = siteMapFactory;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
@@ -34,7 +34,8 @@
 
             FormsAuthentication.SignOut();
 
-            var nextUrl = _siteMap.Home();
+            var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
+            var nextUrl = siteMap.Home();
 
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }

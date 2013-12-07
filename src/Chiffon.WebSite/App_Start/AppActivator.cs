@@ -30,7 +30,7 @@ namespace Chiffon
             builder.RegisterModule(new InfrastructureModule(config));
             builder.RegisterModule(new DataModule(config));
             builder.RegisterModule(new ServicesModule());
-            builder.RegisterModule(new MvcModule());
+            builder.RegisterModule(new AspNetMvcModule());
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

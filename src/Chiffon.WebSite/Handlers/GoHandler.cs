@@ -18,24 +18,24 @@
         //readonly ChiffonConfig _config;
         readonly IMemberService _memberService;
         readonly IFormsAuthenticationService _formsService;
-        readonly ISiteMap _siteMap;
+        readonly ISiteMapFactory _siteMapFactory;
 
         public GoHandler(
             //ChiffonConfig config,
             IMemberService memberService,
             IFormsAuthenticationService formsService,
-            ISiteMap siteMap)
+            ISiteMapFactory siteMapFactory)
             : base()
         {
             //Requires.NotNull(config, "config");
             Requires.NotNull(memberService, "memberService");
             Requires.NotNull(formsService, "formsService");
-            Requires.NotNull(siteMap, "siteMap");
+            Requires.NotNull(siteMapFactory, "siteMapFactory");
 
             //_config = config;
             _memberService = memberService;
             _formsService = formsService;
-            _siteMap = siteMap;
+            _siteMapFactory = siteMapFactory;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
@@ -66,7 +66,9 @@
                 _formsService.SignIn(userName, false /* createPersistentCookie */);
             }
 
-            Uri nextUrl = succeed ? _siteMap.Home() : _siteMap.LogOn();
+            var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
+
+            Uri nextUrl = succeed ? siteMap.Home() : siteMap.LogOn();
 
             context.Response.Redirect(nextUrl.ToString());
         }

@@ -1,12 +1,21 @@
 CHANGELOG
 =========
 
-[XXXX-XX-XX] Release 1.7
+[2013-12-07] Release 1.7
 ------------------------
 
+* Désactivation des modales sauf pour le lien de connexion.
+* Dans la page "motif", on enlève la liste des aperçus des motifs dans la même catégorie.
+* Pour les fenêtres les plus petites, le texte du pied de page passe en minuscule.
 * Si le visiteur est connecté on utilise un texte différent dans la page information.
+* Dans les pages des designers, on agrandit un peu le texte et on met l'adresse email plus en évidence.
+* Dans la page d'accueil, on crée les watermarks en pure CSS et plus en JS, sinon les anciens
+  navigateurs ne les voient pas.
 
 Changements d'ordre technique :
+* Internalisation de MvcMailer (en cours).
+* Réécriture complète de ChiffonContext (l'ancienne version était incorrecte).
+* Multiple corrections relatives à FxCop.
 * Mise à jour de tous les projets vers .NET 4.5.1 et VS 2013.
 * Mise à jour vers la dernière version de ASP.NET.
 * Lorsqu'on travaille dans VS, on garde le choix de la langue en session.

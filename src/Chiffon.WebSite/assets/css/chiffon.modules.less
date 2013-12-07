@@ -306,7 +306,7 @@ A {
     right: 0;
   }
 
-  UL {
+  UL, INPUT {
     text-transform: uppercase;
   }
 
@@ -314,8 +314,17 @@ A {
     margin: 1.2em 0;
   }
 
-  A {
+  A, INPUT {
     padding: 1em;
+  }
+
+  INPUT {
+    border: 0;
+    background: transparent;
+
+    &:hover, &:focus {
+      color: @grey;
+    }
   }
 }
 

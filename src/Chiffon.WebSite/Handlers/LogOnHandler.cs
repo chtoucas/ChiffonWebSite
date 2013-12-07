@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;
@@ -16,21 +17,21 @@
     {
         readonly IMemberService _memberService;
         readonly IFormsAuthenticationService _formsService;
-        readonly ISiteMap _siteMap;
+        readonly ISiteMapFactory _siteMapFactory;
 
         public LogOnHandler(
             IMemberService memberService, 
-            IFormsAuthenticationService formsService, 
-            ISiteMap siteMap)
+            IFormsAuthenticationService formsService,
+            ISiteMapFactory siteMapFactory)
             : base()
         {
             Requires.NotNull(memberService, "memberService");
             Requires.NotNull(formsService, "formsService");
-            Requires.NotNull(siteMap, "siteMap");
+            Requires.NotNull(siteMapFactory, "siteMapFactory");
 
             _memberService = memberService;
             _formsService = formsService;
-            _siteMap = siteMap;
+            _siteMapFactory = siteMapFactory;
         }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
@@ -63,9 +64,11 @@
                 _formsService.SignIn(userName, false /* createPersistentCookie */);
             }
 
+            var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
+
             Uri nextUrl = succeed
-                ? query.TargetUrl.Match(_ => _siteMap.MakeAbsoluteUri(_), _siteMap.Home())
-                : query.TargetUrl.Match(_ => _siteMap.LogOn(_), _siteMap.LogOn());
+                ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
+                : query.TargetUrl.Match(_ => siteMap.LogOn(_), siteMap.LogOn());
 
             context.Response.Redirect(nextUrl.ToString());
         }

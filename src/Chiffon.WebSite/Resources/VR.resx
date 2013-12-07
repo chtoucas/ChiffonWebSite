@@ -198,8 +198,14 @@
   <data name="Layout_Nav_Login" xml:space="preserve">
     <value>Se connecter</value>
   </data>
+  <data name="Layout_Nav_Logout" xml:space="preserve">
+    <value>Se déconnecter</value>
+  </data>
   <data name="Layout_Nav_Newsletter" xml:space="preserve">
     <value>Newsletter</value>
+  </data>
+  <data name="Layout_Nav_Register" xml:space="preserve">
+    <value>S'enregistrer</value>
   </data>
   <data name="Pager_Next" xml:space="preserve">
     <value>Suiv</value>

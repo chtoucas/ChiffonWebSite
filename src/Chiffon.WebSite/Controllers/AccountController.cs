@@ -26,13 +26,13 @@
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
 
         readonly ChiffonConfig _config;
-        readonly ISmtpClient _smtpClient;
+        //readonly ISmtpClient _smtpClient;
         readonly IFormsAuthenticationService _formsService;
         //readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
-            ISmtpClient smtpClient,
+            //ISmtpClient smtpClient,
             ISiteMap siteMap,
             //IMemberService memberService,
             IFormsAuthenticationService formsService,
@@ -43,7 +43,7 @@
             //Requires.NotNull(memberService, "memberService");
 
             _config = config;
-            _smtpClient = smtpClient;
+            //_smtpClient = smtpClient;
             _formsService = formsService;
             //_memberService = memberService;
         }
@@ -68,6 +68,7 @@
         }
 
         [HttpGet]
+        // FIXME: Remettre en place returnUrl.
         public ActionResult Register(/*string returnUrl*/)
         {
             ViewBag.Title = SR.Account_Register_Title;
@@ -103,12 +104,16 @@
                 var publicKey = CreateContact_(contact);
 
                 // Envoi de l'email de confirmation d'inscription.
+                // FIXME: Utiliser LastName, FirstName pour les anglishes.
                 var emailAddress = new MailAddress(
                     contact.EmailAddress, contact.FirstName + " " + contact.LastName);
 
                 var message 
                     = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName);
-                _smtpClient.Send(message);
+                //_smtpClient.Send(message);
+                using (var smtpClient = new SmtpClient()) {
+                    smtpClient.Send(message);
+                }
 
                 // FIXME: 
                 string userName = contact.FirstName + " " + contact.LastName;

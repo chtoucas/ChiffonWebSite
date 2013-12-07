@@ -175,7 +175,7 @@
     <Compile Include="App_Start\Modules\DataModule.cs" />
     <Compile Include="App_Start\Modules\ServicesModule.cs" />
     <Compile Include="App_Start\Modules\InfrastructureModule.cs" />
-    <Compile Include="App_Start\Modules\MvcModule.cs" />
+    <Compile Include="App_Start\Modules\AspNetMvcModule.cs" />
     <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\ControllerName.cs" />
@@ -215,11 +215,7 @@
     <Compile Include="Handlers\LogOnQuery.cs" />
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Mail\EmailSentEventArgs.cs" />
-    <Compile Include="Mail\ISmtpClient.cs" />
     <Compile Include="Mail\MailController.cs" />
-    <Compile Include="Mail\SmtpClientException.cs" />
-    <Compile Include="Mail\SmtpClientProxy.cs" />
     <Compile Include="Mail\StringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MailResources.Designer.cs">
@@ -380,10 +376,10 @@
     <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Account\PostRegister.cshtml" />
     <Content Include="Views\Account\RegisterTwice.cshtml" />
-    <Content Include="Views\AccountMailer\_LayoutX.cshtml" />
-    <Content Include="Views\AccountMailer\_Layout.text.cshtml" />
-    <Content Include="Views\AccountMailer\Welcome.text.cshtml" />
-    <Content Include="Views\AccountMailer\WelcomeX.cshtml" />
+    <Content Include="Views\MailMerge\_LayoutX.cshtml" />
+    <Content Include="Views\MailMerge\_Layout.text.cshtml" />
+    <Content Include="Views\MailMerge\Welcome.text.cshtml" />
+    <Content Include="Views\MailMerge\WelcomeX.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.en.cshtml" />
     <Content Include="Views\Home\Resources\_AboutContent.cshtml" />

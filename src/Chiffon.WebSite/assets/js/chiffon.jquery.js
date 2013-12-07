@@ -14,22 +14,22 @@
   };
 
   // Ajout à un élément d'un calque contenant un texte.
-  $.fn.watermark = function(watermark, options) {
-    var settings = $.extend({}, $.fn.watermark.defaults, options);
-    var getWatermak = null !== watermark ? function() {
-      return watermark;
-    } : function($elmt) {
-      return $elmt.data('watermark');
-    };
+  //$.fn.watermark = function(watermark, options) {
+  //  var settings = $.extend({}, $.fn.watermark.defaults, options);
+  //  var getWatermak = null !== watermark ? function() {
+  //    return watermark;
+  //  } : function($elmt) {
+  //    return $elmt.data('watermark');
+  //  };
 
-    return this.each(function() {
-      var $this = $(this);
-      $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
-    });
-  };
+  //  return this.each(function() {
+  //    var $this = $(this);
+  //    $this.append(settings.wrapperStart + getWatermak($this) + settings.wrapperEnd);
+  //  });
+  //};
 
-  $.fn.watermark.defaults = {
-    wrapperStart: '<div class=watermark><span>',
-    wrapperEnd: '</span></div>'
-  };
+  //$.fn.watermark.defaults = {
+  //  wrapperStart: '<div class=watermark><span>',
+  //  wrapperEnd: '</span></div>'
+  //};
 })(this);

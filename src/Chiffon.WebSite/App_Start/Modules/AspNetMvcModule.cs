@@ -5,9 +5,9 @@
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class MvcModule : Module
+    public class AspNetMvcModule : Module
     {
-        public MvcModule() { }
+        public AspNetMvcModule() { }
 
         protected override void Load(ContainerBuilder builder)
         {

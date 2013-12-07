@@ -229,7 +229,7 @@ Chiffon.Components = (function(window, undef) {
       length = $views.length;
 
       if (length <= 1) {
-        // Si on a au plus une vue, pas besoin d'aller plus loin.
+        // Si on a une seule vue, pas besoin d'aller plus loin.
         return;
       }
 

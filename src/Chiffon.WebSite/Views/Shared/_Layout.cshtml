@@ -35,9 +35,11 @@
      <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
     <li class=account>
      @if (User.Identity.IsAuthenticated) {
+      <form method=post action="/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout"></form>
       @*<a href="#" id=nav_account>Mon compte</a>*@
      }
      else {
+      @*<a href="@Url.RouteUrl(RouteName.Account.Register)">@VR.Layout_Nav_Register</a> @:/*@
       <a href="@Url.RouteUrl(RouteName.Account.Login)" rel="modal:open">@VR.Layout_Nav_Login</a>
      }
     </li>
