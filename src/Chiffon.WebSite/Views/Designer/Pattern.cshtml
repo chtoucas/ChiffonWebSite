@@ -43,34 +43,34 @@
  Liste des motifs dans la même catégorie.
 *@
 @*<ul id=patterns class="mosaic clearfix">
- @foreach (var preview in Model.Previews) {
-  var anchor = String.IsNullOrWhiteSpace(preview.Version) ? "" : "#" + preview.Version;
-  var version = String.IsNullOrWhiteSpace(preview.Version) ? "" : " (" + preview.Version + ")";
-  if (preview.Reference == Model.Reference) {
-   <li class=current>
-    @if (viewCount > 1) {
-     <a href="@anchor" class=vignette>
+  @foreach (var preview in Model.Previews) {
+   var anchor = String.IsNullOrWhiteSpace(preview.Version) ? "" : "#" + preview.Version;
+   var version = String.IsNullOrWhiteSpace(preview.Version) ? "" : " (" + preview.Version + ")";
+   if (preview.Reference == Model.Reference) {
+    <li class=current>
+     @if (viewCount > 1) {
+      <a href="@anchor" class=vignette>
+       <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
+      </a>
+     }
+     else {
+      <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+     }
+    </li>
+   }
+   else {
+    <li>
+     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
       <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
      </a>
-    }
-    else {
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
-    }
-   </li>
+    </li>
+   }
   }
-  else {
-   <li>
-    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)@anchor" class=vignette>
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference@version</span></div>
-    </a>
-   </li>
-  }
- }
-</ul>*@
+ </ul>*@
 @*
  Pagination pour la liste des motifs.
 *@
 @*@if (Model.PageCount > 1) {
- @ViewHelpers.Pager(Url, Model)
-}*@
+  @ViewHelpers.Pager(Url, Model)
+ }*@
 

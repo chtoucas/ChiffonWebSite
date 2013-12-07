@@ -36,7 +36,8 @@
         {
             if (pageIndex < 1) { return null; }
 
-            var previews = _queries.ListPatterns(designerKey).Where(_ => _.HasPreview);
+            // On ne garde que les motifs ayant un aperçu dont on prend le préféré.
+            var previews = _queries.ListPatterns(designerKey).Where(_ => _.HasPreview && _.Preferred);
 
             var pageCount = previews.PageCount(pageSize);
             if (pageIndex > pageCount) { return null; }
@@ -61,7 +62,8 @@
         {
             if (pageIndex < 1) { return null; }
 
-            var previews = _queries.ListPatterns(designerKey, categoryKey).Where(_ => _.HasPreview);
+            // On ne garde que les motifs ayant un aperçu dont on prend le préféré.
+            var previews = _queries.ListPatterns(designerKey, categoryKey).Where(_ => _.HasPreview && _.Preferred);
 
             var pageCount = previews.PageCount(pageSize);
             if (pageIndex > pageCount) { return null; }
