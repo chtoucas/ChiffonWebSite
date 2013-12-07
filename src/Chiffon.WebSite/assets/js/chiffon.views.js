@@ -491,10 +491,11 @@ Chiffon.Views.Home = (function() {
       // On ouvre les liens externes dans une nouvelle fenêtre.
       $('A[rel=external]').external();
     }),
+    Index: Simple
 
-    Index: Simple.Create(function() {
-      $('.vignette').watermark(ł('%preview.watermark'));
-    })
+    //Index: Simple.Create(function() {
+    //  $('.vignette').watermark(ł('%preview.watermark'));
+    //})
   };
 
 })();

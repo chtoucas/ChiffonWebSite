@@ -250,6 +250,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Voir toute la collection &gt;.
+        /// </summary>
+        public static string Home_Index_PreviewWatermark {
+            get {
+                return ResourceManager.GetString("Home_Index_PreviewWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013..
         /// </summary>
         public static string Layout_Copyright {

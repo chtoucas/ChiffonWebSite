@@ -8,9 +8,11 @@
  <nav>
   <ul>
    <li @(ViewBag.CurrentCategoryKey == DesignerController.AllCategoryKey ? " class=current" : String.Empty)>
-    <a href="@Url.Designer(Model.Key, 1)">@VR.Category_All (@Model.PatternCount)</a></li>
+    <a href="@Url.Designer(Model.Key, 1)">@VR.Category_All (@Model.PatternCount)</a>
+   </li>
    @foreach (var category in Model.Categories) {
-    <li @(ViewBag.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)><a href="@Url.Category(Model.Key, category.Key, 1)">@category.DisplayName (@category.PatternsCount)</a>
+    <li @(ViewBag.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)>
+     <a href="@Url.Category(Model.Key, category.Key, 1)">@category.DisplayName (@category.PatternsCount)</a>
     </li>
    }
   </ul>
