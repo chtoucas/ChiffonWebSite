@@ -304,7 +304,6 @@
       .overlay {
         background-color: @red;
       }
-
       // Quand il s'agit d'un motif sans variante, on a juste une image,
       // sinon on a un lien.
       A::before, &::before {
@@ -338,7 +337,6 @@
   }
 
   NAV {
-    margin-bottom: 2.5em;
     font-size: 1.2em;
     border-bottom: 1px solid @grey;
 
@@ -366,11 +364,15 @@
 
     P {
       margin-top: 0;
-      margin-bottom: 2em;
-      font-size: 1.3em;
+      margin-bottom: 1em;
+      font-size: 1.4em;
       color: @darkgrey;
 
       A {
+        display: block;
+        margin-bottom: 2em;
+        padding-top: .5em;
+        padding-bottom: .5em;
         color: @darkgrey;
       }
     }
