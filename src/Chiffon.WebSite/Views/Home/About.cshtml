@@ -9,7 +9,7 @@
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>
-    <a href="@Url.RouteUrl(RouteName.Account.Register)" rel="@ViewBag.ModalRelation">@VR.Home_About_PasswordRequest</a>
+    <a href="@Url.RouteUrl(RouteName.Account.Register)">@VR.Home_About_PasswordRequest</a>
    </p>
   }
   <p>

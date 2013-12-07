@@ -20,14 +20,16 @@
             filterContext.Controller.ViewData["ActionName"] = actionName;
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            Requires.NotNull(filterContext, "filterContext");
+        // Si la personne n'est pas connecté certains liens créés dynamiquement seront
+        // ouverts dans une modale.
+        //public override void OnActionExecuted(ActionExecutedContext filterContext)
+        //{
+        //    Requires.NotNull(filterContext, "filterContext");
 
-            var identity = filterContext.RequestContext.HttpContext.User.Identity;
+        //    var identity = filterContext.RequestContext.HttpContext.User.Identity;
 
-            filterContext.Controller.ViewData["ModalRelation"]
-                = identity.IsAuthenticated ? String.Empty : "modal:open";
-        }
+        //    filterContext.Controller.ViewData["ModalRelation"]
+        //        = identity.IsAuthenticated ? String.Empty : "modal:open";
+        //}
     }
 }
