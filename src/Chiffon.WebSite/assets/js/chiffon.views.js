@@ -659,6 +659,7 @@ Chiffon.Views.Designer = (function(window, undef) {
 
     Category: create({}, DesignerLayoutMixin),
 
+    // FIXME: Il n'est plus nécessaire d'utiliser DesignerLayoutMixin.
     Pattern: create({
       initCore: function() {
         // NB: location.hash contient le caractère '#'.

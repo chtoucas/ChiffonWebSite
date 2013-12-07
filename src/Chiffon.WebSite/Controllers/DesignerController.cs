@@ -107,8 +107,8 @@
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
-            var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
-            if (pagedList == null) { return new HttpNotFoundResult(); }
+            //var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
+            //if (pagedList == null) { return new HttpNotFoundResult(); }
 
             var views = _patternService.GetPatternViews(designerKey, categoryKey, reference);
             if (views.Count() == 0) { return new HttpNotFoundResult(); }
@@ -121,11 +121,11 @@
                 Designer = designer,
                 PatternViews = from _ in views select ObjectMapper.Map(_, designer.DisplayName),
                 Reference = reference,
-                IsFirstPage = pagedList.IsFirstPage,
-                IsLastPage = pagedList.IsLastPage,
-                PageCount = pagedList.PageCount,
-                PageIndex = pagedList.PageIndex,
-                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+                //IsFirstPage = pagedList.IsFirstPage,
+                //IsLastPage = pagedList.IsLastPage,
+                //PageCount = pagedList.PageCount,
+                //PageIndex = pagedList.PageIndex,
+                //Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
             SetDesignerViewData_(designerKey, categoryKey);
