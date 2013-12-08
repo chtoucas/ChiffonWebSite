@@ -139,6 +139,7 @@
     <Compile Include="Infrastructure\ChiffonContext.cs" />
     <Compile Include="Infrastructure\ContainerBuilder%24.cs" />
     <Compile Include="Infrastructure\DevelopmentLogService.cs" />
+    <Compile Include="Infrastructure\ApplicationLifecycleModule.cs" />
     <Compile Include="Infrastructure\HttpContext%24.cs" />
     <Compile Include="Infrastructure\HttpHeaderPolicyModule.cs" />
     <Compile Include="Infrastructure\HttpRequestEnricher.cs" />

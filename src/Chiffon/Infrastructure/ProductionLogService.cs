@@ -15,7 +15,7 @@
         {
             return new LoggerConfiguration()
                 .MinimumLevel.Is(minimumLevel)
-                .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({HttpRequestId}) {Message:l}{NewLine:l}{Exception:l}")
+                .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({RawUrl}) {Message:l}{NewLine:l}{Exception:l}")
                 .Enrich.With<HttpRequestEnricher>()
                 .CreateLogger();
         }
