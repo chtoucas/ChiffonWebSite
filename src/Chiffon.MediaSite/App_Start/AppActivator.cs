@@ -1,9 +1,6 @@
 ﻿using Chiffon;
 using WebActivatorEx;
 
-// WARNING: cet attribut ne peut être utilisé qu'une fois par assemblée.
-//[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
-
 [assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
 [assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
 [assembly: ApplicationShutdownMethod(typeof(AppActivator), "Shutdown")]
@@ -11,10 +8,12 @@ using WebActivatorEx;
 namespace Chiffon
 {
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure;
     using Narvalo.Web;
+    using Serilog;
 
     public static class AppActivator
     {
@@ -36,21 +35,29 @@ namespace Chiffon
             // Modules HTTP.
             HttpHeaderCleanupModule.Register();
             HttpHeaderPolicyModule.Register();
+            ApplicationLifecycleModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
+        }
 
-            //PreStartMiniProfiler_();
+        public static void Start()
+        {
+            Log.Information("Application starting.");
+
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
         public static void PostStart()
         {
-            //PostStartMiniProfiler_();
+            ;
         }
 
-        /// <summary>
-        /// Méthode exécutée après le déchargement du dernier module HTTP. 
-        /// </summary>
+        public static void End()
+        {
+            Log.Information("Application ending.");
+        }
+
         public static void Shutdown()
         {
             ;

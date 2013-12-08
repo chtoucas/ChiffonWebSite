@@ -11,11 +11,15 @@ using WebActivatorEx;
 namespace Chiffon
 {
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Chiffon.Common;
+    using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.Modules;
     using Narvalo.Web;
+    using Serilog;
     //using StackExchange.Profiling.MVCHelpers;
 
     public static class AppActivator
@@ -50,9 +54,23 @@ namespace Chiffon
             //PreStartMiniProfiler_();
         }
 
+        public static void Start()
+        {
+            Log.Information("Application starting.");
+
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
+        }
+
         public static void PostStart()
         {
             //PostStartMiniProfiler_();
+        }
+
+        public static void End()
+        {
+            Log.Information("Application ending.");
         }
 
         /// <summary>

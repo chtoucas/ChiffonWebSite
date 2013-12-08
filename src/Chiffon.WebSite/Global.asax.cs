@@ -1,13 +1,7 @@
 ﻿namespace Chiffon
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using Chiffon.Common;
-    using Chiffon.Entities;
-    using Serilog;
 
     /// <summary>
     /// Au cours de son cycle de vie, l'application déclenche des événements que vous pouvez 
@@ -100,14 +94,9 @@
         /// NB: Pour exécuter un code avant Application_Start, utiliser les facilités offertes par
         /// l'attribut PreApplicationStartMethod. Voir aussi WebActivator.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         protected void Application_Start()
         {
-            Log.Information("Application starting.");
-
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
+            AppActivator.Start();
         }
 
         /// <summary>
@@ -115,7 +104,7 @@
         /// </summary>
         protected void Application_End(object sender, EventArgs e)
         {
-            Log.Information("Application ending.");
+            AppActivator.End();
         }
 
         #endregion
