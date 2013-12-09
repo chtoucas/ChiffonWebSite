@@ -5,7 +5,7 @@ namespace Chiffon.Mail
     using Chiffon.Resources;
     using Narvalo;
 
-    public class MailMerge : MailController
+    public class MailMerge : MailMessageController
     {
         public MailMerge()
             : base()
@@ -26,12 +26,10 @@ namespace Chiffon.Mail
             ViewBag.Password = password;
             ViewBag.SiteUrl = baseUri.ToString();
 
-            var message = new MailMessage {
-                Subject = MailResources.Welcome_Subject
-            };
-            message.To.Add(emailAddress);
+            var message = MailMessageX("Welcome", "_Layout");
 
-            PopulateBody(message, "Welcome", "_Layout");
+            message.Subject = MailResources.Welcome_Subject;
+            message.To.Add(emailAddress);
 
             return message;
         }

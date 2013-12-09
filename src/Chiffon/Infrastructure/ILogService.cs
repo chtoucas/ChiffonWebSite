@@ -9,5 +9,4 @@
     {
         ILogger GetLogger(LogEventLevel minimumLevel);
     }
-
 }

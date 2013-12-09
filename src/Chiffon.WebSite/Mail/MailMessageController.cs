@@ -3,44 +3,103 @@
     using System;
     using System.Net.Mail;
     using System.Net.Mime;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Narvalo;
 
-    /// <summary>
-    /// The Base class for Mailers. Your mailer should subclass MailerBase:
-    /// </summary>
-    public class MailController : ControllerBase
+    public abstract class MailMessageController : ControllerBase, IController
     {
-        /// <summary>
-        /// The parameterless constructor
-        /// </summary>
-        public MailController()
+        HttpContextBase _httpContext;
+
+        protected MailMessageController()
         {
             if (HttpContext.Current != null) {
-                CurrentHttpContext = new HttpContextWrapper(HttpContext.Current);
+                _httpContext = new HttpContextWrapper(HttpContext.Current);
             }
         }
 
-        /// <summary>
-        /// The Path to the MasterPage or Layout
-        /// e.g. Razor: myMailer.MasterName = "_MyLayout.cshtml"
-        /// </summary>
         public string MasterName { get; set; }
 
-        /// <summary>
-        /// The MailerName determines the folder that contains the views for this mailer
-        /// </summary>
         protected string MailerName { get { return GetType().Name; } }
 
-        public HttpContextBase CurrentHttpContext { get; set; }
+        // Laissé intentionnellement vide.
+        protected override void ExecuteCore() { ; }
 
-        /// <summary>
-        /// Nothing to Execute at this point, left blank
-        /// </summary>
-        protected override void ExecuteCore()
+        protected MailMessageResult MailMessage(MailMessage message, string viewName)
         {
+            return MailMessage(message, viewName, null /* masterName */, null /* model */);
+        }
+
+        protected MailMessageResult MailMessage(MailMessage message, string viewName, string masterName)
+        {
+            return MailMessage(message, viewName, masterName, null /* model */);
+        }
+
+        protected MailMessageResult MailMessage(MailMessage message, string viewName, object model)
+        {
+            return MailMessage(message, viewName, null /* masterName */, null /* model */);
+        }
+
+        protected MailMessageResult MailMessage(MailMessage message, string viewName, string masterName, object model)
+        {
+            Requires.NotNull(message, "message");
+            Requires.NotNull(viewName, "viewName");
+
+            if (model != null) {
+                ViewData.Model = model;
+            }
+
+            var result = new MailMessageResult(message, viewName, masterName);
+            result.ViewData = ViewData;
+
+            //var routeData = new RouteData();
+            //routeData.Values["controller"] = GetType().Name.Replace("Controller", String.Empty);
+            //routeData.Values["action"] = viewName;
+
+            //var requestContext = new RequestContext(_httpContext, routeData);
+            //ControllerContext = new ControllerContext(requestContext, this);
+
+            //result.ExecuteResult(ControllerContext);
+            return result;
+        }
+
+        public void SendMail(MailMessage message)
+        {
+            using (var smtpClient = new SmtpClient()) {
+                smtpClient.Send(message);
+            }
+        }
+
+        public MailMessage MailMessageX(string viewName)
+        {
+            return MailMessageX(viewName, null /* masterName */);
+        }
+
+        public MailMessage MailMessageX(string viewName, string masterName)
+        {
+            var message = new MailMessage();
+
+            masterName = masterName ?? MasterName;
+
+            var textExists = TextViewExists(viewName, masterName);
+
+            // Si la version texte existe, elle est utilisée pour le corps du message.
+            if (textExists) {
+                PopulateTextBody(message, viewName, masterName);
+            }
+
+            if (HtmlViewExists(viewName, masterName)) {
+                if (textExists) {
+                    PopulateHtmlPart(message, viewName, masterName);
+                }
+                else {
+                    PopulateHtmlBody(message, viewName, masterName);
+                }
+            }
+
+            return message;
         }
 
         /// <summary>
@@ -190,6 +249,7 @@
         protected AlternateView PopulatePart(MailMessage message, string viewName, string mime, string masterName = null)
         {
             masterName = masterName ?? MasterName;
+
             if (ViewExists(viewName, masterName)) {
                 var part = EmailBody(viewName, masterName);
                 var alternateView = AlternateView.CreateAlternateViewFromString(part, new ContentType(mime));
@@ -222,11 +282,11 @@
 
         void CreateControllerContext_()
         {
-            if (CurrentHttpContext == null) {
-                throw new InvalidOperationException("CurrentHttpContext cannot be null");
+            if (_httpContext == null) {
+                throw new InvalidOperationException("HttpContext cannot be null.");
             }
-            var routeData = RouteTable.Routes.GetRouteData(CurrentHttpContext);
-            ControllerContext = new ControllerContext(CurrentHttpContext, routeData, this);
+            var routeData = RouteTable.Routes.GetRouteData(_httpContext);
+            ControllerContext = new ControllerContext(_httpContext, routeData, this);
         }
     }
 }
