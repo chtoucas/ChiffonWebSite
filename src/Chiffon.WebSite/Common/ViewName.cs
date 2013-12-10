@@ -54,5 +54,12 @@
             public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
             public const string LanguageMenu = "~/Views/Widget/LanguageMenu.cshtml";
         }
+
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public static class Mail
+        {
+            public const string ForgottenPassword = "~/Views/Mail/ForgottenPassword.cshtml";
+            public const string Welcome = "~/Views/Mail/Welcome.cshtml";
+        }
     }
 }

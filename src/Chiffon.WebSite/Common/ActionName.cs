@@ -41,5 +41,13 @@
             public const string GoogleAnalytics = "GoogleAnalytics";
             public const string LanguageMenu = "LanguageMenu";
         }
+
+        // MailController.
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public static class Mail
+        {
+            public const string ForgottenPassword = "ForgottenPassword";
+            public const string Welcome = "Welcome";
+        }
     }
 }

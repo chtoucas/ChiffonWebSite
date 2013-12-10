@@ -5,7 +5,7 @@ namespace Chiffon.Mail
     using Chiffon.Resources;
     using Narvalo;
 
-    public class MailMerge : MailMessageController
+    public class MailMerge : MailController
     {
         public MailMerge()
             : base()

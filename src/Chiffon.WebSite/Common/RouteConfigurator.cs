@@ -52,6 +52,12 @@
                 new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern },
                 new { designerKey = new DesignerKeyConstraint() });
 
+            // MailController.
+            _routes.MapRoute(RouteName.Mail.Welcome, "mail/bienvenue",
+                new { controller = ControllerName.Mail, action = ActionName.Mail.Welcome });
+            _routes.MapRoute(RouteName.Mail.ForgottenPassword, "mail/mot-de-passe-oublié",
+               new { controller = ControllerName.Mail, action = ActionName.Mail.ForgottenPassword });
+
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 
             RegisterHandlerRoutes_();

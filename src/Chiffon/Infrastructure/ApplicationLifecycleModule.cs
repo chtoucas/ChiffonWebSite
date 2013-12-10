@@ -8,7 +8,7 @@
     using Narvalo.Web;
     using Serilog;
 
-    public class ApplicationLifecycleModule
+    public class ApplicationLifecycleModule : IHttpModule
     {
         #region IHttpModule
 

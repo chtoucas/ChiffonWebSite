@@ -6,5 +6,6 @@
         public const string Designer = "Designer";
         public const string Home = "Home";
         public const string Widget = "Widget";
+        public const string Mail = "Mail";
     }
 }

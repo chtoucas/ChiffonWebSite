@@ -3,17 +3,16 @@
     using System;
     using System.Net.Mail;
     using System.Net.Mime;
-    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Narvalo;
 
-    public abstract class MailMessageController : ControllerBase, IController
+    public abstract class MailController : ControllerBase, IController
     {
         HttpContextBase _httpContext;
 
-        protected MailMessageController()
+        protected MailController()
         {
             if (HttpContext.Current != null) {
                 _httpContext = new HttpContextWrapper(HttpContext.Current);
@@ -51,8 +50,11 @@
                 ViewData.Model = model;
             }
 
-            var result = new MailMessageResult(message, viewName, masterName);
-            result.ViewData = ViewData;
+            return new MailMessageResult(message) {
+                MasterName = masterName,
+                ViewData = ViewData,
+                ViewName = viewName
+            };
 
             //var routeData = new RouteData();
             //routeData.Values["controller"] = GetType().Name.Replace("Controller", String.Empty);
@@ -62,7 +64,7 @@
             //ControllerContext = new ControllerContext(requestContext, this);
 
             //result.ExecuteResult(ControllerContext);
-            return result;
+            //return result;
         }
 
         public void SendMail(MailMessage message)

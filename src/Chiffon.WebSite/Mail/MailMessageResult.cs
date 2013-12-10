@@ -9,24 +9,17 @@
     using System.Web.Mvc;
     using Narvalo;
 
-    public class MailMessageResult : ViewResultBase
+    public class MailMessageResult : ViewResult
     {
         readonly MailMessage _message;
-        string _masterName;
 
-        public MailMessageResult(MailMessage message, string viewName)
-            : this(message, viewName, null /* masterName */) { }
-
-        public MailMessageResult(MailMessage message, string viewName, string masterName)
+        public MailMessageResult(MailMessage message)
         {
             Requires.NotNull(message, "message");
 
             _message = message;
-            ViewName = viewName;
-            _masterName = masterName ?? String.Empty;
         }
 
-        public string MasterName { get { return _masterName; } set { _masterName = value; } }
         public MailMessage Message { get { return _message; } }
 
         public override void ExecuteResult(ControllerContext context)

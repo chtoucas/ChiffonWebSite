@@ -187,6 +187,7 @@
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Mail\MailMerge.cs" />
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Mail\MailMessageResult.cs" />
@@ -216,7 +217,7 @@
     <Compile Include="Handlers\LogOnQuery.cs" />
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Mail\MailMessageController.cs" />
+    <Compile Include="Mail\MailController.cs" />
     <Compile Include="Mail\StringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MailResources.Designer.cs">
@@ -395,6 +396,9 @@
     <Content Include="Views\Account\Resources\_RegisterHelp.en.cshtml" />
     <Content Include="Views\Account\Resources\_PostRegisterEmail.cshtml" />
     <Content Include="Views\Account\Resources\_PostRegisterEmail.en.cshtml" />
+    <Content Include="Views\Mail\_Layout.cshtml" />
+    <Content Include="Views\Mail\Welcome.cshtml" />
+    <Content Include="Views\Mail\ForgottenPassword.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

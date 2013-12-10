@@ -31,5 +31,13 @@
             public const string Index = "Designer/Index";
             public const string Pattern = "Designer/Pattern";
         }
+
+        // DesignerController.
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public static class Mail
+        {
+            public const string ForgottenPassword = "Mail/ForgottenPassword";
+            public const string Welcome = "Mail/Welcome";
+        }
     }
 }

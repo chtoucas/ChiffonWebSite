@@ -28,6 +28,9 @@
             DynamicModuleUtility.RegisterModule(typeof(InitializeVSContextModule));
         }
 
+        // FIXME: La session peut ne pas être disponible à ce moment.
+        // http://stackoverflow.com/questions/276355/can-i-access-session-state-from-an-httpmodule
+        // http://forums.asp.net/p/1098574/1665773.aspx
         void OnPostAcquireRequestState(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
