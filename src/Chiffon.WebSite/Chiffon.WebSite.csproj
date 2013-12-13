@@ -186,6 +186,7 @@
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
+    <Compile Include="Common\MailHtmlHelper%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Mail\MailMerge.cs" />
@@ -285,6 +286,8 @@
     <Content Include="assets\js\jquery.modal.js" />
     <Content Include="assets\js\chiffon.jquery.js" />
     <Content Include="assets\js\vendor\jquery-2.0.3.js" />
+    <Content Include="assets\js\vendor\jquery.microdata\jquery.microdata.js" />
+    <Content Include="assets\js\vendor\jquery.microdata\schemas.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\jquery.validate.min.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.11.1\localization\messages_fr.js" />
     <Content Include="assets\js\vendor\jquery.waypoints-2.0.3.js" />
@@ -399,6 +402,7 @@
     <Content Include="Views\Mail\_Layout.cshtml" />
     <Content Include="Views\Mail\Welcome.cshtml" />
     <Content Include="Views\Mail\ForgottenPassword.cshtml" />
+    <Content Include="Views\Shared\_LayoutCopyright.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

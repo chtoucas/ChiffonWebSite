@@ -1,7 +1,7 @@
 ﻿@using Chiffon.Infrastructure
 
 <!DOCTYPE html>
-<html lang="@ViewBag.LanguageName">
+<html lang="@ViewBag.LanguageName" prefix="og: http://ogp.me/ns#">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,13 +12,22 @@
  <meta name=copyright content="Copyright © 2013 Pour quel motif, Simone ?" />
  <meta name=robots content="@ViewBag.MetaRobots" />
  <meta name=viewport content="width=device-width, initial-scale=1" />
- @*<base href="/"/>*@
+ @* OpenGraph *@
+ @*<meta property="og:title" content="@ViewBag.Title" />
+ <meta property="og:type" content="website" />
+ <meta property="og:url" content="@ViewBag.CanonicalLink" />
+ <meta property="og:image" content="http://wznw.org/chiffon/img/logo.png" />
+ <meta property="og:image:type" content="image/png" />
+ <meta property="og:image:width" content="144" />
+ <meta property="og:image:height" content="144" />
+ <meta property="og:description" content="@ViewBag.MetaDescription" />*@
+ @*<base href=" />"/>*@
  <link rel=canonical href="@ViewBag.CanonicalLink" />
  <link rel=author href="/humans.txt" type="text/plain" />
  @{Html.RenderAction(ActionName.Widget.CommonStyleSheet, ControllerName.Widget);}
  @{Html.Partial(ViewName.Html5Shim);}
 </head>
-<body>
+<body itemscope itemtype="@ViewBag.SchemaWebPage">
  <header>
   <h1>@Html.LayoutTitle((ChiffonLanguage)ViewBag.Language)</h1>
   <nav class="clearfix nav_lang">
@@ -50,7 +59,7 @@
  @RenderBody()
  <footer>
   @Html.LayoutAuthorsRights((ChiffonLanguage)ViewBag.Language)
-  <p>@VR.Layout_Copyright</p>
+  @Html.Partial(ViewName.LayoutCopyright)
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new
  {

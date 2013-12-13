@@ -47,6 +47,7 @@
         {
             ViewBag.Title = SR.Home_About_Title;
             ViewBag.MetaDescription = SR.Home_About_Description;
+            ViewBag.SchemaWebPage = "http://schema.org/AboutPage";
             ViewBag.CanonicalLink = SiteMap.About().ToString();
             ViewBag.MainMenuClass = "about";
 
@@ -60,6 +61,7 @@
 
             ViewBag.Title = SR.Home_Contact_Title;
             ViewBag.MetaDescription = SR.Home_Contact_Description;
+            ViewBag.SchemaWebPage = "http://schema.org/ContactPage";
             ViewBag.CanonicalLink = SiteMap.Contact().ToString();
             ViewBag.MainMenuClass = "contact";
 

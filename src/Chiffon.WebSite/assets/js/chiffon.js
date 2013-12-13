@@ -86,6 +86,8 @@ var Chiffon = (function(window, undef) {
       'vendor/jquery-2.0.3.js',
       'vendor/l10n-2013.09.12.js',
       'vendor/nprogress-0.1.2.js',
+      'vendor/jquery.microdata/jquery.microdata.js',
+      'vendor/jquery.microdata/schemas.js',
       'jquery.modal.js',
       'chiffon.jquery.js',
       'chiffon.localization.js',

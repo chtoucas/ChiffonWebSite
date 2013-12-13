@@ -38,14 +38,19 @@
 
             if (String.IsNullOrEmpty(viewBag.MetaDescription)) {
                 __Log("No description given, using default.");
-                viewData["MetaDescription"] = SR.MetaDescription;
+                viewData["MetaDescription"] = SR.DefaultMetaDescription;
             }
             if (String.IsNullOrEmpty(viewBag.MetaKeywords)) {
-                viewData["MetaKeywords"] = SR.MetaKeywords;
+                viewData["MetaKeywords"] = SR.DefaultMetaKeywords;
             }
             if (String.IsNullOrEmpty(viewBag.Title)) {
                 __Log("No title given, using default.");
-                viewData["Title"] = "Pour quel motif, Simone ?";
+                viewData["Title"] = SR.DefaultTitle;
+            }
+
+            // Schema.Org
+            if (String.IsNullOrEmpty(viewBag.SchemaWebPage)) {
+                viewData["SchemaWebPage"] = "http://schema.org/WebPage";
             }
         }
 

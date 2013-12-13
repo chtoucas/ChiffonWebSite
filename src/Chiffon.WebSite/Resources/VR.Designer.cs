@@ -259,15 +259,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à © Pour quel motif, Simone ? 2013..
-        /// </summary>
-        public static string Layout_Copyright {
-            get {
-                return ResourceManager.GetString("Layout_Copyright", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Info.
         /// </summary>
         public static string Layout_Nav_About {

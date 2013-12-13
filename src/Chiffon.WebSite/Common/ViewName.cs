@@ -8,6 +8,7 @@
         public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
         public const string Html5Shim = "~/Views/Shared/_Html5Shim.cshtml";
         public const string LayoutAuthorsRights = "~/Views/Shared/_LayoutAuthorsRights.cshtml";
+        public const string LayoutCopyright = "~/Views/Shared/_LayoutCopyright.cshtml";
         public const string LayoutTitle = "~/Views/Shared/_LayoutTitle.cshtml";
 
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]

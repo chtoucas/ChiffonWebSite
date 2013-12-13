@@ -3,26 +3,26 @@
 
 @model IEnumerable<Designer>
 
-<div class="home_contact text_center fx_topborder">
+<div class="home_contact text_center fx_topborder" itemscope itemtype="http://schema.org/Organization">
  <p class="serif serif_large">
   @Html.HomeContactTitle((ChiffonLanguage)ViewBag.Language)
  </p>
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
-   <li>
-    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=loose>@designer.DisplayName</a></h2>
+   <li itemprop=member itemscope itemtype="http://schema.org/Person">
+    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=loose><span itemprop="name">@designer.DisplayName</span></a></h2>
     <ul>
      <li class=avatar>
       <a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)">
-       <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+       <img src="@Url.PreviewContent(designer.Key, designer.AvatarReference, designer.AvatarVersion)" alt="@designer.DisplayName" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight itemprop=image />
        <div class=overlay></div>
        <div class=watermark></div>
       </a>
      </li>
-     <li class=email><a class=text_underline href="mailto:@designer.EmailAddress">@designer.EmailAddress</a></li>
+     <li class=email><a class=text_underline href="mailto:@designer.EmailAddress" itemprop="email">@designer.EmailAddress</a></li>
      @if (designer.WebsiteUrl.IsSome) {
       var website = designer.WebsiteUrl.Value.ToString().Replace("http://", String.Empty);
-      <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose>@website.Replace("/", String.Empty)</a></li>
+      <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose itemprop="url">@website.Replace("/", String.Empty)</a></li>
      }
     </ul>
    </li>
