@@ -14,6 +14,7 @@
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Web.Semantic;
 
     [Authorize]
     public class DesignerController : PageController
@@ -62,10 +63,20 @@
 
             SetDesignerViewData_(designerKey);
 
+            // Ontology.
             Ontology.Relationships.CanonicalUrl = SiteMap.Designer(designerKey, p);
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Index_Description;
+
+            // FIXME: le chemin vers l'image devrait être absolu.
+            var image = model.Previews.First();
+            Ontology.OpenGraph.Image = new OpenGraphImage {
+                Height = ImageGeometry.PreviewHeight,
+                MimeType = OpenGraphImage.JpegMimeType,
+                Url = new Uri(Url.PreviewContent(designerKey, image.Reference, image.Version), UriKind.Relative),
+                Width = ImageGeometry.PreviewWidth,
+            };
 
             return View(ViewName.Designer.Index, model);
         }
@@ -93,6 +104,7 @@
 
             SetDesignerViewData_(designerKey, categoryKey);
 
+            // Ontology.
             Ontology.Relationships.CanonicalUrl = SiteMap.DesignerCategory(designerKey, categoryKey, p);
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
@@ -130,6 +142,7 @@
 
             SetDesignerViewData_(designerKey, categoryKey);
 
+            // Ontology.
             Ontology.Relationships.CanonicalUrl = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p);
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,

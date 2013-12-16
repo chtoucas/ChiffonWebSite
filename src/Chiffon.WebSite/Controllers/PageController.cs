@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
@@ -51,7 +50,7 @@
 
         void InitializeOntology_()
         {
-            // Il semblerait que "Keywords" est ignoré par Google, il n'est donc 
+            // Il semble que "Keywords" est ignoré par Google, il n'est donc 
             // pas nécessaire de travailler cet aspect là.
             _ontology.Keywords = SR.DefaultKeywords;
 
@@ -66,10 +65,9 @@
             };
 
             // Autres langues dans lesquelles la page est disponible.
-            IList<OpenGraphLocale> locales = new List<OpenGraphLocale>();
             foreach (var environment in ChiffonEnvironment.Environments) {
                 if (environment.Language == Environment.Language) {
-                    break;
+                    continue;
                 }
                 _ontology.OpenGraph.AddAlternativeLocale(new OpenGraphLocale(environment.Culture.UICulture));
             }

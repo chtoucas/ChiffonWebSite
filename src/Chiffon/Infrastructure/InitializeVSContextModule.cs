@@ -4,6 +4,7 @@
     using System.Web;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
+    using Narvalo.Fx;
 
     public class InitializeVSContextModule : IHttpModule
     {
@@ -37,11 +38,8 @@
             var context = app.Context;
             var session = app.Session;
 
-            var environment = ChiffonEnvironmentResolver.Resolve(context.Request, session);
-
-            if (environment.HasValue) {
-                context.AddChiffonContext(new ChiffonContext(environment.Value));
-            }
+            ChiffonEnvironmentResolver.MayResolve(context.Request, session)
+                .WhenSome(_ => { context.AddChiffonContext(new ChiffonContext(_)); });
         }
     }
 }

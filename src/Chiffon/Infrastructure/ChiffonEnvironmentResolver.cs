@@ -20,7 +20,7 @@
             return ResolveFromHost_(uri.Host);
         }
 
-        internal static ChiffonEnvironment? Resolve(HttpRequest request, HttpSessionState session)
+        internal static Maybe<ChiffonEnvironment> MayResolve(HttpRequest request, HttpSessionState session)
         {
             Requires.NotNull(request, "request");
 
@@ -36,14 +36,13 @@
             // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
             // la demande en session.
             language.WhenSome(_ => { UpdateLanguageSession_(session, _); });
-
+                                  
             if (language.IsNone) {
                 // On regarde dans la session si on n'a pas une langue déjà définie.
                 language = MayGetLanguageFromSession_(session);
             }
 
-            return language.Map(_ => new ChiffonEnvironment(_, uri)).ToNullable();
-
+            return language.Map(_ => new ChiffonEnvironment(_, uri));
         }
 
         static Uri GetBaseUri_(Uri uri)
