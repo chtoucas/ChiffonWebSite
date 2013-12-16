@@ -1,0 +1,37 @@
+﻿@using Chiffon.Resources
+@using Narvalo.Web.Semantic
+
+@* Generator: MvcHelper Namespace: Chiffon.Common*@
+
+@* On ne vérifie pas si les champs ont une valeur car cela est effectué
+ au niveau du filtre OntologyFilter *@
+
+@helper StandardMetadata(Ontology ontology)
+{
+ <meta name=description content="@ontology.Description" />
+ <meta name=robots content="@ontology.RobotsDirective" />
+ <meta name=keywords content="@ontology.Keywords" />
+}
+
+@helper RelationshipLinks(Relationships relationships)
+{
+ <link rel=canonical href="@relationships.CanonicalUrl" />
+ <link rel=author href="@relationships.HumansTxtUrl" type="text/plain" />
+}
+
+@helper OpenGraphMetadata(OpenGraphMetadata og)
+{
+ <meta property="og:title" content="@og.Title" />
+ <meta property="og:type" content="@og.Type" />
+ <meta property="og:url" content="@og.Url" />
+ <meta property="og:description" content="@og.Description" />
+ <meta property="og:site_name" content="@og.SiteName" />
+ <meta property="og:locale" content="@og.Locale" />
+ foreach (var locale in og.AlternativeLocales) {
+  <meta property="og:locale:alternate" content="@locale" />
+ }
+ <meta property="og:image" content="@og.Image.Url" />
+ <meta property="og:image:type" content="@og.Image.MimeType" />
+ <meta property="og:image:width" content="@og.Image.Width" />
+ <meta property="og:image:height" content="@og.Image.Height" />
+}

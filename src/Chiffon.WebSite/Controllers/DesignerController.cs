@@ -62,10 +62,10 @@
 
             SetDesignerViewData_(designerKey);
 
-            ViewBag.Title = String.Format(
+            Ontology.Relationships.CanonicalUrl = SiteMap.Designer(designerKey, p);
+            Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
-            ViewBag.MetaDescription = SR.Designer_Index_Description;
-            ViewBag.CanonicalLink = SiteMap.Designer(designerKey, p).ToString();
+            Ontology.Description = SR.Designer_Index_Description;
 
             return View(ViewName.Designer.Index, model);
         }
@@ -93,11 +93,11 @@
 
             SetDesignerViewData_(designerKey, categoryKey);
 
-            ViewBag.Title = String.Format(
+            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerCategory(designerKey, categoryKey, p);
+            Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
                 model.Category.DisplayName, model.Designer.DisplayName);
-            ViewBag.MetaDescription = SR.Designer_Category_Description;
-            ViewBag.CanonicalLink = SiteMap.DesignerCategory(designerKey, categoryKey, p).ToString();
+            Ontology.Description = SR.Designer_Category_Description;
 
             return View(ViewName.Designer.Category, model);
         }
@@ -130,11 +130,11 @@
 
             SetDesignerViewData_(designerKey, categoryKey);
 
-            ViewBag.Title = String.Format(
+            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p);
+            Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
                 reference, model.Designer.DisplayName);
-            ViewBag.MetaDescription = SR.Designer_Pattern_Description;
-            ViewBag.CanonicalLink = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p).ToString();
+            Ontology.Description = SR.Designer_Pattern_Description;
 
             return View(ViewName.Designer.Pattern, model);
         }

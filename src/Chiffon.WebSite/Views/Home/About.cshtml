@@ -1,11 +1,12 @@
 ﻿@using Chiffon.Infrastructure
+@using Narvalo.Web.Semantic
 
 @{
  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="home_about serif serif_large">
- @Html.HomeAboutContent((ChiffonLanguage)ViewBag.Language)
+ @Html.Partial(ViewName.Home.AboutContent, (ChiffonLanguage)ViewBag.Language)
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>

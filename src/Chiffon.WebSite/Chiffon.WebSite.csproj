@@ -183,6 +183,7 @@
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
     <Compile Include="Common\EmptyPartialViewResult.cs" />
     <Compile Include="Common\Enumerable`1%24.cs" />
+    <Compile Include="Common\Filters\OntologyFilterAttribute.cs" />
     <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
@@ -309,6 +310,7 @@
     <Content Include="assets\css\chiffon.responsive.3.less" />
     <Content Include="assets\css\chiffon.responsive.2.less" />
     <Content Include="assets\css\chiffon.responsive.1.less" />
+    <Content Include="App_Code\OntologyHelpers.cshtml" />
     <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="errors\index.html" />

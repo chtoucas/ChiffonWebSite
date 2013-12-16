@@ -9,6 +9,7 @@
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Narvalo;
+    using Narvalo.Web.Semantic;
 
     [SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
@@ -34,9 +35,10 @@
 
             model.Shuffle();
 
-            ViewBag.Title = SR.Home_Index_Title;
-            ViewBag.MetaDescription = SR.Home_Index_Description;
-            ViewBag.CanonicalLink = SiteMap.Home().ToString();
+            Ontology.Title = SR.Home_Index_Title;
+            Ontology.Description = SR.Home_Index_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Home();
+
             ViewBag.MainMenuClass = "index";
 
             return View(ViewName.Home.Index, model);
@@ -45,10 +47,11 @@
         [HttpGet]
         public ActionResult About()
         {
-            ViewBag.Title = SR.Home_About_Title;
-            ViewBag.MetaDescription = SR.Home_About_Description;
-            ViewBag.SchemaWebPage = "http://schema.org/AboutPage";
-            ViewBag.CanonicalLink = SiteMap.About().ToString();
+            Ontology.Title = SR.Home_About_Title;
+            Ontology.Description = SR.Home_About_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.About();
+            Ontology.SchemaOrg.ItemType = SchemaOrgType.AboutPage;
+
             ViewBag.MainMenuClass = "about";
 
             return View(ViewName.Home.About);
@@ -59,10 +62,11 @@
         {
             var model = _queries.ListDesigners(Culture).OrderBy(_ => _.Nickname.ValueOrElse(_.LastName));
 
-            ViewBag.Title = SR.Home_Contact_Title;
-            ViewBag.MetaDescription = SR.Home_Contact_Description;
-            ViewBag.SchemaWebPage = "http://schema.org/ContactPage";
-            ViewBag.CanonicalLink = SiteMap.Contact().ToString();
+            Ontology.Title = SR.Home_Contact_Title;
+            Ontology.Description = SR.Home_Contact_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Contact();
+            Ontology.SchemaOrg.ItemType = SchemaOrgType.ContactPage;
+
             ViewBag.MainMenuClass = "contact";
 
             return View(ViewName.Home.Contact, model);

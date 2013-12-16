@@ -20,7 +20,7 @@
         public CultureInfo Culture { get { return _culture; } }
         public CultureInfo UICulture { get { return _uiCulture; } }
 
-        public string LanguageName
+        public string UILanguageName
         {
             get { return UICulture.TwoLetterISOLanguageName; }
         }
@@ -29,7 +29,7 @@
         {
             switch (language) {
                 case ChiffonLanguage.English:
-                    return new ChiffonCulture(new CultureInfo("en-US"), new CultureInfo("en"));
+                    return new ChiffonCulture(new CultureInfo("en-US"), new CultureInfo("en-US"));
                 case ChiffonLanguage.Default:
                 default:
                     return new ChiffonCulture(new CultureInfo("fr-FR"), new CultureInfo("fr-FR"));

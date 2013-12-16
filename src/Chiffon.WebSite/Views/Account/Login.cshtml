@@ -2,7 +2,7 @@
 
 <div class="account_login text_center serif fx_topborder">
  <div class="serif_large">
-  @Html.AccountLoginContent((ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.Account.LoginContent, (ChiffonLanguage)ViewBag.Language)
  </div>
  <form method=post action="/connecte" id=login_form>
   <p id=error_container class="serif_medium error_container"></p>

@@ -117,18 +117,18 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pour quel motif, Simone ? Collectif de designers textile..
         /// </summary>
-        public static string DefaultMetaDescription {
+        public static string DefaultDescription {
             get {
-                return ResourceManager.GetString("DefaultMetaDescription", resourceCulture);
+                return ResourceManager.GetString("DefaultDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Design textile, Illustrations, Motifs.
         /// </summary>
-        public static string DefaultMetaKeywords {
+        public static string DefaultKeywords {
             get {
-                return ResourceManager.GetString("DefaultMetaKeywords", resourceCulture);
+                return ResourceManager.GetString("DefaultKeywords", resourceCulture);
             }
         }
         

@@ -1,15 +1,16 @@
 ﻿@using Chiffon.Entities
 @using Chiffon.Infrastructure
+@using Narvalo.Web.Semantic
 
 @model IEnumerable<Designer>
 
-<div class="home_contact text_center fx_topborder" itemscope itemtype="http://schema.org/Organization">
+<div class="home_contact text_center fx_topborder" itemscope itemtype="@SchemaOrgType.Organization">
  <p class="serif serif_large">
-  @Html.HomeContactTitle((ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.Home.ContactTitle, (ChiffonLanguage)ViewBag.Language)
  </p>
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {
-   <li itemprop=member itemscope itemtype="http://schema.org/Person">
+   <li itemprop=member itemscope itemtype="@SchemaOrgType.Person">
     <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=loose><span itemprop="name">@designer.DisplayName</span></a></h2>
     <ul>
      <li class=avatar>

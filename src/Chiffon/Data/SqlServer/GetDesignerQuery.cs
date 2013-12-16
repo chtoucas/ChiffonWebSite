@@ -45,7 +45,7 @@
         protected override void PrepareCommand(SqlCommand command)
         {
             command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
-            command.AddParameter("@language", SqlDbType.Char, Culture.LanguageName);
+            command.AddParameter("@language", SqlDbType.Char, Culture.UILanguageName);
         }
     }
 }

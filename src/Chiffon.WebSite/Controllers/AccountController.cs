@@ -53,11 +53,11 @@
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            Ontology.Title = SR.Account_Login_Title;
+            Ontology.Description = SR.Account_Login_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Login();
 
-            ViewBag.Title = SR.Account_Login_Title;
-            ViewBag.MetaDescription = SR.Account_Login_Description;
-            ViewBag.CanonicalLink = SiteMap.Login().ToString();
+            ViewBag.ReturnUrl = returnUrl;
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(ViewName.Account.Login);
@@ -71,9 +71,9 @@
         // FIXME: Remettre en place returnUrl.
         public ActionResult Register(/*string returnUrl*/)
         {
-            ViewBag.Title = SR.Account_Register_Title;
-            ViewBag.MetaDescription = SR.Account_Register_Description;
-            ViewBag.CanonicalLink = SiteMap.Register().ToString();
+            Ontology.Title = SR.Account_Register_Title;
+            Ontology.Description = SR.Account_Register_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(ViewName.Account.Register, new RegisterViewModel());
@@ -88,68 +88,65 @@
         {
             Requires.NotNull(contact, "contact");
 
-            if (ModelState.IsValid) {
-                if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
-                    return View(ViewName.Account.RegisterTwice);
-                }
+            Ontology.Title = SR.Account_Register_Title;
+            Ontology.Description = SR.Account_Register_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
-                ViewBag.Title = SR.Account_Register_Title;
-                ViewBag.MetaDescription = SR.Account_Register_Description;
-                ViewBag.CanonicalLink = SiteMap.Register().ToString();
-
-                // FIXME:
-                if (contact.Message == null) { contact.Message = String.Empty; }
-                if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
-
-                var publicKey = CreateContact_(contact);
-
-                // Envoi de l'email de confirmation d'inscription.
-                // FIXME: Utiliser LastName, FirstName pour les anglishes.
-                var emailAddress = new MailAddress(
-                    contact.EmailAddress, contact.FirstName + " " + contact.LastName);
-
-                var message 
-                    = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.LanguageName);
-                //_smtpClient.Send(message);
-                using (var smtpClient = new SmtpClient()) {
-                    smtpClient.Send(message);
-                }
-
-                // FIXME: 
-                string userName = contact.FirstName + " " + contact.LastName;
-                _formsService.SignIn(userName, false /* createPersistentCookie */);
-
-                // FIXME: vérifier le contenu de l'URL.
-                // FIXME: rajouter un indicateur que tout s'est bien passé.
-                var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
-                //if (nextUrl.IsSome) {
-                //    return Redirect(nextUrl.ToString());
-                //}
-                //else {
-                //    return RedirectToRoute(RouteName.Home.Index);
-                //}
-
-                var model = new NewContactViewModel {
-                    NextUrl = nextUrl.ValueOrElse(Environment.BaseUri).ToString(),
-                };
-
-                return View(ViewName.Account.PostRegister, model);
-            }
-            else {
-                ViewBag.Title = SR.Account_Register_Title;
-                ViewBag.MetaDescription = SR.Account_Register_Description;
-                ViewBag.CanonicalLink = SiteMap.Register().ToString();
-
+            if (!ModelState.IsValid) {
                 return View(ViewName.Account.Register, contact);
             }
+
+            if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
+                return View(ViewName.Account.RegisterTwice);
+            }
+
+            // FIXME:
+            if (contact.Message == null) { contact.Message = String.Empty; }
+            if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
+
+            var publicKey = CreateContact_(contact);
+
+            // Envoi de l'email de confirmation d'inscription.
+            // FIXME: Utiliser LastName, FirstName pour les anglishes.
+            var emailAddress = new MailAddress(
+                contact.EmailAddress, contact.FirstName + " " + contact.LastName);
+
+            var message
+                = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.UILanguageName);
+            //_smtpClient.Send(message);
+            using (var smtpClient = new SmtpClient()) {
+                smtpClient.Send(message);
+            }
+
+            // FIXME: 
+            string userName = contact.FirstName + " " + contact.LastName;
+            _formsService.SignIn(userName, false /* createPersistentCookie */);
+
+            // FIXME: vérifier le contenu de l'URL.
+            // FIXME: rajouter un indicateur que tout s'est bien passé.
+            var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
+            //if (nextUrl.IsSome) {
+            //    return Redirect(nextUrl.ToString());
+            //}
+            //else {
+            //    return RedirectToRoute(RouteName.Home.Index);
+            //}
+
+            var model = new NewContactViewModel
+            {
+                NextUrl = nextUrl.ValueOrElse(Environment.BaseUri).ToString(),
+            };
+
+            return View(ViewName.Account.PostRegister, model);
         }
 
         [HttpGet]
         public ActionResult Newsletter()
         {
-            ViewBag.Title = SR.Account_Newsletter_Title;
-            ViewBag.MetaDescription = SR.Account_Newsletter_Description;
-            ViewBag.CanonicalLink = SiteMap.Newsletter().ToString();
+            Ontology.Title = SR.Account_Newsletter_Title;
+            Ontology.Description = SR.Account_Newsletter_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Newsletter();
+
             ViewBag.MainMenuClass = "newsletter";
 
             return View(ViewName.Account.Newsletter);

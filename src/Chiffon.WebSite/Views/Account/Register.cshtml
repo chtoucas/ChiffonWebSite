@@ -7,11 +7,11 @@
   @VR.Account_Register_Welcome
  </p>
  <p class="serif_large">
-  @Html.AccountRegisterWarning((ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.Account.RegisterWarning, (ChiffonLanguage)ViewBag.Language)
  </p>
  <hr />
  <p class="serif_medium">
-  @Html.AccountRegisterHelp((ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.Account.RegisterHelp, (ChiffonLanguage)ViewBag.Language)
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=sansserif id=register_form>

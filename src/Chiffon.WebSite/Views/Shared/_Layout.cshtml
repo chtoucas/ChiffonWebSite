@@ -1,37 +1,31 @@
 ﻿@using Chiffon.Infrastructure
+@using Narvalo.Web.Semantic
+
+@{
+ var ontology = (Ontology)ViewBag.Ontology;
+ var language = (ChiffonLanguage)ViewBag.Language;
+}
 
 <!DOCTYPE html>
-<html lang="@ViewBag.LanguageName" prefix="og: http://ogp.me/ns#">
+<html lang="@ontology.LanguageName" prefix="@OpenGraphMetadata.Namespace">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
- <title>@ViewBag.Title</title>
- <meta name=description content="@ViewBag.MetaDescription" />
- <meta name=keywords content="@ViewBag.MetaKeywords" />
- <meta name=copyright content="Copyright © 2013 Pour quel motif, Simone ?" />
- <meta name=robots content="@ViewBag.MetaRobots" />
+ <title>@ontology.Title</title>
+ @OntologyHelpers.StandardMetadata(ontology)
+ @OntologyHelpers.OpenGraphMetadata(ontology.OpenGraph)
+ @OntologyHelpers.RelationshipLinks(ontology.Relationships)
  <meta name=viewport content="width=device-width, initial-scale=1" />
- @* OpenGraph *@
- @*<meta property="og:title" content="@ViewBag.Title" />
- <meta property="og:type" content="website" />
- <meta property="og:url" content="@ViewBag.CanonicalLink" />
- <meta property="og:image" content="http://wznw.org/chiffon/img/logo.png" />
- <meta property="og:image:type" content="image/png" />
- <meta property="og:image:width" content="144" />
- <meta property="og:image:height" content="144" />
- <meta property="og:description" content="@ViewBag.MetaDescription" />*@
- @*<base href=" />"/>*@
- <link rel=canonical href="@ViewBag.CanonicalLink" />
- <link rel=author href="/humans.txt" type="text/plain" />
+ @*<base href="/"/>*@
  @{Html.RenderAction(ActionName.Widget.CommonStyleSheet, ControllerName.Widget);}
  @{Html.Partial(ViewName.Html5Shim);}
 </head>
-<body itemscope itemtype="@ViewBag.SchemaWebPage">
+<body itemscope itemtype="@ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@Html.LayoutTitle((ChiffonLanguage)ViewBag.Language)</h1>
+  <h1>@Html.Partial(ViewName.LayoutTitle, language)</h1>
   <nav class="clearfix nav_lang">
-   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = ViewBag.Language });}
+   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = language });}
   </nav>
   <nav class="nav_main @ViewBag.MainMenuClass">
    <ul class=li_center>
@@ -58,14 +52,14 @@
  </header>
  @RenderBody()
  <footer>
-  @Html.LayoutAuthorsRights((ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.LayoutAuthorsRights, language)
   @Html.Partial(ViewName.LayoutCopyright)
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new
  {
   actionName = ViewBag.ActionName,
   controllerName = ViewBag.ControllerName,
-  languageName = ViewBag.LanguageName,
+  languageName = ontology.LanguageName,
  });}
  @{Html.RenderAction(ActionName.Widget.GoogleAnalytics, ControllerName.Widget);}
 </body>

@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using System.Globalization
 @using System.Web.Mvc
 @using Chiffon.Common
 @using Chiffon.Infrastructure
@@ -48,25 +49,25 @@
 }
 
 @*@helper Pager(UrlHelper Url, PatternViewModel Model)
-{
- // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
- <p id=pager class=pager>
-  @if (Model.IsFirstPage) {
-   @VR.Pager_Previous
-  }
-  else {
-   <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
-  }
-  /
-  @if (Model.IsLastPage) {
-   @VR.Pager_Next
-  }
-  else {
-   <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
-  }
-  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
- </p>
-}*@
+ {
+  // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
+  <p id=pager class=pager>
+   @if (Model.IsFirstPage) {
+    @VR.Pager_Previous
+   }
+   else {
+    <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+   }
+   /
+   @if (Model.IsLastPage) {
+    @VR.Pager_Next
+   }
+   else {
+    <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+   }
+   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
+  </p>
+ }*@
 
 @*@helper LanguageMenu(ChiffonLanguage language)
  {
@@ -102,10 +103,4 @@
    ga('send', 'pageview');
   </script>
   }
- }*@
-
-@*@helper DesignerWebSite(Uri url)
- {
-  var website = url.ToString().Replace("http://", String.Empty);
-  <li class="web sansserif"><a href="//@website" rel=external target=_blank>@website</a></li>
  }*@

@@ -155,7 +155,15 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
+    <Compile Include="Narvalo.Web.Semantic\OpenGraphLocale.cs" />
+    <Compile Include="Narvalo.Web.Semantic\OpenGraphImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Narvalo.Web.Semantic\Ontology.cs" />
+    <Compile Include="Narvalo.Web.Semantic\OpenGraphType.cs" />
+    <Compile Include="Narvalo.Web.Semantic\OpenGraphMetadata.cs" />
+    <Compile Include="Narvalo.Web.Semantic\Relationships.cs" />
+    <Compile Include="Narvalo.Web.Semantic\SchemaOrgType.cs" />
+    <Compile Include="Narvalo.Web.Semantic\SchemaOrgVocabulary.cs" />
     <Compile Include="Services\Enumerable`1%24.cs" />
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\IPatternService.cs" />

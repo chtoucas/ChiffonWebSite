@@ -1,14 +1,10 @@
 ﻿namespace Chiffon.Common.Filters
 {
     using System;
-    using System.Diagnostics;
     using System.Web.Mvc;
-    using Chiffon.Resources;
     using Narvalo;
-    using Serilog;
+    using Narvalo.Web.Semantic;
 
-    // TODO: log & check in debug mode !
-    // TODO: canonical attribute.
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class SeoPolicyAttribute : ActionFilterAttribute
     {
@@ -22,52 +18,8 @@
         {
             Requires.NotNull(filterContext, "filterContext");
 
-            filterContext.Controller.ViewData["MetaRobots"] = RobotsDirective;
-        }
-
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            Requires.NotNull(filterContext, "filterContext");
-
-            var viewBag = filterContext.Controller.ViewBag;
-            var viewData = filterContext.Controller.ViewData;
-
-            // TODO: ajouter l'en-tête Canonical ?
-            // TODO: ajouter dynamiquement la balise meta ?
-            __CheckCanonicalLink(filterContext);
-
-            if (String.IsNullOrEmpty(viewBag.MetaDescription)) {
-                __Log("No description given, using default.");
-                viewData["MetaDescription"] = SR.DefaultMetaDescription;
-            }
-            if (String.IsNullOrEmpty(viewBag.MetaKeywords)) {
-                viewData["MetaKeywords"] = SR.DefaultMetaKeywords;
-            }
-            if (String.IsNullOrEmpty(viewBag.Title)) {
-                __Log("No title given, using default.");
-                viewData["Title"] = SR.DefaultTitle;
-            }
-
-            // Schema.Org
-            if (String.IsNullOrEmpty(viewBag.SchemaWebPage)) {
-                viewData["SchemaWebPage"] = "http://schema.org/WebPage";
-            }
-        }
-
-        [Conditional("DEBUG")]
-        static void __CheckCanonicalLink(ActionExecutedContext filterContext)
-        {
-            //if (filterContext.HttpContext.IsDebuggingEnabled) {
-            if (String.IsNullOrEmpty(filterContext.Controller.ViewBag.CanonicalLink)) {
-                __Log("No canonical link given.");
-            }
-            //}
-        }
-
-        [Conditional("DEBUG")]
-        static void __Log(string message)
-        {
-            Log.Debug(message);
+            var ontology = (Ontology)filterContext.Controller.ViewData["Ontology"];
+            ontology.RobotsDirective = RobotsDirective;
         }
     }
 }
