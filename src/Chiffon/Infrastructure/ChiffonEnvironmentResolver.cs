@@ -20,7 +20,7 @@
             return ResolveFromHost_(uri.Host);
         }
 
-        internal static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
+        internal static ChiffonEnvironment? Resolve(HttpRequest request, HttpSessionState session)
         {
             Requires.NotNull(request, "request");
 
@@ -42,7 +42,8 @@
                 language = MayGetLanguageFromSession_(session);
             }
 
-            return new ChiffonEnvironment(language.ValueOrElse(ChiffonLanguage.Default), uri);
+            return language.Map(_ => new ChiffonEnvironment(_, uri)).ToNullable();
+
         }
 
         static Uri GetBaseUri_(Uri uri)

@@ -45,7 +45,6 @@
 
         // > Paramètres facultatifs <
 
-        //public Uri AudioUrl { get; set; }
         public string Description { get { return _ontology.Description; } }
         public string Determiner { get; set; }
         public OpenGraphLocale Locale { get { return _locale; } }
@@ -59,12 +58,9 @@
         }
 
         public string SiteName { get; set; }
-        //public Uri VideoUrl { get; set; }
 
         public void AddAlternativeLocale(OpenGraphLocale locale)
         {
-            Requires.NotNull(locale, "locale");
-
             _alternativeLocales.Add(locale);
         }
     }

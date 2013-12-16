@@ -23,7 +23,6 @@
 
         protected PageController(ChiffonEnvironment environment, ISiteMap siteMap)
         {
-            Requires.NotNull(environment, "environment");
             Requires.NotNull(siteMap, "siteMap");
 
             _environment = environment;

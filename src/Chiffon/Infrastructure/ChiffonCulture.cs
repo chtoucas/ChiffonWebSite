@@ -3,10 +3,10 @@
     using System.Globalization;
     using Narvalo;
 
-    public class ChiffonCulture
+    public struct ChiffonCulture
     {
-        readonly CultureInfo _culture;
-        readonly CultureInfo _uiCulture;
+        CultureInfo _culture;
+        CultureInfo _uiCulture;
 
         ChiffonCulture(CultureInfo culture, CultureInfo uiCulture)
         {

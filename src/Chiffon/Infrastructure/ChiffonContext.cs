@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System.Web;
-    using Narvalo;
 
     public class ChiffonContext
     {
@@ -12,8 +11,6 @@
 
         public ChiffonContext(ChiffonEnvironment environment)
         {
-            Requires.NotNull(environment, "environment");
-
             _environment = environment;
         }
 

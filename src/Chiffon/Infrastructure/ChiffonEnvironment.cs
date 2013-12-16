@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Narvalo;
 
-    public class ChiffonEnvironment
+    public struct ChiffonEnvironment
     {
         static readonly ChiffonEnvironment Default_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
@@ -19,9 +19,9 @@
             }
         }
 
-        readonly Uri _baseUri;
-        readonly ChiffonCulture _culture;
-        readonly ChiffonLanguage _language;
+        Uri _baseUri;
+        ChiffonCulture _culture;
+        ChiffonLanguage _language;
 
         public ChiffonEnvironment(ChiffonLanguage language, Uri baseUri)
         {
@@ -29,7 +29,7 @@
 
             _language = language;
             _baseUri = baseUri;
-            _culture = ChiffonCulture.Create(Language);
+            _culture = ChiffonCulture.Create(_language);
         }
 
         public static ChiffonEnvironment Default

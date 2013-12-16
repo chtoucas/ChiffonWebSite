@@ -3,9 +3,9 @@
     using System.Globalization;
     using Narvalo;
 
-    public class OpenGraphLocale
+    public struct OpenGraphLocale
     {
-        readonly CultureInfo _culture;
+        CultureInfo _culture;
 
         public OpenGraphLocale(CultureInfo culture)
         {
