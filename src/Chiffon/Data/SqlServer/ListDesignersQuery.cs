@@ -4,21 +4,23 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Globalization;
     using System.Net.Mail;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Data;
 
     public class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
     {
-        public ListDesignersQuery(string connectionString, ChiffonCulture culture)
+        readonly CultureInfo _culture;
+
+        public ListDesignersQuery(string connectionString, CultureInfo culture)
             : base(connectionString, "usp_ListDesigners")
         {
-            Culture = culture;
-        }
+            Requires.NotNull(culture, "culture");
 
-        public ChiffonCulture Culture { get; private set; }
+            _culture = culture;
+        }
 
         protected override IEnumerable<Designer> Execute(SqlDataReader rdr)
         {
@@ -49,7 +51,7 @@
 
         protected override void PrepareCommand(SqlCommand command)
         {
-            command.AddParameter("@language", SqlDbType.Char, Culture.UILanguageName);
+            command.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
         }
     }
 }

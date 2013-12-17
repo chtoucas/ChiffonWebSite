@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
 
     public interface IQueryCache
     {
@@ -16,8 +16,8 @@
             Func<DesignerKey, IEnumerable<Category>> query);
 
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture,
-            Func<ChiffonCulture, IEnumerable<Designer>> query);
+        IEnumerable<Designer> GetOrInsertDesigners(CultureInfo culture,
+            Func<CultureInfo, IEnumerable<Designer>> query);
 
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, 

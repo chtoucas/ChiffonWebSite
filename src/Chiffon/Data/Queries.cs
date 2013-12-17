@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Data
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using Chiffon.Data.SqlServer;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
@@ -24,7 +25,7 @@
             return q.Execute();
         }
 
-        public Designer GetDesigner(DesignerKey designerKey, ChiffonCulture culture)
+        public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {
             var q = new GetDesignerQuery(ConnectionString, designerKey, culture);
             return q.Execute();
@@ -42,7 +43,7 @@
             return q.Execute();
         }
 
-        public IEnumerable<Designer> ListDesigners(ChiffonCulture culture)
+        public IEnumerable<Designer> ListDesigners(CultureInfo culture)
         {
             var q = new ListDesignersQuery(ConnectionString, culture);
             return q.Execute();

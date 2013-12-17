@@ -1,44 +1,62 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
-    using System.Collections.Generic;
+    using System.Globalization;
     using Narvalo;
 
-    public struct ChiffonEnvironment
+    public struct ChiffonEnvironment : IEquatable<ChiffonEnvironment>
     {
-        static readonly ChiffonEnvironment Default_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
-
-        public static IEnumerable<ChiffonEnvironment> Environments
-        {
-            get
-            {
-                yield return Default_;
-                yield return new ChiffonEnvironment(
-                    ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
-            }
-        }
-
         Uri _baseUri;
-        ChiffonCulture _culture;
+        CultureInfo _culture;
+        CultureInfo _uiCulture;
         ChiffonLanguage _language;
 
-        public ChiffonEnvironment(ChiffonLanguage language, Uri baseUri)
+        internal ChiffonEnvironment(ChiffonLanguage language, Uri baseUri)
         {
             Requires.NotNull(baseUri, "baseUri");
 
             _language = language;
             _baseUri = baseUri;
-            _culture = ChiffonCulture.Create(_language);
-        }
-
-        public static ChiffonEnvironment Default
-        {
-            get { return Default_; }
+            _culture = language.GetCultureInfo();
+            _uiCulture = language.GetUICultureInfo();
         }
 
         public Uri BaseUri { get { return _baseUri; } }
-        public ChiffonCulture Culture { get { return _culture; } }
+        public CultureInfo Culture { get { return _culture; } }
+        public CultureInfo UICulture { get { return _uiCulture; } }
         public ChiffonLanguage Language { get { return _language; } }
+
+        #region IEquatable<ChiffonEnvironment>
+
+        public bool Equals(ChiffonEnvironment other)
+        {
+            return _language.Equals(other._language);
+        }
+
+        #endregion
+
+        public static bool operator ==(ChiffonEnvironment left, ChiffonEnvironment right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ChiffonEnvironment left, ChiffonEnvironment right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ChiffonEnvironment)) {
+                return false;
+            }
+
+            return Equals((ChiffonEnvironment)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _language.GetHashCode();
+        }
     }
 }

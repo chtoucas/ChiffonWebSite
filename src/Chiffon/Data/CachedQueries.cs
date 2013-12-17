@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Data
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
@@ -27,7 +28,7 @@
             return _cache.GetOrInsertShowcasedPatterns(() => _inner.ListShowcasedPatterns());
         }
 
-        public Designer GetDesigner(DesignerKey designerKey, ChiffonCulture culture)
+        public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {
             return (from _ in ListDesigners(culture) where _.Key == designerKey select _).SingleOrDefault();
         }
@@ -44,7 +45,7 @@
             return _cache.GetOrInsertCategories(designerKey, _ => _inner.ListCategories(_));
         }
 
-        public IEnumerable<Designer> ListDesigners(ChiffonCulture culture)
+        public IEnumerable<Designer> ListDesigners(CultureInfo culture)
         {
             return _cache.GetOrInsertDesigners(culture, _ => _inner.ListDesigners(_));
         }

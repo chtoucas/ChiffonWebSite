@@ -9,7 +9,11 @@
         public string ItemType
         {
             get { return _itemType; }
-            set { _itemType = value; }
+            set
+            {
+                Requires.NotNullOrEmpty(value, "value");
+                _itemType = value;
+            }
         }
     }
 }

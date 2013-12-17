@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Globalization;
     using System.Threading;
     using System.Web;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -50,18 +51,18 @@
             var environment = app.Context.GetChiffonContext().Environment;
 
             if (!environment.Language.IsDefault()) {
-                InitializeCulture_(environment.Culture);
+                InitializeCulture_(environment.Culture, environment.UICulture);
             }
         }
 
         // WARNING: Cette méthode ne convient pas avec les actions asynchrones 
         // car on peut changer de Thread.
-        static void InitializeCulture_(ChiffonCulture culture)
+        static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
         {
-            // Culture utilisée par ResourceManager.
-            Thread.CurrentThread.CurrentUICulture = culture.UICulture;
             // Culture utilisée par System.Globalization.
-            Thread.CurrentThread.CurrentCulture = culture.Culture;
+            Thread.CurrentThread.CurrentCulture = culture;
+            // Culture utilisée par ResourceManager.
+            Thread.CurrentThread.CurrentUICulture = uiCulture;
         }
     }
 }

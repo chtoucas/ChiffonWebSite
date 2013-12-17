@@ -132,7 +132,6 @@
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMapFactory.cs" />
     <Compile Include="Infrastructure\ChiffonConfig.cs" />
-    <Compile Include="Infrastructure\ChiffonCulture.cs" />
     <Compile Include="Infrastructure\ChiffonEnvironment.cs" />
     <Compile Include="Infrastructure\ChiffonEnvironmentResolver.cs" />
     <Compile Include="Infrastructure\ChiffonLanguage.cs" />
@@ -155,6 +154,7 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
+    <Compile Include="Narvalo.Web.Semantic\IOpenGraphMetadata.cs" />
     <Compile Include="Narvalo.Web.Semantic\OpenGraphLocale.cs" />
     <Compile Include="Narvalo.Web.Semantic\OpenGraphImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

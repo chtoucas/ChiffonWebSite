@@ -84,6 +84,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel contact)
         {
             Requires.NotNull(contact, "contact");
@@ -112,7 +113,7 @@
                 contact.EmailAddress, contact.FirstName + " " + contact.LastName);
 
             var message
-                = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, Culture.UILanguageName);
+                = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, UICulture.TwoLetterISOLanguageName);
             //_smtpClient.Send(message);
             using (var smtpClient = new SmtpClient()) {
                 smtpClient.Send(message);

@@ -3,25 +3,27 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Globalization;
     using System.Net.Mail;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Data;
 
     public class GetDesignerQuery : StoredProcedure<Designer>
     {
-        public GetDesignerQuery(string connectionString, DesignerKey designerKey, ChiffonCulture culture)
+        readonly CultureInfo _culture;
+        readonly DesignerKey _designerKey;
+
+        public GetDesignerQuery(string connectionString, DesignerKey designerKey, CultureInfo culture)
             : base(connectionString, "usp_GetDesigner")
         {
-            DesignerKey = designerKey;
-            Culture = culture;
+            Requires.NotNull(culture, "culture");
+
+            _designerKey = designerKey;
+            _culture = culture;
 
             CommandBehavior = CommandBehavior.CloseConnection | CommandBehavior.SingleRow;
         }
-
-        public ChiffonCulture Culture { get; private set; }
-        public DesignerKey DesignerKey { get; private set; }
 
         protected override Designer Execute(SqlDataReader rdr)
         {
@@ -29,7 +31,7 @@
 
             if (!rdr.Read()) { return null; }
 
-            return new Designer(DesignerKey) {
+            return new Designer(_designerKey) {
                 AvatarCategory = rdr.GetString("avatar_category"),
                 AvatarReference = rdr.GetString("avatar_reference"),
                 AvatarVersion = rdr.GetString("avatar_version"),
@@ -44,8 +46,8 @@
 
         protected override void PrepareCommand(SqlCommand command)
         {
-            command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
-            command.AddParameter("@language", SqlDbType.Char, Culture.UILanguageName);
+            command.AddParameter("@designer", SqlDbType.NVarChar, _designerKey.Value);
+            command.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
         }
     }
 }

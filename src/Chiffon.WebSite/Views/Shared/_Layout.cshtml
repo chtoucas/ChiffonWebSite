@@ -7,7 +7,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="@ontology.LanguageName" prefix="@OpenGraphMetadata.Namespace">
+<html lang="@ontology.LanguageName" prefix="@Ontology.OpenGraphNamespace">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,11 +19,11 @@
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>*@
  @{Html.RenderAction(ActionName.Widget.CommonStyleSheet, ControllerName.Widget);}
- @{Html.Partial(ViewName.Html5Shim);}
+ @{Html.RenderPartial(ViewName.Html5Shim);}
 </head>
 <body itemscope itemtype="@ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@Html.Partial(ViewName.LayoutTitle, language)</h1>
+  <h1>@{Html.RenderPartial(ViewName.LayoutTitle, language);}</h1>
   <nav class="clearfix nav_lang">
    @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = language });}
   </nav>
@@ -52,8 +52,8 @@
  </header>
  @RenderBody()
  <footer>
-  @Html.Partial(ViewName.LayoutAuthorsRights, language)
-  @Html.Partial(ViewName.LayoutCopyright)
+  @{Html.RenderPartial(ViewName.LayoutAuthorsRights, language);}
+  @{Html.RenderPartial(ViewName.LayoutCopyright);}
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new
  {

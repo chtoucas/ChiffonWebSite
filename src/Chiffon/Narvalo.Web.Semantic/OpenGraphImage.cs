@@ -8,13 +8,16 @@
         public const string JpegMimeType = "image/jpeg";
         public const string PngMimeType = "image/png";
 
-        Uri _url;
+        readonly Uri _url;
 
-        public Uri Url
+        public OpenGraphImage(Uri url)
         {
-            get { return _url; }
-            set { Requires.NotNull(value, "value"); _url = value; }
+            Requires.NotNull(url, "url");
+
+            _url = url;
         }
+
+        public Uri Url { get { return _url; } }
 
         public int Height { get; set; }
         public int Width { get; set; }

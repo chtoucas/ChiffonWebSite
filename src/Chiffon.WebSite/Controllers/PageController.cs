@@ -1,6 +1,9 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
@@ -16,6 +19,8 @@
     [SeoPolicy]
     public class PageController : Controller
     {
+        static IEnumerable<OpenGraphLocale> OpenGraphLocales_;
+
         readonly ChiffonEnvironment _environment;
         readonly Ontology _ontology;
         readonly ISiteMap _siteMap;
@@ -27,10 +32,22 @@
             _environment = environment;
             _siteMap = siteMap;
 
-            _ontology = new Ontology(Culture.UICulture);
+            _ontology = new Ontology(UICulture);
         }
 
-        protected ChiffonCulture Culture { get { return Environment.Culture; } }
+        protected static IEnumerable<OpenGraphLocale> OpenGraphLocales
+        {
+            get
+            {
+                if (OpenGraphLocales_ == null) {
+                    OpenGraphLocales_ = from env in ChiffonEnvironmentResolver.Environments
+                                        select new OpenGraphLocale(env.UICulture);
+                }
+                return OpenGraphLocales_;
+            }
+        }
+
+        protected CultureInfo UICulture { get { return Environment.UICulture; } }
         protected ChiffonEnvironment Environment { get { return _environment; } }
         protected Ontology Ontology { get { return _ontology; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
@@ -57,20 +74,17 @@
             _ontology.OpenGraph.SiteName = SR.DefaultTitle;
 
             // Par défaut, on utilise le logo comme image.
-            _ontology.OpenGraph.Image = new OpenGraphImage {
+            _ontology.OpenGraph.Image = new OpenGraphImage(AssetManager.GetImage("logo.png")) {
                 Height = 144,
                 MimeType = OpenGraphImage.PngMimeType,
-                Url = AssetManager.GetImage("logo.png"),
                 Width = 144,
             };
 
             // Autres langues dans lesquelles la page est disponible.
-            foreach (var environment in ChiffonEnvironment.Environments) {
-                if (environment.Language == Environment.Language) {
-                    continue;
-                }
-                _ontology.OpenGraph.AddAlternativeLocale(new OpenGraphLocale(environment.Culture.UICulture));
-            }
+            var alternativeLocales = from _ in OpenGraphLocales
+                                     where _ != _ontology.OpenGraph.Locale
+                                     select _;
+            _ontology.OpenGraph.AddAlternativeLocales(alternativeLocales);
         }
     }
 }

@@ -27,7 +27,7 @@
         [HttpGet]
         public ActionResult Index()
         {
-            var designers = _queries.ListDesigners(Culture);
+            var designers = _queries.ListDesigners(UICulture);
             var patterns = _queries.ListShowcasedPatterns();
             var model = (from p in patterns
                          join d in designers on p.DesignerKey equals d.Key
@@ -60,7 +60,7 @@
         [HttpGet]
         public ActionResult Contact()
         {
-            var model = _queries.ListDesigners(Culture).OrderBy(_ => _.Nickname.ValueOrElse(_.LastName));
+            var model = _queries.ListDesigners(UICulture).OrderBy(_ => _.Nickname.ValueOrElse(_.LastName));
 
             Ontology.Title = SR.Home_Contact_Title;
             Ontology.Description = SR.Home_Contact_Description;

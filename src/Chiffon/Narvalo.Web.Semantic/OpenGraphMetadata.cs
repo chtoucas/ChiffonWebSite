@@ -2,17 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using Narvalo;
 
-    public class OpenGraphMetadata
+    public class OpenGraphMetadata : IOpenGraphMetadata
     {
-        public const string Namespace = "og: http://ogp.me/ns#";
-
+        readonly IList<OpenGraphLocale> _alternativeLocales = new List<OpenGraphLocale>();
         readonly OpenGraphLocale _locale;
         readonly Ontology _ontology;
 
-        IList<OpenGraphLocale> _alternativeLocales = new List<OpenGraphLocale>();
         string _type = OpenGraphType.WebSite;
 
         OpenGraphImage _image;
@@ -25,7 +22,7 @@
             _locale = new OpenGraphLocale(ontology.Culture);
         }
 
-        // > Paramètres obligatoires <
+        #region IOpenGraphMetadata
 
         public OpenGraphImage Image
         {
@@ -43,17 +40,15 @@
 
         public Uri Url { get { return _ontology.Relationships.CanonicalUrl; } }
 
-        // > Paramètres facultatifs <
-
         public string Description { get { return _ontology.Description; } }
         public string Determiner { get; set; }
         public OpenGraphLocale Locale { get { return _locale; } }
 
-        public IReadOnlyCollection<OpenGraphLocale> AlternativeLocales
+        public IEnumerable<OpenGraphLocale> AlternativeLocales
         {
             get
             {
-                return new ReadOnlyCollection<OpenGraphLocale>(_alternativeLocales);
+                return _alternativeLocales;
             }
         }
 
@@ -63,5 +58,14 @@
         {
             _alternativeLocales.Add(locale);
         }
+
+        public void AddAlternativeLocales(IEnumerable<OpenGraphLocale> locales)
+        {
+            foreach (var locale in locales) {
+                _alternativeLocales.Add(locale);
+            }
+        }
+
+        #endregion
     }
 }

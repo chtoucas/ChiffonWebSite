@@ -6,7 +6,6 @@
     using System.Web;
     using System.Web.Caching;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
 
     public class QueryCache : IQueryCache
@@ -46,7 +45,7 @@
             return GetOrInsert_(cacheKey, () => query(designerKey));
         }
 
-        public IEnumerable<Designer> GetOrInsertDesigners(ChiffonCulture culture, Func<ChiffonCulture, IEnumerable<Designer>> query)
+        public IEnumerable<Designer> GetOrInsertDesigners(CultureInfo culture, Func<CultureInfo, IEnumerable<Designer>> query)
         {
             var format = "Chiffon:Designer:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, culture);

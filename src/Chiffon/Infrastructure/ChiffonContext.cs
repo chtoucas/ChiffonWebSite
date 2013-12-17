@@ -7,7 +7,7 @@
         readonly ChiffonEnvironment _environment;
 
         internal ChiffonContext()
-            : this(ChiffonEnvironment.Default) { }
+            : this(ChiffonEnvironmentResolver.DefaultEnvironment) { }
 
         public ChiffonContext(ChiffonEnvironment environment)
         {

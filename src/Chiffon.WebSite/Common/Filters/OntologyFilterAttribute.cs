@@ -44,7 +44,7 @@
         }
 
         [Conditional("DEBUG")]
-        static void __CheckOpenGraphMetadata(OpenGraphMetadata metadata)
+        static void __CheckOpenGraphMetadata(IOpenGraphMetadata metadata)
         {
             // NB: On sait que metadata.Image n'est pas null car cette propriété 
             // est systématiquement initialisé dans PageController.

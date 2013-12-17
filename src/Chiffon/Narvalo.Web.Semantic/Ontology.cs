@@ -6,10 +6,12 @@
 
     public class Ontology
     {
+        public const string OpenGraphNamespace = "og: http://ogp.me/ns#";
+
         readonly CultureInfo _culture;
         readonly Relationships _relationships = new Relationships();
         readonly SchemaOrgVocabulary _schemaOrg = new SchemaOrgVocabulary();
-        readonly OpenGraphMetadata _openGraph;
+        readonly IOpenGraphMetadata _openGraph;
 
         string _keywords = String.Empty;
         string _robotsDirective = "index, follow";
@@ -29,7 +31,7 @@
             get { return Culture.TwoLetterISOLanguageName; }
         }
 
-        public OpenGraphMetadata OpenGraph
+        public IOpenGraphMetadata OpenGraph
         {
             get { return _openGraph; }
         }

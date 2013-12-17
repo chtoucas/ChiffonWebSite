@@ -71,10 +71,10 @@
 
             // FIXME: le chemin vers l'image devrait être absolu.
             var image = model.Previews.First();
-            Ontology.OpenGraph.Image = new OpenGraphImage {
+            var imageUrl = new Uri(Url.PreviewContent(designerKey, image.Reference, image.Version), UriKind.Relative);
+            Ontology.OpenGraph.Image = new OpenGraphImage(imageUrl) {
                 Height = ImageGeometry.PreviewHeight,
                 MimeType = OpenGraphImage.JpegMimeType,
-                Url = new Uri(Url.PreviewContent(designerKey, image.Reference, image.Version), UriKind.Relative),
                 Width = ImageGeometry.PreviewWidth,
             };
 
@@ -159,7 +159,7 @@
 
         DesignerViewItem GetDesignerViewItem_(DesignerKey designerKey)
         {
-            var designer = _queries.GetDesigner(designerKey, Culture);
+            var designer = _queries.GetDesigner(designerKey, UICulture);
             var categories = _queries.ListCategories(designerKey);
 
             return ObjectMapper.Map(designer, categories);

@@ -15,6 +15,7 @@
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(RouteName.Account.Register)" class=sansserif id=register_form>
+  @Html.AntiForgeryToken()
   <p id=error_container class="serif serif_medium error_container">@VR.Account_Register_ValidationMessage</p>
   <p>
    <label for=EmailAddress>@VR.Account_Register_EmailAddress</label>

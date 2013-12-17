@@ -124,6 +124,7 @@
         {
             Requires.NotNull(@this, "this");
 
+            // NB: En ajoutant le paramètre scheme, on obtient une URL absolue.
             var scheme = @this.RequestContext.HttpContext.Request.Url.Scheme;
             return @this.Action(actionName, controllerName, routeValues, scheme);
         }
@@ -132,6 +133,7 @@
         {
             Requires.NotNull(@this, "this");
 
+            // NB: En ajoutant le paramètre scheme, on obtient une URL absolue.
             var scheme = @this.RequestContext.HttpContext.Request.Url.Scheme;
             return @this.Action(actionName, controllerName, routeValues, scheme);
         }
