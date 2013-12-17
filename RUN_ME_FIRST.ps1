@@ -24,13 +24,13 @@ $tools = @(
   }
   @{
     'Name' = 'Node'
-    'Version' = '0.10.22'
-    'Source' = 'http://nodejs.org/dist/v0.10.21/node.exe'
+    'Version' = '0.10.23'
+    'Source' = 'http://nodejs.org/dist/v0.10.23/node.exe'
   }
   @{
     'Name' = 'Node Package Manager'
-    'Version' = '1.3.15'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.15.zip'
+    'Version' = '1.3.19'
+    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.19.zip'
   }
   # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
   @{
@@ -39,7 +39,7 @@ $tools = @(
     'Source' = 'http://dl.google.com/closure-compiler/compiler-20131014.zip'
   }
   # WARNING: La version 2.4.8 ne gère pas correctement les chemins Windows.
-  #          Cf. https://github.com/yui/yuicompressor/issues/78
+  # Cf. https://github.com/yui/yuicompressor/issues/78
   @{
     'Name' = 'YUI Compressor'
     'Version' = '2.4.7'
