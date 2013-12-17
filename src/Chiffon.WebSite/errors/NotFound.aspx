@@ -3,6 +3,6 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
  <p>
-  Les Simones sont confuses mais la page demandée n'existe pas.
+  <%: VR.Error_NotFound %>
  </p>
 </asp:Content>

@@ -3,6 +3,6 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
  <p>
-  Les Simones sont confuses mais le site est en cours de maintenance.
+  <%: VR.Error_ServiceUnavailable %>
  </p>
 </asp:Content>

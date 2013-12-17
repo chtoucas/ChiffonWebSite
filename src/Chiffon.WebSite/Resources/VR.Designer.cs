@@ -232,6 +232,51 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais la page demandée n&apos;existe pas..
+        /// </summary>
+        public static string Error_ClientError {
+            get {
+                return ResourceManager.GetString("Error_ClientError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site est dans les choux..
+        /// </summary>
+        public static string Error_InternalServerError {
+            get {
+                return ResourceManager.GetString("Error_InternalServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais la page demandée n&apos;existe pas..
+        /// </summary>
+        public static string Error_NotFound {
+            get {
+                return ResourceManager.GetString("Error_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site est dans les choux..
+        /// </summary>
+        public static string Error_ServerError {
+            get {
+                return ResourceManager.GetString("Error_ServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site est en cours de maintenance..
+        /// </summary>
+        public static string Error_ServiceUnavailable {
+            get {
+                return ResourceManager.GetString("Error_ServiceUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Nous contacter.
         /// </summary>
         public static string Home_About_ContactUs {

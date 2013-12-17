@@ -3,6 +3,6 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
  <p>
-  Les Simones sont confuses mais le site est dans les choux.
+  <%: VR.Error_InternalServerError %>
  </p>
 </asp:Content>
