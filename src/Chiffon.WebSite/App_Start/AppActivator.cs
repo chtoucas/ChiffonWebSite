@@ -10,6 +10,8 @@ using WebActivatorEx;
 
 namespace Chiffon
 {
+    //using System.Diagnostics;
+    //using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Autofac;
@@ -58,7 +60,7 @@ namespace Chiffon
         {
             Log.Information("Application starting.");
 
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
         }

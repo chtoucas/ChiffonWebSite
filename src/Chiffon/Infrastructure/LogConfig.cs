@@ -3,7 +3,6 @@
     using System.ComponentModel.Composition.Hosting;
     using Narvalo;
     using Serilog;
-    //using Serilog.Web;
 
     public class LogConfig
     {
@@ -23,9 +22,6 @@
         // - utiliser MEF.
         public void Configure()
         {
-            // Si Serilog.Web est installé, ajouter la ligne suivante :
-            //ApplicationLifecycleModule.IsEnabled = false;
-
             ILogService svc;
 
             using (var catalog = new AssemblyCatalog(typeof(LogConfig).Assembly)) {

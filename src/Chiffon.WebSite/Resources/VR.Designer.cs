@@ -232,11 +232,11 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais la page demandée n&apos;existe pas..
+        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site n&apos;a pas compris votre requête..
         /// </summary>
-        public static string Error_ClientError {
+        public static string Error_BadRequest {
             get {
-                return ResourceManager.GetString("Error_ClientError", resourceCulture);
+                return ResourceManager.GetString("Error_BadRequest", resourceCulture);
             }
         }
         
@@ -255,15 +255,6 @@ namespace Chiffon.Resources {
         public static string Error_NotFound {
             get {
                 return ResourceManager.GetString("Error_NotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site est dans les choux..
-        /// </summary>
-        public static string Error_ServerError {
-            get {
-                return ResourceManager.GetString("Error_ServerError", resourceCulture);
             }
         }
         

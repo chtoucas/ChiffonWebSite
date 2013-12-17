@@ -4,7 +4,6 @@
     using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Common.Filters;
     using Chiffon.Data;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -12,7 +11,7 @@
     using Narvalo;
     using Narvalo.Web.Semantic;
 
-    [SeoPolicy(RobotsDirective = "index, follow")]
+    //[SeoPolicy(RobotsDirective = "index, follow")]
     public class HomeController : PageController
     {
         readonly IQueries _queries;

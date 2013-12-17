@@ -9,7 +9,10 @@
         {
             Requires.NotNull(filters, "filters");
 
-            filters.Add(new HandleErrorAttribute());
+            // NB: La gestion des erreurs est déléguée à customErrors pour avoir un contrôle
+            // plus fin des codes HTTP de réponse et du message affiché (en anglais ou en français).
+            // Si on réactive le filtre HandleError, il faut aussi créer une vue ~/Views/Shared/Error.cshml.
+            //filters.Add(new HandleErrorAttribute());
         }
     }
 }

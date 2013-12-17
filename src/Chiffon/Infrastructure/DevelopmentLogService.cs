@@ -18,6 +18,9 @@
             var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory").ToString();
             var logfile = Path.Combine(dataDirectory, "Logs", "log.txt");
 
+            // Si Serilog.Extras.Web est installé, ajouter la ligne suivante :
+            //Serilog.Extras.Web.ApplicationLifecycleModule.IsEnabled = false;
+
             return new LoggerConfiguration()
                 .MinimumLevel.Is(minimumLevel)
                 // On écrit dans un fichier de taille maximale 1Mo.

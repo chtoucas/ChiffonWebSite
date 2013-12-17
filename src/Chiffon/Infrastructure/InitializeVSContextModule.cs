@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web;
+    using System.Web.SessionState;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
     using Narvalo.Fx;
@@ -36,6 +37,15 @@
         {
             var app = sender as HttpApplication;
             var context = app.Context;
+
+            if (!(context.Handler is IRequiresSessionState)) {
+                // NB: Normalement, on ne devrait pas avoir à faire cette vérification,
+                // mais cela peut poser des problèmes si il s'agit d'une requête prise
+                // en charge par IIS en cas d'erreur (cf. httpErrors et customErrors dans
+                // web.config).
+                return;
+            }
+
             var session = app.Session;
 
             ChiffonEnvironmentResolver.MayResolve(context.Request, session)

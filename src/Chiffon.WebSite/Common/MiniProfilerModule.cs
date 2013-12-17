@@ -1,4 +1,4 @@
-﻿namespace Chiffon.WebSite
+﻿namespace Chiffon.Common
 {
     using System;
     using System.Web;

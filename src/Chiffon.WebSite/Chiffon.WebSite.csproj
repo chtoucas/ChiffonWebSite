@@ -30,7 +30,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PROFILE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -68,6 +68,9 @@
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado">
+      <HintPath>..\..\packages\Glimpse.Ado.1.7.0\lib\net45\Glimpse.Ado.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,15 +80,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Glimpse.1.8.0\lib\net45\Glimpse.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Mvc4, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Glimpse.Mvc4.1.5.1\lib\net40\Glimpse.Mvc4.dll</HintPath>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\..\packages\Glimpse.Mvc5.1.5.1\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="HtmlSanitizationLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MiniProfiler">
+      <HintPath>..\..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="Narvalo.Common, Version=0.3.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Narvalo.Common.0.3.0.3\lib\net45\Narvalo.Common.dll</HintPath>
@@ -99,11 +104,11 @@
     </Reference>
     <Reference Include="Serilog, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.3\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.3\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -202,6 +207,13 @@
     <Compile Include="Errors\Error.Master.designer.cs">
       <DependentUpon>Error.Master</DependentUpon>
     </Compile>
+    <Compile Include="Errors\BadRequest.aspx.cs">
+      <DependentUpon>BadRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errors\BadRequest.aspx.designer.cs">
+      <DependentUpon>BadRequest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Errors\InternalServerError.aspx.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -237,7 +249,6 @@
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Common\ViewName.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -345,6 +356,7 @@
     <Content Include="assets\css\chiffon.responsive.1.less" />
     <Content Include="App_Code\OntologyHelpers.cshtml" />
     <Content Include="Errors\Error.Master" />
+    <Content Include="Errors\BadRequest.aspx" />
     <Content Include="Errors\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -376,7 +388,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
