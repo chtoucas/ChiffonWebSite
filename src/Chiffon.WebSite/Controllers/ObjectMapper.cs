@@ -41,7 +41,7 @@
                 DesignerKey = pattern.DesignerKey,
                 DesignerName = designerName,
                 Reference = pattern.Reference,
-                Version = pattern.Version,
+                Variant = pattern.Variant,
             };
         }
     }

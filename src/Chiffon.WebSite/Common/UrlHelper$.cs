@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Chiffon.Entities;
@@ -53,20 +54,26 @@
 
         #endregion
 
-        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string version)
+        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant)
+        {
+            Requires.NotNull(@this, "this");
+
+            return PreviewContent_(@this, designerKey, reference, variant, false /* absolute */);
+        }
+
+        public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant, bool absolute)
+        {
+            Requires.NotNull(@this, "this");
+
+            return PreviewContent_(@this, designerKey, reference, variant, absolute);
+        }
+
+        public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant)
         {
             Requires.NotNull(@this, "this");
 
             return @this.Content(String.Format(CultureInfo.InvariantCulture,
-                "~/{0}/vignette-{1}-{2}.jpg", designerKey, reference, version));
-        }
-
-        public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference, string version)
-        {
-            Requires.NotNull(@this, "this");
-
-            return @this.Content(String.Format(CultureInfo.InvariantCulture, 
-                "~/{0}/motif-{1}-{2}.jpg", designerKey, reference, version));
+                "~/{0}/motif-{1}-{2}.jpg", designerKey, reference, variant));
         }
 
         public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)
@@ -138,20 +145,31 @@
             return @this.Action(actionName, controllerName, routeValues, scheme);
         }
 
-        //public static string AbsoluteContent(this UrlHelper self, string path)
-        //{
-        //    Uri uri = new Uri(path, UriKind.RelativeOrAbsolute);
+        // Voir aussi http://weblog.west-wind.com/posts/2007/Sep/18/ResolveUrl-without-Page
+        public static string AbsoluteContent(this UrlHelper self, string path)
+        {
+            Uri uri = new Uri(path, UriKind.RelativeOrAbsolute);
 
-        //    //If the URI is not already absolute, rebuild it based on the current request.
-        //    if (!uri.IsAbsoluteUri) {
-        //        Uri requestUrl = self.RequestContext.HttpContext.Request.Url;
-        //        UriBuilder builder = new UriBuilder(requestUrl.Scheme, requestUrl.Host, requestUrl.Port);
+            if (!uri.IsAbsoluteUri) {
+                Uri requestUrl = self.RequestContext.HttpContext.Request.Url;
+                var builder = new UriBuilder(requestUrl.Scheme, requestUrl.Host, requestUrl.Port);
 
-        //        builder.Path = VirtualPathUtility.ToAbsolute(path);
-        //        uri = builder.Uri;
-        //    }
+                builder.Path = VirtualPathUtility.ToAbsolute(path);
+                uri = builder.Uri;
+            }
 
-        //    return uri.ToString();
-        //}
+            return uri.ToString();
+        }
+
+        // TODO: Quand on passera à un serveur de media séparé il faudra changer ces utilitaires.
+        static string PreviewContent_(UrlHelper urlHelper, DesignerKey designerKey, string reference, string variant, bool absolute)
+        {
+            Requires.NotNull(urlHelper, "urlHelper");
+
+            var path = String.Format(CultureInfo.InvariantCulture,
+                "~/{0}/vignette-{1}-{2}.jpg", designerKey, reference, variant);
+
+            return absolute ? urlHelper.AbsoluteContent(path) : urlHelper.Content(path);
+        }
     }
 }

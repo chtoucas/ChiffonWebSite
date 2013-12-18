@@ -38,29 +38,25 @@
             return ResolveFromHost_(uri.Host);
         }
 
-        internal static Maybe<ChiffonEnvironment> MayResolve(HttpRequest request, HttpSessionState session)
+        internal static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
         {
             Requires.NotNull(request, "request");
 
             var uri = GetBaseUri_(request.Url);
-
-            if (!uri.IsLoopback) {
-                throw new InvalidOperationException(
-                    "This method is only available when run locally.");
-            }
 
             var language = MayGetLanguageFromQueryString_(request);
 
             // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
             // la demande en session.
             language.WhenSome(_ => { UpdateLanguageSession_(session, _); });
-                                  
+
             if (language.IsNone) {
                 // On regarde dans la session si on n'a pas une langue déjà définie.
                 language = MayGetLanguageFromSession_(session);
             }
 
-            return language.Map(_ => new ChiffonEnvironment(_, uri));
+            return language.Map(_ => new ChiffonEnvironment(_, uri))
+                .ValueOrElse(new ChiffonEnvironment(ChiffonLanguage.Default, uri));
         }
 
         static Uri GetBaseUri_(Uri uri)

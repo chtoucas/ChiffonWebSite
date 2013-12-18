@@ -241,6 +241,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Retourner à l&apos;accueil du site.
+        /// </summary>
+        public static string Error_HomeLink {
+            get {
+                return ResourceManager.GetString("Error_HomeLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Les Simones sont confuses mais le site est dans les choux..
         /// </summary>
         public static string Error_InternalServerError {

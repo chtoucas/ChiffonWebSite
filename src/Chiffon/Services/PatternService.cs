@@ -26,7 +26,7 @@
                 .ListPatterns(designerKey, categoryKey)
                 .Where(_ => _.Reference == reference)
                 .OrderByDescending(_ => _.Preferred)
-                .ThenBy(_ => _.Version);
+                .ThenBy(_ => _.Variant);
         }
 
         public PreviewPagedList ListPreviews(

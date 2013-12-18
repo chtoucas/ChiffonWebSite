@@ -16,8 +16,8 @@
         {
             Requires.NotNull(context, "context");
 
-            context.BeginRequest += OnBeginRequest;
-            context.PreRequestHandlerExecute += OnPreRequestHandlerExecute;
+            context.BeginRequest += OnBeginRequest_;
+            context.PreRequestHandlerExecute += OnPreRequestHandlerExecute_;
         }
 
         public void Dispose()
@@ -32,7 +32,7 @@
             DynamicModuleUtility.RegisterModule(typeof(InitializeContextModule));
         }
 
-        void OnBeginRequest(object sender, EventArgs e)
+        void OnBeginRequest_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var context = app.Context;
@@ -44,7 +44,7 @@
 
         // On utilise cet événement car il se déclenche après 'PostAcquireRequestState'
         // qui est utilisé par 'InitializeVSContextModule'.
-        void OnPreRequestHandlerExecute(object sender, EventArgs e)
+        void OnPreRequestHandlerExecute_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 

@@ -10,8 +10,6 @@ using WebActivatorEx;
 
 namespace Chiffon
 {
-    //using System.Diagnostics;
-    //using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Autofac;
@@ -22,7 +20,6 @@ namespace Chiffon
     using Chiffon.Modules;
     using Narvalo.Web;
     using Serilog;
-    //using StackExchange.Profiling.MVCHelpers;
 
     public static class AppActivator
     {
@@ -52,8 +49,6 @@ namespace Chiffon
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
-
-            //PreStartMiniProfiler_();
         }
 
         public static void Start()
@@ -63,11 +58,13 @@ namespace Chiffon
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
+
+            ResetViewEngines_();
         }
 
         public static void PostStart()
         {
-            //PostStartMiniProfiler_();
+            ;
         }
 
         public static void End()
@@ -83,26 +80,15 @@ namespace Chiffon
             ;
         }
 
-        //#region Méthodes privées
+        #region Méthodes privées
 
-        //[Conditional("PROFILE")]
-        //static void PreStartMiniProfiler_()
-        //{
-        //    MiniProfilerModule.SelfRegister();
-        //}
+        static void ResetViewEngines_()
+        {
+            // On ne garde que Razor.
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+        }
 
-        //[Conditional("PROFILE")]
-        //static void PostStartMiniProfiler_()
-        //{
-        //    // Intercept ViewEngines to profile all partial views and regular views.
-        //    // If you prefer to insert your profiling blocks manually you can comment this out
-        //    var copy = ViewEngines.Engines.ToList();
-        //    ViewEngines.Engines.Clear();
-        //    foreach (var item in copy) {
-        //        ViewEngines.Engines.Add(new ProfilingViewEngine(item));
-        //    }
-        //}
-
-        //#endregion
+        #endregion
     }
 }

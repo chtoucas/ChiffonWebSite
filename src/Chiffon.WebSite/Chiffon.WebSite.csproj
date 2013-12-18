@@ -30,7 +30,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PROFILE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -88,9 +88,6 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MiniProfiler">
-      <HintPath>..\..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
-    </Reference>
     <Reference Include="Narvalo.Common, Version=0.3.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Narvalo.Common.0.3.0.3\lib\net45\Narvalo.Common.dll</HintPath>
@@ -324,7 +321,9 @@
     <Content Include="assets\css\chiffon.h5bp.css" />
     <Content Include="assets\css\normalize-2.1.3.css" />
     <Content Include="assets\css\nprogress-0.1.2.css" />
+    <Content Include="assets\img\doubleline_grey.png" />
     <Content Include="assets\img\logo.png" />
+    <Content Include="assets\img\spacer.gif" />
     <Content Include="assets\js\chiffon.views.js" />
     <Content Include="assets\js\chiffon.localization.js" />
     <Content Include="assets\js\chiffon.js" />

@@ -8,7 +8,7 @@
     public class Pattern
     {
         readonly PatternId _patternId;
-        readonly string _version;
+        readonly string _variant;
 
         bool _showcased = false;
         bool _preferred = false;
@@ -17,7 +17,7 @@
         public Pattern(PatternId patternId, string version)
         {
             _patternId = patternId;
-            _version = version;
+            _variant = version;
         }
 
         public string CategoryKey { get; set; }
@@ -54,7 +54,7 @@
 
         public string Reference { get { return PatternId.Reference; } }
 
-        public string Version { get { return _version; } }
+        public string Variant { get { return _variant; } }
 
         public bool Showcased
         {
@@ -70,7 +70,7 @@
 
         public PatternImage GetImage(PatternSize size)
         {
-            return PatternImage.Create(DesignerKey.ToString(), CategoryKey.ToString(), Reference, Version, size);
+            return PatternImage.Create(DesignerKey.ToString(), CategoryKey.ToString(), Reference, Variant, size);
         }
 
         public PatternVisibility GetVisibility(PatternSize size)

@@ -2,5 +2,11 @@
 {
     using System.Web.UI;
 
-    public partial class ErrorMasterPage : MasterPage { }
+    public partial class ErrorMasterPage : MasterPage
+    {
+        public void ShowHomeLink()
+        {
+            pnlHomeLink.Visible = true;
+        }
+    }
 }

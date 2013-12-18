@@ -69,14 +69,8 @@
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Index_Description;
 
-            // FIXME: le chemin vers l'image devrait être absolu.
             var image = model.Previews.First();
-            var imageUrl = new Uri(Url.PreviewContent(designerKey, image.Reference, image.Version), UriKind.Relative);
-            Ontology.OpenGraph.Image = new OpenGraphImage(imageUrl) {
-                Height = ImageGeometry.PreviewHeight,
-                MimeType = OpenGraphImage.JpegMimeType,
-                Width = ImageGeometry.PreviewWidth,
-            };
+            SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
             return View(ViewName.Designer.Index, model);
         }
@@ -110,6 +104,9 @@
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
                 model.Category.DisplayName, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Category_Description;
+
+            var image = model.Previews.First();
+            SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
             return View(ViewName.Designer.Category, model);
         }
@@ -149,6 +146,9 @@
                 reference, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Pattern_Description;
 
+            var image = views.First();
+            SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
+
             return View(ViewName.Designer.Pattern, model);
         }
 
@@ -169,6 +169,16 @@
         {
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
             ViewBag.CurrentCategoryKey = categoryKey;
+        }
+
+        void SetOpenGraphImage_(DesignerKey designerKey, string reference, string variant)
+        {
+            var imageUrl = new Uri(Url.PreviewContent(designerKey, reference, variant, true /* absolute */));
+            Ontology.OpenGraph.Image = new OpenGraphImage(imageUrl) {
+                Height = ImageGeometry.PreviewHeight,
+                MimeType = OpenGraphImage.JpegMimeType,
+                Width = ImageGeometry.PreviewWidth,
+            };
         }
 
         #endregion

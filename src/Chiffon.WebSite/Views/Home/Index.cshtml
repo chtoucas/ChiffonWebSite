@@ -9,7 +9,7 @@
   @foreach (var preview in Model) {
    <li>
     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" class="vignette @preview.CssClass">
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@VR.Home_Index_PreviewWatermark</span></div>
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@VR.Home_Index_PreviewWatermark</span></div>
     </a>
    </li>
   }

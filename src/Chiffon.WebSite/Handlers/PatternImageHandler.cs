@@ -64,7 +64,7 @@
                 DesignerKey = designerKey.Value,
                 Reference = reference.Value,
                 Size = size.Value,
-                Version = version.Value,
+                Variant = version.Value,
             };
 
             return Outcome<PatternImageQuery>.Success(query);
@@ -77,7 +77,7 @@
 
             var response = context.Response;
 
-            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Version);
+            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
             if (pattern == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }

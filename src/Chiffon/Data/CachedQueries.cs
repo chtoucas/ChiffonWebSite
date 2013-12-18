@@ -36,7 +36,7 @@
         public Pattern GetPattern(DesignerKey designerKey, string reference, string version)
         {
             return (from _ in ListPatterns(designerKey) 
-                    where _.Reference == reference && _.Version == version 
+                    where _.Reference == reference && _.Variant == version 
                     select _).SingleOrDefault();
         }
 

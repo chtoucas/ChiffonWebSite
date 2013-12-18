@@ -11,7 +11,7 @@
  @foreach (var preview in Model.Previews) {
   <li>
    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" class=vignette>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Version)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference</span></div>
+    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference</span></div>
    </a>
   </li>
  }

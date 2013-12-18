@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Narvalo.Web
 {
     using System;
     using System.Collections.Generic;
