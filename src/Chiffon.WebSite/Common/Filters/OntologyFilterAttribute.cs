@@ -16,7 +16,7 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class OntologyFilterAttribute : ActionFilterAttribute
     {
-        static Lazy<IEnumerable<OpenGraphLocale>> OpenGraphLocales_
+        static readonly Lazy<IEnumerable<OpenGraphLocale>> OpenGraphLocales_
             = new Lazy<IEnumerable<OpenGraphLocale>>(() =>
             {
                 return from env in ChiffonEnvironmentResolver.Environments

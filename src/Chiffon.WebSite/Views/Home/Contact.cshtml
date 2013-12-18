@@ -6,7 +6,7 @@
 
 <div class="home_contact text_center fx_topborder" itemscope itemtype="@SchemaOrgType.Organization">
  <p class="serif serif_large">
-  @Html.Partial(Constants.ViewName.Home.ContactTitle, Environment.Language)
+  @{ Html.RenderPartial(Constants.ViewName.Home.ContactTitle, Environment.Language); }
  </p>
  <ul class="li_inline li_designers clearfix">
   @foreach (var designer in Model) {

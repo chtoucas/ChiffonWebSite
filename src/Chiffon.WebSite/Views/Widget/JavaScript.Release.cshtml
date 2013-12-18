@@ -1,13 +1,11 @@
-﻿@using Narvalo.Web.Html
-
-@model CommonJavaScriptViewModel
+﻿@model CommonJavaScriptViewModel
 
 <script>
  var args = {
   context: {
    baseUrl: '@Model.ScriptBase',
    locale: '@Model.LanguageName',
-   isAuth: @(Model.IsAuthenticated.ToString().ToLower())
+   isAuth: @Model.IsAuthenticated
   },
   request: {
    action: '@Model.ActionName',

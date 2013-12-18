@@ -4,7 +4,7 @@
     {
         public ISiteMap CreateMap(ChiffonEnvironment environment)
         {
-            return new DefaultSiteMap(environment.BaseUri);
+            return new DefaultSiteMap(environment);
         }
     }
 }

@@ -21,8 +21,8 @@
 
         public void Configure()
         {
-            _routes.IgnoreRoute("admin/elmah");
-            _routes.IgnoreRoute("admin/glimpse");
+            _routes.IgnoreRoute("devil/elmah");
+            _routes.IgnoreRoute("devil/glimpse");
             _routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // HomeController.

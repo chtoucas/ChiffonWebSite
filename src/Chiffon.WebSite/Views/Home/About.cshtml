@@ -6,7 +6,7 @@
 }
 
 <div class="home_about serif serif_large">
- @Html.Partial(Constants.ViewName.Home.AboutContent, Environment.Language)
+ @{ Html.RenderPartial(Constants.ViewName.Home.AboutContent, Environment.Language); }
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>
@@ -20,5 +20,5 @@
 </div>
 
 @section SecondaryNav {
- @Html.Partial(Constants.ViewName.DesignerMenu)
+ @{ Html.RenderPartial(Constants.ViewName.DesignerMenu); }
 }

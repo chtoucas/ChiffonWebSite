@@ -61,16 +61,18 @@
                 Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
-            SetDesignerViewData_(designerKey);
-
-            // Ontology.
-            Ontology.Relationships.CanonicalUrl = SiteMap.Designer(designerKey, p);
+            // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Index_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.Designer(designerKey, p);
 
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
+
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.Designer(designerKey, p));
+            AddDesignerInfoToViewBag_(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -96,17 +98,19 @@
                 Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
-            SetDesignerViewData_(designerKey, categoryKey);
-
-            // Ontology.
-            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerCategory(designerKey, categoryKey, p);
+            // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
                 model.Category.DisplayName, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Category_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerCategory(designerKey, categoryKey, p);
 
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
+
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.DesignerCategory(designerKey, categoryKey, p));
+            AddDesignerInfoToViewBag_(designerKey, categoryKey);
 
             return View(Constants.ViewName.Designer.Category, model);
         }
@@ -137,17 +141,20 @@
                 //Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
-            SetDesignerViewData_(designerKey, categoryKey);
 
-            // Ontology.
-            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p);
+            // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
                 reference, model.Designer.DisplayName);
             Ontology.Description = SR.Designer_Pattern_Description;
+            Ontology.Relationships.CanonicalUrl = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p);
 
             var image = views.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
+
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.DesignerPattern(designerKey, categoryKey, reference, p));
+            AddDesignerInfoToViewBag_(designerKey, categoryKey);
 
             return View(Constants.ViewName.Designer.Pattern, model);
         }
@@ -165,7 +172,7 @@
             return ObjectMapper.Map(designer, categories);
         }
 
-        void SetDesignerViewData_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
+        void AddDesignerInfoToViewBag_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
         {
             ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
             ViewBag.CurrentCategoryKey = categoryKey;

@@ -24,19 +24,21 @@
     public class DefaultSiteMap : ISiteMap
     {
         readonly Uri _baseUri;
+        readonly ChiffonLanguage _language;
 
-        public DefaultSiteMap(Uri baseUri)
+        public DefaultSiteMap(ChiffonEnvironment environment)
         {
-            Requires.NotNull(baseUri, "baseUri");
-
-            if (!baseUri.IsAbsoluteUri) {
+            if (!environment.BaseUri.IsAbsoluteUri) {
                 throw new ArgumentException("The 'baseUri' parameter must be absolute.");
             }
 
-            _baseUri = baseUri;
+            _baseUri = environment.BaseUri;
+            _language = environment.Language;
         }
 
         #region ISiteMap
+
+        public ChiffonLanguage Language { get { return _language; } }
 
         public Uri BaseUri { get { return _baseUri; } }
 

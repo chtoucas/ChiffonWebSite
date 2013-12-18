@@ -38,10 +38,14 @@
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Widget
             {
+                public const string AuthorsRights = "AuthorsRights";
                 public const string CommonJavaScript = "CommonJavaScript";
                 public const string CommonStyleSheet = "CommonStylesheet";
+                public const string Copyright = "Copyright";
                 public const string GoogleAnalytics = "GoogleAnalytics";
+                public const string Html5Shim = "Html5Shim";
                 public const string LanguageMenu = "LanguageMenu";
+                public const string Title = "Title"; 
             }
 
             // MailController.
@@ -113,10 +117,7 @@
         {
             public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
-            public const string Html5Shim = "~/Views/Shared/_Html5Shim.cshtml";
-            public const string LayoutAuthorsRights = "~/Views/Shared/_LayoutAuthorsRights.cshtml";
-            public const string LayoutCopyright = "~/Views/Shared/_LayoutCopyright.cshtml";
-            public const string LayoutTitle = "~/Views/Shared/_LayoutTitle.cshtml";
+            public const string UserMenu = "~/Views/Shared/_UserMenu.cshtml";
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Home
@@ -155,12 +156,16 @@
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Widget
             {
+                public const string AuthorsRights = "~/Views/Widget/AuthorsRights.cshtml";
                 public const string CommonJavaScriptDebug = "~/Views/Widget/JavaScript.Debug.cshtml";
                 public const string CommonJavaScriptRelease = "~/Views/Widget/JavaScript.Release.cshtml";
                 public const string CommonStyleSheetDebug = "~/Views/Widget/Stylesheet.Debug.cshtml";
                 public const string CommonStyleSheetRelease = "~/Views/Widget/Stylesheet.Release.cshtml";
+                public const string Copyright = "~/Views/Widget/Copyright.cshtml";
                 public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
+                public const string Html5Shim = "~/Views/Widget/Html5Shim.cshtml";
                 public const string LanguageMenu = "~/Views/Widget/LanguageMenu.cshtml";
+                public const string Title = "~/Views/Widget/Title.cshtml";
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]

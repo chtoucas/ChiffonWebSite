@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Mvc;
-    using Chiffon.Common.Filters;
     using Chiffon.Controllers;
     using Chiffon.Infrastructure;
     using Narvalo.Web.Semantic;
@@ -26,8 +25,6 @@
             get { return _chiffonControllerContext.Value; }
         }
 
-        protected string CurrentActionName { get { return ChiffonControlerContext.ActionName; } }
-        protected string CurrentControllerName { get { return ChiffonControlerContext.ControllerName; } }
         protected ChiffonEnvironment Environment { get { return ChiffonControlerContext.Environment; } }
         protected Ontology Ontology { get { return ChiffonControlerContext.Ontology; } }
 

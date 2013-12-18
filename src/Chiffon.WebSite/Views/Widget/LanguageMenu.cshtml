@@ -1,5 +1,13 @@
-﻿<ul class="li_inline float_right">
- <li><a class=loose href="//en.pourquelmotifsimone.com">EN</a></li>
+﻿@using Narvalo
+
+@model IEnumerable<KeyValuePair<Chiffon.Infrastructure.ChiffonLanguage, Uri>>
+
+@{
+ var alternateUrl = @Model.First().Value.ToProtocolLessString();
+}
+
+<ul class="li_inline float_right">
+ <li><a class=loose href="@alternateUrl">EN</a></li>
  <li class=sep>/</li>
  <li>FR</li>
 </ul>

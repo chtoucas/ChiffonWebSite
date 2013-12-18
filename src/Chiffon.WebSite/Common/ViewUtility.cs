@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Common
 {
+    using System;
     using Chiffon.Infrastructure;
     using Narvalo;
 
@@ -13,8 +14,9 @@
                 case ChiffonLanguage.English:
                     return viewName.Replace(".cshtml", ".en.cshtml");
                 case ChiffonLanguage.Default:
-                default:
                     return viewName;
+                default:
+                    throw new NotSupportedException("The requested language is not supported.");
             }
         }
     }

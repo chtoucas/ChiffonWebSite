@@ -53,11 +53,14 @@
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
+            // Ontologie.
             Ontology.Title = SR.Account_Login_Title;
             Ontology.Description = SR.Account_Login_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Login();
 
-            ViewBag.ReturnUrl = returnUrl;
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.Login());
+            AddReturnUrlToViewBag(returnUrl);
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(Constants.ViewName.Account.Login);
@@ -71,9 +74,13 @@
         // FIXME: Remettre en place returnUrl.
         public ActionResult Register(/*string returnUrl*/)
         {
+            // Ontologie.
             Ontology.Title = SR.Account_Register_Title;
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
+
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.Register());
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(Constants.ViewName.Account.Register, new RegisterViewModel());
@@ -89,9 +96,13 @@
         {
             Requires.NotNull(contact, "contact");
 
+            // Ontologie.
             Ontology.Title = SR.Account_Register_Title;
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
+
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.Register());
 
             if (!ModelState.IsValid) {
                 return View(Constants.ViewName.Account.Register, contact);
@@ -144,11 +155,14 @@
         [HttpGet]
         public ActionResult Newsletter()
         {
+            // Ontologie.
             Ontology.Title = SR.Account_Newsletter_Title;
             Ontology.Description = SR.Account_Newsletter_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Newsletter();
 
-            ViewBag.MainMenuClass = "newsletter";
+            // ViewBag.
+            AddAlternateUrlsToViewBag(_ => _.Newsletter());
+            AddMainMenuClassToViewBag("newsletter");
 
             return View(Constants.ViewName.Account.Newsletter);
         }

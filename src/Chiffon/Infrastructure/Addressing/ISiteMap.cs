@@ -6,6 +6,8 @@
 
     public interface ISiteMap
     {
+        ChiffonLanguage Language { get; }
+
         Uri BaseUri { get; }
 
         Uri Home();

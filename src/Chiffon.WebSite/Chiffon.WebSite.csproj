@@ -22,7 +22,6 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <WebGreaseLibPath>..\..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -53,10 +52,6 @@
     <Reference Include="AntiXssLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,9 +156,6 @@
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\WebActivatorEx.2.0.4\lib\net40\WebActivatorEx.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -401,6 +393,7 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Shared\_UserMenu.cshtml" />
     <None Include="Views\Widget\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -448,9 +441,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />
-    <Content Include="Views\Shared\_LayoutTitle.cshtml" />
-    <Content Include="Views\Shared\_LayoutTitle.en.cshtml" />
-    <Content Include="Views\Shared\_Html5Shim.cshtml" />
+    <Content Include="Views\Widget\Title.cshtml" />
+    <Content Include="Views\Widget\Title.en.cshtml" />
+    <Content Include="Views\Widget\Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Account\PostRegister.cshtml" />
@@ -463,8 +456,8 @@
     <Content Include="Views\Home\Resources\_ContactTitle.en.cshtml" />
     <Content Include="Views\Home\Resources\_AboutContent.cshtml" />
     <Content Include="Views\Home\Resources\_AboutContent.en.cshtml" />
-    <Content Include="Views\Shared\_LayoutAuthorsRights.cshtml" />
-    <Content Include="Views\Shared\_LayoutAuthorsRights.en.cshtml" />
+    <Content Include="Views\Widget\AuthorsRights.cshtml" />
+    <Content Include="Views\Widget\AuthorsRights.en.cshtml" />
     <Content Include="Views\Account\Resources\_LoginContent.cshtml" />
     <Content Include="Views\Account\Resources\_LoginContent.en.cshtml" />
     <Content Include="Views\Account\Resources\_RegisterWarning.cshtml" />
@@ -476,7 +469,7 @@
     <Content Include="Views\Mail\_Layout.cshtml" />
     <Content Include="Views\Mail\Welcome.cshtml" />
     <Content Include="Views\Mail\ForgottenPassword.cshtml" />
-    <Content Include="Views\Shared\_LayoutCopyright.cshtml" />
+    <Content Include="Views\Widget\Copyright.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
