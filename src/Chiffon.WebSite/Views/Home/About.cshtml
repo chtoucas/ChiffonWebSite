@@ -6,19 +6,19 @@
 }
 
 <div class="home_about serif serif_large">
- @Html.Partial(ViewName.Home.AboutContent, Environment.Language)
+ @Html.Partial(Constants.ViewName.Home.AboutContent, Environment.Language)
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>
-    <a href="@Url.RouteUrl(RouteName.Account.Register)">@VR.Home_About_PasswordRequest</a>
+    <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Home_About_PasswordRequest</a>
    </p>
   }
   <p>
-   <a href="@Url.RouteUrl(RouteName.Home.Contact)">@VR.Home_About_ContactUs</a>
+   <a href="@Url.RouteUrl(Constants.RouteName.Home.Contact)">@VR.Home_About_ContactUs</a>
   </p>
  </div>
 </div>
 
 @section SecondaryNav {
- @Html.Partial(ViewName.DesignerMenu)
+ @Html.Partial(Constants.ViewName.DesignerMenu)
 }

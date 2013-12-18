@@ -178,11 +178,10 @@
     <Compile Include="App_Start\Modules\ServicesModule.cs" />
     <Compile Include="App_Start\Modules\InfrastructureModule.cs" />
     <Compile Include="App_Start\Modules\AspNetMvcModule.cs" />
-    <Compile Include="Common\ActionName.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
-    <Compile Include="Common\ControllerName.cs" />
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
     <Compile Include="Common\EmptyPartialViewResult.cs" />
@@ -196,6 +195,7 @@
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MailHtmlHelper%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
+    <Compile Include="Controllers\ChiffonControlerContext.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
@@ -239,12 +239,8 @@
     <Compile Include="Handlers\GoQuery.cs" />
     <Compile Include="Handlers\GoHandler.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
-    <Compile Include="Common\RouteName.cs" />
-    <Compile Include="Common\Filters\SeoPolicyAttribute.cs" />
-    <Compile Include="Common\CssClassName.cs" />
     <Compile Include="Common\CssUtility.cs" />
-    <Compile Include="Common\ViewName.cs" />
-    <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\ChiffonController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -392,6 +388,26 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Widget\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Mail\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Views\Mail\Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Mail\Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Widget\Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Widget\Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />

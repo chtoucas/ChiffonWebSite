@@ -23,7 +23,7 @@
                 routeValues = new { designerKey = designerKey.ToString() };
             }
 
-            return SecureAction(@this, ActionName.Designer.Index, ControllerName.Designer, routeValues);
+            return SecureAction(@this, Constants.ActionName.Designer.Index, Constants.ControllerName.Designer, routeValues);
         }
 
         public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey, int pageIndex)
@@ -36,7 +36,7 @@
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey };
             }
 
-            return SecureAction(@this, ActionName.Designer.Category, ControllerName.Designer, routeValues);
+            return SecureAction(@this, Constants.ActionName.Designer.Category, Constants.ControllerName.Designer, routeValues);
         }
 
         public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
@@ -49,7 +49,7 @@
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, reference = reference };
             }
 
-            return SecureAction(@this, ActionName.Designer.Pattern, ControllerName.Designer, routeValues);
+            return SecureAction(@this, Constants.ActionName.Designer.Pattern, Constants.ControllerName.Designer, routeValues);
         }
 
         #endregion
@@ -93,7 +93,7 @@
                 return originalUrl;
             }
             else {
-                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(Constants.RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 
@@ -116,7 +116,7 @@
                 return originalUrl;
             }
             else {
-                return @this.RouteUrl(RouteName.Account.Register, new { returnUrl = originalUrl });
+                return @this.RouteUrl(Constants.RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
 

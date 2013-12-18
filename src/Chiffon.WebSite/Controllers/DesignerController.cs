@@ -9,15 +9,15 @@
     using Chiffon.Data;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Semantic;
+    using Addressing = Chiffon.Infrastructure.Addressing;
 
     [Authorize]
-    public class DesignerController : PageController
+    public class DesignerController : ChiffonController
     {
         public const string AllCategoryKey = "ALL";
 
@@ -30,7 +30,7 @@
 
         public DesignerController(
             ChiffonEnvironment environment,
-            ISiteMap siteMap,
+            Addressing.ISiteMap siteMap,
             IQueries queries,
             IPatternService patternService)
             : base(environment, siteMap)
@@ -72,7 +72,7 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            return View(ViewName.Designer.Index, model);
+            return View(Constants.ViewName.Designer.Index, model);
         }
 
         [HttpGet]
@@ -108,7 +108,7 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            return View(ViewName.Designer.Category, model);
+            return View(Constants.ViewName.Designer.Category, model);
         }
 
         [HttpGet]
@@ -149,7 +149,7 @@
             var image = views.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            return View(ViewName.Designer.Pattern, model);
+            return View(Constants.ViewName.Designer.Pattern, model);
         }
 
         #region Utilitaires.

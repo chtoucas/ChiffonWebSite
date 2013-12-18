@@ -7,17 +7,17 @@
     using Chiffon.Common.Filters;
     using Chiffon.Data;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Narvalo;
     using Narvalo.Web.Semantic;
+    using Addressing = Chiffon.Infrastructure.Addressing;
 
-    [SeoPolicy(RobotsDirective = "index, follow")]
-    public class HomeController : PageController
+    [OntologyFilter(RobotsDirective = "index, follow")]
+    public class HomeController : ChiffonController
     {
         readonly IQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IQueries queries)
+        public HomeController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IQueries queries)
             : base(environment, siteMap)
         {
             Requires.NotNull(queries, "queries");
@@ -42,7 +42,7 @@
 
             ViewBag.MainMenuClass = "index";
 
-            return View(ViewName.Home.Index, model);
+            return View(Constants.ViewName.Home.Index, model);
         }
 
         [HttpGet]
@@ -55,7 +55,7 @@
 
             ViewBag.MainMenuClass = "about";
 
-            return View(ViewName.Home.About);
+            return View(Constants.ViewName.Home.About);
         }
 
         [HttpGet]
@@ -70,7 +70,7 @@
 
             ViewBag.MainMenuClass = "contact";
 
-            return View(ViewName.Home.Contact, model);
+            return View(Constants.ViewName.Home.Contact, model);
         }
     }
 }

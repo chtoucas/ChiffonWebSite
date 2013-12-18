@@ -1,48 +1,44 @@
 ﻿@using Chiffon.Infrastructure
 @using Narvalo.Web.Semantic
 
-@{
- var ontology = (Ontology)ViewBag.Ontology;
-}
-
 <!DOCTYPE html>
-<html lang="@ontology.LanguageName" prefix="@Ontology.OpenGraphNamespace">
+<html lang="@Ontology.LanguageName" prefix="@Ontology.OpenGraphNamespace">
 <head>
  <meta charset="utf-8" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
- <title>@ontology.Title</title>
- @OntologyHelpers.StandardMetadata(ontology)
- @OntologyHelpers.OpenGraphMetadata(ontology.OpenGraph)
- @OntologyHelpers.RelationshipLinks(ontology.Relationships)
+ <title>@Ontology.Title</title>
+ @OntologyHelpers.StandardMetadata(Ontology)
+ @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
+ @OntologyHelpers.RelationshipLinks(Ontology.Relationships)
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @*<base href="/"/>*@
- @{Html.RenderAction(ActionName.Widget.CommonStyleSheet, ControllerName.Widget);}
- @{Html.RenderPartial(ViewName.Html5Shim);}
+ @{Html.RenderAction(Constants.ActionName.Widget.CommonStyleSheet, Constants.ControllerName.Widget);}
+ @{Html.RenderPartial(Constants.ViewName.Html5Shim);}
 </head>
-<body itemscope itemtype="@ontology.SchemaOrg.ItemType">
+<body itemscope itemtype="@Ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@{Html.RenderPartial(ViewName.LayoutTitle, Environment.Language);}</h1>
+  <h1>@{Html.RenderPartial(Constants.ViewName.LayoutTitle, Environment.Language);}</h1>
   <nav class="clearfix nav_lang">
-   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = Environment.Language });}
+   @{Html.RenderAction(Constants.ActionName.Widget.LanguageMenu, Constants.ControllerName.Widget, new { language = Environment.Language });}
   </nav>
   <nav class="nav_main @ViewBag.MainMenuClass">
    <ul class=li_center>
-    <li><a href="@Url.RouteUrl(RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
+    <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Home.About)" class=about>@VR.Layout_Nav_About</a></li>
+    <li><a href="@Url.RouteUrl(Constants.RouteName.Home.About)" class=about>@VR.Layout_Nav_About</a></li>
     <li class=sep>/</li>
-    <li><a href="@Url.RouteUrl(RouteName.Home.Contact)" class=contact>@VR.Layout_Nav_Contact</a></li>
+    <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Contact)" class=contact>@VR.Layout_Nav_Contact</a></li>
     @*<li class=sep>/</li>
-     <li><a href="@Url.RouteUrl(RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+     <li><a href="@Url.RouteUrl(Constants.RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
     <li class=account>
      @if (User.Identity.IsAuthenticated) {
       <form method=post action="/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout"></form>
       @*<a href="#" id=nav_account>Mon compte</a>*@
      }
      else {
-      @*<a href="@Url.RouteUrl(RouteName.Account.Register)">@VR.Layout_Nav_Register</a> @:/*@
-      <a href="@Url.RouteUrl(RouteName.Account.Login)" rel="modal:open">@VR.Layout_Nav_Login</a>
+      @*<a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Layout_Nav_Register</a> @:/*@
+      <a href="@Url.RouteUrl(Constants.RouteName.Account.Login)" rel="modal:open">@VR.Layout_Nav_Login</a>
      }
     </li>
    </ul>
@@ -51,15 +47,15 @@
  </header>
  @RenderBody()
  <footer>
-  @{Html.RenderPartial(ViewName.LayoutAuthorsRights, Environment.Language);}
-  @{Html.RenderPartial(ViewName.LayoutCopyright);}
+  @{Html.RenderPartial(Constants.ViewName.LayoutAuthorsRights, Environment.Language);}
+  @{Html.RenderPartial(Constants.ViewName.LayoutCopyright);}
  </footer>
- @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new
+ @{Html.RenderAction(Constants.ActionName.Widget.CommonJavaScript, Constants.ControllerName.Widget, new
  {
   actionName = CurrentActionName,
   controllerName = CurrentControllerName,
-  languageName = ontology.LanguageName,
+  languageName = Ontology.LanguageName,
  });}
- @{Html.RenderAction(ActionName.Widget.GoogleAnalytics, ControllerName.Widget);}
+ @{Html.RenderAction(Constants.ActionName.Widget.GoogleAnalytics, Constants.ControllerName.Widget);}
 </body>
 </html>

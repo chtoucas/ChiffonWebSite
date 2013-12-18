@@ -13,12 +13,12 @@
     {
         public ActionResult ForgottenPassword()
         {
-            return View(ViewName.Mail.ForgottenPassword);
+            return View(Constants.ViewName.Mail.ForgottenPassword);
         }
 
         public ActionResult Welcome()
         {
-            return View(ViewName.Mail.Welcome);
+            return View(Constants.ViewName.Mail.Welcome);
         }
     }
 }

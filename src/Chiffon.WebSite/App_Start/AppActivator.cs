@@ -42,8 +42,6 @@ namespace Chiffon
             (new LogConfig(config)).Configure();
 
             // Modules HTTP.
-            HttpHeaderCleanupModule.Register();
-            HttpHeaderPolicyModule.Register();
             ApplicationLifecycleModule.Register();
             InitializeContextModule.Register();
 

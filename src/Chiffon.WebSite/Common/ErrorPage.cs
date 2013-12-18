@@ -31,7 +31,7 @@
         {
             var master = Master as ErrorMasterPage;
             if (master == null) {
-                throw new InvalidOperationException("Your error page does not use ErrorMasterPage.");
+                throw new InvalidOperationException("Your ErrorPage does not use ErrorMasterPage.");
             }
             _errorMaster = master;
         }

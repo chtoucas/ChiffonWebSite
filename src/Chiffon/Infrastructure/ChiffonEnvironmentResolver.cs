@@ -11,23 +11,24 @@
 
     public static class ChiffonEnvironmentResolver
     {
-        static readonly ChiffonEnvironment Default_
+        static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
+        static readonly ChiffonEnvironment EnglishEnvironment_
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
         static readonly string SessionKey_ = "Language";
 
         public static IEnumerable<ChiffonEnvironment> Environments
         {
             get
             {
-                yield return Default_;
-                yield return new ChiffonEnvironment(
-                    ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
+                yield return DefaultEnvironment_;
+                yield return EnglishEnvironment_;
             }
         }
 
         public static ChiffonEnvironment DefaultEnvironment
         {
-            get { return Default_; }
+            get { return DefaultEnvironment_; }
         }
 
         public static ChiffonEnvironment Resolve(HttpRequest request)

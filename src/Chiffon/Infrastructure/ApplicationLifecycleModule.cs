@@ -18,6 +18,7 @@
 
             context.Error += OnError;
             context.Disposed += OnDisposed;
+            context.PreSendRequestHeaders += OnPreSendRequestHeaders;
         }
 
         public void Dispose()
@@ -81,6 +82,25 @@
                     Log.Fatal(ex, ex.Message);
                     break;
             }
+        }
+
+        void OnPreSendRequestHeaders(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+
+            var response = app.Response;
+            if (response == null) {
+                // Peut arriver si trySkipIisCustomErrors est égal à true.
+                return;
+            }
+
+            // Cf. Narvalo.Web.HttpHeaderCleanupModule
+            response.Headers.Remove("Server");
+
+            // Habituellement on essaie de prévenir l'inclusion d'une page du site dans une "frame" via javascript.
+            // Malheureusement cela ne suffit pas et il existe des techniques pour contrer les techniques basées sur javascript.
+            // Cf. http://en.wikipedia.org/wiki/Framekiller
+            response.Headers.Add("X-Frame-Options", "DENY");
         }
 
         static void SetResponseStatus_(HttpResponse response, HttpStatusCode statusCode)

@@ -6,7 +6,7 @@
  Layout = "~/Views/Shared/_DesignerLayout.cshtml";
 }
 
-@Html.Partial(ViewName.DesignerInfo, Model.Designer)
+@Html.Partial(Constants.ViewName.DesignerInfo, Model.Designer)
 <ul id=patterns class="mosaic clearfix">
  @foreach (var preview in Model.Previews) {
   <li>

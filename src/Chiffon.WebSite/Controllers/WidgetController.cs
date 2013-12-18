@@ -32,8 +32,8 @@
             };
 
             return _config.DebugJavaScript
-                ? PartialView(ViewName.Widget.CommonJavaScriptDebug, model)
-                : PartialView(ViewName.Widget.CommonJavaScriptRelease, model);
+                ? PartialView(Constants.ViewName.Widget.CommonJavaScriptDebug, model)
+                : PartialView(Constants.ViewName.Widget.CommonJavaScriptRelease, model);
         }
 
         [ChildActionOnly]
@@ -45,8 +45,8 @@
             };
 
             return _config.DebugStyleSheet
-                ? PartialView(ViewName.Widget.CommonStyleSheetDebug)
-                : PartialView(ViewName.Widget.CommonStyleSheetRelease, model);
+                ? PartialView(Constants.ViewName.Widget.CommonStyleSheetDebug)
+                : PartialView(Constants.ViewName.Widget.CommonStyleSheetRelease, model);
         }
 
         [ChildActionOnly]
@@ -57,14 +57,14 @@
                 return new EmptyPartialViewResult();
             }
 
-            return PartialView(ViewName.Widget.GoogleAnalytics, _config.GoogleAnalyticsKey);
+            return PartialView(Constants.ViewName.Widget.GoogleAnalytics, _config.GoogleAnalyticsKey);
         }
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "language")]
         public PartialViewResult LanguageMenu(ChiffonLanguage language)
         {
-            return PartialView(ViewUtility.Localize(ViewName.Widget.LanguageMenu, language));
+            return PartialView(ViewUtility.Localize(Constants.ViewName.Widget.LanguageMenu, language));
         }
     }
 }

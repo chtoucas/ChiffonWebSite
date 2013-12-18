@@ -9,18 +9,18 @@
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Mail;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Security;
+    using Addressing = Chiffon.Infrastructure.Addressing;
 
     // FIXME: Cette classe est complètement bancale mais c'est voulu tant qu'on n'a pas 
     // une idée plus précise du processus d'inscription.
     [AllowAnonymous]
     [CLSCompliant(false)]
-    public class AccountController : PageController
+    public class AccountController : ChiffonController
     {
         //static readonly Regex EmailAddressRegex
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
@@ -33,7 +33,7 @@
         public AccountController(
             ChiffonEnvironment environment,
             //ISmtpClient smtpClient,
-            ISiteMap siteMap,
+            Addressing.ISiteMap siteMap,
             //IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
@@ -60,10 +60,10 @@
             ViewBag.ReturnUrl = returnUrl;
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(ViewName.Account.Login);
+                return PartialView(Constants.ViewName.Account.Login);
             }
             else {
-                return View(ViewName.Account.Login);
+                return View(Constants.ViewName.Account.Login);
             }
         }
 
@@ -76,10 +76,10 @@
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(ViewName.Account.Register, new RegisterViewModel());
+                return PartialView(Constants.ViewName.Account.Register, new RegisterViewModel());
             }
             else {
-                return View(ViewName.Account.Register, new RegisterViewModel());
+                return View(Constants.ViewName.Account.Register, new RegisterViewModel());
             }
         }
 
@@ -94,11 +94,11 @@
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
             if (!ModelState.IsValid) {
-                return View(ViewName.Account.Register, contact);
+                return View(Constants.ViewName.Account.Register, contact);
             }
 
             if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
-                return View(ViewName.Account.RegisterTwice);
+                return View(Constants.ViewName.Account.RegisterTwice);
             }
 
             // FIXME:
@@ -130,7 +130,7 @@
             //    return Redirect(nextUrl.ToString());
             //}
             //else {
-            //    return RedirectToRoute(RouteName.Home.Index);
+            //    return RedirectToRoute(Constants.RouteName.Home.Index);
             //}
 
             var model = new NewContactViewModel
@@ -138,7 +138,7 @@
                 NextUrl = nextUrl.ValueOrElse(Environment.BaseUri).ToString(),
             };
 
-            return View(ViewName.Account.PostRegister, model);
+            return View(Constants.ViewName.Account.PostRegister, model);
         }
 
         [HttpGet]
@@ -150,7 +150,7 @@
 
             ViewBag.MainMenuClass = "newsletter";
 
-            return View(ViewName.Account.Newsletter);
+            return View(Constants.ViewName.Account.Newsletter);
         }
 
         // FIXME:

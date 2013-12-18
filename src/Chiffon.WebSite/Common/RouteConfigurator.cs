@@ -26,37 +26,37 @@
             _routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // HomeController.
-            _routes.MapRoute(RouteName.Home.Index, String.Empty,
-                new { controller = ControllerName.Home, action = ActionName.Home.Index });
-            _routes.MapRoute(RouteName.Home.About, "informations",
-                new { controller = ControllerName.Home, action = ActionName.Home.About });
-            _routes.MapRoute(RouteName.Home.Contact, "contact",
-                new { controller = ControllerName.Home, action = ActionName.Home.Contact });
+            _routes.MapRoute(Constants.RouteName.Home.Index, String.Empty,
+                new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.Index });
+            _routes.MapRoute(Constants.RouteName.Home.About, "informations",
+                new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.About });
+            _routes.MapRoute(Constants.RouteName.Home.Contact, "contact",
+                new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.Contact });
 
             // AccountController.
-            _routes.MapRoute(RouteName.Account.Register, "inscription",
-                new { controller = ControllerName.Account, action = ActionName.Contact.Register });
-            _routes.MapRoute(RouteName.Account.Login, "connexion",
-                new { controller = ControllerName.Account, action = ActionName.Contact.Login });
-            _routes.MapRoute(RouteName.Account.Newsletter, "newsletter",
-                new { controller = ControllerName.Account, action = ActionName.Contact.Newsletter });
+            _routes.MapRoute(Constants.RouteName.Account.Register, "inscription",
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Register });
+            _routes.MapRoute(Constants.RouteName.Account.Login, "connexion",
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Login });
+            _routes.MapRoute(Constants.RouteName.Account.Newsletter, "newsletter",
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Newsletter });
 
             // DesignerController.
-            _routes.MapRoute(RouteName.Designer.Index, "{designerKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Index },
+            _routes.MapRoute(Constants.RouteName.Designer.Index, "{designerKey}",
+                new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Index },
                 new { designerKey = new DesignerKeyConstraint() });
-            _routes.MapRoute(RouteName.Designer.Category, "{designerKey}/{categoryKey}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Category },
+            _routes.MapRoute(Constants.RouteName.Designer.Category, "{designerKey}/{categoryKey}",
+                new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Category },
                 new { designerKey = new DesignerKeyConstraint() });
-            _routes.MapRoute(RouteName.Designer.Pattern, "{designerKey}/{categoryKey}/{reference}",
-                new { controller = ControllerName.Designer, action = ActionName.Designer.Pattern },
+            _routes.MapRoute(Constants.RouteName.Designer.Pattern, "{designerKey}/{categoryKey}/{reference}",
+                new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Pattern },
                 new { designerKey = new DesignerKeyConstraint() });
 
             // MailController.
-            _routes.MapRoute(RouteName.Mail.Welcome, "mail/bienvenue",
-                new { controller = ControllerName.Mail, action = ActionName.Mail.Welcome });
-            _routes.MapRoute(RouteName.Mail.ForgottenPassword, "mail/mot-de-passe-oublié",
-               new { controller = ControllerName.Mail, action = ActionName.Mail.ForgottenPassword });
+            _routes.MapRoute(Constants.RouteName.Mail.Welcome, "mail/bienvenue",
+                new { controller = Constants.ControllerName.Mail, action = Constants.ActionName.Mail.Welcome });
+            _routes.MapRoute(Constants.RouteName.Mail.ForgottenPassword, "mail/mot-de-passe-oublié",
+               new { controller = Constants.ControllerName.Mail, action = Constants.ActionName.Mail.ForgottenPassword });
 
             _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
 
