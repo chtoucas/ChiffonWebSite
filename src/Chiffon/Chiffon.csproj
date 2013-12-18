@@ -153,6 +153,7 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
+    <Compile Include="Narvalo.Web\EmptyPartialViewResult.cs" />
     <Compile Include="Narvalo.Web\RobotsDirectiveBuilder.cs" />
     <Compile Include="Narvalo.Web\Semantic\IOpenGraphMetadata.cs" />
     <Compile Include="Narvalo.Web\Semantic\OpenGraphLocale.cs" />

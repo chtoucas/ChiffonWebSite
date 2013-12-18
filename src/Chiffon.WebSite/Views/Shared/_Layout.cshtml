@@ -21,11 +21,11 @@
   <nav class="clearfix nav_lang">
    @{Html.RenderWidget(Constants.ActionName.Widget.LanguageMenu, new
    {
-    alternateUrls = ViewBag.AlternateUrls,
+    alternateUrls = ViewInfo.AlternateUrls,
     language = Environment.Language,
    });}
   </nav>
-  <nav class="nav_main @ViewBag.MainMenuClass">
+  <nav class="nav_main @ViewInfo.MainMenuClass">
    <ul class=li_center>
     <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -44,8 +44,8 @@
  </footer>
  @{Html.RenderWidget(Constants.ActionName.Widget.CommonJavaScript, new
  {
-  actionName = ViewBag.ActionName,
-  controllerName = ViewBag.ControllerName,
+  actionName = ViewInfo.ActionName,
+  controllerName = ViewInfo.ControllerName,
  });}
  @{Html.RenderWidget(Constants.ActionName.Widget.GoogleAnalytics);}
 </body>

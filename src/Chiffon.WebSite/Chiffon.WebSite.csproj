@@ -176,7 +176,6 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
-    <Compile Include="Common\EmptyPartialViewResult.cs" />
     <Compile Include="Common\Enumerable`1%24.cs" />
     <Compile Include="Common\ErrorPage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -186,6 +185,7 @@
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MailHtmlHelper%24.cs" />
+    <Compile Include="Common\ViewInfo.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
     <Compile Include="Controllers\MailController.cs" />
@@ -448,10 +448,8 @@
     <Content Include="Views\Designer\Pattern.cshtml" />
     <Content Include="Views\Account\PostRegister.cshtml" />
     <Content Include="Views\Account\RegisterTwice.cshtml" />
-    <Content Include="Views\MailMerge\_LayoutX.cshtml" />
     <Content Include="Views\MailMerge\_Layout.text.cshtml" />
     <Content Include="Views\MailMerge\Welcome.text.cshtml" />
-    <Content Include="Views\MailMerge\WelcomeX.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.en.cshtml" />
     <Content Include="Views\Home\Resources\_AboutContent.cshtml" />

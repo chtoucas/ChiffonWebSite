@@ -18,6 +18,7 @@
 
     // FIXME: Cette classe est complètement bancale mais c'est voulu tant qu'on n'a pas 
     // une idée plus précise du processus d'inscription.
+    // Si l'utilisateur est déconnecté dégager le visiteur.
     [AllowAnonymous]
     [CLSCompliant(false)]
     public class AccountController : ChiffonController
@@ -58,9 +59,9 @@
             Ontology.Description = SR.Account_Login_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Login();
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Login());
-            AddReturnUrlToViewBag(returnUrl);
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Login());
+            ViewInfo.ReturnUrl = returnUrl;
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(Constants.ViewName.Account.Login);
@@ -79,8 +80,8 @@
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Register());
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Register());
 
             if (Request.IsAjaxRequest()) {
                 return PartialView(Constants.ViewName.Account.Register, new RegisterViewModel());
@@ -101,8 +102,8 @@
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Register());
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Register());
 
             if (!ModelState.IsValid) {
                 return View(Constants.ViewName.Account.Register, contact);
@@ -160,9 +161,9 @@
             Ontology.Description = SR.Account_Newsletter_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Newsletter();
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Newsletter());
-            AddMainMenuClassToViewBag("newsletter");
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
+            ViewInfo.MainMenuClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
         }

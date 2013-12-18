@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using System.Web.Mvc.Html;
     using Chiffon.Controllers;
     using Chiffon.Infrastructure;
     using Narvalo.Web.Semantic;
@@ -14,6 +15,7 @@
     public abstract class ChiffonWebViewPage<TModel> : WebViewPage<TModel>
     {
         Lazy<ChiffonControllerContext> _chiffonControllerContext;
+        ViewInfo _viewInfo;
 
         protected ChiffonWebViewPage()
         {
@@ -27,11 +29,19 @@
 
         protected ChiffonEnvironment Environment { get { return ChiffonControlerContext.Environment; } }
         protected Ontology Ontology { get { return ChiffonControlerContext.Ontology; } }
+        protected ViewInfo ViewInfo { get { return _viewInfo; } }
 
-        //public override void InitHelpers()
+        //public void RenderResource(string viewName, ChiffonLanguage language)
         //{
-        //    base.InitHelpers();
+        //    Html.RenderAction(ViewUtility.Localize(viewName, language), ViewInfo.ControllerName);
         //}
+
+        public override void InitHelpers()
+        {
+            base.InitHelpers();
+
+            _viewInfo = new ViewInfo(ViewData);
+        }
 
         internal static Func<ChiffonControllerContext> GetChiffonControlerContextThunk_(WebViewPage @this)
         {

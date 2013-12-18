@@ -70,9 +70,9 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Designer(designerKey, p));
-            AddDesignerInfoToViewBag_(designerKey);
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
+            EnrichViewInfo_(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -108,9 +108,9 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.DesignerCategory(designerKey, categoryKey, p));
-            AddDesignerInfoToViewBag_(designerKey, categoryKey);
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
+            EnrichViewInfo_(designerKey, categoryKey);
 
             return View(Constants.ViewName.Designer.Category, model);
         }
@@ -152,9 +152,9 @@
             var image = views.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.DesignerPattern(designerKey, categoryKey, reference, p));
-            AddDesignerInfoToViewBag_(designerKey, categoryKey);
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
+            EnrichViewInfo_(designerKey, categoryKey);
 
             return View(Constants.ViewName.Designer.Pattern, model);
         }
@@ -162,7 +162,13 @@
         #region Utilitaires.
 
         // On suppose que designerKey est toujours valide (une contrainte sur la route doit
-        // toujours assurer qu'on se retrouve dans cette configuration).
+        // assurer qu'on se retrouve dans cette configuration).
+
+        void EnrichViewInfo_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
+        {
+            ViewInfo.DesignerClass = CssUtility.DesignerClass(designerKey);
+            ViewInfo.CurrentCategoryKey = categoryKey;
+        }
 
         DesignerViewItem GetDesignerViewItem_(DesignerKey designerKey)
         {
@@ -170,12 +176,6 @@
             var categories = _queries.ListCategories(designerKey);
 
             return ObjectMapper.Map(designer, categories);
-        }
-
-        void AddDesignerInfoToViewBag_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
-        {
-            ViewBag.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewBag.CurrentCategoryKey = categoryKey;
         }
 
         void SetOpenGraphImage_(DesignerKey designerKey, string reference, string variant)

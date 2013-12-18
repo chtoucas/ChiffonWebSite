@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -41,9 +42,9 @@
             Ontology.Description = SR.Home_Index_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Home();
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Home());
-            AddMainMenuClassToViewBag("index");
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Home());
+            ViewInfo.MainMenuClass = "index";
 
             return View(Constants.ViewName.Home.Index, model);
         }
@@ -57,9 +58,9 @@
             Ontology.Relationships.CanonicalUrl = SiteMap.About();
             Ontology.SchemaOrg.ItemType = SchemaOrgType.AboutPage;
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.About());
-            AddMainMenuClassToViewBag("about");
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.About());
+            ViewInfo.MainMenuClass = "about";
 
             return View(Constants.ViewName.Home.About);
         }
@@ -75,9 +76,9 @@
             Ontology.Relationships.CanonicalUrl = SiteMap.Contact();
             Ontology.SchemaOrg.ItemType = SchemaOrgType.ContactPage;
 
-            // ViewBag.
-            AddAlternateUrlsToViewBag(_ => _.Contact());
-            AddMainMenuClassToViewBag("contact");
+            // ViewInfo.
+            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Contact());
+            ViewInfo.MainMenuClass = "contact";
 
             return View(Constants.ViewName.Home.Contact, model);
         }

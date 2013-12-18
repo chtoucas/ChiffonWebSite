@@ -7,6 +7,7 @@
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Web;
     using Narvalo.Web.UI.Assets;
 
     public class WidgetController : Controller

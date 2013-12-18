@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Narvalo.Web
 {
     using System.Web.Mvc;
 
