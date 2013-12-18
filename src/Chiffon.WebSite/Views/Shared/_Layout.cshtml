@@ -3,7 +3,6 @@
 
 @{
  var ontology = (Ontology)ViewBag.Ontology;
- var language = (ChiffonLanguage)ViewBag.Language;
 }
 
 <!DOCTYPE html>
@@ -23,9 +22,9 @@
 </head>
 <body itemscope itemtype="@ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@{Html.RenderPartial(ViewName.LayoutTitle, language);}</h1>
+  <h1>@{Html.RenderPartial(ViewName.LayoutTitle, Environment.Language);}</h1>
   <nav class="clearfix nav_lang">
-   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = language });}
+   @{Html.RenderAction(ActionName.Widget.LanguageMenu, ControllerName.Widget, new { language = Environment.Language });}
   </nav>
   <nav class="nav_main @ViewBag.MainMenuClass">
    <ul class=li_center>
@@ -52,13 +51,13 @@
  </header>
  @RenderBody()
  <footer>
-  @{Html.RenderPartial(ViewName.LayoutAuthorsRights, language);}
+  @{Html.RenderPartial(ViewName.LayoutAuthorsRights, Environment.Language);}
   @{Html.RenderPartial(ViewName.LayoutCopyright);}
  </footer>
  @{Html.RenderAction(ActionName.Widget.CommonJavaScript, ControllerName.Widget, new
  {
-  actionName = ViewBag.ActionName,
-  controllerName = ViewBag.ControllerName,
+  actionName = CurrentActionName,
+  controllerName = CurrentControllerName,
   languageName = ontology.LanguageName,
  });}
  @{Html.RenderAction(ActionName.Widget.GoogleAnalytics, ControllerName.Widget);}

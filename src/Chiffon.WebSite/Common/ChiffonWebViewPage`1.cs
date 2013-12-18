@@ -1,13 +1,39 @@
 ﻿namespace Chiffon.Common
 {
     using System.Web.Mvc;
+    using Chiffon.Infrastructure;
 
-    // Cf. http://haacked.com/archive/2011/02/21/changing-base-type-of-a-razor-view.aspx
+    // TODO:
+    // - activer l'injection de dépendance.
+    // Cf. https://code.google.com/p/autofac/issues/detail?id=349
+    // Cf. http://stackoverflow.com/questions/14933450/property-injection-into-custom-webviewpage-using-autofac 
+    // - ajouter AssetTag
     public abstract class ChiffonWebViewPage<TModel> : WebViewPage<TModel>
     {
-        public override void InitHelpers()
+        protected ChiffonEnvironment Environment
         {
-            base.InitHelpers();
+            get { return ChiffonContext.Current.Environment; }
         }
+
+        protected string CurrentActionName
+        {
+            get
+            {
+                return ViewContext.RouteData.Values["action"].ToString();
+            }
+        }
+
+        protected string CurrentControllerName
+        {
+            get
+            {
+                return ViewContext.RouteData.Values["controller"].ToString();
+            }
+        }
+
+        //public override void InitHelpers()
+        //{
+        //    base.InitHelpers();
+        //}
     }
 }

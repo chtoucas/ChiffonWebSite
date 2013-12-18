@@ -14,7 +14,7 @@
     using Narvalo.Web.Semantic;
     using Narvalo.Web.UI.Assets;
 
-    [HtmlFilter]
+    //[HtmlFilter]
     [OntologyFilter]
     [SeoPolicy]
     public class PageController : Controller
@@ -61,7 +61,6 @@
         {
             InitializeOntology_();
 
-            ViewBag.Language = Environment.Language;
             ViewBag.Ontology = Ontology;
         }
 

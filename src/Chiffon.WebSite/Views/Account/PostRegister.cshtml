@@ -7,7 +7,7 @@
   @VR.Account_PostRegister_Success
  </p>
  <p class="serif serif_medium">
-  @Html.Partial(ViewName.Account.PostRegisterEmail, (ChiffonLanguage)ViewBag.Language)
+  @Html.Partial(ViewName.Account.PostRegisterEmail, Environment.Language)
  </p>
  <p class="serif serif_medium">
   <a href="@Model.NextUrl" class=text_underline>@VR.Account_PostRegister_BrowseGallery</a>

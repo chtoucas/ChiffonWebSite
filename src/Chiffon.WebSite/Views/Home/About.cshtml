@@ -6,7 +6,7 @@
 }
 
 <div class="home_about serif serif_large">
- @Html.Partial(ViewName.Home.AboutContent, (ChiffonLanguage)ViewBag.Language)
+ @Html.Partial(ViewName.Home.AboutContent, Environment.Language)
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>

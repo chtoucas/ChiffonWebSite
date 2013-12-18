@@ -238,7 +238,6 @@
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Handlers\GoQuery.cs" />
     <Compile Include="Handlers\GoHandler.cs" />
-    <Compile Include="Common\Filters\HtmlFilterAttribute.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\RouteName.cs" />
     <Compile Include="Common\Filters\SeoPolicyAttribute.cs" />
@@ -385,7 +384,9 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />

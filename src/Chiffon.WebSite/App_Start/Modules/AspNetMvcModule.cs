@@ -16,6 +16,8 @@
             // Composants Asp.Net MVC.
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);
+            // FIXME: Je n'arrive pas à faire fonctionner la ligne suivante...
+            //builder.RegisterSource(new ViewRegistrationSource());
         }
     }
 }
