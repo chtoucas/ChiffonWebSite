@@ -11,6 +11,7 @@
         int? _patternCount;
 
         public IEnumerable<CategoryViewItem> Categories { get; set; }
+        public string CurrentCategoryKey { get; set; }
         public string DisplayName { get; set; }
         public string EmailAddress { get; set; }
         public DesignerKey Key { get; set; }

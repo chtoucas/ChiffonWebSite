@@ -50,9 +50,8 @@
             ontology.OpenGraph.SiteName = SR.DefaultTitle;
 
             // Par défaut, on utilise le logo comme image.
-            ontology.OpenGraph.Image = new OpenGraphImage(AssetManager.GetImage("logo.png")) {
+            ontology.OpenGraph.Image = new OpenGraphPng(AssetManager.GetImage("logo.png")) {
                 Height = 144,
-                MimeType = OpenGraphImage.PngMimeType,
                 Width = 144,
             };
 

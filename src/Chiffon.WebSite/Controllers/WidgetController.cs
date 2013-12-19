@@ -1,59 +1,24 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web;
-    using Narvalo.Web.UI.Assets;
 
+    // WARNING: Tous les résultats de ces actions sont mis en cache.
     public class WidgetController : Controller
     {
         readonly ChiffonConfig _config;
-        readonly ChiffonEnvironment _environment;
 
-        public WidgetController(ChiffonConfig config, ChiffonEnvironment environment)
+        public WidgetController(ChiffonConfig config)
         {
             Requires.NotNull(config, "config");
 
             _config = config;
-            _environment = environment;
         }
-
-        [ChildActionOnly]
-        public PartialViewResult CommonJavaScript(string controllerName, string actionName)
-        {
-            var model = new CommonJavaScriptViewModel {
-                ActionName = actionName,
-                ControllerName = controllerName,
-                IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
-                LanguageName = _environment.UICulture.TwoLetterISOLanguageName,
-                ScriptBase = AssetManager.ScriptBase.ToProtocolLessString(),
-                Version = _config.JavaScriptVersion,
-            };
-
-            return _config.DebugJavaScript
-                ? PartialView(Constants.ViewName.Widget.CommonJavaScriptDebug, model)
-                : PartialView(Constants.ViewName.Widget.CommonJavaScriptRelease, model);
-        }
-
-        [ChildActionOnly]
-        public PartialViewResult LanguageMenu(
-            ChiffonLanguage language, 
-            IEnumerable<KeyValuePair<ChiffonLanguage, Uri>> alternateUrls)
-        {
-            return PartialView(ViewUtility.Localize(Constants.ViewName.Widget.LanguageMenu, language), alternateUrls);
-        }
-
-        #region Actions mises en cache.
-
-        // WARNING: Tous les résultats de ces actions sont mis en cache, il est donc important
-        // de préciser en paramètre tout ce qui pourrait varier.
-        // Toutes les actions suivantes ne peuvent pas accéder à _environment qui dépend de la
-        // requête en cours.
 
         [ChildActionOnly]
         [OutputCache(Duration = Int32.MaxValue, VaryByParam = "language")]
@@ -106,7 +71,5 @@
         {
             return PartialView(ViewUtility.Localize(Constants.ViewName.Widget.Title, language));
         }
-
-        #endregion
     }
 }

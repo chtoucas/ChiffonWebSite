@@ -2,19 +2,19 @@
 
 @model DesignerViewItem
 
-<div id=info class=info>
- <p>@Model.Presentation</p>
- <p><a href="mailto:@Model.EmailAddress" class=underline>@Model.EmailAddress</a></p>
- <nav>
-  <ul>
-   <li @(ViewInfo.CurrentCategoryKey == DesignerController.AllCategoryKey ? " class=current" : String.Empty)>
-    <a href="@Url.Designer(Model.Key, 1)">@VR.Category_All (@Model.PatternCount)</a>
-   </li>
-   @foreach (var category in Model.Categories) {
-    <li @(ViewInfo.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)>
-     <a href="@Url.Category(Model.Key, category.Key, 1)">@category.DisplayName (@category.PatternsCount)</a>
+ <div id=info class=info>
+  <p>@Model.Presentation</p>
+  <p><a href="mailto:@Model.EmailAddress" class=underline>@Model.EmailAddress</a></p>
+  <nav>
+   <ul>
+    <li @(Model.CurrentCategoryKey == DesignerController.AllCategoryKey ? " class=current" : String.Empty)>
+     <a href="@Url.Designer(Model.Key, 1)">@VR.Category_All (@Model.PatternCount)</a>
     </li>
-   }
-  </ul>
- </nav>
-</div>
+    @foreach (var category in Model.Categories) {
+     <li @(Model.CurrentCategoryKey == category.Key ? " class=current" : String.Empty)>
+      <a href="@Url.Category(Model.Key, category.Key, 1)">@category.DisplayName (@category.PatternsCount)</a>
+     </li>
+    }
+   </ul>
+  </nav>
+ </div>

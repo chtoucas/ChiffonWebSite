@@ -7,11 +7,11 @@
   @VR.Account_Register_Welcome
  </p>
  <p class="serif_large">
-  @{ Html.RenderPartial(Constants.ViewName.Account.RegisterWarning, Environment.Language); }
+  @{ RenderPartialResource(Constants.ViewName.Account.RegisterWarning); }
  </p>
  <hr />
  <p class="serif_medium">
-  @{ Html.RenderPartial(Constants.ViewName.Account.RegisterHelp, Environment.Language); }
+  @{ RenderPartialResource(Constants.ViewName.Account.RegisterHelp); }
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(Constants.RouteName.Account.Register)" class=sansserif id=register_form>

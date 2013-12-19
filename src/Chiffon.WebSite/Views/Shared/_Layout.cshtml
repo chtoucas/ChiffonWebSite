@@ -5,27 +5,31 @@
 <html lang="@Ontology.LanguageName" prefix="@Ontology.OpenGraphNamespace">
 <head>
  <meta charset="utf-8" />
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ @*<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />*@
  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
  <title>@Ontology.Title</title>
  @OntologyHelpers.StandardMetadata(Ontology)
  @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
  @OntologyHelpers.RelationshipLinks(Ontology.Relationships)
  <meta name=viewport content="width=device-width, initial-scale=1" />
- @{Html.RenderWidget(Constants.ActionName.Widget.CommonStyleSheet);}
- @{Html.RenderWidget(Constants.ActionName.Widget.Html5Shim);}
+ @{
+  RenderWidget(Constants.ActionName.Widget.CommonStyleSheet);
+  RenderWidget(Constants.ActionName.Widget.Html5Shim);
+ }
 </head>
 <body itemscope itemtype="@Ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@{Html.RenderWidget(Constants.ActionName.Widget.Title, new { language = Environment.Language });}</h1>
+  <h1>@{ RenderWidget(Constants.ActionName.Widget.Title, true /* localized */); }</h1>
   <nav class="clearfix nav_lang">
-   @{Html.RenderWidget(Constants.ActionName.Widget.LanguageMenu, new
-   {
-    alternateUrls = ViewInfo.AlternateUrls,
-    language = Environment.Language,
-   });}
+   @{
+    RenderComponent(Constants.ActionName.Component.LanguageMenu, new
+    {
+     alternateUrls = LayoutViewModel.AlternateUrls,
+     language = Language,
+    });
+   }
   </nav>
-  <nav class="nav_main @ViewInfo.MainMenuClass">
+  <nav class="nav_main @LayoutViewModel.MainNavCssClass">
    <ul class=li_center>
     <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -39,14 +43,18 @@
  </header>
  @RenderBody()
  <footer>
-  @{Html.RenderWidget(Constants.ActionName.Widget.AuthorsRights, new { language = Environment.Language });}
-  @{Html.RenderWidget(Constants.ActionName.Widget.Copyright);}
+  @{
+   RenderWidget(Constants.ActionName.Widget.AuthorsRights, true /* localized */);
+   RenderWidget(Constants.ActionName.Widget.Copyright);
+  }
  </footer>
- @{Html.RenderWidget(Constants.ActionName.Widget.CommonJavaScript, new
- {
-  actionName = ViewInfo.ActionName,
-  controllerName = ViewInfo.ControllerName,
- });}
- @{Html.RenderWidget(Constants.ActionName.Widget.GoogleAnalytics);}
+ @{
+  RenderComponent(Constants.ActionName.Component.CommonJavaScript, new
+  {
+   actionName = LayoutViewModel.ActionName,
+   controllerName = LayoutViewModel.ControllerName,
+  });
+  RenderWidget(Constants.ActionName.Widget.GoogleAnalytics);
+ }
 </body>
 </html>

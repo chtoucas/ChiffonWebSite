@@ -6,7 +6,7 @@
 }
 
 <div class="home_about serif serif_large">
- @{ Html.RenderPartial(Constants.ViewName.Home.AboutContent, Environment.Language); }
+ @{ RenderPartialResource(Constants.ViewName.Home.AboutContent); }
  <div class=links>
   @if (!User.Identity.IsAuthenticated) {
    <p>

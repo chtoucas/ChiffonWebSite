@@ -47,10 +47,11 @@
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Index(DesignerKey designerKey, int p = 1)
         {
+            // Modèle.
             var pagedList = _patternService.ListPreviews(designerKey, p, PreviewsPageSize_);
             if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            var designer = GetDesignerViewItem_(designerKey);
+            var designer = GetDesigner_(designerKey, AllCategoryKey);
 
             var model = new DesignerViewModel {
                 Designer = designer,
@@ -70,9 +71,9 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
-            EnrichViewInfo_(designerKey);
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
+            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -82,10 +83,11 @@
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Category(DesignerKey designerKey, string categoryKey, int p = 1)
         {
+            // Modèle.
             var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
             if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            var designer = GetDesignerViewItem_(designerKey);
+            var designer = GetDesigner_(designerKey, categoryKey);
             var category = (from _ in designer.Categories where _.Key == categoryKey select _).Single();
 
             var model = new CategoryViewModel {
@@ -108,9 +110,9 @@
             var image = model.Previews.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
-            EnrichViewInfo_(designerKey, categoryKey);
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
+            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Category, model);
         }
@@ -120,13 +122,14 @@
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
+            // Modèle.
             //var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
             //if (pagedList == null) { return new HttpNotFoundResult(); }
 
             var views = _patternService.GetPatternViews(designerKey, categoryKey, reference);
             if (views.Count() == 0) { return new HttpNotFoundResult(); }
 
-            var designer = GetDesignerViewItem_(designerKey);
+            var designer = GetDesigner_(designerKey, categoryKey);
             var category = (from _ in designer.Categories where _.Key == categoryKey select _).Single();
 
             var model = new PatternViewModel {
@@ -141,7 +144,6 @@
                 //Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
-
             // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
@@ -152,9 +154,9 @@
             var image = views.First();
             SetOpenGraphImage_(designerKey, image.Reference, image.Variant);
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
-            EnrichViewInfo_(designerKey, categoryKey);
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
+            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Pattern, model);
         }
@@ -164,26 +166,19 @@
         // On suppose que designerKey est toujours valide (une contrainte sur la route doit
         // assurer qu'on se retrouve dans cette configuration).
 
-        void EnrichViewInfo_(DesignerKey designerKey, string categoryKey = AllCategoryKey)
-        {
-            ViewInfo.DesignerClass = CssUtility.DesignerClass(designerKey);
-            ViewInfo.CurrentCategoryKey = categoryKey;
-        }
-
-        DesignerViewItem GetDesignerViewItem_(DesignerKey designerKey)
+        DesignerViewItem GetDesigner_(DesignerKey designerKey, string categoryKey)
         {
             var designer = _queries.GetDesigner(designerKey, UICulture);
             var categories = _queries.ListCategories(designerKey);
 
-            return ObjectMapper.Map(designer, categories);
+            return ObjectMapper.Map(designer, categories, categoryKey);
         }
 
         void SetOpenGraphImage_(DesignerKey designerKey, string reference, string variant)
         {
             var imageUrl = new Uri(Url.PreviewContent(designerKey, reference, variant, true /* absolute */));
-            Ontology.OpenGraph.Image = new OpenGraphImage(imageUrl) {
+            Ontology.OpenGraph.Image = new OpenGraphJpeg(imageUrl) {
                 Height = ImageGeometry.PreviewHeight,
-                MimeType = OpenGraphImage.JpegMimeType,
                 Width = ImageGeometry.PreviewWidth,
             };
         }

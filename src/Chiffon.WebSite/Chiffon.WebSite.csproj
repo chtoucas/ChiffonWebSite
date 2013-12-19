@@ -83,13 +83,13 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Narvalo.Common, Version=0.3.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.4.0.2, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.3.0.3\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.4.0.2\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.3.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.4.0.2, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.3.0.3\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.4.0.2\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -171,7 +171,9 @@
     <Compile Include="App_Start\Modules\InfrastructureModule.cs" />
     <Compile Include="App_Start\Modules\AspNetMvcModule.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
+    <Compile Include="Common\EnrichedWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
+    <Compile Include="Common\EnrichedWebViewPage`1.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DesignerKeyConstraint.cs" />
@@ -181,14 +183,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Common\Filters\OntologyFilterAttribute.cs" />
-    <Compile Include="Common\HtmlHelper%24.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MailHtmlHelper%24.cs" />
-    <Compile Include="Common\ViewInfo.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
     <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -284,12 +285,14 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
     <Compile Include="ViewModels\CommonStyleSheetViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
     <Compile Include="ViewModels\DesignerViewItem.cs" />
     <Compile Include="ViewModels\PatternViewItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
+    <Compile Include="ViewModels\LayoutViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\..\etc\CodeAnalysisDictionary.xml">
@@ -394,6 +397,16 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\_UserMenu.cshtml" />
+    <Content Include="Views\Component\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Views\Component\Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Component\Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Views\Widget\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -421,9 +434,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Widget\JavaScript.Debug.cshtml" />
+    <Content Include="Views\Component\JavaScript.Debug.cshtml" />
     <Content Include="Views\Widget\Stylesheet.Debug.cshtml" />
-    <Content Include="Views\Widget\JavaScript.Release.cshtml" />
+    <Content Include="Views\Component\JavaScript.Release.cshtml" />
     <Content Include="Views\Widget\Stylesheet.Release.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -476,8 +489,8 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Widget\GoogleAnalytics.cshtml" />
-    <Content Include="Views\Widget\LanguageMenu.cshtml" />
-    <Content Include="Views\Widget\LanguageMenu.en.cshtml" />
+    <Content Include="Views\Component\LanguageMenu.cshtml" />
+    <Content Include="Views\Component\LanguageMenu.en.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\MailResources.en.resx">

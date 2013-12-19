@@ -54,20 +54,22 @@
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
+            // Modèle.
+            var model = new LoginViewModel { ReturnUrl = returnUrl };
+
             // Ontologie.
             Ontology.Title = SR.Account_Login_Title;
             Ontology.Description = SR.Account_Login_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Login();
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Login());
-            ViewInfo.ReturnUrl = returnUrl;
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Login());
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(Constants.ViewName.Account.Login);
+                return PartialView(Constants.ViewName.Account.Login, model);
             }
             else {
-                return View(Constants.ViewName.Account.Login);
+                return View(Constants.ViewName.Account.Login, model);
             }
         }
 
@@ -75,19 +77,22 @@
         // FIXME: Remettre en place returnUrl.
         public ActionResult Register(/*string returnUrl*/)
         {
+            // Modèle.
+            var model = new RegisterViewModel();
+
             // Ontologie.
             Ontology.Title = SR.Account_Register_Title;
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Register());
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
 
             if (Request.IsAjaxRequest()) {
-                return PartialView(Constants.ViewName.Account.Register, new RegisterViewModel());
+                return PartialView(Constants.ViewName.Account.Register, model);
             }
             else {
-                return View(Constants.ViewName.Account.Register, new RegisterViewModel());
+                return View(Constants.ViewName.Account.Register, model);
             }
         }
 
@@ -102,8 +107,8 @@
             Ontology.Description = SR.Account_Register_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Register();
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Register());
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
 
             if (!ModelState.IsValid) {
                 return View(Constants.ViewName.Account.Register, contact);
@@ -161,9 +166,9 @@
             Ontology.Description = SR.Account_Newsletter_Description;
             Ontology.Relationships.CanonicalUrl = SiteMap.Newsletter();
 
-            // ViewInfo.
-            ViewInfo.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
-            ViewInfo.MainMenuClass = "newsletter";
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
+            LayoutViewModel.MainNavCssClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
         }

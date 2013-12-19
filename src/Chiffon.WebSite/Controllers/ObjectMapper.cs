@@ -19,12 +19,13 @@
             };
         }
 
-        public static DesignerViewItem Map(Designer designer, IEnumerable<Category> categories)
+        public static DesignerViewItem Map(Designer designer, IEnumerable<Category> categories, string categoryKey)
         {
             Requires.NotNull(designer, "designer");
 
             return new DesignerViewItem {
                 Categories = from _ in categories select Map(_),
+                CurrentCategoryKey = categoryKey,
                 DisplayName = designer.DisplayName,
                 EmailAddress = designer.EmailAddress.ToString(),
                 Key = designer.Key,

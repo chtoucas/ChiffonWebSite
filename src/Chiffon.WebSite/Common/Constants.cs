@@ -6,13 +6,12 @@
     {
         public static class ActionName
         {
-            // HomeController.
+            // ComponentController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Home
+            public static class Component
             {
-                public const string Index = "Index";
-                public const string About = "About";
-                public const string Contact = "Contact";
+                public const string CommonJavaScript = "CommonJavaScript";
+                public const string LanguageMenu = "LanguageMenu";
             }
 
             // ContactController.
@@ -34,18 +33,13 @@
                 public const string Category = "Category";
             }
 
-            // WidgetController.
+            // HomeController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Widget
+            public static class Home
             {
-                public const string AuthorsRights = "AuthorsRights";
-                public const string CommonJavaScript = "CommonJavaScript";
-                public const string CommonStyleSheet = "CommonStylesheet";
-                public const string Copyright = "Copyright";
-                public const string GoogleAnalytics = "GoogleAnalytics";
-                public const string Html5Shim = "Html5Shim";
-                public const string LanguageMenu = "LanguageMenu";
-                public const string Title = "Title"; 
+                public const string Index = "Index";
+                public const string About = "About";
+                public const string Contact = "Contact";
             }
 
             // MailController.
@@ -55,15 +49,28 @@
                 public const string ForgottenPassword = "ForgottenPassword";
                 public const string Welcome = "Welcome";
             }
+
+            // WidgetController.
+            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+            public static class Widget
+            {
+                public const string AuthorsRights = "AuthorsRights";
+                public const string CommonStyleSheet = "CommonStylesheet";
+                public const string Copyright = "Copyright";
+                public const string GoogleAnalytics = "GoogleAnalytics";
+                public const string Html5Shim = "Html5Shim";
+                public const string Title = "Title"; 
+            }
         }
 
         public static class ControllerName
         {
             public const string Account = "Account";
+            public const string Component = "Component";
             public const string Designer = "Designer";
             public const string Home = "Home";
-            public const string Widget = "Widget";
             public const string Mail = "Mail";
+            public const string Widget = "Widget";
         }
 
         public static class CssClassName
@@ -76,15 +83,6 @@
 
         public static class RouteName
         {
-            // HomeController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Home
-            {
-                public const string About = "Home/About";
-                public const string Contact = "Home/Contact";
-                public const string Index = "Home/";
-            }
-
             // AccountController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Account
@@ -104,6 +102,15 @@
                 public const string Pattern = "Designer/Pattern";
             }
 
+            // HomeController.
+            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+            public static class Home
+            {
+                public const string About = "Home/About";
+                public const string Contact = "Home/Contact";
+                public const string Index = "Home/";
+            }
+
             // DesignerController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Mail
@@ -118,16 +125,6 @@
             public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
             public const string UserMenu = "~/Views/Shared/_UserMenu.cshtml";
-
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Home
-            {
-                public const string Index = "~/Views/Home/Index.cshtml";
-                public const string About = "~/Views/Home/About.cshtml";
-                public const string AboutContent = "~/Views/Home/Resources/_AboutContent.cshtml";
-                public const string Contact = "~/Views/Home/Contact.cshtml";
-                public const string ContactTitle = "~/Views/Home/Resources/_ContactTitle.cshtml";
-            }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Account
@@ -146,6 +143,14 @@
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+            public static class Component
+            {
+                public const string CommonJavaScriptDebug = "~/Views/Component/JavaScript.Debug.cshtml";
+                public const string CommonJavaScriptRelease = "~/Views/Component/JavaScript.Release.cshtml";
+                public const string LanguageMenu = "~/Views/Component/LanguageMenu.cshtml";
+            }
+
+            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Designer
             {
                 public const string Index = "~/Views/Designer/Index.cshtml";
@@ -154,18 +159,13 @@
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Widget
+            public static class Home
             {
-                public const string AuthorsRights = "~/Views/Widget/AuthorsRights.cshtml";
-                public const string CommonJavaScriptDebug = "~/Views/Widget/JavaScript.Debug.cshtml";
-                public const string CommonJavaScriptRelease = "~/Views/Widget/JavaScript.Release.cshtml";
-                public const string CommonStyleSheetDebug = "~/Views/Widget/Stylesheet.Debug.cshtml";
-                public const string CommonStyleSheetRelease = "~/Views/Widget/Stylesheet.Release.cshtml";
-                public const string Copyright = "~/Views/Widget/Copyright.cshtml";
-                public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
-                public const string Html5Shim = "~/Views/Widget/Html5Shim.cshtml";
-                public const string LanguageMenu = "~/Views/Widget/LanguageMenu.cshtml";
-                public const string Title = "~/Views/Widget/Title.cshtml";
+                public const string Index = "~/Views/Home/Index.cshtml";
+                public const string About = "~/Views/Home/About.cshtml";
+                public const string AboutContent = "~/Views/Home/Resources/_AboutContent.cshtml";
+                public const string Contact = "~/Views/Home/Contact.cshtml";
+                public const string ContactTitle = "~/Views/Home/Resources/_ContactTitle.cshtml";
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
@@ -173,6 +173,18 @@
             {
                 public const string ForgottenPassword = "~/Views/Mail/ForgottenPassword.cshtml";
                 public const string Welcome = "~/Views/Mail/Welcome.cshtml";
+            }
+
+            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+            public static class Widget
+            {
+                public const string AuthorsRights = "~/Views/Widget/AuthorsRights.cshtml";
+                public const string CommonStyleSheetDebug = "~/Views/Widget/Stylesheet.Debug.cshtml";
+                public const string CommonStyleSheetRelease = "~/Views/Widget/Stylesheet.Release.cshtml";
+                public const string Copyright = "~/Views/Widget/Copyright.cshtml";
+                public const string GoogleAnalytics = "~/Views/Widget/GoogleAnalytics.cshtml";
+                public const string Html5Shim = "~/Views/Widget/Html5Shim.cshtml";
+                public const string Title = "~/Views/Widget/Title.cshtml";
             }
         }
     }
