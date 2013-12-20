@@ -5,13 +5,13 @@
 
     public abstract class EnrichedWebViewPage<TModel> : WebViewPage<TModel>
     {
-        protected Tag Tag { get; private set; }
+        protected AssetHelper Asset { get; private set; }
 
         public override void InitHelpers()
         {
             base.InitHelpers();
 
-            Tag = new Tag();
+            Asset = new AssetHelper(Html);
         }
     }
 }

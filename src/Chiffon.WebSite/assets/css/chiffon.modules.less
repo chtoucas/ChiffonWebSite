@@ -23,12 +23,18 @@
   line-height: 1.5em;
 }
 
+.highlight_text {
+  font-size: 2.4em;
+  font-weight: bold;
+  color: @black;
+}
+
 // Modales --------------------------------------------------------------------
 
 // Inspiré de http://coding.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
 // FIXME: position sur BODY, Opera !
 //body { position: relative; }
-.modal {
+/*.modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -53,7 +59,7 @@
     height: 30px;
     background: url(img/close.png) no-repeat 0 0;
   }
-}
+}*/
 
 // Overlay --------------------------------------------------------------------
 
@@ -90,15 +96,19 @@
   border-bottom: solid 2px @darkgrey;
 }
 
-// Bloc avec une bordure en haut ----------------------------------------------
+// Bloc avec une bordure ------------------------------------------------------
+
+.fx_bottomborder {
+  border-bottom: 1px solid @grey;
+}
 
 .fx_topborder {
-  border-top: 2px solid @darkgrey;
+  border-top: 1px solid @grey;
 }
 
-.modal .fx_topborder {
+/*.modal .fx_topborder {
   border-top: none;
-}
+}*/
 
 // Checkbox -------------------------------------------------------------------
 
@@ -284,27 +294,21 @@ A {
   border-bottom: solid 2px @black;
 
   UL {
-    margin-bottom: 6px;
     font-weight: bold;
   }
 
-  LI {
-    padding-left: .5em;
+  A, SPAN {
+    display: inline-block;
+    padding: 6px .25em;
   }
 }
 
 // Menu principal -------------------------------------------------------------
 
-.nav_main {
+.menu {
   // On utilise une position relative pour que l'élément ".account" se place
   // correctement à droite de la liste.
   position: relative;
-
-  .account {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
 
   UL, INPUT {
     text-transform: uppercase;
@@ -312,6 +316,30 @@ A {
 
   LI {
     margin: 1.2em 0;
+  }
+
+  .right_item {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .last_elmt {
+    padding-right: 0;
+  }
+
+  UL LI {
+    LI {
+      margin: 0;
+
+      A, INPUT {
+        padding: 1em;
+      }
+    }
+
+    .sep {
+      padding: 1em 0;
+    }
   }
 
   A, INPUT {
@@ -325,6 +353,28 @@ A {
     &:hover, &:focus {
       color: @grey;
     }
+  }
+}
+
+.secondary_menu {
+  LI, A {
+    color: @grey;
+  }
+
+  LI {
+    margin: .6em 0;
+  }
+
+  .right_item {
+    text-transform: none;
+  }
+
+  .last_elmt {
+    padding: (-(@secondary_nav_last_child_scale - 1) + 1em / @secondary_nav_last_child_scale);
+    font-size: (@secondary_nav_last_child_scale * 1em);
+    color: @darkgrey;
+    text-transform: none;
+    /*padding-right: 0;*/
   }
 }
 
@@ -361,6 +411,8 @@ NAV {
   &.about .about,
   &.contact .contact,
   &.newsletter .newsletter,
+  &.register .register,
+  &.login .login,
   &.cl .cl,
   &.em .em,
   &.vd .vd,
@@ -369,18 +421,128 @@ NAV {
   }
 }
 
-// Erreurs --------------------------------------------------------------------
+// Formulaires ----------------------------------------------------------------
 
-.error_container {
+.switch {
+  margin-bottom: 2.5em;
+  font-size: 1.4em;
+  color: @darkgrey;
+
+  A {
+    color: @darkgrey;
+    text-decoration: underline;
+
+    &:hover {
+      color: @black;
+    }
+  }
+}
+
+.custom_form {
+  .inside_form {
+    padding: 2em;
+  }
+
+  .mandatory_warning {
+    margin: 4em auto 5em auto;
+    font-weight: bold;
+    color: @darkgrey;
+  }
+
+  UL, P {
+    width: 334px;
+    margin: 0 auto;
+  }
+
+  LI {
+    padding-bottom: 2em;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  LABEL {
+    display: none;
+    margin-bottom: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: @grey;
+    text-transform: uppercase;
+
+    &:after {
+      display: block;
+      width: 0;
+      height: 150%;
+      content: "";
+    }
+  }
+
+  TEXTAREA, INPUT {
+    width: 314px;
+    height: (-0.9em + 5.1em / 1.2);
+    padding: .4em 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: @black;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 1px solid @grey;
+
+    &:hover {
+      color: @black;
+      border-color: @darkgrey;
+    }
+
+    &[type=submit] {
+      width: 334px;
+      padding: 0;
+      font-size: 1.4em;
+    }
+  }
+
+  TEXTAREA {
+    padding: 1em 10px;
+    height: 22em;
+    line-height: 1.6em;
+  }
+
+  ::-webkit-input-placeholder {
+    color: @black;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: @black;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: @black;
+  }
+  :-ms-input-placeholder {
+    color: @black;
+  }
+}
+
+// Validation ASP.Net
+
+.validation-summary-errors {
+  margin-bottom: 2em;
+  font-size: 1.4em;
+  line-height: 1.5em;
+  color: @error_color;
+  text-align: center;
+}
+
+// Validation jQuery
+
+/*.error_container {
   display: none;
   color: @error_color;
 
   .error {
     border: none;
   }
-}
+}*/
 
-FORM INPUT.error {
+FORM .error {
   border: 1px solid @error_color;
 }
 

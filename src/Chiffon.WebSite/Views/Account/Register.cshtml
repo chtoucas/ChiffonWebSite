@@ -2,51 +2,45 @@
 
 @model RegisterViewModel
 
-<div class="account_register serif text_center fx_topborder">
- <p class="serif_large">
-  @VR.Account_Register_Welcome
- </p>
- <p class="serif_large">
-  @{ RenderPartialResource(Constants.ViewName.Account.RegisterWarning); }
- </p>
- <hr />
- <p class="serif_medium">
-  @{ RenderPartialResource(Constants.ViewName.Account.RegisterHelp); }
+<div class=account_register>
+ <h2>@VR.Account_Register_Heading</h2>
+ <p class=switch>
+  @VR.Account_Register_AlreadyRegistered
+  <a href="@Url.RouteUrl(Constants.RouteName.Account.Login)?returnUrl=@Model.ReturnUrl">@VR.Account_Register_Connect</a>
  </p>
  @Html.ValidationSummary()
- <form method=post action="@Url.RouteUrl(Constants.RouteName.Account.Register)" class=sansserif id=register_form>
-  @Html.AntiForgeryToken()
-  <p id=error_container class="serif serif_medium error_container">@VR.Account_Register_ValidationMessage</p>
-  <p>
-   <label for=EmailAddress>@VR.Account_Register_EmailAddress</label>
-   @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.Account_Register_EmailAddress })
-  </p>
-  <p>
-   <label for="Lastname">@VR.Account_Register_Lastname</label>
-   @Html.TextBoxFor(_ => _.LastName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Lastname })
-  </p>
-  <p>
-   <label for=Firstname>@VR.Account_Register_Firstname</label>
-   @Html.TextBoxFor(_ => _.FirstName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Firstname })
-  </p>
-  <p>
-   <label for=CompanyName>@VR.Account_Register_CompanyName</label>
-   @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_CompanyName })
-  </p>
-  <p>
+ <form method=post action="@Url.RouteUrl(Constants.RouteName.Account.Register)" id=register_form class=custom_form>
+  @*<p id=error_container class=error_container>@VR.Account_Register_ValidationMessage</p>*@
+  <ul>
+   <li>
+    <label for="LastName">@VR.Account_Register_Lastname</label>
+    @Html.TextBoxFor(_ => _.LastName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Lastname })
+   </li>
+   <li>
+    <label for=FirstName>@VR.Account_Register_Firstname</label>
+    @Html.TextBoxFor(_ => _.FirstName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Firstname })
+   </li>
+   <li>
+    <label for=CompanyName>@VR.Account_Register_CompanyName</label>
+    @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_CompanyName })
+   </li>
+   <li>
+    <label for=EmailAddress>@VR.Account_Register_EmailAddress</label>
+    @Html.TextBoxFor(_ => _.EmailAddress, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.Account_Register_EmailAddress })
+   </li>
+  </ul>
+  <p class=inside_form>
    @*@Html.CheckBoxFor(_ => _.Newsletter, new { @checked = "checked" })*@
    <input type="checkbox" id="Newsletter" name="Newsletter" checked="checked" />
    <label for=Newsletter class=newsletter><span></span>@VR.Account_Register_Newsletter</label>
   </p>
   @Html.HiddenFor(_ => _.ReturnUrl)
+  @Html.AntiForgeryToken()
   <p>
    <input type=submit value="@VR.Account_Register_Submit" />
   </p>
-  <p>
+  <p class=mandatory_warning>
    @VR.Account_Register_MandatoryFields
   </p>
  </form>
- @*<p class="serif_large">
-   <a href="@Url.RouteUrl(Constants.RouteName.Account.Login)" class=text_underline rel="modal:open">@VR.Account_Register_Login</a>
-  </p>*@
 </div>

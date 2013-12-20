@@ -61,7 +61,43 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mot de passe.
+        ///   Recherche une chaîne localisée semblable à Votre email *.
+        /// </summary>
+        public static string Account_Login_EmailAddress {
+            get {
+                return ResourceManager.GetString("Account_Login_EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Saisissez vos identifiants de connexion pour accéder au catalogue.
+        /// </summary>
+        public static string Account_Login_Heading {
+            get {
+                return ResourceManager.GetString("Account_Login_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à * Ces champs sont obligatoires.
+        /// </summary>
+        public static string Account_Login_MandatoryFields {
+            get {
+                return ResourceManager.GetString("Account_Login_MandatoryFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Vous êtes un nouvel utilisateur.
+        /// </summary>
+        public static string Account_Login_NewUser {
+            get {
+                return ResourceManager.GetString("Account_Login_NewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre mot de passe *.
         /// </summary>
         public static string Account_Login_Password {
             get {
@@ -70,52 +106,34 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Demander un mot de passe.
+        ///   Recherche une chaîne localisée semblable à Je crée un compte.
         /// </summary>
-        public static string Account_Login_RequestPassword {
+        public static string Account_Login_Register {
             get {
-                return ResourceManager.GetString("Account_Login_RequestPassword", resourceCulture);
+                return ResourceManager.GetString("Account_Login_Register", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Valider.
+        ///   Recherche une chaîne localisée semblable à Connectez-vous.
         /// </summary>
-        public static string Account_Login_Validate {
+        public static string Account_Login_Submit {
             get {
-                return ResourceManager.GetString("Account_Login_Validate", resourceCulture);
+                return ResourceManager.GetString("Account_Login_Submit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
+        ///   Recherche une chaîne localisée semblable à Déjà inscrit(e) ?.
         /// </summary>
-        public static string Account_PostRegister_BrowseGallery {
+        public static string Account_Register_AlreadyRegistered {
             get {
-                return ResourceManager.GetString("Account_PostRegister_BrowseGallery", resourceCulture);
+                return ResourceManager.GetString("Account_Register_AlreadyRegistered", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à À bientôt !.
-        /// </summary>
-        public static string Account_PostRegister_Byebye {
-            get {
-                return ResourceManager.GetString("Account_PostRegister_Byebye", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte..
-        /// </summary>
-        public static string Account_PostRegister_Success {
-            get {
-                return ResourceManager.GetString("Account_PostRegister_Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Agence *.
+        ///   Recherche une chaîne localisée semblable à Votre agence *.
         /// </summary>
         public static string Account_Register_CompanyName {
             get {
@@ -124,7 +142,16 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Email *.
+        ///   Recherche une chaîne localisée semblable à Connectez-vous.
+        /// </summary>
+        public static string Account_Register_Connect {
+            get {
+                return ResourceManager.GetString("Account_Register_Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre email *.
         /// </summary>
         public static string Account_Register_EmailAddress {
             get {
@@ -133,7 +160,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prénom *.
+        ///   Recherche une chaîne localisée semblable à Votre prénom *.
         /// </summary>
         public static string Account_Register_Firstname {
             get {
@@ -142,7 +169,16 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nom *.
+        ///   Recherche une chaîne localisée semblable à Remplissez le formulaire ci-dessous pour feuilleter le catalogue.
+        /// </summary>
+        public static string Account_Register_Heading {
+            get {
+                return ResourceManager.GetString("Account_Register_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre nom *.
         /// </summary>
         public static string Account_Register_Lastname {
             get {
@@ -196,7 +232,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Je m&apos;inscris.
+        ///   Recherche une chaîne localisée semblable à Validez votre inscription.
         /// </summary>
         public static string Account_Register_Submit {
             get {
@@ -214,11 +250,47 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bienvenue,.
+        ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
         /// </summary>
-        public static string Account_Register_Welcome {
+        public static string Account_RegisterConfirmation_BrowseGallery {
             get {
-                return ResourceManager.GetString("Account_Register_Welcome", resourceCulture);
+                return ResourceManager.GetString("Account_RegisterConfirmation_BrowseGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Vous recevrez très prochainement vos identifiants dans votre boîte mail.
+        /// </summary>
+        public static string Account_RegisterConfirmation_EmailSent {
+            get {
+                return ResourceManager.GetString("Account_RegisterConfirmation_EmailSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre demande a bien été prise en compte.
+        /// </summary>
+        public static string Account_RegisterConfirmation_Heading {
+            get {
+                return ResourceManager.GetString("Account_RegisterConfirmation_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nous sommes désolés mais l&apos;adresse avec laquelle vous souhaitez vous enregistrer est déjà prise..
+        /// </summary>
+        public static string Account_RegisterEmailAlreadyTaken_Heading {
+            get {
+                return ResourceManager.GetString("Account_RegisterEmailAlreadyTaken_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Je crée un compte.
+        /// </summary>
+        public static string Account_RegisterEmailAlreadyTaken_Register {
+            get {
+                return ResourceManager.GetString("Account_RegisterEmailAlreadyTaken_Register", resourceCulture);
             }
         }
         
@@ -277,20 +349,65 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nous contacter.
+        ///   Recherche une chaîne localisée semblable à Votre email *.
         /// </summary>
-        public static string Home_About_ContactUs {
+        public static string Home_Contact_EmailAddress {
             get {
-                return ResourceManager.GetString("Home_About_ContactUs", resourceCulture);
+                return ResourceManager.GetString("Home_Contact_EmailAddress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Je demande un mot de passe.
+        ///   Recherche une chaîne localisée semblable à Votre message *.
         /// </summary>
-        public static string Home_About_PasswordRequest {
+        public static string Home_Contact_Message {
             get {
-                return ResourceManager.GetString("Home_About_PasswordRequest", resourceCulture);
+                return ResourceManager.GetString("Home_Contact_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre nom *.
+        /// </summary>
+        public static string Home_Contact_Name {
+            get {
+                return ResourceManager.GetString("Home_Contact_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Envoyez le message.
+        /// </summary>
+        public static string Home_Contact_Submit {
+            get {
+                return ResourceManager.GetString("Home_Contact_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nous vous répondrons dans les meilleurs délais.
+        /// </summary>
+        public static string Home_ContactConfirmation_AnsweringSoon {
+            get {
+                return ResourceManager.GetString("Home_ContactConfirmation_AnsweringSoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
+        /// </summary>
+        public static string Home_ContactConfirmation_BrowseGallery {
+            get {
+                return ResourceManager.GetString("Home_ContactConfirmation_BrowseGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Votre message a bien été envoyé.
+        /// </summary>
+        public static string Home_ContactConfirmation_Heading {
+            get {
+                return ResourceManager.GetString("Home_ContactConfirmation_Heading", resourceCulture);
             }
         }
         
@@ -358,7 +475,7 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à S&apos;enregistrer.
+        ///   Recherche une chaîne localisée semblable à S&apos;inscrire.
         /// </summary>
         public static string Layout_Nav_Register {
             get {

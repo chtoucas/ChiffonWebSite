@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Controllers
 {
-    using System;
     using System.Globalization;
     using System.Web.Mvc;
     using Chiffon.Common.Filters;
@@ -27,7 +26,7 @@
             _environment = environment;
             _siteMap = siteMap;
 
-            _ontology = new Ontology(UICulture);
+            _ontology = new Ontology(CultureInfo.CurrentUICulture);
 
             _chiffonControllerContext = new ChiffonControllerContext() {
                 Language = _environment.Language,
@@ -42,7 +41,6 @@
         protected LayoutViewModel LayoutViewModel { get { return _layoutViewModel; } }
         protected Ontology Ontology { get { return _ontology; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
-        protected CultureInfo UICulture { get { return Environment.UICulture; } }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

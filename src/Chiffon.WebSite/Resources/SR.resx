@@ -120,17 +120,32 @@
   <data name="Account_Login_Description" xml:space="preserve">
     <value>Connectez-vous pour consulter le catalogue.</value>
   </data>
+  <data name="Account_Login_MainHeading" xml:space="preserve">
+    <value>Votre connexion</value>
+  </data>
   <data name="Account_Login_Title" xml:space="preserve">
     <value>Connexion - Pour quel motif, Simone ?</value>
   </data>
   <data name="Account_Newsletter_Description" xml:space="preserve">
     <value>La newsletter des Simone ?</value>
   </data>
+  <data name="Account_Newsletter_MainHeading" xml:space="preserve">
+    <value>Abonnez-vous à la newsletter</value>
+  </data>
   <data name="Account_Newsletter_Title" xml:space="preserve">
     <value>Newsletter - Pour quel motif, Simone ?</value>
   </data>
+  <data name="Account_RegisterConfirmation_MainHeading" xml:space="preserve">
+    <value>Inscription terminée</value>
+  </data>
   <data name="Account_Register_Description" xml:space="preserve">
     <value>Créez votre compte pour consulter le catalogue.</value>
+  </data>
+  <data name="Account_Register_MainHeading" xml:space="preserve">
+    <value>Inscrivez-vous</value>
+  </data>
+  <data name="Account_Register_MainHeadingOnSuccess" xml:space="preserve">
+    <value>Confirmation d'inscription</value>
   </data>
   <data name="Account_Register_Title" xml:space="preserve">
     <value>Enregistrement - Pour quel motif, Simone ?</value>
@@ -144,38 +159,53 @@
   <data name="DefaultTitle" xml:space="preserve">
     <value>Pour quel motif, Simone ?</value>
   </data>
-  <data name="Designer_Category_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  <data name="Designer_Category_DescriptionFormat" xml:space="preserve">
+    <value>Les motifs textiles de {0} dans la catégorie {1}.</value>
   </data>
   <data name="Designer_Category_TitleFormat" xml:space="preserve">
     <value>"{0}" par {1} - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Designer_Index_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  <data name="Designer_Index_DescriptionFormat" xml:space="preserve">
+    <value>Motifs textiles par {0}.</value>
   </data>
   <data name="Designer_Index_TitleFormat" xml:space="preserve">
     <value>{0} - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Designer_Pattern_Description" xml:space="preserve">
-    <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  <data name="Designer_Pattern_DescriptionFormat" xml:space="preserve">
+    <value>Motif textile n°{0} par {1} dans la catégorie {2}.</value>
+  </data>
+  <data name="Designer_Pattern_MainHeadingFormat" xml:space="preserve">
+    <value>{0} ({1})</value>
   </data>
   <data name="Designer_Pattern_TitleFormat" xml:space="preserve">
-    <value>Motif n°{0} par {1} - Pour quel motif, Simone ?</value>
+    <value>Motif textile n°{0} par {1} - Pour quel motif, Simone ?</value>
   </data>
   <data name="Home_About_Description" xml:space="preserve">
     <value>À propos du collectif de designers textile Pour quel motif, Simone ?</value>
   </data>
+  <data name="Home_About_MainHeading" xml:space="preserve">
+    <value>À propos</value>
+  </data>
   <data name="Home_About_Title" xml:space="preserve">
     <value>À propos - Pour quel motif, Simone ?</value>
   </data>
+  <data name="Home_ContactConfirmation_MainHeading" xml:space="preserve">
+    <value>Votre message</value>
+  </data>
   <data name="Home_Contact_Description" xml:space="preserve">
     <value>Contactez le collectif ou une des Simone.</value>
+  </data>
+  <data name="Home_Contact_MainHeading" xml:space="preserve">
+    <value>Votre message</value>
   </data>
   <data name="Home_Contact_Title" xml:space="preserve">
     <value>Contact - Pour quel motif, Simone ?</value>
   </data>
   <data name="Home_Index_Description" xml:space="preserve">
     <value>Pour quel motif, Simone ? Collectif de designers textile.</value>
+  </data>
+  <data name="Home_Index_MainHeading" xml:space="preserve">
+    <value>Découvrez maintenant notre catalogue</value>
   </data>
   <data name="Home_Index_Title" xml:space="preserve">
     <value>Pour quel motif, Simone ?</value>

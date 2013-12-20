@@ -41,10 +41,10 @@ module.exports = function(grunt) {
       css: ['chiffon.css', 'chiffon.print.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
-        'jquery.modal.js',
+        //'jquery.modal.js',
         'chiffon.jquery.js',
         'chiffon.js',
-        'chiffon.localization.js',
+        //'chiffon.localization.js',
         'chiffon.views.js'
       ].map(mapJs).concat('Gruntfile.js')
     },
@@ -95,9 +95,9 @@ module.exports = function(grunt) {
           src: [
             'vendor/l10n-2013.09.12.js',
             'vendor/nprogress-0.1.2.js',
-            'jquery.modal.js',
+            //'jquery.modal.js',
             'chiffon.jquery.js',
-            'chiffon.localization.js',
+            //'chiffon.localization.js',
             'chiffon.views.js'
           ].map(mapJs),
           dest: mapJs('_views-<%= version %>.js'),

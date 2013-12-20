@@ -18,9 +18,30 @@ BODY {
 
 // Menu principal.
 
-.nav_main {
+/*.menu {
   LI {
     margin: .6em 0;
+  }
+}*/
+
+// Menu principal.
+
+.menu {
+  UL {
+    padding: .6em 0;
+
+    UL {
+      padding: 0;
+    }
+  }
+
+  LI {
+    margin: 0;
+  }
+
+  .right_item {
+    position: static;
+    float: right;
   }
 }
 
@@ -50,9 +71,9 @@ BODY {
   width: @mosaic_2_width;
 }
 
-// Page contact.
+// Page à propos.
 
-.home_contact {
+.home_about {
   .li_inline2center;
 
   .li_designers {

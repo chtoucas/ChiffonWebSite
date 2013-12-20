@@ -29,7 +29,7 @@
         protected ChiffonLanguage Language { get { return ChiffonControlerContext.Language; } }
         protected LayoutViewModel LayoutViewModel { get { return ChiffonControlerContext.LayoutViewModel; } }
         protected Ontology Ontology { get { return ChiffonControlerContext.Ontology; } }
-        protected Tag Tag { get; private set; }
+        protected AssetHelper Asset { get; private set; }
 
         public void RenderActionResource(string resourceName)
         {
@@ -65,7 +65,7 @@
         {
             base.InitHelpers();
 
-            Tag = new Tag();
+            Asset = new AssetHelper(Html);
         }
 
         internal static Func<ChiffonControllerContext> GetChiffonControlerContextThunk_(WebViewPage @this)

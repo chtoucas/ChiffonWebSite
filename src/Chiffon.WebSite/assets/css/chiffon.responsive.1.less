@@ -11,19 +11,27 @@ BODY {
   width: @grid_1_width;
 }
 
-H1 {
+HEADER H1 {
   height: 57px;
   width: 57px;
   overflow: hidden;
   // NB: Evitons une requête HTTP supplémentaire pour les smartphones.
   background-image: data-uri("img/logo.png");
+
+  A {
+    color: transparent;
+  }
 }
 
-FOOTER {
+SECTION H1, H2, .highlight_text {
+  font-size: 2em;
+}
+
+/*FOOTER {
   text-transform: none;
   font-size: 1.3em;
   font-variant: normal;
-}
+}*/
 
 .serif_large, .serif_medium {
   font-size: 1.8em;
@@ -41,19 +49,34 @@ FOOTER {
 
 // Menu principal.
 
-.nav_main {
-  .account {
-    position: static;
-  }
-
+.menu {
   UL {
     padding: .6em 0;
+
+    UL {
+      padding: 0;
+    }
   }
 
   LI {
     margin: 0;
   }
+
+  .right_item {
+    position: static;
+    float: none;
+  }
+
+  .last_elmt {
+    padding-right: 1em;
+  }
 }
+
+/*.secondary_menu {
+  .last_elmt {
+    padding-right: .65em;
+  }
+}*/
 
 // Menu des designers.
 
@@ -87,18 +110,23 @@ FOOTER {
   width: @mosaic_1_width;
 }
 
-// Pages account.
-
-.account_login,
-.account_register {
-  INPUT {
-    max-width: 80%;
+.custom_form {
+  UL, P {
+    width: 220px;
   }
+
+  INPUT, TEXTAREA {
+    width: 200px;
+  }
+
+    INPUT[type=submit] {
+      width: 220px;
+    }
 }
 
-// Page contact.
+// Page à propos.
 
-.home_contact {
+.home_about {
   .li_inline2center;
 
   .li_designers {
@@ -107,10 +135,6 @@ FOOTER {
     > LI {
       margin: .8em 0;
     }
-  }
-
-  P A {
-    font-size: .8em;
   }
 }
 

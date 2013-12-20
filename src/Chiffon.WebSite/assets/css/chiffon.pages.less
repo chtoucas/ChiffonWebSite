@@ -2,35 +2,10 @@
 @import "chiffon.vars.less";
 
 // ============================================================================
-// Page d'accueil
-// ============================================================================
-
-.home_index .mosaic {
-  margin: 2.3em 0 .3em 0;
-}
-
-// ============================================================================
 // Page à propos
 // ============================================================================
 
 .home_about {
-  margin-top: 1em;
-  margin-bottom: 2em;
-
-  .links {
-    text-align: center;
-
-    A {
-      text-decoration: underline;
-    }
-  }
-}
-
-// ============================================================================
-// Page de contact
-// ============================================================================
-
-.home_contact {
   margin-bottom: 5em;
 
   .cl:hover .watermark {
@@ -94,6 +69,8 @@
   }
 
   .li_designers {
+    margin-top: 5em;
+
     > LI {
       width: @grid_1_width;
       margin-right: @grid_inter_width;
@@ -127,14 +104,14 @@
       background: @white;
     }
   }
+}
 
-  P {
-    margin: .5em 0 1em 0;
+// ============================================================================
+// Page de contact
+// ============================================================================
 
-    A {
-      font-size: .7em;
-    }
-  }
+.home_contact {
+  text-align: center;
 }
 
 // ============================================================================
@@ -142,181 +119,62 @@
 // ============================================================================
 
 .account_register {
-  .validation-summary-errors {
-    font-size: @font_size_medium;
-    line-height: 1.5em;
-    color: @error_color;
-    text-align: center;
-  }
-
-  P.error_container {
-    margin: inherit;
-  }
-
-  EM {
-    color: @darkgrey;
-  }
-
-  FORM {
-    font-style: normal;
-    color: @darkgrey;
-
-    P {
-      margin: 2em 0;
-    }
-
-    LABEL:first-child {
-      display: none;
-      font-size: 1.2em;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-  }
-  //INPUT[type=text], INPUT[type=email], INPUT[type=submit] {
-  INPUT {
-    width: 312px;
-    height: 3.1em;
-    padding: .5em 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-transform: uppercase;
-    background-color: transparent;
-    border: 1px solid @darkgrey;
-
-    &:hover {
-      color: @darkgrey;
-      border-color: @grey;
-    }
-
-    &[type=submit] {
-      width: 334px;
-      padding: 0;
-      font-size: 1.6em;
-      color: @darkgrey;
-      //&:hover {
-      //  color: @black;
-      //  border-color: @grey;
-      //}
-    }
-  }
+  text-align: center;
 
   LABEL.newsletter {
     font-size: 1.2em;
-    font-weight: normal;
+    font-weight: bold;
+    color: @darkgrey;
     text-transform: none;
   }
-
-  .error_container {
-    text-align: center;
-  }
 }
-
-//.modal .account_register {
-//  FORM P {
-//    margin: 2em auto;
-//  }
-
-//  P, LABEL {
-//    margin: .5em auto;
-//    color: @grey;
-//  }
-
-//    P SPAN {
-//      color: @white;
-//    }
-
-//  INPUT {
-//    color: @white;
-
-//    &[type=submit]:hover {
-//      color: @white;
-//      border-color: @white;
-//    }
-//  }
-//}
 
 // ============================================================================
 // Page de connexion
 // ============================================================================
 
 .account_login {
-  FORM {
-    margin-bottom: 7em;
+  .inside_form {
+    text-align: right;
 
     A {
-      text-transform: none;
-    }
-  }
-
-  INPUT {
-    background-color: transparent;
-    border: 1px solid @darkgrey;
-
-    &[type=password] {
-      width: 16em;
-      padding: .5em .75em;
-      margin-bottom: 1.5em;
-      font-size: 1.8em;
-      color: @darkgrey;
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-    &[type=submit] {
-      margin-bottom: .9em;
-      color: @black;
-      background: transparent;
-      border: 0;
+      font-size: 1.2em;
+      color: @grey;
+      text-decoration: underline;
 
       &:hover {
-        color: @grey;
+        color: @black;
       }
     }
-
-    &[type=text]:focus {
-      color: @black;
-    }
-  }
-
-  .hello {
-    margin-bottom: 2em;
   }
 }
-
-.modal .account_login {
-  INPUT {
-    color: @white;
-  }
-}
-
 // ============================================================================
 // Pages designer
 // ============================================================================
 
 .designer {
-  padding-top: 2.3em;
-
   .mosaic {
     // Mosaïque à trois colonnes.
     width: @mosaic_3_width;
 
-    //.current {
-    //  .overlay {
-    //    background-color: @red;
-    //  }
-    //  // Quand il s'agit d'un motif sans variante, on a juste une image,
-    //  // sinon on a un lien.
-    //  A::before, &::before {
-    //    position: absolute;
-    //    display: block;
-    //    width: @preview_width;
-    //    height: @preview_height;
-    //    content: '';
-    //    -webkit-box-shadow: inset 0 0 3px @red;
-    //    -moz-box-shadow: inset 0 0 3px @red;
-    //    box-shadow: inset 0 0 3px @red;
-    //  }
-    //}
+    .current {
+      opacity: .5;
+      /*.overlay {
+        background-color: @red;
+      }*/
+      // Quand il s'agit d'un motif sans variante, on a juste une image,
+      // sinon on a un lien.
+      A::before, &::before {
+        position: absolute;
+        display: block;
+        width: @preview_width;
+        height: @preview_height;
+        content: '';
+        -webkit-box-shadow: inset 0 0 3px @red;
+        -moz-box-shadow: inset 0 0 3px @red;
+        box-shadow: inset 0 0 3px @red;
+      }
+    }
 
     .watermark SPAN {
       right: 0;

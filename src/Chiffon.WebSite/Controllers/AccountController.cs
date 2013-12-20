@@ -4,6 +4,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Net.Mail;
     //using System.Text.RegularExpressions;
     using System.Web.Mvc;
@@ -54,6 +55,10 @@
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated) {
+                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+            }
+
             // Modèle.
             var model = new LoginViewModel { ReturnUrl = returnUrl };
 
@@ -64,21 +69,28 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Login());
+            LayoutViewModel.MainHeading = SR.Account_Login_MainHeading;
+            LayoutViewModel.MainNavCssClass = "login";
 
-            if (Request.IsAjaxRequest()) {
-                return PartialView(Constants.ViewName.Account.Login, model);
-            }
-            else {
-                return View(Constants.ViewName.Account.Login, model);
-            }
+            //if (Request.IsAjaxRequest()) {
+            //    return PartialView(Constants.ViewName.Account.Login, model);
+            //}
+            //else {
+            return View(Constants.ViewName.Account.Login, model);
+            //}
         }
 
         [HttpGet]
-        // FIXME: Remettre en place returnUrl.
-        public ActionResult Register(/*string returnUrl*/)
+        public ActionResult Register(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated) {
+                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+            }
+
             // Modèle.
-            var model = new RegisterViewModel();
+            var model = new RegisterViewModel {
+                ReturnUrl = returnUrl,
+            };
 
             // Ontologie.
             Ontology.Title = SR.Account_Register_Title;
@@ -87,13 +99,15 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
+            LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
+            LayoutViewModel.MainNavCssClass = "register";
 
-            if (Request.IsAjaxRequest()) {
-                return PartialView(Constants.ViewName.Account.Register, model);
-            }
-            else {
-                return View(Constants.ViewName.Account.Register, model);
-            }
+            //if (Request.IsAjaxRequest()) {
+            //    return PartialView(Constants.ViewName.Account.Register, model);
+            //}
+            //else {
+            return View(Constants.ViewName.Account.Register, model);
+            //}
         }
 
         [HttpPost]
@@ -102,6 +116,10 @@
         {
             Requires.NotNull(contact, "contact");
 
+            if (User.Identity.IsAuthenticated) {
+                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+            }
+
             // Ontologie.
             Ontology.Title = SR.Account_Register_Title;
             Ontology.Description = SR.Account_Register_Description;
@@ -109,53 +127,81 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
+            LayoutViewModel.MainNavCssClass = "register";
+            LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
 
             if (!ModelState.IsValid) {
                 return View(Constants.ViewName.Account.Register, contact);
             }
 
             if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
-                return View(Constants.ViewName.Account.RegisterTwice);
+                return View(Constants.ViewName.Account.RegisterEmailAlreadyTaken);
             }
 
+            LayoutViewModel.MainHeading = SR.Account_Register_MainHeadingOnSuccess;
+
             // FIXME:
-            if (contact.Message == null) { contact.Message = String.Empty; }
+            //if (contact.Message == null) { contact.Message = String.Empty; }
             if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
 
-            var publicKey = CreateContact_(contact);
+            var password = CreateContact_(contact);
 
             // Envoi de l'email de confirmation d'inscription.
             // FIXME: Utiliser LastName, FirstName pour les anglishes.
             var emailAddress = new MailAddress(
                 contact.EmailAddress, contact.FirstName + " " + contact.LastName);
 
-            var message
-                = (new MailMerge()).Welcome(emailAddress, publicKey, Environment.BaseUri, UICulture.TwoLetterISOLanguageName);
-            //_smtpClient.Send(message);
-            using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(message);
-            }
-
             // FIXME: 
             string userName = contact.FirstName + " " + contact.LastName;
             _formsService.SignIn(userName, false /* createPersistentCookie */);
 
+            // On envoie le mail après la connection.
+            var mailMerge = new MailMerge();
+
+            var welcomeMessage
+                = mailMerge.Welcome(emailAddress, password, Environment.BaseUri, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+            var alertMessage
+                = mailMerge.NewMember(emailAddress, contact.FirstName, contact.LastName, contact.CompanyName);
+
+            //_smtpClient.Send(message);
+            using (var smtpClient = new SmtpClient()) {
+                smtpClient.Send(welcomeMessage);
+                smtpClient.Send(alertMessage);
+            }
+
             // FIXME: vérifier le contenu de l'URL.
-            // FIXME: rajouter un indicateur que tout s'est bien passé.
             var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
-            //if (nextUrl.IsSome) {
-            //    return Redirect(nextUrl.ToString());
-            //}
-            //else {
-            //    return RedirectToRoute(Constants.RouteName.Home.Index);
-            //}
+            if (nextUrl.IsSome) {
+                return RedirectToRoute(Constants.RouteName.Account.RegisterConfirmation, new
+                {
+                    nextUrl = nextUrl.Value.ToString()
+                });
+            }
+            else {
+                return RedirectToRoute(Constants.RouteName.Account.RegisterConfirmation);
+            }
+        }
 
-            var model = new NewContactViewModel
-            {
-                NextUrl = nextUrl.ValueOrElse(Environment.BaseUri).ToString(),
-            };
+        [HttpGet]
+        public ActionResult RegisterConfirmation(string nextUrl)
+        {
+            if (!User.Identity.IsAuthenticated) {
+                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Account.Register));
+            }
 
-            return View(Constants.ViewName.Account.PostRegister, model);
+            if (String.IsNullOrEmpty(nextUrl)) {
+                nextUrl = Url.RouteUrl(Constants.RouteName.Home.Index);
+            }
+
+            // Ontologie.
+            Ontology.Relationships.CanonicalUrl = SiteMap.RegisterConfirmation();
+
+            // LayoutViewModel.
+            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
+            LayoutViewModel.MainHeading = SR.Account_RegisterConfirmation_MainHeading;
+            LayoutViewModel.MainNavCssClass = "register";
+
+            return View(Constants.ViewName.Account.RegisterConfirmation, new RegisterConfirmationViewModel { NextUrl = nextUrl });
         }
 
         [HttpGet]
@@ -168,6 +214,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
+            LayoutViewModel.MainHeading = SR.Account_Newsletter_MainHeading;
             LayoutViewModel.MainNavCssClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
@@ -224,7 +271,7 @@
 
         string CreateContact_(RegisterViewModel contact)
         {
-            var publicKey = CreateRandomPassword_(25);
+            var password = CreateRandomPassword_(7);
 
             using (var cnx = new SqlConnection(ConnectionString_)) {
                 using (var cmd = new SqlCommand()) {
@@ -237,15 +284,15 @@
                     p.Add("@firstname", SqlDbType.NVarChar).Value = contact.FirstName;
                     p.Add("@lastname", SqlDbType.NVarChar).Value = contact.LastName;
                     p.Add("@company_name", SqlDbType.NVarChar).Value = contact.CompanyName;
-                    p.Add("@public_key", SqlDbType.NVarChar).Value = publicKey;
-                    p.Add("@message", SqlDbType.NVarChar).Value = contact.Message;
+                    p.Add("@password", SqlDbType.NVarChar).Value = password;
+                    //p.Add("@message", SqlDbType.NVarChar).Value = contact.Message;
 
                     cnx.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
 
-            return publicKey;
+            return password;
         }
 
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx

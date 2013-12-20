@@ -5,7 +5,8 @@
 
     public class LogOnQuery
     {
-        public string Token { get; set; }
+        public string EmailAddress { get; set; }
+        public string Password { get; set; }
         public Maybe<Uri> TargetUrl { get; set; }
     }
 }

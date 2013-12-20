@@ -83,13 +83,13 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Narvalo.Common, Version=0.4.0.2, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.4.0.2\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.4.0.3\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.4.0.2, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.4.0.2\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.4.0.3\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -229,8 +229,6 @@
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Mail\MailMessageResult.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
-    <Compile Include="Handlers\GoQuery.cs" />
-    <Compile Include="Handlers\GoHandler.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\CssUtility.cs" />
     <Compile Include="Controllers\ChiffonController.cs" />
@@ -285,8 +283,10 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
     <Compile Include="ViewModels\CommonStyleSheetViewModel.cs" />
+    <Compile Include="ViewModels\RegisterConfirmationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
     <Compile Include="ViewModels\DesignerViewItem.cs" />
@@ -315,9 +315,7 @@
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\img\spacer.gif" />
     <Content Include="assets\js\chiffon.views.js" />
-    <Content Include="assets\js\chiffon.localization.js" />
     <Content Include="assets\js\chiffon.js" />
-    <Content Include="assets\js\jquery.modal.js" />
     <Content Include="assets\js\chiffon.jquery.js" />
     <Content Include="assets\js\vendor\jquery-2.0.3.js" />
     <Content Include="assets\js\vendor\jquery.microdata\jquery.microdata.js" />
@@ -389,6 +387,9 @@
     <Content Include="Views\Mail\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\MailMerge\NewMember.text.cshtml" />
+    <Content Include="Views\MailMerge\NewMessage.text.cshtml" />
+    <Content Include="Views\Home\ContactConfirmation.cshtml" />
     <None Include="Views\Mail\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -420,9 +421,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_DesignerMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Designer\Index.cshtml" />
@@ -459,8 +457,8 @@
     <Content Include="Views\Widget\Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
-    <Content Include="Views\Account\PostRegister.cshtml" />
-    <Content Include="Views\Account\RegisterTwice.cshtml" />
+    <Content Include="Views\Account\RegisterConfirmation.cshtml" />
+    <Content Include="Views\Account\RegisterEmailAlreadyTaken.cshtml" />
     <Content Include="Views\MailMerge\_Layout.text.cshtml" />
     <Content Include="Views\MailMerge\Welcome.text.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.cshtml" />
@@ -469,14 +467,6 @@
     <Content Include="Views\Home\Resources\_AboutContent.en.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.en.cshtml" />
-    <Content Include="Views\Account\Resources\_LoginContent.cshtml" />
-    <Content Include="Views\Account\Resources\_LoginContent.en.cshtml" />
-    <Content Include="Views\Account\Resources\_RegisterWarning.cshtml" />
-    <Content Include="Views\Account\Resources\_RegisterWarning.en.cshtml" />
-    <Content Include="Views\Account\Resources\_RegisterHelp.cshtml" />
-    <Content Include="Views\Account\Resources\_RegisterHelp.en.cshtml" />
-    <Content Include="Views\Account\Resources\_PostRegisterEmail.cshtml" />
-    <Content Include="Views\Account\Resources\_PostRegisterEmail.en.cshtml" />
     <Content Include="Views\Mail\_Layout.cshtml" />
     <Content Include="Views\Mail\Welcome.cshtml" />
     <Content Include="Views\Mail\ForgottenPassword.cshtml" />

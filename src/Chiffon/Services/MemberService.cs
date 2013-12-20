@@ -25,7 +25,7 @@
         #region IMemberService
 
         // FIXME: c'est un peu laxiste et franchement dangereux...
-        public string LogOn(string publicKey)
+        public string LogOn(string emailAddress, string password)
         {
             // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
 
@@ -38,7 +38,8 @@
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@public_key", SqlDbType.NVarChar).Value = publicKey;
+                    p.Add("@email_address", SqlDbType.NVarChar).Value = emailAddress;
+                    p.Add("@password", SqlDbType.NVarChar).Value = password;
 
                     cnx.Open();
                     using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {

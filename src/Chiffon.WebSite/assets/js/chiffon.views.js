@@ -399,17 +399,17 @@ Chiffon.Views = (function(window, undef) {
   var View;
   var LayoutMixin;
   var validationResources;
-  var document = window.document;
+  //var document = window.document;
   var Views = {};
 
-  function initModal() {
-    // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
-    $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
-      e.preventDefault();
+  //function initModal() {
+  //  // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
+  //  $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
+  //    e.preventDefault();
 
-      $(this).modal({ closeText: ł('%modal.close') });
-    });
-  }
+  //    $(this).modal({ closeText: ł('%modal.close') });
+  //  });
+  //}
 
   Views.View = View = function(context) {
     this.context = context;
@@ -431,10 +431,10 @@ Chiffon.Views = (function(window, undef) {
 
   Views.LayoutMixin = LayoutMixin = {
     initLayout: function() {
-      if (!this.context.isAuth) {
-        // Pour les visiteurs anonymes, on active les modales.
-        initModal();
-      }
+      //if (!this.context.isAuth) {
+      //  // Pour les visiteurs anonymes, on active les modales.
+      //  initModal();
+      //}
       //else {
       // // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
       // $('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
@@ -454,14 +454,14 @@ Chiffon.Views = (function(window, undef) {
       }
 
       this.context.require(validationResources, function() {
-        var $errContainer = $('#error_container');
+        //var $errContainer = $('#error_container');
 
         $.validator.setDefaults({
           hightlight: function(elmt) { $(elmt).addClass('error'); },
-          unhightlight: function(elmt) { $(elmt).removeClass('error'); },
-          errorContainer: $errContainer,
-          errorLabelContainer: $errContainer,
-          invalidHandler: function() { $errContainer.fadeIn(); }
+          unhightlight: function(elmt) { $(elmt).removeClass('error'); }
+          //errorContainer: $errContainer,
+          //errorLabelContainer: $errContainer,
+          //invalidHandler: function() { $errContainer.fadeIn(); }
         });
 
         if (undef !== fn) { fn(); }
@@ -483,14 +483,35 @@ Chiffon.Views = (function(window, undef) {
 Chiffon.Views.Home = (function() {
   'use strict';
 
+  var Views = Chiffon.Views;
   var Simple = Chiffon.Views.Simple;
 
   return {
-    About: Simple,
-    Contact: Simple.Create(function() {
+    About: Simple.Create(function() {
       // On ouvre les liens externes dans une nouvelle fenêtre.
       $('A[rel=external]').external();
     }),
+    Contact: Simple.Create(function() {
+      var $form = $('#contact_form');
+
+      this.validate(function() {
+        $form.validate({
+          // NB: On ne veut pas de message d'erreur par "input".
+          // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+          errorPlacement: $.noop,
+          messages: {
+            EmailAddress: '',
+            Name: '',
+            Message: ''
+          },
+          rules: {
+            EmailAddress: { required: true, email: true },
+            Name: { required: true, minlength: 2, maxlength: 200 },
+            Message: { required: true, minlength: 30, maxlength: 3000 }
+        }
+        });
+      });
+    }, Views.ValidateMixin),
     Index: Simple
 
     //Index: Simple.Create(function() {
@@ -515,8 +536,17 @@ Chiffon.Views.Account = (function() {
 
     this.validate(function() {
       $form.validate({
-        messages: { token: ł('%login.password_required') },
-        rules: { token: { required: true, minlength: 10 } }
+        // NB: On ne veut pas de message d'erreur par "input".
+        // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
+        errorPlacement: $.noop,
+        messages: {
+          email: '', // ł('%login.email_required'),
+          password: '', // ł('%login.password_required')
+        },
+        rules: {
+          email: { required: true, email: true },
+          password: { required: true, minlength: 7 }
+        }
       });
     });
   }, ValidateMixin);
@@ -530,17 +560,17 @@ Chiffon.Views.Account = (function() {
         // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
         errorPlacement: $.noop,
         messages: {
-          Lastname: '',
-          Firstname: '',
+          LastName: '',
+          FirstName: '',
           CompanyName: '',
           EmailAddress: ''
         },
         rules: {
-          Lastname: { required: true, minlength: 2, maxlength: 50 },
-          Firstname: { required: true, minlength: 2, maxlength: 50 },
+          LastName: { required: true, minlength: 2, maxlength: 50 },
+          FirstName: { required: true, minlength: 2, maxlength: 50 },
           CompanyName: { required: true, minlength: 2, maxlength: 100 },
-          EmailAddress: { required: true, minlength: 5, maxlength: 200 },
-          Message: { maxlength: 4000 }
+          EmailAddress: { required: true, email: true }
+          //Message: { maxlength: 4000 }
         }
       });
     });

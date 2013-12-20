@@ -13,29 +13,55 @@ BODY {
 
 HEADER {
   padding-top: 1.9em;
+
+  H1 {
+    margin: 0 auto;
+    font-size: 1.8em;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+
+    EM, STRONG {
+      font-style: normal;
+      font-weight: bold;
+    }
+
+    A {
+      &:hover {
+        color: @black;
+      }
+    }
+  }
 }
 
-H1 {
-  margin: 0 auto;
-  font-size: 1.8em;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
+SECTION {
+  margin-top: 2.3em;
+  margin-bottom: 3em;
 
-  EM, STRONG {
-    font-style: normal;
-    font-weight: bold;
+  H1 {
+    margin: (2.4em / @h1_font_scale) 0 1em 0;
+    font-size: (@h1_font_scale * 1em);
+    text-align: center;
+
+    SPAN {
+      display: block;
+      width: 15px;
+      height: 8px;
+      margin: (.9em / @h1_font_scale) auto (1.9em / @h1_font_scale) auto;
+      background: data-uri("img/down_arrow.png") no-repeat;
+    }
   }
 }
 
 FOOTER {
   margin-bottom: 2em;
-  text-transform: uppercase;
-  border-top: solid 2px @grey;
-  font-variant: small-caps;
-
+  font-size: 1.1em;
+  text-align: center;
+  /*text-transform: uppercase;*/
+  /*border-top: solid 2px @grey;*/
+  /*font-variant: small-caps;*/
   P {
-    margin: 2em 0 0;
-    color: @darkgrey;
+    margin: 1.8em 0 0;
+    /*color: @grey;*/
   }
 }

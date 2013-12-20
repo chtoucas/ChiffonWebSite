@@ -117,35 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account_Login_EmailAddress" xml:space="preserve">
+    <value>Votre email *</value>
+  </data>
+  <data name="Account_Login_Heading" xml:space="preserve">
+    <value>Saisissez vos identifiants de connexion pour accéder au catalogue</value>
+  </data>
+  <data name="Account_Login_MandatoryFields" xml:space="preserve">
+    <value>* Ces champs sont obligatoires</value>
+  </data>
+  <data name="Account_Login_NewUser" xml:space="preserve">
+    <value>Vous êtes un nouvel utilisateur</value>
+  </data>
   <data name="Account_Login_Password" xml:space="preserve">
-    <value>Mot de passe</value>
+    <value>Votre mot de passe *</value>
   </data>
-  <data name="Account_Login_RequestPassword" xml:space="preserve">
-    <value>Demander un mot de passe</value>
+  <data name="Account_Login_Register" xml:space="preserve">
+    <value>Je crée un compte</value>
   </data>
-  <data name="Account_Login_Validate" xml:space="preserve">
-    <value>Valider</value>
+  <data name="Account_Login_Submit" xml:space="preserve">
+    <value>Connectez-vous</value>
   </data>
-  <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
+  <data name="Account_RegisterConfirmation_BrowseGallery" xml:space="preserve">
     <value>Feuilleter le catalogue</value>
   </data>
-  <data name="Account_PostRegister_Byebye" xml:space="preserve">
-    <value>À bientôt !</value>
+  <data name="Account_RegisterConfirmation_EmailSent" xml:space="preserve">
+    <value>Vous recevrez très prochainement vos identifiants dans votre boîte mail</value>
   </data>
-  <data name="Account_PostRegister_Success" xml:space="preserve">
-    <value>Les Simone ont le plaisir de vous informer que votre demande a bien été prise en compte.</value>
+  <data name="Account_RegisterConfirmation_Heading" xml:space="preserve">
+    <value>Votre demande a bien été prise en compte</value>
+  </data>
+  <data name="Account_RegisterEmailAlreadyTaken_Heading" xml:space="preserve">
+    <value>Nous sommes désolés mais l'adresse avec laquelle vous souhaitez vous enregistrer est déjà prise.</value>
+  </data>
+  <data name="Account_RegisterEmailAlreadyTaken_Register" xml:space="preserve">
+    <value>Je crée un compte</value>
+  </data>
+  <data name="Account_Register_AlreadyRegistered" xml:space="preserve">
+    <value>Déjà inscrit(e) ?</value>
   </data>
   <data name="Account_Register_CompanyName" xml:space="preserve">
-    <value>Agence *</value>
+    <value>Votre agence *</value>
+  </data>
+  <data name="Account_Register_Connect" xml:space="preserve">
+    <value>Connectez-vous</value>
   </data>
   <data name="Account_Register_EmailAddress" xml:space="preserve">
-    <value>Email *</value>
+    <value>Votre email *</value>
   </data>
   <data name="Account_Register_Firstname" xml:space="preserve">
-    <value>Prénom *</value>
+    <value>Votre prénom *</value>
+  </data>
+  <data name="Account_Register_Heading" xml:space="preserve">
+    <value>Remplissez le formulaire ci-dessous pour feuilleter le catalogue</value>
   </data>
   <data name="Account_Register_Lastname" xml:space="preserve">
-    <value>Nom *</value>
+    <value>Votre nom *</value>
   </data>
   <data name="Account_Register_Login" xml:space="preserve">
     <value>J'ai déjà un mot de passe</value>
@@ -163,13 +190,10 @@
     <value>Mot de passe</value>
   </data>
   <data name="Account_Register_Submit" xml:space="preserve">
-    <value>Je m'inscris</value>
+    <value>Validez votre inscription</value>
   </data>
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Veuillez vérifier les champs entourés en rouge.</value>
-  </data>
-  <data name="Account_Register_Welcome" xml:space="preserve">
-    <value>Bienvenue,</value>
   </data>
   <data name="Category_All" xml:space="preserve">
     <value>Tous</value>
@@ -189,11 +213,26 @@
   <data name="Error_ServiceUnavailable" xml:space="preserve">
     <value>Les Simones sont confuses mais le site est en cours de maintenance.</value>
   </data>
-  <data name="Home_About_ContactUs" xml:space="preserve">
-    <value>Nous contacter</value>
+  <data name="Home_ContactConfirmation_AnsweringSoon" xml:space="preserve">
+    <value>Nous vous répondrons dans les meilleurs délais</value>
   </data>
-  <data name="Home_About_PasswordRequest" xml:space="preserve">
-    <value>Je demande un mot de passe</value>
+  <data name="Home_ContactConfirmation_BrowseGallery" xml:space="preserve">
+    <value>Feuilleter le catalogue</value>
+  </data>
+  <data name="Home_ContactConfirmation_Heading" xml:space="preserve">
+    <value>Votre message a bien été envoyé</value>
+  </data>
+  <data name="Home_Contact_EmailAddress" xml:space="preserve">
+    <value>Votre email *</value>
+  </data>
+  <data name="Home_Contact_Message" xml:space="preserve">
+    <value>Votre message *</value>
+  </data>
+  <data name="Home_Contact_Name" xml:space="preserve">
+    <value>Votre nom *</value>
+  </data>
+  <data name="Home_Contact_Submit" xml:space="preserve">
+    <value>Envoyez le message</value>
   </data>
   <data name="Home_Index_PreviewWatermark" xml:space="preserve">
     <value>Voir toute la collection &gt;</value>
@@ -217,7 +256,7 @@
     <value>Newsletter</value>
   </data>
   <data name="Layout_Nav_Register" xml:space="preserve">
-    <value>S'enregistrer</value>
+    <value>S'inscrire</value>
   </data>
   <data name="Pager_Next" xml:space="preserve">
     <value>Suiv</value>

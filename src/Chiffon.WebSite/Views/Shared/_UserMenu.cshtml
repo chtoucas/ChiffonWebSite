@@ -1,12 +1,14 @@
-﻿@*<li class=sep>/</li>
- <li><a href="@Url.RouteUrl(Constants.RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
-<li class=account>
+﻿@*
+ <li class=left_item><a href="@Url.RouteUrl(Constants.RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
+<li class=right_item>
  @if (User.Identity.IsAuthenticated) {
-  <form method=post action="/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout"></form>
-  @*<a href="#" id=nav_account>Mon compte</a>*@
+  <form method=post action="/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout" class=last_elmt></form>
  }
  else {
-  @*<a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Layout_Nav_Register</a> @:/*@
-  <a href="@Url.RouteUrl(Constants.RouteName.Account.Login)" rel="modal:open">@VR.Layout_Nav_Login</a>
+  <ul class=li_inline>
+   <li><a href="@Url.RouteUrl(Constants.RouteName.Account.Login)" class=login>@VR.Layout_Nav_Login</a></li>
+   <li class=sep>/</li>
+   <li><a href="@Url.RouteUrl(Constants.RouteName.Account.Register)" class="last_elmt register">@VR.Layout_Nav_Register</a></li>
+  </ul>
  }
 </li>

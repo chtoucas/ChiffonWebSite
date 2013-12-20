@@ -16,12 +16,12 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class OntologyFilterAttribute : ActionFilterAttribute
     {
-        static readonly Lazy<IEnumerable<OpenGraphLocale>> OpenGraphLocales_
-            = new Lazy<IEnumerable<OpenGraphLocale>>(() =>
-            {
-                return from env in ChiffonEnvironmentResolver.Environments
-                       select new OpenGraphLocale(env.UICulture);
-            });
+        //static readonly Lazy<IEnumerable<OpenGraphLocale>> OpenGraphLocales_
+        //    = new Lazy<IEnumerable<OpenGraphLocale>>(() =>
+        //    {
+        //        return from env in ChiffonEnvironmentResolver.Environments
+        //               select new OpenGraphLocale(env.UICulture);
+        //    });
 
         string _robotsDirective = "noindex, nofollow";
 
@@ -56,10 +56,10 @@
             };
 
             // Autres langues dans lesquelles la page est disponible.
-            var alternativeLocales = from _ in OpenGraphLocales_.Value
-                                     where _ != ontology.OpenGraph.Locale
-                                     select _;
-            ontology.OpenGraph.AddAlternativeLocales(alternativeLocales);
+            //var alternativeLocales = from _ in OpenGraphLocales_.Value
+            //                         where _ != ontology.OpenGraph.Locale
+            //                         select _;
+            //ontology.OpenGraph.AddAlternativeLocales(alternativeLocales);
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)

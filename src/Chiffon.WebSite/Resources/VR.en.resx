@@ -117,35 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account_Login_EmailAddress" xml:space="preserve">
+    <value>Your email *</value>
+  </data>
+  <data name="Account_Login_Heading" xml:space="preserve">
+    <value>Enter your credentials to access the catalog</value>
+  </data>
+  <data name="Account_Login_MandatoryFields" xml:space="preserve">
+    <value>* Mandatory fields</value>
+  </data>
+  <data name="Account_Login_NewUser" xml:space="preserve">
+    <value>I am not registered yet</value>
+  </data>
   <data name="Account_Login_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Your password *</value>
   </data>
-  <data name="Account_Login_RequestPassword" xml:space="preserve">
-    <value>Request your password</value>
+  <data name="Account_Login_Register" xml:space="preserve">
+    <value>Create a new account</value>
   </data>
-  <data name="Account_Login_Validate" xml:space="preserve">
-    <value>Validate</value>
+  <data name="Account_Login_Submit" xml:space="preserve">
+    <value>Connect now</value>
   </data>
-  <data name="Account_PostRegister_BrowseGallery" xml:space="preserve">
-    <value>Browse the catalog.</value>
+  <data name="Account_RegisterConfirmation_BrowseGallery" xml:space="preserve">
+    <value>Browse the catalog</value>
   </data>
-  <data name="Account_PostRegister_Byebye" xml:space="preserve">
-    <value>See you soon!</value>
+  <data name="Account_RegisterConfirmation_EmailSent" xml:space="preserve">
+    <value>You will receive shortly your credentials in your mailbox</value>
   </data>
-  <data name="Account_PostRegister_Success" xml:space="preserve">
-    <value>Les Simone are pleased to inform you that your request has been processed.</value>
+  <data name="Account_RegisterConfirmation_Heading" xml:space="preserve">
+    <value>Your request has been successfully processed.</value>
+  </data>
+  <data name="Account_RegisterEmailAlreadyTaken_Heading" xml:space="preserve">
+    <value>We are sorry but the email address you tried to register with is already taken.</value>
+  </data>
+  <data name="Account_RegisterEmailAlreadyTaken_Register" xml:space="preserve">
+    <value>Create a new account</value>
+  </data>
+  <data name="Account_Register_AlreadyRegistered" xml:space="preserve">
+    <value>Already registered?</value>
   </data>
   <data name="Account_Register_CompanyName" xml:space="preserve">
-    <value>Agency *</value>
+    <value>Your agency *</value>
+  </data>
+  <data name="Account_Register_Connect" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="Account_Register_EmailAddress" xml:space="preserve">
-    <value>Email *</value>
+    <value>Your email *</value>
   </data>
   <data name="Account_Register_Firstname" xml:space="preserve">
-    <value>Firstname *</value>
+    <value>Your firstname *</value>
+  </data>
+  <data name="Account_Register_Heading" xml:space="preserve">
+    <value>Please, fill the form to browse the catalog</value>
   </data>
   <data name="Account_Register_Lastname" xml:space="preserve">
-    <value>Name *</value>
+    <value>Your name *</value>
   </data>
   <data name="Account_Register_Login" xml:space="preserve">
     <value>I already own a password</value>
@@ -168,9 +195,6 @@
   <data name="Account_Register_ValidationMessage" xml:space="preserve">
     <value>Please, fill out all highlighted fields in red.</value>
   </data>
-  <data name="Account_Register_Welcome" xml:space="preserve">
-    <value>Welcome</value>
-  </data>
   <data name="Category_All" xml:space="preserve">
     <value>All</value>
   </data>
@@ -189,11 +213,26 @@
   <data name="Error_ServiceUnavailable" xml:space="preserve">
     <value>Les Simones are confused but the site is currently undergoing maintenance.</value>
   </data>
-  <data name="Home_About_ContactUs" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Home_ContactConfirmation_AnsweringSoonHome_ContactConfirmation_AnsweringSoon" xml:space="preserve">
+    <value>We shall get back to you very soon</value>
   </data>
-  <data name="Home_About_PasswordRequest" xml:space="preserve">
-    <value>Request a password</value>
+  <data name="Home_ContactConfirmation_BrowseGallery" xml:space="preserve">
+    <value>Browse the catalog</value>
+  </data>
+  <data name="Home_ContactConfirmation_Heading" xml:space="preserve">
+    <value>Your message has successfully been sent</value>
+  </data>
+  <data name="Home_Contact_EmailAddress" xml:space="preserve">
+    <value>Your email *</value>
+  </data>
+  <data name="Home_Contact_Message" xml:space="preserve">
+    <value>Your message *</value>
+  </data>
+  <data name="Home_Contact_Name" xml:space="preserve">
+    <value>Your name *</value>
+  </data>
+  <data name="Home_Contact_Submit" xml:space="preserve">
+    <value>Send the message *</value>
   </data>
   <data name="Home_Index_PreviewWatermark" xml:space="preserve">
     <value>Go to the collection &gt;</value>

@@ -51,6 +51,9 @@
         public Uri Contact() { return MakeAbsoluteUri("contact"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
+        public Uri ContactConfirmation() { return MakeAbsoluteUri("contact-confirmation"); }
+
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Newsletter() { return MakeAbsoluteUri("newsletter"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
@@ -66,7 +69,7 @@
             }
 
             var builder = new UriBuilder(MakeAbsoluteUri("connexion")) {
-                Query = "targetUrl=XXX",
+                //Query = "targetUrl=XXX",
             };
             return builder.Uri;
         }
@@ -75,7 +78,10 @@
         public Uri Login() { return MakeAbsoluteUri("connexion"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Register() { return MakeAbsoluteUri("informations"); }
+        public Uri Register() { return MakeAbsoluteUri("inscription"); }
+
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
+        public Uri RegisterConfirmation() { return MakeAbsoluteUri("inscription-confirmation"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Designer(DesignerKey designerKey, int pageIndex)

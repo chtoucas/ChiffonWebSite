@@ -50,8 +50,10 @@
 
             var environment = app.Context.GetChiffonContext().Environment;
 
-            if (!environment.Language.IsDefault()) {
-                InitializeCulture_(environment.Culture, environment.UICulture);
+            var language = environment.Language;
+
+            if (!language.IsDefault()) {
+                InitializeCulture_(language.GetCultureInfo(), language.GetUICultureInfo());
             }
         }
 

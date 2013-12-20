@@ -16,6 +16,7 @@
                        select new DefaultSiteMap(env);
             });
 
+        string _mainHeading = String.Empty;
         string _mainNavCssClass = String.Empty;
 
         public LayoutViewModel() { }
@@ -23,10 +24,12 @@
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
 
+        public string MainHeading { get { return _mainHeading; } set { _mainHeading = value; } }
+
         public IEnumerable<KeyValuePair<ChiffonLanguage, Uri>> AlternateUrls { get; set; }
 
         public string MainNavCssClass { get { return _mainNavCssClass; } set { _mainNavCssClass = value; } }
-        public string SecondaryNavCssClass { get; set; }
+        public string DesignerNavCssClass { get; set; }
 
         protected static IEnumerable<ISiteMap> SiteMaps { get { return SiteMaps_.Value; } }
 

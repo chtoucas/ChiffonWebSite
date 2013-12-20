@@ -2,21 +2,32 @@
 
 @model LoginViewModel
 
-<div class="account_login text_center serif fx_topborder">
- <div class="serif_large">
-  @{ RenderPartialResource(Constants.ViewName.Account.LoginContent); }
- </div>
- <form method=post action="/connecte" id=login_form>
-  <p id=error_container class="serif_medium error_container"></p>
-  <p>
-   <input type=password autofocus placeholder="@VR.Account_Login_Password" name=token required=required maxlength=25 class="sansserif highlight" />
-   <input type=hidden value="@Model.ReturnUrl" name=targeturl />
+<div class="account_login text_center">
+ <h2>@VR.Account_Login_Heading</h2>
+ <p class=switch>
+  <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)?returnUrl=@Model.ReturnUrl">@VR.Account_Login_NewUser</a>
+ </p>
+ <form method=post action="/connecte" id=login_form class=custom_form>
+  @*<p id=error_container class=error_container></p>*@
+  <ul>
+   <li>
+    <label for=email>@VR.Account_Login_EmailAddress</label>
+    <input type=text placeholder="@VR.Account_Login_EmailAddress" name=email required=required maxlength=200 class=highlight />
+   </li>
+   <li>
+    <label for=password>@VR.Account_Login_Password</label>
+    <input type=password placeholder="@VR.Account_Login_Password" name=password required=required maxlength=25 class=highlight />
+   </li>
+  </ul>
+  <p class=inside_form>
+   <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Account_Login_Register</a>
   </p>
+  <input type=hidden value="@Model.ReturnUrl" name=targeturl />
   <p>
-   <input type=submit value="@VR.Account_Login_Validate" class="serif serif_large" />
+   <input type=submit value="@VR.Account_Login_Submit" />
   </p>
-  <p class="serif_large">
-   <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)" class="loose text_underline">@VR.Account_Login_RequestPassword</a>
+  <p class=mandatory_warning>
+   @VR.Account_Login_MandatoryFields
   </p>
  </form>
 </div>

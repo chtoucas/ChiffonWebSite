@@ -65,7 +65,8 @@
             // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Index_TitleFormat, model.Designer.DisplayName);
-            Ontology.Description = SR.Designer_Index_Description;
+            Ontology.Description = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Index_DescriptionFormat, model.Designer.DisplayName); 
             Ontology.Relationships.CanonicalUrl = SiteMap.Designer(designerKey, p);
 
             var image = model.Previews.First();
@@ -73,7 +74,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
-            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -104,7 +105,10 @@
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Category_TitleFormat,
                 model.Category.DisplayName, model.Designer.DisplayName);
-            Ontology.Description = SR.Designer_Category_Description;
+            Ontology.Description = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Category_DescriptionFormat,
+                model.Designer.DisplayName, model.Category.DisplayName);
+            //Ontology.SchemaOrg.ItemType = SchemaOrgType.CollectionPage;
             Ontology.Relationships.CanonicalUrl = SiteMap.DesignerCategory(designerKey, categoryKey, p);
 
             var image = model.Previews.First();
@@ -112,7 +116,8 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
-            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.MainHeading = category.DisplayName;
 
             return View(Constants.ViewName.Designer.Category, model);
         }
@@ -123,8 +128,8 @@
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
             // Modèle.
-            //var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
-            //if (pagedList == null) { return new HttpNotFoundResult(); }
+            var pagedList = _patternService.ListPreviews(designerKey, categoryKey, p, PreviewsPageSize_);
+            if (pagedList == null) { return new HttpNotFoundResult(); }
 
             var views = _patternService.GetPatternViews(designerKey, categoryKey, reference);
             if (views.Count() == 0) { return new HttpNotFoundResult(); }
@@ -137,18 +142,21 @@
                 Designer = designer,
                 PatternViews = from _ in views select ObjectMapper.Map(_, designer.DisplayName),
                 Reference = reference,
-                //IsFirstPage = pagedList.IsFirstPage,
-                //IsLastPage = pagedList.IsLastPage,
-                //PageCount = pagedList.PageCount,
-                //PageIndex = pagedList.PageIndex,
-                //Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+                IsFirstPage = pagedList.IsFirstPage,
+                IsLastPage = pagedList.IsLastPage,
+                PageCount = pagedList.PageCount,
+                PageIndex = pagedList.PageIndex,
+                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
             };
 
             // Ontologie.
             Ontology.Title = String.Format(
                 CultureInfo.CurrentUICulture, SR.Designer_Pattern_TitleFormat,
                 reference, model.Designer.DisplayName);
-            Ontology.Description = SR.Designer_Pattern_Description;
+            Ontology.Description = String.Format(
+                CultureInfo.CurrentUICulture, SR.Designer_Pattern_DescriptionFormat,
+                reference, model.Designer.DisplayName, category.DisplayName);
+            //Ontology.SchemaOrg.ItemType = SchemaOrgType.ItemPage;
             Ontology.Relationships.CanonicalUrl = SiteMap.DesignerPattern(designerKey, categoryKey, reference, p);
 
             var image = views.First();
@@ -156,7 +164,9 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
-            LayoutViewModel.SecondaryNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.MainHeading = String.Format(CultureInfo.CurrentUICulture,
+                SR.Designer_Pattern_MainHeadingFormat, category.DisplayName, reference.ToUpperInvariant());
 
             return View(Constants.ViewName.Designer.Pattern, model);
         }
@@ -168,7 +178,7 @@
 
         DesignerViewItem GetDesigner_(DesignerKey designerKey, string categoryKey)
         {
-            var designer = _queries.GetDesigner(designerKey, UICulture);
+            var designer = _queries.GetDesigner(designerKey, CultureInfo.CurrentUICulture);
             var categories = _queries.ListCategories(designerKey);
 
             return ObjectMapper.Map(designer, categories, categoryKey);

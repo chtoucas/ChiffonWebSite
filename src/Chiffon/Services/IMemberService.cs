@@ -3,6 +3,6 @@
     public interface IMemberService
     {
         // TODO: devra renvoyer un UserInfo.
-        string LogOn(string publicKey);
+        string LogOn(string emailAddress, string password);
     }
 }

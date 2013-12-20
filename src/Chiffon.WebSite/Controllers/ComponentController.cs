@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
@@ -12,14 +13,12 @@
     public class ComponentController : Controller
     {
         readonly ChiffonConfig _config;
-        readonly ChiffonEnvironment _environment;
 
-        public ComponentController(ChiffonConfig config, ChiffonEnvironment environment)
+        public ComponentController(ChiffonConfig config)
         {
             Requires.NotNull(config, "config");
 
             _config = config;
-            _environment = environment;
         }
 
         [ChildActionOnly]
@@ -29,7 +28,7 @@
                 ActionName = actionName,
                 ControllerName = controllerName,
                 IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
-                LanguageName = _environment.UICulture.TwoLetterISOLanguageName,
+                LanguageName = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
                 ScriptBase = AssetManager.ScriptBase.ToProtocolLessString(),
                 Version = _config.JavaScriptVersion,
             };

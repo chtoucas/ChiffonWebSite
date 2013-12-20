@@ -27,7 +27,7 @@
         // FIXME
         public string Newsletter { get; set; }
 
-        public string Message { get; set; }
+        //public string Message { get; set; }
 
         [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string ReturnUrl { get; set; }

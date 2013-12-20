@@ -48,7 +48,7 @@
  </p>
 }
 
-@*@helper Pager(UrlHelper Url, PatternViewModel Model)
+@helper Pager(UrlHelper Url, PatternViewModel Model)
  {
   // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
   <p id=pager class=pager>
@@ -67,7 +67,7 @@
    }
    - @Model.PageIndex @VR.Pager_Of @Model.PageCount
   </p>
- }*@
+ }
 
 @*@helper LanguageMenu(ChiffonLanguage language)
  {

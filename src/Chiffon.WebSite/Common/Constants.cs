@@ -4,6 +4,8 @@
 
     public static class Constants
     {
+        public const string ContactAddress = "contact@pourquelmotifsimone.com";
+
         public static class ActionName
         {
             // ComponentController.
@@ -18,10 +20,11 @@
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Contact
             {
-                public const string Register = "Register";
                 [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "Login";
                 public const string Newsletter = "Newsletter";
+                public const string Register = "Register";
+                public const string RegisterConfirmation = "RegisterConfirmation";
             }
 
             // DesignerController.
@@ -40,6 +43,7 @@
                 public const string Index = "Index";
                 public const string About = "About";
                 public const string Contact = "Contact";
+                public const string ContactConfirmation = "ContactConfirmation";
             }
 
             // MailController.
@@ -91,6 +95,7 @@
                 public const string Login = "Contact/Login";
                 public const string Newsletter = "Contact/Newsletter";
                 public const string Register = "Contact/Register";
+                public const string RegisterConfirmation = "Contact/RegisterConfirmation";
             }
 
             // DesignerController.
@@ -108,6 +113,7 @@
             {
                 public const string About = "Home/About";
                 public const string Contact = "Home/Contact";
+                public const string ContactConfirmation = "Home/ContactConfimation";
                 public const string Index = "Home/";
             }
 
@@ -122,7 +128,6 @@
 
         public static class ViewName
         {
-            public const string DesignerMenu = "~/Views/Shared/_DesignerMenu.cshtml";
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
             public const string UserMenu = "~/Views/Shared/_UserMenu.cshtml";
 
@@ -131,14 +136,9 @@
             {
                 [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "~/Views/Account/Login.cshtml";
-                [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
-                public const string LoginContent = "~/Views/Account/Resources/_LoginContent.cshtml";
-                public const string PostRegisterEmail = "~/Views/Account/Resources/_PostRegisterEmail.cshtml";
                 public const string Register = "~/Views/Account/Register.cshtml";
-                public const string RegisterHelp = "~/Views/Account/Resources/_RegisterHelp.cshtml";
-                public const string RegisterWarning = "~/Views/Account/Resources/_RegisterWarning.cshtml";
-                public const string PostRegister = "~/Views/Account/PostRegister.cshtml";
-                public const string RegisterTwice = "~/Views/Account/RegisterTwice.cshtml";
+                public const string RegisterConfirmation = "~/Views/Account/RegisterConfirmation.cshtml";
+                public const string RegisterEmailAlreadyTaken = "~/Views/Account/RegisterEmailAlreadyTaken.cshtml";
                 public const string Newsletter = "~/Views/Account/Newsletter.cshtml";
             }
 
@@ -165,7 +165,7 @@
                 public const string About = "~/Views/Home/About.cshtml";
                 public const string AboutContent = "~/Views/Home/Resources/_AboutContent.cshtml";
                 public const string Contact = "~/Views/Home/Contact.cshtml";
-                public const string ContactTitle = "~/Views/Home/Resources/_ContactTitle.cshtml";
+                public const string ContactConfirmation = "~/Views/Home/ContactConfirmation.cshtml";
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]

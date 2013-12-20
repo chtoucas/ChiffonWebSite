@@ -1,12 +1,12 @@
-﻿@using Chiffon.Infrastructure
+﻿@using Chiffon.Entities
+@using Chiffon.Infrastructure
 @using Narvalo.Web.Semantic
 
 <!DOCTYPE html>
 <html lang="@Ontology.LanguageName" prefix="@Ontology.OpenGraphNamespace">
 <head>
  <meta charset="utf-8" />
- @*<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />*@
- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <title>@Ontology.Title</title>
  @OntologyHelpers.StandardMetadata(Ontology)
  @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
@@ -19,7 +19,9 @@
 </head>
 <body itemscope itemtype="@Ontology.SchemaOrg.ItemType">
  <header>
-  <h1>@{ RenderWidget(Constants.ActionName.Widget.Title, true /* localized */); }</h1>
+  <h1>
+   <a href="@Url.RouteUrl(Constants.RouteName.Home.Index)">@{ RenderWidget(Constants.ActionName.Widget.Title, true /* localized */); }</a>
+  </h1>
   <nav class="clearfix nav_lang">
    @{
     RenderComponent(Constants.ActionName.Component.LanguageMenu, new
@@ -29,7 +31,7 @@
     });
    }
   </nav>
-  <nav class="nav_main @LayoutViewModel.MainNavCssClass">
+  <nav class="menu @LayoutViewModel.MainNavCssClass">
    <ul class=li_center>
     <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -39,10 +41,27 @@
     @{ Html.RenderPartial(Constants.ViewName.UserMenu); }
    </ul>
   </nav>
-  @RenderSection("SecondaryNav", false /* required */)
+  <nav class="clearfix nav_designers fx_strike @LayoutViewModel.DesignerNavCssClass">
+   <ul class="serif li_inline">
+    <li><a href="@Url.Designer(DesignerKey.EstherMarthi, 1)" class=em>Chicamancha</a></li>
+    <li><a href="@Url.Designer(DesignerKey.VivianeDevaux, 1)" class=vd>Viviane Devaux</a></li>
+    <li><a href="@Url.Designer(DesignerKey.ChristineLégeret, 1)" class=cl>Petroleum Blue</a></li>
+    <li><a href="@Url.Designer(DesignerKey.LaureRoussel, 1)" class=lr>Laure Roussel</a></li>
+   </ul>
+  </nav>
  </header>
- @RenderBody()
+ <section>
+  @if (LayoutViewModel.MainHeading.Length > 0) {
+   <h1 class=fx_bottomborder>@LayoutViewModel.MainHeading<span></span></h1>
+  }
+  @RenderBody()
+ </section>
  <footer>
+  <nav class="menu secondary_menu fx_topborder fx_bottomborder">
+   <ul class=li_center>
+    <li><a class="last_elmt loose" href="mailto:@(Constants.ContactAddress)">@Constants.ContactAddress</a></li>
+   </ul>
+  </nav>
   @{
    RenderWidget(Constants.ActionName.Widget.AuthorsRights, true /* localized */);
    RenderWidget(Constants.ActionName.Widget.Copyright);

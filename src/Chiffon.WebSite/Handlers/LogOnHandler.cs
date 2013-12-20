@@ -20,7 +20,7 @@
         readonly ISiteMapFactory _siteMapFactory;
 
         public LogOnHandler(
-            IMemberService memberService, 
+            IMemberService memberService,
             IFormsAuthenticationService formsService,
             ISiteMapFactory siteMapFactory)
             : base()
@@ -42,12 +42,19 @@
 
             var form = request.Form;
 
-            var token = form.MayGetValue("token").Filter(_ => _.Length > 0);
-            if (token.IsNone) { return BindingFailure("token"); }
+            var emailAddress = form.MayGetValue("email").Filter(_ => _.Length > 0);
+            if (emailAddress.IsNone) { return BindingFailure("email"); }
+
+            var password = form.MayGetValue("password").Filter(_ => _.Length > 0);
+            if (password.IsNone) { return BindingFailure("password"); }
 
             var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayParse.ToUri(_, UriKind.Relative));
 
-            var model = new LogOnQuery { TargetUrl = targetUrl, Token = token.Value };
+            var model = new LogOnQuery {
+                EmailAddress = emailAddress.Value,
+                Password = password.Value,
+                TargetUrl = targetUrl
+            };
 
             return Outcome<LogOnQuery>.Success(model);
         }
@@ -57,11 +64,12 @@
             Requires.NotNull(context, "context");
             Requires.NotNull(query, "query");
 
-            var userName = _memberService.LogOn(query.Token);
+            var userName = _memberService.LogOn(query.EmailAddress, query.Password);
 
             var succeed = !String.IsNullOrEmpty(userName);
             if (succeed) {
-                _formsService.SignIn(userName, false /* createPersistentCookie */);
+                //_formsService.SignIn(userName, false /* createPersistentCookie */);
+                _formsService.SignIn(query.EmailAddress, false /* createPersistentCookie */);
             }
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);

@@ -36,7 +36,7 @@ var Chiffon = (function(window, undef) {
     var nprogress = window.NProgress;
 
     // Utilitaire de localisation d'une chaîne de caractères.
-    window.ł = function(value) { return value.toLocaleString(); };
+    //window.ł = function(value) { return value.toLocaleString(); };
 
     // Pour les tablettes, on essaie d'éliminer le temps de latence entre l'événement "touch"
     // et l'événement "click".
@@ -84,13 +84,13 @@ var Chiffon = (function(window, undef) {
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
       'vendor/jquery-2.0.3.js',
-      'vendor/l10n-2013.09.12.js',
+      //'vendor/l10n-2013.09.12.js',
       'vendor/nprogress-0.1.2.js',
       'vendor/jquery.microdata/jquery.microdata.js',
       'vendor/jquery.microdata/schemas.js',
-      'jquery.modal.js',
+      //'jquery.modal.js',
       'chiffon.jquery.js',
-      'chiffon.localization.js',
+      //'chiffon.localization.js',
       'chiffon.views.js'
     ] : [
       'vendor/jquery-2.0.3.min.js',
