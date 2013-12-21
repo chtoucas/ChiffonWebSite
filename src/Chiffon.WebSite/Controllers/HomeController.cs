@@ -84,7 +84,8 @@
             var model = new ContactViewModel();
 
             if (User.Identity.IsAuthenticated) {
-                model.EmailAddress = User.Identity.Name;
+                model.Name = User.Identity.Name;
+                model.EmailAddress = MemberSession.EmailAddress;
             }
 
             // Ontologie.
@@ -122,13 +123,10 @@
                 return View(Constants.ViewName.Home.Contact, model);
             }
 
-            // On envoie le mail après la connection.
-            var emailAddress = new MailAddress(model.EmailAddress, model.Name);
-
-            var contactMessage = (new MailMerge()).NewMessage(emailAddress, model.Name, model.Message);
+            var message = (new MailMerge()).NewMessageAlert(new MailAddress(model.EmailAddress, model.Name), model.Message);
 
             using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(contactMessage);
+                smtpClient.Send(message);
             }
 
             return RedirectToRoute(Constants.RouteName.Home.ContactConfirmation);

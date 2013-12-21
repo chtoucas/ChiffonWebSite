@@ -1,0 +1,8 @@
+﻿
+Un nouveau membre vient de s'inscrire : {0} {1}
+
+Agence : {2}
+Email : {3}
+
+
+NB : Ce mail vous est envoyé automatiquement après toute nouvelle inscription.

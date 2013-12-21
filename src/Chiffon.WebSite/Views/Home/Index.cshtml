@@ -2,15 +2,13 @@
 
 @{
  Layout = "~/Views/Shared/_Layout.cshtml";
-
- var nofollow = ViewUtility.NofollowAttribute(User);
 }
 
 <div class=home_index>
  <ul class="mosaic clearfix">
   @foreach (var preview in Model) {
    <li>
-    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" class="vignette @preview.CssClass"@nofollow>
+    <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, 1)" class="vignette @preview.CssClass" rel="@FollowRelation">
      <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@VR.Home_Index_PreviewWatermark</span></div>
     </a>
    </li>

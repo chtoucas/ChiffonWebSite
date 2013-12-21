@@ -4,6 +4,7 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using System.Web.SessionState;
+    using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Narvalo;
@@ -33,6 +34,7 @@
             Requires.NotNull(context, "context");
 
             FormsAuthentication.SignOut();
+            (new MemberSession(context)).Clear();
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
             var nextUrl = siteMap.Home();

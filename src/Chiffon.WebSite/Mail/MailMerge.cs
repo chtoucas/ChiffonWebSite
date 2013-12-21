@@ -7,12 +7,23 @@ namespace Chiffon.Mail
     using Chiffon.Resources;
     using Narvalo;
 
+    // TODO: Utiliser SmartFormat.NET ou StringTemplate.
     public class MailMerge : MailController
     {
         public MailMerge()
             : base()
         {
             MasterName = "_Layout";
+        }
+
+        protected static string NewMemberAlertTpl
+        {
+            get { return Chiffon.Properties.Resources.NewMemberAlertEmail; }
+        }
+
+        protected static string NewMessageAlertTpl
+        {
+            get { return Chiffon.Properties.Resources.NewMessageAlertEmail; }
         }
 
         public MailMessage Welcome(
@@ -36,43 +47,34 @@ namespace Chiffon.Mail
             return message;
         }
 
-        public MailMessage NewMember(
+        public MailMessage NewMemberAlert(
             MailAddress emailAddress,
             string firstName,
             string lastName,
             string companyName)
         {
-            var email = emailAddress.Address;
-
-            ViewBag.EmailAddress = email;
-            ViewBag.FirstName = firstName;
-            ViewBag.LastName = lastName;
-            ViewBag.CompanyName = companyName;
-
-            var message = MailMessageX("NewMember", "_Layout");
-
-            message.Subject = String.Format(CultureInfo.InvariantCulture,
-                "Nouvelle inscription sur le site : {0} {1}.", firstName, lastName);
+            var message = new MailMessage {
+                Body = String.Format(CultureInfo.InvariantCulture, NewMemberAlertTpl, firstName, lastName, companyName, emailAddress.Address),
+                IsBodyHtml = false,
+                Subject = String.Format(CultureInfo.InvariantCulture,
+                  "Nouvelle inscription sur le site : {0} {1}.", firstName, lastName)
+            };
             message.To.Add(Constants.ContactAddress);
 
             return message;
         }
 
-        public MailMessage NewMessage(
-            MailAddress emailAddress,
-            string name,
-            string bodyText)
+        public MailMessage NewMessageAlert(MailAddress emailAddress, string bodyText)
         {
             var email = emailAddress.Address;
+            var displayName = emailAddress.DisplayName;
 
-            ViewBag.EmailAddress = email;
-            ViewBag.Name = name;
-            ViewBag.BodyText = bodyText;
-
-            var message = MailMessageX("NewMessage", "_Layout");
-
-            message.Subject = String.Format(CultureInfo.InvariantCulture,
-                "Nouveau message sur le site de {0}.", email);
+            var message = new MailMessage {
+                Body = String.Format(CultureInfo.InvariantCulture, NewMessageAlertTpl, displayName, email, bodyText),
+                IsBodyHtml = false,
+                Subject = String.Format(CultureInfo.InvariantCulture,
+                "Nouveau message sur le site de la part de {0}.", email)
+            };
             message.To.Add(Constants.ContactAddress);
 
             return message;

@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Web.Mvc;
     using Chiffon.Common.Filters;
@@ -19,6 +20,8 @@
         readonly Ontology _ontology;
         readonly ISiteMap _siteMap;
 
+        Lazy<Common.MemberSession> _memberSesssion;
+
         protected ChiffonController(ChiffonEnvironment environment, ISiteMap siteMap)
         {
             Requires.NotNull(siteMap, "siteMap");
@@ -33,6 +36,8 @@
                 LayoutViewModel = _layoutViewModel,
                 Ontology = _ontology,
             };
+
+            _memberSesssion = new Lazy<Common.MemberSession>(GetMemberSessionThunk_(this));
         }
 
         public ChiffonControllerContext ChiffonControllerContext { get { return _chiffonControllerContext; } }
@@ -41,6 +46,7 @@
         protected LayoutViewModel LayoutViewModel { get { return _layoutViewModel; } }
         protected Ontology Ontology { get { return _ontology; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
+        protected Common.MemberSession MemberSession { get { return _memberSesssion.Value; } }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -55,6 +61,14 @@
         protected ActionResult RedirectToHome()
         {
             return RedirectToRoute(Common.Constants.RouteName.Home.Index);
+        }
+
+        static Func<Common.MemberSession> GetMemberSessionThunk_(Controller @this)
+        {
+            return () =>
+            {
+                return new Common.MemberSession(@this.HttpContext);
+            };
         }
     }
 }

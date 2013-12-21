@@ -507,7 +507,7 @@ Chiffon.Views.Home = (function() {
           rules: {
             EmailAddress: { required: true, email: true },
             Name: { required: true, minlength: 2, maxlength: 200 },
-            Message: { required: true, minlength: 30, maxlength: 3000 }
+            Message: { required: true, minlength: 20, maxlength: 3000 }
           }
         });
       });

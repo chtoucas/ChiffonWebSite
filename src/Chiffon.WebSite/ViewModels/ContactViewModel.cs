@@ -17,7 +17,7 @@
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Le champs \"Message\" est obligatoire.")]
-        [StringLength(3000, MinimumLength = 30, ErrorMessage = "Le champs \"Message\" doit comporter au moins 30 caractères.")]
+        [StringLength(3000, MinimumLength = 20, ErrorMessage = "Le champs \"Message\" doit comporter au moins 20 caractères.")]
         public string Message { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Common
 {
     using System;
-    using System.Security.Principal;
     using Chiffon.Infrastructure;
     using Narvalo;
 
@@ -19,11 +18,6 @@
                 default:
                     throw new NotSupportedException("The requested language is not supported.");
             }
-        }
-
-        public static string NofollowAttribute(IPrincipal user)
-        {
-            return user.Identity.IsAuthenticated ? String.Empty : " rel=nofollow";
         }
     }
 }

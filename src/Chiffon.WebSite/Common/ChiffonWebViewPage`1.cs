@@ -15,15 +15,22 @@
     public abstract class ChiffonWebViewPage<TModel> : WebViewPage<TModel>
     {
         Lazy<ChiffonControllerContext> _chiffonControllerContext;
+        Lazy<String> _followRelation;
 
         protected ChiffonWebViewPage()
         {
             _chiffonControllerContext = new Lazy<ChiffonControllerContext>(GetChiffonControlerContextThunk_(this));
+            _followRelation = new Lazy<String>(GetFollowRelationThunk_(this));
         }
 
         protected ChiffonControllerContext ChiffonControlerContext
         {
             get { return _chiffonControllerContext.Value; }
+        }
+
+        protected string FollowRelation
+        {
+            get { return _followRelation.Value; }
         }
 
         protected ChiffonLanguage Language { get { return ChiffonControlerContext.Language; } }
@@ -68,7 +75,7 @@
             Asset = new AssetHelper(Html);
         }
 
-        internal static Func<ChiffonControllerContext> GetChiffonControlerContextThunk_(WebViewPage @this)
+        static Func<ChiffonControllerContext> GetChiffonControlerContextThunk_(WebViewPage @this)
         {
             return () =>
             {
@@ -78,6 +85,14 @@
                         "ChiffonWebViewPage should only be used on views for actions on ChiffonController.");
                 }
                 return controller.ChiffonControllerContext;
+            };
+        }
+
+        static Func<String> GetFollowRelationThunk_(WebViewPage @this)
+        {
+            return () =>
+            {
+                return @this.User.Identity.IsAuthenticated ? "follow" : "nofollow";
             };
         }
     }

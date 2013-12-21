@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
@@ -64,13 +65,18 @@
             Requires.NotNull(context, "context");
             Requires.NotNull(query, "query");
 
-            var userName = _memberService.LogOn(query.EmailAddress, query.Password);
+            var memberInfo = _memberService.MayLogOn(query.EmailAddress, query.Password);
 
-            var succeed = !String.IsNullOrEmpty(userName);
-            if (succeed) {
-                //_formsService.SignIn(userName, false /* createPersistentCookie */);
-                _formsService.SignIn(query.EmailAddress, false /* createPersistentCookie */);
-            }
+            bool succeed = false;
+
+            memberInfo.WhenSome(_ =>
+            {
+                succeed = true;
+
+                _formsService.SignIn(_.DisplayName, false /* createPersistentCookie */);
+
+                (new MemberSession(context)).EmailAddress = query.EmailAddress;
+            });
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 

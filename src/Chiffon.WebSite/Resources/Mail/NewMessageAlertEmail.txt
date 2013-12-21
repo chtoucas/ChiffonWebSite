@@ -1,0 +1,8 @@
+﻿
+Nouveau message de {0} ({1}) :
+
+
+{2}
+
+
+NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.

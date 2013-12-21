@@ -13,6 +13,7 @@
     using Chiffon.Infrastructure;
     using Chiffon.Mail;
     using Chiffon.Resources;
+    using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Security;
@@ -130,19 +131,22 @@
             if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
 
             var password = CreateContact_(contact);
-            string userName = String.Format(CultureInfo.CurrentCulture,
-                SR.MailAddressDisplayNameFormat, contact.FirstName, contact.LastName);
+            var memberInfo = new MemberInfo {
+                FirstName = contact.FirstName,
+                LastName = contact.LastName
+            };
 
-            _formsService.SignIn(userName, false /* createPersistentCookie */);
+            _formsService.SignIn(memberInfo.DisplayName, false /* createPersistentCookie */);
+            MemberSession.EmailAddress = contact.EmailAddress;
 
             // Envoi de l'email de confirmation d'inscription après la connection.
-            var emailAddress = new MailAddress(contact.EmailAddress, userName);
+            var emailAddress = new MailAddress(contact.EmailAddress, memberInfo.DisplayName);
             var mailMerge = new MailMerge();
 
             var welcomeMessage
                 = mailMerge.Welcome(emailAddress, password, Environment.BaseUri, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
             var alertMessage
-                = mailMerge.NewMember(emailAddress, contact.FirstName, contact.LastName, contact.CompanyName);
+                = mailMerge.NewMemberAlert(emailAddress, contact.FirstName, contact.LastName, contact.CompanyName);
 
             using (var smtpClient = new SmtpClient()) {
                 smtpClient.Send(welcomeMessage);
