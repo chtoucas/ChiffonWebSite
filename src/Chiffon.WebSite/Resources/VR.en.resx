@@ -213,7 +213,7 @@
   <data name="Error_ServiceUnavailable" xml:space="preserve">
     <value>Les Simones are confused but the site is currently undergoing maintenance.</value>
   </data>
-  <data name="Home_ContactConfirmation_AnsweringSoonHome_ContactConfirmation_AnsweringSoon" xml:space="preserve">
+  <data name="Home_ContactConfirmation_AnsweringSoon" xml:space="preserve">
     <value>We shall get back to you very soon</value>
   </data>
   <data name="Home_ContactConfirmation_BrowseGallery" xml:space="preserve">
