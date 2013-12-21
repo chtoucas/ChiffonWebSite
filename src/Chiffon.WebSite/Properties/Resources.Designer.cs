@@ -62,35 +62,80 @@ namespace Chiffon.Properties {
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
-        ///Un nouveau membre vient de s&apos;inscrire : {0} {1}
         ///
-        ///Agence : {2}
-        ///Email : {3}
+        ///Nouveau message de &lt;Message.ContactAddress.DisplayName&gt; (&lt;Message.ContactAddress.Address&gt;) :
         ///
         ///
-        ///NB : Ce mail vous est envoyé automatiquement après toute nouvelle inscription.
+        ///&lt;Message.Content&gt;
+        ///
+        ///
+        ///NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.
+        ///
         ///.
         /// </summary>
-        internal static string NewMemberAlertEmail {
+        internal static string NewContactNotificationBody {
             get {
-                return ResourceManager.GetString("NewMemberAlertEmail", resourceCulture);
+                return ResourceManager.GetString("NewContactNotificationBody", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
-        ///Nouveau message de {0} ({1}) :
+        ///
+        ///Un nouveau membre vient de s&apos;inscrire : &lt;Message.MemberAddress.DisplayName&gt;
         ///
         ///
-        ///{2}
+        ///Agence : &lt;Message.CompanyName&gt;
+        ///Email : &lt;Message.MemberAddress.Address&gt;
         ///
         ///
-        ///NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.
+        ///NB : Ce mail vous est envoyé automatiquement après toute nouvelle inscription.
+        ///
         ///.
         /// </summary>
-        internal static string NewMessageAlertEmail {
+        internal static string NewMemberNotificationBody {
             get {
-                return ResourceManager.GetString("NewMessageAlertEmail", resourceCulture);
+                return ResourceManager.GetString("NewMemberNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///
+        ///Les Simone vous remercient de l&apos;intérêt que vous avez souhaité leur accorder.
+        ///
+        ///Votre compte est activé.
+        ///
+        ///Votre identifiant : @Html.Raw(ViewBag.Email)
+        ///Votre mot de passe : @Html.Raw(ViewBag.Password)
+        ///
+        ///Je feuillette le portfolio : @Html.Raw(ViewBag.SiteUrl)
+        ///
+        ///.
+        /// </summary>
+        internal static string WelcomeMailBody {
+            get {
+                return ResourceManager.GetString("WelcomeMailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///
+        ///Welcome,
+        ///
+        ///Many thanks for your interest in the Simone project.
+        ///
+        ///Your login: @Html.Raw(ViewBag.Email)
+        ///Your password: @Html.Raw(ViewBag.Password)
+        ///
+        ///Browse the gallery: @Html.Raw(ViewBag.SiteUrl)
+        ///
+        ///.
+        /// </summary>
+        internal static string WelcomeMailBody_English {
+            get {
+                return ResourceManager.GetString("WelcomeMailBody_English", resourceCulture);
             }
         }
     }

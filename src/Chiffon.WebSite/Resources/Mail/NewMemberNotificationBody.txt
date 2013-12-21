@@ -1,0 +1,11 @@
+﻿
+
+Un nouveau membre vient de s'inscrire : <Message.MemberAddress.DisplayName>
+
+
+Agence : <Message.CompanyName>
+Email : <Message.MemberAddress.Address>
+
+
+NB : Ce mail vous est envoyé automatiquement après toute nouvelle inscription.
+

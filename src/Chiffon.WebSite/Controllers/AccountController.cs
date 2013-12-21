@@ -103,7 +103,6 @@
 
             _memberService.MemberCreated += (object sender, MemberCreatedEventArgs e) =>
             {
-                // On connecte automatiquement le membre.
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 

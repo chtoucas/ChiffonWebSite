@@ -1,0 +1,10 @@
+﻿
+
+Nouveau message de <Message.ContactAddress.DisplayName> (<Message.ContactAddress.Address>) :
+
+
+<Message.Content>
+
+
+NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.
+

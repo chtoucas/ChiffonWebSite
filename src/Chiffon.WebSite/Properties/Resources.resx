@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="NewMemberAlertEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mail\NewMemberAlertEmail.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="NewContactNotificationBody" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mail\NewContactNotificationBody.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="NewMessageAlertEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mail\NewMessageAlertEmail.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="NewMemberNotificationBody" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mail\NewMemberNotificationBody.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="WelcomeMailBody" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mail\WelcomeMailBody.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="WelcomeMailBody_English" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\mail\welcomemailbody_english.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

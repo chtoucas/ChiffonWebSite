@@ -1,0 +1,17 @@
+﻿
+
+Welcome <Message.MemberAddress.DisplayName>,
+
+
+Many thanks for your interest in the Simone project.
+
+Your login: <Message.MemberAddress.Address>
+Your password: <Message.Password>
+
+Browse the gallery: <SiteUrl>
+
+
+See you soon !
+
+Les Simone
+

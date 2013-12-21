@@ -1,0 +1,18 @@
+﻿
+
+Bienvenue <Message.MemberAddress.DisplayName>,
+
+
+Les Simone vous remercient de l'intérêt que vous avez souhaité leur accorder.
+
+Votre compte est activé.
+
+Votre identifiant : <Message.MemberAddress.Address>
+Votre mot de passe : <Message.Password>
+
+Je feuillette le portfolio : <SiteUrl>
+
+
+À très bientôt,
+
+Les Simone
