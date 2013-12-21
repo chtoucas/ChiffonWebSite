@@ -4,7 +4,6 @@
 /// <reference path="../assets/js/chiffon.views.js" />
 /// <reference path="../assets/js/vendor/jquery-2.0.3.js" />
 /// <reference path="../assets/js/vendor/jquery.waypoints-2.0.3.js" />
-/// <reference path="../assets/js/vendor/l10n-2013.09.12.js" />
 /// <reference path="../assets/js/vendor/lodash.custom-2.3.0.js" />
 /// <reference path="../assets/js/vendor/nprogress-0.1.2.js" />
 /// <reference path="../assets/js/vendor/yepnope-1.5.4.js" />

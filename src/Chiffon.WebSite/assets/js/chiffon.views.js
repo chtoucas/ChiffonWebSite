@@ -1,4 +1,4 @@
-﻿/*global  _, $, ł, Chiffon*/
+﻿/*global  _, $, Chiffon*/
 
 Chiffon.Utils = (function(window, undef) {
   'use strict';
@@ -508,7 +508,7 @@ Chiffon.Views.Home = (function() {
             EmailAddress: { required: true, email: true },
             Name: { required: true, minlength: 2, maxlength: 200 },
             Message: { required: true, minlength: 30, maxlength: 3000 }
-        }
+          }
         });
       });
     }, Views.ValidateMixin),
@@ -541,7 +541,7 @@ Chiffon.Views.Account = (function() {
         errorPlacement: $.noop,
         messages: {
           email: '', // ł('%login.email_required'),
-          password: '', // ł('%login.password_required')
+          password: '' // ł('%login.password_required')
         },
         rules: {
           email: { required: true, email: true },
