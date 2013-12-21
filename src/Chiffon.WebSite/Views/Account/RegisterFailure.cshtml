@@ -1,0 +1,8 @@
+﻿@model RegisterFailureViewModel
+
+<div class=account_register>
+ <p class=highlight_text>@Model.Message</p>
+ <p class=switch>
+  <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Account_RegisterFailure_Register</a>
+ </p>
+</div>

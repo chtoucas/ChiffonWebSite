@@ -4,6 +4,7 @@
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Infrastructure.Messaging;
     using Chiffon.Mail;
     using Narvalo;
 
@@ -26,7 +27,8 @@
 
             // FIXME: Réactiver l'injection de ISmtpClient.
             //builder.RegisterType<SmtpClientProxy>().As<ISmtpClient>().InstancePerHttpRequest();
-            builder.RegisterType<MailMerge>().AsSelf().InstancePerHttpRequest();
+            builder.RegisterType<MailMerge>().As<IMailMerge>().InstancePerHttpRequest();
+            builder.RegisterType<Messenger>().As<IMessenger>().InstancePerHttpRequest();
 
             builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // FIXME: Pour les HttpHandlers, je n'arrive pas à voir pour le moment pourquoi

@@ -12,26 +12,19 @@
     using Narvalo.Collections;
     using Narvalo.Fx;
     using Narvalo.Web;
-    using Narvalo.Web.Security;
 
     public class LogOnHandler : HttpHandlerBase<LogOnQuery>, IRequiresSessionState
     {
         readonly IMemberService _memberService;
-        readonly IFormsAuthenticationService _formsService;
         readonly ISiteMapFactory _siteMapFactory;
 
-        public LogOnHandler(
-            IMemberService memberService,
-            IFormsAuthenticationService formsService,
-            ISiteMapFactory siteMapFactory)
+        public LogOnHandler(IMemberService memberService, ISiteMapFactory siteMapFactory)
             : base()
         {
             Requires.NotNull(memberService, "memberService");
-            Requires.NotNull(formsService, "formsService");
             Requires.NotNull(siteMapFactory, "siteMapFactory");
 
             _memberService = memberService;
-            _formsService = formsService;
             _siteMapFactory = siteMapFactory;
         }
 
@@ -43,8 +36,8 @@
 
             var form = request.Form;
 
-            var emailAddress = form.MayGetValue("email").Filter(_ => _.Length > 0);
-            if (emailAddress.IsNone) { return BindingFailure("email"); }
+            var email = form.MayGetValue("email").Filter(_ => _.Length > 0);
+            if (email.IsNone) { return BindingFailure("email"); }
 
             var password = form.MayGetValue("password").Filter(_ => _.Length > 0);
             if (password.IsNone) { return BindingFailure("password"); }
@@ -52,12 +45,12 @@
             var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayParse.ToUri(_, UriKind.Relative));
 
             var model = new LogOnQuery {
-                EmailAddress = emailAddress.Value,
+                Email = email.Value,
                 Password = password.Value,
                 TargetUrl = targetUrl
             };
 
-            return Outcome<LogOnQuery>.Success(model);
+            return Outcome.Success(model);
         }
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
@@ -65,22 +58,13 @@
             Requires.NotNull(context, "context");
             Requires.NotNull(query, "query");
 
-            var memberInfo = _memberService.MayLogOn(query.EmailAddress, query.Password);
+            var result = _memberService.MayLogOn(query.Email, query.Password);
 
-            bool succeed = false;
-
-            memberInfo.WhenSome(_ =>
-            {
-                succeed = true;
-
-                _formsService.SignIn(_.DisplayName, false /* createPersistentCookie */);
-
-                (new MemberSession(context)).EmailAddress = query.EmailAddress;
-            });
+            result.WhenSome(_ => { (new AuthentificationService(context)).SignIn(_); });
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 
-            Uri nextUrl = succeed
+            Uri nextUrl = result.IsSome
                 ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
                 : query.TargetUrl.Match(_ => siteMap.LogOn(_), siteMap.LogOn());
 

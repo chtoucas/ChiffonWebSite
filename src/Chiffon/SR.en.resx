@@ -120,4 +120,7 @@
   <data name="MemberDisplayNameFormat" xml:space="preserve">
     <value>{1} {0}</value>
   </data>
+  <data name="MemberService_EmailAlreadyTaken" xml:space="preserve">
+    <value>We are sorry but the email address you tried to register with is already taken.</value>
+  </data>
 </root>

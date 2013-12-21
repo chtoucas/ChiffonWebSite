@@ -120,4 +120,7 @@
   <data name="MemberDisplayNameFormat" xml:space="preserve">
     <value>{0} {1}</value>
   </data>
+  <data name="MemberService_EmailAlreadyTaken" xml:space="preserve">
+    <value>Nous sommes désolés mais l'adresse avec laquelle vous souhaitez vous enregistrer est déjà prise.</value>
+  </data>
 </root>

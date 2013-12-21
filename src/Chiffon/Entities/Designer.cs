@@ -9,6 +9,7 @@
     {
         readonly DesignerKey _key;
         string _displayName;
+        MailAddress _emailAddress;
 
         public Designer(DesignerKey key)
         {
@@ -30,14 +31,26 @@
         {
             get
             {
-                if (String.IsNullOrEmpty(_displayName))
-                {
+                if (String.IsNullOrEmpty(_displayName)) {
                     _displayName = Nickname.ValueOrElse(FirstName + " " + LastName);
                 }
                 return _displayName;
             }
         }
-        public MailAddress EmailAddress { get; set; }
+
+        public string Email { get; set; }
+
+        public MailAddress EmailAddress
+        {
+            get
+            {
+                if (_emailAddress == null) {
+                    _emailAddress = new MailAddress(Email, DisplayName);
+                }
+                return _emailAddress;
+            }
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Maybe<string> Nickname { get; set; }

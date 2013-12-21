@@ -4,7 +4,7 @@
 
  <div id=info class=info>
   <p>@Model.Presentation</p>
-  <p><a href="mailto:@Model.EmailAddress" class=underline>@Model.EmailAddress</a></p>
+  <p><a href="mailto:@Model.Email" class=underline>@Model.Email</a></p>
   <nav>
    <ul>
     <li @(Model.CurrentCategoryKey == DesignerController.AllCategoryKey ? " class=current" : String.Empty)>

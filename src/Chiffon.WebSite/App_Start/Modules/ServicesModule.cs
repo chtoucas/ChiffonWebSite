@@ -4,7 +4,6 @@
     using Autofac.Integration.Mvc;
     using Chiffon.Services;
     using Narvalo;
-    using Narvalo.Web.Security;
 
     public class ServicesModule : Module
     {
@@ -14,9 +13,8 @@
         {
             Requires.NotNull(builder, "builder");
 
-            builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>().SingleInstance();
-
-            builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
+            // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
+            builder.RegisterType<MemberService>().As<IMemberService>().InstancePerHttpRequest();
             // NB: On utilise InstancePerHttpRequest car PatternService dépend d'IQueries.
             builder.RegisterType<PatternService>().As<IPatternService>().InstancePerHttpRequest();
         }

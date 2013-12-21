@@ -5,7 +5,6 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Globalization;
-    using System.Net.Mail;
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -35,7 +34,7 @@
                     AvatarCategory = rdr.GetString("avatar_category"),
                     AvatarReference = rdr.GetString("avatar_reference"),
                     AvatarVersion = rdr.GetString("avatar_version"),
-                    EmailAddress = new MailAddress(rdr.GetString("email_address")),
+                    Email = rdr.GetString("email_address"),
                     FirstName = rdr.GetString("firstname"),
                     LastName = rdr.GetString("lastname"),
                     Nickname = rdr.MayGetString("nickname"),

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_Login_EmailAddress" xml:space="preserve">
+  <data name="Account_Login_Email" xml:space="preserve">
     <value>Votre email *</value>
   </data>
   <data name="Account_Login_Heading" xml:space="preserve">
@@ -138,20 +138,17 @@
   <data name="Account_Login_Submit" xml:space="preserve">
     <value>Connectez-vous</value>
   </data>
-  <data name="Account_RegisterConfirmation_BrowseGallery" xml:space="preserve">
+  <data name="Account_RegisterFailure_Register" xml:space="preserve">
+    <value>Je crée un compte</value>
+  </data>
+  <data name="Account_RegisterSuccess_BrowseGallery" xml:space="preserve">
     <value>Feuilleter le catalogue</value>
   </data>
-  <data name="Account_RegisterConfirmation_EmailSent" xml:space="preserve">
+  <data name="Account_RegisterSuccess_EmailSent" xml:space="preserve">
     <value>Vous recevrez très prochainement vos identifiants dans votre boîte mail</value>
   </data>
-  <data name="Account_RegisterConfirmation_Heading" xml:space="preserve">
+  <data name="Account_RegisterSuccess_Heading" xml:space="preserve">
     <value>Votre demande a bien été prise en compte</value>
-  </data>
-  <data name="Account_RegisterEmailAlreadyTaken_Heading" xml:space="preserve">
-    <value>Nous sommes désolés mais l'adresse avec laquelle vous souhaitez vous enregistrer est déjà prise.</value>
-  </data>
-  <data name="Account_RegisterEmailAlreadyTaken_Register" xml:space="preserve">
-    <value>Je crée un compte</value>
   </data>
   <data name="Account_Register_AlreadyRegistered" xml:space="preserve">
     <value>Déjà inscrit(e) ?</value>
@@ -162,7 +159,7 @@
   <data name="Account_Register_Connect" xml:space="preserve">
     <value>Connectez-vous</value>
   </data>
-  <data name="Account_Register_EmailAddress" xml:space="preserve">
+  <data name="Account_Register_Email" xml:space="preserve">
     <value>Votre email *</value>
   </data>
   <data name="Account_Register_Firstname" xml:space="preserve">
@@ -222,7 +219,7 @@
   <data name="Home_ContactConfirmation_Heading" xml:space="preserve">
     <value>Votre message a bien été envoyé</value>
   </data>
-  <data name="Home_Contact_EmailAddress" xml:space="preserve">
+  <data name="Home_Contact_Email" xml:space="preserve">
     <value>Votre email *</value>
   </data>
   <data name="Home_Contact_Message" xml:space="preserve">

@@ -133,15 +133,6 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Confirmation d&apos;inscription.
-        /// </summary>
-        public static string Account_Register_MainHeadingOnSuccess {
-            get {
-                return ResourceManager.GetString("Account_Register_MainHeadingOnSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Enregistrement - Pour quel motif, Simone ?.
         /// </summary>
         public static string Account_Register_Title {
@@ -153,9 +144,9 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Inscription terminée.
         /// </summary>
-        public static string Account_RegisterConfirmation_MainHeading {
+        public static string Account_RegisterSuccess_MainHeading {
             get {
-                return ResourceManager.GetString("Account_RegisterConfirmation_MainHeading", resourceCulture);
+                return ResourceManager.GetString("Account_RegisterSuccess_MainHeading", resourceCulture);
             }
         }
         
@@ -306,9 +297,9 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre message.
         /// </summary>
-        public static string Home_ContactConfirmation_MainHeading {
+        public static string Home_ContactSuccess_MainHeading {
             get {
-                return ResourceManager.GetString("Home_ContactConfirmation_MainHeading", resourceCulture);
+                return ResourceManager.GetString("Home_ContactSuccess_MainHeading", resourceCulture);
             }
         }
         

@@ -13,13 +13,13 @@
         Uri Home();
         Uri About();
         Uri Contact();
-        Uri ContactConfirmation();
+        Uri ContactSuccess();
         Uri Newsletter();
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         Uri Login();
         Uri Register();
-        Uri RegisterConfirmation();
+        Uri RegisterSuccess();
         Uri LogOn();
         Uri LogOn(Uri targetUrl);
 

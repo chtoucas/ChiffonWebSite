@@ -135,7 +135,7 @@
   <data name="Account_Newsletter_Title" xml:space="preserve">
     <value>Newsletter - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Account_RegisterConfirmation_MainHeading" xml:space="preserve">
+  <data name="Account_RegisterSuccess_MainHeading" xml:space="preserve">
     <value>Registration completed</value>
   </data>
   <data name="Account_Register_Description" xml:space="preserve">
@@ -143,9 +143,6 @@
   </data>
   <data name="Account_Register_MainHeading" xml:space="preserve">
     <value>Register now</value>
-  </data>
-  <data name="Account_Register_MainHeadingOnSuccess" xml:space="preserve">
-    <value>Registration completed</value>
   </data>
   <data name="Account_Register_Title" xml:space="preserve">
     <value>Register - Pour quel motif, Simone ?</value>
@@ -189,7 +186,7 @@
   <data name="Home_About_Title" xml:space="preserve">
     <value>About - Pour quel motif, Simone ?</value>
   </data>
-  <data name="Home_ContactConfirmation_MainHeading" xml:space="preserve">
+  <data name="Home_ContactSuccess_MainHeading" xml:space="preserve">
     <value>Your message</value>
   </data>
   <data name="Home_Contact_Description" xml:space="preserve">

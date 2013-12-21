@@ -68,5 +68,14 @@ namespace Chiffon {
                 return ResourceManager.GetString("MemberDisplayNameFormat", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nous sommes désolés mais l&apos;adresse avec laquelle vous souhaitez vous enregistrer est déjà prise..
+        /// </summary>
+        internal static string MemberService_EmailAlreadyTaken {
+            get {
+                return ResourceManager.GetString("MemberService_EmailAlreadyTaken", resourceCulture);
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@
         public Uri Contact() { return MakeAbsoluteUri("contact"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri ContactConfirmation() { return MakeAbsoluteUri("contact-confirmation"); }
+        public Uri ContactSuccess() { return MakeAbsoluteUri("contact-confirmation"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Newsletter() { return MakeAbsoluteUri("newsletter"); }
@@ -81,7 +81,7 @@
         public Uri Register() { return MakeAbsoluteUri("inscription"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri RegisterConfirmation() { return MakeAbsoluteUri("inscription-confirmation"); }
+        public Uri RegisterSuccess() { return MakeAbsoluteUri("inscription-confirmation"); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Designer(DesignerKey designerKey, int pageIndex)

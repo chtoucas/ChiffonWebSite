@@ -3,16 +3,23 @@ namespace Chiffon.Mail
     using System;
     using System.Globalization;
     using System.Net.Mail;
-    using Chiffon.Common;
+    using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Infrastructure.Messaging;
     using Chiffon.Resources;
     using Narvalo;
 
     // TODO: Utiliser SmartFormat.NET ou StringTemplate.
-    public class MailMerge : MailController
+    public class MailMerge : MailController, IMailMerge
     {
-        public MailMerge()
+        readonly ISiteMap _siteMap;
+
+        public MailMerge(ISiteMap siteMap)
             : base()
         {
+            Requires.NotNull(siteMap, "config");
+
+            _siteMap = siteMap;
+
             MasterName = "_Layout";
         }
 
@@ -26,58 +33,46 @@ namespace Chiffon.Mail
             get { return Chiffon.Properties.Resources.NewMessageAlertEmail; }
         }
 
-        public MailMessage Welcome(
-            MailAddress emailAddress,
-            string password,
-            Uri baseUri,
-            string languageName)
+        public MailMessage WelcomeMail(NewMemberMessage message)
         {
-            Requires.NotNull(baseUri, "baseUri");
+            ViewBag.Email = message.MemberAddress.Address;
+            ViewBag.Password = message.Password;
+            ViewBag.SiteUrl = _siteMap.Home().ToString();
 
-            ViewBag.EmailAddress = emailAddress.Address;
-            ViewBag.LanguageName = languageName;
-            ViewBag.Password = password;
-            ViewBag.SiteUrl = baseUri.ToString();
+            var mail = MailMessageX("Welcome", "_Layout");
 
-            var message = MailMessageX("Welcome", "_Layout");
+            mail.Subject = MailResources.Welcome_Subject;
+            mail.To.Add(message.MemberAddress);
 
-            message.Subject = MailResources.Welcome_Subject;
-            message.To.Add(emailAddress);
-
-            return message;
+            return mail;
         }
 
-        public MailMessage NewMemberAlert(
-            MailAddress emailAddress,
-            string firstName,
-            string lastName,
-            string companyName)
+        public MailMessage NewContactNotification(NewContactMessage message)
         {
-            var message = new MailMessage {
-                Body = String.Format(CultureInfo.InvariantCulture, NewMemberAlertTpl, firstName, lastName, companyName, emailAddress.Address),
+            var mail = new MailMessage {
+                Body = String.Format(CultureInfo.InvariantCulture,
+                    NewMessageAlertTpl, message.ContactAddress.DisplayName, message.ContactAddress.Address, message.Content),
                 IsBodyHtml = false,
                 Subject = String.Format(CultureInfo.InvariantCulture,
-                  "Nouvelle inscription sur le site : {0} {1}.", firstName, lastName)
+                    "Nouveau message sur le site de la part de {0}.", message.ContactAddress.Address)
             };
-            message.To.Add(Constants.ContactAddress);
+            mail.To.Add(Common.Constants.ContactAddress);
 
-            return message;
+            return mail;
         }
 
-        public MailMessage NewMessageAlert(MailAddress emailAddress, string bodyText)
+        public MailMessage NewMemberNotification(NewMemberMessage message)
         {
-            var email = emailAddress.Address;
-            var displayName = emailAddress.DisplayName;
-
-            var message = new MailMessage {
-                Body = String.Format(CultureInfo.InvariantCulture, NewMessageAlertTpl, displayName, email, bodyText),
+            var mail = new MailMessage {
+                Body = String.Format(CultureInfo.InvariantCulture,
+                    NewMemberAlertTpl, message.MemberAddress.DisplayName, message.CompanyName, message.MemberAddress.Address),
                 IsBodyHtml = false,
                 Subject = String.Format(CultureInfo.InvariantCulture,
-                "Nouveau message sur le site de la part de {0}.", email)
+                  "Nouvelle inscription sur le site : {0}.", message.MemberAddress.DisplayName)
             };
-            message.To.Add(Constants.ContactAddress);
+            mail.To.Add(Common.Constants.ContactAddress);
 
-            return message;
+            return mail;
         }
     }
 }

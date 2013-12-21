@@ -32,14 +32,14 @@
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.About });
             _routes.MapRoute(Constants.RouteName.Home.Contact, "contact",
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.Contact });
-            _routes.MapRoute(Constants.RouteName.Home.ContactConfirmation, "contact-confirmation",
-                new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.ContactConfirmation });
+            _routes.MapRoute(Constants.RouteName.Home.ContactSuccess, "contact-confirmation",
+                new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.ContactSuccess });
 
             // AccountController.
             _routes.MapRoute(Constants.RouteName.Account.Register, "inscription",
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Register });
-            _routes.MapRoute(Constants.RouteName.Account.RegisterConfirmation, "inscription-confirmation",
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.RegisterConfirmation });
+            _routes.MapRoute(Constants.RouteName.Account.RegisterSuccess, "inscription-confirmation",
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.RegisterSuccess });
             _routes.MapRoute(Constants.RouteName.Account.Login, "connexion",
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Login });
             _routes.MapRoute(Constants.RouteName.Account.Newsletter, "newsletter",

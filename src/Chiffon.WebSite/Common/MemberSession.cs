@@ -1,12 +1,12 @@
 ﻿namespace Chiffon.Common
 {
-    using System;
     using System.Web;
+    using Chiffon.Entities;
 
     // FIXME: AppPool recycling.
     public class MemberSession
     {
-        const string HttpSessionKey = "memberInfo";
+        const string HttpSessionKey = "member";
 
         readonly HttpContextBase _httpContext;
 
@@ -22,9 +22,9 @@
             get { return _httpContext.Session; }
         }
 
-        public string EmailAddress
+        public Member Value
         {
-            get { return Session[HttpSessionKey] as String; }
+            get { return Session[HttpSessionKey] as Member; }
             set { Session[HttpSessionKey] = value; }
         }
 

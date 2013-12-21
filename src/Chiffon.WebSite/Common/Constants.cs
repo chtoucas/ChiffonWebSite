@@ -24,7 +24,7 @@
                 public const string Login = "Login";
                 public const string Newsletter = "Newsletter";
                 public const string Register = "Register";
-                public const string RegisterConfirmation = "RegisterConfirmation";
+                public const string RegisterSuccess = "RegisterSuccess";
             }
 
             // DesignerController.
@@ -43,7 +43,7 @@
                 public const string Index = "Index";
                 public const string About = "About";
                 public const string Contact = "Contact";
-                public const string ContactConfirmation = "ContactConfirmation";
+                public const string ContactSuccess = "ContactSuccess";
             }
 
             // MailController.
@@ -95,7 +95,7 @@
                 public const string Login = "Contact/Login";
                 public const string Newsletter = "Contact/Newsletter";
                 public const string Register = "Contact/Register";
-                public const string RegisterConfirmation = "Contact/RegisterConfirmation";
+                public const string RegisterSuccess = "Contact/RegisterSuccess";
             }
 
             // DesignerController.
@@ -113,7 +113,7 @@
             {
                 public const string About = "Home/About";
                 public const string Contact = "Home/Contact";
-                public const string ContactConfirmation = "Home/ContactConfimation";
+                public const string ContactSuccess = "Home/ContactConfimation";
                 public const string Index = "Home/";
             }
 
@@ -137,8 +137,8 @@
                 [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "~/Views/Account/Login.cshtml";
                 public const string Register = "~/Views/Account/Register.cshtml";
-                public const string RegisterConfirmation = "~/Views/Account/RegisterConfirmation.cshtml";
-                public const string RegisterEmailAlreadyTaken = "~/Views/Account/RegisterEmailAlreadyTaken.cshtml";
+                public const string RegisterSuccess = "~/Views/Account/RegisterSuccess.cshtml";
+                public const string RegisterFailure = "~/Views/Account/RegisterFailure.cshtml";
                 public const string Newsletter = "~/Views/Account/Newsletter.cshtml";
             }
 
@@ -165,7 +165,7 @@
                 public const string About = "~/Views/Home/About.cshtml";
                 public const string AboutContent = "~/Views/Home/Resources/_AboutContent.cshtml";
                 public const string Contact = "~/Views/Home/Contact.cshtml";
-                public const string ContactConfirmation = "~/Views/Home/ContactConfirmation.cshtml";
+                public const string ContactSuccess = "~/Views/Home/ContactSuccess.cshtml";
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]

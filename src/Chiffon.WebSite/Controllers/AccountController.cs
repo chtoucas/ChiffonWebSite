@@ -1,52 +1,31 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Data;
-    using System.Data.SqlClient;
     using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Net.Mail;
-    //using System.Text.RegularExpressions;
+    using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
     using Chiffon.Common.Filters;
     using Chiffon.Infrastructure;
-    using Chiffon.Mail;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
-    using Narvalo.Web.Security;
     using Addressing = Chiffon.Infrastructure.Addressing;
 
     [AllowAnonymous]
     [CLSCompliant(false)]
     public class AccountController : ChiffonController
     {
-        const int RandomPasswordLength_ = 7;
-        const string RandomPasswordLetters_ = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-        const string RandomPasswordNumbers_ = "23456789";
+        readonly IMemberService _memberService;
 
-        //static readonly Regex EmailAddressRegex
-        //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
-
-        readonly ChiffonConfig _config;
-        readonly IFormsAuthenticationService _formsService;
-
-        public AccountController(
-            ChiffonEnvironment environment,
-            Addressing.ISiteMap siteMap,
-            IFormsAuthenticationService formsService,
-            ChiffonConfig config)
+        public AccountController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IMemberService memberService)
             : base(environment, siteMap)
         {
-            Requires.NotNull(config, "config");
+            Requires.NotNull(memberService, "memberService");
 
-            _config = config;
-            _formsService = formsService;
+            _memberService = memberService;
         }
-
-        string ConnectionString_ { get { return _config.SqlConnectionString; } }
 
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
@@ -100,9 +79,9 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel contact)
+        public ActionResult Register(RegisterViewModel model)
         {
-            Requires.NotNull(contact, "contact");
+            Requires.NotNull(model, "model");
 
             if (User.Identity.IsAuthenticated) {
                 return RedirectToHome();
@@ -119,72 +98,61 @@
             LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
 
             if (!ModelState.IsValid) {
-                return View(Constants.ViewName.Account.Register, contact);
+                return View(Constants.ViewName.Account.Register, model);
             }
 
-            if (IsEmailAddressAlreadyTaken_(contact.EmailAddress)) {
-                return View(Constants.ViewName.Account.RegisterEmailAlreadyTaken);
-            }
-
-            LayoutViewModel.MainHeading = SR.Account_Register_MainHeadingOnSuccess;
-
-            if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
-
-            var password = CreateContact_(contact);
-            var memberInfo = new MemberInfo {
-                FirstName = contact.FirstName,
-                LastName = contact.LastName
+            _memberService.MemberCreated += (object sender, MemberCreatedEventArgs e) =>
+            {
+                // On connecte automatiquement le membre.
+                (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 
-            _formsService.SignIn(memberInfo.DisplayName, false /* createPersistentCookie */);
-            MemberSession.EmailAddress = contact.EmailAddress;
+            var outcome = _memberService.RegisterMember(new RegisterMemberQuery {
+                CompanyName = model.CompanyName,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                NewsletterChecked = FormUtility.IsCheckboxOn(model.Newsletter),
+            });
 
-            // Envoi de l'email de confirmation d'inscription après la connection.
-            var emailAddress = new MailAddress(contact.EmailAddress, memberInfo.DisplayName);
-            var mailMerge = new MailMerge();
-
-            var welcomeMessage
-                = mailMerge.Welcome(emailAddress, password, Environment.BaseUri, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-            var alertMessage
-                = mailMerge.NewMemberAlert(emailAddress, contact.FirstName, contact.LastName, contact.CompanyName);
-
-            using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(welcomeMessage);
-                smtpClient.Send(alertMessage);
-            }
-
-            var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
-            if (nextUrl.IsSome) {
-                return RedirectToRoute(Constants.RouteName.Account.RegisterConfirmation, new
-                {
-                    nextUrl = nextUrl.Value.ToString()
+            if (outcome.Unsuccessful) {
+                return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
+                    Message = outcome.Error.Message
                 });
             }
+
+            string returnUrl = MayParse.ToUri(model.ReturnUrl, UriKind.Relative)
+                .Map(_ => _.ToString())
+                .ValueOrElse(String.Empty);
+
+            if (returnUrl.Length > 0) {
+                return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess, new { returnUrl = returnUrl });
+            }
             else {
-                return RedirectToRoute(Constants.RouteName.Account.RegisterConfirmation);
+                return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess);
             }
         }
 
         [HttpGet]
-        public ActionResult RegisterConfirmation(string nextUrl)
+        public ActionResult RegisterSuccess(string returnUrl)
         {
             if (!User.Identity.IsAuthenticated) {
                 return new RedirectResult(Url.RouteUrl(Constants.RouteName.Account.Register));
             }
 
-            if (String.IsNullOrEmpty(nextUrl)) {
-                nextUrl = Url.RouteUrl(Constants.RouteName.Home.Index);
-            }
+            string nextUrl = MayParse.ToUri(returnUrl, UriKind.Relative)
+                .Map(_ => _.ToString())
+                .ValueOrElse(Url.RouteUrl(Constants.RouteName.Home.Index));
 
             // Ontologie.
-            Ontology.Relationships.CanonicalUrl = SiteMap.RegisterConfirmation();
+            Ontology.Relationships.CanonicalUrl = SiteMap.RegisterSuccess();
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
-            LayoutViewModel.MainHeading = SR.Account_RegisterConfirmation_MainHeading;
+            LayoutViewModel.MainHeading = SR.Account_RegisterSuccess_MainHeading;
             LayoutViewModel.MainNavCssClass = "register";
 
-            return View(Constants.ViewName.Account.RegisterConfirmation, new RegisterConfirmationViewModel { NextUrl = nextUrl });
+            return View(Constants.ViewName.Account.RegisterSuccess, new RegisterSuccessViewModel { NextUrl = nextUrl });
         }
 
         [HttpGet]
@@ -202,99 +170,6 @@
             LayoutViewModel.MainNavCssClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
-        }
-
-        //static bool IsValidEmailAddress_(string value)
-        //{
-        //    return !String.IsNullOrWhiteSpace(value)
-        //        && IsValidDotNetMailAddress(value)
-        //        && EmailAddressRegex.IsMatch(value);
-        //}
-
-        //static bool IsValidDotNetMailAddress(string value)
-        //{
-        //    MailAddress address = null;
-
-        //    try {
-        //        address = new MailAddress(value);
-        //    }
-        //    catch (FormatException) {
-        //    }
-
-        //    return address != null;
-        //}
-
-        bool IsEmailAddressAlreadyTaken_(string emailAddress)
-        {
-            bool exists = false;
-
-            using (var cnx = new SqlConnection(ConnectionString_)) {
-                using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_GetPublicKeyByEmailAddress";
-                    cmd.Connection = cnx;
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@email_address", SqlDbType.NVarChar).Value = emailAddress;
-
-                    cnx.Open();
-                    using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                        if (rdr.Read()) {
-                            exists = true;
-                        }
-                    }
-                }
-            }
-
-            return exists;
-        }
-
-        string CreateContact_(RegisterViewModel contact)
-        {
-            var password = CreateRandomPassword_(RandomPasswordLength_);
-
-            using (var cnx = new SqlConnection(ConnectionString_)) {
-                using (var cmd = new SqlCommand()) {
-                    cmd.CommandText = "usp_NewContact";
-                    cmd.Connection = cnx;
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameterCollection p = cmd.Parameters;
-                    p.Add("@email_address", SqlDbType.NVarChar).Value = contact.EmailAddress;
-                    p.Add("@firstname", SqlDbType.NVarChar).Value = contact.FirstName;
-                    p.Add("@lastname", SqlDbType.NVarChar).Value = contact.LastName;
-                    p.Add("@company_name", SqlDbType.NVarChar).Value = contact.CompanyName;
-                    p.Add("@password", SqlDbType.NVarChar).Value = password;
-
-                    cnx.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-
-            return password;
-        }
-
-        // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx
-        // Cf. http://stackoverflow.com/questions/54991/generating-random-passwords
-        static string CreateRandomPassword_(int passwordLength)
-        {
-            var chars = new char[passwordLength];
-            var rd = new Random();
-
-            bool useLetter = true;
-            for (int i = 0; i < passwordLength; i++) {
-                if (useLetter) {
-                    chars[i] = RandomPasswordLetters_[rd.Next(0, RandomPasswordLetters_.Length)];
-                    useLetter = false;
-                }
-                else {
-                    chars[i] = RandomPasswordNumbers_[rd.Next(0, RandomPasswordNumbers_.Length)];
-                    useLetter = true;
-                }
-
-            }
-
-            return new String(chars);
         }
     }
 }

@@ -500,12 +500,12 @@ Chiffon.Views.Home = (function() {
           // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
           errorPlacement: $.noop,
           messages: {
-            EmailAddress: '',
+            Email: '',
             Name: '',
             Message: ''
           },
           rules: {
-            EmailAddress: { required: true, email: true },
+            Email: { required: true, email: true },
             Name: { required: true, minlength: 2, maxlength: 200 },
             Message: { required: true, minlength: 20, maxlength: 3000 }
           }
@@ -563,13 +563,13 @@ Chiffon.Views.Account = (function() {
           LastName: '',
           FirstName: '',
           CompanyName: '',
-          EmailAddress: ''
+          Email: ''
         },
         rules: {
           LastName: { required: true, minlength: 2, maxlength: 50 },
           FirstName: { required: true, minlength: 2, maxlength: 50 },
           CompanyName: { required: true, minlength: 2, maxlength: 100 },
-          EmailAddress: { required: true, email: true }
+          Email: { required: true, email: true }
           //Message: { maxlength: 4000 }
         }
       });

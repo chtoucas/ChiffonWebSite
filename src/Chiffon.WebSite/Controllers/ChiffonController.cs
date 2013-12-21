@@ -46,7 +46,16 @@
         protected LayoutViewModel LayoutViewModel { get { return _layoutViewModel; } }
         protected Ontology Ontology { get { return _ontology; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
-        protected Common.MemberSession MemberSession { get { return _memberSesssion.Value; } }
+        protected Common.MemberSession MemberSession
+        {
+            get
+            {
+                if (!HttpContext.User.Identity.IsAuthenticated) {
+                    throw new NotSupportedException("This method is only supported for authenticated visitors.");
+                }
+                return _memberSesssion.Value;
+            }
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

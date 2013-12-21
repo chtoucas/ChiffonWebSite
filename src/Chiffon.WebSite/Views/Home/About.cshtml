@@ -25,7 +25,7 @@
        <div class=watermark></div>
       </a>
      </li>
-     <li class=email><a class=text_underline href="mailto:@designer.EmailAddress" itemprop="email">@designer.EmailAddress</a></li>
+     <li class=email><a class=text_underline href="mailto:@designer.Email" itemprop="email">@designer.Email</a></li>
      @if (designer.WebsiteUrl.IsSome) {
       var website = designer.WebsiteUrl.Value.ToString().Replace("http://", String.Empty);
       <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose itemprop="url">@website.Replace("/", String.Empty)</a></li>

@@ -10,7 +10,7 @@
         [StringLength(200, MinimumLength = 5, ErrorMessage = "Le champs \"Email\" doit comporter au moins 5 caractères.")]
         [EmailAddress(ErrorMessage = "Vous devez utiliser une adresse email valide.")]
         //[DataType(DataType.EmailAddress)]
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Le champs \"Nom\" est obligatoire.")]
         [StringLength(200, MinimumLength = 2, ErrorMessage = "Le champs \"Nom\" doit comporter au moins 2 caractères.")]

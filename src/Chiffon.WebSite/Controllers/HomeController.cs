@@ -10,7 +10,7 @@
     using Chiffon.Common.Filters;
     using Chiffon.Data;
     using Chiffon.Infrastructure;
-    using Chiffon.Mail;
+    using Chiffon.Infrastructure.Messaging;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;
@@ -20,13 +20,16 @@
     [OntologyFilter(RobotsDirective = "index, follow")]
     public class HomeController : ChiffonController
     {
+        readonly IMessenger _messenger;
         readonly IQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IQueries queries)
+        public HomeController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IMessenger messenger, IQueries queries)
             : base(environment, siteMap)
         {
+            Requires.NotNull(messenger, "messenger");
             Requires.NotNull(queries, "queries");
 
+            _messenger = messenger;
             _queries = queries;
         }
 
@@ -85,7 +88,7 @@
 
             if (User.Identity.IsAuthenticated) {
                 model.Name = User.Identity.Name;
-                model.EmailAddress = MemberSession.EmailAddress;
+                model.Email = MemberSession.Value.Email;
             }
 
             // Ontologie.
@@ -123,28 +126,27 @@
                 return View(Constants.ViewName.Home.Contact, model);
             }
 
-            var message = (new MailMerge()).NewMessageAlert(new MailAddress(model.EmailAddress, model.Name), model.Message);
+            _messenger.Publish(new NewContactMessage {
+                ContactAddress = new MailAddress(model.Email, model.Name),
+                Content = model.Message,
+            });
 
-            using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(message);
-            }
-
-            return RedirectToRoute(Constants.RouteName.Home.ContactConfirmation);
+            return RedirectToRoute(Constants.RouteName.Home.ContactSuccess);
         }
 
         [HttpGet]
         [OntologyFilter(RobotsDirective = "noindex, nofollow")]
-        public ActionResult ContactConfirmation()
+        public ActionResult ContactSuccess()
         {
             // Ontologie.
-            Ontology.Relationships.CanonicalUrl = SiteMap.ContactConfirmation();
+            Ontology.Relationships.CanonicalUrl = SiteMap.ContactSuccess();
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Contact());
-            LayoutViewModel.MainHeading = SR.Home_ContactConfirmation_MainHeading;
+            LayoutViewModel.MainHeading = SR.Home_ContactSuccess_MainHeading;
             LayoutViewModel.MainNavCssClass = "contact";
 
-            return View(Constants.ViewName.Home.ContactConfirmation);
+            return View(Constants.ViewName.Home.ContactSuccess);
         }
     }
 }

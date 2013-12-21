@@ -170,6 +170,7 @@
     <Compile Include="App_Start\Modules\ServicesModule.cs" />
     <Compile Include="App_Start\Modules\InfrastructureModule.cs" />
     <Compile Include="App_Start\Modules\AspNetMvcModule.cs" />
+    <Compile Include="Common\AuthentificationService.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\EnrichedWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
@@ -183,6 +184,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Common\Filters\OntologyFilterAttribute.cs" />
+    <Compile Include="Common\FormUtility.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MemberSession.cs" />
@@ -288,9 +290,9 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
     <Compile Include="ViewModels\CommonStyleSheetViewModel.cs" />
-    <Compile Include="ViewModels\RegisterConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\RegisterFailureViewModel.cs" />
+    <Compile Include="ViewModels\RegisterSuccessViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\PatternViewModel.cs" />
@@ -397,7 +399,7 @@
     <Content Include="Views\Mail\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\ContactConfirmation.cshtml" />
+    <Content Include="Views\Home\ContactSuccess.cshtml" />
     <None Include="Views\Mail\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -465,8 +467,8 @@
     <Content Include="Views\Widget\Html5Shim.cshtml" />
     <Content Include="Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Views\Designer\Pattern.cshtml" />
-    <Content Include="Views\Account\RegisterConfirmation.cshtml" />
-    <Content Include="Views\Account\RegisterEmailAlreadyTaken.cshtml" />
+    <Content Include="Views\Account\RegisterSuccess.cshtml" />
+    <Content Include="Views\Account\RegisterFailure.cshtml" />
     <Content Include="Views\MailMerge\_Layout.text.cshtml" />
     <Content Include="Views\MailMerge\Welcome.text.cshtml" />
     <Content Include="Views\Home\Resources\_ContactTitle.cshtml" />

@@ -63,9 +63,9 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre email *.
         /// </summary>
-        public static string Account_Login_EmailAddress {
+        public static string Account_Login_Email {
             get {
-                return ResourceManager.GetString("Account_Login_EmailAddress", resourceCulture);
+                return ResourceManager.GetString("Account_Login_Email", resourceCulture);
             }
         }
         
@@ -153,9 +153,9 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre email *.
         /// </summary>
-        public static string Account_Register_EmailAddress {
+        public static string Account_Register_Email {
             get {
-                return ResourceManager.GetString("Account_Register_EmailAddress", resourceCulture);
+                return ResourceManager.GetString("Account_Register_Email", resourceCulture);
             }
         }
         
@@ -250,47 +250,38 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Je crée un compte.
+        /// </summary>
+        public static string Account_RegisterFailure_Register {
+            get {
+                return ResourceManager.GetString("Account_RegisterFailure_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Feuilleter le catalogue.
         /// </summary>
-        public static string Account_RegisterConfirmation_BrowseGallery {
+        public static string Account_RegisterSuccess_BrowseGallery {
             get {
-                return ResourceManager.GetString("Account_RegisterConfirmation_BrowseGallery", resourceCulture);
+                return ResourceManager.GetString("Account_RegisterSuccess_BrowseGallery", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Vous recevrez très prochainement vos identifiants dans votre boîte mail.
         /// </summary>
-        public static string Account_RegisterConfirmation_EmailSent {
+        public static string Account_RegisterSuccess_EmailSent {
             get {
-                return ResourceManager.GetString("Account_RegisterConfirmation_EmailSent", resourceCulture);
+                return ResourceManager.GetString("Account_RegisterSuccess_EmailSent", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre demande a bien été prise en compte.
         /// </summary>
-        public static string Account_RegisterConfirmation_Heading {
+        public static string Account_RegisterSuccess_Heading {
             get {
-                return ResourceManager.GetString("Account_RegisterConfirmation_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nous sommes désolés mais l&apos;adresse avec laquelle vous souhaitez vous enregistrer est déjà prise..
-        /// </summary>
-        public static string Account_RegisterEmailAlreadyTaken_Heading {
-            get {
-                return ResourceManager.GetString("Account_RegisterEmailAlreadyTaken_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Je crée un compte.
-        /// </summary>
-        public static string Account_RegisterEmailAlreadyTaken_Register {
-            get {
-                return ResourceManager.GetString("Account_RegisterEmailAlreadyTaken_Register", resourceCulture);
+                return ResourceManager.GetString("Account_RegisterSuccess_Heading", resourceCulture);
             }
         }
         
@@ -351,9 +342,9 @@ namespace Chiffon.Resources {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre email *.
         /// </summary>
-        public static string Home_Contact_EmailAddress {
+        public static string Home_Contact_Email {
             get {
-                return ResourceManager.GetString("Home_Contact_EmailAddress", resourceCulture);
+                return ResourceManager.GetString("Home_Contact_Email", resourceCulture);
             }
         }
         

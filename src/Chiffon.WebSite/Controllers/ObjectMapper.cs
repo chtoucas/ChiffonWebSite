@@ -27,7 +27,7 @@
                 Categories = from _ in categories select Map(_),
                 CurrentCategoryKey = categoryKey,
                 DisplayName = designer.DisplayName,
-                EmailAddress = designer.EmailAddress.ToString(),
+                Email = designer.Email,
                 Key = designer.Key,
                 Presentation = designer.Presentation,
             };
