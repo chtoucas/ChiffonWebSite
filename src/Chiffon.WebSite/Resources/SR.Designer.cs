@@ -340,6 +340,15 @@ namespace Chiffon.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} {1}.
+        /// </summary>
+        public static string MailAddressDisplayNameFormat {
+            get {
+                return ResourceManager.GetString("MailAddressDisplayNameFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Motif textile n°{0} par {1}.
         /// </summary>
         public static string PatternDescriptionFormat {

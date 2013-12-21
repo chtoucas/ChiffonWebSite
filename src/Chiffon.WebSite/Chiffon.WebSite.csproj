@@ -185,7 +185,6 @@
     <Compile Include="Common\Filters\OntologyFilterAttribute.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
-    <Compile Include="Common\MailHtmlHelper%24.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
     <Compile Include="Controllers\MailController.cs" />

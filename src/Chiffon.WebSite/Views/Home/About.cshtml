@@ -6,6 +6,8 @@
 
 @{
  Layout = "~/Views/Shared/_Layout.cshtml";
+
+ var nofollow = ViewUtility.NofollowAttribute(User);
 }
 
 <div class="home_about" itemscope itemtype="@SchemaOrgType.Organization">
@@ -15,7 +17,7 @@
  <ul class="li_inline li_designers clearfix text_center">
   @foreach (var designer in Model) {
    <li itemprop=member itemscope itemtype="@SchemaOrgType.Person">
-    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)" class=loose><span itemprop="name">@designer.DisplayName</span></a></h2>
+    <h2 class="serif fx_strike"><a href="@Url.Designer(designer.Key, 1)"@nofollow class=loose><span itemprop="name">@designer.DisplayName</span></a></h2>
     <ul>
      <li class=avatar>
       @*<a href="@Url.Pattern(designer.Key, designer.AvatarCategory, designer.AvatarReference, 1)" class="vignette @CssUtility.DesignerClass(designer.Key)">*@

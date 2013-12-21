@@ -51,5 +51,10 @@
             LayoutViewModel.ControllerName = actionDescriptor.ControllerDescriptor.ControllerName;
             LayoutViewModel.ActionName = actionDescriptor.ActionName;
         }
+
+        protected ActionResult RedirectToHome()
+        {
+            return RedirectToRoute(Common.Constants.RouteName.Home.Index);
+        }
     }
 }

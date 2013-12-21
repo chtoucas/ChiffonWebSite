@@ -9,6 +9,7 @@
     //using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Chiffon.Common;
+    using Chiffon.Common.Filters;
     using Chiffon.Infrastructure;
     using Chiffon.Mail;
     using Chiffon.Resources;
@@ -17,38 +18,34 @@
     using Narvalo.Web.Security;
     using Addressing = Chiffon.Infrastructure.Addressing;
 
-    // FIXME: Cette classe est complètement bancale mais c'est voulu tant qu'on n'a pas 
-    // une idée plus précise du processus d'inscription.
-    // Si l'utilisateur est déconnecté dégager le visiteur.
     [AllowAnonymous]
     [CLSCompliant(false)]
     public class AccountController : ChiffonController
     {
+        const int RandomPasswordLength_ = 7;
+        const string RandomPasswordLetters_ = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+        const string RandomPasswordNumbers_ = "23456789";
+
         //static readonly Regex EmailAddressRegex
         //       = new Regex(@"^[\w\.\-_]+@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$", RegexOptions.Compiled);
 
         readonly ChiffonConfig _config;
-        //readonly ISmtpClient _smtpClient;
         readonly IFormsAuthenticationService _formsService;
-        //readonly IMemberService _memberService;
 
         public AccountController(
             ChiffonEnvironment environment,
-            //ISmtpClient smtpClient,
             Addressing.ISiteMap siteMap,
-            //IMemberService memberService,
             IFormsAuthenticationService formsService,
             ChiffonConfig config)
             : base(environment, siteMap)
         {
             Requires.NotNull(config, "config");
-            //Requires.NotNull(memberService, "memberService");
 
             _config = config;
-            //_smtpClient = smtpClient;
             _formsService = formsService;
-            //_memberService = memberService;
         }
+
+        string ConnectionString_ { get { return _config.SqlConnectionString; } }
 
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
@@ -56,7 +53,7 @@
         public ActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated) {
-                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+                return RedirectToHome();
             }
 
             // Modèle.
@@ -72,19 +69,14 @@
             LayoutViewModel.MainHeading = SR.Account_Login_MainHeading;
             LayoutViewModel.MainNavCssClass = "login";
 
-            //if (Request.IsAjaxRequest()) {
-            //    return PartialView(Constants.ViewName.Account.Login, model);
-            //}
-            //else {
             return View(Constants.ViewName.Account.Login, model);
-            //}
         }
 
         [HttpGet]
         public ActionResult Register(string returnUrl)
         {
             if (User.Identity.IsAuthenticated) {
-                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+                return RedirectToHome();
             }
 
             // Modèle.
@@ -102,12 +94,7 @@
             LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
             LayoutViewModel.MainNavCssClass = "register";
 
-            //if (Request.IsAjaxRequest()) {
-            //    return PartialView(Constants.ViewName.Account.Register, model);
-            //}
-            //else {
             return View(Constants.ViewName.Account.Register, model);
-            //}
         }
 
         [HttpPost]
@@ -117,7 +104,7 @@
             Requires.NotNull(contact, "contact");
 
             if (User.Identity.IsAuthenticated) {
-                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Home.Index));
+                return RedirectToHome();
             }
 
             // Ontologie.
@@ -140,22 +127,16 @@
 
             LayoutViewModel.MainHeading = SR.Account_Register_MainHeadingOnSuccess;
 
-            // FIXME:
-            //if (contact.Message == null) { contact.Message = String.Empty; }
             if (contact.ReturnUrl == null) { contact.ReturnUrl = String.Empty; }
 
             var password = CreateContact_(contact);
+            string userName = String.Format(CultureInfo.CurrentCulture,
+                SR.MailAddressDisplayNameFormat, contact.FirstName, contact.LastName);
 
-            // Envoi de l'email de confirmation d'inscription.
-            // FIXME: Utiliser LastName, FirstName pour les anglishes.
-            var emailAddress = new MailAddress(
-                contact.EmailAddress, contact.FirstName + " " + contact.LastName);
-
-            // FIXME: 
-            string userName = contact.FirstName + " " + contact.LastName;
             _formsService.SignIn(userName, false /* createPersistentCookie */);
 
-            // On envoie le mail après la connection.
+            // Envoi de l'email de confirmation d'inscription après la connection.
+            var emailAddress = new MailAddress(contact.EmailAddress, userName);
             var mailMerge = new MailMerge();
 
             var welcomeMessage
@@ -163,13 +144,11 @@
             var alertMessage
                 = mailMerge.NewMember(emailAddress, contact.FirstName, contact.LastName, contact.CompanyName);
 
-            //_smtpClient.Send(message);
             using (var smtpClient = new SmtpClient()) {
                 smtpClient.Send(welcomeMessage);
                 smtpClient.Send(alertMessage);
             }
 
-            // FIXME: vérifier le contenu de l'URL.
             var nextUrl = MayParse.ToUri(contact.ReturnUrl, UriKind.Relative);
             if (nextUrl.IsSome) {
                 return RedirectToRoute(Constants.RouteName.Account.RegisterConfirmation, new
@@ -205,6 +184,7 @@
         }
 
         [HttpGet]
+        [OntologyFilter(RobotsDirective = "index, follow")]
         public ActionResult Newsletter()
         {
             // Ontologie.
@@ -219,10 +199,6 @@
 
             return View(Constants.ViewName.Account.Newsletter);
         }
-
-        // FIXME:
-
-        string ConnectionString_ { get { return _config.SqlConnectionString; } }
 
         //static bool IsValidEmailAddress_(string value)
         //{
@@ -271,7 +247,7 @@
 
         string CreateContact_(RegisterViewModel contact)
         {
-            var password = CreateRandomPassword_(7);
+            var password = CreateRandomPassword_(RandomPasswordLength_);
 
             using (var cnx = new SqlConnection(ConnectionString_)) {
                 using (var cmd = new SqlCommand()) {
@@ -285,7 +261,6 @@
                     p.Add("@lastname", SqlDbType.NVarChar).Value = contact.LastName;
                     p.Add("@company_name", SqlDbType.NVarChar).Value = contact.CompanyName;
                     p.Add("@password", SqlDbType.NVarChar).Value = password;
-                    //p.Add("@message", SqlDbType.NVarChar).Value = contact.Message;
 
                     cnx.Open();
                     cmd.ExecuteNonQuery();
@@ -299,25 +274,23 @@
         // Cf. http://stackoverflow.com/questions/54991/generating-random-passwords
         static string CreateRandomPassword_(int passwordLength)
         {
-            string allowedLetterChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-            string allowedNumberChars = "23456789";
-            char[] chars = new char[passwordLength];
-            Random rd = new Random();
+            var chars = new char[passwordLength];
+            var rd = new Random();
 
             bool useLetter = true;
             for (int i = 0; i < passwordLength; i++) {
                 if (useLetter) {
-                    chars[i] = allowedLetterChars[rd.Next(0, allowedLetterChars.Length)];
+                    chars[i] = RandomPasswordLetters_[rd.Next(0, RandomPasswordLetters_.Length)];
                     useLetter = false;
                 }
                 else {
-                    chars[i] = allowedNumberChars[rd.Next(0, allowedNumberChars.Length)];
+                    chars[i] = RandomPasswordNumbers_[rd.Next(0, RandomPasswordNumbers_.Length)];
                     useLetter = true;
                 }
 
             }
 
-            return new string(chars);
+            return new String(chars);
         }
     }
 }

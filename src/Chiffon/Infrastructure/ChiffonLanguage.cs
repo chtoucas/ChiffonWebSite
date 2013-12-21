@@ -16,7 +16,7 @@
             return @this == ChiffonLanguage.Default;
         }
 
-        public static CultureInfo GetCultureInfo(this ChiffonLanguage @this)
+        internal static CultureInfo GetCultureInfo(this ChiffonLanguage @this)
         {
             switch (@this) {
                 case ChiffonLanguage.English:
@@ -27,7 +27,7 @@
             }
         }
 
-        public static CultureInfo GetUICultureInfo(this ChiffonLanguage @this)
+        internal static CultureInfo GetUICultureInfo(this ChiffonLanguage @this)
         {
             switch (@this) {
                 case ChiffonLanguage.English:
