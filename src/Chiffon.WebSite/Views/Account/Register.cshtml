@@ -14,7 +14,7 @@
   <ul>
    <li>
     <label for="LastName">@VR.Account_Register_Lastname</label>
-    @Html.TextBoxFor(_ => _.LastName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_Lastname })
+    @Html.TextBoxFor(_ => _.LastName, new { @class = "highlight", @required = "required", @spellcheck = "false", @placeholder = VR.Account_Register_Lastname })
    </li>
    <li>
     <label for=FirstName>@VR.Account_Register_Firstname</label>
@@ -22,11 +22,11 @@
    </li>
    <li>
     <label for=CompanyName>@VR.Account_Register_CompanyName</label>
-    @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @placeholder = VR.Account_Register_CompanyName })
+    @Html.TextBoxFor(_ => _.CompanyName, new { @class = "highlight", @required = "required", @spellcheck = "false", @placeholder = VR.Account_Register_CompanyName })
    </li>
    <li>
     <label for=Email>@VR.Account_Register_Email</label>
-    @Html.TextBoxFor(_ => _.Email, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.Account_Register_Email })
+    @Html.TextBoxFor(_ => _.Email, new { @class = "highlight", @required = "required", @type = "email", @spellcheck = "false", @placeholder = VR.Account_Register_Email })
    </li>
   </ul>
   <p class=inside_form>

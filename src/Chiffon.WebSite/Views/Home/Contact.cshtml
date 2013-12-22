@@ -9,11 +9,11 @@
   <ul>
    <li>
     <label for="Name">@VR.Home_Contact_Name</label>
-    @Html.TextBoxFor(_ => _.Name, new { @class = "highlight", @required = "required", @placeholder = VR.Home_Contact_Name })
+    @Html.TextBoxFor(_ => _.Name, new { @class = "highlight", @required = "required", @spellcheck = "false", @placeholder = VR.Home_Contact_Name })
    </li>
    <li>
     <label for=Email>@VR.Home_Contact_Email</label>
-    @Html.TextBoxFor(_ => _.Email, new { @class = "highlight", @required = "required", @type = "email", @placeholder = VR.Home_Contact_Email })
+    @Html.TextBoxFor(_ => _.Email, new { @class = "highlight", @required = "required", @type = "email", @spellcheck = "false", @placeholder = VR.Home_Contact_Email })
    </li>
    <li>
     <label for=Message>@VR.Home_Contact_Message</label>
