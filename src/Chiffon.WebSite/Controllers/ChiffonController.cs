@@ -20,7 +20,7 @@
         readonly Ontology _ontology;
         readonly ISiteMap _siteMap;
 
-        Lazy<Common.MemberSession> _memberSesssion;
+        Lazy<MemberSession> _memberSesssion;
 
         protected ChiffonController(ChiffonEnvironment environment, ISiteMap siteMap)
         {
@@ -37,25 +37,16 @@
                 Ontology = _ontology,
             };
 
-            _memberSesssion = new Lazy<Common.MemberSession>(GetMemberSessionThunk_(this));
+            _memberSesssion = new Lazy<MemberSession>(GetMemberSessionThunk_(this));
         }
 
         public ChiffonControllerContext ChiffonControllerContext { get { return _chiffonControllerContext; } }
 
         protected ChiffonEnvironment Environment { get { return _environment; } }
         protected LayoutViewModel LayoutViewModel { get { return _layoutViewModel; } }
+        protected MemberSession MemberSession { get { return _memberSesssion.Value; } }
         protected Ontology Ontology { get { return _ontology; } }
         protected ISiteMap SiteMap { get { return _siteMap; } }
-        protected Common.MemberSession MemberSession
-        {
-            get
-            {
-                if (!HttpContext.User.Identity.IsAuthenticated) {
-                    throw new NotSupportedException("This method is only supported for authenticated visitors.");
-                }
-                return _memberSesssion.Value;
-            }
-        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -69,14 +60,14 @@
 
         protected ActionResult RedirectToHome()
         {
-            return RedirectToRoute(Common.Constants.RouteName.Home.Index);
+            return RedirectToRoute(Constants.RouteName.Home.Index);
         }
 
-        static Func<Common.MemberSession> GetMemberSessionThunk_(Controller @this)
+        static Func<MemberSession> GetMemberSessionThunk_(Controller @this)
         {
             return () =>
             {
-                return new Common.MemberSession(@this.HttpContext);
+                return new MemberSession(@this.HttpContext.Session);
             };
         }
     }

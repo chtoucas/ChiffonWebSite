@@ -1,9 +1,7 @@
 ﻿namespace Chiffon.ViewModels
 {
-    using System;
     using System.Collections.Generic;
 
-    [Serializable]
     public class PatternViewModel
     {
         public CategoryViewItem Category { get; set; }

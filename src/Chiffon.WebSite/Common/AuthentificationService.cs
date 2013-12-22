@@ -13,7 +13,7 @@
         {
             Requires.NotNull(httpContext, "httpContext");
 
-            _memberSession = new MemberSession(httpContext);
+            _memberSession = new MemberSession(httpContext.Session);
         }
 
         public AuthentificationService(HttpContext httpContext) : this(new HttpContextWrapper(httpContext)) { }

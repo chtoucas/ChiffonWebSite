@@ -62,7 +62,7 @@ namespace Chiffon.Common
                 Subject = String.Format(FrenchCultureInfo_,
                     "Nouveau message sur le site de la part de {0}.", message.EmailAddress.Address)
             };
-            mail.To.Add(Common.Constants.ContactAddress);
+            mail.To.Add(Constants.ContactAddress);
 
             return mail;
         }
@@ -78,7 +78,7 @@ namespace Chiffon.Common
                 Subject = String.Format(FrenchCultureInfo_,
                   "Nouvelle inscription sur le site : {0}.", message.EmailAddress.DisplayName)
             };
-            mail.To.Add(Common.Constants.ContactAddress);
+            mail.To.Add(Constants.ContactAddress);
 
             return mail;
         }

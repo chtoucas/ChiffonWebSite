@@ -5,6 +5,7 @@
     using System.Net.Mail;
     using Narvalo;
 
+    [Serializable]
     public class Member
     {
         readonly string _email;
@@ -12,6 +13,7 @@
         readonly string _lastName;
 
         string _displayName;
+        [NonSerialized]
         MailAddress _emailAddress;
 
         public Member(string email, string firstName, string lastName)

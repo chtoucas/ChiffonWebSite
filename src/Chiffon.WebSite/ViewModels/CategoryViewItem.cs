@@ -1,8 +1,5 @@
 ﻿namespace Chiffon.ViewModels
 {
-    using System;
-
-    [Serializable]
     public class CategoryViewItem
     {
         public string DisplayName { get; set; }

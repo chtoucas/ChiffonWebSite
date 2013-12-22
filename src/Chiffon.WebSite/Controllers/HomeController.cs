@@ -86,7 +86,13 @@
 
             if (User.Identity.IsAuthenticated) {
                 model.Name = User.Identity.Name;
-                model.Email = MemberSession.Value.Email;
+
+                // IMPORTANT: On doit vérifier si la session n'a pas disparue.
+                // Cf. la remarque en début de la classe MemberSession.
+                var session = MemberSession.Value;
+                if (session != null) {
+                    model.Email = session.Email;
+                }
             }
 
             // Ontologie.

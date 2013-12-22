@@ -3,34 +3,28 @@
     using System.Web;
     using Chiffon.Entities;
 
-    // FIXME: AppPool recycling.
+    // WARNING: Pour le moment, si l'AppPool est recyclé on perd la session car on utilise
+    // le mode de fonctionnement "InProc".
     public class MemberSession
     {
         const string HttpSessionKey = "member";
 
-        readonly HttpContextBase _httpContext;
+        readonly HttpSessionStateBase _httpSession;
 
-        public MemberSession(HttpContext httpContext) : this(new HttpContextWrapper(httpContext)) { }
-
-        public MemberSession(HttpContextBase httpContext)
+        public MemberSession(HttpSessionStateBase httpSession)
         {
-            _httpContext = httpContext;
-        }
-
-        protected HttpSessionStateBase Session
-        {
-            get { return _httpContext.Session; }
+            _httpSession = httpSession;
         }
 
         public Member Value
         {
-            get { return Session[HttpSessionKey] as Member; }
-            set { Session[HttpSessionKey] = value; }
+            get { return _httpSession[HttpSessionKey] as Member; }
+            set { _httpSession[HttpSessionKey] = value; }
         }
 
         public void Clear()
         {
-            Session.Clear();
+            _httpSession.Clear();
         }
     }
 }

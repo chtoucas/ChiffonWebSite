@@ -7,7 +7,6 @@
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
 
-    [Serializable]
     public class LayoutViewModel
     {
         static readonly Lazy<IEnumerable<ISiteMap>> SiteMaps_

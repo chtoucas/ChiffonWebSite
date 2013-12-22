@@ -1,9 +1,7 @@
 ﻿namespace Chiffon.ViewModels
 {
-    using System;
     using System.Collections.Generic;
 
-    [Serializable]
     public class DesignerViewModel
     {
         public DesignerViewItem Designer { get; set; }

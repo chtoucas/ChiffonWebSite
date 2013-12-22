@@ -1,11 +1,9 @@
 ﻿namespace Chiffon.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Chiffon.Entities;
 
-    [Serializable]
     public class DesignerViewItem
     {
         int? _patternCount;
