@@ -170,10 +170,10 @@
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="App_Start\Modules\DataModule.cs" />
-    <Compile Include="App_Start\Modules\ServicesModule.cs" />
-    <Compile Include="App_Start\Modules\InfrastructureModule.cs" />
-    <Compile Include="App_Start\Modules\AspNetMvcModule.cs" />
+    <Compile Include="App_Start\DataModule.cs" />
+    <Compile Include="App_Start\ServicesModule.cs" />
+    <Compile Include="App_Start\InfrastructureModule.cs" />
+    <Compile Include="App_Start\AspNetMvcModule.cs" />
     <Compile Include="Common\AuthentificationService.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\EnrichedWebViewPage.cs" />
@@ -187,14 +187,14 @@
     <Compile Include="Common\ErrorPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Common\Filters\OntologyFilterAttribute.cs" />
+    <Compile Include="Common\OntologyFilterAttribute.cs" />
     <Compile Include="Common\FormUtility.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
     <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MemberSession.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
-    <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\MailMergeController.cs" />
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
@@ -399,15 +399,15 @@
     <Content Include="Views\Widget\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Mail\Web.config">
+    <Content Include="Views\MailMerge\Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Home\ContactSuccess.cshtml" />
-    <Content Include="Views\Mail\ForgottenPassword.cshtml" />
-    <None Include="Views\Mail\Web.Debug.config">
+    <Content Include="Views\MailMerge\ForgottenPassword.cshtml" />
+    <None Include="Views\MailMerge\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Views\Mail\Web.Release.config">
+    <None Include="Views\MailMerge\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
@@ -479,8 +479,8 @@
     <Content Include="Views\Home\Resources\_AboutContent.en.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.en.cshtml" />
-    <Content Include="Views\Mail\_Layout.cshtml" />
-    <Content Include="Views\Mail\Welcome.cshtml" />
+    <Content Include="Views\MailMerge\_Layout.cshtml" />
+    <Content Include="Views\MailMerge\Welcome.cshtml" />
     <Content Include="Views\Widget\Copyright.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

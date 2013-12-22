@@ -9,6 +9,7 @@
     {
         readonly DesignerKey _key;
         string _displayName;
+        [NonSerialized]
         MailAddress _emailAddress;
 
         public Designer(DesignerKey key)

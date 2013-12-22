@@ -11,11 +11,12 @@
 
     public static class ChiffonEnvironmentResolver
     {
+        const string SessionKey_ = "Language";
+
         static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
         static readonly ChiffonEnvironment EnglishEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
-        static readonly string SessionKey_ = "Language";
 
         public static IEnumerable<ChiffonEnvironment> Environments
         {

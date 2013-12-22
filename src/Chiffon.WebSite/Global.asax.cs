@@ -1,6 +1,7 @@
 ﻿namespace Chiffon
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web;
 
     /// <summary>
@@ -94,6 +95,7 @@
         /// NB: Pour exécuter un code avant Application_Start, utiliser les facilités offertes par
         /// l'attribut PreApplicationStartMethod. Voir aussi WebActivator.
         /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         protected void Application_Start()
         {
             AppActivator.Start();
@@ -102,6 +104,7 @@
         /// <summary>
         /// Appelé une fois dans la durée de vie de l'application avant que celle-ci ne soit déchargée. 
         /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         protected void Application_End(object sender, EventArgs e)
         {
             AppActivator.End();

@@ -13,6 +13,7 @@
     using Narvalo.Fx;
     using Narvalo.Web;
 
+    // TODO: ValidateAntiForgeryToken.
     public class LogOnHandler : HttpHandlerBase<LogOnQuery>, IRequiresSessionState
     {
         readonly IMemberService _memberService;
@@ -66,7 +67,7 @@
 
             Uri nextUrl = result.IsSome
                 ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
-                : query.TargetUrl.Match(_ => siteMap.LogOn(_), siteMap.LogOn());
+                : query.TargetUrl.Match(_ => siteMap.Login(_), siteMap.Login());
 
             context.Response.Redirect(nextUrl.ToString());
         }

@@ -19,11 +19,11 @@
 
         protected ChiffonWebViewPage()
         {
-            _chiffonControllerContext = new Lazy<ChiffonControllerContext>(GetChiffonControlerContextThunk_(this));
+            _chiffonControllerContext = new Lazy<ChiffonControllerContext>(GetChiffonControllerContextThunk_(this));
             _followRelation = new Lazy<String>(GetFollowRelationThunk_(this));
         }
 
-        protected ChiffonControllerContext ChiffonControlerContext
+        protected ChiffonControllerContext ChiffonControllerContext
         {
             get { return _chiffonControllerContext.Value; }
         }
@@ -33,9 +33,9 @@
             get { return _followRelation.Value; }
         }
 
-        protected ChiffonLanguage Language { get { return ChiffonControlerContext.Language; } }
-        protected LayoutViewModel LayoutViewModel { get { return ChiffonControlerContext.LayoutViewModel; } }
-        protected Ontology Ontology { get { return ChiffonControlerContext.Ontology; } }
+        protected ChiffonLanguage Language { get { return ChiffonControllerContext.Language; } }
+        protected LayoutViewModel LayoutViewModel { get { return ChiffonControllerContext.LayoutViewModel; } }
+        protected Ontology Ontology { get { return ChiffonControllerContext.Ontology; } }
         protected AssetHelper Asset { get; private set; }
 
         public void RenderActionResource(string resourceName)
@@ -75,7 +75,7 @@
             Asset = new AssetHelper(Html);
         }
 
-        static Func<ChiffonControllerContext> GetChiffonControlerContextThunk_(WebViewPage @this)
+        static Func<ChiffonControllerContext> GetChiffonControllerContextThunk_(WebViewPage @this)
         {
             return () =>
             {

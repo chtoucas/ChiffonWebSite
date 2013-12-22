@@ -1,32 +1,31 @@
 ﻿namespace Chiffon.Services
 {
     using System;
-    using System.Data;
-    using System.Data.SqlClient;
+    using Chiffon.Data;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Messaging;
     using Narvalo;
-    using Narvalo.Data;
     using Narvalo.Fx;
 
     public class MemberService/*Impl*/ : IMemberService
     {
-        const int RandomPasswordLength_ = 7;
-        const string RandomPasswordLetters_ = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-        const string RandomPasswordNumbers_ = "23456789";
+        const int PasswordLength_ = 7;
+        const string PasswordLetters_ = "abcdefghijkmnpqrstuvwxyz";
+        const string PasswordNumbers_ = "23456789";
 
         readonly IMessenger _messenger;
-        readonly Queries _queries;
+        readonly IReadOnlyQueries _queries;
+        readonly IReadWriteQueries _inserts;
 
-        public MemberService(ChiffonConfig config, IMessenger messenger)
+        public MemberService(IReadOnlyQueries queries, IReadWriteQueries inserts, IMessenger messenger)
         {
-            Requires.NotNull(config, "config");
+            Requires.NotNull(queries, "queries");
+            Requires.NotNull(inserts, "inserts");
             Requires.NotNull(messenger, "messenger");
 
             _messenger = messenger;
-
-            _queries = new Queries(config);
+            _queries = queries;
+            _inserts = inserts;
         }
 
         public event EventHandler<MemberCreatedEventArgs> MemberCreated;
@@ -35,30 +34,46 @@
 
         public Outcome<Member> RegisterMember(RegisterMemberQuery query)
         {
-            // 1. On vérifie que l'addresse email n'est pas déjà prise.
+            // 1. Nettoyage des données reçues.
+
+            query.Normalize();
+
+            // 2. On vérifie que l'addresse email n'est pas déjà prise.
 
             // TODO: Fusionner cette méthode avec celle qui suit pour éviter deux appels DB.
-            if (_queries.IsEmailAlreadyTaken(query.Email)) {
+            var password = _queries.GetPassword(query.Email);
+
+            if (!String.IsNullOrEmpty(password)) {
                 return Outcome<Member>.Failure(SR.MemberService_EmailAlreadyTaken);
             }
 
-            // 2. Génération d'un nouveau mot de passe.
+            // 3. Génération d'un nouveau mot de passe.
 
-            var password = CreateRandomPassword_(RandomPasswordLength_);
+            password = CreatePassword_();
 
-            // 3. Création du compte en base de données.
+            // 4. Création du compte en base de données.
 
-            var member = _queries.RegisterMember(query, password);
+            var model = new NewMemberModel {
+                CompanyName = query.CompanyName,
+                Email = query.Email,
+                FirstName = query.FirstName,
+                LastName = query.LastName,
+                NewsletterChecked = query.NewsletterChecked,
+                Password = password,
+            };
 
-            // 4. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
+            // TODO: Encrypter les mots de passe.
+            var member = _inserts.NewMember(model);
+
+            // 5. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
 
             OnMemberCreated_(new MemberCreatedEventArgs(member));
 
-            // 5. Envoi des notifications.
+            // 6. Envoi des notifications.
 
             _messenger.Publish(new NewMemberMessage {
                 CompanyName = query.CompanyName,
-                MemberAddress = member.EmailAddress,
+                EmailAddress = member.EmailAddress,
                 Password = password
             });
 
@@ -75,19 +90,23 @@
 
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx
         // Cf. http://stackoverflow.com/questions/54991/generating-random-passwords
-        static string CreateRandomPassword_(int passwordLength)
+        static string CreatePassword_()
         {
-            var chars = new char[passwordLength];
+            // TODO: Changer le comportement suivant.
+            // Pour le moment, on génére des mots de passe assez faibles mais 
+            // cela n'a que peu d'importance car ils ont une durée de vie assez courte.
+
+            var chars = new char[PasswordLength_];
             var rd = new Random();
 
             bool useLetter = true;
-            for (int i = 0; i < passwordLength; i++) {
+            for (int i = 0; i < PasswordLength_; i++) {
                 if (useLetter) {
-                    chars[i] = RandomPasswordLetters_[rd.Next(0, RandomPasswordLetters_.Length)];
+                    chars[i] = PasswordLetters_[rd.Next(0, PasswordLetters_.Length)];
                     useLetter = false;
                 }
                 else {
-                    chars[i] = RandomPasswordNumbers_[rd.Next(0, RandomPasswordNumbers_.Length)];
+                    chars[i] = PasswordNumbers_[rd.Next(0, PasswordNumbers_.Length)];
                     useLetter = true;
                 }
 
@@ -104,98 +123,5 @@
                 localHandler(this, e);
             }
         }
-
-        #region TODO: À basculer correctement dans Chiffon.Data.
-
-        private class Queries
-        {
-            readonly ChiffonConfig _config;
-
-            public Queries(ChiffonConfig config)
-            {
-                Requires.NotNull(config, "config");
-
-                _config = config;
-            }
-
-            protected string ConnectionString { get { return _config.SqlConnectionString; } }
-
-            public Member RegisterMember(RegisterMemberQuery query, string password)
-            {
-                using (var cnx = new SqlConnection(ConnectionString)) {
-                    using (var cmd = new SqlCommand()) {
-                        cmd.CommandText = "usp_NewMember";
-                        cmd.Connection = cnx;
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        SqlParameterCollection p = cmd.Parameters;
-                        p.Add("@email_address", SqlDbType.NVarChar).Value = query.Email;
-                        p.Add("@firstname", SqlDbType.NVarChar).Value = query.FirstName;
-                        p.Add("@lastname", SqlDbType.NVarChar).Value = query.LastName;
-                        p.Add("@company_name", SqlDbType.NVarChar).Value = query.CompanyName;
-                        p.Add("@password", SqlDbType.NVarChar).Value = password;
-                        p.Add("@newsletter", SqlDbType.Bit).Value = query.NewsletterChecked;
-
-                        cnx.Open();
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                return new Member(query.Email, query.FirstName, query.LastName);
-            }
-
-            public Member GetMember(string email, string password)
-            {
-                Member member = null;
-
-                using (var cnx = new SqlConnection(ConnectionString)) {
-                    using (var cmd = new SqlCommand()) {
-                        cmd.CommandText = "usp_GetContactByPublicKey";
-                        cmd.Connection = cnx;
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        SqlParameterCollection p = cmd.Parameters;
-                        p.Add("@email_address", SqlDbType.NVarChar).Value = email;
-                        p.Add("@password", SqlDbType.NVarChar).Value = password;
-
-                        cnx.Open();
-                        using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                            if (rdr.Read()) {
-                                member = new Member(email, rdr.GetString("firstname"), rdr.GetString("lastname"));
-                            }
-                        }
-                    }
-                }
-
-                return member;
-            }
-
-            public bool IsEmailAlreadyTaken(string email)
-            {
-                bool exists = false;
-
-                using (var cnx = new SqlConnection(ConnectionString)) {
-                    using (var cmd = new SqlCommand()) {
-                        cmd.CommandText = "usp_GetPublicKeyByEmailAddress";
-                        cmd.Connection = cnx;
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        SqlParameterCollection p = cmd.Parameters;
-                        p.Add("@email_address", SqlDbType.NVarChar).Value = email;
-
-                        cnx.Open();
-                        using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)) {
-                            if (rdr.Read()) {
-                                exists = true;
-                            }
-                        }
-                    }
-                }
-
-                return exists;
-            }
-        }
-
-        #endregion
     }
 }

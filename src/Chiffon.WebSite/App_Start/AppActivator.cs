@@ -17,8 +17,6 @@ namespace Chiffon
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Modules;
-    using Narvalo.Web;
     using Serilog;
 
     public static class AppActivator

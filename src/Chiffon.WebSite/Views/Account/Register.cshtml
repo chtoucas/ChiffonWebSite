@@ -6,7 +6,7 @@
  <h2>@VR.Account_Register_Heading</h2>
  <p class=switch>
   @VR.Account_Register_AlreadyRegistered
-  <a href="@Url.RouteUrl(Constants.RouteName.Account.Login)?returnUrl=@Model.ReturnUrl">@VR.Account_Register_Connect</a>
+  <a href="@Url.RouteUrl(Constants.RouteName.Account.Login, new { returnUrl = Model.ReturnUrl })">@VR.Account_Register_Connect</a>
  </p>
  @Html.ValidationSummary()
  <form method=post action="@Url.RouteUrl(Constants.RouteName.Account.Register)" id=register_form class=custom_form>

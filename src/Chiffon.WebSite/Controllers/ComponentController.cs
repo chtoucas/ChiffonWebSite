@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Web.Mvc;
     using Chiffon.Common;
@@ -39,6 +40,7 @@
         }
 
         [ChildActionOnly]
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public PartialViewResult LanguageMenu(
             ChiffonLanguage language, 
             IEnumerable<KeyValuePair<ChiffonLanguage, Uri>> alternateUrls)

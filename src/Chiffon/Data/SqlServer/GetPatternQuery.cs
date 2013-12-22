@@ -8,19 +8,19 @@
 
     public class GetPatternQuery : StoredProcedure<Pattern>
     {
-        public GetPatternQuery(string connectionString, DesignerKey designerKey, string reference, string version)
+        public GetPatternQuery(string connectionString, DesignerKey designerKey, string reference, string variant)
             : base(connectionString, "usp_GetPattern")
         {
             DesignerKey = designerKey;
             Reference = reference;
-            Version = version;
+            Variant = variant;
 
             CommandBehavior = CommandBehavior.CloseConnection | CommandBehavior.SingleRow;
         }
 
         public DesignerKey DesignerKey { get; private set; }
         public string Reference { get; private set; }
-        public string Version { get; private set; }
+        public string Variant { get; private set; }
 
         protected override Pattern Execute(SqlDataReader rdr)
         {
@@ -28,7 +28,7 @@
 
             if (!rdr.Read()) { return null; }
 
-            return new Pattern(new PatternId(DesignerKey, Reference), Version) {
+            return new Pattern(new PatternId(DesignerKey, Reference), Variant) {
                 CategoryKey = rdr.GetString("category"),
                 CreationTime = rdr.GetDateTime("creation_time"),
                 HasPreview = rdr.GetBoolean("preview"),
@@ -43,7 +43,7 @@
         {
             command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
             command.AddParameter("@reference", SqlDbType.NVarChar, Reference);
-            command.AddParameter("@version", SqlDbType.NVarChar, Version);
+            command.AddParameter("@version", SqlDbType.NVarChar, Variant);
         }
     }
 }

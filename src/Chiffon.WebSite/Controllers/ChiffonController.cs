@@ -3,7 +3,7 @@
     using System;
     using System.Globalization;
     using System.Web.Mvc;
-    using Chiffon.Common.Filters;
+    using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.ViewModels;

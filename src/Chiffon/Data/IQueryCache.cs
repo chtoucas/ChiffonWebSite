@@ -9,9 +9,6 @@
     public interface IQueryCache
     {
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query);
-
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey,
             Func<DesignerKey, IEnumerable<Category>> query);
 
@@ -20,7 +17,10 @@
             Func<CultureInfo, IEnumerable<Designer>> query);
 
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, 
+        IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey,
             Func<DesignerKey, IEnumerable<Pattern>> query);
+
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query);
     }
 }

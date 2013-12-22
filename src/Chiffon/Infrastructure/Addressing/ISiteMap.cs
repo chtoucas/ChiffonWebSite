@@ -13,15 +13,14 @@
         Uri Home();
         Uri About();
         Uri Contact();
-        Uri ContactSuccess();
         Uri Newsletter();
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         Uri Login();
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        Uri Login(Uri returnUrl);
         Uri Register();
-        Uri RegisterSuccess();
-        Uri LogOn();
-        Uri LogOn(Uri targetUrl);
+        Uri Register(Uri returnUrl);
 
         Uri Designer(DesignerKey designerKey, int pageIndex);
         Uri DesignerCategory(DesignerKey designerKey, string categoryKey, int pageIndex);

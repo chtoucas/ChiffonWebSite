@@ -8,9 +8,14 @@
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <title>@Ontology.Title</title>
- @OntologyHelpers.StandardMetadata(Ontology)
- @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
- @OntologyHelpers.RelationshipLinks(Ontology.Relationships)
+ @if (LayoutViewModel.DisableOntology) {
+  <meta name=robots content="noindex, nofollow" />
+ }
+ else {
+  @OntologyHelpers.StandardMetadata(Ontology)
+  @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
+  @OntologyHelpers.RelationshipLinks(Ontology.Relationships)
+ }
  <meta name=viewport content="width=device-width, initial-scale=1" />
  @{
   RenderWidget(Constants.ActionName.Widget.CommonStyleSheet);
@@ -31,7 +36,7 @@
     });
    }
   </nav>
-  <nav class="menu @LayoutViewModel.MainNavCssClass">
+  <nav class="menu @LayoutViewModel.MainMenuCssClass">
    <ul class=li_center>
     <li><a href="@Url.RouteUrl(Constants.RouteName.Home.Index)" class=index>@VR.Layout_Nav_Home</a></li>
     <li class=sep>/</li>
@@ -41,7 +46,7 @@
     @{ Html.RenderPartial(Constants.ViewName.UserMenu); }
    </ul>
   </nav>
-  <nav class="clearfix nav_designers fx_strike @LayoutViewModel.DesignerNavCssClass">
+  <nav class="clearfix designers_menu fx_strike @LayoutViewModel.DesignerMenuCssClass">
    <ul class="serif li_inline">
     <li><a href="@Url.Designer(DesignerKey.EstherMarthi, 1)" class=em>Chicamancha</a></li>
     <li><a href="@Url.Designer(DesignerKey.VivianeDevaux, 1)" class=vd>Viviane Devaux</a></li>

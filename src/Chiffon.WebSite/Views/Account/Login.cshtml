@@ -5,21 +5,21 @@
 <div class="account_login text_center">
  <h2>@VR.Account_Login_Heading</h2>
  <p class=switch>
-  <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)?returnUrl=@Model.ReturnUrl">@VR.Account_Login_NewUser</a>
+  <a href="@Url.RouteUrl(Constants.RouteName.Account.Register, new { returnUrl = Model.ReturnUrl })">@VR.Account_Login_NewUser</a>
  </p>
  <form method=post action="/connecte" id=login_form class=custom_form>
   @*<p id=error_container class=error_container></p>*@
-  <ul>
-   <li>
-    <label for=email>@VR.Account_Login_Email</label>
-    <input type=text placeholder="@VR.Account_Login_Email" name=email required=required maxlength=200 class=highlight />
-   </li>
-   <li>
-    <label for=password>@VR.Account_Login_Password</label>
-    <input type=password placeholder="@VR.Account_Login_Password" name=password required=required maxlength=25 class=highlight />
-   </li>
-  </ul>
-  <p class=inside_form>
+   <ul>
+    <li>
+     <label for=email>@VR.Account_Login_Email</label>
+     <input type=text placeholder="@VR.Account_Login_Email" name=email required=required maxlength=200 class=highlight />
+    </li>
+    <li>
+     <label for=password>@VR.Account_Login_Password</label>
+     <input type=password placeholder="@VR.Account_Login_Password" name=password required=required maxlength=25 class=highlight />
+    </li>
+   </ul>
+<p class=inside_form>
    <a href="@Url.RouteUrl(Constants.RouteName.Account.Register)">@VR.Account_Login_Register</a>
   </p>
   <input type=hidden value="@Model.ReturnUrl" name=targeturl />

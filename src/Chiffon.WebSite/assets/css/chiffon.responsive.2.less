@@ -38,6 +38,10 @@ BODY {
 
   LI {
     margin: 0;
+
+    &:first-child A {
+      padding-left: 0;
+    }
   }
 
   .right_item {
@@ -46,9 +50,13 @@ BODY {
   }
 }
 
+.secondary_menu UL {
+  text-align: inherit;
+}
+
 // Menu des designers.
 
-.nav_designers {
+.designers_menu {
   &.fx_strike {
     background: none;
   }

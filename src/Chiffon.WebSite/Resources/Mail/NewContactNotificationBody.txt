@@ -1,9 +1,9 @@
 ﻿
 
-Nouveau message de <Message.ContactAddress.DisplayName> (<Message.ContactAddress.Address>) :
+Nouveau message de <Message.EmailAddress.DisplayName> (<Message.EmailAddress.Address>) :
 
 
-<Message.Content>
+<Message.MessageContent>
 
 
 NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.

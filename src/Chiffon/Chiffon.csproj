@@ -109,12 +109,17 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="Data\CachedQueries.cs" />
-    <Compile Include="Data\IQueries.cs" />
+    <Compile Include="Data\CachedReadOnlyQueries.cs" />
+    <Compile Include="Data\IReadWriteQueries.cs" />
+    <Compile Include="Data\ReadWriteQueries.cs" />
+    <Compile Include="Data\IReadOnlyQueries.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\Queries.cs" />
+    <Compile Include="Data\ReadOnlyQueries.cs" />
     <Compile Include="Data\QueryCache.cs" />
+    <Compile Include="Data\NewMemberModel.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
+    <Compile Include="Data\SqlServer\GetPasswordQuery.cs" />
+    <Compile Include="Data\SqlServer\GetMemberQuery.cs" />
     <Compile Include="Data\SqlServer\GetPatternQuery.cs" />
     <Compile Include="Data\SqlServer\ListCategoriesQuery.cs" />
     <Compile Include="Data\SqlServer\ListDesignersQuery.cs" />
@@ -126,7 +131,7 @@
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
-    <Compile Include="Infrastructure\Addressing\Constants.cs" />
+    <Compile Include="Infrastructure\Addressing\SiteMapConstants.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\DefaultSiteMapFactory.cs" />
     <Compile Include="Infrastructure\Addressing\ISiteMap.cs" />
@@ -167,6 +172,7 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
+    <Compile Include="Services\RegisterMemberQuery.cs" />
     <Compile Include="SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

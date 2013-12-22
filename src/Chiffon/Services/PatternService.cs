@@ -8,11 +8,12 @@
 
     public class PatternService : IPatternService
     {
-        IQueries _queries;
+        readonly IReadOnlyQueries _queries;
 
-        public PatternService(IQueries queries)
+        public PatternService(IReadOnlyQueries queries)
         {
             Requires.NotNull(queries, "queries");
+
             _queries = queries;
         }
 

@@ -32,12 +32,6 @@
 
         #region IChiffonCache
 
-        public IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query)
-        {
-            var cacheKey = "Chiffon:Home";
-            return GetOrInsert_(cacheKey, () => query());
-        }
-
         public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
         {
             var format = "Chiffon:Category:{0}";
@@ -57,6 +51,12 @@
             var format = "Chiffon:Pattern:{0}";
             var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
             return GetOrInsert_(cacheKey, () => query(designerKey));
+        }
+
+        public IEnumerable<Pattern> GetOrInsertShowcasedPatterns(Func<IEnumerable<Pattern>> query)
+        {
+            var cacheKey = "Chiffon:Home";
+            return GetOrInsert_(cacheKey, () => query());
         }
 
         #endregion

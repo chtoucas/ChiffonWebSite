@@ -15,6 +15,8 @@ namespace Chiffon.Common
     // * Content Encoding & co
     public class MailMerge : IMailMerge
     {
+        static readonly CultureInfo FrenchCultureInfo_ = new CultureInfo("fr-FR");
+
         readonly ISiteMap _siteMap;
 
         public MailMerge(ISiteMap siteMap)
@@ -40,11 +42,11 @@ namespace Chiffon.Common
             tpl.Add("SiteUrl", _siteMap.Home().ToString());
 
             var mail = new MailMessage {
-                Body = tpl.Render(),
+                Body = tpl.Render(CultureInfo.CurrentCulture),
                 IsBodyHtml = false,
                 Subject = MailResources.Welcome_Subject
             };
-            mail.To.Add(message.MemberAddress);
+            mail.To.Add(message.EmailAddress);
 
             return mail;
         }
@@ -55,10 +57,10 @@ namespace Chiffon.Common
             tpl.Add("Message", message);
 
             var mail = new MailMessage {
-                Body = tpl.Render(),
+                Body = tpl.Render(FrenchCultureInfo_),
                 IsBodyHtml = false,
-                Subject = String.Format(CultureInfo.InvariantCulture,
-                    "Nouveau message sur le site de la part de {0}.", message.ContactAddress.Address)
+                Subject = String.Format(FrenchCultureInfo_,
+                    "Nouveau message sur le site de la part de {0}.", message.EmailAddress.Address)
             };
             mail.To.Add(Common.Constants.ContactAddress);
 
@@ -71,10 +73,10 @@ namespace Chiffon.Common
             tpl.Add("Message", message);
 
             var mail = new MailMessage {
-                Body = tpl.Render(),
+                Body = tpl.Render(FrenchCultureInfo_),
                 IsBodyHtml = false,
-                Subject = String.Format(CultureInfo.InvariantCulture,
-                  "Nouvelle inscription sur le site : {0}.", message.MemberAddress.DisplayName)
+                Subject = String.Format(FrenchCultureInfo_,
+                  "Nouvelle inscription sur le site : {0}.", message.EmailAddress.DisplayName)
             };
             mail.To.Add(Common.Constants.ContactAddress);
 

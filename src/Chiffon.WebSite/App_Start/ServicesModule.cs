@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Modules
+﻿namespace Chiffon
 {
     using Autofac;
     using Autofac.Integration.Mvc;

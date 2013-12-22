@@ -1,0 +1,52 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>@ViewBag.Title</title>
+ <meta name="viewport" content="width=device-width">
+ <style type="text/css">
+  body { width: 100% !important; }
+
+  a, a:link, a:visited, a:active { text-decoration: none; color: inherit; }
+
+   a:hover { text-decoration: underline; }
+
+  @@media only screen and (min-device-width: 569px) and (min-device-pixel-ratio: 1.5), only screen and (min-device-width: 569px) {
+   img { visibility: hidden; }
+  }
+ </style>
+ <!--[if gte mso 9]>
+ <style type="text/css">
+ table, td, div, p { font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif !important; line-height: normal !important; }
+ </style>
+ <![endif]-->
+ <!--[if lte mso 7]>
+ <style type="text/css">
+ table, td, div, p {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif !important; line-height: normal !important; }
+ </style>
+ <![endif]-->
+</head>
+<body bgcolor="#ffffff" style="margin:0;padding:0">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+   <td style="padding: 0 20px 0 20px; background-color: #ffffff;">
+    <table width="668" border="0" cellspacing="0" cellpadding="0" align="center" style="margin:0 auto">
+     @* Espacement en haut de page *@
+     <tr>
+      <td>
+       <img src="/assets/img/spacer.gif" alt="" width="1" height="20" style="display:block; margin:0;" border="0">
+      </td>
+     </tr>
+     @* Contenu du mail *@
+     <tr>
+      <td>
+       @RenderBody()
+      </td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+ </table>
+ @* TODO: Ajouter un beacon ici *@
+</body>
+</html>

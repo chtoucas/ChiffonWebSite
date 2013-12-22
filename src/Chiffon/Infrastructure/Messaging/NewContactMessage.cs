@@ -4,7 +4,7 @@
 
     public class NewContactMessage
     {
-        public MailAddress ContactAddress { get; set; }
-        public string Content { get; set; }
+        public MailAddress EmailAddress { get; set; }
+        public string MessageContent { get; set; }
     }
 }

@@ -3,9 +3,7 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using System.Net;
     using Chiffon.Entities;
-    using Narvalo;
 
     //<configuration>
     //  <uri>
@@ -36,6 +34,26 @@
             _language = environment.Language;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public static class Constants
+        {
+            public const string About = "informations";
+            public const string Contact = "contact";
+            public const string Newsletter = "newsletter";
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+            public const string Login = "connexion";
+            public const string Register = "inscription";
+
+            // TODO: Utiliser ces constantes dans SiteMap (cf. SmartFormat.NET).
+            public const string Designer = "{designerKey}";
+            public const string DesignerCategory = "{designerKey}/{categoryKey}";
+            public const string DesignerPattern = "{designerKey}/{categoryKey}/{reference}";
+
+            public const string LogOff = "disconnecte";
+            public const string LogOn = "connecte";
+            public const string Pattern = "motif";
+        }
+
         #region ISiteMap
 
         public ChiffonLanguage Language { get { return _language; } }
@@ -45,48 +63,40 @@
         public Uri Home() { return _baseUri; }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri About() { return MakeAbsoluteUri("informations"); }
+        public Uri About() { return MakeAbsoluteUri(Constants.About); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Contact() { return MakeAbsoluteUri("contact"); }
+        public Uri Contact() { return MakeAbsoluteUri(Constants.Contact); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri ContactSuccess() { return MakeAbsoluteUri("contact-confirmation"); }
+        public Uri Newsletter() { return MakeAbsoluteUri(Constants.Newsletter); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Newsletter() { return MakeAbsoluteUri("newsletter"); }
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public Uri Login() { return MakeAbsoluteUri(Constants.Login); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri LogOn() { return MakeAbsoluteUri("connexion"); }
-
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri LogOn(Uri targetUrl)
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public Uri Login(Uri returnUrl)
         {
-            Requires.NotNull(targetUrl, "targetUrl");
-
-            if (targetUrl.IsAbsoluteUri) {
-                throw new ArgumentException("XXX", "targetUrl");
-            }
-
-            var builder = new UriBuilder(MakeAbsoluteUri("connexion")) {
-                //Query = "targetUrl=XXX",
-            };
-            return builder.Uri;
+            var uri = MakeAbsoluteUri(Constants.Login);
+            return AddReturnUrl_(uri, returnUrl);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Login() { return MakeAbsoluteUri("connexion"); }
+        public Uri Register() { return MakeAbsoluteUri(Constants.Register); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Register() { return MakeAbsoluteUri("inscription"); }
-
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri RegisterSuccess() { return MakeAbsoluteUri("inscription-confirmation"); }
+        public Uri Register(Uri returnUrl)
+        {
+            var uri = MakeAbsoluteUri(Constants.Register);
+            return AddReturnUrl_(uri, returnUrl);
+        }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Designer(DesignerKey designerKey, int pageIndex)
         {
-            var uri = MakeAbsoluteUri(designerKey.ToString() + "/");
+            var uri = MakeAbsoluteUri(designerKey.ToString());
             return AddPagination_(uri, pageIndex);
         }
 
@@ -121,13 +131,23 @@
         {
             if (pageIndex > 1) {
                 var builder = new UriBuilder(uri) {
-                    Query = "p=" + pageIndex.ToString(CultureInfo.InvariantCulture)
+                    Query = String.Format(CultureInfo.InvariantCulture,
+                        "{0}={1}", SiteMapConstants.PageKey, pageIndex.ToString(CultureInfo.InvariantCulture))
                 };
                 return builder.Uri;
             }
             else {
                 return uri;
             }
+        }
+
+        static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
+        {
+            var builder = new UriBuilder(uri) {
+                Query = String.Format(CultureInfo.InvariantCulture,
+                    "{0}={1}", SiteMapConstants.ReturnUrl, returnUrl.ToString())
+            };
+            return builder.Uri;
         }
     }
 }

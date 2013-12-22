@@ -7,23 +7,21 @@
     using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Common.Filters;
     using Chiffon.Data;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Semantic;
-    using Addressing = Chiffon.Infrastructure.Addressing;
 
-    [OntologyFilter(RobotsDirective = "index, follow")]
     public class HomeController : ChiffonController
     {
         readonly IMessenger _messenger;
-        readonly IQueries _queries;
+        readonly IReadOnlyQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IMessenger messenger, IQueries queries)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IMessenger messenger, IReadOnlyQueries queries)
             : base(environment, siteMap)
         {
             Requires.NotNull(messenger, "messenger");
@@ -55,7 +53,7 @@
             if (User.Identity.IsAuthenticated) {
                 LayoutViewModel.MainHeading = SR.Home_Index_MainHeading;
             }
-            LayoutViewModel.MainNavCssClass = "index";
+            LayoutViewModel.MainMenuCssClass = "index";
 
             return View(Constants.ViewName.Home.Index, model);
         }
@@ -75,7 +73,7 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.About());
             LayoutViewModel.MainHeading = SR.Home_About_MainHeading;
-            LayoutViewModel.MainNavCssClass = "about";
+            LayoutViewModel.MainMenuCssClass = "about";
 
             return View(Constants.ViewName.Home.About, model);
         }
@@ -100,7 +98,7 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Contact());
             LayoutViewModel.MainHeading = SR.Home_Contact_MainHeading;
-            LayoutViewModel.MainNavCssClass = "contact";
+            LayoutViewModel.MainMenuCssClass = "contact";
 
             return View(Constants.ViewName.Home.Contact, model);
         }
@@ -120,31 +118,28 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Contact());
             LayoutViewModel.MainHeading = SR.Home_Contact_MainHeading;
-            LayoutViewModel.MainNavCssClass = "contact";
+            LayoutViewModel.MainMenuCssClass = "contact";
 
             if (!ModelState.IsValid) {
                 return View(Constants.ViewName.Home.Contact, model);
             }
 
             _messenger.Publish(new NewContactMessage {
-                ContactAddress = new MailAddress(model.Email, model.Name),
-                Content = model.Message,
+                EmailAddress = new MailAddress(model.Email, model.Name),
+                MessageContent = model.Message,
             });
 
             return RedirectToRoute(Constants.RouteName.Home.ContactSuccess);
         }
 
         [HttpGet]
-        [OntologyFilter(RobotsDirective = "noindex, nofollow")]
+        [OntologyFilter(Disabled = true)]
         public ActionResult ContactSuccess()
         {
-            // Ontologie.
-            Ontology.Relationships.CanonicalUrl = SiteMap.ContactSuccess();
-
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Contact());
             LayoutViewModel.MainHeading = SR.Home_ContactSuccess_MainHeading;
-            LayoutViewModel.MainNavCssClass = "contact";
+            LayoutViewModel.MainMenuCssClass = "contact";
 
             return View(Constants.ViewName.Home.ContactSuccess);
         }

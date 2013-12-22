@@ -5,21 +5,18 @@
     using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Common.Filters;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
-    using Addressing = Chiffon.Infrastructure.Addressing;
 
-    [AllowAnonymous]
-    [CLSCompliant(false)]
     public class AccountController : ChiffonController
     {
         readonly IMemberService _memberService;
 
-        public AccountController(ChiffonEnvironment environment, Addressing.ISiteMap siteMap, IMemberService memberService)
+        public AccountController(ChiffonEnvironment environment, ISiteMap siteMap, IMemberService memberService)
             : base(environment, siteMap)
         {
             Requires.NotNull(memberService, "memberService");
@@ -27,9 +24,9 @@
             _memberService = memberService;
         }
 
+        [HttpGet]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
-        [HttpGet]
         public ActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated) {
@@ -47,12 +44,13 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Login());
             LayoutViewModel.MainHeading = SR.Account_Login_MainHeading;
-            LayoutViewModel.MainNavCssClass = "login";
+            LayoutViewModel.MainMenuCssClass = "login";
 
             return View(Constants.ViewName.Account.Login, model);
         }
 
         [HttpGet]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         public ActionResult Register(string returnUrl)
         {
             if (User.Identity.IsAuthenticated) {
@@ -72,7 +70,7 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
             LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
-            LayoutViewModel.MainNavCssClass = "register";
+            LayoutViewModel.MainMenuCssClass = "register";
 
             return View(Constants.ViewName.Account.Register, model);
         }
@@ -94,7 +92,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
-            LayoutViewModel.MainNavCssClass = "register";
+            LayoutViewModel.MainMenuCssClass = "register";
             LayoutViewModel.MainHeading = SR.Account_Register_MainHeading;
 
             if (!ModelState.IsValid) {
@@ -111,7 +109,7 @@
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                NewsletterChecked = FormUtility.IsCheckboxOn(model.Newsletter),
+                NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
             if (outcome.Unsuccessful) {
@@ -124,15 +122,13 @@
                 .Map(_ => _.ToString())
                 .ValueOrElse(String.Empty);
 
-            if (returnUrl.Length > 0) {
-                return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess, new { returnUrl = returnUrl });
-            }
-            else {
-                return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess);
-            }
+            return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess, new { returnUrl = returnUrl });
         }
 
         [HttpGet]
+        [Authorize]
+        [OntologyFilter(Disabled = true)]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         public ActionResult RegisterSuccess(string returnUrl)
         {
             if (!User.Identity.IsAuthenticated) {
@@ -143,19 +139,15 @@
                 .Map(_ => _.ToString())
                 .ValueOrElse(Url.RouteUrl(Constants.RouteName.Home.Index));
 
-            // Ontologie.
-            Ontology.Relationships.CanonicalUrl = SiteMap.RegisterSuccess();
-
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Register());
             LayoutViewModel.MainHeading = SR.Account_RegisterSuccess_MainHeading;
-            LayoutViewModel.MainNavCssClass = "register";
+            LayoutViewModel.MainMenuCssClass = "register";
 
             return View(Constants.ViewName.Account.RegisterSuccess, new RegisterSuccessViewModel { NextUrl = nextUrl });
         }
 
         [HttpGet]
-        [OntologyFilter(RobotsDirective = "index, follow")]
         public ActionResult Newsletter()
         {
             // Ontologie.
@@ -166,7 +158,7 @@
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
             LayoutViewModel.MainHeading = SR.Account_Newsletter_MainHeading;
-            LayoutViewModel.MainNavCssClass = "newsletter";
+            LayoutViewModel.MainMenuCssClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
         }

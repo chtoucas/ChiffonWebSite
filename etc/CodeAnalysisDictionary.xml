@@ -24,10 +24,12 @@
       <Word>Marthi</Word>
       <Word>Roussel</Word>
 
-      <!-- Autoac, Serilog,... -->
+      <!-- Autofac, Serilog,... -->
       <Word>Autofac</Word>
+      <Word>Configurator</Word>
       <Word>Enricher</Word>
-      
+      <Word>Mvc</Word>
+
       <!-- Mots du Web-->
       <Word>Seo</Word>
     </Recognized>
@@ -55,6 +57,7 @@
         'Whitespace').
       -->
       <Term CompoundAlternate="PreStart">PreStart</Term>
+      <Term CompoundAlternate="WebSite">WebSite</Term>
     </Compound>
     <DiscreteExceptions>
       <!--

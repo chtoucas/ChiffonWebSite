@@ -9,16 +9,16 @@
     // - vérifier SPF, DKIM
     // - mode authentifié uniquement
     // - beacon
-    public class MailController : Controller
+    public class MailMergeController : Controller
     {
         public ActionResult ForgottenPassword()
         {
-            return View(Constants.ViewName.Mail.ForgottenPassword);
+            return View(Constants.ViewName.MailMerge.ForgottenPassword);
         }
 
         public ActionResult Welcome()
         {
-            return View(Constants.ViewName.Mail.Welcome);
+            return View(Constants.ViewName.MailMerge.Welcome);
         }
     }
 }

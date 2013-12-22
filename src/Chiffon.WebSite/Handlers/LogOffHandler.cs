@@ -2,7 +2,6 @@
 {
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Security;
     using System.Web.SessionState;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
@@ -10,20 +9,16 @@
     using Narvalo;
     using Narvalo.Web;
 
+    // TODO: ValidateAntiForgeryToken.
     public class LogOffHandler : HttpHandlerBase, IRequiresSessionState
     {
-        //readonly IMemberService _memberService;
         readonly ISiteMapFactory _siteMapFactory;
 
-        public LogOffHandler(
-            //IMemberService memberService, 
-            ISiteMapFactory siteMapFactory)
+        public LogOffHandler(ISiteMapFactory siteMapFactory)
             : base()
         {
-            //Requires.NotNull(memberService, "memberService");
             Requires.NotNull(siteMapFactory, "siteMapFactory");
 
-            //_memberService = memberService;
             _siteMapFactory = siteMapFactory;
         }
 
@@ -33,8 +28,7 @@
         {
             Requires.NotNull(context, "context");
 
-            FormsAuthentication.SignOut();
-            (new MemberSession(context)).Clear();
+            (new AuthentificationService(context)).SignOut();
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
             var nextUrl = siteMap.Home();

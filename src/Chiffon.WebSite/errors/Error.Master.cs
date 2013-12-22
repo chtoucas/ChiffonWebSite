@@ -6,7 +6,7 @@
     {
         public void ShowHomeLink()
         {
-            pnlHomeLink.Visible = true;
+            HomeLinkPanel.Visible = true;
         }
     }
 }

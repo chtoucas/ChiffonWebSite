@@ -1,11 +1,11 @@
 ﻿
 
-Welcome <Message.MemberAddress.DisplayName>,
+Welcome <Message.EmailAddress.DisplayName>,
 
 
 Many thanks for your interest in the Simone project.
 
-Your login: <Message.MemberAddress.Address>
+Your login: <Message.EmailAddress.Address>
 Your password: <Message.Password>
 
 Browse the gallery: <SiteUrl>

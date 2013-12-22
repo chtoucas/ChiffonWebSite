@@ -18,7 +18,7 @@
    <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQAQMAAADdiHD7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFAAAA//7+y8WeCgAAAIpJREFUSInt1TEKBDEMA0CBvmXw1w3+lkFX3bHLdbG6XZdTxCFxFOCtBxbLRqw/OyQWIu4dTondw8ru2hPYKuoqx5RqTao1ewKoSV0bHhM1OXnDBaknWwZipSYiNawtISgVpQpsKb6r8mfH5NyX9byM92idL+fcW9+jMSe8+eXLVTjzHtZ/6K0n1Afz5rOI/4rCoQAAAABJRU5ErkJggg==" /></a>
   <asp:ContentPlaceHolder ID="MainContent" runat="server">
   </asp:ContentPlaceHolder>
-  <asp:Panel ID=pnlHomeLink Visible=false runat=server>
+  <asp:Panel ID=HomeLinkPanel Visible=false runat=server>
    <p>
     <a href="<%: ResolveUrl("~/") %>"><%: VR.Error_HomeLink %></a>
    </p>

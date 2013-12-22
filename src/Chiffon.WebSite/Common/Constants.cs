@@ -6,6 +6,7 @@
     {
         public const string ContactAddress = "contact@pourquelmotifsimone.com";
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ActionName
         {
             // ComponentController.
@@ -46,9 +47,9 @@
                 public const string ContactSuccess = "ContactSuccess";
             }
 
-            // MailController.
+            // MailMergeController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Mail
+            public static class MailMerge
             {
                 public const string ForgottenPassword = "ForgottenPassword";
                 public const string Welcome = "Welcome";
@@ -67,16 +68,18 @@
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ControllerName
         {
             public const string Account = "Account";
             public const string Component = "Component";
             public const string Designer = "Designer";
             public const string Home = "Home";
-            public const string Mail = "Mail";
+            public const string MailMerge = "MailMerge";
             public const string Widget = "Widget";
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class CssClassName
         {
             public const string EstherMarthi = "em";
@@ -85,6 +88,7 @@
             public const string ChristineLégeret = "cl";
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class RouteName
         {
             // AccountController.
@@ -119,13 +123,14 @@
 
             // DesignerController.
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Mail
+            public static class MailMerge
             {
-                public const string ForgottenPassword = "Mail/ForgottenPassword";
-                public const string Welcome = "Mail/Welcome";
+                public const string ForgottenPassword = "MailMerge/ForgottenPassword";
+                public const string Welcome = "MailMerge/Welcome";
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ViewName
         {
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
@@ -169,10 +174,10 @@
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-            public static class Mail
+            public static class MailMerge
             {
-                public const string ForgottenPassword = "~/Views/Mail/ForgottenPassword.cshtml";
-                public const string Welcome = "~/Views/Mail/Welcome.cshtml";
+                public const string ForgottenPassword = "~/Views/MailMerge/ForgottenPassword.cshtml";
+                public const string Welcome = "~/Views/MailMerge/Welcome.cshtml";
             }
 
             [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]

@@ -9,12 +9,12 @@
     using Chiffon.Data;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Semantic;
-    using Addressing = Chiffon.Infrastructure.Addressing;
 
     [Authorize]
     public class DesignerController : ChiffonController
@@ -25,13 +25,13 @@
         // de l'internaute, on peut avoir de 2 à 3 colonnes, on choisit donc un multiple de 6.
         const int PreviewsPageSize_ = 18;
 
-        readonly IQueries _queries;
+        readonly IReadOnlyQueries _queries;
         readonly IPatternService _patternService;
 
         public DesignerController(
             ChiffonEnvironment environment,
-            Addressing.ISiteMap siteMap,
-            IQueries queries,
+            ISiteMap siteMap,
+            IReadOnlyQueries queries,
             IPatternService patternService)
             : base(environment, siteMap)
         {
@@ -74,7 +74,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
-            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -116,7 +116,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
-            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
             LayoutViewModel.MainHeading = category.DisplayName;
 
             return View(Constants.ViewName.Designer.Category, model);
@@ -164,7 +164,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
-            LayoutViewModel.DesignerNavCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
             LayoutViewModel.MainHeading = String.Format(CultureInfo.CurrentUICulture,
                 SR.Designer_Pattern_MainHeadingFormat, category.DisplayName, reference.ToUpperInvariant());
 

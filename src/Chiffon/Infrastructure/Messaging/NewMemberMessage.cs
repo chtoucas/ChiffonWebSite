@@ -4,8 +4,8 @@
 
     public class NewMemberMessage
     {
-        public MailAddress MemberAddress { get; set; }
         public string CompanyName { get; set; }
+        public MailAddress EmailAddress { get; set; }
         public string Password { get; set; }
     }
 }
