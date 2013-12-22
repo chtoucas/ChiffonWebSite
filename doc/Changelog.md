@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+
+[2013-12-22] Infrastructure
+---------------------------
+
+On configure tous les AppPools pour qu'ils ne se recyclent qu'en fonction de la mémoire.
+On supprime aussi les timeout qui forcent le redémarrage des AppPools.
+
+
 [2013-12-07] Release 1.7
 ------------------------
 
