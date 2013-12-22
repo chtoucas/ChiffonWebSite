@@ -2,6 +2,7 @@
 {
     using System.Net.Mail;
     using Narvalo;
+    using Serilog;
 
     public class Messenger/*Impl*/ : IMessenger
     {
@@ -14,25 +15,49 @@
             _mailMerge = mailMerge;
         }
 
-        // Envoi de l'email de confirmation d'inscription ainsi que d'une notification au administrateurs.
+        #region IMessenger
+
+        // Notifications lors de l'inscription d'un nouveau membre.
         public void Publish(NewMemberMessage message)
         {
-            var mail = _mailMerge.WelcomeMail(message);
-            var notification = _mailMerge.NewMemberNotification(message);
+            SmtpClient smtpClient = null;
 
-            using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(mail);
-                smtpClient.Send(notification);
+            try {
+                smtpClient = new SmtpClient();
+                
+                // On envoie d'abord le mail pour le nouveau membre (le plus important).
+                using (var mail = _mailMerge.WelcomeMail(message)) {
+                    smtpClient.Send(mail);
+                }
+
+                using (var notification = _mailMerge.NewMemberNotification(message)) {
+                    smtpClient.Send(notification);
+                }
+            }
+            catch (SmtpException ex) {
+                // NB: On ne "rethrow" pas les exceptions SMTP.
+                // Si une erreur intervient lors du message au nouveau membre, il n'aura
+                // pas de mail contenant son mot de passe mais pourra le récupérer sur le site
+                // via le lien "Mot de passe oublié".
+                Log.Error(ex, "A SMTP error occured while sending the new member messages.");
+            }
+            finally {
+                if (smtpClient != null) {
+                    smtpClient.Dispose();
+                }
             }
         }
 
+        // Notifications lors d'une demande à partir de la page contact.
         public void Publish(NewContactMessage message)
         {
-            var notification = _mailMerge.NewContactNotification(message);
-
             using (var smtpClient = new SmtpClient()) {
-                smtpClient.Send(notification);
+                using (var notification = _mailMerge.NewContactNotification(message)) {
+                    smtpClient.Send(notification);
+                }
             }
         }
+
+        #endregion
     }
 }

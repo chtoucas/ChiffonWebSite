@@ -11,8 +11,12 @@ namespace Chiffon.Common
     using Narvalo;
 
     // TODO: 
-    // * HTML
-    // * Content Encoding & co
+    // - HTML
+    // - Content Encoding & co  
+    // - utiliser ISO-8859-1
+    // - utiliser Quoted-Printable
+    // - vérifier SPF, DKIM
+    // - beacon
     public class MailMerge : IMailMerge
     {
         static readonly CultureInfo FrenchCultureInfo_ = new CultureInfo("fr-FR");

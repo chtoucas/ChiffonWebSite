@@ -15,7 +15,7 @@
                 case PatternSize.Original:
                     return Original_;
                 default:
-                    throw new ArgumentException("XXX");
+                    throw new NotSupportedException("The requested size is not supported.");
             }
         }
     }

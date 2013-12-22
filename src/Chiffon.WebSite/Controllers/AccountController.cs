@@ -99,7 +99,7 @@
                 return View(Constants.ViewName.Account.Register, model);
             }
 
-            _memberService.MemberCreated += (object sender, MemberCreatedEventArgs e) =>
+            _memberService.MemberCreated += (sender, e) =>
             {
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
@@ -132,7 +132,7 @@
         public ActionResult RegisterSuccess(string returnUrl)
         {
             if (!User.Identity.IsAuthenticated) {
-                return new RedirectResult(Url.RouteUrl(Constants.RouteName.Account.Register));
+                return RedirectToRoute(Constants.RouteName.Account.Register);
             }
 
             string nextUrl = MayParse.ToUri(returnUrl, UriKind.Relative)

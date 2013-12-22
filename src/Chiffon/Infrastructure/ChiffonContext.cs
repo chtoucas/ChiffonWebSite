@@ -20,7 +20,7 @@
         {
             get
             {
-                // XXX: Vérifier que HttpContext.Current existe bien.
+                // TODO: Vérifier que HttpContext.Current existe bien.
                 return HttpContext.Current.GetChiffonContext();
             }
         }

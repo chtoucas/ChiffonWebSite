@@ -51,7 +51,7 @@
                 case "laure-roussel":
                     return LaureRoussel;
                 default:
-                    throw new ArgumentException("XXX", "value");
+                    throw new ArgumentException("The supplied value is not a valid designer key.", "value");
             }
         }
 
