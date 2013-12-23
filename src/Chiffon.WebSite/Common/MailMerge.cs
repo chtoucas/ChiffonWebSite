@@ -3,6 +3,8 @@ namespace Chiffon.Common
     using System;
     using System.Globalization;
     using System.Net.Mail;
+    using System.Net.Mime;
+    using System.Text;
     using Antlr4.StringTemplate;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;
@@ -10,6 +12,9 @@ namespace Chiffon.Common
     using Chiffon.Resources;
     using Narvalo;
 
+    // FIXME:
+    // - doit-on ajouter les "To" ici ?
+    // - encodage, corps & sujet.
     // TODO: 
     // - HTML
     // - Content Encoding & co  
@@ -32,7 +37,7 @@ namespace Chiffon.Common
 
         public MailMessage WelcomeMail(NewMemberMessage message)
         {
-            // C'est un peu pourri ! À refaire ! Utiliser CultureInfo.DefaultThreadCurrentUICulture ?
+            // FIXME: C'est un peu pourri ! À refaire ! Utiliser CultureInfo.DefaultThreadCurrentUICulture ?
             String template;
             if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr") {
                 template = Resources.WelcomeMailBody;
@@ -86,5 +91,11 @@ namespace Chiffon.Common
 
             return mail;
         }
+
+        //static void ApplyDefaultAttributes_(MailMessage message)
+        //{
+        //    message.BodyEncoding = Encoding.UTF8;
+        //    message.BodyTransferEncoding = TransferEncoding.QuotedPrintable;
+        //}
     }
 }
