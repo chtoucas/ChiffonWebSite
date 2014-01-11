@@ -19,9 +19,9 @@
     public class HomeController : ChiffonController
     {
         readonly IMessenger _messenger;
-        readonly IReadQueries _queries;
+        readonly IQueries _queries;
 
-        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IMessenger messenger, IReadQueries queries)
+        public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IMessenger messenger, IQueries queries)
             : base(environment, siteMap)
         {
             Requires.NotNull(messenger, "messenger");

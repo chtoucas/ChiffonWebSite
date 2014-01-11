@@ -5,19 +5,19 @@
     using Narvalo;
 
     /// <summary>
-    /// Implémentation standard de <see cref="Chiffon.Data.IWriteQueries"/>.
+    /// Implémentation standard de <see cref="Chiffon.Data.ICommands"/>.
     /// </summary>
-    public class WriteQueries : IWriteQueries
+    public class Commands : ICommands
     {
         readonly string _connectionString;
 
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.WriteQueries"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.Commands"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
-        public WriteQueries(string connectionString)
+        public Commands(string connectionString)
         {
             Requires.NotNullOrEmpty(connectionString, "connectionString");
 
@@ -30,20 +30,14 @@
         /// </summary>
         protected string ConnectionString { get { return _connectionString; } }
 
-        #region IWriteQueries
+        #region ICommands
 
-        public Member NewMember(NewMemberParameters parameters)
+        public void NewMember(NewMemberParameters parameters)
         {
             Requires.NotNull(parameters, "parameters");
 
-            var q = new NewMemberQuery(ConnectionString);
+            var q = new NewMemberCommand(ConnectionString);
             q.Execute(parameters);
-
-            return new Member {
-                Email = parameters.Email,
-                FirstName = parameters.FirstName,
-                LastName = parameters.LastName,
-            };
         }
 
         #endregion

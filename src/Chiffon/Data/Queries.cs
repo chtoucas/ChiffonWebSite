@@ -7,19 +7,19 @@
     using Narvalo;
 
     /// <summary>
-    /// Implémentation standard de <see cref="Chiffon.Data.IReadQueries"/>.
+    /// Implémentation standard de <see cref="Chiffon.Data.IQueries"/>.
     /// </summary>
-    public class ReadQueries : IReadQueries
+    public class Queries : IQueries
     {
         readonly string _connectionString;
 
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.ReadQueries"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.Queries"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
-        public ReadQueries(string connectionString)
+        public Queries(string connectionString)
         {
             Requires.NotNullOrEmpty(connectionString, "connectionString");
 
@@ -32,7 +32,7 @@
         /// </summary>
         protected string ConnectionString { get { return _connectionString; } }
 
-        #region IReadQueries
+        #region IQueries
 
         public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {

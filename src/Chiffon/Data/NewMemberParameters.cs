@@ -4,7 +4,7 @@
 
     /// <summary>
     /// Représente les paramètres nécessaires à la création d'un membre et utilisés par
-    /// <see cref="Chiffon.Data.IWriteQueries.NewMember"/>.
+    /// <see cref="Chiffon.Data.ICommands.NewMember"/>.
     /// </summary>
     [Serializable]
     public class NewMemberParameters

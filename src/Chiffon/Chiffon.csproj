@@ -109,14 +109,13 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="Data\CachedReadQueries.cs" />
-    <Compile Include="Data\SqlServer\NewMemberQuery.cs" />
-    <Compile Include="Data\WeakQueryCache.cs" />
-    <Compile Include="Data\IWriteQueries.cs" />
-    <Compile Include="Data\WriteQueries.cs" />
-    <Compile Include="Data\IReadQueries.cs" />
+    <Compile Include="Data\CachedQueries.cs" />
+    <Compile Include="Data\SqlServer\NewMemberCommand.cs" />
+    <Compile Include="Data\ICommands.cs" />
+    <Compile Include="Data\Commands.cs" />
+    <Compile Include="Data\IQueries.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\ReadQueries.cs" />
+    <Compile Include="Data\Queries.cs" />
     <Compile Include="Data\QueryCache.cs" />
     <Compile Include="Data\NewMemberParameters.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
@@ -177,7 +176,7 @@
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
     <Compile Include="Services\RegisterMemberRequest.cs" />
-    <Compile Include="SR.Designer.cs">
+    <Compile Include="Resources\SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
@@ -194,8 +193,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SR.en.resx" />
-    <EmbeddedResource Include="SR.resx">
+    <EmbeddedResource Include="Resources\SR.en.resx" />
+    <EmbeddedResource Include="Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>

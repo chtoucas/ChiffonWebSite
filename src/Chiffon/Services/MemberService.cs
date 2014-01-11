@@ -5,6 +5,7 @@
     using Chiffon.Entities;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
+    using Chiffon.Resources;
     using Narvalo;
     using Narvalo.Fx;
 
@@ -18,17 +19,17 @@
         const string PasswordNumbers_ = "23456789";
 
         readonly IMessenger _messenger;
-        readonly IReadQueries _reader;
-        readonly IWriteQueries _writer;
+        readonly IQueries _queries;
+        readonly ICommands _commands;
 
-        public MemberService(IReadQueries reader, IWriteQueries writer, IMessenger messenger)
+        public MemberService(IQueries queries, ICommands commands, IMessenger messenger)
         {
-            Requires.NotNull(reader, "reader");
-            Requires.NotNull(writer, "writer");
+            Requires.NotNull(queries, "queries");
+            Requires.NotNull(commands, "commands");
             Requires.NotNull(messenger, "messenger");
 
-            _reader = reader;
-            _writer = writer;
+            _queries = queries;
+            _commands = commands;
             _messenger = messenger;
         }
 
@@ -43,7 +44,7 @@
             // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
             // TODO: Fusionner cette méthode avec celle qui suit pour éviter deux appels DB ?
-            var password = _reader.GetPassword(request.Email);
+            var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
                 return Outcome<Member>.Failure(SR.MemberService_EmailAlreadyTaken);
@@ -55,7 +56,15 @@
 
             // 3. Création du compte en base de données.
 
-            var member = _writer.NewMember(Mapper.Map(request, EncryptPassword_(password)));
+            var cmdParameters = Mapper.Map(request, EncryptPassword_(password));
+
+            _commands.NewMember(cmdParameters);
+
+            var member = new Member {
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            };
 
             // 4. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
 
@@ -78,7 +87,7 @@
         public Maybe<Member> MayLogOn(string email, string password)
         {
             // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
-            return Maybe.Create(_reader.GetMember(email, password));
+            return Maybe.Create(_queries.GetMember(email, password));
         }
 
         #endregion

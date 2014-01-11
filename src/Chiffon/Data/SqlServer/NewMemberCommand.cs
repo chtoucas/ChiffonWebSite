@@ -7,15 +7,15 @@
     /// <summary>
     /// Représente la procédure stockée "usp_NewMember".
     /// </summary>
-    public class NewMemberQuery : NonQueryStoredProcedure<NewMemberParameters>
+    public class NewMemberCommand : NonQueryStoredProcedure<NewMemberParameters>
     {
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.SqlServer.NewMemberQuery"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.SqlServer.NewMemberCommand"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne de caractères vide.</exception>
-        public NewMemberQuery(string connectionString)
+        public NewMemberCommand(string connectionString)
             : base(connectionString, "usp_NewMember") { }
 
         protected override void PrepareCommand(SqlCommand command, NewMemberParameters parameters)

@@ -24,30 +24,30 @@
             builder.RegisterType<QueryCache>().As<IQueryCache>().InstancePerHttpRequest();
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveReadQueries_).As<IReadQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
             }
             else {
-                builder.Register(ResolveReadQueriesNoCache_).As<IReadQueries>().SingleInstance();
+                builder.Register(ResolveQueriesNoCache_).As<IQueries>().SingleInstance();
             }
 
-            builder.Register(ResolveWriteQueries_).As<IWriteQueries>().SingleInstance();
+            builder.Register(ResolveCommands_).As<ICommands>().SingleInstance();
         }
 
-        static IReadQueries ResolveReadQueries_(IComponentContext context)
+        static IQueries ResolveQueries_(IComponentContext context)
         {
-            return new CachedReadQueries(
-                new ReadQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
+            return new CachedQueries(
+                new Queries(context.Resolve<ChiffonConfig>().SqlConnectionString),
                 context.Resolve<IQueryCache>());
         }
 
-        static IReadQueries ResolveReadQueriesNoCache_(IComponentContext context)
+        static IQueries ResolveQueriesNoCache_(IComponentContext context)
         {
-            return new ReadQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
+            return new Queries(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
 
-        static IWriteQueries ResolveWriteQueries_(IComponentContext context)
+        static ICommands ResolveCommands_(IComponentContext context)
         {
-            return new WriteQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
+            return new Commands(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
     }
 }

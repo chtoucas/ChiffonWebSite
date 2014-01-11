@@ -3,12 +3,11 @@
     using System.Collections.Generic;
     using System.Globalization;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
 
     /// <summary>
     /// Représente l'ensemble des opérations permettant l'accès en lecture au stockage persistant.
     /// </summary>
-    public interface IReadQueries
+    public interface IQueries
     {
         Designer GetDesigner(DesignerKey designerKey, CultureInfo culture);
         Pattern GetPattern(DesignerKey designerKey, string reference, string variant);
