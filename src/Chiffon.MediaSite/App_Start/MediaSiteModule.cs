@@ -25,25 +25,25 @@
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
-            builder.RegisterType<QueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
 
             // > Data <
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerHttpRequest();
             }
             else {
-                builder.RegisterType<Queries>().As<IQueries>().SingleInstance();
+                builder.RegisterType<DbQueries>().As<IDbQueries>().SingleInstance();
             }
 
             builder.RegisterHandlers(typeof(Global).Assembly);
         }
 
-        static IQueries ResolveQueries_(IComponentContext context)
+        static IDbQueries ResolveQueries_(IComponentContext context)
         {
-            return new CachedQueries(
-               new Queries(context.Resolve<ChiffonConfig>().SqlConnectionString),
-               context.Resolve<IQueryCache>());
+            return new CachedDbQueries(
+               new DbQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
+               context.Resolve<IDbQueryCache>());
         }
     }
 }

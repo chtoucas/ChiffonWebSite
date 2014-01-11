@@ -109,14 +109,14 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="Data\CachedQueries.cs" />
+    <Compile Include="Data\CachedDbQueries.cs" />
     <Compile Include="Data\SqlServer\NewMemberCommand.cs" />
-    <Compile Include="Data\ICommands.cs" />
-    <Compile Include="Data\Commands.cs" />
-    <Compile Include="Data\IQueries.cs" />
-    <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\Queries.cs" />
-    <Compile Include="Data\QueryCache.cs" />
+    <Compile Include="Data\IDbCommands.cs" />
+    <Compile Include="Data\DbCommands.cs" />
+    <Compile Include="Data\IDbQueries.cs" />
+    <Compile Include="Data\IDbQueryCache.cs" />
+    <Compile Include="Data\DbQueries.cs" />
+    <Compile Include="Data\DbQueryCache.cs" />
     <Compile Include="Data\NewMemberParameters.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
     <Compile Include="Data\SqlServer\GetPasswordQuery.cs" />
@@ -129,6 +129,7 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Entities\DesignerKey.cs" />
+    <Compile Include="Domain\MemberFactory.cs" />
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
@@ -171,7 +172,7 @@
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\IPatternService.cs" />
     <Compile Include="Services\MemberCreatedEventArgs.cs" />
-    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Domain\Member.cs" />
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />

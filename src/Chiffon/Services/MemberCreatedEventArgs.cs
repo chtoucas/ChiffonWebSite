@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Services
 {
     using System;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
 
     public class MemberCreatedEventArgs : EventArgs
     {

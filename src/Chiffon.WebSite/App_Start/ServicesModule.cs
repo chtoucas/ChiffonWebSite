@@ -15,7 +15,7 @@
 
             // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
             builder.RegisterType<MemberService>().As<IMemberService>().InstancePerHttpRequest();
-            // NB: On utilise InstancePerHttpRequest car PatternService dépend d'IQueries.
+            // NB: On utilise InstancePerHttpRequest car PatternService dépend d'IDbQueries.
             builder.RegisterType<PatternService>().As<IPatternService>().InstancePerHttpRequest();
         }
     }

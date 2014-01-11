@@ -5,7 +5,7 @@
 
     /// <summary>
     /// Représente une demande d'inscription associée à la méthode
-    /// <see cref="Chiffon.Services.IMemberService.RegisterMember"/>.
+    /// <see cref="Chiffon.Services.IMemberService.MayRegisterMember"/>.
     /// </summary>
     [Serializable]
     public class RegisterMemberRequest

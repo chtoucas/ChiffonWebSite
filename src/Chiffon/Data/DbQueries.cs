@@ -3,23 +3,24 @@
     using System.Collections.Generic;
     using System.Globalization;
     using Chiffon.Data.SqlServer;
+    using Chiffon.Domain;
     using Chiffon.Entities;
     using Narvalo;
 
     /// <summary>
-    /// Implémentation standard de <see cref="Chiffon.Data.IQueries"/>.
+    /// Implémentation standard de <see cref="Chiffon.Data.IDbQueries"/>.
     /// </summary>
-    public class Queries : IQueries
+    public class DbQueries : IDbQueries
     {
         readonly string _connectionString;
 
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.Queries"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.DbQueries"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
-        public Queries(string connectionString)
+        public DbQueries(string connectionString)
         {
             Requires.NotNullOrEmpty(connectionString, "connectionString");
 
@@ -32,7 +33,7 @@
         /// </summary>
         protected string ConnectionString { get { return _connectionString; } }
 
-        #region IQueries
+        #region IDbQueries
 
         public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {

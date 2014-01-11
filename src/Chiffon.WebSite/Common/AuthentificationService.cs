@@ -2,7 +2,7 @@
 {
     using System.Web;
     using System.Web.Security;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
     using Narvalo;
 
     public class AuthentificationService

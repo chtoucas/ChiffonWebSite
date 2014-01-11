@@ -5,19 +5,19 @@
     using Narvalo;
 
     /// <summary>
-    /// Implémentation standard de <see cref="Chiffon.Data.ICommands"/>.
+    /// Implémentation standard de <see cref="Chiffon.Data.IDbCommands"/>.
     /// </summary>
-    public class Commands : ICommands
+    public class DbCommands : IDbCommands
     {
         readonly string _connectionString;
 
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.Commands"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.DbCommands"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
-        public Commands(string connectionString)
+        public DbCommands(string connectionString)
         {
             Requires.NotNullOrEmpty(connectionString, "connectionString");
 
@@ -30,7 +30,7 @@
         /// </summary>
         protected string ConnectionString { get { return _connectionString; } }
 
-        #region ICommands
+        #region IDbCommands
 
         public void NewMember(NewMemberParameters parameters)
         {

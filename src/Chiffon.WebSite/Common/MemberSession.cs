@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Common
 {
     using System.Web;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
 
     // WARNING: Pour le moment, si l'AppPool est recyclé on perd la session car on utilise
     // le mode de fonctionnement "InProc".

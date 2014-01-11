@@ -22,9 +22,9 @@
 
         readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
-        readonly IQueries _queries;
+        readonly IDbQueries _queries;
 
-        public PatternImageHandler(ChiffonConfig config, IQueries queries)
+        public PatternImageHandler(ChiffonConfig config, IDbQueries queries)
             : base()
         {
             Requires.NotNull(config, "config");
@@ -36,7 +36,7 @@
             _fileSystem = new PatternFileSystem(config);
         }
 
-        // TODO: Pour le moment il n'est pas opportun de réutiliser cet Handler car IQueries 
+        // TODO: Pour le moment il n'est pas opportun de réutiliser cet Handler car IDbQueries 
         // peut avoir des dépendances vis à vis de la requête en cours.
         public override bool IsReusable { get { return false; } }
 

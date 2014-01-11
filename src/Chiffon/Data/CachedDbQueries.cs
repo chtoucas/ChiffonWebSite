@@ -3,16 +3,16 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Chiffon.Domain;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class CachedQueries : IQueries
+    public class CachedDbQueries : IDbQueries
     {
-        readonly IQueries _inner;
-        readonly IQueryCache _cache;
+        readonly IDbQueries _inner;
+        readonly IDbQueryCache _cache;
 
-        public CachedQueries(IQueries inner, IQueryCache cache)
+        public CachedDbQueries(IDbQueries inner, IDbQueryCache cache)
         {
             Requires.NotNull(inner, "inner");
             Requires.NotNull(cache, "cache");
@@ -21,7 +21,7 @@
             _cache = cache;
         }
 
-        #region IQueries
+        #region IDbQueries
 
         public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {

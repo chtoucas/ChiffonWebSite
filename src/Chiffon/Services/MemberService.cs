@@ -2,7 +2,7 @@
 {
     using System;
     using Chiffon.Data;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
     using Chiffon.Resources;
@@ -18,36 +18,35 @@
         const string PasswordLetters_ = "abcdefghijkmnpqrstuvwxyz";
         const string PasswordNumbers_ = "23456789";
 
+        readonly IDbCommands _commands;
         readonly IMessenger _messenger;
-        readonly IQueries _queries;
-        readonly ICommands _commands;
+        readonly IDbQueries _queries;
 
-        public MemberService(IQueries queries, ICommands commands, IMessenger messenger)
+        public MemberService(IDbQueries queries, IDbCommands commands, IMessenger messenger)
         {
-            Requires.NotNull(queries, "queries");
             Requires.NotNull(commands, "commands");
             Requires.NotNull(messenger, "messenger");
+            Requires.NotNull(queries, "queries");
 
-            _queries = queries;
             _commands = commands;
             _messenger = messenger;
+            _queries = queries;
         }
 
         public event EventHandler<MemberCreatedEventArgs> MemberCreated;
 
         #region IMemberService
 
-        public Outcome<Member> RegisterMember(RegisterMemberRequest request)
+        public Maybe<Error> MayRegisterMember(RegisterMemberRequest request)
         {
             Requires.NotNull(request, "request");
 
             // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
-            // TODO: Fusionner cette méthode avec celle qui suit pour éviter deux appels DB ?
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return Outcome<Member>.Failure(SR.MemberService_EmailAlreadyTaken);
+                return Maybe.Create(Error.Create(SR.MemberService_EmailAlreadyTaken));
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -60,11 +59,7 @@
 
             _commands.NewMember(cmdParameters);
 
-            var member = new Member {
-                Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-            };
+            var member = MemberFactory.NewMember(request.Email, request.FirstName, request.LastName);
 
             // 4. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
 
@@ -81,7 +76,7 @@
                 });
             }
 
-            return Outcome.Success(member);
+            return Maybe<Error>.None;
         }
 
         public Maybe<Member> MayLogOn(string email, string password)

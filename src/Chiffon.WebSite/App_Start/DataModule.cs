@@ -21,33 +21,33 @@
         {
             Requires.NotNull(builder, "builder");
 
-            builder.RegisterType<QueryCache>().As<IQueryCache>().InstancePerHttpRequest();
+            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerHttpRequest();
             }
             else {
-                builder.Register(ResolveQueriesNoCache_).As<IQueries>().SingleInstance();
+                builder.Register(ResolveQueriesNoCache_).As<IDbQueries>().SingleInstance();
             }
 
-            builder.Register(ResolveCommands_).As<ICommands>().SingleInstance();
+            builder.Register(ResolveCommands_).As<IDbCommands>().SingleInstance();
         }
 
-        static IQueries ResolveQueries_(IComponentContext context)
+        static IDbQueries ResolveQueries_(IComponentContext context)
         {
-            return new CachedQueries(
-                new Queries(context.Resolve<ChiffonConfig>().SqlConnectionString),
-                context.Resolve<IQueryCache>());
+            return new CachedDbQueries(
+                new DbQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
+                context.Resolve<IDbQueryCache>());
         }
 
-        static IQueries ResolveQueriesNoCache_(IComponentContext context)
+        static IDbQueries ResolveQueriesNoCache_(IComponentContext context)
         {
-            return new Queries(context.Resolve<ChiffonConfig>().SqlConnectionString);
+            return new DbQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
 
-        static ICommands ResolveCommands_(IComponentContext context)
+        static IDbCommands ResolveCommands_(IComponentContext context)
         {
-            return new Commands(context.Resolve<ChiffonConfig>().SqlConnectionString);
+            return new DbCommands(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
     }
 }

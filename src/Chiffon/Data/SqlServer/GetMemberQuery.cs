@@ -2,7 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
     using Narvalo;
     using Narvalo.Data;
 
@@ -26,11 +26,7 @@
 
             if (!rdr.Read()) { return null; }
 
-            return new Member {
-                Email = Email,
-                FirstName = rdr.GetString("firstname"),
-                LastName = rdr.GetString("lastname"),
-            };
+            return MemberFactory.NewMember(Email, rdr.GetString("firstname"), rdr.GetString("lastname"));
         }
 
         protected override void PrepareCommand(SqlCommand command)

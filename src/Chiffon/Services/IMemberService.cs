@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Services
 {
     using System;
-    using Chiffon.Entities;
+    using Chiffon.Domain;
     using Narvalo.Fx;
 
     /// <summary>
@@ -32,6 +32,6 @@
         /// Retourne une monade contenant le membre qui vient d'être créé 
         /// si l'opération s'est correctement déroulée.
         /// </returns>
-        Outcome<Member> RegisterMember(RegisterMemberRequest request);
+        Maybe<Error> MayRegisterMember(RegisterMemberRequest request);
     }
 }

@@ -104,7 +104,7 @@
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 
-            var outcome = _memberService.RegisterMember(new RegisterMemberRequest {
+            var result = _memberService.MayRegisterMember(new RegisterMemberRequest {
                 CompanyName = model.CompanyName,
                 Email = model.Email,
                 FirstName = model.FirstName,
@@ -112,9 +112,9 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (outcome.Unsuccessful) {
+            if (result.IsSome) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
-                    Message = outcome.Error.Message
+                    Message = result.Value.Message
                 });
             }
 

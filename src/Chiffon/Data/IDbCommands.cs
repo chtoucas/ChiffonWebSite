@@ -3,7 +3,7 @@
     /// <summary>
     /// Représente l'ensemble des opérations permettant l'accès en écriture au stockage persistant.
     /// </summary>
-    public interface ICommands
+    public interface IDbCommands
     {
         /// <summary>
         /// Sauvegarde les informations concernant un nouveau membre.
