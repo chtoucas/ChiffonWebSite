@@ -72,6 +72,7 @@
         {
             base.InitHelpers();
 
+            // TODO: Charger Asset uniquement à la demande ?
             Asset = new AssetHelper(Html);
         }
 

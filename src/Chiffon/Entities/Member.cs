@@ -3,55 +3,63 @@
     using System;
     using System.Globalization;
     using System.Net.Mail;
-    using Narvalo;
 
+    /// <summary>
+    /// Représente un membre du site.
+    /// </summary>
     [Serializable]
     public class Member
     {
-        readonly string _email;
-        readonly string _firstName;
-        readonly string _lastName;
-
+        [NonSerialized]
         string _displayName;
         [NonSerialized]
         MailAddress _emailAddress;
 
-        public Member(string email, string firstName, string lastName)
-        {
-            Requires.NotNull(email, "email");
-            Requires.NotNull(firstName, "firstName");
-            Requires.NotNull(lastName, "lastName");
-
-            _email = email;
-            _firstName = firstName;
-            _lastName = lastName;
-        }
-
-        public string Email { get { return _email; } }
-        public string FirstName { get { return _firstName; } }
-        public string LastName { get { return _lastName; } }
-
+        /// <summary>
+        /// Retourne le nom du membre adapté à la culture en cours d'utilisation :
+        /// <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>.
+        /// </summary>
         public string DisplayName
         {
             get
             {
                 if (_displayName == null) {
-                    _displayName = String.Format(CultureInfo.CurrentCulture, SR.MemberDisplayNameFormat, FirstName, LastName);
+                    _displayName = String.Format(CultureInfo.CurrentUICulture,
+                        SR.MemberDisplayNameFormat, FirstName, LastName);
                 }
                 return _displayName;
             }
         }
 
+        /// <summary>
+        /// Assigne ou retourne l'adresse e-mail du membre.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Retourne l'adresse électronique du membre construite à partir de l'e-mail
+        /// et du nom du membre.
+        /// </summary>
         public MailAddress EmailAddress
         {
             get
             {
                 if (_emailAddress == null) {
+                    // XXX: Doit-on préciser l'encodage du nom ?
                     _emailAddress = new MailAddress(Email, DisplayName);
                 }
                 return _emailAddress;
             }
         }
-    }
 
+        /// <summary>
+        /// Assigne ou retourne le prénom du membre.
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Assigne ou retourne le nom de famille du membre.
+        /// </summary>
+        public string LastName { get; set; }
+    }
 }

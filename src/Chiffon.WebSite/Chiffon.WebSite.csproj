@@ -58,11 +58,11 @@
     </Reference>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.Mvc5.3.0.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
@@ -87,24 +87,24 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Narvalo.Common, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.4.0.3\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.5.0.1\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.4.0.3\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.5.0.1\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -184,9 +184,6 @@
     <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
     <Compile Include="Common\Enumerable`1%24.cs" />
-    <Compile Include="Common\ErrorPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Common\OntologyFilterAttribute.cs" />
     <Compile Include="Common\FormUtility.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
@@ -196,19 +193,26 @@
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
     <Compile Include="Controllers\MailMergeController.cs" />
     <Compile Include="Controllers\ComponentController.cs" />
-    <Compile Include="Errors\Error.Master.cs">
-      <DependentUpon>Error.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Errors\Error.Master.designer.cs">
-      <DependentUpon>Error.Master</DependentUpon>
-    </Compile>
     <Compile Include="Errors\BadRequest.aspx.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\BadRequest.aspx.designer.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Errors\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errors\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Errors\Error.Master.cs">
+      <DependentUpon>Error.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errors\Error.Master.designer.cs">
+      <DependentUpon>Error.Master</DependentUpon>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
@@ -224,6 +228,8 @@
     <Compile Include="Errors\NotFound.aspx.designer.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\MailMerge.cs" />
+    <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Errors\ServiceUnavailable.aspx.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -231,8 +237,9 @@
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Common\MailMerge.cs" />
-    <Compile Include="Controllers\ObjectMapper.cs" />
+    <Compile Include="Common\ErrorPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\CssUtility.cs" />
@@ -277,6 +284,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Resources\SRNames.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SRNames.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Resources\SR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\VR.en.Designer.cs">
       <DependentUpon>VR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -301,6 +318,11 @@
     <Compile Include="ViewModels\PatternViewItem.cs" />
     <Compile Include="ViewModels\DesignerViewModel.cs" />
     <Compile Include="ViewModels\LayoutViewModel.cs" />
+    <Compile Include="ViewModels\Resources\SR.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SR.en.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\..\etc\CodeAnalysisDictionary.xml">
@@ -349,22 +371,15 @@
     <Content Include="assets\css\chiffon.responsive.2.less" />
     <Content Include="assets\css\chiffon.responsive.1.less" />
     <Content Include="App_Code\OntologyHelpers.cshtml" />
-    <Content Include="Errors\Error.Master" />
     <Content Include="Errors\BadRequest.aspx" />
-    <Content Include="Errors\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="Errors\Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Errors\Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Scripts\_references.js" />
-    <Content Include="crossdomain.xml" />
+    <Content Include="Errors\Default.aspx" />
     <Content Include="Errors\InternalServerError.aspx" />
     <Content Include="Errors\NotFound.aspx" />
     <Content Include="Errors\ServiceUnavailable.aspx" />
+    <Content Include="ViewModels\Resources\ResourceNames.tt" />
+    <Content Include="Errors\Error.Master" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="crossdomain.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
@@ -404,6 +419,10 @@
     </Content>
     <Content Include="Views\Home\ContactSuccess.cshtml" />
     <Content Include="Views\MailMerge\ForgottenPassword.cshtml" />
+    <Content Include="ViewModels\Resources\SRNames.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SRNames.cs</LastGenOutput>
+    </Content>
     <None Include="Views\MailMerge\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -508,6 +527,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModels\Resources\SR.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModels\Resources\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\VR.en.resx">

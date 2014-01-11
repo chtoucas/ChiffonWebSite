@@ -4,23 +4,35 @@
     using System.Globalization;
     using Chiffon.Data.SqlServer;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class ReadOnlyQueries : IReadOnlyQueries
+    /// <summary>
+    /// Implémentation standard de <see cref="Chiffon.Data.IReadQueries"/>.
+    /// </summary>
+    public class ReadQueries : IReadQueries
     {
-        readonly ChiffonConfig _config;
+        readonly string _connectionString;
 
-        public ReadOnlyQueries(ChiffonConfig config)
+        /// <summary>
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.ReadQueries"/>.
+        /// </summary>
+        /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
+        /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
+        /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
+        public ReadQueries(string connectionString)
         {
-            Requires.NotNull(config, "config");
+            Requires.NotNullOrEmpty(connectionString, "connectionString");
 
-            _config = config;
+            _connectionString = connectionString;
         }
 
-        protected string ConnectionString { get { return _config.SqlConnectionString; } }
+        /// <summary>
+        /// Retourne la chaîne de connexion à la base de données tel que spécifiée 
+        /// lors de la création de l'objet.
+        /// </summary>
+        protected string ConnectionString { get { return _connectionString; } }
 
-        #region IQueries
+        #region IReadQueries
 
         public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {

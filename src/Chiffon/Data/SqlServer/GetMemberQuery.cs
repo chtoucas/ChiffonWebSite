@@ -26,7 +26,11 @@
 
             if (!rdr.Read()) { return null; }
 
-            return new Member(Email, rdr.GetString("firstname"), rdr.GetString("lastname"));
+            return new Member {
+                Email = Email,
+                FirstName = rdr.GetString("firstname"),
+                LastName = rdr.GetString("lastname"),
+            };
         }
 
         protected override void PrepareCommand(SqlCommand command)

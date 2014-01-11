@@ -63,10 +63,10 @@ namespace Chiffon.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
         ///
-        ///Nouveau message de &lt;Message.ContactAddress.DisplayName&gt; (&lt;Message.ContactAddress.Address&gt;) :
+        ///Nouveau message de &lt;Message.EmailAddress.DisplayName&gt; (&lt;Message.EmailAddress.Address&gt;) :
         ///
         ///
-        ///&lt;Message.Content&gt;
+        ///&lt;Message.MessageContent&gt;
         ///
         ///
         ///NB : Ce mail vous est envoyé automatiquement à partir de la page contact du site.
@@ -82,11 +82,11 @@ namespace Chiffon.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
         ///
-        ///Un nouveau membre vient de s&apos;inscrire : &lt;Message.MemberAddress.DisplayName&gt;
+        ///Un nouveau membre vient de s&apos;inscrire : &lt;Message.EmailAddress.DisplayName&gt;
         ///
         ///
         ///Agence : &lt;Message.CompanyName&gt;
-        ///Email : &lt;Message.MemberAddress.Address&gt;
+        ///Email : &lt;Message.EmailAddress.Address&gt;
         ///
         ///
         ///NB : Ce mail vous est envoyé automatiquement après toute nouvelle inscription.
@@ -102,14 +102,22 @@ namespace Chiffon.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
         ///
+        ///Bienvenue &lt;Message.EmailAddress.DisplayName&gt;,
+        ///
+        ///
         ///Les Simone vous remercient de l&apos;intérêt que vous avez souhaité leur accorder.
         ///
         ///Votre compte est activé.
         ///
-        ///Votre identifiant : @Html.Raw(ViewBag.Email)
-        ///Votre mot de passe : @Html.Raw(ViewBag.Password)
+        ///Votre identifiant : &lt;Message.EmailAddress.Address&gt;
+        ///Votre mot de passe : &lt;Message.Password&gt;
         ///
-        ///Je feuillette le portfolio : @Html.Raw(ViewBag.SiteUrl)
+        ///Je feuillette le portfolio : &lt;SiteUrl&gt;
+        ///
+        ///
+        ///À très bientôt,
+        ///
+        ///Les Simone
         ///
         ///.
         /// </summary>
@@ -122,14 +130,20 @@ namespace Chiffon.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
         ///
-        ///Welcome,
+        ///Welcome &lt;Message.EmailAddress.DisplayName&gt;,
+        ///
         ///
         ///Many thanks for your interest in the Simone project.
         ///
-        ///Your login: @Html.Raw(ViewBag.Email)
-        ///Your password: @Html.Raw(ViewBag.Password)
+        ///Your login: &lt;Message.EmailAddress.Address&gt;
+        ///Your password: &lt;Message.Password&gt;
         ///
-        ///Browse the gallery: @Html.Raw(ViewBag.SiteUrl)
+        ///Browse the gallery: &lt;SiteUrl&gt;
+        ///
+        ///
+        ///See you soon !
+        ///
+        ///Les Simone
         ///
         ///.
         /// </summary>

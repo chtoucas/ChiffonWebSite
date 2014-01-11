@@ -3,8 +3,13 @@
     using System.Net;
     using Chiffon.Common;
 
-    public partial class InternalServerErrorPage : ErrorPage
+    public partial class InternalServerErrorPage : ErrorPageBase
     {
-        public InternalServerErrorPage() : base((int)HttpStatusCode.InternalServerError) { }
+        public InternalServerErrorPage() : base() { }
+
+        protected override HttpStatusCode StatusCode
+        {
+            get { return HttpStatusCode.InternalServerError; }
+        }
     }
 }

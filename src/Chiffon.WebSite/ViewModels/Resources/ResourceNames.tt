@@ -1,0 +1,24 @@
+﻿<#@ assembly name="System.Xml.dll" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.XPath" #>
+<#+
+    public void ResourceNamesTemplate()
+    {
+#>
+namespace Chiffon.ViewModels.Resources {
+    internal static class SRNames {
+<#+
+        var reader = XmlReader.Create(Host.ResolvePath("SR.resx"));
+        var document = new XPathDocument(reader);
+        foreach (XPathNavigator item in document.CreateNavigator().Select("/root/data")) {
+            string name = item.GetAttribute("name", String.Empty);
+#>
+        public const string <#= name #> = "<#= name #>";
+<#+
+        } 
+#>
+    }
+}
+<#+
+    }
+#>

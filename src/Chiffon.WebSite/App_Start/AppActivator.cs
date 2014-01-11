@@ -17,6 +17,7 @@ namespace Chiffon
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Narvalo.Web.Optimization;
     using Serilog;
 
     public static class AppActivator
@@ -45,6 +46,9 @@ namespace Chiffon
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
+
+            // Optimisation du contenu HTML.
+            WhiteSpaceBuster.Current.SetWhiteSpaceBuster(new AggressiveWhiteSpaceBuster());
         }
 
         public static void Start()

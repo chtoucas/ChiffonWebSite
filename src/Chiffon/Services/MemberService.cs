@@ -4,9 +4,13 @@
     using Chiffon.Data;
     using Chiffon.Entities;
     using Chiffon.Infrastructure.Messaging;
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Fx;
 
+    /// <summary>
+    /// Implémentation standard de <see cref="Chiffon.Services.IMemberService"/>.
+    /// </summary>
     public class MemberService/*Impl*/ : IMemberService
     {
         const int PasswordLength_ = 7;
@@ -14,76 +18,67 @@
         const string PasswordNumbers_ = "23456789";
 
         readonly IMessenger _messenger;
-        readonly IReadOnlyQueries _queries;
-        readonly IReadWriteQueries _inserts;
+        readonly IReadQueries _reader;
+        readonly IWriteQueries _writer;
 
-        public MemberService(IReadOnlyQueries queries, IReadWriteQueries inserts, IMessenger messenger)
+        public MemberService(IReadQueries reader, IWriteQueries writer, IMessenger messenger)
         {
-            Requires.NotNull(queries, "queries");
-            Requires.NotNull(inserts, "inserts");
+            Requires.NotNull(reader, "reader");
+            Requires.NotNull(writer, "writer");
             Requires.NotNull(messenger, "messenger");
 
+            _reader = reader;
+            _writer = writer;
             _messenger = messenger;
-            _queries = queries;
-            _inserts = inserts;
         }
 
         public event EventHandler<MemberCreatedEventArgs> MemberCreated;
 
         #region IMemberService
 
-        public Outcome<Member> RegisterMember(RegisterMemberQuery query)
+        public Outcome<Member> RegisterMember(RegisterMemberRequest request)
         {
-            // 1. Nettoyage des données reçues.
+            Requires.NotNull(request, "request");
 
-            query.Normalize();
+            // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
-            // 2. On vérifie que l'addresse email n'est pas déjà prise.
-
-            // TODO: Fusionner cette méthode avec celle qui suit pour éviter deux appels DB.
-            var password = _queries.GetPassword(query.Email);
+            // TODO: Fusionner cette méthode avec celle qui suit pour éviter deux appels DB ?
+            var password = _reader.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
                 return Outcome<Member>.Failure(SR.MemberService_EmailAlreadyTaken);
             }
 
-            // 3. Génération d'un nouveau mot de passe.
+            // 2. Génération d'un nouveau mot de passe.
 
             password = CreatePassword_();
 
-            // 4. Création du compte en base de données.
+            // 3. Création du compte en base de données.
 
-            var model = new NewMemberModel {
-                CompanyName = query.CompanyName,
-                Email = query.Email,
-                FirstName = query.FirstName,
-                LastName = query.LastName,
-                NewsletterChecked = query.NewsletterChecked,
-                Password = password,
-            };
+            var member = _writer.NewMember(Mapper.Map(request, EncryptPassword_(password)));
 
-            // TODO: Encrypter les mots de passe.
-            var member = _inserts.NewMember(model);
-
-            // 5. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
+            // 4. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
 
             OnMemberCreated_(new MemberCreatedEventArgs(member));
 
-            // 6. Envoi des notifications.
+            // 5. Envoi des notifications.
 
-            _messenger.Publish(new NewMemberMessage {
-                CompanyName = query.CompanyName,
-                EmailAddress = member.EmailAddress,
-                Password = password
-            });
+            if (request.Recipients != MessageRecipients.None) {
+                _messenger.Publish(new NewMemberMessage {
+                    CompanyName = request.CompanyName,
+                    EmailAddress = member.EmailAddress,
+                    Password = password,
+                    Recipients = request.Recipients,
+                });
+            }
 
             return Outcome.Success(member);
         }
 
-        // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
         public Maybe<Member> MayLogOn(string email, string password)
         {
-            return Maybe.Create(_queries.GetMember(email, password));
+            // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
+            return Maybe.Create(_reader.GetMember(email, password));
         }
 
         #endregion
@@ -113,6 +108,12 @@
             }
 
             return new String(chars);
+        }
+
+        static string EncryptPassword_(string password)
+        {
+            // FIXME: Utiliser BountyCastleOrg. 
+            return password;
         }
 
         void OnMemberCreated_(MemberCreatedEventArgs e)

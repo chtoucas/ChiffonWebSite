@@ -25,13 +25,13 @@
         // de l'internaute, on peut avoir de 2 à 3 colonnes, on choisit donc un multiple de 6.
         const int PreviewsPageSize_ = 18;
 
-        readonly IReadOnlyQueries _queries;
+        readonly IReadQueries _queries;
         readonly IPatternService _patternService;
 
         public DesignerController(
             ChiffonEnvironment environment,
             ISiteMap siteMap,
-            IReadOnlyQueries queries,
+            IReadQueries queries,
             IPatternService patternService)
             : base(environment, siteMap)
         {

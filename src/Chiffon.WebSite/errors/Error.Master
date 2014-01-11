@@ -8,21 +8,41 @@
  <meta name=robots content="noindex, nofollow" />
  <link href="//fonts.googleapis.com/css?family=Droid+Serif:400italic" rel=stylesheet />
  <style>
-  body { font-family: "Droid Serif", Georgia, "Times New Roman", serif; font-size: 3.6em; line-height: 1.5em; font-style: italic; }
-  .content { max-width: 940px; text-align: center; padding-top: 1em; display: table; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+  body {
+   padding: .5em;
+   text-align: center;
+   font-family: "Droid Serif", Georgia, "Times New Roman", serif;
+   font-size: 3.6em;
+   font-style: italic;
+   line-height: 1.5;
+  }
+
+  p {
+   max-width: 940px;
+   margin: .5em auto;
+  }
+
+  @media only screen and (max-width: 460px) {
+   body {
+    font-size: 1.8em;
+   }
+  }
  </style>
 </head>
 <body>
- <div class=content>
-  <a href="<%: ResolveUrl("~/") %>">
-   <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQAQMAAADdiHD7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFAAAA//7+y8WeCgAAAIpJREFUSInt1TEKBDEMA0CBvmXw1w3+lkFX3bHLdbG6XZdTxCFxFOCtBxbLRqw/OyQWIu4dTondw8ru2hPYKuoqx5RqTao1ewKoSV0bHhM1OXnDBaknWwZipSYiNawtISgVpQpsKb6r8mfH5NyX9byM92idL+fcW9+jMSe8+eXLVTjzHtZ/6K0n1Afz5rOI/4rCoQAAAABJRU5ErkJggg==" /></a>
-  <asp:ContentPlaceHolder ID="MainContent" runat="server">
+ <asp:HyperLink NavigateUrl="~/" runat=server>
+   <img width=144 height=144 alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQAQMAAADdiHD7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFAAAA//7+y8WeCgAAAIpJREFUSInt1TEKBDEMA0CBvmXw1w3+lkFX3bHLdbG6XZdTxCFxFOCtBxbLRqw/OyQWIu4dTondw8ru2hPYKuoqx5RqTao1ewKoSV0bHhM1OXnDBaknWwZipSYiNawtISgVpQpsKb6r8mfH5NyX9byM92idL+fcW9+jMSe8+eXLVTjzHtZ/6K0n1Afz5rOI/4rCoQAAAABJRU5ErkJggg==" />
+ </asp:HyperLink>
+ <p>
+  <asp:ContentPlaceHolder ID="ErrorMessageCph" runat="server">
+   <%= VR.Error_DefaultMessage %>
   </asp:ContentPlaceHolder>
-  <asp:Panel ID=HomeLinkPanel Visible=false runat=server>
-   <p>
-    <a href="<%: ResolveUrl("~/") %>"><%: VR.Error_HomeLink %></a>
-   </p>
-  </asp:Panel>
- </div>
+ </p>
+ <asp:ContentPlaceHolder ID="ReturnHomeCph" runat="server">
+  <p>
+   <asp:HyperLink NavigateUrl="~/" runat=server CssClass=home><%= VR.Error_Home %></asp:HyperLink>
+  </p>
+ </asp:ContentPlaceHolder>
+ <%-- TODO: Ajouter Google Analytics --%>
 </body>
 </html>

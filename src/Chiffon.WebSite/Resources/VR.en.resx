@@ -196,16 +196,19 @@
     <value>All</value>
   </data>
   <data name="Error_BadRequest" xml:space="preserve">
-    <value>Les Simones are confused but the site did not understand your query.</value>
+    <value>Les Simone are confused but the site could not process your request.</value>
   </data>
-  <data name="Error_HomeLink" xml:space="preserve">
-    <value>Return to home page</value>
+  <data name="Error_DefaultMessage" xml:space="preserve">
+    <value>Les Simone are confused but the site is feeling a little dizzy.</value>
+  </data>
+  <data name="Error_Home" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="Error_InternalServerError" xml:space="preserve">
-    <value>Les Simones are confused but the site is feeling a little dizzy.</value>
+    <value>Les Simone are confused but the site is feeling a little dizzy.</value>
   </data>
   <data name="Error_NotFound" xml:space="preserve">
-    <value>Les Simones are confused but the requested page does not exist.</value>
+    <value>Les Simone are confused but the requested page does not exist.</value>
   </data>
   <data name="Error_ServiceUnavailable" xml:space="preserve">
     <value>Les Simones are confused but the site is currently undergoing maintenance.</value>

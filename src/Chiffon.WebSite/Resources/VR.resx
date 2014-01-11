@@ -196,19 +196,22 @@
     <value>Tous</value>
   </data>
   <data name="Error_BadRequest" xml:space="preserve">
-    <value>Les Simones sont confuses mais le site n'a pas compris votre requête.</value>
+    <value>Les Simone sont confuses mais le site n'est pas en mesure de répondre à votre demande.</value>
   </data>
-  <data name="Error_HomeLink" xml:space="preserve">
-    <value>Retourner à l'accueil du site</value>
+  <data name="Error_DefaultMessage" xml:space="preserve">
+    <value>Les Simone sont confuses mais le site est dans les choux.</value>
+  </data>
+  <data name="Error_Home" xml:space="preserve">
+    <value>Accueil</value>
   </data>
   <data name="Error_InternalServerError" xml:space="preserve">
-    <value>Les Simones sont confuses mais le site est dans les choux.</value>
+    <value>Les Simone sont confuses mais le site est dans les choux.</value>
   </data>
   <data name="Error_NotFound" xml:space="preserve">
-    <value>Les Simones sont confuses mais la page demandée n'existe pas.</value>
+    <value>Les Simone sont confuses mais la page demandée n'existe pas.</value>
   </data>
   <data name="Error_ServiceUnavailable" xml:space="preserve">
-    <value>Les Simones sont confuses mais le site est en cours de maintenance.</value>
+    <value>Les Simone sont confuses mais le site est en cours de maintenance.</value>
   </data>
   <data name="Home_ContactConfirmation_AnsweringSoon" xml:space="preserve">
     <value>Nous vous répondrons dans les meilleurs délais</value>

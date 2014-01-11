@@ -3,15 +3,13 @@
     using System.Net;
     using Chiffon.Common;
 
-    public partial class NotFoundPage : ErrorPage
+    public partial class NotFoundPage : ErrorPageBase
     {
-        public NotFoundPage() : base((int)HttpStatusCode.NotFound) { }
+        public NotFoundPage() : base() { }
 
-        protected override void Page_LoadCore(object sender, System.EventArgs e)
+        protected override HttpStatusCode StatusCode
         {
-            base.Page_LoadCore(sender, e);
-
-            ErrorMaster.ShowHomeLink();
+            get { return HttpStatusCode.NotFound; }
         }
     }
 }

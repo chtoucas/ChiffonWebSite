@@ -16,9 +16,9 @@
         {
             Requires.NotNull(context, "context");
 
-            context.Error += OnError;
+            context.Error += OnError_;
             context.Disposed += OnDisposed;
-            context.PreSendRequestHeaders += OnPreSendRequestHeaders;
+            context.PreSendRequestHeaders += OnPreSendRequestHeaders_;
         }
 
         public void Dispose()
@@ -45,7 +45,7 @@
         /// Se produit lorsqu'une exception non gérée est levée.
         /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
         /// </summary>
-        void OnError(object sender, EventArgs e)
+        void OnError_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var server = app.Server;
@@ -62,7 +62,7 @@
                 case UnhandledErrorType.InvalidViewState:
                     Log.Warning(ex, ex.Message);
                     server.ClearError();
-                    SetResponseStatus_(app.Response, HttpStatusCode.ServiceUnavailable);
+                    SetResponseStatus_(app.Response, HttpStatusCode.BadRequest);
                     break;
 
                 case UnhandledErrorType.PotentiallyDangerousForm:
@@ -84,13 +84,13 @@
             }
         }
 
-        void OnPreSendRequestHeaders(object sender, EventArgs e)
+        void OnPreSendRequestHeaders_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 
             var response = app.Response;
             if (response == null) {
-                // Peut arriver si trySkipIisCustomErrors est égal à true.
+                // Peut arriver si trySkipIisCustomErrors est égal à "true".
                 return;
             }
 

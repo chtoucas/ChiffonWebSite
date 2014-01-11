@@ -5,7 +5,10 @@
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
 
-    public interface IReadOnlyQueries
+    /// <summary>
+    /// Représente l'ensemble des opérations permettant l'accès en lecture au stockage persistant.
+    /// </summary>
+    public interface IReadQueries
     {
         Designer GetDesigner(DesignerKey designerKey, CultureInfo culture);
         Pattern GetPattern(DesignerKey designerKey, string reference, string variant);

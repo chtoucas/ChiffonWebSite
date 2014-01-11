@@ -24,20 +24,30 @@
             builder.RegisterType<QueryCache>().As<IQueryCache>().InstancePerHttpRequest();
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IReadOnlyQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveReadQueries_).As<IReadQueries>().InstancePerHttpRequest();
             }
             else {
-                builder.RegisterType<ReadOnlyQueries>().As<IReadOnlyQueries>().SingleInstance();
+                builder.Register(ResolveReadQueriesNoCache_).As<IReadQueries>().SingleInstance();
             }
 
-            builder.RegisterType<ReadWriteQueries>().As<IReadWriteQueries>().SingleInstance();
+            builder.Register(ResolveWriteQueries_).As<IWriteQueries>().SingleInstance();
         }
 
-        static IReadOnlyQueries ResolveQueries_(IComponentContext context)
+        static IReadQueries ResolveReadQueries_(IComponentContext context)
         {
-            return new CachedReadOnlyQueries(
-                new ReadOnlyQueries(context.Resolve<ChiffonConfig>()),
+            return new CachedReadQueries(
+                new ReadQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
                 context.Resolve<IQueryCache>());
+        }
+
+        static IReadQueries ResolveReadQueriesNoCache_(IComponentContext context)
+        {
+            return new ReadQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
+        }
+
+        static IWriteQueries ResolveWriteQueries_(IComponentContext context)
+        {
+            return new WriteQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
     }
 }

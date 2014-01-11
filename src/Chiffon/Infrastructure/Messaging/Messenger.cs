@@ -17,21 +17,28 @@
 
         #region IMessenger
 
-        // Notifications lors de l'inscription d'un nouveau membre.
+        /// <summary>
+        /// Envoi des notifications lors de l'inscription d'un nouveau membre.
+        /// </summary>
+        /// <param name="message">Modèle du message à envoyer.</param>
         public void Publish(NewMemberMessage message)
         {
             SmtpClient smtpClient = null;
 
             try {
                 smtpClient = new SmtpClient();
-                
-                // On envoie d'abord le mail pour le nouveau membre (le plus important).
-                using (var mail = _mailMerge.WelcomeMail(message)) {
-                    smtpClient.Send(mail);
+
+                // On envoie d'abord le mail destiné au nouveau membre (le plus important).
+                if (message.Recipients.HasFlag(MessageRecipients.Member)) {
+                    using (var mail = _mailMerge.WelcomeMail(message)) {
+                        smtpClient.Send(mail);
+                    }
                 }
 
-                using (var notification = _mailMerge.NewMemberNotification(message)) {
-                    smtpClient.Send(notification);
+                if (message.Recipients.HasFlag(MessageRecipients.Admin)) {
+                    using (var notification = _mailMerge.NewMemberNotification(message)) {
+                        smtpClient.Send(notification);
+                    }
                 }
             }
             catch (SmtpException ex) {
@@ -48,7 +55,10 @@
             }
         }
 
-        // Notifications lors d'une demande à partir de la page contact.
+        /// <summary>
+        /// Envoi des notifications lors d'une demande effectuée à partir de la page contact.
+        /// </summary>
+        /// <param name="message">Modèle de message</param>
         public void Publish(NewContactMessage message)
         {
             using (var smtpClient = new SmtpClient()) {

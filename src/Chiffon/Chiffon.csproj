@@ -45,27 +45,27 @@
   <ItemGroup>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Common, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.4.0.3\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.5.0.1\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.4.0.3, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.4.0.3\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.5.0.1\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.4\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -109,14 +109,16 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
-    <Compile Include="Data\CachedReadOnlyQueries.cs" />
-    <Compile Include="Data\IReadWriteQueries.cs" />
-    <Compile Include="Data\ReadWriteQueries.cs" />
-    <Compile Include="Data\IReadOnlyQueries.cs" />
+    <Compile Include="Data\CachedReadQueries.cs" />
+    <Compile Include="Data\SqlServer\NewMemberQuery.cs" />
+    <Compile Include="Data\WeakQueryCache.cs" />
+    <Compile Include="Data\IWriteQueries.cs" />
+    <Compile Include="Data\WriteQueries.cs" />
+    <Compile Include="Data\IReadQueries.cs" />
     <Compile Include="Data\IQueryCache.cs" />
-    <Compile Include="Data\ReadOnlyQueries.cs" />
+    <Compile Include="Data\ReadQueries.cs" />
     <Compile Include="Data\QueryCache.cs" />
-    <Compile Include="Data\NewMemberModel.cs" />
+    <Compile Include="Data\NewMemberParameters.cs" />
     <Compile Include="Data\SqlServer\GetDesignerQuery.cs" />
     <Compile Include="Data\SqlServer\GetPasswordQuery.cs" />
     <Compile Include="Data\SqlServer\GetMemberQuery.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Infrastructure\Messaging\Messenger.cs" />
     <Compile Include="Infrastructure\Messaging\NewContactMessage.cs" />
     <Compile Include="Infrastructure\Messaging\NewMemberMessage.cs" />
+    <Compile Include="Infrastructure\Messaging\MessageRecipients.cs" />
     <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\PatternImage.cs" />
     <Compile Include="Infrastructure\PatternImageSize.cs" />
@@ -163,6 +166,7 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Infrastructure\RemoteAssetProvider.cs" />
+    <Compile Include="Internal\Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Enumerable`1%24.cs" />
     <Compile Include="Services\IMemberService.cs" />
@@ -172,7 +176,7 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
-    <Compile Include="Services\RegisterMemberQuery.cs" />
+    <Compile Include="Services\RegisterMemberRequest.cs" />
     <Compile Include="SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,6 +200,7 @@
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

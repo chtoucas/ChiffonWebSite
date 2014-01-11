@@ -22,9 +22,9 @@
 
         readonly ChiffonConfig _config;
         readonly PatternFileSystem _fileSystem;
-        readonly IReadOnlyQueries _queries;
+        readonly IReadQueries _queries;
 
-        public PatternImageHandler(ChiffonConfig config, IReadOnlyQueries queries)
+        public PatternImageHandler(ChiffonConfig config, IReadQueries queries)
             : base()
         {
             Requires.NotNull(config, "config");

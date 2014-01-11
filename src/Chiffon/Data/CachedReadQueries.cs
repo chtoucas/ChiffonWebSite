@@ -7,12 +7,12 @@
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class CachedReadOnlyQueries : IReadOnlyQueries
+    public class CachedReadQueries : IReadQueries
     {
-        readonly IReadOnlyQueries _inner;
+        readonly IReadQueries _inner;
         readonly IQueryCache _cache;
 
-        public CachedReadOnlyQueries(IReadOnlyQueries inner, IQueryCache cache)
+        public CachedReadQueries(IReadQueries inner, IQueryCache cache)
         {
             Requires.NotNull(inner, "inner");
             Requires.NotNull(cache, "cache");

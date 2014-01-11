@@ -3,15 +3,13 @@
     using System.Net;
     using Chiffon.Common;
 
-    public partial class BadRequestPage : ErrorPage
+    public partial class BadRequestPage : ErrorPageBase
     {
-        public BadRequestPage() : base((int)HttpStatusCode.BadRequest) { }
+        public BadRequestPage() : base() { }
 
-        protected override void Page_LoadCore(object sender, System.EventArgs e)
+        protected override HttpStatusCode StatusCode
         {
-            base.Page_LoadCore(sender, e);
-
-            ErrorMaster.ShowHomeLink();
+            get { return HttpStatusCode.BadRequest; }
         }
     }
 }

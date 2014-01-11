@@ -30,20 +30,20 @@
             // > Data <
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IReadOnlyQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IReadQueries>().InstancePerHttpRequest();
             }
             else {
-                builder.RegisterType<ReadOnlyQueries>().As<IReadOnlyQueries>().SingleInstance();
+                builder.RegisterType<ReadQueries>().As<IReadQueries>().SingleInstance();
             }
 
             builder.RegisterHandlers(typeof(Global).Assembly);
         }
 
-        static IReadOnlyQueries ResolveQueries_(IComponentContext context)
+        static IReadQueries ResolveQueries_(IComponentContext context)
         {
-            return new CachedReadOnlyQueries(
-                new ReadOnlyQueries(context.Resolve<ChiffonConfig>()),
-                context.Resolve<IQueryCache>());
+            return new CachedReadQueries(
+               new ReadQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
+               context.Resolve<IQueryCache>());
         }
     }
 }

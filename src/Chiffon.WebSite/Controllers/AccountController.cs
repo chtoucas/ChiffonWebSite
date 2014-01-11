@@ -104,7 +104,7 @@
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 
-            var outcome = _memberService.RegisterMember(new RegisterMemberQuery {
+            var outcome = _memberService.RegisterMember(new RegisterMemberRequest {
                 CompanyName = model.CompanyName,
                 Email = model.Email,
                 FirstName = model.FirstName,
