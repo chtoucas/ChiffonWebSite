@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Data.SqlServer
+﻿namespace Chiffon.Persistence.SqlServer
 {
     using System;
     using System.Data;

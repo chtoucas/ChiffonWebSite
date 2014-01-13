@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Data
+﻿namespace Chiffon.Persistence
 {
     /// <summary>
     /// Représente l'ensemble des opérations permettant l'accès en écriture au stockage persistant.

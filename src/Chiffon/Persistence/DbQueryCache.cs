@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Data
+﻿namespace Chiffon.Persistence
 {
     using System;
     using System.Collections.Generic;

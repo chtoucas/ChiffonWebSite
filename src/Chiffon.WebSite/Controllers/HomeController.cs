@@ -7,7 +7,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;

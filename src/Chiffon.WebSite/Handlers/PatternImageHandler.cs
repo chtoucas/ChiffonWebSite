@@ -5,7 +5,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;

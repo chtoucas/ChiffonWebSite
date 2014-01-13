@@ -1,8 +1,9 @@
 ﻿using Chiffon;
 using WebActivatorEx;
 
-// WARNING: cet attribut ne peut être utilisé qu'une fois par assemblée.
+// WARNING: Cet attribut ne peut être utilisé qu'une fois par assemblée.
 //[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+//[assembly: PreApplicationStartMethod(typeof(System.Web.Mvc.PreApplicationStartCode), "Start")]
 
 [assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
 [assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
@@ -30,7 +31,7 @@ namespace Chiffon
             // Résolution des dépendances (Autofac).
             var builder = new ContainerBuilder();
             builder.RegisterModule(new InfrastructureModule(config));
-            builder.RegisterModule(new DataModule(config));
+            builder.RegisterModule(new PersistenceModule(config));
             builder.RegisterModule(new ServicesModule());
             builder.RegisterModule(new AspNetMvcModule());
             var container = builder.Build();

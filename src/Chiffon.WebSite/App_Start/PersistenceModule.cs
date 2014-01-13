@@ -2,15 +2,15 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class DataModule : Module
+    public class PersistenceModule : Module
     {
         readonly ChiffonConfig _config;
 
-        public DataModule(ChiffonConfig config)
+        public PersistenceModule(ChiffonConfig config)
         {
             Requires.NotNull(config, "config");
 

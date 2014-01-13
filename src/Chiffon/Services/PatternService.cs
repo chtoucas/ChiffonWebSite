@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Entities;
     using Narvalo;
 

@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Internal
 {
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Services;
     using Narvalo;
 

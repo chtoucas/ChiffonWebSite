@@ -2,7 +2,7 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Data;
+    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Narvalo;
 
@@ -27,7 +27,7 @@
 
             builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
 
-            // > Data <
+            // > Persistence <
 
             if (_config.EnableServerCache) {
                 builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerHttpRequest();

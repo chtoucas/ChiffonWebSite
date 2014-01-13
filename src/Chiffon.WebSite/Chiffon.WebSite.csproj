@@ -170,7 +170,7 @@
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="App_Start\DataModule.cs" />
+    <Compile Include="App_Start\PersistenceModule.cs" />
     <Compile Include="App_Start\ServicesModule.cs" />
     <Compile Include="App_Start\InfrastructureModule.cs" />
     <Compile Include="App_Start\AspNetMvcModule.cs" />

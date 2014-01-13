@@ -1,21 +1,21 @@
-﻿namespace Chiffon.Data
+﻿namespace Chiffon.Persistence
 {
     using System.Collections.Generic;
     using System.Globalization;
-    using Chiffon.Data.SqlServer;
+    using Chiffon.Persistence.SqlServer;
     using Chiffon.Domain;
     using Chiffon.Entities;
     using Narvalo;
 
     /// <summary>
-    /// Implémentation standard de <see cref="Chiffon.Data.IDbQueries"/>.
+    /// Implémentation standard de <see cref="Chiffon.Persistence.IDbQueries"/>.
     /// </summary>
     public class DbQueries : IDbQueries
     {
         readonly string _connectionString;
 
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Data.DbQueries"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Persistence.DbQueries"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
