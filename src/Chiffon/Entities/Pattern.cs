@@ -84,7 +84,7 @@
                             ? PatternVisibility.Public
                             : PatternVisibility.Members;
                     default:
-                        throw ExceptionFactory.NotSupported(
+                        throw Failure.NotSupported(
                             "The pattern size '{0}' is not yet handled.", size.ToString());
                 }
             }

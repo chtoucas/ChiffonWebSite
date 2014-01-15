@@ -14,6 +14,7 @@
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Web.Semantic;
 
     public class HomeController : ChiffonController

@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.Composition;
     using System.IO;
+    using Narvalo.Web;
     using Serilog;
     using Serilog.Events;
 
@@ -28,7 +29,7 @@
                 .WriteTo.File(logfile, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] ({RawUrl}) {Message:l}{NewLine:l}{Exception:l}", fileSizeLimitBytes: 1048576)
                 // On écrit aussi une trace qui apparaîtra dans Glimpse.
                 .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({RawUrl}) {Message:l}{NewLine:l}{Exception:l}")
-                .Enrich.With<HttpRequestEnricher>()
+                .Enrich.With<HttpLogEventEnricher>()
                 .CreateLogger();
         }
 

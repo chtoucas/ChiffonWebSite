@@ -87,24 +87,28 @@
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Narvalo.Common, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.7.0.4, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.5.0.1\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.7.0.4\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.5.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.7.0.4, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.5.0.1\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.7.0.4\lib\net45\Narvalo.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Narvalo.Web.Extras, Version=0.7.0.4, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Narvalo.Web.Extras.0.7.0.4\lib\net45\Narvalo.Web.Extras.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.7\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.2.5\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.2.7\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -175,7 +179,6 @@
     <Compile Include="App_Start\InfrastructureModule.cs" />
     <Compile Include="App_Start\AspNetMvcModule.cs" />
     <Compile Include="Common\AuthentificationService.cs" />
-    <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\EnrichedWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\EnrichedWebViewPage`1.cs" />
@@ -183,11 +186,10 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Common\DesignerKeyModelBinder.cs" />
-    <Compile Include="Common\Enumerable`1%24.cs" />
+    <Compile Include="Common\List`1%24.cs" />
     <Compile Include="Common\OntologyFilterAttribute.cs" />
     <Compile Include="Common\FormUtility.cs" />
     <Compile Include="Common\ImageGeometry.cs" />
-    <Compile Include="Common\List%24.cs" />
     <Compile Include="Common\MemberSession.cs" />
     <Compile Include="Common\ViewUtility.cs" />
     <Compile Include="Controllers\ChiffonControlerContext.cs" />
@@ -236,9 +238,6 @@
     </Compile>
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\ErrorPageBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />

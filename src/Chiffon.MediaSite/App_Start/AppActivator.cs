@@ -33,7 +33,6 @@ namespace Chiffon
             (new LogConfig(config)).Configure();
 
             // Modules HTTP.
-            HttpHeaderCleanupModule.Register();
             ApplicationLifecycleModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".

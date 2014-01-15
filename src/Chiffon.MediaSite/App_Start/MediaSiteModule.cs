@@ -2,9 +2,10 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
+    using Chiffon.Persistence;
     using Narvalo;
+    using Narvalo.Web;
 
     public class MediaSiteModule : Module
     {

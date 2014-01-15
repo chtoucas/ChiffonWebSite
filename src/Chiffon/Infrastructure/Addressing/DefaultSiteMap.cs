@@ -27,7 +27,7 @@
         public DefaultSiteMap(ChiffonEnvironment environment)
         {
             if (!environment.BaseUri.IsAbsoluteUri) {
-                throw new ArgumentException("The 'baseUri' parameter must be absolute.");
+                throw new ArgumentException("The 'baseUri' parameter must be absolute.", "environment");
             }
 
             _baseUri = environment.BaseUri;

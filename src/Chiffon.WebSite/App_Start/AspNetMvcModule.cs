@@ -4,6 +4,7 @@
     using Autofac.Integration.Mvc;
     using Chiffon.Infrastructure;
     using Narvalo;
+    using Narvalo.Web;
 
     public class AspNetMvcModule : Module
     {

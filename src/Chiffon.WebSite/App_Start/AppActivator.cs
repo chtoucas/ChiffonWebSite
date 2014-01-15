@@ -18,6 +18,7 @@ namespace Chiffon
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Narvalo.Web;
     using Narvalo.Web.Optimization;
     using Serilog;
 

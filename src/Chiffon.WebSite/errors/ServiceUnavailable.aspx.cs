@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net;
-    using Chiffon.Common;
+    using Narvalo.Web;
 
     public partial class ServiceUnavailablePage : ErrorPageBase
     {

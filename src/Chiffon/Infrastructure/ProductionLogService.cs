@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.Composition;
+    using Narvalo.Web;
     using Serilog;
     using Serilog.Events;
 
@@ -16,7 +17,7 @@
             return new LoggerConfiguration()
                 .MinimumLevel.Is(minimumLevel)
                 .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({RawUrl}) {Message:l}{NewLine:l}{Exception:l}")
-                .Enrich.With<HttpRequestEnricher>()
+                .Enrich.With<HttpLogEventEnricher>()
                 .CreateLogger();
         }
 
