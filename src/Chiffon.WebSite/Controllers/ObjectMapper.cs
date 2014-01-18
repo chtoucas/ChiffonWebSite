@@ -10,7 +10,7 @@
     {
         public static CategoryViewItem Map(Category category)
         {
-            Requires.NotNull(category, "category");
+            Require.NotNull(category, "category");
 
             return new CategoryViewItem {
                 DisplayName = category.DisplayName,
@@ -21,7 +21,7 @@
 
         public static DesignerViewItem Map(Designer designer, IEnumerable<Category> categories, string categoryKey)
         {
-            Requires.NotNull(designer, "designer");
+            Require.NotNull(designer, "designer");
 
             return new DesignerViewItem {
                 Categories = from _ in categories select Map(_),
@@ -35,7 +35,7 @@
 
         public static PatternViewItem Map(Pattern pattern, string designerName)
         {
-            Requires.NotNull(pattern, "pattern");
+            Require.NotNull(pattern, "pattern");
 
             return new PatternViewItem {
                 CategoryKey = pattern.CategoryKey,

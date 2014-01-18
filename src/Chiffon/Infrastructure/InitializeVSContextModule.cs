@@ -12,7 +12,7 @@
 
         public void Init(HttpApplication context)
         {
-            Requires.NotNull(context, "context");
+            Require.NotNull(context, "context");
 
             context.PostAcquireRequestState += OnPostAcquireRequestState_;
         }

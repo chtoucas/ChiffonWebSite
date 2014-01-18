@@ -8,7 +8,7 @@
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            Requires.NotNull(routes, "routes");
+            Require.NotNull(routes, "routes");
 
             routes.Add(new Route("motif", new AutofacRouteHandler<PatternImageHandler>()));
         }

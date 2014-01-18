@@ -20,7 +20,7 @@
 
         protected override IEnumerable<Category> Execute(SqlDataReader rdr)
         {
-            Requires.NotNull(rdr, "rdr");
+            Require.NotNull(rdr, "rdr");
 
             var categories = new List<Category>();
 

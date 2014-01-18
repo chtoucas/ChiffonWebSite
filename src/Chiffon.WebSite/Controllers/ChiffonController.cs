@@ -24,7 +24,7 @@
 
         protected ChiffonController(ChiffonEnvironment environment, ISiteMap siteMap)
         {
-            Requires.NotNull(siteMap, "siteMap");
+            Require.NotNull(siteMap, "siteMap");
 
             _environment = environment;
             _siteMap = siteMap;
@@ -50,7 +50,7 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            Requires.NotNull(filterContext, "filterContext");
+            Require.NotNull(filterContext, "filterContext");
 
             var actionDescriptor = filterContext.ActionDescriptor;
 

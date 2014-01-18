@@ -22,8 +22,8 @@
         public LogOnHandler(IMemberService memberService, ISiteMapFactory siteMapFactory)
             : base()
         {
-            Requires.NotNull(memberService, "memberService");
-            Requires.NotNull(siteMapFactory, "siteMapFactory");
+            Require.NotNull(memberService, "memberService");
+            Require.NotNull(siteMapFactory, "siteMapFactory");
 
             _memberService = memberService;
             _siteMapFactory = siteMapFactory;
@@ -33,7 +33,7 @@
 
         protected override Outcome<LogOnQuery> Bind(HttpRequest request)
         {
-            Requires.NotNull(request, "request");
+            Require.NotNull(request, "request");
 
             var form = request.Form;
 
@@ -51,13 +51,13 @@
                 TargetUrl = targetUrl
             };
 
-            return Outcome.Success(model);
+            return Outcome.Create(model);
         }
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            Requires.NotNull(context, "context");
-            Requires.NotNull(query, "query");
+            Require.NotNull(context, "context");
+            Require.NotNull(query, "query");
 
             var result = _memberService.MayLogOn(query.Email, query.Password);
 

@@ -10,7 +10,7 @@
 
         public Messenger(IMailMerge mailMerge)
         {
-            Requires.NotNull(mailMerge, "mailMerge");
+            Require.NotNull(mailMerge, "mailMerge");
 
             _mailMerge = mailMerge;
         }

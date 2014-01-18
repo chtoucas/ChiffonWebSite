@@ -23,7 +23,7 @@
 
         public DbQueryCache(HttpContextBase context)
         {
-            Requires.NotNull(context, "context");
+            Require.NotNull(context, "context");
 
             _context = context;
         }

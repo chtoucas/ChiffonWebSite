@@ -16,7 +16,7 @@
 
         public string GetPath(PatternImage image)
         {
-            Requires.NotNull(image, "image");
+            Require.NotNull(image, "image");
 
             return Path.Combine(_config.PatternDirectory, image.RelativePath);
         }

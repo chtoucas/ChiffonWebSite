@@ -13,7 +13,7 @@
             RouteValueDictionary values,
             RouteDirection routeDirection)
         {
-            Requires.NotNull(values, "values");
+            Require.NotNull(values, "values");
 
             var value = (string)values["designerKey"];
             switch (value) {

@@ -40,8 +40,8 @@
             string version,
             PatternSize size)
         {
-            Requires.NotNullOrEmpty(designerDirectory, "directory");
-            Requires.NotNullOrEmpty(reference, "reference");
+            Require.NotNullOrEmpty(designerDirectory, "directory");
+            Require.NotNullOrEmpty(reference, "reference");
 
             switch (size) {
                 case PatternSize.Preview:

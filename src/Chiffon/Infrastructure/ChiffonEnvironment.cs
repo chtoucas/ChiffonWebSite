@@ -11,7 +11,7 @@
 
         internal ChiffonEnvironment(ChiffonLanguage language, Uri baseUri)
         {
-            Requires.NotNull(baseUri, "baseUri");
+            Require.NotNull(baseUri, "baseUri");
 
             _language = language;
             _baseUri = baseUri;

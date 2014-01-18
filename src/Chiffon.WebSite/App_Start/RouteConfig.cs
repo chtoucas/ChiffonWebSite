@@ -8,7 +8,7 @@
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            Requires.NotNull(routes, "routes");
+            Require.NotNull(routes, "routes");
 
             new RouteConfigurator(routes).Configure();
         }

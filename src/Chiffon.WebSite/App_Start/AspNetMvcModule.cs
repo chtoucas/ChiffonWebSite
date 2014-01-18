@@ -12,7 +12,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Requires.NotNull(builder, "builder");
+            Require.NotNull(builder, "builder");
 
             // Composants Asp.Net MVC.
             builder.RegisterControllers(typeof(Global).Assembly);

@@ -56,21 +56,21 @@
 
         public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             return PreviewContent_(@this, designerKey, reference, variant, false /* absolute */);
         }
 
         public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant, bool absolute)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             return PreviewContent_(@this, designerKey, reference, variant, absolute);
         }
 
         public static string PatternContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             return @this.Content(String.Format(CultureInfo.InvariantCulture,
                 "~/{0}/motif-{1}-{2}.jpg", designerKey, reference, variant));
@@ -78,14 +78,14 @@
 
         public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             return @this.SecureAction(actionName, controllerName, new RouteValueDictionary(routeValues));
         }
 
         public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, RouteValueDictionary routeValues)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             var originalUrl = @this.Action(actionName, controllerName, routeValues);
 
@@ -100,7 +100,7 @@
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
         public static string SecureUrl(this UrlHelper @this, string routeName, object routeValues)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             return @this.SecureUrl(routeName, new RouteValueDictionary(routeValues));
         }
@@ -108,7 +108,7 @@
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
         public static string SecureUrl(this UrlHelper @this, string routeName, RouteValueDictionary routeValues)
         {
-            Requires.NotNull(@this, "this");
+            Require.Object(@this);
 
             var originalUrl = @this.RouteUrl(routeName, routeValues);
 
@@ -123,7 +123,7 @@
         // TODO: Quand on passera à un serveur de media séparé il faudra changer ces utilitaires.
         static string PreviewContent_(UrlHelper urlHelper, DesignerKey designerKey, string reference, string variant, bool absolute)
         {
-            Requires.NotNull(urlHelper, "urlHelper");
+            Require.NotNull(urlHelper, "urlHelper");
 
             var path = String.Format(CultureInfo.InvariantCulture,
                 "~/{0}/vignette-{1}-{2}.jpg", designerKey, reference, variant);

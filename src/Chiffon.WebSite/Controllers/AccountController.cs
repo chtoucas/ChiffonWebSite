@@ -19,7 +19,7 @@
         public AccountController(ChiffonEnvironment environment, ISiteMap siteMap, IMemberService memberService)
             : base(environment, siteMap)
         {
-            Requires.NotNull(memberService, "memberService");
+            Require.NotNull(memberService, "memberService");
 
             _memberService = memberService;
         }
@@ -79,7 +79,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
-            Requires.NotNull(model, "model");
+            Require.NotNull(model, "model");
 
             if (User.Identity.IsAuthenticated) {
                 return RedirectToHome();
@@ -104,7 +104,7 @@
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 
-            var result = _memberService.MayRegisterMember(new RegisterMemberRequest {
+            var outcome = _memberService.MayRegisterMember(new RegisterMemberRequest {
                 CompanyName = model.CompanyName,
                 Email = model.Email,
                 FirstName = model.FirstName,
@@ -112,9 +112,9 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (result.IsSome) {
+            if (outcome.Unsuccessful) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
-                    Message = result.Value.Message
+                    Message = outcome.Exception.Message
                 });
             }
 

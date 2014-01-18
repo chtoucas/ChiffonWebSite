@@ -9,14 +9,14 @@
 
         public static void AddChiffonContext(this HttpContext @this, ChiffonContext context)
         {
-            Requires.NotNull(@this, "this");
+            Require.NotNull(@this, "this");
 
             @this.Items[HttpContextKey_] = context;
         }
 
         public static ChiffonContext GetChiffonContext(this HttpContext @this)
         {
-            Requires.NotNull(@this, "this");
+            Require.NotNull(@this, "this");
 
             var result = @this.Items[HttpContextKey_] as ChiffonContext;
 

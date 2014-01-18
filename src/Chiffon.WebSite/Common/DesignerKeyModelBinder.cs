@@ -10,7 +10,7 @@
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            Requires.NotNull(controllerContext, "controllerContext");
+            Require.NotNull(controllerContext, "controllerContext");
 
             var value = controllerContext.RouteData.Values["designerKey"];
             if (value == null) {

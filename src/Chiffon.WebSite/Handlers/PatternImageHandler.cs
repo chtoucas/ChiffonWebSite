@@ -27,8 +27,8 @@
         public PatternImageHandler(ChiffonConfig config, IDbQueries queries)
             : base()
         {
-            Requires.NotNull(config, "config");
-            Requires.NotNull(queries, "queries");
+            Require.NotNull(config, "config");
+            Require.NotNull(queries, "queries");
 
             _config = config;
             _queries = queries;
@@ -44,7 +44,7 @@
 
         protected override Outcome<PatternImageQuery> Bind(HttpRequest request)
         {
-            Requires.NotNull(request, "request");
+            Require.NotNull(request, "request");
 
             var nvc = request.QueryString;
 
@@ -67,13 +67,13 @@
                 Variant = version.Value,
             };
 
-            return Outcome<PatternImageQuery>.Success(query);
+            return Outcome.Create(query);
         }
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            Requires.NotNull(context, "context");
-            Requires.NotNull(query, "query");
+            Require.NotNull(context, "context");
+            Require.NotNull(query, "query");
 
             var response = context.Response;
 

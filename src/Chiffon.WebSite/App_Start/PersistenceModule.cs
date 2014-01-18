@@ -12,14 +12,14 @@
 
         public PersistenceModule(ChiffonConfig config)
         {
-            Requires.NotNull(config, "config");
+            Require.NotNull(config, "config");
 
             _config = config;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            Requires.NotNull(builder, "builder");
+            Require.NotNull(builder, "builder");
 
             builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
 

@@ -22,7 +22,7 @@
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
         public DbQueries(string connectionString)
         {
-            Requires.NotNullOrEmpty(connectionString, "connectionString");
+            Require.NotNullOrEmpty(connectionString, "connectionString");
 
             _connectionString = connectionString;
         }

@@ -17,7 +17,7 @@
 
         public ComponentController(ChiffonConfig config)
         {
-            Requires.NotNull(config, "config");
+            Require.NotNull(config, "config");
 
             _config = config;
         }

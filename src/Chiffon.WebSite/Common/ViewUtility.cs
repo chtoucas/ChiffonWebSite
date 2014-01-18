@@ -8,7 +8,7 @@
     {
         public static string Localize(string viewName, ChiffonLanguage language)
         {
-            Requires.NotNull(viewName, "viewName");
+            Require.NotNull(viewName, "viewName");
 
             switch (language) {
                 case ChiffonLanguage.English:

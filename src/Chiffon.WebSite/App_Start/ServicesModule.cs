@@ -11,7 +11,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Requires.NotNull(builder, "builder");
+            Require.NotNull(builder, "builder");
 
             // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
             builder.RegisterType<MemberService>().As<IMemberService>().InstancePerHttpRequest();

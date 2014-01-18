@@ -13,7 +13,7 @@
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
         {
-            Requires.NotNull(rdr, "rdr");
+            Require.NotNull(rdr, "rdr");
 
             var result = new List<Pattern>();
 

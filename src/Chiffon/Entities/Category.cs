@@ -11,7 +11,7 @@
 
         public Category(DesignerKey designerKey, string key)
         {
-            Requires.NotNullOrEmpty(key, "key");
+            Require.NotNullOrEmpty(key, "key");
 
             _designerKey = designerKey;
             _key = key;

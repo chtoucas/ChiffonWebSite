@@ -25,8 +25,8 @@
         public HomeController(ChiffonEnvironment environment, ISiteMap siteMap, IMessenger messenger, IDbQueries queries)
             : base(environment, siteMap)
         {
-            Requires.NotNull(messenger, "messenger");
-            Requires.NotNull(queries, "queries");
+            Require.NotNull(messenger, "messenger");
+            Require.NotNull(queries, "queries");
 
             _messenger = messenger;
             _queries = queries;
@@ -114,7 +114,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Contact(ContactViewModel model)
         {
-            Requires.NotNull(model, "model");
+            Require.NotNull(model, "model");
 
             // Ontologie.
             Ontology.Title = SR.Home_Contact_Title;

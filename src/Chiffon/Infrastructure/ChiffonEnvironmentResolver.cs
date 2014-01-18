@@ -34,7 +34,7 @@
 
         public static ChiffonEnvironment Resolve(HttpRequest request)
         {
-            Requires.NotNull(request, "request");
+            Require.NotNull(request, "request");
 
             var uri = GetBaseUri_(request.Url);
             return ResolveFromHost_(uri.Host);
@@ -42,7 +42,7 @@
 
         internal static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
         {
-            Requires.NotNull(request, "request");
+            Require.NotNull(request, "request");
 
             var uri = GetBaseUri_(request.Url);
 
@@ -82,7 +82,7 @@
 
             return value == null
                 ? Maybe<ChiffonLanguage>.None
-                : EnumUtility.MayConvert<ChiffonLanguage>(value);
+                : MayConvert.ToEnum<ChiffonLanguage>(value);
         }
 
         static ChiffonEnvironment ResolveFromHost_(string host)

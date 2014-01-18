@@ -14,8 +14,8 @@
 
         public CachedDbQueries(IDbQueries inner, IDbQueryCache cache)
         {
-            Requires.NotNull(inner, "inner");
-            Requires.NotNull(cache, "cache");
+            Require.NotNull(inner, "inner");
+            Require.NotNull(cache, "cache");
 
             _inner = inner;
             _cache = cache;

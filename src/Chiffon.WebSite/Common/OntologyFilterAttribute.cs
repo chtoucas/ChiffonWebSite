@@ -28,7 +28,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            Requires.NotNull(filterContext, "filterContext");
+            Require.NotNull(filterContext, "filterContext");
 
             var controller = filterContext.Controller as ChiffonController;
             if (controller == null) {
@@ -66,7 +66,7 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            Requires.NotNull(filterContext, "filterContext");
+            Require.NotNull(filterContext, "filterContext");
 
             if (Disabled) {
                 return;

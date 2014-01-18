@@ -35,8 +35,8 @@
             IPatternService patternService)
             : base(environment, siteMap)
         {
-            Requires.NotNull(queries, "queries");
-            Requires.NotNull(patternService, "patternService");
+            Require.NotNull(queries, "queries");
+            Require.NotNull(patternService, "patternService");
 
             _queries = queries;
             _patternService = patternService;

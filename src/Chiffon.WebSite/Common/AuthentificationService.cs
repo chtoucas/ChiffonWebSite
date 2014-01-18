@@ -11,7 +11,7 @@
 
         public AuthentificationService(HttpContextBase httpContext)
         {
-            Requires.NotNull(httpContext, "httpContext");
+            Require.NotNull(httpContext, "httpContext");
 
             _memberSession = new MemberSession(httpContext.Session);
         }
@@ -20,7 +20,7 @@
 
         public void SignIn(Member member)
         {
-            Requires.NotNull(member, "member");
+            Require.NotNull(member, "member");
 
             FormsAuthentication.SetAuthCookie(member.DisplayName, false /* createPersistentCookie */);
             _memberSession.Value = member;

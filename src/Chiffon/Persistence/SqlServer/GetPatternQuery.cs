@@ -24,7 +24,7 @@
 
         protected override Pattern Execute(SqlDataReader rdr)
         {
-            Requires.NotNull(rdr, "rdr");
+            Require.NotNull(rdr, "rdr");
 
             if (!rdr.Read()) { return null; }
 

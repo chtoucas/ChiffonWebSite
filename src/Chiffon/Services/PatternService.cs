@@ -12,7 +12,7 @@
 
         public PatternService(IDbQueries queries)
         {
-            Requires.NotNull(queries, "queries");
+            Require.NotNull(queries, "queries");
 
             _queries = queries;
         }

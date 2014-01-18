@@ -16,14 +16,14 @@
         public ListDesignersQuery(string connectionString, CultureInfo culture)
             : base(connectionString, "usp_ListDesigners")
         {
-            Requires.NotNull(culture, "culture");
+            Require.NotNull(culture, "culture");
 
             _culture = culture;
         }
 
         protected override IEnumerable<Designer> Execute(SqlDataReader rdr)
         {
-            Requires.NotNull(rdr, "rdr");
+            Require.NotNull(rdr, "rdr");
 
             var designers = new List<Designer>();
 

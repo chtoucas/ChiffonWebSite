@@ -24,9 +24,9 @@
 
         public MemberService(IDbQueries queries, IDbCommands commands, IMessenger messenger)
         {
-            Requires.NotNull(commands, "commands");
-            Requires.NotNull(messenger, "messenger");
-            Requires.NotNull(queries, "queries");
+            Require.NotNull(commands, "commands");
+            Require.NotNull(messenger, "messenger");
+            Require.NotNull(queries, "queries");
 
             _commands = commands;
             _messenger = messenger;
@@ -37,16 +37,16 @@
 
         #region IMemberService
 
-        public Maybe<Error> MayRegisterMember(RegisterMemberRequest request)
+        public Outcome MayRegisterMember(RegisterMemberRequest request)
         {
-            Requires.NotNull(request, "request");
+            Require.NotNull(request, "request");
 
             // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return Maybe.Create(Error.Create(SR.MemberService_EmailAlreadyTaken));
+                return Outcome.Failure(SR.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -76,7 +76,7 @@
                 });
             }
 
-            return Maybe<Error>.None;
+            return Outcome.Success;
         }
 
         public Maybe<Member> MayLogOn(string email, string password)

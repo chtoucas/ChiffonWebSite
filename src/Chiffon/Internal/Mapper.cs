@@ -9,8 +9,8 @@
         /// <summary />
         public static NewMemberParameters Map(RegisterMemberRequest request, string encryptedPassword)
         {
-            Requires.NotNull(request, "query");
-            Requires.NotNullOrEmpty(encryptedPassword, "encryptedPassword");
+            Require.NotNull(request, "query");
+            Require.NotNullOrEmpty(encryptedPassword, "encryptedPassword");
 
             return new NewMemberParameters {
                 CompanyName = request.CompanyName,

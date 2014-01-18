@@ -17,7 +17,7 @@
         public LogOffHandler(ISiteMapFactory siteMapFactory)
             : base()
         {
-            Requires.NotNull(siteMapFactory, "siteMapFactory");
+            Require.NotNull(siteMapFactory, "siteMapFactory");
 
             _siteMapFactory = siteMapFactory;
         }
@@ -26,7 +26,7 @@
 
         protected override void ProcessRequestCore(HttpContext context)
         {
-            Requires.NotNull(context, "context");
+            Require.NotNull(context, "context");
 
             (new AuthentificationService(context)).SignOut();
 

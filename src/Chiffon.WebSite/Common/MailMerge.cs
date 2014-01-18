@@ -30,7 +30,7 @@ namespace Chiffon.Common
 
         public MailMerge(ISiteMap siteMap)
         {
-            Requires.NotNull(siteMap, "config");
+            Require.NotNull(siteMap, "config");
 
             _siteMap = siteMap;
         }

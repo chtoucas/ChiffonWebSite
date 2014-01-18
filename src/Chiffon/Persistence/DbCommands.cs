@@ -19,7 +19,7 @@
         /// <exception cref="System.ArgumentException">connectionString est une chaîne vide.</exception>
         public DbCommands(string connectionString)
         {
-            Requires.NotNullOrEmpty(connectionString, "connectionString");
+            Require.NotNullOrEmpty(connectionString, "connectionString");
 
             _connectionString = connectionString;
         }
@@ -34,7 +34,7 @@
 
         public void NewMember(NewMemberParameters parameters)
         {
-            Requires.NotNull(parameters, "parameters");
+            Require.NotNull(parameters, "parameters");
 
             var q = new NewMemberCommand(ConnectionString);
             q.Execute(parameters);

@@ -16,7 +16,7 @@
         public GetDesignerQuery(string connectionString, DesignerKey designerKey, CultureInfo culture)
             : base(connectionString, "usp_GetDesigner")
         {
-            Requires.NotNull(culture, "culture");
+            Require.NotNull(culture, "culture");
 
             _designerKey = designerKey;
             _culture = culture;
@@ -26,7 +26,7 @@
 
         protected override Designer Execute(SqlDataReader rdr)
         {
-            Requires.NotNull(rdr, "rdr");
+            Require.NotNull(rdr, "rdr");
 
             if (!rdr.Read()) { return null; }
 

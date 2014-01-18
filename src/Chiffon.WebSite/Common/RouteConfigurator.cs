@@ -15,7 +15,7 @@
 
         public RouteConfigurator(RouteCollection routes)
         {
-            Requires.NotNull(routes, "routes");
+            Require.NotNull(routes, "routes");
 
             _routes = routes;
         }
