@@ -32,6 +32,6 @@
         /// Retourne une monade contenant le membre qui vient d'être créé 
         /// si l'opération s'est correctement déroulée.
         /// </returns>
-        Outcome MayRegisterMember(RegisterMemberRequest request);
+        Failure<FailureException>? MayRegisterMember(RegisterMemberRequest request);
     }
 }

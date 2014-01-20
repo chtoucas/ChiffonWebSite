@@ -6,8 +6,8 @@
     using System.Web;
     using System.Web.SessionState;
     using Narvalo;
-    using Narvalo.Collections;
     using Narvalo.Fx;
+    using Narvalo.Linq;
 
     public static class ChiffonEnvironmentResolver
     {
@@ -50,7 +50,7 @@
 
             // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
             // la demande en session.
-            language.WhenSome(_ => { UpdateLanguageSession_(session, _); });
+            language.OnSome(_ => { UpdateLanguageSession_(session, _); });
 
             if (language.IsNone) {
                 // On regarde dans la session si on n'a pas une langue déjà définie.

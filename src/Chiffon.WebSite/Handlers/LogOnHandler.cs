@@ -9,8 +9,8 @@
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;
-    using Narvalo.Collections;
     using Narvalo.Fx;
+    using Narvalo.Linq;
     using Narvalo.Web;
 
     // TODO: ValidateAntiForgeryToken.
@@ -43,7 +43,7 @@
             var password = form.MayGetValue("password").Filter(_ => _.Length > 0);
             if (password.IsNone) { return BindingFailure("password"); }
 
-            var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayParse.ToUri(_, UriKind.Relative));
+            var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayCreate.Uri(_, UriKind.Relative));
 
             var model = new LogOnQuery {
                 Email = email.Value,
@@ -61,7 +61,7 @@
 
             var result = _memberService.MayLogOn(query.Email, query.Password);
 
-            result.WhenSome(_ => { (new AuthentificationService(context)).SignIn(_); });
+            result.OnSome(_ => { (new AuthentificationService(context)).SignIn(_); });
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 

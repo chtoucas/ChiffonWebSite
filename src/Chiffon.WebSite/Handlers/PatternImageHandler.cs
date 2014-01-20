@@ -9,8 +9,8 @@
     using Chiffon.Infrastructure;
     using Chiffon.Persistence;
     using Narvalo;
-    using Narvalo.Collections;
     using Narvalo.Fx;
+    using Narvalo.Linq;
     using Narvalo.Web;
 
     public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState

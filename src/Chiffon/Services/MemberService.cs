@@ -37,7 +37,7 @@
 
         #region IMemberService
 
-        public Outcome MayRegisterMember(RegisterMemberRequest request)
+        public Failure<FailureException>? MayRegisterMember(RegisterMemberRequest request)
         {
             Require.NotNull(request, "request");
 
@@ -46,7 +46,7 @@
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return Outcome.Failure(SR.MemberService_EmailAlreadyTaken);
+                return Failure.Create(SR.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -76,7 +76,7 @@
                 });
             }
 
-            return Outcome.Success;
+            return null;
         }
 
         public Maybe<Member> MayLogOn(string email, string password)

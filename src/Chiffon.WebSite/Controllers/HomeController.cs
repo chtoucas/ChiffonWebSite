@@ -7,14 +7,13 @@
     using System.Web;
     using System.Web.Mvc;
     using Chiffon.Common;
-    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;
+    using Chiffon.Persistence;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;
-    using Narvalo.Collections;
     using Narvalo.Web.Semantic;
 
     public class HomeController : ChiffonController

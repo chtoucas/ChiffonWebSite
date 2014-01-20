@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Reflection;
     using Narvalo;
-    using Narvalo.Collections;
+    using Narvalo.Linq;
     using Serilog.Events;
 
     public class ChiffonConfig

@@ -104,7 +104,7 @@
                 (new AuthentificationService(HttpContext)).SignIn(e.Member);
             };
 
-            var outcome = _memberService.MayRegisterMember(new RegisterMemberRequest {
+            var failure = _memberService.MayRegisterMember(new RegisterMemberRequest {
                 CompanyName = model.CompanyName,
                 Email = model.Email,
                 FirstName = model.FirstName,
@@ -112,13 +112,13 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (outcome.Unsuccessful) {
+            if (failure.HasValue) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
-                    Message = outcome.Exception.Message
+                    Message = failure.Value.Message
                 });
             }
 
-            string returnUrl = MayParse.ToUri(model.ReturnUrl, UriKind.Relative)
+            string returnUrl = MayCreate.Uri(model.ReturnUrl, UriKind.Relative)
                 .Map(_ => _.ToString())
                 .ValueOrElse(String.Empty);
 
@@ -135,7 +135,7 @@
                 return RedirectToRoute(Constants.RouteName.Account.Register);
             }
 
-            string nextUrl = MayParse.ToUri(returnUrl, UriKind.Relative)
+            string nextUrl = MayCreate.Uri(returnUrl, UriKind.Relative)
                 .Map(_ => _.ToString())
                 .ValueOrElse(Url.RouteUrl(Constants.RouteName.Home.Index));
 
