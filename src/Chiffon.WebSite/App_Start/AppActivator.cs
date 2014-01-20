@@ -50,7 +50,7 @@ namespace Chiffon
             MvcHandler.DisableMvcResponseHeader = true;
 
             // Optimisation du contenu HTML.
-            WhiteSpaceBusterBuilder.Current.SetWhiteSpaceBuster(new AggressiveWhiteSpaceBuster());
+            WhiteSpaceBusterProvider.Current.WhiteSpaceBuster = new AggressiveWhiteSpaceBuster();
         }
 
         public static void Start()

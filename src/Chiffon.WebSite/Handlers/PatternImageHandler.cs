@@ -49,16 +49,16 @@
             var nvc = request.QueryString;
 
             var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
-            if (designerKey.IsNone) { return BindingFailure("designer"); }
+            if (designerKey.IsNone) { return CreateFailure("designer"); }
 
             var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
-            if (size.IsNone) { return BindingFailure("size"); }
+            if (size.IsNone) { return CreateFailure("size"); }
 
             var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 0);
-            if (reference.IsNone) { return BindingFailure("reference"); }
+            if (reference.IsNone) { return CreateFailure("reference"); }
 
             var version = nvc.MayGetValue("version");
-            if (version.IsNone) { return BindingFailure("reference"); }
+            if (version.IsNone) { return CreateFailure("reference"); }
 
             var query = new PatternImageQuery {
                 DesignerKey = designerKey.Value,

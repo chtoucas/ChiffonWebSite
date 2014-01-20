@@ -2,6 +2,7 @@
 {
     using System;
     using Chiffon.Domain;
+    using Narvalo;
     using Narvalo.Fx;
 
     /// <summary>
@@ -32,6 +33,6 @@
         /// Retourne une monade contenant le membre qui vient d'être créé 
         /// si l'opération s'est correctement déroulée.
         /// </returns>
-        Failure<FailureException>? MayRegisterMember(RegisterMemberRequest request);
+        Nil RegisterMember(RegisterMemberRequest request);
     }
 }

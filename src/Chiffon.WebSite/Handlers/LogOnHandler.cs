@@ -38,10 +38,10 @@
             var form = request.Form;
 
             var email = form.MayGetValue("email").Filter(_ => _.Length > 0);
-            if (email.IsNone) { return BindingFailure("email"); }
+            if (email.IsNone) { return CreateFailure("email"); }
 
             var password = form.MayGetValue("password").Filter(_ => _.Length > 0);
-            if (password.IsNone) { return BindingFailure("password"); }
+            if (password.IsNone) { return CreateFailure("password"); }
 
             var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayCreate.Uri(_, UriKind.Relative));
 
@@ -61,13 +61,22 @@
 
             var result = _memberService.MayLogOn(query.Email, query.Password);
 
-            result.OnSome(_ => { (new AuthentificationService(context)).SignIn(_); });
-
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 
-            Uri nextUrl = result.IsSome
-                ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
-                : query.TargetUrl.Match(_ => siteMap.Login(_), siteMap.Login());
+            Uri nextUrl = null;
+
+            result.OnSome(_ =>
+            {
+                (new AuthentificationService(context)).SignIn(_);
+                nextUrl = query.TargetUrl.Match(value => siteMap.MakeAbsoluteUri(value), siteMap.Home());
+            }).OnNone(() =>
+            {
+                nextUrl = query.TargetUrl.Match(_ => siteMap.Login(_), siteMap.Login());
+            });
+
+            //Uri nextUrl = result.IsSome
+            //    ? query.TargetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home())
+            //    : query.TargetUrl.Match(_ => siteMap.Login(_), siteMap.Login());
 
             context.Response.Redirect(nextUrl.ToString());
         }

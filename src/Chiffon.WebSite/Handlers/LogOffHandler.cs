@@ -31,9 +31,8 @@
             (new AuthentificationService(context)).SignOut();
 
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
-            var nextUrl = siteMap.Home();
 
-            context.Response.Redirect(nextUrl.AbsoluteUri);
+            context.Response.Redirect(siteMap.Home().AbsoluteUri);
         }
     }
 }

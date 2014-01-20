@@ -1,10 +1,10 @@
 ﻿namespace Chiffon.Services
 {
     using System;
-    using Chiffon.Persistence;
     using Chiffon.Domain;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
+    using Chiffon.Persistence;
     using Chiffon.Resources;
     using Narvalo;
     using Narvalo.Fx;
@@ -37,7 +37,8 @@
 
         #region IMemberService
 
-        public Failure<FailureException>? MayRegisterMember(RegisterMemberRequest request)
+        /// <summary />
+        public Nil RegisterMember(RegisterMemberRequest request)
         {
             Require.NotNull(request, "request");
 
@@ -46,7 +47,7 @@
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return Failure.Create(SR.MemberService_EmailAlreadyTaken);
+                return Nil.Failure(SR.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -76,9 +77,10 @@
                 });
             }
 
-            return null;
+            return Nil.Success;
         }
 
+        /// <summary />
         public Maybe<Member> MayLogOn(string email, string password)
         {
             // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
