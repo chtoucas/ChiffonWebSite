@@ -22,6 +22,8 @@
             _siteMapFactory = siteMapFactory;
         }
 
+        public override bool IsReusable { get { return true; } }
+
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
 
         protected override void ProcessRequestCore(HttpContext context)
@@ -30,9 +32,9 @@
 
             (new AuthentificationService(context)).SignOut();
 
-            var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
+            var nextUrl = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment).Home().AbsoluteUri;
 
-            context.Response.Redirect(siteMap.Home().AbsoluteUri);
+            context.Response.Redirect(nextUrl);
         }
     }
 }

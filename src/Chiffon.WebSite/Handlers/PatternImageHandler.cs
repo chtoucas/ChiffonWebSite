@@ -38,13 +38,13 @@
 
         // TODO: Pour le moment il n'est pas opportun de réutiliser cet Handler car IDbQueries 
         // peut avoir des dépendances vis à vis de la requête en cours.
-        public override bool IsReusable { get { return false; } }
+        //public override bool IsReusable { get { return true; } }
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
         protected override Outcome<PatternImageQuery> Bind(HttpRequest request)
         {
-            Require.NotNull(request, "request");
+            DebugCheck.NotNull(request);
 
             var nvc = request.QueryString;
 
@@ -58,7 +58,7 @@
             if (reference.IsNone) { return CreateFailure("reference"); }
 
             var version = nvc.MayGetValue("version");
-            if (version.IsNone) { return CreateFailure("reference"); }
+            if (version.IsNone) { return CreateFailure("version"); }
 
             var query = new PatternImageQuery {
                 DesignerKey = designerKey.Value,
@@ -72,8 +72,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            Require.NotNull(context, "context");
-            Require.NotNull(query, "query");
+            DebugCheck.NotNull(context);
+            DebugCheck.NotNull(query);
 
             var response = context.Response;
 
