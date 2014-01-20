@@ -47,25 +47,20 @@
             DebugCheck.NotNull(request);
 
             var nvc = request.QueryString;
+            var query = new PatternImageQuery();
 
-            var designerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
-            if (designerKey.IsNone) { return CreateFailure("designer"); }
+            query.DesignerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
 
-            var size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
-            if (size.IsNone) { return CreateFailure("size"); }
+            query.Size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
 
-            var reference = nvc.MayGetValue("reference").Filter(_ => _.Length > 0);
-            if (reference.IsNone) { return CreateFailure("reference"); }
+            query.Reference = nvc.MayGetValue("reference")
+                .Filter(_ => _.Length > 0);
 
-            var version = nvc.MayGetValue("version");
-            if (version.IsNone) { return CreateFailure("version"); }
+            query.Variant = nvc.MayGetValue("version");
 
-            var query = new PatternImageQuery {
-                DesignerKey = designerKey.Value,
-                Reference = reference.Value,
-                Size = size.Value,
-                Variant = version.Value,
-            };
+            if (query.IsIncomplete) {
+                return Outcome.Failure<PatternImageQuery>(new PatternImageException("FIXME"));
+            }
 
             return Outcome.Create(query);
         }
@@ -77,17 +72,19 @@
 
             var response = context.Response;
 
-            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
+            var pattern = _queries.GetPattern(query.DesignerKey.Value, query.Reference.Value, query.Variant.Value);
             if (pattern == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
+            var size = query.Size.Value;
+
             // FIXME
-            if (query.Size == PatternSize.Preview && !pattern.HasPreview) {
+            if (size == PatternSize.Preview && !pattern.HasPreview) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var visibility = pattern.GetVisibility(query.Size);
+            var visibility = pattern.GetVisibility(size);
 
             bool isAuth = context.User.Identity.IsAuthenticated;
 
@@ -102,7 +99,7 @@
                     response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var image = pattern.GetImage(query.Size);
+            var image = pattern.GetImage(size);
 
             // FIXME: Capturer les exceptions d'IO.
             response.Clear();

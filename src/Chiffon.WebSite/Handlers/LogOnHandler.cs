@@ -38,22 +38,22 @@
             DebugCheck.NotNull(request);
 
             var form = request.Form;
+            var query = new LogOnQuery();
 
-            var email = form.MayGetValue("email").Filter(_ => _.Length > 0);
-            if (email.IsNone) { return CreateFailure("email"); }
+            query.Email = form.MayGetValue("email")
+                .Filter(_ => _.Length > 0);
 
-            var password = form.MayGetValue("password").Filter(_ => _.Length > 0);
-            if (password.IsNone) { return CreateFailure("password"); }
+            query.Password = form.MayGetValue("password")
+                .Filter(_ => _.Length > 0);
 
-            var targetUrl = form.MayGetValue("targeturl").Bind(_ => MayCreate.Uri(_, UriKind.Relative));
+            query.TargetUrl = form.MayGetValue("targeturl")
+                .Bind(_ => MayCreate.Uri(_, UriKind.Relative));
 
-            var model = new LogOnQuery {
-                Email = email.Value,
-                Password = password.Value,
-                TargetUrl = targetUrl
-            };
+            if (query.IsIncomplete) {
+                return Outcome.Failure<LogOnQuery>(new LogOnException("FIXME"));
+            }
 
-            return Outcome.Create(model);
+            return Outcome.Create(query);
         }
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
@@ -64,7 +64,7 @@
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 
             var nextUrl = _memberService
-                .MayLogOn(query.Email, query.Password)
+                .MayLogOn(query.Email.Value, query.Password.Value)
                 .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
                 .Match(
                     _ => GetNextUri_(query.TargetUrl, siteMap),

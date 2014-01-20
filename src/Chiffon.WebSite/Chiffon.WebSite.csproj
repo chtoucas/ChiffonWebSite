@@ -197,30 +197,35 @@
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Errors\BadRequest.aspx.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\BadRequest.aspx.designer.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Error.Master.designer.cs">
       <DependentUpon>Error.Master</DependentUpon>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.designer.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.designer.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
@@ -229,10 +234,13 @@
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Errors\ServiceUnavailable.aspx.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\PatternImageException.cs" />
+    <Compile Include="Handlers\LogOnException.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\CssUtility.cs" />

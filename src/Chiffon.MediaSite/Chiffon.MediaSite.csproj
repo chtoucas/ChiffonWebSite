@@ -142,6 +142,9 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
+    <Compile Include="..\Chiffon.WebSite\Handlers\PatternImageException.cs">
+      <Link>Handlers\PatternImageException.cs</Link>
+    </Compile>
     <Compile Include="..\Chiffon.WebSite\Handlers\PatternImageHandler.cs">
       <Link>Handlers\PatternImageHandler.cs</Link>
     </Compile>
