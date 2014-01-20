@@ -9,11 +9,10 @@
     using Chiffon.Infrastructure;
     using Chiffon.Persistence;
     using Narvalo;
-    using Narvalo.Fx;
-    using Narvalo.Linq;
     using Narvalo.Web;
 
-    public class PatternImageHandler : HttpHandlerBase<PatternImageQuery>, IRequiresSessionState
+    public class PatternImageHandler
+        : HttpHandlerBase<PatternImageQuery, PatternImageQueryBinder>, IRequiresSessionState
     {
         // Mise en cache publique pour 7 jours.
         static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(7, 0, 0, 0);
@@ -42,29 +41,6 @@
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
-        protected override Outcome<PatternImageQuery> Bind(HttpRequest request)
-        {
-            DebugCheck.NotNull(request);
-
-            var nvc = request.QueryString;
-            var query = new PatternImageQuery();
-
-            query.DesignerKey = nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_));
-
-            query.Size = nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_));
-
-            query.Reference = nvc.MayGetValue("reference")
-                .Filter(_ => _.Length > 0);
-
-            query.Variant = nvc.MayGetValue("version");
-
-            if (query.IsIncomplete) {
-                return Outcome.Failure<PatternImageQuery>(new PatternImageException("FIXME"));
-            }
-
-            return Outcome.Create(query);
-        }
-
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
             DebugCheck.NotNull(context);
@@ -72,12 +48,12 @@
 
             var response = context.Response;
 
-            var pattern = _queries.GetPattern(query.DesignerKey.Value, query.Reference.Value, query.Variant.Value);
+            var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
             if (pattern == null) {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
-            var size = query.Size.Value;
+            var size = query.Size;
 
             // FIXME
             if (size == PatternSize.Preview && !pattern.HasPreview) {

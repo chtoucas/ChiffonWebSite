@@ -10,11 +10,11 @@
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Fx;
-    using Narvalo.Linq;
     using Narvalo.Web;
 
     // TODO: ValidateAntiForgeryToken.
-    public class LogOnHandler : HttpHandlerBase<LogOnQuery>, IRequiresSessionState
+    public class LogOnHandler
+        : HttpHandlerBase<LogOnQuery, LogOnQueryBinder>, IRequiresSessionState
     {
         readonly IMemberService _memberService;
         readonly ISiteMapFactory _siteMapFactory;
@@ -33,29 +33,6 @@
 
         protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
 
-        protected override Outcome<LogOnQuery> Bind(HttpRequest request)
-        {
-            DebugCheck.NotNull(request);
-
-            var form = request.Form;
-            var query = new LogOnQuery();
-
-            query.Email = form.MayGetValue("email")
-                .Filter(_ => _.Length > 0);
-
-            query.Password = form.MayGetValue("password")
-                .Filter(_ => _.Length > 0);
-
-            query.TargetUrl = form.MayGetValue("targeturl")
-                .Bind(_ => MayCreate.Uri(_, UriKind.Relative));
-
-            if (query.IsIncomplete) {
-                return Outcome.Failure<LogOnQuery>(new LogOnException("FIXME"));
-            }
-
-            return Outcome.Create(query);
-        }
-
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
             DebugCheck.NotNull(context);
@@ -64,7 +41,7 @@
             var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
 
             var nextUrl = _memberService
-                .MayLogOn(query.Email.Value, query.Password.Value)
+                .MayLogOn(query.Email, query.Password)
                 .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
                 .Match(
                     _ => GetNextUri_(query.TargetUrl, siteMap),

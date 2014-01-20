@@ -239,8 +239,8 @@
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\PatternImageException.cs" />
-    <Compile Include="Handlers\LogOnException.cs" />
+    <Compile Include="Handlers\LogOnQueryBinder.cs" />
+    <Compile Include="Handlers\PatternImageQueryBinder.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Common\RouteConfigurator.cs" />
     <Compile Include="Common\CssUtility.cs" />
