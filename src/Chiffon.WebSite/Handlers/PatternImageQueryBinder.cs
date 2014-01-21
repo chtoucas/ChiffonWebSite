@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Handlers
 {
-    using System;
     using System.Web;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
@@ -18,7 +17,7 @@
 
             var nvc = request.QueryString;
 
-            nvc.MayParseValue("designer", _ => DesignerKey.MayParse(_))
+            nvc.MayParseValue("designerkey", _ => DesignerKey.MayParse(_))
                 .OnSome(_ => result.DesignerKey = _);
 
             nvc.MayGetValue("reference")
@@ -27,7 +26,7 @@
             nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_))
                 .OnSome(_ => result.Size = _);
 
-            nvc.MayGetValue("version")
+            nvc.MayGetValue("variant")
                 .OnSome(_ => result.Variant = _);
 
             return result;

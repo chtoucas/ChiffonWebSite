@@ -16,8 +16,6 @@ namespace Chiffon.Handlers
         [Required]
         public PatternSize Size { get; set; }
 
-        [Required]
-        [StringLength(200, MinimumLength = 1)]
         public string Variant { get; set; }
     }
 }

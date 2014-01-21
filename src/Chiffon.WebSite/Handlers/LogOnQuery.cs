@@ -15,7 +15,6 @@
         [StringLength(200, MinimumLength = 1)]
         public string Password { get; set; }
 
-        [Required]
         public Maybe<Uri> TargetUrl { get; set; }
     }
 }
