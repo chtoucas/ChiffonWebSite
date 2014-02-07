@@ -3,29 +3,32 @@
     using System;
     using System.Web;
     using Narvalo;
+    using Narvalo.Collections;
+    using Narvalo.Fx;
     using Narvalo.Linq;
     using Narvalo.Web;
 
-    public class LogOnQueryBinder : QueryBinderBase<LogOnQuery>
+    public class LogOnQueryBinder : HttpQueryBinderBase<LogOnQuery>
     {
         public LogOnQueryBinder() : base() { }
 
-        protected override LogOnQuery BindCore(HttpRequest request)
+        protected override Maybe<LogOnQuery> BindCore(HttpRequest request)
         {
-            var result = new LogOnQuery();
-
             var form = request.Form;
 
-            form.MayGetValue("email")
-                .OnSome(_ => result.Email = _);
+            return
+                // Paramètres obligatoires.
+                from email in form.MayGetSingle("email")
+                from password in form.MayGetSingle("password")
 
-            form.MayGetValue("password")
-                .OnSome(_ => result.Password = _);
+                // Paramètres optionnelles.
+                let targetUrl = form.MayGetSingle("targeturl").Bind(_ => MayParseTo.Uri(_, UriKind.Relative))
 
-            result.TargetUrl = form.MayGetValue("targeturl")
-                 .Bind(_ => MayCreate.Uri(_, UriKind.Relative));
-
-            return result;
+                select new LogOnQuery {
+                    Email = email,
+                    Password = password,
+                    TargetUrl = targetUrl
+                };
         }
     }
 }

@@ -38,7 +38,7 @@
         #region IMemberService
 
         /// <summary />
-        public Nil RegisterMember(RegisterMemberRequest request)
+        public VoidOrBreak RegisterMember(RegisterMemberRequest request)
         {
             Require.NotNull(request, "request");
 
@@ -47,7 +47,7 @@
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return Nil.Failure(SR.MemberService_EmailAlreadyTaken);
+                return VoidOrBreak.Interrupt(SR.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -77,7 +77,7 @@
                 });
             }
 
-            return Nil.Success;
+            return VoidOrBreak.Success;
         }
 
         /// <summary />

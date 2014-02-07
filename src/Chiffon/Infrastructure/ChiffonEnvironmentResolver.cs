@@ -6,6 +6,7 @@
     using System.Web;
     using System.Web.SessionState;
     using Narvalo;
+    using Narvalo.Collections;
     using Narvalo.Fx;
     using Narvalo.Linq;
 
@@ -46,19 +47,16 @@
 
             var uri = GetBaseUri_(request.Url);
 
-            var language = MayGetLanguageFromQueryString_(request);
+            var language = GetLanguageFromQueryString_(request);
 
-            // Si le visiteur a demandé une langue bien spécifique, on sauvegarde
-            // la demande en session.
-            language.OnSome(_ => { UpdateLanguageSession_(session, _); });
+            // Si le visiteur a demandé une langue bien spécifique, on sauvegarde la demande en session.
+            language.OnValue(_ => { UpdateLanguageSession_(session, _); });
 
-            if (language.IsNone) {
-                // On regarde dans la session si on n'a pas une langue déjà définie.
-                language = MayGetLanguageFromSession_(session);
-            }
+            // On regarde dans la session si on n'a pas une langue déjà définie.
+            language = language ?? GetLanguageFromSession_(session);
 
             return language.Map(_ => new ChiffonEnvironment(_, uri))
-                .ValueOrElse(new ChiffonEnvironment(ChiffonLanguage.Default, uri));
+                ?? new ChiffonEnvironment(ChiffonLanguage.Default, uri);
         }
 
         static Uri GetBaseUri_(Uri uri)
@@ -70,19 +68,23 @@
             // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
         }
 
-        static Maybe<ChiffonLanguage> MayGetLanguageFromQueryString_(HttpRequest request)
+        static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
         {
-            return request.QueryString
-                .MayParseValue("lang", _ => MayParse.ToEnum<ChiffonLanguage>(_));
+            return (from _ in request.QueryString.MayGetSingle("lang")
+                    select ParseTo.NullableEnum<ChiffonLanguage>(_)).ToNullable();
         }
 
-        static Maybe<ChiffonLanguage> MayGetLanguageFromSession_(HttpSessionState session)
+        static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
         {
             var value = session[SessionKey_];
+            ChiffonLanguage result;
 
-            return value == null
-                ? Maybe<ChiffonLanguage>.None
-                : MayConvert.ToEnum<ChiffonLanguage>(value);
+            if (TryConvertTo.Enum<ChiffonLanguage>(value, out result)) {
+                return result;
+            }
+            else {
+                return null;
+            }
         }
 
         static ChiffonEnvironment ResolveFromHost_(string host)

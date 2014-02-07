@@ -21,7 +21,7 @@
         /// <param name="email">L'adresse e-mail du membre.</param>
         /// <param name="password">Le mot de passe du membre.</param>
         /// <returns>
-        /// Retourne une monade contenant le membre si l'e-mail et le mot de passe correspondent. 
+        /// Retourne une monade contenant le membre si e-mail et mot de passe correspondent. 
         /// </returns>
         Maybe<Member> MayLogOn(string email, string password);
 
@@ -33,6 +33,6 @@
         /// Retourne une monade contenant le membre qui vient d'être créé 
         /// si l'opération s'est correctement déroulée.
         /// </returns>
-        Nil RegisterMember(RegisterMemberRequest request);
+        VoidOrBreak RegisterMember(RegisterMemberRequest request);
     }
 }

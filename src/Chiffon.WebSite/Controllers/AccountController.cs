@@ -11,6 +11,7 @@
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Linq;
 
     public class AccountController : ChiffonController
     {
@@ -112,14 +113,13 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (result.Unsuccessful) {
+            if (result.IsBreak) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
                     Message = result.Message
                 });
             }
 
-            string returnUrl = MayCreate.Uri(model.ReturnUrl, UriKind.Relative)
-                .Map(_ => _.ToString())
+            string returnUrl = (from _ in MayParseTo.Uri(model.ReturnUrl, UriKind.Relative) select _.ToString())
                 .ValueOrElse(String.Empty);
 
             return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess, new { returnUrl = returnUrl });
@@ -135,8 +135,7 @@
                 return RedirectToRoute(Constants.RouteName.Account.Register);
             }
 
-            string nextUrl = MayCreate.Uri(returnUrl, UriKind.Relative)
-                .Map(_ => _.ToString())
+            string nextUrl = (from _ in MayParseTo.Uri(returnUrl, UriKind.Relative) select _.ToString())
                 .ValueOrElse(Url.RouteUrl(Constants.RouteName.Home.Index));
 
             // LayoutViewModel.

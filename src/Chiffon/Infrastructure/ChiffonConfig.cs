@@ -7,6 +7,8 @@
     using System.Linq;
     using System.Reflection;
     using Narvalo;
+    using Narvalo.Collections;
+    using Narvalo.Fx;
     using Narvalo.Linq;
     using Serilog.Events;
 
@@ -89,16 +91,17 @@
         {
             // > Paramètres obligatoires <
 
-            LogProfile = source.MayGetValue("chiffon:LogProfile")
+            LogProfile = source.MayGetSingle("chiffon:LogProfile")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon:LogProfile'."));
 
-            LogMinimumLevel = source.MayParseValue("chiffon:LogMinimumLevel", _ => MayParse.ToEnum<LogEventLevel>(_))
-                .ValueOrThrow(() => new ConfigurationErrorsException(
-                    "Missing or invalid config 'chiffon:LogMinimumLevel'."));
+            LogMinimumLevel = (from _ in source.MayGetSingle("chiffon:LogMinimumLevel")
+                               select ParseTo.NullableEnum<LogEventLevel>(_))
+                               .UnpackOrThrow(
+                                   () => new ConfigurationErrorsException("Missing or invalid config 'chiffon:LogMinimumLevel'."));
 
             // TODO: validate this? Absolute and well-formed.
-            PatternDirectory = source.MayGetValue("chiffon:PatternDirectory")
+            PatternDirectory = source.MayGetSingle("chiffon:PatternDirectory")
                 .ValueOrThrow(() => new ConfigurationErrorsException(
                     "Missing or invalid config 'chiffon:PatternDirectory'."));
 
@@ -110,23 +113,27 @@
                 AssemblyVersion_.Minor,
                 AssemblyVersion_.Build);
 
-            CssVersion = source.MayGetValue("chiffon:CssVersion").ValueOrElse(version);
+            CssVersion = source.MayGetSingle("chiffon:CssVersion").ValueOrElse(version);
 
-            JavaScriptVersion = source.MayGetValue("chiffon:JavaScriptVersion").ValueOrElse(version);
+            JavaScriptVersion = source.MayGetSingle("chiffon:JavaScriptVersion").ValueOrElse(version);
 
-            DebugStyleSheet = source.MayParseValue("chiffon:DebugStyleSheet", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultDebugStyleSheet_);
+            DebugStyleSheet = (from _ in source.MayGetSingle("chiffon:DebugStyleSheet")
+                               select ParseTo.NullableBoolean(_))
+                               .UnpackOrElse(DefaultDebugStyleSheet_);
 
-            DebugJavaScript = source.MayParseValue("chiffon:DebugJavaScript", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultDebugJavaScript_);
+            DebugJavaScript = (from _ in source.MayGetSingle("chiffon:DebugJavaScript")
+                               select ParseTo.NullableBoolean(_))
+                               .UnpackOrElse(DefaultDebugJavaScript_);
 
-            EnableClientCache = source.MayParseValue("chiffon:EnableClientCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultEnableClientCache_);
+            EnableClientCache = (from _ in source.MayGetSingle("chiffon:EnableClientCache")
+                                 select ParseTo.NullableBoolean(_))
+                                 .UnpackOrElse(DefaultEnableClientCache_);
 
-            EnableServerCache = source.MayParseValue("chiffon:EnableServerCache", _ => MayParse.ToBoolean(_, BooleanStyles.Literal))
-                .ValueOrElse(DefaultEnableServerCache_);
+            EnableServerCache = (from _ in source.MayGetSingle("chiffon:EnableServerCache")
+                                 select ParseTo.NullableBoolean(_))
+                                 .UnpackOrElse(DefaultEnableServerCache_);
 
-            GoogleAnalyticsKey = source.MayGetValue("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey_);
+            GoogleAnalyticsKey = source.MayGetSingle("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey_);
         }
     }
 }

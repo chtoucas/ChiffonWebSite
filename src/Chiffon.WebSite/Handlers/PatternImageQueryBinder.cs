@@ -1,35 +1,42 @@
 ﻿namespace Chiffon.Handlers
 {
+    using System;
     using System.Web;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;
+    using Narvalo.Collections;
+    using Narvalo.Fx;
     using Narvalo.Linq;
     using Narvalo.Web;
 
-    public class PatternImageQueryBinder : QueryBinderBase<PatternImageQuery>
+    public class PatternImageQueryBinder : HttpQueryBinderBase<PatternImageQuery>
     {
         public PatternImageQueryBinder() : base() { }
 
-        protected override PatternImageQuery BindCore(HttpRequest request)
+        protected override Maybe<PatternImageQuery> BindCore(HttpRequest request)
         {
-            var result = new PatternImageQuery();
-
             var nvc = request.QueryString;
 
-            nvc.MayParseValue("designerkey", _ => DesignerKey.MayParse(_))
-                .OnSome(_ => result.DesignerKey = _);
+            return
+                // Paramètres obligatoires.
+                from designerKey in
+                    (from _ in nvc.MayGetSingle("designerKey") select DesignerKey.MayParse(_))
+                from reference in nvc.MayGetSingle("reference")
+                from size in
+                    (from _ in nvc.MayGetSingle("size") select ParseTo.NullableEnum<PatternSize>(_))
 
-            nvc.MayGetValue("reference")
-                .OnSome(_ => result.Reference = _);
+                // Paramètres optionnelles.
+                let variant = nvc.MayGetSingle("variant")
 
-            nvc.MayParseValue("size", _ => MayParse.ToEnum<PatternSize>(_))
-                .OnSome(_ => result.Size = _);
+                where designerKey.IsSome && size.HasValue
 
-            nvc.MayGetValue("variant")
-                .OnSome(_ => result.Variant = _);
-
-            return result;
+                select new PatternImageQuery {
+                    DesignerKey = designerKey.Value,
+                    Reference = reference,
+                    Size = size.Value,
+                    Variant = variant.ValueOrElse(String.Empty),
+                };
         }
     }
 }
