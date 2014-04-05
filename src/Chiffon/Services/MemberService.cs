@@ -47,7 +47,7 @@
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password)) {
-                return VoidOrBreak.Interrupt(SR.MemberService_EmailAlreadyTaken);
+                return VoidOrBreak.Abort(SR.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
