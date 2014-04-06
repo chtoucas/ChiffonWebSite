@@ -7,7 +7,6 @@
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
-    using Narvalo.Linq;
     using Narvalo.Web;
 
     public class PatternImageQueryBinder : HttpQueryBinderBase<PatternImageQuery>
@@ -21,18 +20,19 @@
             return
                 // Paramètres obligatoires.
                 from designerKey in
-                    (from _ in nvc.MayGetSingle("designerKey") select DesignerKey.MayParse(_))
+                    Maybe.Flatten(nvc.MayGetSingle("designerKey").Select(_ => DesignerKey.MayParse(_)))
                 from reference in nvc.MayGetSingle("reference")
                 from size in
-                    (from _ in nvc.MayGetSingle("size") select ParseTo.NullableEnum<PatternSize>(_))
+                    (from _ in nvc.MayGetSingle("size") select ParseTo.Enum<PatternSize>(_))
 
                 // Paramètres optionnelles.
                 let variant = nvc.MayGetSingle("variant")
 
-                where designerKey.IsSome && size.HasValue
+                //where designerKey.IsSome && size.HasValue
+                where size.HasValue
 
                 select new PatternImageQuery {
-                    DesignerKey = designerKey.Value,
+                    DesignerKey = designerKey,
                     Reference = reference,
                     Size = size.Value,
                     Variant = variant.ValueOrElse(String.Empty),

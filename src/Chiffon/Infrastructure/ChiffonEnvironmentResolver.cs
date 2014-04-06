@@ -8,7 +8,6 @@
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
-    using Narvalo.Linq;
 
     public static class ChiffonEnvironmentResolver
     {
@@ -55,7 +54,7 @@
             // On regarde dans la session si on n'a pas une langue déjà définie.
             language = language ?? GetLanguageFromSession_(session);
 
-            return language.Map(_ => new ChiffonEnvironment(_, uri))
+            return language.Select(_ => new ChiffonEnvironment(_, uri))
                 ?? new ChiffonEnvironment(ChiffonLanguage.Default, uri);
         }
 
@@ -71,20 +70,14 @@
         static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
         {
             return (from _ in request.QueryString.MayGetSingle("lang")
-                    select ParseTo.NullableEnum<ChiffonLanguage>(_)).ToNullable();
+                    select ParseTo.Enum<ChiffonLanguage>(_)).ToNullable();
         }
 
         static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
         {
             var value = session[SessionKey_];
-            ChiffonLanguage result;
-
-            if (TryConvertTo.Enum<ChiffonLanguage>(value, out result)) {
-                return result;
-            }
-            else {
-                return null;
-            }
+            
+            return ConvertTo.Convert<ChiffonLanguage>(value);
         }
 
         static ChiffonEnvironment ResolveFromHost_(string host)

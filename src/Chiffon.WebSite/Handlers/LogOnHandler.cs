@@ -42,22 +42,21 @@
 
             var nextUrl = _memberService
                 .MayLogOn(query.Email, query.Password)
-                .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
-                .Match(
-                    _ => GetNextUri_(query.TargetUrl, siteMap),
-                    () => GetLoginUri_(query.TargetUrl, siteMap));
+                .Run(_ => (new AuthentificationService(context)).SignIn(_))
+                .Select(_ => GetNextUri_(query.TargetUrl, siteMap))
+                .ValueOrElse(GetLoginUri_(query.TargetUrl, siteMap));
 
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }
 
         Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
         {
-            return targetUrl.Match(_ => siteMap.MakeAbsoluteUri(_), siteMap.Home());
+            return targetUrl.Select(_ => siteMap.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
         }
 
         Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
         {
-            return targetUrl.Match(_ => siteMap.Login(_), siteMap.Login());
+            return targetUrl.Select(_ => siteMap.Login(_)).ValueOrElse(siteMap.Login());
         }
     }
 }

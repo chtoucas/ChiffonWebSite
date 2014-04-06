@@ -11,7 +11,6 @@
     using Chiffon.Services;
     using Chiffon.ViewModels;
     using Narvalo;
-    using Narvalo.Linq;
 
     public class AccountController : ChiffonController
     {
@@ -119,7 +118,7 @@
                 });
             }
 
-            string returnUrl = (from _ in MayParseTo.Uri(model.ReturnUrl, UriKind.Relative) select _.ToString())
+            string returnUrl = (from _ in ParseTo.Uri(model.ReturnUrl, UriKind.Relative) select _.ToString())
                 .ValueOrElse(String.Empty);
 
             return RedirectToRoute(Constants.RouteName.Account.RegisterSuccess, new { returnUrl = returnUrl });
@@ -135,7 +134,7 @@
                 return RedirectToRoute(Constants.RouteName.Account.Register);
             }
 
-            string nextUrl = (from _ in MayParseTo.Uri(returnUrl, UriKind.Relative) select _.ToString())
+            string nextUrl = (from _ in ParseTo.Uri(returnUrl, UriKind.Relative) select _.ToString())
                 .ValueOrElse(Url.RouteUrl(Constants.RouteName.Home.Index));
 
             // LayoutViewModel.

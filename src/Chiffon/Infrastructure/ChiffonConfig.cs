@@ -9,7 +9,6 @@
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
-    using Narvalo.Linq;
     using Serilog.Events;
 
     public class ChiffonConfig
@@ -96,7 +95,7 @@
                     "Missing or invalid config 'chiffon:LogProfile'."));
 
             LogMinimumLevel = (from _ in source.MayGetSingle("chiffon:LogMinimumLevel")
-                               select ParseTo.NullableEnum<LogEventLevel>(_))
+                               select ParseTo.Enum<LogEventLevel>(_))
                                .UnpackOrThrow(
                                    () => new ConfigurationErrorsException("Missing or invalid config 'chiffon:LogMinimumLevel'."));
 
@@ -118,19 +117,19 @@
             JavaScriptVersion = source.MayGetSingle("chiffon:JavaScriptVersion").ValueOrElse(version);
 
             DebugStyleSheet = (from _ in source.MayGetSingle("chiffon:DebugStyleSheet")
-                               select ParseTo.NullableBoolean(_))
+                               select ParseTo.Boolean(_))
                                .UnpackOrElse(DefaultDebugStyleSheet_);
 
             DebugJavaScript = (from _ in source.MayGetSingle("chiffon:DebugJavaScript")
-                               select ParseTo.NullableBoolean(_))
+                               select ParseTo.Boolean(_))
                                .UnpackOrElse(DefaultDebugJavaScript_);
 
             EnableClientCache = (from _ in source.MayGetSingle("chiffon:EnableClientCache")
-                                 select ParseTo.NullableBoolean(_))
+                                 select ParseTo.Boolean(_))
                                  .UnpackOrElse(DefaultEnableClientCache_);
 
             EnableServerCache = (from _ in source.MayGetSingle("chiffon:EnableServerCache")
-                                 select ParseTo.NullableBoolean(_))
+                                 select ParseTo.Boolean(_))
                                  .UnpackOrElse(DefaultEnableServerCache_);
 
             GoogleAnalyticsKey = source.MayGetSingle("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey_);

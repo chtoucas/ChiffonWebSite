@@ -39,7 +39,7 @@
                     LastName = rdr.GetString("lastname"),
                     Nickname = rdr.MayGetString("nickname"),
                     Presentation = rdr.GetString("presentation"),
-                    WebsiteUrl = rdr.MayGetString("website").Map(_ => new Uri(_)),
+                    WebsiteUrl = rdr.MayGetString("website").Select(_ => new Uri(_)),
                 };
 
                 designers.Add(designer);

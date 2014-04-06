@@ -5,7 +5,6 @@
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
-    using Narvalo.Linq;
     using Narvalo.Web;
 
     public class LogOnQueryBinder : HttpQueryBinderBase<LogOnQuery>
@@ -22,7 +21,7 @@
                 from password in form.MayGetSingle("password")
 
                 // Paramètres optionnelles.
-                let targetUrl = form.MayGetSingle("targeturl").Bind(_ => MayParseTo.Uri(_, UriKind.Relative))
+                let targetUrl = form.MayGetSingle("targeturl").Bind(_ => ParseTo.Uri(_, UriKind.Relative))
 
                 select new LogOnQuery {
                     Email = email,
