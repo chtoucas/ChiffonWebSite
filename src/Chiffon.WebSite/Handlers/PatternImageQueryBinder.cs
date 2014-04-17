@@ -28,7 +28,6 @@
                 // Paramètres optionnelles.
                 let variant = nvc.MayGetSingle("variant")
 
-                //where designerKey.IsSome && size.HasValue
                 where size.HasValue
 
                 select new PatternImageQuery {

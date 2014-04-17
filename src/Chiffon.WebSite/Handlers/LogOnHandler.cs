@@ -42,7 +42,7 @@
 
             var nextUrl = _memberService
                 .MayLogOn(query.Email, query.Password)
-                .Run(_ => (new AuthentificationService(context)).SignIn(_))
+                .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
                 .Select(_ => GetNextUri_(query.TargetUrl, siteMap))
                 .ValueOrElse(GetLoginUri_(query.TargetUrl, siteMap));
 

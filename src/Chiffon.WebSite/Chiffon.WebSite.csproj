@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.Mvc5.3.2.1\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle">
+      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\BouncyCastle.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -86,7 +89,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="MailKit">
+      <HintPath>..\..\packages\MailKit.0.9.0.0\lib\net40\MailKit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MimeKit">
+      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
     <Reference Include="Narvalo.Common, Version=0.16.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Narvalo.Common.0.16.0.1\lib\net45\Narvalo.Common.dll</HintPath>
@@ -117,6 +129,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -198,35 +211,30 @@
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Errors\BadRequest.aspx.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\BadRequest.aspx.designer.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Error.Master.designer.cs">
       <DependentUpon>Error.Master</DependentUpon>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.designer.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.designer.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
@@ -235,7 +243,6 @@
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Errors\ServiceUnavailable.aspx.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
@@ -384,6 +391,7 @@
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="sqlite3.dll" />
     <Content Include="ViewModels\Resources\ResourceNames.tt" />
     <Content Include="Errors\Error.Master" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
