@@ -77,7 +77,7 @@
         {
             var value = session[SessionKey_];
             
-            return ConvertTo.Convert<ChiffonLanguage>(value);
+            return ConvertTo.Enum<ChiffonLanguage>(value);
         }
 
         static ChiffonEnvironment ResolveFromHost_(string host)
