@@ -64,22 +64,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.Mvc5.3.3.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle">
-      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\BouncyCastle.dll</HintPath>
+    <Reference Include="BouncyCastle, Version=1.8.5240.35743, Culture=neutral, PublicKeyToken=eec3120e64a3fcba, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MimeKit.0.35.0.0\lib\net40\BouncyCastle.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Ado">
-      <HintPath>..\..\packages\Glimpse.Ado.1.7.0\lib\net45\Glimpse.Ado.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.AspNet, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glimpse.Ado, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Glimpse.AspNet.1.8.1\lib\net45\Glimpse.AspNet.dll</HintPath>
+      <HintPath>..\..\packages\Glimpse.Ado.1.7.1\lib\net45\Glimpse.Ado.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Core, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glimpse.AspNet, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Glimpse.1.8.4\lib\net45\Glimpse.Core.dll</HintPath>
+      <HintPath>..\..\packages\Glimpse.AspNet.1.9.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Glimpse.1.8.5\lib\net45\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -89,15 +91,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit">
-      <HintPath>..\..\packages\MailKit.0.9.0.0\lib\net40\MailKit.dll</HintPath>
+    <Reference Include="MailKit, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MailKit.0.14.0.0\lib\net40\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MimeKit">
-      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\MimeKit.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\..\packages\MimeKit.0.30.0.0\lib\net40\Mono.Data.Sqlite.dll</HintPath>
+    <Reference Include="MimeKit, Version=0.35.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MimeKit.0.35.0.0\lib\net40\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Common, Version=0.18.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -253,7 +254,6 @@
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Handlers\LogOnQuery.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -397,7 +397,6 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="sqlite3.dll" />
     <Content Include="ViewModels\Resources\ResourceNames.tt" />
     <Content Include="Errors\Error.Master" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
