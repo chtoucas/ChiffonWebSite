@@ -58,15 +58,15 @@
     </Reference>
     <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Autofac.3.4.0\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.Mvc5.3.3.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle, Version=1.8.5240.35743, Culture=neutral, PublicKeyToken=eec3120e64a3fcba, processorArchitecture=MSIL">
+    <Reference Include="BouncyCastle, Version=1.8.5259.25294, Culture=neutral, PublicKeyToken=eec3120e64a3fcba, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MimeKit.0.35.0.0\lib\net40\BouncyCastle.dll</HintPath>
+      <HintPath>..\..\packages\MimeKit.0.36.0.0\lib\net40\BouncyCastle.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
@@ -91,14 +91,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+    <Reference Include="MailKit, Version=0.15.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MailKit.0.14.0.0\lib\net40\MailKit.dll</HintPath>
+      <HintPath>..\..\packages\MailKit.0.15.0.0\lib\net40\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MimeKit, Version=0.35.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+    <Reference Include="MimeKit, Version=0.36.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MimeKit.0.35.0.0\lib\net40\MimeKit.dll</HintPath>
+      <HintPath>..\..\packages\MimeKit.0.36.0.0\lib\net40\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Common, Version=0.18.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -212,35 +212,30 @@
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Errors\BadRequest.aspx.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\BadRequest.aspx.designer.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\Error.Master.cs">
       <DependentUpon>Error.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\Error.Master.designer.cs">
       <DependentUpon>Error.Master</DependentUpon>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\InternalServerError.aspx.designer.cs">
       <DependentUpon>InternalServerError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\NotFound.aspx.designer.cs">
       <DependentUpon>NotFound.aspx</DependentUpon>
@@ -249,7 +244,6 @@
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Errors\ServiceUnavailable.aspx.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
