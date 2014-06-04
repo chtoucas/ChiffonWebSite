@@ -19,24 +19,24 @@ $tools = @(
   # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement vers une version spécifique.
   @{
     'Name' = 'NuGet'
-    'Version' = '2.8.0'
+    'Version' = '2.8.2'
     'Source' = 'http://www.nuget.org/nuget.exe'
   }
   @{
     'Name' = 'Node'
-    'Version' = '0.10.23'
-    'Source' = 'http://nodejs.org/dist/v0.10.23/node.exe'
+    'Version' = '0.10.28'
+    'Source' = 'http://nodejs.org/dist/v0.10.28/node.exe'
   }
   @{
     'Name' = 'Node Package Manager'
-    'Version' = '1.3.19'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.3.19.zip'
+    'Version' = '1.4.9'
+    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.9.zip'
   }
   # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
   @{
     'Name' = 'Google Closure Compiler'
-    'Version' = '20131014'
-    'Source' = 'http://dl.google.com/closure-compiler/compiler-20131014.zip'
+    'Version' = '20140508'
+    'Source' = 'http://dl.google.com/closure-compiler/compiler-20140508.zip'
   }
   # WARNING: La version 2.4.8 ne gère pas correctement les chemins Windows.
   # Cf. https://github.com/yui/yuicompressor/issues/78
