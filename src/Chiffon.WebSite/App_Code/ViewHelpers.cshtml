@@ -2,11 +2,21 @@
 @using System.Globalization
 @using System.Web.Mvc
 @using Chiffon.Common
+@using Chiffon.Entities
 @using Chiffon.Infrastructure
 @using Chiffon.Resources
 @using Chiffon.ViewModels
 
 @* Generator: MvcHelper Namespace: Chiffon.Common*@
+
+@helper DesignerWebsiteUrl(Designer designer)
+{
+ var url = designer.WebsiteUrl.Select(_ => _.ToString()).ValueOrDefault();
+ if (!String.IsNullOrEmpty(url)) {
+  var website = url.ToString().Replace("http://", String.Empty);
+  <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose itemprop="url">@website.Replace("/", String.Empty)</a></li>
+ }
+}
 
 @helper Pager(UrlHelper Url, DesignerViewModel Model)
 {
@@ -49,25 +59,25 @@
 }
 
 @helper Pager(UrlHelper Url, PatternViewModel Model)
- {
-  // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
-  <p id=pager class=pager>
-   @if (Model.IsFirstPage) {
-    @VR.Pager_Previous
-   }
-   else {
-    <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
-   }
-   /
-   @if (Model.IsLastPage) {
-    @VR.Pager_Next
-   }
-   else {
-    <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
-   }
-   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
-  </p>
- }
+{
+ // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
+ <p id=pager class=pager>
+  @if (Model.IsFirstPage) {
+   @VR.Pager_Previous
+  }
+  else {
+   <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
+  }
+  /
+  @if (Model.IsLastPage) {
+   @VR.Pager_Next
+  }
+  else {
+   <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
+  }
+  - @Model.PageIndex @VR.Pager_Of @Model.PageCount
+ </p>
+}
 
 @*@helper LanguageMenu(ChiffonLanguage language)
  {

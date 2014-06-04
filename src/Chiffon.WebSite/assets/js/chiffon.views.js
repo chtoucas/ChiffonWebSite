@@ -446,7 +446,7 @@ Chiffon.Views = (function(window, undef) {
   Views.ValidateMixin = {
     // Chargement de jQuery.validate puis exécution d'un callback.
     validate: function(fn) {
-      var locale = this.context.locale;
+      //var locale = this.context.locale;
       if (undef === validationResources) {
         validationResources = [DEBUG ? 'jquery.validate.js' : 'jquery.validate.min.js']
           // NB: Pour le moment on n'affiche pas les messages d'erreur.

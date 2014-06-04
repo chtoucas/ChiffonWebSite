@@ -76,8 +76,8 @@
         static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
         {
             var value = session[SessionKey_];
-            
-            return ConvertTo.Enum<ChiffonLanguage>(value);
+
+            return value != null ? ConvertTo.Enum<ChiffonLanguage>(value) : null;
         }
 
         static ChiffonEnvironment ResolveFromHost_(string host)
