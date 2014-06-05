@@ -21,10 +21,10 @@
         {
             Require.NotNull(builder, "builder");
 
-            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
+            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerRequest();
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerRequest();
             }
             else {
                 builder.Register(ResolveQueriesNoCache_).As<IDbQueries>().SingleInstance();

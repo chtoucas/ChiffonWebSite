@@ -26,12 +26,12 @@
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
-            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerHttpRequest();
+            builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerRequest();
 
             // > Persistence <
 
             if (_config.EnableServerCache) {
-                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerHttpRequest();
+                builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerRequest();
             }
             else {
                 builder.RegisterType<DbQueries>().As<IDbQueries>().SingleInstance();
