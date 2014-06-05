@@ -19,7 +19,7 @@ Technology footprint
 Requirements
 ------------
 
-* .NET 4.5
+* .NET 4.5.1
 * PowerShell v3
 
 Setup

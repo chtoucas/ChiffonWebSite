@@ -451,7 +451,7 @@ Chiffon.Views = (function(window, undef) {
         validationResources = [DEBUG ? 'jquery.validate.js' : 'jquery.validate.min.js']
           // NB: Pour le moment on n'affiche pas les messages d'erreur.
           //.concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
-          .map(function(src) { return 'vendor/jquery.validate-1.11.1/' + src; });
+          .map(function(src) { return 'vendor/jquery.validate-1.12.0/' + src; });
       }
 
       this.context.require(validationResources, function() {

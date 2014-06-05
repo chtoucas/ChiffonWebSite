@@ -35,6 +35,7 @@ var Chiffon = (function(window, undef) {
     var $ = window.$;
     var nprogress = window.NProgress;
 
+    // NB: L10N n'est plus utilisé pour le moment.
     // Utilitaire de localisation d'une chaîne de caractères.
     //window.ł = function(value) { return value.toLocaleString(); };
 
@@ -83,17 +84,20 @@ var Chiffon = (function(window, undef) {
     var baseUrl = context.baseUrl;
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
-      'vendor/jquery-2.0.3.js',
-      //'vendor/l10n-2013.09.12.js',
+      'vendor/jquery-2.1.1.js',
+      // N'est plus utilisé pour le moment.
+      //'vendor/l10n-2014.05.02.js',
       'vendor/nprogress-0.1.2.js',
       'vendor/jquery.microdata/jquery.microdata.js',
       'vendor/jquery.microdata/schemas.js',
+      // NB: L10N n'est plus utilisé pour le moment.
       //'jquery.modal.js',
       'chiffon.jquery.js',
+      // NB: L10N n'est plus utilisé pour le moment.
       //'chiffon.localization.js',
       'chiffon.views.js'
     ] : [
-      'vendor/jquery-2.0.3.min.js',
+      'vendor/jquery-2.1.1.min.js',
       Chiffon.getBundle('views')
     ];
 

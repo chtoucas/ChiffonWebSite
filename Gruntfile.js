@@ -80,20 +80,20 @@ module.exports = function(grunt) {
         main: {
           src: [
             'vendor/yepnope-1.5.4.js',
-            'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js',
-            'vendor/fastclick-0.6.9.js',
+            'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "").replace("^", "") %>.js',
+            'vendor/fastclick-1.0.2.js',
             'chiffon.js'
           ].map(mapJs),
           dest: mapJs('_main-<%= version %>.js'),
           srcmap: '_main-<%= version %>.map'
         },
         //lib: {
-        //  src: ['vendor/jquery-2.0.3.min.js'].map(mapJs),
+        //  src: ['vendor/jquery-2.1.1.min.js'].map(mapJs),
         //  dest: mapJs('_lib-<%= version %>.js')
         //},
         views: {
           src: [
-            'vendor/l10n-2013.09.12.js',
+            //'vendor/l10n-2014.05.02.js',
             'vendor/nprogress-0.1.2.js',
             //'jquery.modal.js',
             'chiffon.jquery.js',
@@ -247,7 +247,7 @@ module.exports = function(grunt) {
 
     lodash: {
       custom: {
-        dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "") %>.js'),
+        dest: mapJs('vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "").replace("^", "") %>.js'),
         options: {
           modifier: 'modern',
           include: ['debounce', 'defaults', 'extend', 'rest'],
