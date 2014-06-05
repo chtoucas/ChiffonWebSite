@@ -7,13 +7,14 @@ var Chiffon = (function(window, undef) {
   var defaultSettings = {
     ajaxTimeout: 3000
   };
+  // Contexte par défaut.
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
     //device: {
     //  isTouch: false
     //},
-    isAuth: false,
-    locale: 'fr'
+    isAuth: false//,
+    //locale: 'fr'
   };
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
   var locales = [defaultContext.locale, 'en'];
@@ -52,7 +53,8 @@ var Chiffon = (function(window, undef) {
       cache: true
     });
 
-    // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch de requêtes se termine.
+    // Quand une requête ajax démarre on affiche un indicateur, idem quand un batch
+    // de requêtes se termine.
     $(document).ajaxStart(function() {
       nprogress.start();
     }).ajaxStop(function() {
@@ -85,7 +87,7 @@ var Chiffon = (function(window, undef) {
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
       'vendor/jquery-2.1.1.js',
-      // N'est plus utilisé pour le moment.
+      // NB: L10N n'est plus utilisé pour le moment.
       //'vendor/l10n-2014.05.02.js',
       'vendor/nprogress-0.1.2.js',
       'vendor/jquery.microdata/jquery.microdata.js',

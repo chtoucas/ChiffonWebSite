@@ -21,11 +21,17 @@
         }
 
         public string CategoryKey { get; set; }
+
         public DateTime CreationTime { get; set; }
+
         public DesignerKey DesignerKey { get { return PatternId.DesignerKey; } }
+
         public bool HasPreview { get; set; }
+
         public DateTime LastModifiedTime { get; set; }
+
         public bool Locked { get { return Preferred || Showcased; } }
+
         public PatternId PatternId { get { return _patternId; } }
 
         public bool Preferred

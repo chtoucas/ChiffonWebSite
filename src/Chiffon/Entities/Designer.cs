@@ -37,7 +37,9 @@
         public DesignerKey Key { get { return _key; } }
 
         public string AvatarCategory { get; set; }
+
         public string AvatarReference { get; set; }
+
         public string AvatarVersion { get; set; }
 
         /// <summary>

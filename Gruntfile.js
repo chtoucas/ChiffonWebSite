@@ -66,7 +66,7 @@ module.exports = function(grunt) {
       css: {
         main: {
           src: [
-            'normalize-2.1.3.css',
+            'normalize-3.0.1.css',
             'nprogress-0.1.2.css',
             'chiffon.h5bp.css',
             'chiffon.css',
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // Minification des fichiers Css via Clean-CSS.
+    // Minification des fichiers CSS via Clean-CSS.
     cssmin: {
       main: {
         options: {

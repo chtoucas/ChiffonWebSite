@@ -64,10 +64,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.Mvc5.3.3.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle, Version=1.8.5259.25294, Culture=neutral, PublicKeyToken=eec3120e64a3fcba, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MimeKit.0.36.0.0\lib\net40\BouncyCastle.dll</HintPath>
-    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -91,15 +87,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit, Version=0.15.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MailKit.0.15.0.0\lib\net40\MailKit.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MimeKit, Version=0.36.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\MimeKit.0.36.0.0\lib\net40\MimeKit.dll</HintPath>
-    </Reference>
     <Reference Include="Narvalo.Common, Version=0.18.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Narvalo.Common.0.18.0.1\lib\net45\Narvalo.Common.dll</HintPath>
@@ -357,7 +345,7 @@
       <DependentUpon>Chiffon.mdf</DependentUpon>
     </Content>
     <Content Include="assets\css\chiffon.h5bp.css" />
-    <Content Include="assets\css\normalize-2.1.3.css" />
+    <Content Include="assets\css\normalize-3.0.1.css" />
     <Content Include="assets\css\nprogress-0.1.2.css" />
     <Content Include="assets\img\doubleline_grey.png" />
     <Content Include="assets\img\logo.png" />

@@ -62,7 +62,7 @@
         {
             if (pageIndex < 1) { return null; }
 
-            // On ne garde que les motifs ayant un aperçu dont on prend le préféré.
+            // On ne garde que les motifs ayant un aperçu et on ne garde que le préféré.
             var previews = _queries.ListPatterns(designerKey, categoryKey).Where(_ => _.HasPreview && _.Preferred);
 
             var pageCount = previews.PageCount(pageSize);

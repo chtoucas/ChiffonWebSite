@@ -32,19 +32,19 @@ $tools = @(
     'Version' = '1.4.9'
     'Source' = 'http://nodejs.org/dist/npm/npm-1.4.9.zip'
   }
-  # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
-  @{
-    'Name' = 'Google Closure Compiler'
-    'Version' = '20140508'
-    'Source' = 'http://dl.google.com/closure-compiler/compiler-20140508.zip'
-  }
-  # WARNING: La version 2.4.8 ne gère pas correctement les chemins Windows.
-  # Cf. https://github.com/yui/yuicompressor/issues/78
-  @{
-    'Name' = 'YUI Compressor'
-    'Version' = '2.4.7'
-    'Source' = 'https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip'
-  }
+#  # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
+#  @{
+#    'Name' = 'Google Closure Compiler'
+#    'Version' = '20140508'
+#    'Source' = 'http://dl.google.com/closure-compiler/compiler-20140508.zip'
+#  }
+#  # WARNING: La version 2.4.8 ne gère pas correctement les chemins Windows.
+#  # Cf. https://github.com/yui/yuicompressor/issues/78
+#  @{
+#    'Name' = 'YUI Compressor'
+#    'Version' = '2.4.7'
+#    'Source' = 'https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip'
+#  }
 )
 
 #-- Installation ou mise à jour des outils --#
@@ -68,7 +68,6 @@ Write-Host 'Restoring Node.js modules.' -ForegroundColor 'Yellow'
 # Installation des exécutables nodes.
 
 $modules = @(
-  @{ 'Name' = 'bower'; 'Command' = 'bower\bin\bower' }
   @{ 'Name' = 'grunt'; 'Command' = 'grunt-cli\bin\grunt' }
   @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
 )
