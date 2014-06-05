@@ -3,12 +3,10 @@ ChiffonWebSite
 
 WebSite for a textile design collective, available in French & English.
 
-The result can be seen here: [http://pourquelmotifsimone.com](http://pourquelmotifsimone.com).
-
 Technology footprint
 --------------------
 
-* ASP.NET MVC 4
+* ASP.NET MVC 5
 * I18N'ized
 * Autofac
 * MEF
@@ -22,7 +20,6 @@ Requirements
 ------------
 
 * .NET 4.5
-* JRE v1.6
 * PowerShell v3
 
 Setup
@@ -35,5 +32,3 @@ session. This script will download then install all third-party tools, namely:
 * NuGet
 * Node.js
 * Node Package Manager
-* Google Closure Compiler
-* YUI Compressor
