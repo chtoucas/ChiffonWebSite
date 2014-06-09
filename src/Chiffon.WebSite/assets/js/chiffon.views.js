@@ -8,7 +8,7 @@ Chiffon.Utils = (function(window, undef) {
 
   // WARNING: cette fonction ne prend pas en compte les paramètres multiples.
   Utils.parseQuery = function(value) {
-    // WARNING: window.location.search commence avec le caractère '?'.
+    // NB: window.location.search commence avec le caractère '?'.
     if (undef === value) { value = location.search.substring(1); }
 
     if (!value) { return {}; }

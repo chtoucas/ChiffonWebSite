@@ -7,6 +7,7 @@ var Chiffon = (function(window, undef) {
   var defaultSettings = {
     ajaxTimeout: 3000
   };
+
   // Contexte par défaut.
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
@@ -16,27 +17,31 @@ var Chiffon = (function(window, undef) {
     isAuth: false//,
     //locale: 'fr'
   };
+
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
   var locales = [defaultContext.locale, 'en'];
   var bundleSuffix = '-' + VERSION + '.js';
   var document = window.document;
 
-  // Objet Chiffon.
-
+  /*
+   * Objet Chiffon.
+   */
   function Chiffon(context) {
     this.context = context;
   }
 
   Chiffon.getBundle = function(name) { return '_' + name + bundleSuffix; };
 
-  // Configuration globale de l'application.
-  // WARNING: On ajoute la fonction "ł" au contexte global.
+  /*
+   * Configuration globale de l'application.
+   * WARNING: On ajoute la fonction "ł" au contexte global.
+   */
   Chiffon.configure = function(options) {
     var settings = _.defaults(options || {}, defaultSettings);
     var $ = window.$;
     var nprogress = window.NProgress;
 
-    // NB: L10N n'est plus utilisé pour le moment.
+    // NB: L10N n'est pas utilisé pour le moment.
     // Utilitaire de localisation d'une chaîne de caractères.
     //window.ł = function(value) { return value.toLocaleString(); };
 
@@ -46,7 +51,7 @@ var Chiffon = (function(window, undef) {
       FastClick.attach(document.body);
     });
 
-    // Comportement des appels Ajax via jQuery.
+    // Définition du comportement des appels Ajax via jQuery.
     $.ajaxSetup({
       timeout: settings.ajaxTimeout,
       async: true,
@@ -62,40 +67,51 @@ var Chiffon = (function(window, undef) {
     });
   };
 
-  // Valide puis retourne le contexte de la requête.
+  /*
+   * Valide puis retourne le contexte de la requête.
+   */
   Chiffon.validateContext = function(context) {
     // URL de base.
     if (-1 === baseUrls.indexOf(context.baseUrl)) {
       if (DEBUG) { console.log('The baseUrl "' + context.baseUrl + '" is not valid.'); }
+
       context.baseUrl = defaultContext.baseUrl;
     }
+
     // Authentifié ?
     context.isAuth = true === context.isAuth;
+
     // Langue demandée.
     if (-1 === locales.indexOf(context.locale)) {
       if (DEBUG) { console.log('The locale "' + context.locale + '" is not supported.'); }
+
       context.locale = defaultContext.locale;
     }
+
     return context;
   };
 
-  // Principal point d'entrée de l'application.
+  /*
+   * Point d'entrée de l'application.
+   */
   Chiffon.main = function(args) {
     var context = Chiffon.validateContext(_.defaults(args.context || {}, defaultContext));
+
     // Mise en cache de baseUrl.
     var baseUrl = context.baseUrl;
+
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
       'vendor/jquery-2.1.1.js',
-      // NB: L10N n'est plus utilisé pour le moment.
+      // NB: L10N n'est pas utilisé pour le moment.
       //'vendor/l10n-2014.05.02.js',
       'vendor/nprogress-0.1.2.js',
       'vendor/jquery.microdata/jquery.microdata.js',
       'vendor/jquery.microdata/schemas.js',
-      // NB: L10N n'est plus utilisé pour le moment.
+      // NB: L10N n'est pas utilisé pour le moment.
       //'jquery.modal.js',
       'chiffon.jquery.js',
-      // NB: L10N n'est plus utilisé pour le moment.
+      // NB: L10N n'est pas utilisé pour le moment.
       //'chiffon.localization.js',
       'chiffon.views.js'
     ] : [
@@ -129,6 +145,9 @@ var Chiffon = (function(window, undef) {
     });
   };
 
+  /*
+   * Prototype pour Chiffon.
+   */
   Chiffon.prototype = {
     handle: function(request) {
       var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
@@ -153,8 +172,9 @@ var Chiffon = (function(window, undef) {
     },
 
     init: function() {
+      // NB: L10N n'est pas utilisé pour le moment.
       // Configuration de L10N.
-      String.locale = this.context.locale;
+      //String.locale = this.context.locale;
 
       return this;
     }
