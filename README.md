@@ -24,7 +24,11 @@ A multilingual WebSite for a textile design collective. Available in French & En
 
 ### Setup ###
 
-Add the `scripts\modules` directory to your PowerShell module path, then launch `RUN_ME_FIRST.ps1` in a PowerShell session. This script will download then install the nessary third-party tools, namely:
+You will need to clone my PowerShell repository [Narvalo.PowerShell](https://github.com/chtoucas/Narvalo.PowerShell)
+and add it to your PowerShell module path.
+
+Add the `scripts\modules` directory to your PowerShell module path, then launch `RUN_ME_FIRST.ps1`
+in a PowerShell session. This script will download then install the nessary third-party tools, namely:
 
 - 7-Zip
 - NuGet
