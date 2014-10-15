@@ -22,6 +22,7 @@ Available in French & English.
 - Visual Studio Express 2013.3, but 2013.1/2 might work
 - .NET 4.5.1
 - PowerShell v3
+- Nodejs
 
 ### Setup ###
 

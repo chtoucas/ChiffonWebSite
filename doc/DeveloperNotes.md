@@ -22,8 +22,7 @@ Interface :
 Mise à jour des librairies JavaScript
 =====================================
 
-Màj package.json en changeant toutes les version en "*" (Hum non, ce n'est pas la bonne manière
-de faire) :
+Màj package.json:
 - tools\npm-check-updates
 - npm update --save-dev
 
@@ -36,8 +35,6 @@ Pour less, màj
 Dans tous les cas, màj
 - chiffon.js & chiffon.views.js
 - Gruntfile.js
-
-
 
 Gruntfile.js
 

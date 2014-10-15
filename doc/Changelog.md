@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-[2013-12-22] Release 1.12
+[2014-10-XX] Release 1.12
 -------------------------
 
 * On n'utilise plus une version locale de nodejs/npm car cela pose trop de
@@ -10,11 +10,12 @@ CHANGELOG
 * MAJ des dépendances JS et CSS
 
 TODO:
-* fixer CSS (présentation de "se déconnecter")
-* MAJ .NET 4.5.2
-* suppression de toute référence à pourquelmotifsimone
+* vérifier que tout fonctionne dans un répertoire virtuel
+* supprimer toute référence à pourquelmotifsimone
+* supprimer yepnope
 * désactivater la création de compte et l'envoi de mail
 * désactiver l'indexation Google
+* MAJ .NET 4.5.2
 
 [2013-12-22] Infrastructure
 ---------------------------
