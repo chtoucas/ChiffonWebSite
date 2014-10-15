@@ -4,7 +4,11 @@
 
     public static class Constants
     {
+#if SHOWCASE
+        public const string ContactAddress = "pqms@narvalo.org";
+#else
         public const string ContactAddress = "contact@pourquelmotifsimone.com";
+#endif
 
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ActionName
@@ -64,7 +68,7 @@
                 public const string Copyright = "Copyright";
                 public const string GoogleAnalytics = "GoogleAnalytics";
                 public const string Html5Shim = "Html5Shim";
-                public const string Title = "Title"; 
+                public const string Title = "Title";
             }
         }
 

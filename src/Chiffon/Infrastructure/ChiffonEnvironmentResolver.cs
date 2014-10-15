@@ -13,10 +13,17 @@
     {
         const string SessionKey_ = "Language";
 
+#if SHOWCASE
+        static readonly ChiffonEnvironment DefaultEnvironment_
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org/pqms/"));
+        static readonly ChiffonEnvironment EnglishEnvironment_
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org/pqms/"));
+#else
         static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
         static readonly ChiffonEnvironment EnglishEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
+#endif
 
         public static IEnumerable<ChiffonEnvironment> Environments
         {

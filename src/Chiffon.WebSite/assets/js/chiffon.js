@@ -18,7 +18,7 @@ var Chiffon = (function(window, undef) {
     //locale: 'fr'
   };
 
-  var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
+  //var baseUrls = [defaultContext.baseUrl, '/virtualdirectory/assets/js/'];
   //var locales = [defaultContext.locale, 'en'];
   var bundleSuffix = '-' + VERSION + '.js';
   var document = window.document;
@@ -72,11 +72,11 @@ var Chiffon = (function(window, undef) {
    */
   Chiffon.validateContext = function(context) {
     // URL de base.
-    if (-1 === baseUrls.indexOf(context.baseUrl)) {
-      if (DEBUG) { console.log('The baseUrl "' + context.baseUrl + '" is not valid.'); }
+    //if (-1 === baseUrls.indexOf(context.baseUrl)) {
+    //  if (DEBUG) { console.log('The baseUrl "' + context.baseUrl + '" is not valid.'); }
 
-      context.baseUrl = defaultContext.baseUrl;
-    }
+    //  context.baseUrl = defaultContext.baseUrl;
+    //}
 
     // Authentifié ?
     context.isAuth = true === context.isAuth;

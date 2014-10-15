@@ -20,7 +20,11 @@
         //               select new OpenGraphLocale(env.UICulture);
         //    });
 
+#if SHOWCASE
+        bool _disabled = true;
+#else
         bool _disabled = false;
+#endif
 
         public OntologyFilterAttribute() { }
 
