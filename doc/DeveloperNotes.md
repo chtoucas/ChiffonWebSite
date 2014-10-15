@@ -24,6 +24,7 @@ Mise à jour des librairies JavaScript
 
 Màj package.json en changeant toutes les version en "*" (Hum non, ce n'est pas la bonne manière
 de faire) :
+- tools\npm-check-updates
 - npm update --save-dev
 
 À chaque nouvelle version de yepnope, Lo-Dash ou FastClick, mettre à jour :

@@ -1,6 +1,20 @@
 CHANGELOG
 =========
 
+[2013-12-22] Release 1.12
+-------------------------
+
+* On n'utilise plus une version locale de nodejs/npm car cela pose trop de
+  problèmes.
+* MAJ nodejs & npm
+* MAJ des dépendances JS et CSS
+
+TODO:
+* fixer CSS (présentation de "se déconnecter")
+* MAJ .NET 4.5.2
+* suppression de toute référence à pourquelmotifsimone
+* désactivater la création de compte et l'envoi de mail
+* désactiver l'indexation Google
 
 [2013-12-22] Infrastructure
 ---------------------------
