@@ -2,7 +2,7 @@
  <li class=left_item><a href="@Url.RouteUrl(Constants.RouteName.Contact.Newsletter)" class=newsletter>@VR.Layout_Nav_Newsletter</a></li>*@
 <li class=right_item>
  @if (User.Identity.IsAuthenticated) {
-  <form method=post action="/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout" class=last_elmt></form>
+  <form method=post action="~/disconnecte"><input type=submit value="@VR.Layout_Nav_Logout" class=last_elmt></form>
  }
  else {
   <ul class=li_inline>
