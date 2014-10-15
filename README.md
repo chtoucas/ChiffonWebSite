@@ -36,5 +36,4 @@ install the nessary third-party tools, namely:
 
 - 7-Zip
 - NuGet
-- Node.js
 - Node packages

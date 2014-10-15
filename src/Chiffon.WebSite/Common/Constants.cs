@@ -5,7 +5,7 @@
     public static class Constants
     {
 #if SHOWCASE
-        public const string ContactAddress = "pqms@narvalo.org";
+        public const string ContactAddress = "chiffon@narvalo.org";
 #else
         public const string ContactAddress = "contact@pourquelmotifsimone.com";
 #endif

@@ -5,6 +5,7 @@ _build/
 _tmp/
 _work/
 bin/
+intern/
 node_modules/
 obj/
 packages/

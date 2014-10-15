@@ -15,9 +15,9 @@
 
 #if SHOWCASE
         static readonly ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org/pqms/"));
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org/chiffon/"));
         static readonly ChiffonEnvironment EnglishEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org/pqms/"));
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org/chiffon/"));
 #else
         static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
