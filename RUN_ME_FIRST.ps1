@@ -24,13 +24,13 @@ $tools = @(
   }
   @{
     'Name' = 'Node'
-    'Version' = '0.10.28'
-    'Source' = 'http://nodejs.org/dist/v0.10.28/node.exe'
+    'Version' = '0.10.32'
+    'Source' = 'http://nodejs.org/dist/v0.10.32/node.exe'
   }
   @{
     'Name' = 'Node Package Manager'
-    'Version' = '1.4.9'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.9.zip'
+    'Version' = '1.4.12'
+    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.12.zip'
   }
 #  # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
 #  @{
