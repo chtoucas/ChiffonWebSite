@@ -345,8 +345,8 @@
       <DependentUpon>Chiffon.mdf</DependentUpon>
     </Content>
     <Content Include="assets\css\chiffon.h5bp.css" />
-    <Content Include="assets\css\normalize-3.0.1.css" />
-    <Content Include="assets\css\nprogress-0.1.2.css" />
+    <Content Include="assets\css\normalize-3.0.2.css" />
+    <Content Include="assets\css\nprogress-0.1.6.css" />
     <Content Include="assets\img\doubleline_grey.png" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\img\spacer.gif" />
@@ -368,14 +368,14 @@
     <Content Include="assets\css\chiffon.responsive.2.less" />
     <Content Include="assets\css\chiffon.responsive.1.less" />
     <Content Include="App_Code\OntologyHelpers.cshtml" />
-    <Content Include="assets\js\vendor\fastclick-1.0.2.js" />
+    <Content Include="assets\js\vendor\fastclick-1.0.3.js" />
     <Content Include="assets\js\vendor\jquery-2.1.1.js" />
     <Content Include="assets\js\vendor\jquery.microdata\jquery.microdata.js" />
     <Content Include="assets\js\vendor\jquery.microdata\schemas.js" />
-    <Content Include="assets\js\vendor\jquery.validate-1.12.0\jquery.validate.js" />
-    <Content Include="assets\js\vendor\jquery.waypoints-2.0.3.js" />
+    <Content Include="assets\js\vendor\jquery.validate-1.13.1\jquery.validate.js" />
+    <Content Include="assets\js\vendor\jquery.waypoints-2.0.5.js" />
     <Content Include="assets\js\vendor\lodash.custom-2.4.2.js" />
-    <Content Include="assets\js\vendor\nprogress-0.1.2.js" />
+    <Content Include="assets\js\vendor\nprogress-0.1.6.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="Errors\BadRequest.aspx" />
     <Content Include="Errors\Default.aspx" />

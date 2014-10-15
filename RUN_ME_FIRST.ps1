@@ -22,16 +22,16 @@ $tools = @(
     'Version' = '2.8.2'
     'Source' = 'http://www.nuget.org/nuget.exe'
   }
-  @{
-    'Name' = 'Node'
-    'Version' = '0.10.32'
-    'Source' = 'http://nodejs.org/dist/v0.10.32/node.exe'
-  }
-  @{
-    'Name' = 'Node Package Manager'
-    'Version' = '1.4.12'
-    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.12.zip'
-  }
+#  @{
+#    'Name' = 'Node'
+#    'Version' = '0.10.32'
+#    'Source' = 'http://nodejs.org/dist/v0.10.32/node.exe'
+#  }
+#  @{
+#    'Name' = 'Node Package Manager'
+#    'Version' = '1.4.12'
+#    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.28.zip'
+#  }
 #  # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
 #  @{
 #    'Name' = 'Google Closure Compiler'
@@ -62,20 +62,21 @@ Write-Host 'Restoring NuGet packages.' -ForegroundColor 'Yellow'
 
 #-- Installation ou mise à jour des modules Node.js --#
 
-Write-Host 'Restoring Node.js modules.' -ForegroundColor 'Yellow'
-.\tools\npm.cmd install
+#Write-Host 'Restoring Node.js modules.' -ForegroundColor 'Yellow'
+#.\tools\npm.cmd install
 
 # Installation des exécutables nodes.
 
 $modules = @(
   @{ 'Name' = 'grunt'; 'Command' = 'grunt-cli\bin\grunt' }
-  @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
+  @{ 'Name' = 'npm-check-updates'; 'Command' = 'npm-check-updates\bin\npm-check-updates' }
+#  @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
 )
 $template = @"
 :: WARNING: Ne pas modifier ce fichier car il est généré automatiquement.
 @echo off
 
-"%~dp0\node.exe" "%~dp0\..\node_modules\{{command}}" %*
+node.exe "%~dp0\..\node_modules\{{command}}" %*
 "@
 
 foreach ($module in $modules) {

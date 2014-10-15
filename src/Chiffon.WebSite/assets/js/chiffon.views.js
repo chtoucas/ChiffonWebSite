@@ -451,7 +451,7 @@ Chiffon.Views = (function(window, undef) {
         validationResources = [DEBUG ? 'jquery.validate.js' : 'jquery.validate.min.js']
           // NB: Pour le moment on n'affiche pas les messages d'erreur.
           //.concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
-          .map(function(src) { return 'vendor/jquery.validate-1.12.0/' + src; });
+          .map(function(src) { return 'vendor/jquery.validate-1.13.1/' + src; });
       }
 
       this.context.require(validationResources, function() {
@@ -632,7 +632,7 @@ Chiffon.Views.Designer = (function(window, undef) {
       var $container = $('#patterns');
       var $loading = $('<li class=loading></li>');
 
-      this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.3.js' : 'vendor/jquery.waypoints-2.0.3.min.js'], function() {
+      this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.5.js' : 'vendor/jquery.waypoints-2.0.5.min.js'], function() {
         // On cache la pagination.
         $pager.hide();
 

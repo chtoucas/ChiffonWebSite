@@ -19,7 +19,7 @@ var Chiffon = (function(window, undef) {
   };
 
   var baseUrls = [defaultContext.baseUrl, '/assets/js/'];
-  var locales = [defaultContext.locale, 'en'];
+  //var locales = [defaultContext.locale, 'en'];
   var bundleSuffix = '-' + VERSION + '.js';
   var document = window.document;
 
@@ -82,11 +82,11 @@ var Chiffon = (function(window, undef) {
     context.isAuth = true === context.isAuth;
 
     // Langue demandée.
-    if (-1 === locales.indexOf(context.locale)) {
-      if (DEBUG) { console.log('The locale "' + context.locale + '" is not supported.'); }
+    //if (-1 === locales.indexOf(context.locale)) {
+    //  if (DEBUG) { console.log('The locale "' + context.locale + '" is not supported.'); }
 
-      context.locale = defaultContext.locale;
-    }
+    //  context.locale = defaultContext.locale;
+    //}
 
     return context;
   };
@@ -105,7 +105,7 @@ var Chiffon = (function(window, undef) {
       'vendor/jquery-2.1.1.js',
       // NB: L10N n'est pas utilisé pour le moment.
       //'vendor/l10n-2014.05.02.js',
-      'vendor/nprogress-0.1.2.js',
+      'vendor/nprogress-0.1.6.js',
       'vendor/jquery.microdata/jquery.microdata.js',
       'vendor/jquery.microdata/schemas.js',
       // NB: L10N n'est pas utilisé pour le moment.
