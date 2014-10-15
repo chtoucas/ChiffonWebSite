@@ -2,7 +2,7 @@
 Properties {
   $project = '.\Make.proj'
 
-  $options = '/nologo', '/v:minimal', '/fl',
+  $options = '/nologo', '/v:minimal', '/fl', '/p:DefineConstants="SHOWCASE"',
     '/flp:logfile=..\..\msbuild.log;verbosity=normal;encoding=utf-8',
     '/m', '/nodeReuse:false'
 }

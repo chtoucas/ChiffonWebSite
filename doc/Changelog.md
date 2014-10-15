@@ -12,7 +12,8 @@ CHANGELOG
 * Suppression de toute référence à pourquelmotifsimone
 
 TODO:
-* robots.txt pour narvalo.org
+* réactiver enableWhiteSpaceBusting
+* contact : l'adresse email n'est pas là
 * vérifier que tout fonctionne dans un répertoire virtuel (en cours)
   - connexion, déconnexion
   - VSModuleContext (activer en localhost) + session lang
