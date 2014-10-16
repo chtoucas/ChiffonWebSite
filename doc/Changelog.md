@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-[2014-10-XX] Release 1.12
+[2014-10-16] Release 1.12
 -------------------------
 
 * On n'utilise plus une version locale de nodejs/npm.
