@@ -7,7 +7,6 @@
 /// <reference path="../assets/js/vendor/jquery.waypoints-2.0.5.js" />
 /// <reference path="../assets/js/vendor/lodash.custom-2.4.2.js" />
 /// <reference path="../assets/js/vendor/nprogress-0.1.6.js" />
-/// <reference path="../assets/js/vendor/yepnope-1.5.4.js" />
 /// <reference path="../assets/js/vendor/jquery.microdata/jquery.microdata.js" />
 /// <reference path="../assets/js/vendor/jquery.microdata/schemas.js" />
 /// <reference path="../assets/js/vendor/jquery.validate-1.13.1/jquery.validate.js" />

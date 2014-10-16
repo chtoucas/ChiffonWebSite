@@ -25,6 +25,8 @@
             = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
 #endif
 
+        // FIXME: Ne marche pas dans le cas où on utilise un environnement différent 
+        // de ce qui est prévu à l'origine (cf. Resolve()).
         public static IEnumerable<ChiffonEnvironment> Environments
         {
             get
@@ -51,6 +53,7 @@
         {
             Require.NotNull(request, "request");
 
+            // FIXME: Ne marche pas quand on place l'application dans un répertoire virtuel.
             var uri = GetBaseUri_(request.Url);
 
             var language = GetLanguageFromQueryString_(request);

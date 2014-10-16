@@ -9,14 +9,16 @@ CHANGELOG
 * Mise à jour de toutes les dépendances JS et CSS.
 * Désactivation de l'indexation Google et des données SEO.
 * Suppression de (presque) toutes les références à pourquelmotifsimone.
+* Désactivation de la version multilangue (trop de bugs...).
+  Il faudrait revoir ISiteMap (ajouter un paramètre langue à chaque méthode),
+  ChiffonEnvironmentResolver et LayoutViewModel (voir les FIXME).
 
 TODO:
-* configuger IIS en production
 * vérifier que tout fonctionne dans un répertoire virtuel (en cours)
-  - connexion, déconnexion
   - VSModuleContext (activer en localhost) + session lang
+  - connexion, déconnexion
   - httpErrors
-* désactivater la création de compte et l'envoi de mail
+* désactivater la création de compte et l'envoi de mail ?
 
 [2013-12-22] Infrastructure
 ---------------------------

@@ -14,7 +14,9 @@
         {
             Require.NotNull(context, "context");
 
+#if !SHOWCASE
             context.PostAcquireRequestState += OnPostAcquireRequestState_;
+#endif
         }
 
         public void Dispose()
@@ -50,9 +52,9 @@
                 return;
             }
 
-            var env = ChiffonEnvironmentResolver.Resolve(request, app.Session);
+            var environment = ChiffonEnvironmentResolver.Resolve(request, app.Session);
 
-            context.AddChiffonContext(new ChiffonContext(env));
+            context.AddChiffonContext(new ChiffonContext(environment));
         }
     }
 }

@@ -4,6 +4,9 @@
     using System.Globalization;
     using System.Threading;
     using System.Web;
+#if SHOWCASE
+    using System.Web.SessionState;
+#endif
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 
@@ -16,8 +19,13 @@
         {
             Require.NotNull(context, "context");
 
-            context.BeginRequest += OnBeginRequest_;
             context.PreRequestHandlerExecute += OnPreRequestHandlerExecute_;
+
+#if SHOWCASE
+            context.PostAcquireRequestState += OnPostAcquireRequestState_;
+#else
+            context.BeginRequest += OnBeginRequest_;
+#endif
         }
 
         public void Dispose()
@@ -32,6 +40,28 @@
             DynamicModuleUtility.RegisterModule(typeof(InitializeContextModule));
         }
 
+#if SHOWCASE
+        // NB: La session peut ne pas être disponible à ce moment.
+        // http://stackoverflow.com/questions/276355/can-i-access-session-state-from-an-httpmodule
+        void OnPostAcquireRequestState_(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+            var context = app.Context;
+            var request = context.Request;
+
+            if (!(context.Handler is IRequiresSessionState)) {
+                // NB: Normalement, on ne devrait pas avoir à faire cette vérification,
+                // mais cela peut poser des problèmes si il s'agit d'une requête prise
+                // en charge par IIS en cas d'erreur (cf. httpErrors et customErrors dans
+                // web.config).
+                return;
+            }
+
+            var environment = ChiffonEnvironmentResolver.Resolve(request, app.Session);
+
+            context.AddChiffonContext(new ChiffonContext(environment));
+        }
+#else
         void OnBeginRequest_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
@@ -41,6 +71,7 @@
 
             context.AddChiffonContext(new ChiffonContext(environment));
         }
+#endif
 
         // On utilise cet événement car il se déclenche après 'PostAcquireRequestState'
         // qui est utilisé par 'InitializeVSContextModule'.

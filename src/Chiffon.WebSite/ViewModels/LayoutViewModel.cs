@@ -9,6 +9,7 @@
 
     public class LayoutViewModel
     {
+        // FIXME: Vraiment pas efficace.
         static readonly Lazy<IEnumerable<ISiteMap>> SiteMaps_
             = new Lazy<IEnumerable<ISiteMap>>(() =>
             {
