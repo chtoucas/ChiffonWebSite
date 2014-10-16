@@ -49,7 +49,7 @@ namespace Chiffon
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
 
-            // Optimisation du contenu HTML.
+            // Optimisation du contenu HTML (ASP.NET WebForm).
             WhiteSpaceBusterProvider.Current.WhiteSpaceBuster = new AggressiveWhiteSpaceBuster();
         }
 

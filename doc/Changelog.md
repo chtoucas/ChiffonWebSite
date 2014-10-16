@@ -4,24 +4,19 @@ CHANGELOG
 [2014-10-XX] Release 1.12
 -------------------------
 
-* On n'utilise plus une version locale de nodejs/npm car cela pose trop de
-  problèmes.
-* Mise à jour de nodejs & npm
-* Mise à jour de toutes les dépendances JS et CSS
-* Désactivation de l'indexation Google
-* Suppression de toute référence à pourquelmotifsimone
+* On n'utilise plus une version locale de nodejs/npm.
+* Mise à jour de nodejs & npm.
+* Mise à jour de toutes les dépendances JS et CSS.
+* Désactivation de l'indexation Google et des données SEO.
+* Suppression de (presque) toutes les références à pourquelmotifsimone.
 
 TODO:
-* réactiver enableWhiteSpaceBusting
-* contact : l'adresse email n'est pas là
+* configuger IIS en production
 * vérifier que tout fonctionne dans un répertoire virtuel (en cours)
   - connexion, déconnexion
   - VSModuleContext (activer en localhost) + session lang
-* supprimer toute référence à pourquelmotifsimone
+  - httpErrors
 * désactivater la création de compte et l'envoi de mail
-* désactiver l'indexation Google
-* MAJ .NET 4.5.2 (wait psake upgrade)
-* supprimer yepnope
 
 [2013-12-22] Infrastructure
 ---------------------------

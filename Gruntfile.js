@@ -1,8 +1,6 @@
 /*jshint node:true*/
 /*jslint node:true*/
 
-// TODO: tests !
-
 /*jshint -W071*/
 module.exports = function(grunt) {
   'use strict';
@@ -41,10 +39,8 @@ module.exports = function(grunt) {
       css: ['chiffon.css', 'chiffon.print.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
-        //'jquery.modal.js',
         'chiffon.jquery.js',
         'chiffon.js',
-        //'chiffon.localization.js',
         'chiffon.views.js'
       ].map(mapJs).concat('Gruntfile.js')
     },
@@ -87,17 +83,10 @@ module.exports = function(grunt) {
           dest: mapJs('_main-<%= version %>.js'),
           srcmap: '_main-<%= version %>.map'
         },
-        //lib: {
-        //  src: ['vendor/jquery-2.1.1.min.js'].map(mapJs),
-        //  dest: mapJs('_lib-<%= version %>.js')
-        //},
         views: {
           src: [
-            //'vendor/l10n-2014.05.02.js',
             'vendor/nprogress-0.1.6.js',
-            //'jquery.modal.js',
             'chiffon.jquery.js',
-            //'chiffon.localization.js',
             'chiffon.views.js'
           ].map(mapJs),
           dest: mapJs('_views-<%= version %>.js'),
@@ -111,7 +100,6 @@ module.exports = function(grunt) {
     //  js: { src: '<%= sources.js %>' },
     //  css: { src: '<%= sources.css %>' }
     //},
-
 
     // Analyse des fichiers CSS via CSSLint.
     csslint: {
@@ -257,17 +245,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Fusion des fichiers JavaScript.
-    //concat: {
-    //  options: {
-    //    stripBanners: true
-    //  },
-    //  lib: {
-    //    src: '<%= bundles.js.lib.src %>',
-    //    dest: '<%= bundles.js.lib.dest %>'
-    //  }
-    //},
-
     // Minification des fichiers JavaScript via UglifyJS.
     uglify: {
       options: {
@@ -334,7 +311,6 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
   });
 
-  //grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');

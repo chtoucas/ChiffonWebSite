@@ -11,15 +11,9 @@ var Chiffon = (function(window, undef) {
   // Contexte par défaut.
   var defaultContext = {
     baseUrl: '//wznw.org/chiffon/js/',
-    //device: {
-    //  isTouch: false
-    //},
-    isAuth: false//,
-    //locale: 'fr'
+    isAuth: false
   };
 
-  //var baseUrls = [defaultContext.baseUrl, '/virtualdirectory/assets/js/'];
-  //var locales = [defaultContext.locale, 'en'];
   var bundleSuffix = '-' + VERSION + '.js';
   var document = window.document;
 
@@ -40,10 +34,6 @@ var Chiffon = (function(window, undef) {
     var settings = _.defaults(options || {}, defaultSettings);
     var $ = window.$;
     var nprogress = window.NProgress;
-
-    // NB: L10N n'est pas utilisé pour le moment.
-    // Utilitaire de localisation d'une chaîne de caractères.
-    //window.ł = function(value) { return value.toLocaleString(); };
 
     // Pour les tablettes, on essaie d'éliminer le temps de latence entre l'événement "touch"
     // et l'événement "click".
@@ -71,22 +61,8 @@ var Chiffon = (function(window, undef) {
    * Valide puis retourne le contexte de la requête.
    */
   Chiffon.validateContext = function(context) {
-    // URL de base.
-    //if (-1 === baseUrls.indexOf(context.baseUrl)) {
-    //  if (DEBUG) { console.log('The baseUrl "' + context.baseUrl + '" is not valid.'); }
-
-    //  context.baseUrl = defaultContext.baseUrl;
-    //}
-
     // Authentifié ?
     context.isAuth = true === context.isAuth;
-
-    // Langue demandée.
-    //if (-1 === locales.indexOf(context.locale)) {
-    //  if (DEBUG) { console.log('The locale "' + context.locale + '" is not supported.'); }
-
-    //  context.locale = defaultContext.locale;
-    //}
 
     return context;
   };
@@ -103,26 +79,15 @@ var Chiffon = (function(window, undef) {
     var coreResources = DEBUG ? [
       // NB: Ne pas utiliser de version minifiée, même si on dispose du sourcemap.
       'vendor/jquery-2.1.1.js',
-      // NB: L10N n'est pas utilisé pour le moment.
-      //'vendor/l10n-2014.05.02.js',
       'vendor/nprogress-0.1.6.js',
       'vendor/jquery.microdata/jquery.microdata.js',
       'vendor/jquery.microdata/schemas.js',
-      // NB: L10N n'est pas utilisé pour le moment.
-      //'jquery.modal.js',
       'chiffon.jquery.js',
-      // NB: L10N n'est pas utilisé pour le moment.
-      //'chiffon.localization.js',
       'chiffon.views.js'
     ] : [
       'vendor/jquery-2.1.1.min.js',
       Chiffon.getBundle('views')
     ];
-
-    // NB: Il n'est pas possible de détecter une tablette mais on peut s'approcher du résultat.
-    // Cf. https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
-    // et http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
-    //context.device.isTouch = 'ontouchstart' in window || window.navigator.msMaxTouchPoints > 0;
 
     context.require = function(resources, onComplete) {
       yepnope({
@@ -141,7 +106,7 @@ var Chiffon = (function(window, undef) {
 
       Chiffon.configure(args.settings);
 
-      (new Chiffon(context)).init().handle(args.request);
+      (new Chiffon(context)).handle(args.request);
     });
   };
 
@@ -150,12 +115,12 @@ var Chiffon = (function(window, undef) {
    */
   Chiffon.prototype = {
     handle: function(request) {
-      var req = _.defaults(request || {}, { action: '', controller: '', params: {} });
+      var req = _.defaults(request || {}, { action: '', controller: '' });
 
-      this.handleCore(req.controller, req.action, req.params);
+      this.handleCore(req.controller, req.action);
     },
 
-    handleCore: function(controllerName, actionName, params) {
+    handleCore: function(controllerName, actionName) {
       var Views = Chiffon.Views;
 
       // On cherche l'objet Views.{controllerName}.
@@ -168,15 +133,7 @@ var Chiffon = (function(window, undef) {
       if (!ViewController.hasOwnProperty(actionName)) { return; }
 
       ViewClass = ViewController[actionName];
-      (new ViewClass(this.context)).init(params);
-    },
-
-    init: function() {
-      // NB: L10N n'est pas utilisé pour le moment.
-      // Configuration de L10N.
-      //String.locale = this.context.locale;
-
-      return this;
+      (new ViewClass(this.context)).init();
     }
   };
 
