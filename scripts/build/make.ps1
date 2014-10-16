@@ -80,11 +80,9 @@ Task ReadPackageConfig {
 
   [string] $packageTarget    = $config.PackageTarget
   [string] $packageAssets    = $config.PackageAssets
-  [string] $packageMediaSite = $config.PackageMediaSite
   [string] $packageWebSite   = $config.PackageWebSite
 
   $script:msproperties = "/p:PackageTarget=$packageTarget",
     "/p:PackageAssets=$packageAssets",
-    "/p:PackageMediaSite=$packageMediaSite",
     "/p:PackageWebSite=$packageWebSite";
 }

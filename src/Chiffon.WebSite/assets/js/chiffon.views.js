@@ -273,121 +273,6 @@ Chiffon.Components = (function(window, undef) {
   })();
   /*jshint +W071*/
 
-  //// Autant que possible on s'assure que le bloc informations sur le designer est toujours visible.
-  //Components.StickyInfo = (function() {
-  //  // Configuration par défaut.
-  //  var settings;
-  //  var defaults = {
-  //    infoSel: '#info',
-  //    designerSel: '#designer'
-  //  };
-
-  //  var $info;
-  //  var $designer;
-
-  //  // Géométrie du bloc #info.
-  //  var infoHeight;
-  //  var infoWidth;
-  //  var infoTop;
-  //  var infoLeft;
-
-  //  // Géométrie du bloc #designer.
-  //  var designerWidth;
-
-  //  // Géométrie de la fenêtre.
-  //  var windowHeight;
-
-  //  function handleScrollEventForMediumBlock() {
-  //    var scrollLimit;
-  //    var stickyClass = 'info_sticky info_top';
-  //    var isSticky = false;
-
-  //    function stick() {
-  //      if (isSticky) { return; }
-  //      isSticky = true;
-  //      $info.addClass(stickyClass);
-  //    }
-
-  //    function unstick() {
-  //      if (!isSticky) { return; }
-  //      isSticky = false;
-  //      $info.removeClass(stickyClass);
-  //    }
-
-  //    scrollLimit = infoTop - 23;
-
-  //    if ($(window).scrollTop() >= scrollLimit) { stick(); }
-
-  //    $(window).scroll(function() {
-  //      if ($(window).scrollTop() >= scrollLimit) { stick(); } else { unstick(); }
-  //    });
-  //  }
-
-  //  // FIXME: Pour le moment, on ne s'occupe que des redimensionnements horizontaux.
-  //  function handleResizeEvent() {
-  //    // On utilise "_.debounce()" pour temporiser la prise en charge de l'évènement "resize"
-  //    // pendant 150 millisecondes.
-  //    $(window).resize(_.debounce(function() {
-  //      var left = $designer.offset().left + designerWidth - infoWidth;
-
-  //      $info.css({ 'left': left + 'px' });
-  //    }, 150));
-  //  }
-
-  //  // Dans sa position initiale, le bloc info est entièrement contenu dans la fenêtre ;
-  //  // pour qu'il soit toujours visible on lui donne une position fixe.
-  //  function setupSmallBlock() {
-  //    $info.addClass('info_sticky');
-  //    $info.css({ top: infoTop + 'px', left: infoLeft + 'px' });
-  //  }
-
-  //  // La fenêtre peut contenir tout le bloc info, mais à condition de le positioner tout en
-  //  // haut de la fenêtre.
-  //  function setupMediumBlock() {
-  //    // On applique la propriété 'left' uniquement au chargement car elle pourrait être modifiée
-  //    // plus tard lors d'un redimensionnement horizontal de la fenêtre.
-  //    $info.css('left', infoLeft + 'px');
-
-  //    handleScrollEventForMediumBlock();
-  //  }
-
-  //  function init() {
-  //    var infoOffset;
-
-  //    $info = $(settings.infoSel);
-  //    $designer = $(settings.designerSel);
-
-  //    infoHeight = $info.height();
-  //    infoWidth = $info.width();
-
-  //    infoOffset = $info.offset();
-  //    infoTop = infoOffset.top;
-  //    infoLeft = infoOffset.left;
-
-  //    designerWidth = $designer.width();
-  //    windowHeight = $(window).height();
-  //  }
-
-  //  return function(options) {
-  //    settings = _.defaults(options || {}, defaults);
-
-  //    init();
-
-  //    if (windowHeight >= infoHeight + infoTop) {
-  //      setupSmallBlock();
-  //    } else if (windowHeight >= infoHeight) {
-  //      setupMediumBlock();
-  //    } else {
-  //      // La fenêtre est trop petite pour contenir tout le bloc info.
-  //      // Si on donne une position fixe à ce dernier, le contenu en bas n'est jamais visible.
-  //      // On ne touche donc à rien.
-  //      return;
-  //    }
-
-  //    handleResizeEvent();
-  //  };
-  //})();
-
   return Components;
 
 })(this);
@@ -399,17 +284,7 @@ Chiffon.Views = (function(window, undef) {
   var View;
   var LayoutMixin;
   var validationResources;
-  //var document = window.document;
   var Views = {};
-
-  //function initModal() {
-  //  // NB: On place l'événement sur "document" car on veut rester dans la modale après un clic.
-  //  $(document).on('click.modal', 'A[rel="modal:open"]', function(e) {
-  //    e.preventDefault();
-
-  //    $(this).modal({ closeText: ł('%modal.close') });
-  //  });
-  //}
 
   Views.View = View = function(context) {
     this.context = context;
@@ -430,39 +305,23 @@ Chiffon.Views = (function(window, undef) {
   };
 
   Views.LayoutMixin = LayoutMixin = {
-    initLayout: function() {
-      //if (!this.context.isAuth) {
-      //  // Pour les visiteurs anonymes, on active les modales.
-      //  initModal();
-      //}
-      //else {
-      // // TODO: Utiliser un hashcode pour afficher la confirmation de compte.
-      // $('<div class="welcome serif serif_large"><h2>Bienvenue !</h2><p>Merci de vous être inscrit.</p></div>')
-      //   .appendTo('body').modal({ closeText: ł('%modal.close') });
-      //}
-    }
+    //initLayout: function() {
+    //}
   };
 
   Views.ValidateMixin = {
     // Chargement de jQuery.validate puis exécution d'un callback.
     validate: function(fn) {
-      //var locale = this.context.locale;
       if (undef === validationResources) {
         validationResources = [DEBUG ? 'jquery.validate.js' : 'jquery.validate.min.js']
           // NB: Pour le moment on n'affiche pas les messages d'erreur.
-          //.concat('en' !== locale ? ['localization/messages_' + locale + '.js'] : [])
           .map(function(src) { return 'vendor/jquery.validate-1.13.1/' + src; });
       }
 
       this.context.require(validationResources, function() {
-        //var $errContainer = $('#error_container');
-
         $.validator.setDefaults({
           hightlight: function(elmt) { $(elmt).addClass('error'); },
           unhightlight: function(elmt) { $(elmt).removeClass('error'); }
-          //errorContainer: $errContainer,
-          //errorLabelContainer: $errContainer,
-          //invalidHandler: function() { $errContainer.fadeIn(); }
         });
 
         if (undef !== fn) { fn(); }
@@ -488,10 +347,8 @@ Chiffon.Views.Home = (function() {
   var Simple = Chiffon.Views.Simple;
 
   return {
-    About: Simple.Create(function() {
-      // On ouvre les liens externes dans une nouvelle fenêtre.
-      $('A[rel=external]').external();
-    }),
+    About: Simple,
+
     Contact: Simple.Create(function() {
       var $form = $('#contact_form');
 
@@ -513,11 +370,8 @@ Chiffon.Views.Home = (function() {
         });
       });
     }, Views.ValidateMixin),
-    Index: Simple
 
-    //Index: Simple.Create(function() {
-    //  $('.vignette').watermark(ł('%preview.watermark'));
-    //})
+    Index: Simple
   };
 
 })();
@@ -541,8 +395,8 @@ Chiffon.Views.Account = (function() {
         // TODO: "errorPlacement" ne semble pas être la bonne méthode à utiliser.
         errorPlacement: $.noop,
         messages: {
-          email: '', // ł('%login.email_required'),
-          password: '' // ł('%login.password_required')
+          email: '',
+          password: ''
         },
         rules: {
           email: { required: true, email: true },
@@ -571,7 +425,6 @@ Chiffon.Views.Account = (function() {
           FirstName: { required: true, minlength: 2, maxlength: 50 },
           CompanyName: { required: true, minlength: 2, maxlength: 100 },
           Email: { required: true, email: true }
-          //Message: { maxlength: 4000 }
         }
       });
     });
@@ -593,9 +446,6 @@ Chiffon.Views.Designer = (function(window, undef) {
 
   var DesignerLayoutMixin = {
     initLayout: function() {
-      // FIXME: Rétablir cette fonctionnalité quand on aura fixé tous les bugs :-)
-      //Components.StickyInfo();
-
       // Toutes les pages "designer" contiennent une liste de motifs et on essaie
       // de rendre la pagination plus ergonomique. Ainsi, on charge automatiquement 
       // le contenu de la page suivante et on affiche le résultat en bas de page.
@@ -699,22 +549,6 @@ Chiffon.Views.Designer = (function(window, undef) {
       }
     }, DesignerLayoutMixin)
   };
-
-  //var DesignerLayoutMixin = (function() {
-  //  function DesignerLayout(context) {
-  //    BaseView.apply(this, arguments);
-  //    this.layoutView = new Views.Layout(context);
-  //  }
-
-  //  DesignerLayout.prototype = {
-  //    init: function() {
-  //      this.layoutView.init();
-  //      Components.StickyInfo();
-  //    }
-  //  };
-
-  //  return DesignerLayout;
-  //})();
 
   return Designer;
 

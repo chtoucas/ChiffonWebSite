@@ -39,9 +39,9 @@ module.exports = function(grunt) {
       css: ['chiffon.css', 'chiffon.print.css'].map(mapCss),
       // Fichiers JavaScript à analyser.
       js: [
-        'chiffon.jquery.js',
         'chiffon.js',
-        'chiffon.views.js'
+        'chiffon.views.js',
+        'chiffon.main.js'
       ].map(mapJs).concat('Gruntfile.js')
     },
 
@@ -78,28 +78,16 @@ module.exports = function(grunt) {
             'vendor/yepnope-1.5.4.js',
             'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "").replace("^", "") %>.js',
             'vendor/fastclick-1.0.3.js',
-            'chiffon.js'
+            'vendor/nprogress-0.1.6.js',
+            'chiffon.js',
+            'chiffon.views.js',
+            'chiffon.main.js'
           ].map(mapJs),
           dest: mapJs('_main-<%= version %>.js'),
           srcmap: '_main-<%= version %>.map'
-        },
-        views: {
-          src: [
-            'vendor/nprogress-0.1.6.js',
-            'chiffon.jquery.js',
-            'chiffon.views.js'
-          ].map(mapJs),
-          dest: mapJs('_views-<%= version %>.js'),
-          srcmap: '_views-<%= version %>.map'
         }
       }
     },
-
-    // NB: Désactivé pour le moment car Visual Studio ne gère pas les fichiers UTF8 sans BOM.
-    //nobom: {
-    //  js: { src: '<%= sources.js %>' },
-    //  css: { src: '<%= sources.css %>' }
-    //},
 
     // Analyse des fichiers CSS via CSSLint.
     csslint: {
@@ -260,24 +248,13 @@ module.exports = function(grunt) {
       },
       main: {
         options: {
-          banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
+          //banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
           preserveComments: false,
           sourceMap: mapJs('<%= bundles.js.main.srcmap %>'),
           sourceMappingURL: '<%= bundles.js.main.srcmap %>'
         },
         files: {
           '<%= bundles.js.main.dest %>' : '<%= bundles.js.main.src %>'
-        }
-      },
-      views: {
-        options: {
-          banner: '// Timestamp: <%= grunt.template.today("yyyy-mm-dd HH:mm") %>.',
-          preserveComments: false,
-          sourceMap: mapJs('<%= bundles.js.views.srcmap %>'),
-          sourceMappingURL: '<%= bundles.js.views.srcmap %>'
-        },
-        files: {
-          '<%= bundles.js.views.dest %>': '<%= bundles.js.views.src %>'
         }
       }
     }

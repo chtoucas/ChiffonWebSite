@@ -21,8 +21,6 @@
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
 
     <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
-    <!-- WARNING: Pour le moment, on ne compile pas par défaut le site media. -->
-    <PackageMediaSite Condition="'$(PackageMediaSite)' != 'true'">false</PackageMediaSite>
     <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
@@ -66,15 +64,6 @@
         $(PublishProperties);
         PublishUrl=$(_StageDir)pourquelmotifsimone.com\;
         PublishProfile=$(_PublishProfileDir)Chiffon.WebSite.pubxml
-      </AdditionalProperties>
-    </ProjectsToBuild>
-
-    <ProjectsToBuild Include="$(_SourceDir)Chiffon.MediaSite\Chiffon.MediaSite.csproj"
-                     Condition="'$(PackageMediaSite)' == 'true'">
-      <AdditionalProperties>
-        $(PublishProperties);
-        PublishUrl=$(_StageDir)s.pourquelmotifsimone.com\;
-        PublishProfile=$(_PublishProfileDir)Chiffon.MediaSite.pubxml
       </AdditionalProperties>
     </ProjectsToBuild>
 

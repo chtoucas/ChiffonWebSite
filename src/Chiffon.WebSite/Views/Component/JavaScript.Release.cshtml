@@ -3,8 +3,7 @@
 <script>
  var args = {
   context: {
-   baseUrl: '@Model.ScriptBase',
-   isAuth: @Model.IsAuthenticated
+   baseUrl: '@Model.ScriptBase'
   },
   request: {
    action: '@Model.ActionName',
@@ -13,4 +12,5 @@
  };
 </script>
 
+@Asset.JavaScript("vendor/jquery-2.1.1.min.js")
 @Asset.JavaScript("_main-" + Model.Version + ".js")
