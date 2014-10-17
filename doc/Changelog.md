@@ -13,6 +13,8 @@ TODO:
 * chemins dans httpErrors
 * désactivater la création de compte et l'envoi de mail ?
 * cacher les mails ?
+* virer SHOWCASE et déterminer via la configuration si on est dans un
+  répertoire virtuel.
 
 [2014-10-16] Release 1.12
 -------------------------

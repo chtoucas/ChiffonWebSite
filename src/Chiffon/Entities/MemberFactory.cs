@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Domain
+﻿namespace Chiffon.Entities
 {
     public static class MemberFactory
     {

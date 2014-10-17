@@ -22,7 +22,7 @@
         //               select new OpenGraphLocale(env.UICulture);
         //    });
 
-#if !SHOWCASE
+#if SHOWCASE
         bool _disabled = true;
 #else
         bool _disabled = false;

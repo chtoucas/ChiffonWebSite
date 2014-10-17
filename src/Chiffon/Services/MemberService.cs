@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Services
 {
     using System;
-    using Chiffon.Domain;
+    using Chiffon.Entities;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
     using Chiffon.Persistence;

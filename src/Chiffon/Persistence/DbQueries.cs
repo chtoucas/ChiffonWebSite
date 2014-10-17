@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Globalization;
     using Chiffon.Persistence.SqlServer;
-    using Chiffon.Domain;
     using Chiffon.Entities;
     using Narvalo;
 

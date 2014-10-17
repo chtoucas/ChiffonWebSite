@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Globalization;
-    using Chiffon.Domain;
     using Chiffon.Entities;
 
     /// <summary>

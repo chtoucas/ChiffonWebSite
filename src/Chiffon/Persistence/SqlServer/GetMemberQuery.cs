@@ -2,7 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Chiffon.Domain;
+    using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
 

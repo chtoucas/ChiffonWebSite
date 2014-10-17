@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Domain
+﻿namespace Chiffon.Entities
 {
     using System;
     using System.Globalization;
