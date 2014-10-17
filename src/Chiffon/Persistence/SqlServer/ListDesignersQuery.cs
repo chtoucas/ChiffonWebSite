@@ -8,7 +8,6 @@
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
-    using Narvalo.Fx;
 
     public class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
     {
@@ -35,20 +34,12 @@
                     AvatarCategory = rdr.GetString("avatar_category"),
                     AvatarReference = rdr.GetString("avatar_reference"),
                     AvatarVersion = rdr.GetString("avatar_version"),
-#if SHOWCASE
-                    Email = "chiffon@narvalo.org",
-#else
                     Email = rdr.GetString("email_address"),
-#endif
                     FirstName = rdr.GetString("firstname"),
                     LastName = rdr.GetString("lastname"),
                     Nickname = rdr.MayGetString("nickname"),
                     Presentation = rdr.GetString("presentation"),
-#if SHOWCASE
-                    WebsiteUrl = Maybe<Uri>.None,
-#else
                     WebsiteUrl = rdr.MayGetString("website").Select(_ => new Uri(_)),
-#endif
                 };
 
                 designers.Add(designer);

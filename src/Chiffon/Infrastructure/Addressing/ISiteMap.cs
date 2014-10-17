@@ -8,11 +8,6 @@
     {
         ChiffonLanguage Language { get; }
 
-        /// <summary>
-        /// Uri de base du site (sans le répertoire virtuel).
-        /// </summary>
-        Uri BaseUri { get; }
-
         Uri Home();
         Uri About();
         Uri Contact();

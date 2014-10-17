@@ -59,9 +59,6 @@
 
         public ChiffonLanguage Language { get { return _language; } }
 
-        public Uri BaseUri { get { return _baseUri; } }
-
-        //public Uri Home() { return _baseUri; }
         public Uri Home() { return MakeAbsoluteUri_(String.Empty); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
@@ -132,7 +129,7 @@
             }
         }
 
-        // returnUrl contient le répertoire virtuel.
+        // NB: returnUrl contient le répertoire virtuel.
         static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
         {
             var builder = new UriBuilder(uri) {
@@ -142,7 +139,7 @@
             return builder.Uri;
         }
 
-        // relativeUri ne contient pas le répertoire virtuel.
+        // NB: relativeUri ne contient pas le répertoire virtuel.
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"), SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
         Uri MakeAbsoluteUri_(string relativeUri)
         {
