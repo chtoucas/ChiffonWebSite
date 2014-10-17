@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Web;
     using System.Globalization;
     using Chiffon.Entities;
 
@@ -60,69 +61,59 @@
 
         public Uri BaseUri { get { return _baseUri; } }
 
-        public Uri Home() { return _baseUri; }
+        //public Uri Home() { return _baseUri; }
+        public Uri Home() { return MakeAbsoluteUri_(String.Empty); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri About() { return MakeAbsoluteUri(Constants.About); }
+        public Uri About() { return MakeAbsoluteUri_(Constants.About); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Contact() { return MakeAbsoluteUri(Constants.Contact); }
+        public Uri Contact() { return MakeAbsoluteUri_(Constants.Contact); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Newsletter() { return MakeAbsoluteUri(Constants.Newsletter); }
+        public Uri Newsletter() { return MakeAbsoluteUri_(Constants.Newsletter); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
-        public Uri Login() { return MakeAbsoluteUri(Constants.Login); }
+        public Uri Login() { return MakeAbsoluteUri_(Constants.Login); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         public Uri Login(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri(Constants.Login);
+            var uri = MakeAbsoluteUri_(Constants.Login);
             return AddReturnUrl_(uri, returnUrl);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Register() { return MakeAbsoluteUri(Constants.Register); }
+        public Uri Register() { return MakeAbsoluteUri_(Constants.Register); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Register(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri(Constants.Register);
+            var uri = MakeAbsoluteUri_(Constants.Register);
             return AddReturnUrl_(uri, returnUrl);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Designer(DesignerKey designerKey, int pageIndex)
         {
-            var uri = MakeAbsoluteUri(designerKey.ToString());
+            var uri = MakeAbsoluteUri_(designerKey.ToString());
             return AddPagination_(uri, pageIndex);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri DesignerCategory(DesignerKey designerKey, string categoryKey, int pageIndex)
         {
-            var uri = MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey);
+            var uri = MakeAbsoluteUri_(designerKey.ToString() + "/" + categoryKey);
             return AddPagination_(uri, pageIndex);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
         {
-            var uri = MakeAbsoluteUri(designerKey.ToString() + "/" + categoryKey + "/" + reference);
+            var uri = MakeAbsoluteUri_(designerKey.ToString() + "/" + categoryKey + "/" + reference);
             return AddPagination_(uri, pageIndex);
-        }
-
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"), SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public Uri MakeAbsoluteUri(string relativeUri)
-        {
-            return new Uri(_baseUri, relativeUri);
-        }
-
-        public Uri MakeAbsoluteUri(Uri relativeUri)
-        {
-            return new Uri(_baseUri, relativeUri);
         }
 
         #endregion
@@ -141,6 +132,7 @@
             }
         }
 
+        // returnUrl contient le répertoire virtuel.
         static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
         {
             var builder = new UriBuilder(uri) {
@@ -148,6 +140,13 @@
                     "{0}={1}", SiteMapConstants.ReturnUrl, returnUrl.ToString())
             };
             return builder.Uri;
+        }
+
+        // relativeUri ne contient pas le répertoire virtuel.
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"), SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        Uri MakeAbsoluteUri_(string relativeUri)
+        {
+            return new Uri(_baseUri, VirtualPathUtility.ToAbsolute("~/" + relativeUri));
         }
     }
 }

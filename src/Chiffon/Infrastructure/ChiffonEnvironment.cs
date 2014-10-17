@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using Narvalo;
 
@@ -17,7 +18,11 @@
             _baseUri = baseUri;
         }
 
+        /// <summary>
+        /// Uri de base du site (sans le répertoire virtuel).
+        /// </summary>
         public Uri BaseUri { get { return _baseUri; } }
+
         public ChiffonLanguage Language { get { return _language; } }
 
         #region IEquatable<ChiffonEnvironment>
@@ -51,6 +56,18 @@
         public override int GetHashCode()
         {
             return _language.GetHashCode();
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"),
+            SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public Uri MakeAbsoluteUri(string relativeUri)
+        {
+            return new Uri(_baseUri, relativeUri);
+        }
+
+        public Uri MakeAbsoluteUri(Uri relativeUri)
+        {
+            return new Uri(_baseUri, relativeUri);
         }
     }
 }

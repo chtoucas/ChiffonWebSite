@@ -350,9 +350,9 @@
     <Content Include="assets\img\doubleline_grey.png" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\img\spacer.gif" />
+    <Content Include="assets\js\chiffon.main.js" />
     <Content Include="assets\js\chiffon.views.js" />
     <Content Include="assets\js\chiffon.js" />
-    <Content Include="assets\js\chiffon.jquery.js" />
     <Content Include="assets\css\chiffon.less" />
     <Content Include="assets\css\chiffon.vars.less" />
     <Content Include="assets\css\chiffon.print.less" />

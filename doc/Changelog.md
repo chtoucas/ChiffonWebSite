@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+[2014-10-XX] Release 1.13
+-------------------------
+
+* Maintenant DefaultSiteMap prend correctement en compte le répertoire
+  virtuel de l'application.
+
+TODO:
+* Multi-langues
+  - VSModuleContext (activer en localhost) + session lang
+* chemins dans httpErrors
+* désactivater la création de compte et l'envoi de mail ?
+* cacher les mails ?
+
 [2014-10-16] Release 1.12
 -------------------------
 
@@ -12,13 +25,6 @@ CHANGELOG
 * Désactivation de la version multilangue (trop de bugs...).
   Il faudrait revoir ISiteMap (ajouter un paramètre langue à chaque méthode),
   ChiffonEnvironmentResolver et LayoutViewModel (voir les FIXME).
-
-TODO:
-* vérifier que tout fonctionne dans un répertoire virtuel (en cours)
-  - VSModuleContext (activer en localhost) + session lang
-  - connexion, déconnexion
-  - httpErrors
-* désactivater la création de compte et l'envoi de mail ?
 
 [2013-12-22] Infrastructure
 ---------------------------

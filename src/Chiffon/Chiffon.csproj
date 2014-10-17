@@ -157,7 +157,6 @@
     <Compile Include="Infrastructure\ILogService.cs" />
     <Compile Include="Infrastructure\Messaging\IMailMerge.cs" />
     <Compile Include="Infrastructure\Messaging\IMessenger.cs" />
-    <Compile Include="Infrastructure\InitializeVSContextModule.cs" />
     <Compile Include="Infrastructure\InitializeContextModule.cs" />
     <Compile Include="Infrastructure\LogConfig.cs" />
     <Compile Include="Infrastructure\Messaging\Messenger.cs" />

@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Web;
     using System.Web.Mvc;
     using Chiffon.Controllers;
+    using Chiffon.Infrastructure;
     using Chiffon.Resources;
     using Narvalo;
     using Narvalo.Web.Semantic;
@@ -20,7 +22,7 @@
         //               select new OpenGraphLocale(env.UICulture);
         //    });
 
-#if SHOWCASE
+#if !SHOWCASE
         bool _disabled = true;
 #else
         bool _disabled = false;
@@ -56,7 +58,11 @@
             ontology.OpenGraph.SiteName = SR.DefaultTitle;
 
             // Par défaut, on utilise le logo comme image.
-            ontology.OpenGraph.Image = new OpenGraphPng(AssetManager.GetImage("logo.png")) {
+            // QUICKFIX: On veut une URL absolue.
+            var environment = ChiffonContext.Current.Environment;
+            var logoUri = environment.MakeAbsoluteUri(AssetManager.GetImage("logo.png"));
+
+            ontology.OpenGraph.Image = new OpenGraphPng(logoUri) {
                 Height = 144,
                 Width = 144,
             };
@@ -93,6 +99,9 @@
                 __Log("No title given, using default.");
                 ontology.Title = SR.DefaultTitle;
             }
+
+            // QUICKFIX: On veut une URL absolue.
+            ontology.Relationships.HumansTxtUrl = new Uri(VirtualPathUtility.ToAbsolute("~/human.txt"), UriKind.Relative);
 
             __CheckRelationships(ontology.Relationships);
             __CheckOpenGraphMetadata(ontology.OpenGraph);

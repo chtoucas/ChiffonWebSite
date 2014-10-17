@@ -38,20 +38,21 @@
             DebugCheck.NotNull(context);
             DebugCheck.NotNull(query);
 
-            var siteMap = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment);
+            var environment = ChiffonContext.Current.Environment;
+            var siteMap = _siteMapFactory.CreateMap(environment);
 
             var nextUrl = _memberService
                 .MayLogOn(query.Email, query.Password)
                 .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
-                .Select(_ => GetNextUri_(query.TargetUrl, siteMap))
+                .Select(_ => GetNextUri_(query.TargetUrl, siteMap, environment))
                 .ValueOrElse(GetLoginUri_(query.TargetUrl, siteMap));
 
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }
 
-        Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
+        Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
         {
-            return targetUrl.Select(_ => siteMap.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
+            return targetUrl.Select(_ => environment.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
         }
 
         Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)

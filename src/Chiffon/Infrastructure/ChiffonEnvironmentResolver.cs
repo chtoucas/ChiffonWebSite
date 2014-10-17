@@ -15,9 +15,9 @@
 
 #if SHOWCASE
         static readonly ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org/chiffon/"));
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"));
         static readonly ChiffonEnvironment EnglishEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org/chiffon/"));
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"));
 #else
         static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
@@ -71,11 +71,22 @@
         static Uri GetBaseUri_(Uri uri)
         {
             return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
-
-            // return VirtualPathUtility.ToAbsolute("~/") -> "/";
-            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-            // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
         }
+
+        //static Uri GetBaseUri_(HttpRequest request)
+        //{
+        //    // http://msdn.microsoft.com/en-us/library/system.web.httpruntime.appdomainappvirtualpath(v=vs.110).aspx
+        //    // http://weblog.west-wind.com/posts/2009/Dec/21/Making-Sense-of-ASPNET-Paths
+
+        //    string authority = request.Url.GetLeftPart(UriPartial.Authority);
+        //    var uriBuilder = new UriBuilder(authority);
+        //    uriBuilder.Path = request.ApplicationPath;
+        //    return uriBuilder.Uri;
+
+        //    // return VirtualPathUtility.ToAbsolute("~/") -> "/";
+        //    // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+        //    // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
+        //}
 
         static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
         {

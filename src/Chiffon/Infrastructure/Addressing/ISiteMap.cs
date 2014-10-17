@@ -8,6 +8,9 @@
     {
         ChiffonLanguage Language { get; }
 
+        /// <summary>
+        /// Uri de base du site (sans le répertoire virtuel).
+        /// </summary>
         Uri BaseUri { get; }
 
         Uri Home();
@@ -25,8 +28,5 @@
         Uri Designer(DesignerKey designerKey, int pageIndex);
         Uri DesignerCategory(DesignerKey designerKey, string categoryKey, int pageIndex);
         Uri DesignerPattern(DesignerKey designerKey, string categoryKey, string reference, int pageIndex);
-
-        Uri MakeAbsoluteUri(string relativeUri);
-        Uri MakeAbsoluteUri(Uri relativeUri);
     }
 }
