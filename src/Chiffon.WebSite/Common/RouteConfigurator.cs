@@ -29,31 +29,31 @@
             // HomeController.
             _routes.MapRoute(Constants.RouteName.Home.Index, String.Empty,
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.Index });
-            _routes.MapRoute(Constants.RouteName.Home.About, DefaultSiteMap.Constants.About,
+            _routes.MapRoute(Constants.RouteName.Home.About, Routes.About,
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.About });
-            _routes.MapRoute(Constants.RouteName.Home.Contact, DefaultSiteMap.Constants.Contact,
+            _routes.MapRoute(Constants.RouteName.Home.Contact, Routes.Contact,
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.Contact });
             _routes.MapRoute(Constants.RouteName.Home.ContactSuccess, "contact-confirmation",
                 new { controller = Constants.ControllerName.Home, action = Constants.ActionName.Home.ContactSuccess });
 
             // AccountController.
-            _routes.MapRoute(Constants.RouteName.Account.Register, DefaultSiteMap.Constants.Register,
+            _routes.MapRoute(Constants.RouteName.Account.Register, Routes.Register,
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Register });
             _routes.MapRoute(Constants.RouteName.Account.RegisterSuccess, "inscription-confirmation",
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.RegisterSuccess });
-            _routes.MapRoute(Constants.RouteName.Account.Login, DefaultSiteMap.Constants.Login,
+            _routes.MapRoute(Constants.RouteName.Account.Login, Routes.Login,
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Login });
-            _routes.MapRoute(Constants.RouteName.Account.Newsletter, DefaultSiteMap.Constants.Newsletter,
+            _routes.MapRoute(Constants.RouteName.Account.Newsletter, Routes.Newsletter,
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Newsletter });
 
             // DesignerController.
-            _routes.MapRoute(Constants.RouteName.Designer.Index, DefaultSiteMap.Constants.Designer,
+            _routes.MapRoute(Constants.RouteName.Designer.Index, Routes.Designer,
                 new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Index },
                 new { designerKey = new DesignerKeyConstraint() });
-            _routes.MapRoute(Constants.RouteName.Designer.Category, DefaultSiteMap.Constants.DesignerCategory,
+            _routes.MapRoute(Constants.RouteName.Designer.Category, Routes.DesignerCategory,
                 new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Category },
                 new { designerKey = new DesignerKeyConstraint() });
-            _routes.MapRoute(Constants.RouteName.Designer.Pattern, DefaultSiteMap.Constants.DesignerPattern,
+            _routes.MapRoute(Constants.RouteName.Designer.Pattern, Routes.DesignerPattern,
                 new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Pattern },
                 new { designerKey = new DesignerKeyConstraint() });
 
@@ -70,9 +70,9 @@
 
         void RegisterHandlerRoutes_()
         {
-            _routes.Add(new Route(DefaultSiteMap.Constants.Pattern, new AutofacRouteHandler<PatternImageHandler>()));
-            _routes.Add(new Route(DefaultSiteMap.Constants.LogOn, new AutofacRouteHandler<LogOnHandler>()));
-            _routes.Add(new Route(DefaultSiteMap.Constants.LogOff, new AutofacRouteHandler<LogOffHandler>()));
+            _routes.Add(new Route(Routes.Pattern, new AutofacRouteHandler<PatternImageHandler>()));
+            _routes.Add(new Route(Routes.LogOn, new AutofacRouteHandler<LogOnHandler>()));
+            _routes.Add(new Route(Routes.LogOff, new AutofacRouteHandler<LogOffHandler>()));
             //_routes.Add(new Route("go", new AutofacRouteHandler<GoHandler>()));
         }
     }

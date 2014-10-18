@@ -8,20 +8,24 @@
     public struct ChiffonEnvironment : IEquatable<ChiffonEnvironment>
     {
         Uri _baseUri;
+        ChiffonHosting _hosting;
         ChiffonLanguage _language;
 
-        internal ChiffonEnvironment(ChiffonLanguage language, Uri baseUri)
+        internal ChiffonEnvironment(ChiffonLanguage language, Uri baseUri, ChiffonHosting hosting)
         {
             Require.NotNull(baseUri, "baseUri");
 
             _language = language;
             _baseUri = baseUri;
+            _hosting = hosting;
         }
 
         /// <summary>
         /// Uri de base du site (sans le répertoire virtuel).
         /// </summary>
         public Uri BaseUri { get { return _baseUri; } }
+
+        public ChiffonHosting Hosting { get { return _hosting; } }
 
         public ChiffonLanguage Language { get { return _language; } }
 
@@ -55,14 +59,17 @@
 
         public override int GetHashCode()
         {
-            return _language.GetHashCode();
+            // TODO: Dubious.
+            return _language.GetHashCode()
+                ^ _baseUri.GetHashCode()
+                ^ _hosting.GetHashCode();
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"),
-            SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        public Uri MakeAbsoluteUri(string relativeUri)
+        //[SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"),
+        //    SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        public Uri MakeAbsoluteUri(string relativePath)
         {
-            return new Uri(_baseUri, relativeUri);
+            return new Uri(_baseUri, relativePath);
         }
 
         public Uri MakeAbsoluteUri(Uri relativeUri)

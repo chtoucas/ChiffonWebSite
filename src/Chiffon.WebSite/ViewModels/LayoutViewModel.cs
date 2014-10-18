@@ -9,12 +9,13 @@
 
     public class LayoutViewModel
     {
-        // FIXME: Vraiment pas efficace.
+        // FIXME: Vraiment pas efficace et incorrect en plus (on ne sait pas réellement quel est 
+        // l'ISiteMap en cours d'utilisation.
         static readonly Lazy<IEnumerable<ISiteMap>> SiteMaps_
             = new Lazy<IEnumerable<ISiteMap>>(() =>
             {
                 return from env in ChiffonEnvironmentResolver.Environments
-                       select new DefaultSiteMap(env);
+                       select new SingleDomainSiteMap(env);
             });
 
         bool _disableOntology = false;

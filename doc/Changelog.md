@@ -1,11 +1,8 @@
 CHANGELOG
 =========
 
-[2014-10-XX] Release 1.13
+[2014-XX-XX] Release 1.14
 -------------------------
-
-* Maintenant DefaultSiteMap prend correctement en compte le répertoire
-  virtuel de l'application.
 
 TODO:
 * Flag DEMO
@@ -15,6 +12,12 @@ TODO:
 * désactivater la création de compte et l'envoi de mail ?
 * virer SHOWCASE et déterminer via la configuration si on est dans un
   répertoire virtuel.
+
+[2014-10-17] Release 1.13
+-------------------------
+
+* Maintenant DefaultSiteMap prend correctement en compte le répertoire
+  virtuel de l'application.
 
 [2014-10-16] Release 1.12
 -------------------------

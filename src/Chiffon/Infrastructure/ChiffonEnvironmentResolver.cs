@@ -15,18 +15,19 @@
 
 #if SHOWCASE
         static readonly ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"));
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
         static readonly ChiffonEnvironment EnglishEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"));
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
 #else
         static readonly ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"));
+            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
         static readonly ChiffonEnvironment EnglishEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"));
+            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
 #endif
 
         // FIXME: Ne marche pas dans le cas où on utilise un environnement différent 
-        // de ce qui est prévu à l'origine (cf. Resolve()).
+        // de ce qui est prévu à l'origine (cf. Resolve()). Il faudra initialiser
+        // cette propriété dynamiquement.
         public static IEnumerable<ChiffonEnvironment> Environments
         {
             get
@@ -64,8 +65,12 @@
             // On regarde dans la session si on n'a pas une langue déjà définie.
             language = language ?? GetLanguageFromSession_(session);
 
-            return language.Select(_ => new ChiffonEnvironment(_, uri))
-                ?? new ChiffonEnvironment(ChiffonLanguage.Default, uri);
+            // On détermine comment le passage d'une langue à une autre va se faire.
+            bool isAppVirtual = VirtualPathUtility.ToAbsolute("~/") == "/";
+            var hosting = isAppVirtual ? ChiffonHosting.SingleDomain : ChiffonHosting.OneDomainPerLanguage;
+
+            return language.Select(_ => new ChiffonEnvironment(_, uri, hosting))
+                ?? new ChiffonEnvironment(ChiffonLanguage.Default, uri, hosting);
         }
 
         static Uri GetBaseUri_(Uri uri)

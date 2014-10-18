@@ -2,30 +2,16 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using System.Web;
     using System.Globalization;
+    using System.Web;
     using Chiffon.Entities;
 
-    //<configuration>
-    //  <uri>
-    //  <idn enabled="All" />
-    //  <iriParsing enabled="true" />
-    //  </uri>
-    //</configuration>
-    // Check UriBuilder
-    // TODO: ajouter la possibilité de supprimer le préfixe http:
-    // - change base path, depending on anonymous / member
-    // http://stackoverflow.com/questions/829080/how-to-build-a-query-string-for-a-url-in-c
-    // VirtualPathUtility
-    // NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-    // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
-    // & https://github.com/schourode/canonicalize
-    public class DefaultSiteMap : ISiteMap
+    public class OneDomainPerLanguageSiteMap : ISiteMap
     {
         readonly Uri _baseUri;
         readonly ChiffonLanguage _language;
 
-        public DefaultSiteMap(ChiffonEnvironment environment)
+        public OneDomainPerLanguageSiteMap(ChiffonEnvironment environment)
         {
             if (!environment.BaseUri.IsAbsoluteUri) {
                 throw new ArgumentException("The 'baseUri' parameter must be absolute.", "environment");
@@ -35,26 +21,6 @@
             _language = environment.Language;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public static class Constants
-        {
-            public const string About = "informations";
-            public const string Contact = "contact";
-            public const string Newsletter = "newsletter";
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
-            public const string Login = "connexion";
-            public const string Register = "inscription";
-
-            // TODO: Utiliser ces constantes dans SiteMap (cf. SmartFormat.NET).
-            public const string Designer = "{designerKey}";
-            public const string DesignerCategory = "{designerKey}/{categoryKey}";
-            public const string DesignerPattern = "{designerKey}/{categoryKey}/{reference}";
-
-            public const string LogOff = "disconnecte";
-            public const string LogOn = "connecte";
-            public const string Pattern = "motif";
-        }
-
         #region ISiteMap
 
         public ChiffonLanguage Language { get { return _language; } }
@@ -62,33 +28,33 @@
         public Uri Home() { return MakeAbsoluteUri_(String.Empty); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri About() { return MakeAbsoluteUri_(Constants.About); }
+        public Uri About() { return MakeAbsoluteUri_(Routes.About); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Contact() { return MakeAbsoluteUri_(Constants.Contact); }
+        public Uri Contact() { return MakeAbsoluteUri_(Routes.Contact); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Newsletter() { return MakeAbsoluteUri_(Constants.Newsletter); }
+        public Uri Newsletter() { return MakeAbsoluteUri_(Routes.Newsletter); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
-        public Uri Login() { return MakeAbsoluteUri_(Constants.Login); }
+        public Uri Login() { return MakeAbsoluteUri_(Routes.Login); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         public Uri Login(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Constants.Login);
+            var uri = MakeAbsoluteUri_(Routes.Login);
             return AddReturnUrl_(uri, returnUrl);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
-        public Uri Register() { return MakeAbsoluteUri_(Constants.Register); }
+        public Uri Register() { return MakeAbsoluteUri_(Routes.Register); }
 
         [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri Register(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Constants.Register);
+            var uri = MakeAbsoluteUri_(Routes.Register);
             return AddReturnUrl_(uri, returnUrl);
         }
 
@@ -129,7 +95,7 @@
             }
         }
 
-        // NB: returnUrl contient le répertoire virtuel.
+        // NB: "returnUrl" contient le répertoire virtuel.
         static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
         {
             var builder = new UriBuilder(uri) {
@@ -139,11 +105,15 @@
             return builder.Uri;
         }
 
-        // NB: relativeUri ne contient pas le répertoire virtuel.
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"), SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        Uri MakeAbsoluteUri_(string relativeUri)
+        // NB: "relativePath" ne contient pas le répertoire virtuel.
+        Uri MakeAbsoluteUri_(string relativePath)
         {
-            return new Uri(_baseUri, VirtualPathUtility.ToAbsolute("~/" + relativeUri));
+            if (relativePath == String.Empty) {
+                return new Uri(_baseUri, VirtualPathUtility.ToAbsolute("~/"));
+            }
+            else {
+                return new Uri(_baseUri, VirtualPathUtility.ToAbsolute(VirtualPathUtility.Combine("~/", relativePath)));
+            }
         }
     }
 }
