@@ -101,7 +101,8 @@
             }
 
             // QUICKFIX: On veut une URL absolue.
-            ontology.Relationships.HumansTxtUrl = new Uri(VirtualPathUtility.ToAbsolute("~/human.txt"), UriKind.Relative);
+            ontology.Relationships.HumansTxtUrl
+                = new Uri(VirtualPathUtility.ToAbsolute("~/human.txt"), UriKind.Relative);
 
             __CheckRelationships(ontology.Relationships);
             __CheckOpenGraphMetadata(ontology.OpenGraph);

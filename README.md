@@ -4,6 +4,9 @@ ChiffonWebSite
 A multilingual WebSite for a textile design collective.
 Available in French & English.
 
+The result (with SEO disabled) can be seen here:
+[http://narvalo.org/chiffon/](http://narvalo.org/chiffon/).
+
 **Status: Stable**
 
 ### Technology footprint ###
@@ -19,7 +22,7 @@ Available in French & English.
 
 ### Requirements ###
 
-- Visual Studio Express 2013.3, but 2013.1/2 might work
+- Visual Studio Express 2013 Update 3
 - .NET 4.5.1
 - PowerShell v3
 - Nodejs
