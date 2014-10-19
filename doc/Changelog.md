@@ -5,6 +5,7 @@ CHANGELOG
 -------------------------
 
 TODO:
+* Migrate to Attribute Routing
 * Flag DEMO
 * Multi-langues
   - VSModuleContext (activer en localhost) + session lang

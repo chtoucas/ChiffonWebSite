@@ -16,35 +16,13 @@ $tools = @(
     'Version' = '9.20'
     'Source' = 'http://downloads.sourceforge.net/sevenzip/7za920.zip'
   }
-  # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement vers une version spécifique.
+  # FIXME: Malheureusement, je ne trouve pas de lien de téléchargement
+  # vers une version spécifique.
   @{
     'Name' = 'NuGet'
-    'Version' = '2.8.2'
+    'Version' = '2.8.3'
     'Source' = 'http://www.nuget.org/nuget.exe'
   }
-#  @{
-#    'Name' = 'Node'
-#    'Version' = '0.10.32'
-#    'Source' = 'http://nodejs.org/dist/v0.10.32/node.exe'
-#  }
-#  @{
-#    'Name' = 'Node Package Manager'
-#    'Version' = '1.4.12'
-#    'Source' = 'http://nodejs.org/dist/npm/npm-1.4.28.zip'
-#  }
-#  # Cf. https://code.google.com/p/closure-compiler/wiki/BinaryDownloads
-#  @{
-#    'Name' = 'Google Closure Compiler'
-#    'Version' = '20140508'
-#    'Source' = 'http://dl.google.com/closure-compiler/compiler-20140508.zip'
-#  }
-#  # WARNING: La version 2.4.8 ne gère pas correctement les chemins Windows.
-#  # Cf. https://github.com/yui/yuicompressor/issues/78
-#  @{
-#    'Name' = 'YUI Compressor'
-#    'Version' = '2.4.7'
-#    'Source' = 'https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip'
-#  }
 )
 
 #-- Installation ou mise à jour des outils --#
@@ -72,6 +50,7 @@ $modules = @(
   @{ 'Name' = 'npm-check-updates'; 'Command' = 'npm-check-updates\bin\npm-check-updates' }
 #  @{ 'Name' = 'tsc';   'Command' = 'typescript\bin\tsc' }
 )
+
 $template = @"
 :: WARNING: Ne pas modifier ce fichier car il est généré automatiquement.
 @echo off
@@ -81,6 +60,7 @@ node.exe "%~dp0\..\node_modules\{{command}}" %*
 
 foreach ($module in $modules) {
   $path = ".\tools\$($module.Name).cmd"
+
   if (!(Test-Path $path)) {
     Add-Content ".\tools\$($module.Name).cmd" $template.Replace('{{command}}', $module.Command)
   }
