@@ -4,6 +4,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
+
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -112,9 +113,9 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (result.IsBreak) {
+            if (result.Aborted) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
-                    Message = result.Message
+                    Message = result.Reason
                 });
             }
 

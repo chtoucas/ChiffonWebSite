@@ -3,6 +3,7 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
+
     using Narvalo;
     using Narvalo.Data;
 
@@ -27,9 +28,9 @@
             return rdr.GetString("public_key");
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@email_address", SqlDbType.NVarChar, Email);
+            parameters.AddParameter("@email_address", SqlDbType.NVarChar, Email);
         }
     }
 }

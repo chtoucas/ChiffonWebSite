@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Data.SqlClient;
+
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -30,10 +31,16 @@
                     Published = true,
                     Showcased = true,
                 };
+
                 result.Add(pattern);
             }
 
             return result;
+        }
+
+        protected override void PrepareParameters(SqlParameterCollection parameters)
+        {
+            // Intentionally left blank.
         }
     }
 }

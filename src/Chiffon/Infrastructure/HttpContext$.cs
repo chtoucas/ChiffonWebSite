@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System.Web;
+
     using Narvalo;
 
     public static class HttpContextExtensions

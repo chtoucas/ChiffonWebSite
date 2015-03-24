@@ -55,17 +55,16 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Common, Version=0.18.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Common, Version=0.22.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.0.18.0.1\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.0.22.1\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web, Version=0.17.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.0.17.0.1\lib\net45\Narvalo.Web.dll</HintPath>
+    <Reference Include="Narvalo.Core">
+      <HintPath>..\..\packages\Narvalo.Core.0.22.1\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Narvalo.Web.Extras, Version=0.17.0.1, Culture=neutral, PublicKeyToken=48027043888c7f5e, processorArchitecture=MSIL">
+    <Reference Include="Narvalo.Web, Version=0.22.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.Extras.0.17.0.1\lib\net45\Narvalo.Web.Extras.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.0.22.1\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -118,9 +117,15 @@
     <Compile Include="..\..\etc\AssemblyInfo.Version.cs">
       <Link>Properties\AssemblyInfo.Version.cs</Link>
     </Compile>
+    <Compile Include="Externs\AutofacRouteHandler`1.cs" />
+    <Compile Include="Externs\ContainerBuilder%24.cs" />
+    <Compile Include="Externs\ConvertTo.cs" />
+    <Compile Include="Externs\HttpLogEventEnricher.cs" />
     <Compile Include="Infrastructure\Addressing\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\Routes.cs" />
+    <Compile Include="Infrastructure\ApplicationLifeCycleModule.cs" />
     <Compile Include="Infrastructure\ChiffonHosting.cs" />
+    <Compile Include="Infrastructure\LocalAssetProvider.cs" />
     <Compile Include="Persistence\CachedDbQueries.cs" />
     <Compile Include="Persistence\SqlServer\NewMemberCommand.cs" />
     <Compile Include="Persistence\IDbCommands.cs" />

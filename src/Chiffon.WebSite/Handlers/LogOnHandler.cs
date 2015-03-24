@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -35,15 +36,18 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            DebugCheck.NotNull(context);
-            DebugCheck.NotNull(query);
+            //Require.NotNull(context, "context");
+            //Require.NotNull(query, "query");
 
             var environment = ChiffonContext.Current.Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);
 
-            var nextUrl = _memberService
-                .MayLogOn(query.Email, query.Password)
-                .OnSome(_ => (new AuthentificationService(context)).SignIn(_))
+            var member = _memberService
+                .MayLogOn(query.Email, query.Password);
+
+            member.OnSome(_ => (new AuthentificationService(context)).SignIn(_));
+
+            var nextUrl = member
                 .Select(_ => GetNextUri_(query.TargetUrl, siteMap, environment))
                 .ValueOrElse(GetLoginUri_(query.TargetUrl, siteMap));
 

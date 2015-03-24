@@ -5,10 +5,12 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Web.Mvc;
+
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.ViewModels;
     using Narvalo;
+    using Narvalo.Web;
     using Narvalo.Web.UI.Assets;
 
     public class ComponentController : Controller
@@ -42,7 +44,7 @@
         [ChildActionOnly]
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public PartialViewResult LanguageMenu(
-            ChiffonLanguage language, 
+            ChiffonLanguage language,
             IEnumerable<KeyValuePair<ChiffonLanguage, Uri>> alternateUrls)
         {
             return PartialView(ViewUtility.Localize(Constants.ViewName.Component.LanguageMenu, language), alternateUrls);

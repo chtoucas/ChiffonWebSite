@@ -5,9 +5,11 @@
     using System.Linq;
     using System.Web;
     using System.Web.SessionState;
+
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
+    using Narvalo.Fx.Extensions;
 
     public static class ChiffonEnvironmentResolver
     {

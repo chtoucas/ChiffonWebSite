@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel.Composition;
     using System.IO;
+
+    using Narvalo.Externs.Serilog;
     using Narvalo.Web;
     using Serilog;
     using Serilog.Events;

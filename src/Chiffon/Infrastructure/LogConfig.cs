@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System.ComponentModel.Composition.Hosting;
+
     using Narvalo;
     using Serilog;
 

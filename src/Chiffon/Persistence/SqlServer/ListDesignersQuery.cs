@@ -5,6 +5,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Globalization;
+
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -48,9 +49,9 @@
             return designers;
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
+            parameters.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
         }
     }
 }

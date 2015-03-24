@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Net.Mail;
+
     using Chiffon.Resources;
 
     /// <summary>

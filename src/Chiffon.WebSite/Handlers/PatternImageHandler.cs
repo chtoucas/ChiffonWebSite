@@ -5,6 +5,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.Persistence;
@@ -43,20 +44,22 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            DebugCheck.NotNull(context);
-            DebugCheck.NotNull(query);
+            //Require.NotNull(context, "context");
+            //Require.NotNull(query, "query");
 
             var response = context.Response;
 
             var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
-            if (pattern == null) {
+            if (pattern == null)
+            {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
             var size = query.Size;
 
             // FIXME
-            if (size == PatternSize.Preview && !pattern.HasPreview) {
+            if (size == PatternSize.Preview && !pattern.HasPreview)
+            {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
 
@@ -64,7 +67,8 @@
 
             bool isAuth = context.User.Identity.IsAuthenticated;
 
-            switch (visibility) {
+            switch (visibility)
+            {
                 case PatternVisibility.Members:
                     if (!isAuth) { response.SetStatusCode(HttpStatusCode.Unauthorized); return; }
                     break;
@@ -79,7 +83,8 @@
 
             // FIXME: Capturer les exceptions d'IO.
             response.Clear();
-            if (_config.EnableClientCache) {
+            if (_config.EnableClientCache)
+            {
                 CacheResponse_(response, visibility);
             }
             response.ContentType = image.MimeType;
@@ -89,10 +94,12 @@
         // TODO: Il faut revoir les en-têtes de cache.
         static void CacheResponse_(HttpResponse response, PatternVisibility visibility)
         {
-            if (visibility == PatternVisibility.Public) {
+            if (visibility == PatternVisibility.Public)
+            {
                 response.PubliclyCacheFor(PublicCacheTimeSpan_);
             }
-            else {
+            else
+            {
                 response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
             }
         }

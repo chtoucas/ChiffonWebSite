@@ -2,6 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
+
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -39,11 +40,11 @@
             };
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
-            command.AddParameter("@reference", SqlDbType.NVarChar, Reference);
-            command.AddParameter("@version", SqlDbType.NVarChar, Variant);
+            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            parameters.AddParameter("@reference", SqlDbType.NVarChar, Reference);
+            parameters.AddParameter("@version", SqlDbType.NVarChar, Variant);
         }
     }
 }

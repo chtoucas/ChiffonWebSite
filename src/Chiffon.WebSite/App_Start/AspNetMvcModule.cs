@@ -2,9 +2,9 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Infrastructure;
+
     using Narvalo;
-    using Narvalo.Web;
+    using Narvalo.Externs.Autofac;
 
     public class AspNetMvcModule : Module
     {

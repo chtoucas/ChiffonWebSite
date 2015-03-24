@@ -3,9 +3,11 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Routing;
+
     using Chiffon.Handlers;
     using Chiffon.Infrastructure.Addressing;
     using Narvalo;
+    using Narvalo.Externs.Autofac;
     using Narvalo.Web;
 
     // TODO: I18N.

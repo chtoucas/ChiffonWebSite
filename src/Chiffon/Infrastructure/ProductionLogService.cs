@@ -2,6 +2,8 @@
 {
     using System;
     using System.ComponentModel.Composition;
+
+    using Narvalo.Externs.Serilog;
     using Narvalo.Web;
     using Serilog;
     using Serilog.Events;
@@ -9,8 +11,6 @@
     [Export("Production", typeof(ILogService))]
     public class ProductionLogService : ILogService
     {
-        #region ILogService
-
         [CLSCompliant(false)]
         public ILogger GetLogger(LogEventLevel minimumLevel)
         {
@@ -20,7 +20,5 @@
                 .Enrich.With<HttpLogEventEnricher>()
                 .CreateLogger();
         }
-
-        #endregion
     }
 }

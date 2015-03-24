@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Narvalo;
@@ -36,9 +37,9 @@
             return categories;
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
         }
     }
 }

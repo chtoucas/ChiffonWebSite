@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net.Mail;
+
     using Narvalo.Fx;
 
     /// <summary>

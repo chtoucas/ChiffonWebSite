@@ -2,6 +2,7 @@
 {
     using Chiffon.Persistence;
     using Chiffon.Services;
+
     using Narvalo;
 
     static class Mapper

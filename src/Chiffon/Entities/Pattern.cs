@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+
     using Chiffon.Infrastructure;
     using Narvalo;
 

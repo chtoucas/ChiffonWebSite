@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+
     using Narvalo.Fx;
 
     [Serializable]
@@ -27,13 +28,13 @@
         {
             switch (value) {
                 case "chicamancha":
-                    return Maybe.Create(EstherMarthi);
+                    return Maybe.Of(EstherMarthi);
                 case "viviane-devaux":
-                    return Maybe.Create(VivianeDevaux);
+                    return Maybe.Of(VivianeDevaux);
                 case "petroleum-blue":
-                    return Maybe.Create(ChristineLégeret);
+                    return Maybe.Of(ChristineLégeret);
                 case "laure-roussel":
-                    return Maybe.Create(LaureRoussel);
+                    return Maybe.Of(LaureRoussel);
                 default:
                     return Maybe<DesignerKey>.None;
             }

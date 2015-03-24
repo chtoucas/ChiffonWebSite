@@ -2,6 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
+
     using Narvalo.Data;
 
     /// <summary>
@@ -18,15 +19,14 @@
         public NewMemberCommand(string connectionString)
             : base(connectionString, "usp_NewMember") { }
 
-        protected override void PrepareCommand(SqlCommand command, NewMemberParameters parameters)
+        protected override void AddParameters(SqlParameterCollection parameters, NewMemberParameters values)
         {
-            SqlParameterCollection p = command.Parameters;
-            p.Add("@email_address", SqlDbType.NVarChar).Value = parameters.Email;
-            p.Add("@firstname", SqlDbType.NVarChar).Value = parameters.FirstName;
-            p.Add("@lastname", SqlDbType.NVarChar).Value = parameters.LastName;
-            p.Add("@company_name", SqlDbType.NVarChar).Value = parameters.CompanyName;
-            p.Add("@password", SqlDbType.NVarChar).Value = parameters.EncryptedPassword;
-            p.Add("@newsletter", SqlDbType.Bit).Value = parameters.NewsletterChecked;
+            parameters.Add("@email_address", SqlDbType.NVarChar).Value = values.Email;
+            parameters.Add("@firstname", SqlDbType.NVarChar).Value = values.FirstName;
+            parameters.Add("@lastname", SqlDbType.NVarChar).Value = values.LastName;
+            parameters.Add("@company_name", SqlDbType.NVarChar).Value = values.CompanyName;
+            parameters.Add("@password", SqlDbType.NVarChar).Value = values.EncryptedPassword;
+            parameters.Add("@newsletter", SqlDbType.Bit).Value = values.NewsletterChecked;
         }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.IO;
+
     using Narvalo;
 
     public abstract class PatternImage

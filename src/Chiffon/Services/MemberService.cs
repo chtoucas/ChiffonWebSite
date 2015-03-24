@@ -84,7 +84,7 @@
         public Maybe<Member> MayLogOn(string email, string password)
         {
             // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
-            return Maybe.Create(_queries.GetMember(email, password));
+            return Maybe.Of(_queries.GetMember(email, password));
         }
 
         #endregion

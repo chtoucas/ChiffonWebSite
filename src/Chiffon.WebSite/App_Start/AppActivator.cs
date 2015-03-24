@@ -13,12 +13,12 @@ namespace Chiffon
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+
     using Autofac;
     using Autofac.Integration.Mvc;
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Narvalo.Web;
     using Narvalo.Web.Optimization;
     using Serilog;
 
@@ -43,14 +43,14 @@ namespace Chiffon
             (new LogConfig(config)).Configure();
 
             // Modules HTTP.
-            ApplicationLifecycleModule.Register();
+            ApplicationLifeCycleModule.Register();
             InitializeContextModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
 
             // Optimisation du contenu HTML (ASP.NET WebForm).
-            WhiteSpaceBusterProvider.Current.WhiteSpaceBuster = new AggressiveWhiteSpaceBuster();
+            WhiteSpaceBusterProvider.Current.PageBuster = new UnsafeWhiteSpaceBuster();
         }
 
         public static void Start()
@@ -79,7 +79,7 @@ namespace Chiffon
         /// </summary>
         public static void Shutdown()
         {
-            ;
+            // Intentionally left blank.
         }
 
         #region Méthodes privées

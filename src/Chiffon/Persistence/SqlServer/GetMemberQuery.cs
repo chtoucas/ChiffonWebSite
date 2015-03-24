@@ -2,6 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
+
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -29,10 +30,10 @@
             return MemberFactory.NewMember(Email, rdr.GetString("firstname"), rdr.GetString("lastname"));
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@email_address", SqlDbType.NVarChar, Email);
-            command.AddParameter("@password", SqlDbType.NVarChar, Password);
+            parameters.AddParameter("@email_address", SqlDbType.NVarChar, Email);
+            parameters.AddParameter("@password", SqlDbType.NVarChar, Password);
         }
     }
 }

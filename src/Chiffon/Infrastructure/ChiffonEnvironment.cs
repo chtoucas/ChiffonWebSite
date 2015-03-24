@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+
     using Narvalo;
 
     public struct ChiffonEnvironment : IEquatable<ChiffonEnvironment>

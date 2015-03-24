@@ -8,6 +8,7 @@
     using System.Web.SessionState;
 #endif
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+
     using Narvalo;
 
     // TODO: Vérifier que ces événements ne sont déclenchés qu'une fois par requête.

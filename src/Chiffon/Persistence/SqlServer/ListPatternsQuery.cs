@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
@@ -48,22 +49,22 @@
             return patterns;
         }
 
-        protected override void PrepareCommand(SqlCommand command)
+        protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            command.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
 
             if (Published.HasValue) {
-                command.AddParameter("@published", SqlDbType.Bit, Published.Value);
+                parameters.AddParameter("@published", SqlDbType.Bit, Published.Value);
             }
             else {
-                command.AddParameter("@published", SqlDbType.Bit, DBNull.Value);
+                parameters.AddParameter("@published", SqlDbType.Bit, DBNull.Value);
             }
 
             if (!String.IsNullOrEmpty(CategoryKey)) {
-                command.AddParameter("@category", SqlDbType.NVarChar, CategoryKey);
+                parameters.AddParameter("@category", SqlDbType.NVarChar, CategoryKey);
             }
             else {
-                command.AddParameter("@category", SqlDbType.NVarChar, DBNull.Value);
+                parameters.AddParameter("@category", SqlDbType.NVarChar, DBNull.Value);
             }
         }
     }
