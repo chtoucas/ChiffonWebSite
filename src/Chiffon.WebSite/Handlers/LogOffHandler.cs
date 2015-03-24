@@ -28,7 +28,7 @@
 
         protected override void ProcessRequestCore(HttpContext context)
         {
-            Require.NotNull(context, "context");
+            //DebugCheck.NotNull(context);
 
             (new AuthentificationService(context)).SignOut();
 

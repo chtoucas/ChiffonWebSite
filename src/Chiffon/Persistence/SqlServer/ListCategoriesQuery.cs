@@ -27,9 +27,9 @@
             // Catégories du designer (avec au moins un motif).
             while (reader.Read())
             {
-                var category = new Category(DesignerKey, reader.GetString("category")) {
-                    DisplayName = reader.GetString("display_name"),
-                    PatternsCount = reader.GetInt32("patterns_count"),
+                var category = new Category(DesignerKey, reader.GetStringUnsafe("category")) {
+                    DisplayName = reader.GetStringUnsafe("display_name"),
+                    PatternsCount = reader.GetInt32Unsafe("patterns_count"),
                 };
                 categories.Add(category);
             }

@@ -30,13 +30,13 @@
             if (!reader.Read()) { return null; }
 
             return new Pattern(new PatternId(DesignerKey, Reference), Variant) {
-                CategoryKey = reader.GetString("category"),
-                CreationTime = reader.GetDateTime("creation_time"),
-                HasPreview = reader.GetBoolean("preview"),
-                LastModifiedTime = reader.GetDateTime("last_modified_time"),
-                Preferred = reader.GetBoolean("preferred"),
-                Published = reader.GetBoolean("published"),
-                Showcased = reader.GetBoolean("showcased"),
+                CategoryKey = reader.GetStringUnsafe("category"),
+                CreationTime = reader.GetDateTimeUnsafe("creation_time"),
+                HasPreview = reader.GetBooleanUnsafe("preview"),
+                LastModifiedTime = reader.GetDateTimeUnsafe("last_modified_time"),
+                Preferred = reader.GetBooleanUnsafe("preferred"),
+                Published = reader.GetBooleanUnsafe("published"),
+                Showcased = reader.GetBooleanUnsafe("showcased"),
             };
         }
 

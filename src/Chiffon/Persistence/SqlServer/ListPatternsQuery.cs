@@ -31,17 +31,17 @@
 
             while (reader.Read())
             {
-                var patternId = new PatternId(DesignerKey, reader.GetString("reference"));
-                var version = reader.GetString("version");
+                var patternId = new PatternId(DesignerKey, reader.GetStringUnsafe("reference"));
+                var version = reader.GetStringUnsafe("version");
 
                 var pattern = new Pattern(patternId, version) {
-                    CategoryKey = reader.GetString("category"),
-                    CreationTime = reader.GetDateTime("creation_time"),
-                    HasPreview = reader.GetBoolean("preview"),
-                    LastModifiedTime = reader.GetDateTime("last_modified_time"),
-                    Preferred = reader.GetBoolean("preferred"),
-                    Published = reader.GetBoolean("published"),
-                    Showcased = reader.GetBoolean("showcased"),
+                    CategoryKey = reader.GetStringUnsafe("category"),
+                    CreationTime = reader.GetDateTimeUnsafe("creation_time"),
+                    HasPreview = reader.GetBooleanUnsafe("preview"),
+                    LastModifiedTime = reader.GetDateTimeUnsafe("last_modified_time"),
+                    Preferred = reader.GetBooleanUnsafe("preferred"),
+                    Published = reader.GetBooleanUnsafe("published"),
+                    Showcased = reader.GetBooleanUnsafe("showcased"),
                 };
 
                 patterns.Add(pattern);
@@ -52,25 +52,11 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            Require.NotNull(parameters, "parameters");
 
-            if (Published.HasValue)
-            {
-                parameters.AddParameter("@published", SqlDbType.Bit, Published.Value);
-            }
-            else
-            {
-                parameters.AddParameter("@published", SqlDbType.Bit, DBNull.Value);
-            }
-
-            if (!String.IsNullOrEmpty(CategoryKey))
-            {
-                parameters.AddParameter("@category", SqlDbType.NVarChar, CategoryKey);
-            }
-            else
-            {
-                parameters.AddParameter("@category", SqlDbType.NVarChar, DBNull.Value);
-            }
+            parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            parameters.AddParameterOrNullUnsafe("@published", SqlDbType.Bit, Published);
+            parameters.AddParameterOrNullUnsafe("@category", SqlDbType.NVarChar, CategoryKey, !String.IsNullOrEmpty(CategoryKey));
         }
     }
 }

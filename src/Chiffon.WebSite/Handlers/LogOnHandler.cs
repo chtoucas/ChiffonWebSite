@@ -36,8 +36,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            //Require.NotNull(context, "context");
-            //Require.NotNull(query, "query");
+            //DebugCheck.NotNull(context);
+            //DebugCheck.NotNull(query);
 
             var environment = ChiffonContext.Current.Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);

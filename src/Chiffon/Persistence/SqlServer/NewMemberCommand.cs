@@ -25,12 +25,12 @@
             Require.NotNull(parameters, "parameters");
             Require.NotNull(values, "values");
 
-            parameters.Add("@email_address", SqlDbType.NVarChar).Value = values.Email;
-            parameters.Add("@firstname", SqlDbType.NVarChar).Value = values.FirstName;
-            parameters.Add("@lastname", SqlDbType.NVarChar).Value = values.LastName;
-            parameters.Add("@company_name", SqlDbType.NVarChar).Value = values.CompanyName;
-            parameters.Add("@password", SqlDbType.NVarChar).Value = values.EncryptedPassword;
-            parameters.Add("@newsletter", SqlDbType.Bit).Value = values.NewsletterChecked;
+            parameters.AddParameterUnsafe("@email_address", SqlDbType.NVarChar, values.Email);
+            parameters.AddParameterUnsafe("@firstname", SqlDbType.NVarChar, values.FirstName);
+            parameters.AddParameterUnsafe("@lastname", SqlDbType.NVarChar, values.LastName);
+            parameters.AddParameterUnsafe("@company_name", SqlDbType.NVarChar, values.CompanyName);
+            parameters.AddParameterUnsafe("@password", SqlDbType.NVarChar, values.EncryptedPassword);
+            parameters.AddParameterUnsafe("@newsletter", SqlDbType.Bit, values.NewsletterChecked);
         }
     }
 }

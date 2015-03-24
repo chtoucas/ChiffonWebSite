@@ -32,15 +32,15 @@
             if (!reader.Read()) { return null; }
 
             return new Designer(_designerKey) {
-                AvatarCategory = reader.GetString("avatar_category"),
-                AvatarReference = reader.GetString("avatar_reference"),
-                AvatarVersion = reader.GetString("avatar_version"),
-                Email = reader.GetString("email_address"),
-                FirstName = reader.GetString("firstname"),
-                LastName = reader.GetString("lastname"),
-                Nickname = reader.MayGetString("nickname"),
-                Presentation = reader.GetString("presentation"),
-                WebsiteUrl = reader.MayGetString("website").Select(_ => new Uri(_)),
+                AvatarCategory = reader.GetStringUnsafe("avatar_category"),
+                AvatarReference = reader.GetStringUnsafe("avatar_reference"),
+                AvatarVersion = reader.GetStringUnsafe("avatar_version"),
+                Email = reader.GetStringUnsafe("email_address"),
+                FirstName = reader.GetStringUnsafe("firstname"),
+                LastName = reader.GetStringUnsafe("lastname"),
+                Nickname = reader.MayGetStringUnsafe("nickname"),
+                Presentation = reader.GetStringUnsafe("presentation"),
+                WebsiteUrl = reader.MayGetStringUnsafe("website").Select(_ => new Uri(_)),
             };
         }
 

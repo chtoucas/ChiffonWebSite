@@ -27,7 +27,10 @@
 
             if (!reader.Read()) { return null; }
 
-            return MemberFactory.NewMember(Email, reader.GetString("firstname"), reader.GetString("lastname"));
+            return MemberFactory.NewMember(
+                Email, 
+                reader.GetStringUnsafe("firstname"),
+                reader.GetStringUnsafe("lastname"));
         }
 
         protected override void PrepareParameters(SqlParameterCollection parameters)

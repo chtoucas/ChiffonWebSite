@@ -44,8 +44,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            //Require.NotNull(context, "context");
-            //Require.NotNull(query, "query");
+            //DebugCheck.NotNull(context);
+            //DebugCheck.NotNull(query);
 
             var response = context.Response;
 

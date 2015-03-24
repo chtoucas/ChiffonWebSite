@@ -25,7 +25,7 @@
 
             if (!reader.Read()) { return null; }
 
-            return reader.GetString("public_key");
+            return reader.GetStringUnsafe("public_key");
         }
 
         protected override void PrepareParameters(SqlParameterCollection parameters)

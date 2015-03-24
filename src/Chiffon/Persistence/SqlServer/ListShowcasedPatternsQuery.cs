@@ -20,14 +20,14 @@
 
             while (reader.Read())
             {
-                var designerKey = DesignerKey.Parse(reader.GetString("designer"));
-                var patternId = new PatternId(designerKey, reader.GetString("reference"));
-                var version = reader.GetString("version");
+                var designerKey = DesignerKey.Parse(reader.GetStringUnsafe("designer"));
+                var patternId = new PatternId(designerKey, reader.GetStringUnsafe("reference"));
+                var version = reader.GetStringUnsafe("version");
                 var pattern = new Pattern(patternId, version) {
-                    CategoryKey = reader.GetString("category"),
-                    CreationTime = reader.GetDateTime("creation_time"),
-                    HasPreview = reader.GetBoolean("preview"),
-                    LastModifiedTime = reader.GetDateTime("last_modified_time"),
+                    CategoryKey = reader.GetStringUnsafe("category"),
+                    CreationTime = reader.GetDateTimeUnsafe("creation_time"),
+                    HasPreview = reader.GetBooleanUnsafe("preview"),
+                    LastModifiedTime = reader.GetDateTimeUnsafe("last_modified_time"),
                     Preferred = true,
                     Published = true,
                     Showcased = true,
