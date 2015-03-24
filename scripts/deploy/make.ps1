@@ -1,4 +1,5 @@
 #Requires -Version 3.0
+#Requires -RunAsAdministrator
 
 param($task = 'default')
 
@@ -7,12 +8,12 @@ Set-StrictMode -Version Latest
 #Get-Module Narvalo | Remove-Module
 Import-Module Narvalo
 
-$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
-$isAdmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+#$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+#$isAdmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
 
-if ($isAdmin -eq $false)  {
-  throw "You must be an Administrator to run this script."
-}
+#if ($isAdmin -eq $false)  {
+#  throw "You must be an Administrator to run this script."
+#}
 
 Import-WebAdministration
 Import-Module '.\Deployment.psm1'
