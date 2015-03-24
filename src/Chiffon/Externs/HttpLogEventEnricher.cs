@@ -5,9 +5,9 @@ namespace Narvalo.Externs.Serilog
     using System;
     using System.Web;
 
-    using Narvalo;
     using global::Serilog.Core;
     using global::Serilog.Events;
+    using Narvalo;
 
     [CLSCompliant(false)]
     public sealed class HttpLogEventEnricher : ILogEventEnricher

@@ -1,9 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
-    using System;
     using System.IO;
 
-    using Chiffon.Infrastructure;
     using Narvalo;
 
     public class PatternFileSystem

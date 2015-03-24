@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure.Messaging
 {
     using System.Net.Mail;
+
     using Narvalo;
     using Serilog;
 

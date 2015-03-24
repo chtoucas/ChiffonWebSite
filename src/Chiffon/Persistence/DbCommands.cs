@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Persistence
 {
     using Chiffon.Persistence.SqlServer;
-    using Chiffon.Entities;
     using Narvalo;
 
     /// <summary>

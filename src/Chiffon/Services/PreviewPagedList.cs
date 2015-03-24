@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Services
 {
     using System.Collections.Generic;
+
     using Chiffon.Entities;
 
     public class PreviewPagedList

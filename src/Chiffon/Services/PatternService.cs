@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Chiffon.Persistence;
+
     using Chiffon.Entities;
+    using Chiffon.Persistence;
     using Narvalo;
 
     public class PatternService : IPatternService

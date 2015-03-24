@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Globalization;
-    using Chiffon.Persistence.SqlServer;
+
     using Chiffon.Entities;
+    using Chiffon.Persistence.SqlServer;
     using Narvalo;
 
     /// <summary>

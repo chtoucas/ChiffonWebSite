@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+
     using Chiffon.Entities;
 
     public interface IDbQueryCache

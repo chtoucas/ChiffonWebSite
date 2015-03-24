@@ -5,7 +5,6 @@
     using System.Data.SqlClient;
 
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Data;
 

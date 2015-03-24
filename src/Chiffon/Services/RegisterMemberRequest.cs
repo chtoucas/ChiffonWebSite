@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Services
 {
     using System;
+
     using Chiffon.Infrastructure.Messaging;
 
     /// <summary>

@@ -2,9 +2,6 @@
 {
     using System;
 
-    using Narvalo;
-    using Narvalo.Fx;
-
     [Serializable]
     public struct PatternId : IEquatable<PatternId>
     {

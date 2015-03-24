@@ -1,8 +1,8 @@
 ﻿namespace Chiffon.Services
 {
     using System;
+
     using Chiffon.Entities;
-    using Narvalo;
     using Narvalo.Fx;
 
     /// <summary>

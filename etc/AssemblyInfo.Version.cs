@@ -3,9 +3,7 @@
  * Timestamp: 2014-10-18 08:38 +02:00
  */
 
-using System;
 using System.Reflection;
-using System.Diagnostics.CodeAnalysis;
 
 // Version utilisée par le runtime.
 [assembly: AssemblyVersion("1.14.0.0")]
