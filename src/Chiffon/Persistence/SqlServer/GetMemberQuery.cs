@@ -32,8 +32,10 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@email_address", SqlDbType.NVarChar, Email);
-            parameters.AddParameter("@password", SqlDbType.NVarChar, Password);
+            Require.NotNull(parameters, "parameters");
+
+            parameters.AddParameterUnsafe("@email_address", SqlDbType.NVarChar, Email);
+            parameters.AddParameterUnsafe("@password", SqlDbType.NVarChar, Password);
         }
     }
 }

@@ -42,9 +42,11 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
-            parameters.AddParameter("@reference", SqlDbType.NVarChar, Reference);
-            parameters.AddParameter("@version", SqlDbType.NVarChar, Variant);
+            Require.NotNull(parameters, "parameters");
+
+            parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            parameters.AddParameterUnsafe("@reference", SqlDbType.NVarChar, Reference);
+            parameters.AddParameterUnsafe("@version", SqlDbType.NVarChar, Variant);
         }
     }
 }

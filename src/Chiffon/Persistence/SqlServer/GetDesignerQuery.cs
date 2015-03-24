@@ -46,8 +46,10 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@designer", SqlDbType.NVarChar, _designerKey.Value);
-            parameters.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
+            Require.NotNull(parameters, "parameters");
+
+            parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, _designerKey.Value);
+            parameters.AddParameterUnsafe("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
         }
     }
 }
