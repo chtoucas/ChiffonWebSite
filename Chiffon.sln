@@ -23,8 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInf
 		etc\VersionInfo.xml = etc\VersionInfo.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.Tests", "test\Chiffon.Tests\Chiffon.Tests.csproj", "{CE0724C9-25B5-4615-9FB9-CF709318780C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configs", "Configs", "{9858E246-3025-4B7E-B6CA-3BAFDF47C96C}"
 	ProjectSection(SolutionItems) = preProject
 		etc\Milestone.config = etc\Milestone.config
@@ -49,10 +47,6 @@ Global
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE0724C9-25B5-4615-9FB9-CF709318780C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
