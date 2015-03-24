@@ -12,7 +12,8 @@
 @helper DesignerWebsiteUrl(Designer designer)
 {
  var url = designer.WebsiteUrl.Select(_ => _.ToString()).ValueOrDefault();
- if (!String.IsNullOrEmpty(url)) {
+ if (!String.IsNullOrEmpty(url))
+ {
   var website = url.ToString().Replace("http://", String.Empty);
   <li class="website text_right sansserif"><a href="//@website" rel=external target=_blank class=loose itemprop="url">@website.Replace("/", String.Empty)</a></li>
  }
@@ -21,17 +22,21 @@
 @helper Pager(UrlHelper Url, DesignerViewModel Model)
 {
  <p id=pager class=pager>
-  @if (Model.IsFirstPage) {
+  @if (Model.IsFirstPage)
+  {
    @VR.Pager_Previous
   }
-  else {
+  else
+  {
    <a href="@Url.Designer(Model.Designer.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
-  @if (Model.IsLastPage) {
+  @if (Model.IsLastPage)
+  {
    @VR.Pager_Next
   }
-  else {
+  else
+  {
    <a id=next_page class=more href="@Url.Designer(Model.Designer.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
@@ -41,17 +46,21 @@
 @helper Pager(UrlHelper Url, CategoryViewModel Model)
 {
  <p id=pager class=pager>
-  @if (Model.IsFirstPage) {
+  @if (Model.IsFirstPage)
+  {
    @VR.Pager_Previous
   }
-  else {
+  else
+  {
    <a href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
-  @if (Model.IsLastPage) {
+  @if (Model.IsLastPage)
+  {
    @VR.Pager_Next
   }
-  else {
+  else
+  {
    <a id=next_page class=more href="@Url.Category(Model.Designer.Key, Model.Category.Key, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount
@@ -62,17 +71,21 @@
 {
  // On ajoute l'attribut "rel=nofollow" car il s'agit toujours au final du même motif.
  <p id=pager class=pager>
-  @if (Model.IsFirstPage) {
+  @if (Model.IsFirstPage)
+  {
    @VR.Pager_Previous
   }
-  else {
+  else
+  {
    <a rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex - 1)">@VR.Pager_Previous</a>
   }
   /
-  @if (Model.IsLastPage) {
+  @if (Model.IsLastPage)
+  {
    @VR.Pager_Next
   }
-  else {
+  else
+  {
    <a id=next_page class=more rel=nofollow href="@Url.Pattern(Model.Designer.Key, Model.Category.Key, Model.Reference, Model.PageIndex + 1)">@VR.Pager_Next</a>
   }
   - @Model.PageIndex @VR.Pager_Of @Model.PageCount

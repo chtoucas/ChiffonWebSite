@@ -12,21 +12,21 @@
         public ListShowcasedPatternsQuery(string connectionString)
             : base(connectionString, "usp_ListShowcasedPatterns") { }
 
-        protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
+        protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
             var result = new List<Pattern>();
 
-            while (rdr.Read()) {
-                var designerKey = DesignerKey.Parse(rdr.GetString("designer"));
-                var patternId = new PatternId(designerKey, rdr.GetString("reference"));
-                var version = rdr.GetString("version");
+            while (reader.Read()) {
+                var designerKey = DesignerKey.Parse(reader.GetString("designer"));
+                var patternId = new PatternId(designerKey, reader.GetString("reference"));
+                var version = reader.GetString("version");
                 var pattern = new Pattern(patternId, version) {
-                    CategoryKey = rdr.GetString("category"),
-                    CreationTime = rdr.GetDateTime("creation_time"),
-                    HasPreview = rdr.GetBoolean("preview"),
-                    LastModifiedTime = rdr.GetDateTime("last_modified_time"),
+                    CategoryKey = reader.GetString("category"),
+                    CreationTime = reader.GetDateTime("creation_time"),
+                    HasPreview = reader.GetBoolean("preview"),
+                    LastModifiedTime = reader.GetDateTime("last_modified_time"),
                     Preferred = true,
                     Published = true,
                     Showcased = true,

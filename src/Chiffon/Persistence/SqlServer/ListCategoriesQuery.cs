@@ -18,17 +18,17 @@
 
         public DesignerKey DesignerKey { get; private set; }
 
-        protected override IEnumerable<Category> Execute(SqlDataReader rdr)
+        protected override IEnumerable<Category> Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
             var categories = new List<Category>();
 
             // Catégories du designer (avec au moins un motif).
-            while (rdr.Read()) {
-                var category = new Category(DesignerKey, rdr.GetString("category")) {
-                    DisplayName = rdr.GetString("display_name"),
-                    PatternsCount = rdr.GetInt32("patterns_count"),
+            while (reader.Read()) {
+                var category = new Category(DesignerKey, reader.GetString("category")) {
+                    DisplayName = reader.GetString("display_name"),
+                    PatternsCount = reader.GetInt32("patterns_count"),
                 };
                 categories.Add(category);
             }

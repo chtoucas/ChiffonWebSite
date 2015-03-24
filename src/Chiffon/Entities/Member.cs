@@ -13,9 +13,9 @@
     public class Member
     {
         [NonSerialized]
-        string _displayName;
+        private string _displayName;
         [NonSerialized]
-        MailAddress _emailAddress;
+        private MailAddress _emailAddress;
 
         /// <summary>
         /// Retourne le nom du membre adapté à la culture en cours d'utilisation :
@@ -25,9 +25,13 @@
         {
             get
             {
-                if (_displayName == null) {
-                    _displayName = String.Format(CultureInfo.CurrentUICulture,
-                        SR.MemberDisplayNameFormat, FirstName, LastName);
+                if (_displayName == null)
+                {
+                    _displayName = String.Format(
+                        CultureInfo.CurrentUICulture,
+                        SR.MemberDisplayNameFormat, 
+                        FirstName, 
+                        LastName);
                 }
                 return _displayName;
             }
@@ -46,10 +50,12 @@
         {
             get
             {
-                if (_emailAddress == null) {
+                if (_emailAddress == null)
+                {
                     // XXX: Doit-on préciser l'encodage du nom ?
                     _emailAddress = new MailAddress(Email, DisplayName);
                 }
+
                 return _emailAddress;
             }
         }

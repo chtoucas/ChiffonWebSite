@@ -3,6 +3,7 @@
     using System.Data;
     using System.Data.SqlClient;
 
+    using Narvalo;
     using Narvalo.Data;
 
     /// <summary>

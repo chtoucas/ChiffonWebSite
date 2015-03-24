@@ -43,7 +43,7 @@ namespace Chiffon
             (new LogConfig(config)).Configure();
 
             // Modules HTTP.
-            ApplicationLifeCycleModule.Register();
+            ApplicationLifecycleModule.Register();
             InitializeContextModule.Register();
 
             // Supprime l'en-tête "X-AspNetMvc-Version".

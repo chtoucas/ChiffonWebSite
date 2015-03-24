@@ -13,11 +13,11 @@ namespace Chiffon.Infrastructure
     using Narvalo.Web;
     using Serilog;
 
-    public sealed class ApplicationLifeCycleModule : IHttpModule
+    public sealed class ApplicationLifecycleModule : IHttpModule
     {
         public static void Register()
         {
-            DynamicModuleUtility.RegisterModule(typeof(ApplicationLifeCycleModule));
+            DynamicModuleUtility.RegisterModule(typeof(ApplicationLifecycleModule));
         }
 
         public void Init(HttpApplication context)
@@ -104,7 +104,7 @@ namespace Chiffon.Infrastructure
         /// Toutes ces en-têtes pourraient être rajoutées via "Web.config".
         /// </remarks>
         /// <param name="headers">Collection d'en-têtes de réponse.</param>
-        public static void AddSecurityHeaders_(NameValueCollection headers)
+        private static void AddSecurityHeaders_(NameValueCollection headers)
         {
             // Cf. http://www.html5rocks.com/en/tutorials/security/content-security-policy/
             //headers.Add("Content-Security-Policy", "");
@@ -188,7 +188,7 @@ namespace Chiffon.Infrastructure
         /// On peut aussi configurer IIS pour qu'il n'émette pas cette en-tête.
         /// </remarks>
         /// <param name="headers">Collection d'en-têtes de réponse.</param>
-        public static void RemoveUnnecessaryHeaders_(NameValueCollection headers)
+        private static void RemoveUnnecessaryHeaders_(NameValueCollection headers)
         {
             headers.Remove("Server");
         }

@@ -19,13 +19,13 @@
 
         public string Email { get; private set; }
 
-        protected override string Execute(SqlDataReader rdr)
+        protected override string Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
-            if (!rdr.Read()) { return null; }
+            if (!reader.Read()) { return null; }
 
-            return rdr.GetString("public_key");
+            return reader.GetString("public_key");
         }
 
         protected override void PrepareParameters(SqlParameterCollection parameters)

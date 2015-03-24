@@ -11,12 +11,12 @@
     [Serializable]
     public class Designer
     {
-        readonly DesignerKey _key;
+        private readonly DesignerKey _key;
 
         [NonSerialized]
-        string _displayName;
+        private string _displayName;
         [NonSerialized]
-        MailAddress _emailAddress;
+        private MailAddress _emailAddress;
 
         /// <summary>
         /// Initialise un nouvel objet de type <see cref="Chiffon.Entities.Designer"/>.
@@ -50,10 +50,12 @@
         {
             get
             {
-                if (String.IsNullOrEmpty(_displayName)) {
+                if (String.IsNullOrEmpty(_displayName))
+                {
                     // NB: Le nom affiché ne dépend pas de la culture en cours d'utilisation.
                     _displayName = Nickname.ValueOrElse(FirstName + " " + LastName);
                 }
+
                 return _displayName;
             }
         }
@@ -71,9 +73,11 @@
         {
             get
             {
-                if (_emailAddress == null) {
+                if (_emailAddress == null)
+                {
                     _emailAddress = new MailAddress(Email, DisplayName);
                 }
+
                 return _emailAddress;
             }
         }

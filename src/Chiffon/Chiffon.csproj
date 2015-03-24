@@ -123,9 +123,9 @@
     <Compile Include="Externs\HttpLogEventEnricher.cs" />
     <Compile Include="Infrastructure\Addressing\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\Routes.cs" />
-    <Compile Include="Infrastructure\ApplicationLifeCycleModule.cs" />
+    <Compile Include="Externs\ApplicationLifecycleModule.cs" />
     <Compile Include="Infrastructure\ChiffonHosting.cs" />
-    <Compile Include="Infrastructure\LocalAssetProvider.cs" />
+    <Compile Include="Externs\LocalAssetProvider.cs" />
     <Compile Include="Persistence\CachedDbQueries.cs" />
     <Compile Include="Persistence\SqlServer\NewMemberCommand.cs" />
     <Compile Include="Persistence\IDbCommands.cs" />

@@ -5,8 +5,8 @@
     [Serializable]
     public struct PatternId : IEquatable<PatternId>
     {
-        readonly DesignerKey _designerKey;
-        readonly string _reference;
+        private readonly DesignerKey _designerKey;
+        private readonly string _reference;
 
         public PatternId(DesignerKey designerKey, string reference)
         {
@@ -17,14 +17,10 @@
         public DesignerKey DesignerKey { get { return _designerKey; } }
         public string Reference { get { return _reference; } }
 
-        #region IEquatable<PatternId>
-
         public bool Equals(PatternId other)
         {
             return _designerKey == other._designerKey && _reference == other._reference;
         }
-
-        #endregion
 
         public static bool operator ==(PatternId left, PatternId right)
         {
@@ -38,7 +34,8 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is PatternId)) {
+            if (!(obj is PatternId))
+            {
                 return false;
             }
 

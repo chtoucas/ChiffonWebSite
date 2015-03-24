@@ -21,13 +21,13 @@
         public string Email { get; private set; }
         public string Password { get; private set; }
 
-        protected override Member Execute(SqlDataReader rdr)
+        protected override Member Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
-            if (!rdr.Read()) { return null; }
+            if (!reader.Read()) { return null; }
 
-            return MemberFactory.NewMember(Email, rdr.GetString("firstname"), rdr.GetString("lastname"));
+            return MemberFactory.NewMember(Email, reader.GetString("firstname"), reader.GetString("lastname"));
         }
 
         protected override void PrepareParameters(SqlParameterCollection parameters)

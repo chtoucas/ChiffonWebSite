@@ -25,22 +25,22 @@
             CommandBehavior = CommandBehavior.CloseConnection | CommandBehavior.SingleRow;
         }
 
-        protected override Designer Execute(SqlDataReader rdr)
+        protected override Designer Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
-            if (!rdr.Read()) { return null; }
+            if (!reader.Read()) { return null; }
 
             return new Designer(_designerKey) {
-                AvatarCategory = rdr.GetString("avatar_category"),
-                AvatarReference = rdr.GetString("avatar_reference"),
-                AvatarVersion = rdr.GetString("avatar_version"),
-                Email = rdr.GetString("email_address"),
-                FirstName = rdr.GetString("firstname"),
-                LastName = rdr.GetString("lastname"),
-                Nickname = rdr.MayGetString("nickname"),
-                Presentation = rdr.GetString("presentation"),
-                WebsiteUrl = rdr.MayGetString("website").Select(_ => new Uri(_)),
+                AvatarCategory = reader.GetString("avatar_category"),
+                AvatarReference = reader.GetString("avatar_reference"),
+                AvatarVersion = reader.GetString("avatar_version"),
+                Email = reader.GetString("email_address"),
+                FirstName = reader.GetString("firstname"),
+                LastName = reader.GetString("lastname"),
+                Nickname = reader.MayGetString("nickname"),
+                Presentation = reader.GetString("presentation"),
+                WebsiteUrl = reader.MayGetString("website").Select(_ => new Uri(_)),
             };
         }
 

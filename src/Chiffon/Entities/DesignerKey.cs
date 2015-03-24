@@ -12,9 +12,9 @@
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
-        string _value;
+        private string _value;
 
-        DesignerKey(string value)
+        private DesignerKey(string value)
         {
             _value = value;
         }
@@ -26,7 +26,8 @@
 
         public static Maybe<DesignerKey> MayParse(string value)
         {
-            switch (value) {
+            switch (value)
+            {
                 case "chicamancha":
                     return Maybe.Of(EstherMarthi);
                 case "viviane-devaux":
@@ -42,7 +43,8 @@
 
         public static DesignerKey Parse(string value)
         {
-            switch (value) {
+            switch (value)
+            {
                 case "chicamancha":
                     return EstherMarthi;
                 case "viviane-devaux":
@@ -56,14 +58,10 @@
             }
         }
 
-        #region IEquatable<DesignerKey>
-
         public bool Equals(DesignerKey other)
         {
             return _value == other._value;
         }
-
-        #endregion
 
         public static bool operator ==(DesignerKey left, DesignerKey right)
         {
@@ -77,7 +75,8 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is DesignerKey)) {
+            if (!(obj is DesignerKey))
+            {
                 return false;
             }
 

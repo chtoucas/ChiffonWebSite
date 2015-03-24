@@ -7,8 +7,8 @@
     [Serializable]
     public class Category
     {
-        readonly DesignerKey _designerKey;
-        readonly string _key;
+        private readonly DesignerKey _designerKey;
+        private readonly string _key;
 
         public Category(DesignerKey designerKey, string key)
         {

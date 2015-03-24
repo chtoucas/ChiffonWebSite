@@ -14,15 +14,14 @@
 
         public OneDomainPerLanguageSiteMap(ChiffonEnvironment environment)
         {
-            if (!environment.BaseUri.IsAbsoluteUri) {
+            if (!environment.BaseUri.IsAbsoluteUri)
+            {
                 throw new ArgumentException("The 'baseUri' parameter must be absolute.", "environment");
             }
 
             _baseUri = environment.BaseUri;
             _language = environment.Language;
         }
-
-        #region ISiteMap
 
         public ChiffonLanguage Language { get { return _language; } }
 
@@ -80,39 +79,42 @@
             return AddPagination_(uri, pageIndex);
         }
 
-        #endregion
-
-        static Uri AddPagination_(Uri uri, int pageIndex)
+        private static Uri AddPagination_(Uri uri, int pageIndex)
         {
-            if (pageIndex > 1) {
+            if (pageIndex > 1)
+            {
                 var builder = new UriBuilder(uri) {
                     Query = String.Format(CultureInfo.InvariantCulture,
                         "{0}={1}", SiteMapConstants.PageKey, pageIndex.ToString(CultureInfo.InvariantCulture))
                 };
                 return builder.Uri;
             }
-            else {
+            else
+            {
                 return uri;
             }
         }
 
         // NB: "returnUrl" contient le répertoire virtuel.
-        static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
+        private static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
         {
             var builder = new UriBuilder(uri) {
                 Query = String.Format(CultureInfo.InvariantCulture,
                     "{0}={1}", SiteMapConstants.ReturnUrl, returnUrl.ToString())
             };
+
             return builder.Uri;
         }
 
         // NB: "relativePath" ne contient pas le répertoire virtuel.
-        Uri MakeAbsoluteUri_(string relativePath)
+        private Uri MakeAbsoluteUri_(string relativePath)
         {
-            if (relativePath == String.Empty) {
+            if (relativePath.Length == 0)
+            {
                 return new Uri(_baseUri, VirtualPathUtility.ToAbsolute("~/"));
             }
-            else {
+            else
+            {
                 return new Uri(_baseUri, VirtualPathUtility.ToAbsolute(VirtualPathUtility.Combine("~/", relativePath)));
             }
         }

@@ -4,8 +4,8 @@
 
     public static class PatternSizeExtensions
     {
-        static readonly PatternImageSize Original_ = new PatternImageSize(700, 520);
-        static readonly PatternImageSize Preview_ = new PatternImageSize(200, 160);
+        private static readonly PatternImageSize Original_ = new PatternImageSize(700, 520);
+        private static readonly PatternImageSize Preview_ = new PatternImageSize(200, 160);
 
         public static PatternImageSize GetImageSize(this PatternSize @this)
         {

@@ -23,20 +23,20 @@
         public string Reference { get; private set; }
         public string Variant { get; private set; }
 
-        protected override Pattern Execute(SqlDataReader rdr)
+        protected override Pattern Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
-            if (!rdr.Read()) { return null; }
+            if (!reader.Read()) { return null; }
 
             return new Pattern(new PatternId(DesignerKey, Reference), Variant) {
-                CategoryKey = rdr.GetString("category"),
-                CreationTime = rdr.GetDateTime("creation_time"),
-                HasPreview = rdr.GetBoolean("preview"),
-                LastModifiedTime = rdr.GetDateTime("last_modified_time"),
-                Preferred = rdr.GetBoolean("preferred"),
-                Published = rdr.GetBoolean("published"),
-                Showcased = rdr.GetBoolean("showcased"),
+                CategoryKey = reader.GetString("category"),
+                CreationTime = reader.GetDateTime("creation_time"),
+                HasPreview = reader.GetBoolean("preview"),
+                LastModifiedTime = reader.GetDateTime("last_modified_time"),
+                Preferred = reader.GetBoolean("preferred"),
+                Published = reader.GetBoolean("published"),
+                Showcased = reader.GetBoolean("showcased"),
             };
         }
 

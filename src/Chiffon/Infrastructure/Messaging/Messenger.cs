@@ -24,6 +24,8 @@
         /// <param name="message">Modèle du message à envoyer.</param>
         public void Publish(NewMemberMessage message)
         {
+            Require.NotNull(message, "message");
+
             SmtpClient smtpClient = null;
 
             try {

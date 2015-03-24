@@ -23,24 +23,24 @@
         public DesignerKey DesignerKey { get; private set; }
         public bool? Published { get { return _published; } set { _published = value; } }
 
-        protected override IEnumerable<Pattern> Execute(SqlDataReader rdr)
+        protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Require.NotNull(rdr, "rdr");
+            Require.NotNull(reader, "reader");
 
             var patterns = new List<Pattern>();
 
-            while (rdr.Read()) {
-                var patternId = new PatternId(DesignerKey, rdr.GetString("reference"));
-                var version = rdr.GetString("version");
+            while (reader.Read()) {
+                var patternId = new PatternId(DesignerKey, reader.GetString("reference"));
+                var version = reader.GetString("version");
 
                 var pattern = new Pattern(patternId, version) {
-                    CategoryKey = rdr.GetString("category"),
-                    CreationTime = rdr.GetDateTime("creation_time"),
-                    HasPreview = rdr.GetBoolean("preview"),
-                    LastModifiedTime = rdr.GetDateTime("last_modified_time"),
-                    Preferred = rdr.GetBoolean("preferred"),
-                    Published = rdr.GetBoolean("published"),
-                    Showcased = rdr.GetBoolean("showcased"),
+                    CategoryKey = reader.GetString("category"),
+                    CreationTime = reader.GetDateTime("creation_time"),
+                    HasPreview = reader.GetBoolean("preview"),
+                    LastModifiedTime = reader.GetDateTime("last_modified_time"),
+                    Preferred = reader.GetBoolean("preferred"),
+                    Published = reader.GetBoolean("published"),
+                    Showcased = reader.GetBoolean("showcased"),
                 };
 
                 patterns.Add(pattern);

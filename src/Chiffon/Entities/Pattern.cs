@@ -8,12 +8,12 @@
     [Serializable]
     public class Pattern
     {
-        readonly PatternId _patternId;
-        readonly string _variant;
+        private readonly PatternId _patternId;
+        private readonly string _variant;
 
-        bool _showcased = false;
-        bool _preferred = false;
-        bool _published = true;
+        private bool _showcased = false;
+        private bool _preferred = false;
+        private bool _published = true;
 
         public Pattern(PatternId patternId, string version)
         {
@@ -40,9 +40,11 @@
             get { return _preferred; }
             set
             {
-                if (!Published) {
+                if (!Published)
+                {
                     throw new InvalidOperationException("First, you must publish the pattern.");
                 }
+
                 _preferred = value;
             }
         }
@@ -68,9 +70,11 @@
             get { return _showcased; }
             set
             {
-                if (!Published) {
+                if (!Published)
+                {
                     throw new InvalidOperationException("First, you must publish the pattern.");
                 }
+
                 _showcased = value;
             }
         }
@@ -82,8 +86,10 @@
 
         public PatternVisibility GetVisibility(PatternSize size)
         {
-            if (Published) {
-                switch (size) {
+            if (Published)
+            {
+                switch (size)
+                {
                     case PatternSize.Original:
                         return PatternVisibility.Members;
                     case PatternSize.Preview:
@@ -95,7 +101,8 @@
                             Format.CurrentCulture("The pattern size '{0}' is not yet handled.", size.ToString()));
                 }
             }
-            else {
+            else
+            {
                 return PatternVisibility.None;
             }
         }

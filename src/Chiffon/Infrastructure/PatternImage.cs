@@ -8,9 +8,9 @@
 
     public abstract class PatternImage
     {
-        const string JpegMimeType_ = "image/jpeg";
+        private const string JpegMimeType_ = "image/jpeg";
 
-        string _relativePath;
+        private string _relativePath;
 
         protected PatternImage() { }
 
@@ -23,9 +23,11 @@
         {
             get
             {
-                if (_relativePath == null) {
+                if (_relativePath == null)
+                {
                     _relativePath = Path.Combine(DesignerDirectory, CategoryDirectory, FileName);
                 }
+
                 return _relativePath;
             }
         }
@@ -44,7 +46,8 @@
             Require.NotNullOrEmpty(designerDirectory, "directory");
             Require.NotNullOrEmpty(reference, "reference");
 
-            switch (size) {
+            switch (size)
+            {
                 case PatternSize.Preview:
                     return new Preview {
                         CategoryDirectory = categoryDirectory,
@@ -64,9 +67,9 @@
             }
         }
 
-        class Original : PatternImage
+        private class Original : PatternImage
         {
-            string _fileName;
+            private string _fileName;
 
             public Original() : base() { }
 
@@ -74,9 +77,11 @@
             {
                 get
                 {
-                    if (_fileName == null) {
+                    if (_fileName == null)
+                    {
                         _fileName = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}.jpg", Reference, Version);
                     }
+
                     return _fileName;
                 }
             }
@@ -85,9 +90,9 @@
             public override PatternSize Size { get { return PatternSize.Original; } }
         }
 
-        class Preview : PatternImage
+        private class Preview : PatternImage
         {
-            string _filename;
+            private string _filename;
 
             public Preview() : base() { }
 
@@ -95,9 +100,11 @@
             {
                 get
                 {
-                    if (_filename == null) {
+                    if (_filename == null)
+                    {
                         _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}-apercu.jpg", Reference, Version);
                     }
+
                     return _filename;
                 }
             }
