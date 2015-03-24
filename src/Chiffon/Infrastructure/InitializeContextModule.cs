@@ -14,8 +14,6 @@
     // TODO: Vérifier que ces événements ne sont déclenchés qu'une fois par requête.
     public class InitializeContextModule : IHttpModule
     {
-        #region IHttpModule
-
         public void Init(HttpApplication context)
         {
             Require.NotNull(context, "context");
@@ -31,10 +29,8 @@
 
         public void Dispose()
         {
-            ;
+            // Intentionally left blank.
         }
-
-        #endregion
 
         public static void Register()
         {
@@ -44,13 +40,14 @@
 #if SHOWCASE
         // NB: La session peut ne pas être disponible à ce moment.
         // http://stackoverflow.com/questions/276355/can-i-access-session-state-from-an-httpmodule
-        void OnPostAcquireRequestState_(object sender, EventArgs e)
+        private void OnPostAcquireRequestState_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var context = app.Context;
             var request = context.Request;
 
-            if (!(context.Handler is IRequiresSessionState)) {
+            if (!(context.Handler is IRequiresSessionState))
+            {
                 // NB: Normalement, on ne devrait pas avoir à faire cette vérification,
                 // mais cela peut poser des problèmes si il s'agit d'une requête prise
                 // en charge par IIS en cas d'erreur (cf. httpErrors et customErrors dans
@@ -63,7 +60,7 @@
             context.AddChiffonContext(new ChiffonContext(environment));
         }
 #else
-        void OnBeginRequest_(object sender, EventArgs e)
+        private void OnBeginRequest_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var context = app.Context;
@@ -76,7 +73,7 @@
 
         // On utilise cet événement car il se déclenche après 'PostAcquireRequestState'
         // qui est utilisé par 'InitializeVSContextModule'.
-        void OnPreRequestHandlerExecute_(object sender, EventArgs e)
+        private void OnPreRequestHandlerExecute_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 
@@ -84,14 +81,15 @@
 
             var language = environment.Language;
 
-            if (!language.IsDefault()) {
+            if (!language.IsDefault())
+            {
                 InitializeCulture_(language.GetCultureInfo(), language.GetUICultureInfo());
             }
         }
 
         // WARNING: Cette méthode ne convient pas avec les actions asynchrones 
         // car on peut changer de Thread.
-        static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
+        private static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
         {
             // Culture utilisée par System.Globalization.
             Thread.CurrentThread.CurrentCulture = culture;

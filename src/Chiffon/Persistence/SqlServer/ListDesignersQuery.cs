@@ -28,7 +28,8 @@
 
             var designers = new List<Designer>();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 var designerKey = DesignerKey.Parse(reader.GetString("id"));
 
                 var designer = new Designer(designerKey) {

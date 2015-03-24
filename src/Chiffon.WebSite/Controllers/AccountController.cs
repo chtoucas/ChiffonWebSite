@@ -113,7 +113,7 @@
                 NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
             });
 
-            if (result.Aborted) {
+            if (result.IsBreak) {
                 return View(Constants.ViewName.Account.RegisterFailure, new RegisterFailureViewModel {
                     Message = result.Reason
                 });

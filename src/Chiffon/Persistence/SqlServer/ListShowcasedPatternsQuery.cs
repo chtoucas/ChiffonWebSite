@@ -18,7 +18,8 @@
 
             var result = new List<Pattern>();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 var designerKey = DesignerKey.Parse(reader.GetString("designer"));
                 var patternId = new PatternId(designerKey, reader.GetString("reference"));
                 var version = reader.GetString("version");

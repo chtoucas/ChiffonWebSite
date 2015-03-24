@@ -25,7 +25,8 @@
             var categories = new List<Category>();
 
             // Catégories du designer (avec au moins un motif).
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 var category = new Category(DesignerKey, reader.GetString("category")) {
                     DisplayName = reader.GetString("display_name"),
                     PatternsCount = reader.GetInt32("patterns_count"),

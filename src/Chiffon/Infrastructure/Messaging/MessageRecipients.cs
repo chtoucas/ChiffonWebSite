@@ -11,4 +11,12 @@
 
         Default = Member | Admin,
     }
+
+    public static class MessageRecipientsExtensions
+    {
+        public static bool Contains(this MessageRecipients @this, MessageRecipients value)
+        {
+            return (@this & value) != 0;
+        }
+    }
 }

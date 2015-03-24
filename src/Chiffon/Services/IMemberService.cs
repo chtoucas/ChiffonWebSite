@@ -29,10 +29,6 @@
         /// Crée un nouveau membre.
         /// </summary>
         /// <param name="request">Informations nécessaires à la création d'un membre.</param>
-        /// <returns>
-        /// Retourne une monade contenant le membre qui vient d'être créé 
-        /// si l'opération s'est correctement déroulée.
-        /// </returns>
         VoidOrBreak RegisterMember(RegisterMemberRequest request);
     }
 }

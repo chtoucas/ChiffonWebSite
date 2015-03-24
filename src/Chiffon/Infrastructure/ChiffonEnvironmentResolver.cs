@@ -13,17 +13,17 @@
 
     public static class ChiffonEnvironmentResolver
     {
-        const string SessionKey_ = "Language";
+        private const string SessionKey_ = "Language";
 
 #if SHOWCASE
-        static readonly ChiffonEnvironment DefaultEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
-        static readonly ChiffonEnvironment EnglishEnvironment_
-            = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
+        private static readonly ChiffonEnvironment DefaultEnvironment_
+              = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
+        private static readonly ChiffonEnvironment EnglishEnvironment_
+              = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
 #else
-        static readonly ChiffonEnvironment DefaultEnvironment_
+     private   static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
-        static readonly ChiffonEnvironment EnglishEnvironment_
+     private   static readonly ChiffonEnvironment EnglishEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
 #endif
 
@@ -75,12 +75,12 @@
                 ?? new ChiffonEnvironment(ChiffonLanguage.Default, uri, hosting);
         }
 
-        static Uri GetBaseUri_(Uri uri)
+        private static Uri GetBaseUri_(Uri uri)
         {
             return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
         }
 
-        //static Uri GetBaseUri_(HttpRequest request)
+        //private static Uri GetBaseUri_(HttpRequest request)
         //{
         //    // http://msdn.microsoft.com/en-us/library/system.web.httpruntime.appdomainappvirtualpath(v=vs.110).aspx
         //    // http://weblog.west-wind.com/posts/2009/Dec/21/Making-Sense-of-ASPNET-Paths
@@ -95,27 +95,27 @@
         //    // return uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
         //}
 
-        static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
+        private static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
         {
             return (from _ in request.QueryString.MayGetSingle("lang")
                     select ParseTo.Enum<ChiffonLanguage>(_)).ToNullable();
         }
 
-        static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
+        private static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
         {
             var value = session[SessionKey_];
 
             return value != null ? ConvertTo.Enum<ChiffonLanguage>(value) : null;
         }
 
-        static ChiffonEnvironment ResolveFromHost_(string host)
+        private static ChiffonEnvironment ResolveFromHost_(string host)
         {
             var q = from _ in Environments where _.BaseUri.Host == host select _;
 
             return q.SingleOrNone().ValueOrElse(DefaultEnvironment);
         }
 
-        static void UpdateLanguageSession_(HttpSessionState session, ChiffonLanguage language)
+        private static void UpdateLanguageSession_(HttpSessionState session, ChiffonLanguage language)
         {
             session[SessionKey_] = language;
         }

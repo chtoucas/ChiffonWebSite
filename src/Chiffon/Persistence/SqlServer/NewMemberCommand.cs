@@ -22,6 +22,9 @@
 
         protected override void AddParameters(SqlParameterCollection parameters, NewMemberParameters values)
         {
+            Require.NotNull(parameters, "parameters");
+            Require.NotNull(values, "values");
+
             parameters.Add("@email_address", SqlDbType.NVarChar).Value = values.Email;
             parameters.Add("@firstname", SqlDbType.NVarChar).Value = values.FirstName;
             parameters.Add("@lastname", SqlDbType.NVarChar).Value = values.LastName;

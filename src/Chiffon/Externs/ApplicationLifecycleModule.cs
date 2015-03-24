@@ -31,8 +31,6 @@ namespace Chiffon.Infrastructure
 
         public void Dispose() { }
 
-        #region Gestionnaires d'événements.
-
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
         /// </summary>
@@ -91,10 +89,6 @@ namespace Chiffon.Infrastructure
             RemoveUnnecessaryHeaders_(headers);
             AddSecurityHeaders_(headers);
         }
-
-        #endregion
-
-        #region Utilitaires.
 
         /// <summary>
         /// Ajoute des en-têtes de réponse facultatives mais qui peuvent améliorer
@@ -192,7 +186,5 @@ namespace Chiffon.Infrastructure
         {
             headers.Remove("Server");
         }
-
-        #endregion
     }
 }

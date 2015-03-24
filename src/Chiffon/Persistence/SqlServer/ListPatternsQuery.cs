@@ -29,7 +29,8 @@
 
             var patterns = new List<Pattern>();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 var patternId = new PatternId(DesignerKey, reader.GetString("reference"));
                 var version = reader.GetString("version");
 
@@ -53,17 +54,21 @@
         {
             parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
 
-            if (Published.HasValue) {
+            if (Published.HasValue)
+            {
                 parameters.AddParameter("@published", SqlDbType.Bit, Published.Value);
             }
-            else {
+            else
+            {
                 parameters.AddParameter("@published", SqlDbType.Bit, DBNull.Value);
             }
 
-            if (!String.IsNullOrEmpty(CategoryKey)) {
+            if (!String.IsNullOrEmpty(CategoryKey))
+            {
                 parameters.AddParameter("@category", SqlDbType.NVarChar, CategoryKey);
             }
-            else {
+            else
+            {
                 parameters.AddParameter("@category", SqlDbType.NVarChar, DBNull.Value);
             }
         }

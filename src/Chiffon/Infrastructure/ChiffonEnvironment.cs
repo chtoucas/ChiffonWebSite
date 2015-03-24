@@ -28,14 +28,10 @@
 
         public ChiffonLanguage Language { get { return _language; } }
 
-        #region IEquatable<ChiffonEnvironment>
-
         public bool Equals(ChiffonEnvironment other)
         {
             return _language.Equals(other._language);
         }
-
-        #endregion
 
         public static bool operator ==(ChiffonEnvironment left, ChiffonEnvironment right)
         {
@@ -49,7 +45,8 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is ChiffonEnvironment)) {
+            if (!(obj is ChiffonEnvironment))
+            {
                 return false;
             }
 
@@ -64,8 +61,6 @@
                 ^ _hosting.GetHashCode();
         }
 
-        //[SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"),
-        //    SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
         public Uri MakeAbsoluteUri(string relativePath)
         {
             return new Uri(_baseUri, relativePath);

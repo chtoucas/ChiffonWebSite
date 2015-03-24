@@ -8,10 +8,12 @@
  <meta charset="utf-8" />
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <title>@Ontology.Title</title>
- @if (LayoutViewModel.DisableOntology) {
+ @if (LayoutViewModel.DisableOntology)
+ {
   <meta name=robots content="noindex, nofollow" />
  }
- else {
+ else
+ {
   @OntologyHelpers.StandardMetadata(Ontology)
   @OntologyHelpers.OpenGraphMetadata(Ontology.OpenGraph)
   @OntologyHelpers.RelationshipLinks(Ontology.Relationships)
@@ -30,8 +32,7 @@
   </h1>
   <nav class="clearfix nav_lang">
    @{
-    RenderComponent(Constants.ActionName.Component.LanguageMenu, new
-    {
+    RenderComponent(Constants.ActionName.Component.LanguageMenu, new {
      alternateUrls = LayoutViewModel.AlternateUrls,
      language = Language,
     });
@@ -57,7 +58,8 @@
   </nav>
  </header>
  <section>
-  @if (LayoutViewModel.MainHeading.Length > 0) {
+  @if (LayoutViewModel.MainHeading.Length > 0)
+  {
    <h1 class=fx_bottomborder>@LayoutViewModel.MainHeading<span></span></h1>
   }
   @RenderBody()
@@ -74,8 +76,7 @@
   }
  </footer>
  @{
-  RenderComponent(Constants.ActionName.Component.CommonJavaScript, new
-  {
+  RenderComponent(Constants.ActionName.Component.CommonJavaScript, new {
    actionName = LayoutViewModel.ActionName,
    controllerName = LayoutViewModel.ControllerName,
   });

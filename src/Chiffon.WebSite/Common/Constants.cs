@@ -5,9 +5,9 @@
     public static class Constants
     {
 #if SHOWCASE
-        public const string ContactAddress = "chiffon@narvalo.org";
+        public static readonly string ContactAddress = "chiffon@narvalo.org";
 #else
-        public const string ContactAddress = "contact@pourquelmotifsimone.com";
+        public static readonly string ContactAddress = "contact@pourquelmotifsimone.com";
 #endif
 
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
