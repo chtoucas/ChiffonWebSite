@@ -8,11 +8,12 @@
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
+    using Narvalo.Internal;
 
-    public class GetDesignerQuery : StoredProcedure<Designer>
+    public sealed class GetDesignerQuery : StoredProcedure<Designer>
     {
-        readonly CultureInfo _culture;
-        readonly DesignerKey _designerKey;
+        private readonly CultureInfo _culture;
+        private readonly DesignerKey _designerKey;
 
         public GetDesignerQuery(string connectionString, DesignerKey designerKey, CultureInfo culture)
             : base(connectionString, "usp_GetDesigner")
@@ -27,7 +28,7 @@
 
         protected override Designer Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            //DebugCheck.NotNull(reader);
 
             if (!reader.Read()) { return null; }
 
@@ -46,7 +47,7 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            Require.NotNull(parameters, "parameters");
+            //DebugCheck.NotNull(parameters);
 
             parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, _designerKey.Value);
             parameters.AddParameterUnsafe("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);

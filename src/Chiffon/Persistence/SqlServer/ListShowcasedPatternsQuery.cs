@@ -7,7 +7,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
+    public sealed class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
     {
         public ListShowcasedPatternsQuery(string connectionString)
             : base(connectionString, "usp_ListShowcasedPatterns") { }

@@ -7,7 +7,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class GetPatternQuery : StoredProcedure<Pattern>
+    public sealed class GetPatternQuery : StoredProcedure<Pattern>
     {
         public GetPatternQuery(string connectionString, DesignerKey designerKey, string reference, string variant)
             : base(connectionString, "usp_GetPattern")

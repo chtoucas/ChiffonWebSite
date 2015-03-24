@@ -8,7 +8,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class ListCategoriesQuery : StoredProcedure<IEnumerable<Category>>
+    public sealed class ListCategoriesQuery : StoredProcedure<IEnumerable<Category>>
     {
         public ListCategoriesQuery(string connectionString, DesignerKey designerKey)
             : base(connectionString, "usp_ListCategories")

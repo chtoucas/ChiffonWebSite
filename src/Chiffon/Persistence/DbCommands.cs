@@ -29,8 +29,6 @@
         /// </summary>
         protected string ConnectionString { get { return _connectionString; } }
 
-        #region IDbCommands
-
         public void NewMember(NewMemberParameters parameters)
         {
             Require.NotNull(parameters, "parameters");
@@ -38,8 +36,6 @@
             var q = new NewMemberCommand(ConnectionString);
             q.Execute(parameters);
         }
-
-        #endregion
     }
 
 }

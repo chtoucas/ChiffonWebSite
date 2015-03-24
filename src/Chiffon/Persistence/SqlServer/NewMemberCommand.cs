@@ -9,7 +9,7 @@
     /// <summary>
     /// Représente la procédure stockée "usp_NewMember".
     /// </summary>
-    public class NewMemberCommand : NonQueryStoredProcedure<NewMemberParameters>
+    public sealed class NewMemberCommand : NonQueryStoredProcedure<NewMemberParameters>
     {
         /// <summary>
         /// Initialise un nouvel objet de type <see cref="Chiffon.Persistence.SqlServer.NewMemberCommand"/>.

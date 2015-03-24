@@ -9,9 +9,9 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class ListPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
+    public sealed class ListPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
     {
-        bool? _published = true;
+        private bool? _published = true;
 
         public ListPatternsQuery(string connectionString, DesignerKey designerKey)
             : base(connectionString, "usp_ListPatterns")

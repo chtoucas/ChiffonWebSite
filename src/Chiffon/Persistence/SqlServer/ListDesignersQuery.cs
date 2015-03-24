@@ -10,9 +10,9 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
+    public sealed class ListDesignersQuery : StoredProcedure<IEnumerable<Designer>>
     {
-        readonly CultureInfo _culture;
+        private readonly CultureInfo _culture;
 
         public ListDesignersQuery(string connectionString, CultureInfo culture)
             : base(connectionString, "usp_ListDesigners")

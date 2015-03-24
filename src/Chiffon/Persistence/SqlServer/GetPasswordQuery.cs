@@ -7,7 +7,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class GetPasswordQuery : StoredProcedure<String>
+    public sealed class GetPasswordQuery : StoredProcedure<String>
     {
         public GetPasswordQuery(string connectionString, string email)
             : base(connectionString, "usp_GetPublicKeyByEmailAddress")

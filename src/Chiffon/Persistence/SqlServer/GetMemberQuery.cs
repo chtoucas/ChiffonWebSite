@@ -7,7 +7,7 @@
     using Narvalo;
     using Narvalo.Data;
 
-    public class GetMemberQuery : StoredProcedure<Member>
+    public sealed class GetMemberQuery : StoredProcedure<Member>
     {
         public GetMemberQuery(string connectionString, string email, string password)
             : base(connectionString, "usp_GetContactByPublicKey")
