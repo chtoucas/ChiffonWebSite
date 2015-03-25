@@ -20,7 +20,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Check.NotNull(builder, "The base class guarantees that this parameter is not null.");
+            Promise.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
 

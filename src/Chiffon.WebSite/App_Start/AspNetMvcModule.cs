@@ -2,7 +2,6 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-
     using Narvalo;
     using Narvalo.Externs.Autofac;
 
@@ -12,7 +11,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Require.NotNull(builder, "builder");
+            Promise.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             // Composants Asp.Net MVC.
             builder.RegisterControllers(typeof(Global).Assembly);

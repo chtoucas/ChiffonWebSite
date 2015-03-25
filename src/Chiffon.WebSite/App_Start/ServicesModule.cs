@@ -10,7 +10,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Check.NotNull(builder, "The base class guarantees that this parameter is not null.");
+            Promise.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
             builder.RegisterType<MemberService>().As<IMemberService>().InstancePerRequest();

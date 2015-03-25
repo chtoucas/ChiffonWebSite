@@ -6,7 +6,6 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
-    using Narvalo;
     using Narvalo.Data;
 
     public sealed class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
