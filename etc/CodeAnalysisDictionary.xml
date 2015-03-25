@@ -59,7 +59,7 @@
         'Whitespace').
       -->
       <Term CompoundAlternate="PreStart">PreStart</Term>
-      <Term CompoundAlternate="WebSite">WebSite</Term>
+      <!--<Term CompoundAlternate="WebSite">WebSite</Term>-->
     </Compound>
     <DiscreteExceptions>
       <!--

@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     using Narvalo.Fx;
 
@@ -12,7 +13,7 @@
         public static readonly DesignerKey LaureRoussel = new DesignerKey("laure-roussel");
         public static readonly DesignerKey VivianeDevaux = new DesignerKey("viviane-devaux");
 
-        private string _value;
+        private readonly string _value;
 
         private DesignerKey(string value)
         {
@@ -24,8 +25,11 @@
             get { return _value; }
         }
 
+        // FIXME: This should return a nullable.
         public static Maybe<DesignerKey> MayParse(string value)
         {
+            Contract.Ensures(Contract.Result<Maybe<DesignerKey>>() != null);
+
             switch (value)
             {
                 case "chicamancha":

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Specialized;
     using System.Configuration;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -14,24 +15,24 @@
 
     public class ChiffonConfig
     {
-        const string SettingPrefix_ = "chiffon:";
-        const string SqlConnectionStringName_ = "SqlServer";
+        private const string SettingPrefix_ = "chiffon:";
+        private const string SqlConnectionStringName_ = "SqlServer";
 
-        const bool DefaultDebugStyleSheet_ = false;
-        const bool DefaultDebugJavaScript_ = false;
-        const bool DefaultEnableClientCache_ = true;
-        const bool DefaultEnableServerCache_ = true;
+        private const bool DefaultDebugStyleSheet_ = false;
+        private const bool DefaultDebugJavaScript_ = false;
+        private const bool DefaultEnableClientCache_ = true;
+        private const bool DefaultEnableServerCache_ = true;
 
-        static readonly string DefaultGoogleAnalyticsKey_ = String.Empty;
+        private static readonly string DefaultGoogleAnalyticsKey_ = String.Empty;
 
-        static readonly Version AssemblyVersion_
+        private static readonly Version AssemblyVersion_
             = Assembly.GetExecutingAssembly().GetName().Version;
 
-        bool _debugStyleSheet = DefaultDebugStyleSheet_;
-        bool _debugJavaScript = DefaultDebugJavaScript_;
-        bool _enableClientCache = DefaultEnableClientCache_;
-        bool _enableServerCache = DefaultEnableServerCache_;
-        string _googleAnalyticsKey = DefaultGoogleAnalyticsKey_;
+        private bool _debugStyleSheet = DefaultDebugStyleSheet_;
+        private bool _debugJavaScript = DefaultDebugJavaScript_;
+        private bool _enableClientCache = DefaultEnableClientCache_;
+        private bool _enableServerCache = DefaultEnableServerCache_;
+        private string _googleAnalyticsKey = DefaultGoogleAnalyticsKey_;
 
         public string CssVersion { get; set; }
         public bool DebugStyleSheet { get { return _debugStyleSheet; } set { _debugStyleSheet = value; } }
@@ -48,36 +49,46 @@
 
         public static ChiffonConfig FromConfiguration()
         {
+            Contract.Ensures(Contract.Result<ChiffonConfig>() != null);
+
             return (new ChiffonConfig()).Load();
         }
 
         public ChiffonConfig Load()
         {
+            Contract.Ensures(Contract.Result<ChiffonConfig>() != null);
+
             LoadSettings_(ConfigurationManager.AppSettings);
             LoadConnectionStrings_(ConfigurationManager.ConnectionStrings);
 
             return this;
         }
 
-        void LoadSettings_(NameValueCollection settings)
+        private void LoadSettings_(NameValueCollection settings)
         {
+            Contract.Requires(settings != null);
+
             var chiffonKeys = settings.AllKeys
                 .Where(_ => _.StartsWith(SettingPrefix_, StringComparison.OrdinalIgnoreCase));
 
             var chiffonSettings = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var key in chiffonKeys) {
+            foreach (var key in chiffonKeys)
+            {
                 chiffonSettings[key] = settings[key];
             }
 
             Initialize_(chiffonSettings);
         }
 
-        void LoadConnectionStrings_(ConnectionStringSettingsCollection connections)
+        private void LoadConnectionStrings_(ConnectionStringSettingsCollection connections)
         {
+            Contract.Requires(connections != null);
+
             ConnectionStringSettings connection = connections[SqlConnectionStringName_];
 
-            if (connection == null) {
+            if (connection == null)
+            {
                 throw new ConfigurationErrorsException(
                     String.Format(CultureInfo.InvariantCulture,
                         "The '{0}' connection is not defined in your config file!",
@@ -87,8 +98,10 @@
             SqlConnectionString = connection.ConnectionString;
         }
 
-        void Initialize_(NameValueCollection source)
+        private void Initialize_(NameValueCollection source)
         {
+            Contract.Requires(source != null);
+
             // > Paramètres obligatoires <
 
             LogProfile = source.MayGetSingle("chiffon:LogProfile")

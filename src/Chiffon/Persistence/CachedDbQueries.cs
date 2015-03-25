@@ -21,8 +21,6 @@
             _cache = cache;
         }
 
-        #region IDbQueries
-
         public Designer GetDesigner(DesignerKey designerKey, CultureInfo culture)
         {
             return (from _ in ListDesigners(culture) where _.Key == designerKey select _).SingleOrDefault();
@@ -81,7 +79,5 @@
         {
             return _cache.GetOrInsertShowcasedPatterns(() => _inner.ListShowcasedPatterns());
         }
-
-        #endregion
     }
 }

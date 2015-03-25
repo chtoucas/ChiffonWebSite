@@ -8,7 +8,6 @@
     using Chiffon.Entities;
     using Narvalo;
     using Narvalo.Data;
-    using Narvalo.Internal;
 
     public sealed class GetDesignerQuery : StoredProcedure<Designer>
     {
@@ -28,7 +27,7 @@
 
         protected override Designer Execute(SqlDataReader reader)
         {
-            //DebugCheck.NotNull(reader);
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             if (!reader.Read()) { return null; }
 
@@ -47,7 +46,7 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            //DebugCheck.NotNull(parameters);
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
 
             parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, _designerKey.Value);
             parameters.AddParameterUnsafe("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);

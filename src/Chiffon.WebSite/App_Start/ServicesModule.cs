@@ -1,7 +1,6 @@
 ﻿namespace Chiffon
 {
     using Autofac;
-    using Autofac.Integration.Mvc;
     using Chiffon.Services;
     using Narvalo;
 
@@ -11,7 +10,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Require.NotNull(builder, "builder");
+            Check.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
             builder.RegisterType<MemberService>().As<IMemberService>().InstancePerRequest();

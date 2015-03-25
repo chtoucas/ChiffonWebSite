@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Infrastructure;
     using Narvalo;
@@ -81,6 +82,8 @@
 
         public PatternImage GetImage(PatternSize size)
         {
+            Contract.Ensures(Contract.Result<PatternImage>() != null);
+
             return PatternImage.Create(DesignerKey.ToString(), CategoryKey.ToString(), Reference, Variant, size);
         }
 

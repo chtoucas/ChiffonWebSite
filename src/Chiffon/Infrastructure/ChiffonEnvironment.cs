@@ -1,14 +1,15 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     using Narvalo;
 
     public struct ChiffonEnvironment : IEquatable<ChiffonEnvironment>
     {
-        Uri _baseUri;
-        ChiffonHosting _hosting;
-        ChiffonLanguage _language;
+        private readonly Uri _baseUri;
+        private readonly ChiffonHosting _hosting;
+        private readonly ChiffonLanguage _language;
 
         internal ChiffonEnvironment(ChiffonLanguage language, Uri baseUri, ChiffonHosting hosting)
         {
@@ -63,11 +64,16 @@
 
         public Uri MakeAbsoluteUri(string relativePath)
         {
+            Contract.Requires(relativePath != null);
+            Contract.Ensures(Contract.Result<Uri>() != null);
+
             return new Uri(_baseUri, relativePath);
         }
 
         public Uri MakeAbsoluteUri(Uri relativeUri)
         {
+            Contract.Ensures(Contract.Result<Uri>() != null);
+
             return new Uri(_baseUri, relativeUri);
         }
     }

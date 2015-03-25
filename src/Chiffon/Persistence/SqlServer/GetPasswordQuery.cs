@@ -3,6 +3,7 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Narvalo;
     using Narvalo.Data;
@@ -12,6 +13,8 @@
         public GetPasswordQuery(string connectionString, string email)
             : base(connectionString, "usp_GetPublicKeyByEmailAddress")
         {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+
             Email = email;
 
             CommandBehavior = CommandBehavior.CloseConnection | CommandBehavior.SingleRow;
@@ -21,7 +24,7 @@
 
         protected override string Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             if (!reader.Read()) { return null; }
 
@@ -30,7 +33,9 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@email_address", SqlDbType.NVarChar, Email);
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
+
+            parameters.AddParameterUnsafe("@email_address", SqlDbType.NVarChar, Email);
         }
     }
 }

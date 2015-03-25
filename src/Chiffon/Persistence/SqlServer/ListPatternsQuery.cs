@@ -25,7 +25,7 @@
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             var patterns = new List<Pattern>();
 
@@ -52,7 +52,7 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            Require.NotNull(parameters, "parameters");
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
 
             parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, DesignerKey.Value);
             parameters.AddParameterOrNullUnsafe("@published", SqlDbType.Bit, Published);

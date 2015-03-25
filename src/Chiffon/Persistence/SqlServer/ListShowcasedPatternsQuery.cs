@@ -1,7 +1,9 @@
 ﻿namespace Chiffon.Persistence.SqlServer
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
     using Narvalo;
@@ -10,11 +12,14 @@
     public sealed class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
     {
         public ListShowcasedPatternsQuery(string connectionString)
-            : base(connectionString, "usp_ListShowcasedPatterns") { }
+            : base(connectionString, "usp_ListShowcasedPatterns")
+        {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+        }
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             var result = new List<Pattern>();
 

@@ -15,13 +15,13 @@
     /// </summary>
     public class MemberService/*Impl*/ : IMemberService
     {
-        const int PasswordLength_ = 7;
-        const string PasswordLetters_ = "abcdefghijkmnpqrstuvwxyz";
-        const string PasswordNumbers_ = "23456789";
+        private const int PasswordLength_ = 7;
+        private const string PasswordLetters_ = "abcdefghijkmnpqrstuvwxyz";
+        private const string PasswordNumbers_ = "23456789";
 
-        readonly IDbCommands _commands;
-        readonly IMessenger _messenger;
-        readonly IDbQueries _queries;
+        private readonly IDbCommands _commands;
+        private readonly IMessenger _messenger;
+        private readonly IDbQueries _queries;
 
         public MemberService(IDbQueries queries, IDbCommands commands, IMessenger messenger)
         {
@@ -36,8 +36,6 @@
 
         public event EventHandler<MemberCreatedEventArgs> MemberCreated;
 
-        #region IMemberService
-
         /// <summary />
         public VoidOrBreak RegisterMember(RegisterMemberRequest request)
         {
@@ -45,9 +43,11 @@
 
             // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
+            // FIXME: Utiliser un tableau de caractères.
             var password = _queries.GetPassword(request.Email);
 
-            if (!String.IsNullOrEmpty(password)) {
+            if (!String.IsNullOrEmpty(password))
+            {
                 return VoidOrBreak.Break(SR.MemberService_EmailAlreadyTaken);
             }
 
@@ -69,7 +69,8 @@
 
             // 5. Envoi des notifications.
 
-            if (request.Recipients != MessageRecipients.None) {
+            if (request.Recipients != MessageRecipients.None)
+            {
                 _messenger.Publish(new NewMemberMessage {
                     CompanyName = request.CompanyName,
                     EmailAddress = member.EmailAddress,
@@ -88,11 +89,9 @@
             return Maybe.Of(_queries.GetMember(email, password));
         }
 
-        #endregion
-
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx
         // Cf. http://stackoverflow.com/questions/54991/generating-random-passwords
-        static string CreatePassword_()
+        private static string CreatePassword_()
         {
             // TODO: Changer le comportement suivant.
             // Pour le moment, on génére des mots de passe assez faibles mais 
@@ -102,12 +101,15 @@
             var rd = new Random();
 
             bool useLetter = true;
-            for (int i = 0; i < PasswordLength_; i++) {
-                if (useLetter) {
+            for (int i = 0; i < PasswordLength_; i++)
+            {
+                if (useLetter)
+                {
                     chars[i] = PasswordLetters_[rd.Next(0, PasswordLetters_.Length)];
                     useLetter = false;
                 }
-                else {
+                else
+                {
                     chars[i] = PasswordNumbers_[rd.Next(0, PasswordNumbers_.Length)];
                     useLetter = true;
                 }
@@ -117,17 +119,18 @@
             return new String(chars);
         }
 
-        static string EncryptPassword_(string password)
+        private static string EncryptPassword_(string password)
         {
             // FIXME: Utiliser BountyCastleOrg. 
             return password;
         }
 
-        void OnMemberCreated_(MemberCreatedEventArgs e)
+        private void OnMemberCreated_(MemberCreatedEventArgs e)
         {
             EventHandler<MemberCreatedEventArgs> localHandler = MemberCreated;
 
-            if (localHandler != null) {
+            if (localHandler != null)
+            {
                 localHandler(this, e);
             }
         }

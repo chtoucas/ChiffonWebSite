@@ -51,15 +51,15 @@
     </Reference>
     <Reference Include="Narvalo.Common, Version=0.22.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.22.1-T22712505\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.22.1-T22910418\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Core, Version=0.22.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.22.1-T22712505\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.22.1-T22910418\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Web, Version=0.22.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.22.1-T22712505\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.22.1-T22910418\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />

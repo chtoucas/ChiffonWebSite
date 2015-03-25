@@ -1,6 +1,10 @@
 ﻿namespace Chiffon.Persistence
 {
     using System.Collections.Generic;
+#if CONTRACTS_FULL // Using directive.
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+#endif
     using System.Globalization;
 
     using Chiffon.Entities;
@@ -8,7 +12,7 @@
     /// <summary>
     /// Représente l'ensemble des opérations permettant l'accès en lecture au stockage persistant.
     /// </summary>
-    public interface IDbQueries
+    public partial interface IDbQueries
     {
         Designer GetDesigner(DesignerKey designerKey, CultureInfo culture);
         Pattern GetPattern(DesignerKey designerKey, string reference, string variant);
@@ -26,4 +30,84 @@
 
         IEnumerable<Pattern> ListShowcasedPatterns();
     }
+    
+#if CONTRACTS_FULL // Contract Class and Object Invariants.
+
+    [ContractClass(typeof(IDbQueriesContract))]
+    public partial interface IDbQueries { }
+
+    [ContractClassFor(typeof(IDbQueries))]
+    internal abstract class IDbQueriesContract : IDbQueries
+    {
+        Designer IDbQueries.GetDesigner(DesignerKey designerKey, CultureInfo culture)
+        {
+            return default(Designer);
+        }
+
+        Pattern IDbQueries.GetPattern(DesignerKey designerKey, string reference, string variant)
+        {
+            return default(Pattern);
+        }
+
+        Member IDbQueries.GetMember(string email, string password)
+        {
+            return default(Member);
+        }
+
+        string IDbQueries.GetPassword(string email)
+        {
+            return default(string);
+        }
+
+        IEnumerable<Category> IDbQueries.ListCategories(DesignerKey designerKey)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Category>>() != null);
+
+            return Enumerable.Empty<Category>();
+        }
+
+        IEnumerable<Designer> IDbQueries.ListDesigners(CultureInfo culture)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Designer>>() != null);
+
+            return Enumerable.Empty<Designer>();
+        }
+
+        IEnumerable<Pattern> IDbQueries.ListPatterns(DesignerKey designerKey)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Pattern>>() != null);
+
+            return Enumerable.Empty<Pattern>();
+        }
+
+        IEnumerable<Pattern> IDbQueries.ListPatterns(DesignerKey designerKey, string categoryKey)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Pattern>>() != null);
+
+            return Enumerable.Empty<Pattern>();
+        }
+
+        IEnumerable<Pattern> IDbQueries.ListPatterns(DesignerKey designerKey, string categoryKey, bool published)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Pattern>>() != null);
+
+            return Enumerable.Empty<Pattern>();
+        }
+
+        IEnumerable<Pattern> IDbQueries.ListPatterns(DesignerKey designerKey, bool published)
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Pattern>>() != null);
+
+            return Enumerable.Empty<Pattern>();
+        }
+
+        IEnumerable<Pattern> IDbQueries.ListShowcasedPatterns()
+        {
+            Contract.Ensures(Contract.Result<IEnumerable<Pattern>>() != null);
+
+            return Enumerable.Empty<Pattern>();
+        }
+    }
+
+#endif
 }

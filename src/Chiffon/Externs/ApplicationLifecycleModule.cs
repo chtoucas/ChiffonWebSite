@@ -4,6 +4,7 @@ namespace Chiffon.Infrastructure
 {
     using System;
     using System.Collections.Specialized;
+    using System.Diagnostics.Contracts;
     using System.Net;
     using System.Web;
     using System.Web.UI;
@@ -34,7 +35,7 @@ namespace Chiffon.Infrastructure
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
         /// </summary>
-        void OnDisposed_(object sender, EventArgs e)
+        private void OnDisposed_(object sender, EventArgs e)
         {
             Log.Information("Application disposed.");
         }
@@ -43,7 +44,7 @@ namespace Chiffon.Infrastructure
         /// Se produit lorsqu'une exception non gérée est levée.
         /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
         /// </summary>
-        void OnError_(object sender, EventArgs e)
+        private void OnError_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var server = app.Server;
@@ -73,7 +74,7 @@ namespace Chiffon.Infrastructure
             }
         }
 
-        void OnPreSendRequestHeaders_(object sender, EventArgs e)
+        private void OnPreSendRequestHeaders_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 
@@ -100,6 +101,8 @@ namespace Chiffon.Infrastructure
         /// <param name="headers">Collection d'en-têtes de réponse.</param>
         private static void AddSecurityHeaders_(NameValueCollection headers)
         {
+            Contract.Requires(headers != null);
+
             // Cf. http://www.html5rocks.com/en/tutorials/security/content-security-policy/
             //headers.Add("Content-Security-Policy", "");
 
@@ -112,6 +115,8 @@ namespace Chiffon.Infrastructure
 
         private static HttpStatusCode GetStatusCode_(Exception exception)
         {
+            Contract.Requires(exception != null);
+
             Type type = exception.GetType();
             var httpException = exception as HttpException;
 
@@ -184,6 +189,8 @@ namespace Chiffon.Infrastructure
         /// <param name="headers">Collection d'en-têtes de réponse.</param>
         private static void RemoveUnnecessaryHeaders_(NameValueCollection headers)
         {
+            Contract.Requires(headers != null);
+
             headers.Remove("Server");
         }
     }

@@ -18,8 +18,6 @@
             _queries = queries;
         }
 
-        #region IPatternService
-
         public IEnumerable<Pattern> GetPatternViews(
             DesignerKey designerKey, string categoryKey, string reference)
         {
@@ -81,7 +79,5 @@
                 Previews = slice
             };
         }
-
-        #endregion
     }
 }

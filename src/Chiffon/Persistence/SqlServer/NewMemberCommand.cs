@@ -1,7 +1,9 @@
 ﻿namespace Chiffon.Persistence.SqlServer
 {
+    using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Narvalo;
     using Narvalo.Data;
@@ -18,12 +20,15 @@
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
         /// <exception cref="System.ArgumentException">connectionString est une chaîne de caractères vide.</exception>
         public NewMemberCommand(string connectionString)
-            : base(connectionString, "usp_NewMember") { }
+            : base(connectionString, "usp_NewMember")
+        {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+        }
 
         protected override void AddParameters(SqlParameterCollection parameters, NewMemberParameters values)
         {
-            Require.NotNull(parameters, "parameters");
             Require.NotNull(values, "values");
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
 
             parameters.AddParameterUnsafe("@email_address", SqlDbType.NVarChar, values.Email);
             parameters.AddParameterUnsafe("@firstname", SqlDbType.NVarChar, values.FirstName);

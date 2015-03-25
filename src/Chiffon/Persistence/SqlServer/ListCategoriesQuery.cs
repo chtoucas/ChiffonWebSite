@@ -1,8 +1,10 @@
 ﻿namespace Chiffon.Persistence.SqlServer
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
     using Narvalo;
@@ -13,6 +15,8 @@
         public ListCategoriesQuery(string connectionString, DesignerKey designerKey)
             : base(connectionString, "usp_ListCategories")
         {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+
             DesignerKey = designerKey;
         }
 
@@ -20,7 +24,7 @@
 
         protected override IEnumerable<Category> Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             var categories = new List<Category>();
 
@@ -39,7 +43,9 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@designer", SqlDbType.NVarChar, DesignerKey.Value);
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
+
+            parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, DesignerKey.Value);
         }
     }
 }

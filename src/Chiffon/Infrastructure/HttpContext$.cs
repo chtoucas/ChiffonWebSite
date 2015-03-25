@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
+    using System.Diagnostics.Contracts;
     using System.Web;
 
     using Narvalo;
@@ -18,6 +19,7 @@
         public static ChiffonContext GetChiffonContext(this HttpContext @this)
         {
             Require.NotNull(@this, "this");
+            Contract.Ensures(Contract.Result<ChiffonContext>() != null);
 
             var result = @this.Items[HttpContextKey_] as ChiffonContext;
 

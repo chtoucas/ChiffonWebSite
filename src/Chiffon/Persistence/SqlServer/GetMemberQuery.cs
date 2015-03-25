@@ -1,7 +1,9 @@
 ﻿namespace Chiffon.Persistence.SqlServer
 {
+    using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
     using Narvalo;
@@ -12,6 +14,8 @@
         public GetMemberQuery(string connectionString, string email, string password)
             : base(connectionString, "usp_GetContactByPublicKey")
         {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+
             Email = email;
             Password = password;
 
@@ -23,7 +27,7 @@
 
         protected override Member Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             if (!reader.Read()) { return null; }
 
@@ -35,7 +39,7 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            Require.NotNull(parameters, "parameters");
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
 
             parameters.AddParameterUnsafe("@email_address", SqlDbType.NVarChar, Email);
             parameters.AddParameterUnsafe("@password", SqlDbType.NVarChar, Password);

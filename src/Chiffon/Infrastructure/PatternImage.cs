@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.IO;
 
@@ -23,6 +24,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<string>() != null);
+
                 if (_relativePath == null)
                 {
                     _relativePath = Path.Combine(DesignerDirectory, CategoryDirectory, FileName);
@@ -45,6 +48,7 @@
         {
             Require.NotNullOrEmpty(designerDirectory, "directory");
             Require.NotNullOrEmpty(reference, "reference");
+            Contract.Ensures(Contract.Result<PatternImage>() != null);
 
             switch (size)
             {

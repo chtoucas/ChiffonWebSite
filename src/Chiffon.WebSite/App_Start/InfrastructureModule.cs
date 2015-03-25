@@ -1,7 +1,6 @@
 ﻿namespace Chiffon
 {
     using Autofac;
-    using Autofac.Integration.Mvc;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
@@ -21,7 +20,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Require.NotNull(builder, "builder");
+            Check.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             builder.Register(_ => _config).AsSelf().SingleInstance();
 

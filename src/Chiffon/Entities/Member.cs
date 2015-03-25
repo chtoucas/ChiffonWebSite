@@ -1,6 +1,8 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Net.Mail;
 
@@ -25,6 +27,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<string>() != null); 
+                
                 if (_displayName == null)
                 {
                     _displayName = String.Format(
@@ -40,6 +44,8 @@
         /// <summary>
         /// Assigne ou retourne l'adresse e-mail du membre.
         /// </summary>
+        [SuppressMessage("Microsoft.Contracts", "Suggestion-17-0",
+            Justification = "[Ignore] Unrecognized postcondition by CCCheck.")]
         public string Email { get; set; }
 
         /// <summary>
@@ -50,6 +56,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<MailAddress>() != null); 
+                
                 if (_emailAddress == null)
                 {
                     // XXX: Doit-on préciser l'encodage du nom ?

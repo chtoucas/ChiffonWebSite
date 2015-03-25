@@ -1,7 +1,6 @@
 ﻿namespace Chiffon
 {
     using Autofac;
-    using Autofac.Integration.Mvc;
     using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Narvalo;
@@ -19,7 +18,7 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Require.NotNull(builder, "builder");
+            Check.NotNull(builder, "The base class guarantees that this parameter is not null.");
 
             builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerRequest();
 

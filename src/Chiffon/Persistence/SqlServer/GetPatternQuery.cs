@@ -1,7 +1,9 @@
 ﻿namespace Chiffon.Persistence.SqlServer
 {
+    using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
     using Narvalo;
@@ -12,6 +14,8 @@
         public GetPatternQuery(string connectionString, DesignerKey designerKey, string reference, string variant)
             : base(connectionString, "usp_GetPattern")
         {
+            Contract.Requires(!String.IsNullOrEmpty(connectionString));
+
             DesignerKey = designerKey;
             Reference = reference;
             Variant = variant;
@@ -25,7 +29,7 @@
 
         protected override Pattern Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             if (!reader.Read()) { return null; }
 
@@ -42,7 +46,7 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            Require.NotNull(parameters, "parameters");
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
 
             parameters.AddParameterUnsafe("@designer", SqlDbType.NVarChar, DesignerKey.Value);
             parameters.AddParameterUnsafe("@reference", SqlDbType.NVarChar, Reference);

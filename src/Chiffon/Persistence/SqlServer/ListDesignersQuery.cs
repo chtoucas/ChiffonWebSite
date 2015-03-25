@@ -24,7 +24,7 @@
 
         protected override IEnumerable<Designer> Execute(SqlDataReader reader)
         {
-            Require.NotNull(reader, "reader");
+            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
 
             var designers = new List<Designer>();
 
@@ -52,7 +52,9 @@
 
         protected override void PrepareParameters(SqlParameterCollection parameters)
         {
-            parameters.AddParameter("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
+            Check.NotNull(parameters, "The base class guarantees that the parameter is not null.");
+
+            parameters.AddParameterUnsafe("@language", SqlDbType.Char, _culture.TwoLetterISOLanguageName);
         }
     }
 }

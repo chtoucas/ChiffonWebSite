@@ -31,18 +31,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configs", "Configs", "{9858
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CodeContracts|Any CPU = CodeContracts|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F446C2E-D766-428D-A567-724631F114A6}.CodeContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F446C2E-D766-428D-A567-724631F114A6}.CodeContracts|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.CodeContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.CodeContracts|Any CPU.Build.0 = Debug|Any CPU
 		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.CodeContracts|Any CPU.ActiveCfg = CodeContracts|Any CPU
+		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.CodeContracts|Any CPU.Build.0 = CodeContracts|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Release|Any CPU.ActiveCfg = Release|Any CPU

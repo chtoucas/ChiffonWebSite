@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Web;
     using System.Web.SessionState;
@@ -34,6 +35,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<IEnumerable<ChiffonEnvironment>>() != null);
+
                 yield return DefaultEnvironment_;
                 yield return EnglishEnvironment_;
             }
@@ -77,6 +80,8 @@
 
         private static Uri GetBaseUri_(Uri uri)
         {
+            Contract.Requires(uri != null);
+
             return new Uri(uri.GetLeftPart(UriPartial.Authority), UriKind.Absolute);
         }
 
@@ -97,12 +102,16 @@
 
         private static ChiffonLanguage? GetLanguageFromQueryString_(HttpRequest request)
         {
+            Contract.Requires(request != null);
+
             return (from _ in request.QueryString.MayGetSingle("lang")
                     select ParseTo.Enum<ChiffonLanguage>(_)).ToNullable();
         }
 
         private static ChiffonLanguage? GetLanguageFromSession_(HttpSessionState session)
         {
+            Contract.Requires(session != null);
+
             var value = session[SessionKey_];
 
             return value != null ? ConvertTo.Enum<ChiffonLanguage>(value) : null;
@@ -117,6 +126,8 @@
 
         private static void UpdateLanguageSession_(HttpSessionState session, ChiffonLanguage language)
         {
+            Contract.Requires(session != null);
+
             session[SessionKey_] = language;
         }
     }

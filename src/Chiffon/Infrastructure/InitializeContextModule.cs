@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Threading;
     using System.Web;
@@ -91,6 +92,9 @@
         // car on peut changer de Thread.
         private static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
         {
+            Contract.Requires(culture != null);
+            Contract.Requires(uiCulture != null);
+
             // Culture utilisée par System.Globalization.
             Thread.CurrentThread.CurrentCulture = culture;
             // Culture utilisée par ResourceManager.

@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
+    using System.Diagnostics.Contracts;
     using System.Web;
 
     public class ChiffonContext
@@ -20,6 +21,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<ChiffonContext>() != null);
+
                 // TODO: Vérifier que HttpContext.Current existe bien.
                 return HttpContext.Current.GetChiffonContext();
             }

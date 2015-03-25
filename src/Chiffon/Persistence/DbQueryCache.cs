@@ -11,11 +11,11 @@
 
     public class DbQueryCache : IDbQueryCache
     {
-        const int CacheExpirationInHours_ = 24;
+        private const int CacheExpirationInHours_ = 24;
 
-        static object Lock_ = new Object();
+        private static object Lock_ = new Object();
 
-        readonly HttpContextBase _context;
+        private readonly HttpContextBase _context;
 
         // NB: Constructeur pour Autofac.
         // TODO: Je n'aime pas l'utilisation de HttpContext.Current, il faudra voir 
@@ -30,8 +30,6 @@
         }
 
         protected Cache Cache { get { return _context.Cache; } }
-
-        #region IDbQueryCache
 
         public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
         {
@@ -60,20 +58,21 @@
             return GetOrInsert_(cacheKey, () => query());
         }
 
-        #endregion
-
-        T GetOrInsert_<T>(string cacheKey, Func<T> query) where T : class
+        private T GetOrInsert_<T>(string cacheKey, Func<T> query) where T : class
         {
             var cachedValue = Cache[cacheKey];
 
-            if (cachedValue != null) {
+            if (cachedValue != null)
+            {
                 return cachedValue as T;
             }
 
             T result = query.Invoke();
 
-            lock (Lock_) {
-                if (Cache[cacheKey] == null) {
+            lock (Lock_)
+            {
+                if (Cache[cacheKey] == null)
+                {
                     Cache.Add(cacheKey, result, null,
                         DateTime.Now.AddHours(CacheExpirationInHours_),
                         Cache.NoSlidingExpiration, CacheItemPriority.High, null);

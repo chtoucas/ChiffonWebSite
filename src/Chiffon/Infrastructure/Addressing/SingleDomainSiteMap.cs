@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Web;
 
@@ -95,12 +96,15 @@
 
         private static Uri AddPagination_(Uri uri, int pageIndex)
         {
+            Contract.Requires(uri != null);
+
             if (pageIndex > 1)
             {
                 var builder = new UriBuilder(uri) {
                     Query = String.Format(CultureInfo.InvariantCulture,
                         "{0}={1}", SiteMapConstants.PageKey, pageIndex.ToString(CultureInfo.InvariantCulture))
                 };
+
                 return builder.Uri;
             }
             else
@@ -112,16 +116,22 @@
         // NB: "returnUrl" contient le répertoire virtuel.
         private static Uri AddReturnUrl_(Uri uri, Uri returnUrl)
         {
+            Contract.Requires(uri != null);
+            Contract.Requires(returnUrl != null);
+
             var builder = new UriBuilder(uri) {
                 Query = String.Format(CultureInfo.InvariantCulture,
                     "{0}={1}", SiteMapConstants.ReturnUrl, returnUrl.ToString())
             };
+
             return builder.Uri;
         }
 
         // NB: "relativePath" ne contient pas le répertoire virtuel.
         private Uri MakeAbsoluteUri_(string relativePath)
         {
+            Contract.Requires(relativePath != null);
+
             if (relativePath.Length == 0)
             {
                 return new Uri(_baseUri, VirtualPathUtility.ToAbsolute("~/"));
