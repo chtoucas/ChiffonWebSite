@@ -96,7 +96,6 @@
   <ItemGroup>
     <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
     <_AfterBuildTargets Include="VerifyAspNetMergeOutputs" Condition="'$(Analyze)' == 'true'" />
-    <_AfterBuildTargets Include="RunXunitTests" Condition="'$(RunTests)' == 'true'" />
   </ItemGroup>
 
   <PropertyGroup>
