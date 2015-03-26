@@ -4,8 +4,8 @@ ChiffonWebSite
 A multilingual WebSite for a textile design collective.
 Available in French & English.
 
-The result (with SEO disabled) can be seen here:
-[http://narvalo.org/chiffon/](http://narvalo.org/chiffon/).
+The result (with a few things disabled) can be seen here:
+[http://vivianedevaux.org/chiffon/](http://vivianedevaux.org/chiffon/).
 
 **Status: Stable**
 
