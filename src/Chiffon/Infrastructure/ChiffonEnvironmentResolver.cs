@@ -18,9 +18,9 @@
 
 #if SHOWCASE
         private static readonly ChiffonEnvironment DefaultEnvironment_
-              = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
+              = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://vivianedevaux.org"), ChiffonHosting.SingleDomain);
         private static readonly ChiffonEnvironment EnglishEnvironment_
-              = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://narvalo.org"), ChiffonHosting.SingleDomain);
+              = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://vivianedevaux.org"), ChiffonHosting.SingleDomain);
 #else
      private   static readonly ChiffonEnvironment DefaultEnvironment_
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);

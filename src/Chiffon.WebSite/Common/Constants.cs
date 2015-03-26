@@ -5,7 +5,7 @@
     public static class Constants
     {
 #if SHOWCASE
-        public static readonly string ContactAddress = "chiffon@narvalo.org";
+        public static readonly string ContactAddress = "contact@vivianedevaux.org";
 #else
         public static readonly string ContactAddress = "contact@pourquelmotifsimone.com";
 #endif
