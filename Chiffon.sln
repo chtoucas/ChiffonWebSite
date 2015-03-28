@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DC52B7-302B-4B39-974D-90AFDE3E2087}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -13,21 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1DC52
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon.WebSite", "src\Chiffon.WebSite\Chiffon.WebSite.csproj", "{0F446C2E-D766-428D-A567-724631F114A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wznw.Org", "src\Wznw.Org\Wznw.Org.csproj", "{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiffon", "src\Chiffon\Chiffon.csproj", "{1759636F-FE03-4DAA-87B7-895CEB3F8797}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssemblyInfo", "AssemblyInfo", "{CA1374AC-6B74-4840-8B92-4AB593FBA306}"
-	ProjectSection(SolutionItems) = preProject
-		etc\AssemblyInfo.Template.cs = etc\AssemblyInfo.Template.cs
-		etc\VersionInfo.xml = etc\VersionInfo.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configs", "Configs", "{9858E246-3025-4B7E-B6CA-3BAFDF47C96C}"
-	ProjectSection(SolutionItems) = preProject
-		etc\Milestone.config = etc\Milestone.config
-		etc\Package.config = etc\Package.config
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,12 +26,6 @@ Global
 		{0F446C2E-D766-428D-A567-724631F114A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F446C2E-D766-428D-A567-724631F114A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.CodeContracts|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.CodeContracts|Any CPU.Build.0 = Debug|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8B67A5E-16BF-4F97-AAF1-804E5CBBAFEE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.CodeContracts|Any CPU.ActiveCfg = CodeContracts|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.CodeContracts|Any CPU.Build.0 = CodeContracts|Any CPU
 		{1759636F-FE03-4DAA-87B7-895CEB3F8797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -57,9 +35,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{CA1374AC-6B74-4840-8B92-4AB593FBA306} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
-		{9858E246-3025-4B7E-B6CA-3BAFDF47C96C} = {A51A66EA-571C-4F64-A8BF-B4F1D202DAAD}
 	EndGlobalSection
 EndGlobal
