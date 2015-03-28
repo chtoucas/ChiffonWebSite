@@ -1,11 +1,11 @@
 ﻿namespace Chiffon.ViewModels
 {
-    using System;
-    using System.Globalization;
     using System.Web;
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Resources;
+
+    using Narvalo;
 
     public class PatternViewItem
     {
@@ -21,8 +21,7 @@
         {
             get
             {
-                return new HtmlString(String.Format(CultureInfo.CurrentCulture,
-                    SR.PatternDescriptionFormat, Reference, DesignerName));
+                return new HtmlString(Format.CurrentCulture(SR.PatternDescriptionFormat, Reference, DesignerName));
             }
         }
 

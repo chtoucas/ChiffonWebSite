@@ -101,8 +101,7 @@
             if (pageIndex > 1)
             {
                 var builder = new UriBuilder(uri) {
-                    Query = String.Format(CultureInfo.InvariantCulture,
-                        "{0}={1}", SiteMapConstants.PageKey, pageIndex.ToString(CultureInfo.InvariantCulture))
+                    Query = SiteMapConstants.PageKey + "=" + pageIndex.ToString(CultureInfo.InvariantCulture)
                 };
 
                 return builder.Uri;
@@ -120,8 +119,7 @@
             Contract.Requires(returnUrl != null);
 
             var builder = new UriBuilder(uri) {
-                Query = String.Format(CultureInfo.InvariantCulture,
-                    "{0}={1}", SiteMapConstants.ReturnUrl, returnUrl.ToString())
+                Query = SiteMapConstants.ReturnUrl + "=" + returnUrl.ToString()
             };
 
             return builder.Uri;

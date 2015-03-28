@@ -13,7 +13,7 @@
     // TODO: ValidateAntiForgeryToken.
     public sealed class LogOffHandler : HttpHandlerBase, IRequiresSessionState
     {
-        readonly ISiteMapFactory _siteMapFactory;
+        private readonly ISiteMapFactory _siteMapFactory;
 
         public LogOffHandler(ISiteMapFactory siteMapFactory)
             : base()
@@ -29,7 +29,7 @@
 
         protected override void ProcessRequestCore(HttpContext context)
         {
-            //DebugCheck.NotNull(context);
+            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
 
             (new AuthentificationService(context)).SignOut();
 

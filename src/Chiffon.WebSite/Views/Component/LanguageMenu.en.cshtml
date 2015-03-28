@@ -3,7 +3,7 @@
 @model IEnumerable<KeyValuePair<Chiffon.Infrastructure.ChiffonLanguage, Uri>>
 
 @{
- var alternateUrl = @Model.First().Value.ToProtocolLessString();
+ var alternateUrl = @Model.First().Value.ToProtocolRelativeString();
 }
 
 <ul class="li_inline float_right">

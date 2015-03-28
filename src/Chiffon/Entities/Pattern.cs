@@ -101,7 +101,7 @@
                             : PatternVisibility.Members;
                     default:
                         throw new NotSupportedException(
-                            Format.CurrentCulture("The pattern size '{0}' is not yet handled.", size.ToString()));
+                            "The pattern size '" + size.ToString() + "' is not yet handled.");
                 }
             }
             else

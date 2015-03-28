@@ -12,17 +12,17 @@
     using Narvalo;
     using Narvalo.Web;
 
-    public class PatternImageHandler
+    public sealed class PatternImageHandler
         : HttpHandlerBase<PatternImageQuery, PatternImageQueryBinder>, IRequiresSessionState
     {
         // Mise en cache publique pour 7 jours.
-        static readonly TimeSpan PublicCacheTimeSpan_ = new TimeSpan(7, 0, 0, 0);
+        private static readonly TimeSpan s_PublicCacheTimeSpan = new TimeSpan(7, 0, 0, 0);
         // Mise en cache publique pour 1 jour.
-        static readonly TimeSpan PrivateCacheTimeSpan_ = new TimeSpan(1, 0, 0, 0);
+        private static readonly TimeSpan s_PrivateCacheTimeSpan = new TimeSpan(1, 0, 0, 0);
 
-        readonly ChiffonConfig _config;
-        readonly PatternFileSystem _fileSystem;
-        readonly IDbQueries _queries;
+        private readonly ChiffonConfig _config;
+        private readonly PatternFileSystem _fileSystem;
+        private readonly IDbQueries _queries;
 
         public PatternImageHandler(ChiffonConfig config, IDbQueries queries)
             : base()
@@ -36,7 +36,7 @@
             _fileSystem = new PatternFileSystem(config);
         }
 
-        // TODO: Pour le moment il n'est pas opportun de réutiliser cet Handler car IDbQueries 
+        // TODO: Pour le moment il n'est pas opportun de réutiliser ce gestionnaire car IDbQueries 
         // peut avoir des dépendances vis à vis de la requête en cours.
         //public override bool IsReusable { get { return true; } }
 
@@ -44,10 +44,17 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            //DebugCheck.NotNull(context);
-            //DebugCheck.NotNull(query);
+            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
+            Check.NotNull(query, "The base class guarantees that the parameter is not null.");
 
             var response = context.Response;
+
+#if SHOWCASE // Seules les images de Vivi sont visibles. 
+            if (query.DesignerKey != DesignerKey.VivianeDevaux)
+            {
+                response.SetStatusCode(HttpStatusCode.NoContent); return;
+            }
+#endif
 
             var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
             if (pattern == null)
@@ -87,20 +94,21 @@
             {
                 CacheResponse_(response, visibility);
             }
+
             response.ContentType = image.MimeType;
             response.TransmitFile(_fileSystem.GetPath(image));
         }
 
         // TODO: Il faut revoir les en-têtes de cache.
-        static void CacheResponse_(HttpResponse response, PatternVisibility visibility)
+        private static void CacheResponse_(HttpResponse response, PatternVisibility visibility)
         {
             if (visibility == PatternVisibility.Public)
             {
-                response.PubliclyCacheFor(PublicCacheTimeSpan_);
+                response.PubliclyCacheFor(s_PublicCacheTimeSpan);
             }
             else
             {
-                response.PrivatelyCacheFor(PrivateCacheTimeSpan_);
+                response.PrivatelyCacheFor(s_PrivateCacheTimeSpan);
             }
         }
     }

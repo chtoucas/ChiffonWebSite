@@ -14,11 +14,11 @@
     using Narvalo.Web;
 
     // TODO: ValidateAntiForgeryToken.
-    public class LogOnHandler
+    public sealed class LogOnHandler
         : HttpHandlerBase<LogOnQuery, LogOnQueryBinder>, IRequiresSessionState
     {
-        readonly IMemberService _memberService;
-        readonly ISiteMapFactory _siteMapFactory;
+        private readonly IMemberService _memberService;
+        private readonly ISiteMapFactory _siteMapFactory;
 
         public LogOnHandler(IMemberService memberService, ISiteMapFactory siteMapFactory)
             : base()
@@ -36,8 +36,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            //DebugCheck.NotNull(context);
-            //DebugCheck.NotNull(query);
+            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
+            Check.NotNull(query, "The base class guarantees that the parameter is not null.");
 
             var environment = ChiffonContext.Current.Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);

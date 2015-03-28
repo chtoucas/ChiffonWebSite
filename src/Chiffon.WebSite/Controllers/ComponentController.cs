@@ -32,7 +32,7 @@
                 ControllerName = controllerName,
                 IsAuthenticated = User.Identity.IsAuthenticated ? "true" : "false",
                 LanguageName = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
-                ScriptBase = AssetManager.ScriptBase.ToProtocolLessString(),
+                ScriptBase = AssetManager.ScriptBase.ToProtocolRelativeString(),
                 Version = _config.JavaScriptVersion,
             };
 

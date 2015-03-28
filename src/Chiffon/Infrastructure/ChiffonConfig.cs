@@ -90,9 +90,7 @@
             if (connection == null)
             {
                 throw new ConfigurationErrorsException(
-                    String.Format(CultureInfo.InvariantCulture,
-                        "The '{0}' connection is not defined in your config file!",
-                        SqlConnectionStringName_));
+                    "The '" + SqlConnectionStringName_ + "' connection is not defined in your config file!");
             }
 
             SqlConnectionString = connection.ConnectionString;
@@ -120,11 +118,9 @@
 
             // > Paramètres optionels <
 
-            var version = String.Format(CultureInfo.InvariantCulture,
-                "{0}.{1}.{2}",
-                AssemblyVersion_.Major,
-                AssemblyVersion_.Minor,
-                AssemblyVersion_.Build);
+            var version = AssemblyVersion_.Major.ToString(CultureInfo.InvariantCulture)
+                + "." + AssemblyVersion_.Minor.ToString(CultureInfo.InvariantCulture)
+                + "." + AssemblyVersion_.Build.ToString(CultureInfo.InvariantCulture);
 
             CssVersion = source.MayGetSingle("chiffon:CssVersion").ValueOrElse(version);
 

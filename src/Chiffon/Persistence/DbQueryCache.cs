@@ -33,22 +33,19 @@
 
         public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
         {
-            var format = "Chiffon:Category:{0}";
-            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
+            var cacheKey = "Chiffon:Category:" + designerKey.ToString();
             return GetOrInsert_(cacheKey, () => query(designerKey));
         }
 
         public IEnumerable<Designer> GetOrInsertDesigners(CultureInfo culture, Func<CultureInfo, IEnumerable<Designer>> query)
         {
-            var format = "Chiffon:Designer:{0}";
-            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, culture);
+            var cacheKey = "Chiffon:Designer:" + culture.ToString();
             return GetOrInsert_(cacheKey, () => query(culture));
         }
 
         public IEnumerable<Pattern> GetOrInsertPatterns(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Pattern>> query)
         {
-            var format = "Chiffon:Pattern:{0}";
-            var cacheKey = String.Format(CultureInfo.InvariantCulture, format, designerKey.ToString());
+            var cacheKey = "Chiffon:Pattern:" + designerKey.ToString();
             return GetOrInsert_(cacheKey, () => query(designerKey));
         }
 

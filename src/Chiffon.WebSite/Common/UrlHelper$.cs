@@ -16,10 +16,12 @@
         public static string Designer(this UrlHelper @this, DesignerKey designerKey, int pageIndex)
         {
             object routeValues;
-            if (pageIndex > 1) {
+            if (pageIndex > 1)
+            {
                 routeValues = new { designerKey = designerKey.ToString(), p = pageIndex };
             }
-            else {
+            else
+            {
                 routeValues = new { designerKey = designerKey.ToString() };
             }
 
@@ -29,10 +31,12 @@
         public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey, int pageIndex)
         {
             object routeValues;
-            if (pageIndex > 1) {
+            if (pageIndex > 1)
+            {
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, p = pageIndex };
             }
-            else {
+            else
+            {
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey };
             }
 
@@ -42,10 +46,12 @@
         public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
         {
             object routeValues;
-            if (pageIndex > 1) {
+            if (pageIndex > 1)
+            {
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, reference = reference, p = pageIndex };
             }
-            else {
+            else
+            {
                 routeValues = new { designerKey = designerKey.ToString(), categoryKey = categoryKey, reference = reference };
             }
 
@@ -72,8 +78,9 @@
         {
             Require.Object(@this);
 
-            return @this.Content(String.Format(CultureInfo.InvariantCulture,
-                "~/{0}/motif-{1}-{2}.jpg", designerKey, reference, variant));
+            return @this.Content(
+                "~/" + designerKey.ToString() + "/motif-" + reference + "-" + variant + ".jpg");
+
         }
 
         public static string SecureAction(this UrlHelper @this, string actionName, string controllerName, object routeValues)
@@ -89,10 +96,12 @@
 
             var originalUrl = @this.Action(actionName, controllerName, routeValues);
 
-            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
+            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+            {
                 return originalUrl;
             }
-            else {
+            else
+            {
                 return @this.RouteUrl(Constants.RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
@@ -112,10 +121,12 @@
 
             var originalUrl = @this.RouteUrl(routeName, routeValues);
 
-            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated) {
+            if (@this.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+            {
                 return originalUrl;
             }
-            else {
+            else
+            {
                 return @this.RouteUrl(Constants.RouteName.Account.Register, new { returnUrl = originalUrl });
             }
         }
@@ -125,8 +136,7 @@
         {
             Require.NotNull(urlHelper, "urlHelper");
 
-            var path = String.Format(CultureInfo.InvariantCulture,
-                "~/{0}/vignette-{1}-{2}.jpg", designerKey, reference, variant);
+            var path = "~/" + designerKey.ToString() + "/vignette-" + reference + "-" + variant + ".jpg";
 
             return absolute ? urlHelper.AbsoluteContent(path) : urlHelper.Content(path);
         }

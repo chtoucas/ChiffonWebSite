@@ -83,7 +83,7 @@
                 {
                     if (_fileName == null)
                     {
-                        _fileName = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}.jpg", Reference, Version);
+                        _fileName = "motif-" + Reference + Version + ".jpg";
                     }
 
                     return _fileName;
@@ -106,7 +106,7 @@
                 {
                     if (_filename == null)
                     {
-                        _filename = String.Format(CultureInfo.InvariantCulture, "motif-{0}{1}-apercu.jpg", Reference, Version);
+                        _filename = "motif-" + Reference + Version + "-apercu.jpg";
                     }
 
                     return _filename;
