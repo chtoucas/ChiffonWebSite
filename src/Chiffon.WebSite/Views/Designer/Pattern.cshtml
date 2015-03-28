@@ -46,7 +46,7 @@
  @foreach (var preview in Model.Previews) {
   if (preview.Reference == Model.Reference) {
    <li class=current>
-    <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+    <img class=vignette src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
    </li>
   }
   else {
