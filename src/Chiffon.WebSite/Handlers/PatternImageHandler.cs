@@ -58,7 +58,9 @@
 #if SHOWCASE // Seules les images publiques et celles de Vivi sont visibles.
             if (!pattern.Showcased && query.DesignerKey != DesignerKey.VivianeDevaux)
             {
-                response.SetStatusCode(HttpStatusCode.NoContent); return;
+                response.SetStatusCode(HttpStatusCode.NoContent);
+                response.PrivatelyCacheFor(s_PrivateCacheTimeSpan);
+                return;
             }
 #endif
 
