@@ -49,18 +49,18 @@
 
             var response = context.Response;
 
-#if SHOWCASE // Seules les images de Vivi sont visibles. 
-            if (query.DesignerKey != DesignerKey.VivianeDevaux)
-            {
-                response.SetStatusCode(HttpStatusCode.NoContent); return;
-            }
-#endif
-
             var pattern = _queries.GetPattern(query.DesignerKey, query.Reference, query.Variant);
             if (pattern == null)
             {
                 response.SetStatusCode(HttpStatusCode.NotFound); return;
             }
+
+#if SHOWCASE // Seules les images publiques et celles de Vivi sont visibles.
+            if (!pattern.Showcased && query.DesignerKey != DesignerKey.VivianeDevaux)
+            {
+                response.SetStatusCode(HttpStatusCode.NoContent); return;
+            }
+#endif
 
             var size = query.Size;
 
