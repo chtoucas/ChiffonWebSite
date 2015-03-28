@@ -161,6 +161,7 @@ A {
   display: block;
   width: @preview_width;
   height: @preview_height;
+  background-color: @missing_img_background;
   transition: all .2s ease-in-out;
 
   .overlay {
@@ -212,6 +213,7 @@ A {
   width: @grid_3_width;
   height: @pattern_heigth;
   overflow: hidden;
+  background-color: @missing_img_background;
 
   LI {
     // On utilise une position relative pour le positionnement du watermark.
@@ -510,12 +512,15 @@ NAV {
   ::-webkit-input-placeholder {
     color: @black;
   }
+
   :-moz-placeholder { /* Firefox 18- */
     color: @black;
   }
+
   ::-moz-placeholder { /* Firefox 19+ */
     color: @black;
   }
+
   :-ms-input-placeholder {
     color: @black;
   }
