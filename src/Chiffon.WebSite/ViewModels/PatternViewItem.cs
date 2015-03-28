@@ -1,5 +1,6 @@
 ﻿namespace Chiffon.ViewModels
 {
+    using System;
     using System.Web;
     using Chiffon.Common;
     using Chiffon.Entities;
@@ -21,7 +22,13 @@
         {
             get
             {
+#if SHOWCASE
+                return DesignerKey == DesignerKey.VivianeDevaux
+                    ? new HtmlString(Format.CurrentCulture(SR.PatternDescriptionFormat, Reference, DesignerName))
+                    : new HtmlString(String.Empty);
+#else
                 return new HtmlString(Format.CurrentCulture(SR.PatternDescriptionFormat, Reference, DesignerName));
+#endif
             }
         }
 
