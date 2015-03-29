@@ -13,6 +13,13 @@ TODO
 - Re-enable language switch
 - Use CurrentCulture instead of CurrentUICulture for localization
 
-- Re-enable robots.txt      
+- Re-enable robots.txt
 - Migrate to Attribute Routing
 - Finish mail merge
+
+
+  * rajouter aux package les scripts de déploiement
+  * encrypter les chaînes de connection
+  * compilation pour de multiples plateformes ?
+  * RestorePackages ?
+  * IISExpress, configSource
