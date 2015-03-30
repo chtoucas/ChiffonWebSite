@@ -1,12 +1,16 @@
+Création d'un package
+---------------------
+
+Mettre à jour la version dans AssemblyInfo.Common.cs et PSakefile.ps1.
+
 CSS & JavaScript
-================
+----------------
 
 * N'utiliser que des classes dans les CSS, éviter les IDs autant que faire se peut.
 * Utiliser uniquement des IDs dans les sélecteurs jQuery.
 
-
 Tests d'interface
-=================
+-----------------
 
 Analyse des performances en conditions réelles :
 * YSlow Extension
@@ -20,7 +24,7 @@ Interface :
 
 
 Mise à jour des librairies JavaScript
-=====================================
+-------------------------------------
 
 Màj package.json:
 - tools\npm-check-updates

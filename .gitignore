@@ -2,7 +2,6 @@
 *.suo
 *.user
 _build/
-_tmp/
 _work/
 bin/
 intern/
@@ -10,4 +9,3 @@ node_modules/
 obj/
 packages/
 tools/
-Chiffon.sln.metaproj*

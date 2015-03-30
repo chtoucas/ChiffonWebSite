@@ -1,129 +1,170 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--
-  TODO:
-  * rajouter aux package les scripts de déploiement
-  * encrypter les chaînes de connection
-  * compilation pour de multiples plateformes ?
-  * RestorePackages ?
-  * IISExpress, configSource
- -->
-
-<Project ToolsVersion="12.0" DefaultTargets="Build"
-         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project=".\Chiffon.common.targets" />
-  <Import Project=".\Chiffon.tests.targets" />
-
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Define common MSBuild project options. -->
   <PropertyGroup>
-    <!-- Valeurs possibles : Major, Minor, Patch, Build. -->
-    <Milestone Condition="'$(Milestone)' == ''">Build</Milestone>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <BuildInParallel Condition="'$(BuildInParallel)' == '' And $(MSBuildNodeCount) &gt; 1">true</BuildInParallel>
+    <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
+  </PropertyGroup>
 
+  <!-- Define Chiffon options. -->
+  <PropertyGroup>
     <!-- Valeurs possibles : Production, Integration. -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
-
-    <PackageAssets Condition="'$(PackageAssets)' != 'false'">true</PackageAssets>
-    <PackageWebSite Condition="'$(PackageWebSite)' != 'false'">true</PackageWebSite>
   </PropertyGroup>
 
+  <!-- Define Chiffon properties. -->
   <PropertyGroup>
-    <PublishProperties>
-      $(BuildProperties);
-      TransformsDir=$(_TransformsDir);
-      PackageTarget=$(PackageTarget);
-      <!-- Configuration de MSBuild. -->
-      DeployOnBuild=true;
+    <RepositoryDir>$(MSBuildThisFileDirectory)..\..\</RepositoryDir>
+    <SourceDir>$(RepositoryDir)src\</SourceDir>
+    <ToolsDir>$(RepositoryDir)tools\</ToolsDir>
+    <PackageDir>$(RepositoryDir)_build\</PackageDir>
+    <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
 
-      <!-- Configuration commune à tous les profils. -->
-      WebPublishMethod=FileSystem;
-      DebugSymbols=true;
-      DeleteAppCodeCompiledFiles=true;
-      DeleteExistingFiles=true;
-      DeployTarget=WebPublish;
-      EnableUpdateable=false;
-      ExcludeApp_Data=true;
-      <!-- On garde les fichiers debug liés aux autres assemblées. -->
-      ExcludeGeneratedDebugSymbol=false;
-      PrecompileBeforePublish=true;
-      UseMerge=true;
-      WDPMergeOption=MergeAllOutputsToASingleAssembly
-    </PublishProperties>
+    <!-- Répertoires temporaires créés au cours de la compilation. -->
+    <WorkDir>$(RepositoryDir)_work\</WorkDir>
+    <OutDir>$(WorkDir)bin\$(Configuration)\</OutDir>
+    <BaseIntermediateOutDir>$(WorkDir)obj\</BaseIntermediateOutDir>
+    <StageDir>$(WorkDir)stage\</StageDir>
+
+    <!-- WARNING: Ce répertoires n'est pas inclus dans l'entrepôt Git maître
+         car il contient toutes les données confidentielles. -->
+    <TransformsDir>$(RepositoryDir)intern\transforms\</TransformsDir>
+
+    <!-- Outils locaux (exe). -->
+    <GruntCmd>$(ToolsDir)grunt.cmd</GruntCmd>
+    <NuGetExe>$(ToolsDir)nuget.exe</NuGetExe>
+    <SevenZipExe>$(ToolsDir)7za.exe</SevenZipExe>
+
+    <BuildTimeFile>$(WorkDir).buildTime</BuildTimeFile>
   </PropertyGroup>
 
+  <!-- Define the BuildProperties property. -->
+  <PropertyGroup>
+    <BuildProperties>
+      Configuration=$(Configuration);
+      OutDir=$(OutDir);
+      <!-- NB: D'après Microsoft.Common.targets, on doit utiliser "OutDir" plutôt qu'"OutputPath".
+           Pour les projets Web, choisir la même valeur pour "OutDir" et "OutputPath" permet
+           aussi d'éviter la création de "_PublishedWebsites". -->
+      OutputPath=$(OutDir);
+      BaseIntermediateOutputPath=$(BaseIntermediateOutDir);
+      Platform=$(Platform);
+      BuildInParallel=$(BuildInParallel);
+      <!-- On force la valeur de "VisualStudioVersion", sinon MSBuild refusera de publier le projet.
+           Cela est aussi nécessaire pour Typescript.
+           Cf. http://sedodream.com/2012/08/19/VisualStudioProjectCompatabilityAndVisualStudioVersion.aspx -->
+      VisualStudioVersion=12.0
+    </BuildProperties>
+  </PropertyGroup>
+
+  <!-- Define the ProjectsToBuild items. -->
   <ItemGroup>
-    <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj"
-                     Condition="'$(PackageAssets)' == 'true'">
+    <ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
         $(BuildProperties);
         DeployOnBuild=true;
-        PublishUrl=$(_StageDir)wznw.org_chiffon\
+        PublishUrl=$(StageDir)wznw.org_chiffon\
       </AdditionalProperties>
     </ProjectsToBuild>
 
-    <ProjectsToBuild Include="$(_SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj"
-                     Condition="'$(PackageWebSite)' == 'true'">
+    <ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj">
       <AdditionalProperties>
-        $(PublishProperties);
-        PublishUrl=$(_StageDir)pourquelmotifsimone.com\;
-        PublishProfile=$(_PublishProfileDir)Chiffon.WebSite.pubxml
-      </AdditionalProperties>
-    </ProjectsToBuild>
+        $(BuildProperties);
+        TransformsDir=$(TransformsDir);
+        PackageTarget=$(PackageTarget);
+        <!-- Configuration de MSBuild. -->
+        DeployOnBuild=true;
 
-    <ProjectsToBuild Include="$(_TestDir)**\*.Tests.csproj"
-                     Condition="'$(RunTests)' == 'true'">
-      <AdditionalProperties>$(BuildProperties)</AdditionalProperties>
+        <!-- Configuration commune à tous les profils. -->
+        WebPublishMethod=FileSystem;
+        DebugSymbols=true;
+        DeleteAppCodeCompiledFiles=true;
+        DeleteExistingFiles=true;
+        DeployTarget=WebPublish;
+        EnableUpdateable=false;
+        ExcludeApp_Data=true;
+        <!-- On garde les fichiers debug liés aux autres assemblées. -->
+        ExcludeGeneratedDebugSymbol=false;
+        PrecompileBeforePublish=true;
+        UseMerge=true;
+        WDPMergeOption=MergeAllOutputsToASingleAssembly;
+        
+        PublishUrl=$(StageDir)pourquelmotifsimone.com\;
+        PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
+      </AdditionalProperties>
     </ProjectsToBuild>
   </ItemGroup>
 
-  <Target Name="Clean" DependsOnTargets="DeleteBuildDir">
-    <MSBuild Projects="$(_SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
+  <!-- Clean target -->
+  <Target Name="Clean">
+    <ItemGroup>
+      <_FilesToRemove Include="$(WorkDir)**\*"/>
+    </ItemGroup>
+
+    <Delete Files="@(_FilesToRemove)" />
+    <RemoveDir Directories="$(WorkDir)" Condition="Exists($(WorkDir))" />
+    
+    <MSBuild Projects="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
   </Target>
 
+  <!-- Build target -->
   <Target Name="Build">
-    <Exec Command="$(_GruntCmd) --no-color build" ContinueOnError="false" />
+    <Exec Command="&quot;$(NuGetExe)&quot; restore &quot;$(RepositoryDir)Chiffon.sln&quot; -Verbosity quiet" />
+    <Exec Command="$(GruntCmd) --no-color build" ContinueOnError="false" />
 
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
-  <Target Name="BeforeBuild" BeforeTargets="Build" DependsOnTargets="RestorePackages" />
-  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="$(AfterBuildDependsOn)" />
+  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="_VerifyBuildOutputs;_VerifyAspNetMergeOutputs" />
 
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-
-  <Target Name="Milestone" DependsOnTargets="_ValidateMilestone;_UpdateVersionNumber" />
-
-  <Target Name="Package" DependsOnTargets="_UpdateVersionNumber;Rebuild;_ZipPackage" />
-
-  <ItemGroup>
-    <_AfterBuildTargets Include="VerifyBuildOutputs" Condition="'$(Analyze)' == 'true'" />
-    <_AfterBuildTargets Include="VerifyAspNetMergeOutputs" Condition="'$(Analyze)' == 'true'" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <AfterBuildDependsOn>@(_AfterBuildTargets)</AfterBuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="_ValidateMilestone">
-    <Error Text="The parameter 'Milestone' must not be set to 'Build'."
-           Condition="'$(Milestone)' == 'Build'" />
-  </Target>
-
-  <!-- Mise à jour du numéro de version des assemblées .NET. -->
-  <Target Name="_UpdateVersionNumber">
-    <UpdateVersion
-      VersionInfoXml="$(_EtcDir)VersionInfo.xml"
-      AssemblyInfoTemplate="$(_EtcDir)AssemblyInfo.Template.cs"
-      AssemblyInfoFile="$(_EtcDir)AssemblyInfo.Version.cs"
-      Milestone="$(Milestone)">
-    </UpdateVersion>
-  </Target>
-
-  <Target Name="_ZipPackage" DependsOnTargets="CreatePackageDir;GetVersionNumber">
+  <!-- Package target -->
+  <Target Name="Package" DependsOnTargets="Clean;Build">
+    <Error Text="The parameter 'VersionNumber' must be set." Condition="'$(VersionNumber)' == ''" />
+    
     <PropertyGroup>
-      <_PackageFile>$(_PackageDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(PackageDir)chiffon-$(VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
+    <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
     <Delete Files="$(_PackageFile)" />
-    <Exec Command="$(_SevenZipExe) -mx9 a $(_PackageFile) $(_StageDir)*" ContinueOnError="false"/>
+    
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(StageDir)*" ContinueOnError="false"/>
   </Target>
 
+  <!-- _GetPEVerify target -->
+  <Target Name="_GetPEVerify">
+    <PropertyGroup>
+      <PEVerifyExe>&quot;$(SDK40ToolsPath)peverify.exe&quot;</PEVerifyExe>
+    </PropertyGroup>
+  </Target>
+
+  <!-- _VerifyBuildOutputs target -->
+  <Target Name="_VerifyBuildOutputs" DependsOnTargets="_GetPEVerify"
+          Inputs="@(_BuildOutputs)"
+          Outputs="$(BuildTimeFile)">
+    <Message Text="Verifying build outputs with PEVerify." Importance="Low" />
+
+    <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
+          ContinueOnError="false" />
+
+    <!-- NB: Garder cette commande en fin de directive au cas où une vérification échoue -->
+    <Touch Files="$(BuildTimeFile)" AlwaysCreate="true" />
+  </Target>
+
+  <!-- _VerifyAspNetMergeOutputs target -->
+  <Target Name="_VerifyAspNetMergeOutputs" DependsOnTargets="_GetPEVerify">
+    <Message Text="Verifying 'aspnet_merge' outputs with PEVerify." Importance="Low" />
+
+    <ItemGroup>
+      <_AspNetMergeOutputs Include="$(StageDir)**\Chiffon.*.AspNet.dll" />
+    </ItemGroup>
+
+    <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" peut produire des assemblées
+         "incorrectes" de ce point de vue là. -->
+    <Exec Command="$(PEVerifyExe) &quot;%(_AspNetMergeOutputs.FullPath)&quot; /nologo /il /unique"
+          ContinueOnError="false" />
+  </Target>
 </Project>

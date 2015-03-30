@@ -1,19 +1,6 @@
 CHANGELOG
 =========
 
-[2014-XX-XX] Release 1.14
--------------------------
-
-TODO:
-* Migrate to Attribute Routing
-* Flag DEMO
-* Multi-langues
-  - VSModuleContext (activer en localhost) + session lang
-* chemins dans httpErrors
-* désactivater la création de compte et l'envoi de mail ?
-* virer SHOWCASE et déterminer via la configuration si on est dans un
-  répertoire virtuel.
-
 [2014-10-17] Release 1.13
 -------------------------
 
@@ -38,7 +25,6 @@ TODO:
 On configure tous les AppPools pour qu'ils ne se recyclent qu'en fonction de la mémoire.
 On supprime aussi les timeout qui forcent le redémarrage des AppPools.
 
-
 [2013-12-07] Release 1.7
 ------------------------
 
@@ -59,19 +45,16 @@ Changements d'ordre technique :
 * Lorsqu'on travaille dans VS, on garde le choix de la langue en session.
 * On scinde le fichier less.
 
-
 [2013-12-02] Infrastructure
 ---------------------------
 
 Installation en production de .NET 4.5.1
-
 
 [2013-11-28] Release 1.6.0.1
 ----------------------------
 
 * Mise en avant du motif en cours de consultation.
 * Affichage de la référence lorsqu'on passe la souris au-dessus d'un motif.
-
 
 [2013-11-27] Release 1.5.0.1
 ----------------------------
@@ -81,7 +64,6 @@ Installation en production de .NET 4.5.1
 
 Changements d'ordre technique :
 * Intégration de fastclick.js pour améliorer le temps de réaction des tablettes lors d'un "clic".
-
 
 [2013-11-26] Release 1.4.0.3
 ----------------------------
@@ -97,13 +79,11 @@ Changements d'ordre technique :
 * On utilise NProgress pour signaler le début et la fin des appels Ajax.
 * Pour les petits écrans, on adapte le fonctionnement des modales.
 
-
 [2013-11-25] Release 1.3.0.1
 ----------------------------
 
 * Version stable de la feuille de style pour un site web adaptatif.
 * Désactivation de la gestion du bloc info en JavaScript.
-
 
 [2013-11-21] Release 1.2.0.1
 ----------------------------
@@ -118,7 +98,6 @@ Correctifs :
   une directive "top: 0". Par défaut, le bloc est alors positionné par rapport au bas
   du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
 * nprogress.css n'était pas inclus dans le build.
-
 
 [2013-11-19] Release 1.1.1.1
 ----------------------------
@@ -140,7 +119,6 @@ Changements d'ordre technique :
 Correctifs :
 * La couleur utilisée dans les paginations était la couleur par défaut (gris).
 * Suppression du package source avant la mise à jour d'un outil.
-
 
 [2013-11-18] Release 1.1.0.23
 -----------------------------
@@ -168,7 +146,6 @@ Changements d'ordre technique :
 * Utilitaire de déploiement.
 * Utilitaire de sauvegarde de la base de données.
 
-
 [2013-09-19] Release 1.0.26
 ---------------------------
 
@@ -180,13 +157,11 @@ Correctifs :
 * La minification du HTML était trop agressive, vu qu'elle remplacer certains espaces blancs
   par une chaîne vide.
 
-
 [2013-08-22]
 ------------
 
 * Création d'un fichier humantxt.
 * On n'utilise plus les ViewHelpers pour Google Analytics.
-
 
 [2013-08-21]
 ------------
@@ -196,7 +171,6 @@ Correctifs :
 * On sépare les configurations de développement et de production.
 * Activation de Google Analytics en production.
 * Via l'outil d'administration de IIS, création d'une machineKey.
-
 
 [2013-08-21] Infrastructure
 ---------------------------

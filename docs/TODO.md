@@ -18,8 +18,16 @@ TODO
 - Finish mail merge
 
 
-  * rajouter aux package les scripts de déploiement
-  * encrypter les chaînes de connection
-  * compilation pour de multiples plateformes ?
-  * RestorePackages ?
-  * IISExpress, configSource
+* rajouter aux package les scripts de déploiement
+* encrypter les chaînes de connection
+* compilation pour de multiples plateformes ?
+* RestorePackages ?
+* IISExpress, configSource
+
+* Migrate to Attribute Routing
+* Multi-langues
+  - VSModuleContext (activer en localhost) + session lang
+* chemins dans httpErrors
+* désactivater la création de compte et l'envoi de mail ?
+* virer SHOWCASE et déterminer via la configuration si on est dans un
+  répertoire virtuel.

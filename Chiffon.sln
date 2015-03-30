@@ -17,8 +17,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		docs\Changelog.md = docs\Changelog.md
 		docs\DeveloperNotes.md = docs\DeveloperNotes.md
-		docs\ReleaseAndDeploy.md = docs\ReleaseAndDeploy.md
+		README.md = README.md
 		docs\TODO.md = docs\TODO.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{7574759A-A213-46E7-9162-9D6D6C915997}"
+	ProjectSection(SolutionItems) = preProject
+		src\Chiffon.WebSite\assets\Chiffon.Assets.proj = src\Chiffon.WebSite\assets\Chiffon.Assets.proj
+		scripts\build\Chiffon.WebSite.pubxml = scripts\build\Chiffon.WebSite.pubxml
+		scripts\export-database.ps1 = scripts\export-database.ps1
+		Gruntfile.js = Gruntfile.js
+		scripts\build\Make.proj = scripts\build\Make.proj
+		scripts\mvc-build-views.cmd = scripts\mvc-build-views.cmd
+		scripts\build\PSakefile.ps1 = scripts\build\PSakefile.ps1
+		RUN_ME_FIRST.ps1 = RUN_ME_FIRST.ps1
 	EndProjectSection
 EndProject
 Global
@@ -43,5 +55,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7574759A-A213-46E7-9162-9D6D6C915997} = {3CF45664-1B78-4721-8405-B701498B2A80}
 	EndGlobalSection
 EndGlobal
