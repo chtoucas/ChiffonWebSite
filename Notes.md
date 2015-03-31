@@ -30,9 +30,10 @@ Mise en production
 Mise à jour des librairies JavaScript
 -------------------------------------
 
-Màj package.json:
-- `tools\npm-check-updates`
-- `npm update --save-dev`
+Màj des dépendances nodejs:
+- `tools\npm-check-updates` pour vérifier la disponibilité de nouvelles versions
+- `tools\npm-check-updates -u` pour mettre à jour le fichier `package.json` 
+  ou utiliser `npm update --save-dev`
 
 À chaque nouvelle version de yepnope, Lo-Dash ou FastClick, mettre à jour :
 - `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
