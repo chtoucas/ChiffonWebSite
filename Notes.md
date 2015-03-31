@@ -35,24 +35,25 @@ Màj des dépendances nodejs:
 - `tools\npm-check-updates -u` pour mettre à jour le fichier `package.json` 
   ou utiliser `npm update --save-dev`
 
-À chaque nouvelle version de yepnope, Lo-Dash ou FastClick, mettre à jour :
+À chaque nouvelle version d'une librairie JavaScript, mettre à jour :
 - `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
-
-Pour less, màj
-- `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`
-
-Dans tous les cas, màj
-- `chiffon.js` & `chiffon.views.js`
-- `Gruntfile.js`
-
-Fichiers impactés :
+- `src\Chiffon.WebSite\Views\Component\JavaScript.Release.cshtml`
 - `Gruntfile.js`
 - `src\assets\js\chiffon.js`
 - `src\assets\js\chiffon.jquery.js`
 - `src\assets\js\chiffon.views.js`
-- `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
-- `src\Chiffon.WebSite\Views\Component\JavaScript.Release.cshtml`
-                                                
+
+Pour les feuilles de style, mettre à jour :
+- `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`
+
+Cas spéciaux:          
+- [jQuery](https://jquery.com/download/), télécharger et installer les 3 fichiers 
+  jquery.js, jquery.min.js et jquery.min.map.
+- Lo-Dash, la mise à jour se fait via nodejs ; ensuite ne pas oublier de modifier
+  `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
+  et de supprimer les références à l'ancienne version dans VS.
+  ATTENTION: La nouvelle version ne sera visible dans VS qu'après avoir exécuté grunt.
+
 CSS & JavaScript
 ----------------
 
