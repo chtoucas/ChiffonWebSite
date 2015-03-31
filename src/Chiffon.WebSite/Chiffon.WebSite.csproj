@@ -362,13 +362,13 @@
     <Content Include="assets\css\chiffon.responsive.2.less" />
     <Content Include="assets\css\chiffon.responsive.1.less" />
     <Content Include="App_Code\OntologyHelpers.cshtml" />
-    <Content Include="assets\js\vendor\fastclick-1.0.3.js" />
-    <Content Include="assets\js\vendor\jquery-2.1.1.js" />
+    <Content Include="assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="assets\js\vendor\jquery-2.1.3.js" />
     <Content Include="assets\js\vendor\jquery.microdata\jquery.microdata.js" />
     <Content Include="assets\js\vendor\jquery.microdata\schemas.js" />
     <Content Include="assets\js\vendor\jquery.validate-1.13.1\jquery.validate.js" />
-    <Content Include="assets\js\vendor\jquery.waypoints-2.0.5.js" />
-    <Content Include="assets\js\vendor\lodash.custom-2.4.2.js" />
+    <Content Include="assets\js\vendor\jquery.waypoints-3.1.1.js" />
+    <Content Include="assets\js\vendor\lodash.custom-3.6.0.js" />
     <Content Include="assets\js\vendor\nprogress-0.1.6.js" />
     <Content Include="assets\js\vendor\yepnope-1.5.4.js" />
     <Content Include="Errors\BadRequest.aspx" />

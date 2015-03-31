@@ -482,7 +482,7 @@ Chiffon.Views.Designer = (function(window, undef) {
       var $container = $('#patterns');
       var $loading = $('<li class=loading></li>');
 
-      this.context.require([DEBUG ? 'vendor/jquery.waypoints-2.0.5.js' : 'vendor/jquery.waypoints-2.0.5.min.js'], function() {
+      this.context.require([DEBUG ? 'vendor/jquery.waypoints-3.1.1.js' : 'vendor/jquery.waypoints-3.1.1.min.js'], function () {
         // On cache la pagination.
         $pager.hide();
 
@@ -494,11 +494,12 @@ Chiffon.Views.Designer = (function(window, undef) {
               return;
             }
 
-            var $this = $(this);
+            var waypoint = this;
             var $more = $(moreSel);
 
             // On désactive "waypoint" le temps de la récupération du contenu de la page suivante.
-            $this.waypoint('disable');
+            //$this.waypoint('disable');
+            waypoint.disable();
             // On affiche un indicateur visuel de chargement.
             $loading.appendTo($container);
 
@@ -517,10 +518,10 @@ Chiffon.Views.Designer = (function(window, undef) {
                   // On met à jour le lien "page suivante".
                   $more.replaceWith($newMore);
                   // On active à nouveau "waypoint".
-                  $this.waypoint('enable');
+                  waypoint.enable();
                 } else {
                   // On est arrivé en bout de course, on peut supprimer complètement "waypoint".
-                  $this.waypoint('destroy');
+                  waypoint.destroy();
                 }
               })
               .fail(function() {
@@ -528,7 +529,7 @@ Chiffon.Views.Designer = (function(window, undef) {
                 // NB: On réactive la pagination, mais uniquement à partir de la page qui n'a
                 // pas pu être chargée.
                 $pager.show();
-                $this.waypoint('destroy');
+                waypoint.destroy();
               });
           }
         });

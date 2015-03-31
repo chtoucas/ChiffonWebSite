@@ -40,15 +40,16 @@ Màj des dépendances nodejs:
 - `src\Chiffon.WebSite\Views\Component\JavaScript.Release.cshtml`
 - `Gruntfile.js`
 - `src\assets\js\chiffon.js`
-- `src\assets\js\chiffon.jquery.js`
 - `src\assets\js\chiffon.views.js`
 
 Pour les feuilles de style, mettre à jour :
 - `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`
 
-Cas spéciaux:          
+En détails:    
+- [FastClick](https://github.com/ftlabs/fastclick)
 - [jQuery](https://jquery.com/download/), télécharger et installer les 3 fichiers 
   jquery.js, jquery.min.js et jquery.min.map.
+- [jQuery.Waypoints](https://github.com/imakewebthings/waypoints)
 - Lo-Dash, la mise à jour se fait via nodejs ; ensuite ne pas oublier de modifier
   `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
   et de supprimer les références à l'ancienne version dans VS.
