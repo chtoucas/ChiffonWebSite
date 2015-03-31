@@ -7,7 +7,7 @@
 
     public class PersistenceModule : Module
     {
-        readonly ChiffonConfig _config;
+        private readonly ChiffonConfig _config;
 
         public PersistenceModule(ChiffonConfig config)
         {

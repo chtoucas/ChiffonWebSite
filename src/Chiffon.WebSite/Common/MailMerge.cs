@@ -24,9 +24,9 @@ namespace Chiffon.Common
     // - beacon
     public class MailMerge : IMailMerge
     {
-        static readonly CultureInfo FrenchCultureInfo_ = new CultureInfo("fr-FR");
+        private static readonly CultureInfo FrenchCultureInfo_ = new CultureInfo("fr-FR");
 
-        readonly ISiteMap _siteMap;
+        private readonly ISiteMap _siteMap;
 
         public MailMerge(ISiteMap siteMap)
         {

@@ -12,7 +12,7 @@
     // TODO: I18N.
     public class RouteConfigurator
     {
-        readonly RouteCollection _routes;
+        private readonly RouteCollection _routes;
 
         public RouteConfigurator(RouteCollection routes)
         {
@@ -69,7 +69,7 @@
             RegisterHandlerRoutes_();
         }
 
-        void RegisterHandlerRoutes_()
+        private void RegisterHandlerRoutes_()
         {
             _routes.Add(new Route(Routes.Pattern, new AutofacRouteHandler<PatternImageHandler>()));
             _routes.Add(new Route(Routes.LogOn, new AutofacRouteHandler<LogOnHandler>()));

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Define common MSBuild project options. -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -16,13 +16,14 @@
 
   <!-- Define Chiffon properties. -->
   <PropertyGroup>
-    <RepositoryDir>$(MSBuildThisFileDirectory)..\..\</RepositoryDir>
+    <RepositoryDir>$(MSBuildThisFileDirectory)..\</RepositoryDir>
     <SourceDir>$(RepositoryDir)src\</SourceDir>
+    <PackagesDir>$(RepositoryDir)packages\</PackagesDir>
     <ToolsDir>$(RepositoryDir)tools\</ToolsDir>
-    <PackageDir>$(RepositoryDir)_build\</PackageDir>
     <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
 
     <!-- Répertoires temporaires créés au cours de la compilation. -->
+    <ArtefactsDir>$(RepositoryDir)_artefacts\</ArtefactsDir>
     <WorkDir>$(RepositoryDir)_work\</WorkDir>
     <OutDir>$(WorkDir)bin\$(Configuration)\</OutDir>
     <BaseIntermediateOutDir>$(WorkDir)obj\</BaseIntermediateOutDir>
@@ -32,12 +33,17 @@
          car il contient toutes les données confidentielles. -->
     <TransformsDir>$(RepositoryDir)intern\transforms\</TransformsDir>
 
-    <!-- Outils locaux (exe). -->
-    <GruntCmd>$(ToolsDir)grunt.cmd</GruntCmd>
-    <NuGetExe>$(ToolsDir)nuget.exe</NuGetExe>
-    <SevenZipExe>$(ToolsDir)7za.exe</SevenZipExe>
-
     <BuildTimeFile>$(WorkDir).buildTime</BuildTimeFile>
+  </PropertyGroup>
+
+  <!-- Outils locaux (exe). -->
+  <ItemGroup>
+    <_NuGetExe Include="$(PackagesDir)NuGet.CommandLine.*\tools\nuget.exe" />
+  </ItemGroup>
+  <PropertyGroup>
+    <GruntCmd>$(ToolsDir)grunt.cmd</GruntCmd>
+    <NuGetExe>@(_NuGetExe)</NuGetExe>
+    <SevenZipExe>$(ToolsDir)7za.exe</SevenZipExe>
   </PropertyGroup>
 
   <!-- Define the BuildProperties property. -->
@@ -59,17 +65,22 @@
     </BuildProperties>
   </PropertyGroup>
 
-  <!-- Define the ProjectsToBuild items. -->
+  <!-- Define the ProjectsToPackage items. -->
   <ItemGroup>
-    <ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
+    <ProjectsToPackage Include="$(SourceDir)Chiffon\Chiffon.csproj">
       <AdditionalProperties>
-        $(BuildProperties);
+        $(BuildProperties)
+      </AdditionalProperties>
+    </ProjectsToPackage>
+
+    <ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
+      <AdditionalProperties>
         DeployOnBuild=true;
         PublishUrl=$(StageDir)wznw.org_chiffon\
       </AdditionalProperties>
-    </ProjectsToBuild>
+    </ProjectsToPackage>
 
-    <ProjectsToBuild Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj">
+    <ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj">
       <AdditionalProperties>
         $(BuildProperties);
         TransformsDir=$(TransformsDir);
@@ -90,11 +101,12 @@
         PrecompileBeforePublish=true;
         UseMerge=true;
         WDPMergeOption=MergeAllOutputsToASingleAssembly;
-        
-        PublishUrl=$(StageDir)pourquelmotifsimone.com\;
+
+        PublishUrl=$(StageDir)vivianedevaux.org_simone\;
         PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
       </AdditionalProperties>
-    </ProjectsToBuild>
+    </ProjectsToPackage>
+
   </ItemGroup>
 
   <!-- Clean target -->
@@ -105,33 +117,44 @@
 
     <Delete Files="@(_FilesToRemove)" />
     <RemoveDir Directories="$(WorkDir)" Condition="Exists($(WorkDir))" />
-    
+
     <MSBuild Projects="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
+  </Target>
+
+  <!-- Grunt target -->
+  <Target Name="Grunt">
+    <Message Text="Building assets with Grunt..." Importance="high" />
+
+    <Exec Command="$(GruntCmd) build >> build.log" ContinueOnError="false"  />
   </Target>
 
   <!-- Build target -->
   <Target Name="Build">
+    <Message Text="Restoring NuGet packages..." Importance="high" />
     <Exec Command="&quot;$(NuGetExe)&quot; restore &quot;$(RepositoryDir)Chiffon.sln&quot; -Verbosity quiet" />
-    <Exec Command="$(GruntCmd) --no-color build" ContinueOnError="false" />
 
-    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" StopOnFirstFailure="true">
+    <Message Text="Building projects..." Importance="high" />
+    <MSBuild Projects="@(ProjectsToPackage)" Targets="Build">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
-  <Target Name="AfterBuild" AfterTargets="Build" DependsOnTargets="_VerifyBuildOutputs;_VerifyAspNetMergeOutputs" />
 
   <!-- Package target -->
-  <Target Name="Package" DependsOnTargets="Clean;Build">
-    <Error Text="The parameter 'VersionNumber' must be set." Condition="'$(VersionNumber)' == ''" />
-    
+  <Target Name="Package" DependsOnTargets="Grunt;Build;_VerifyBuildOutputs;_VerifyAspNetMergeOutputs">
+    <!-- Récupération du numéro de version des assemblées .NET. -->
+    <GetVersionNumber VersionInfoXml="$(RepositoryDir)VersionInfo.xml">
+      <Output TaskParameter="VersionNumber" PropertyName="_VersionNumber" />
+    </GetVersionNumber>
+
     <PropertyGroup>
-      <_PackageFile>$(PackageDir)chiffon-$(VersionNumber)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(ArtefactsDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
-    <MakeDir Directories="$(PackageDir)" Condition="!Exists($(PackageDir))" />
+    <Message Text="Creating package..." Importance="high" />
+    <MakeDir Directories="$(ArtefactsDir)" Condition="!Exists($(ArtefactsDir))" />
     <Delete Files="$(_PackageFile)" />
-    
-    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(StageDir)*" ContinueOnError="false"/>
+
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(StageDir)* >> build.log" ContinueOnError="false"/>
   </Target>
 
   <!-- _GetPEVerify target -->
@@ -150,7 +173,7 @@
     <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
           ContinueOnError="false" />
 
-    <!-- NB: Garder cette commande en fin de directive au cas où une vérification échoue -->
+    <!-- NB: Garder cette commande à la fin de cible au cas où une vérification échoue. -->
     <Touch Files="$(BuildTimeFile)" AlwaysCreate="true" />
   </Target>
 
@@ -167,4 +190,49 @@
     <Exec Command="$(PEVerifyExe) &quot;%(_AspNetMergeOutputs.FullPath)&quot; /nologo /il /unique"
           ContinueOnError="false" />
   </Target>
+
+  <!-- GetVersionNumber task -->
+  <UsingTask TaskName="GetVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <VersionInfoXml ParameterType="System.String" Required="true" />
+      <VersionNumber ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq" />
+      <Using Namespace="System" />
+      <Using Namespace="System.Globalization" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Xml" />
+      <Using Namespace="System.Xml.Linq" />
+      <Using Namespace="Microsoft.Build.Framework" />
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+if (VersionInfoXml.Length == 0) {
+    Log.LogMessage(MessageImportance.High, "You must supply a version file.");
+    return false;
+}
+
+try {
+    XDocument xdoc;
+    using (var reader = new StreamReader(VersionInfoXml)) {
+        xdoc = XDocument.Load(reader);
+    }
+    
+    var root = xdoc.Root;
+    var major = Int16.Parse(root.Element("Major").Value);
+    var minor = Int16.Parse(root.Element("Minor").Value);
+    var build = Int16.Parse(root.Element("Build").Value);
+    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}}", major, minor, build);
+}
+catch (IOException ex) {
+    Log.LogErrorFromException(ex);
+}
+
+return !Log.HasLoggedErrors;
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
 </Project>

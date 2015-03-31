@@ -7,9 +7,9 @@
     // le mode de fonctionnement "InProc".
     public class MemberSession
     {
-        const string HttpSessionKey = "member";
+        private const string HttpSessionKey = "member";
 
-        readonly HttpSessionStateBase _httpSession;
+        private readonly HttpSessionStateBase _httpSession;
 
         public MemberSession(HttpSessionStateBase httpSession)
         {

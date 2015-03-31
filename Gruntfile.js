@@ -19,7 +19,7 @@ module.exports = function(grunt) {
   function readSemVer() {
     var semVer;
     var parseString = require('xml2js').parseString;
-    var xml = grunt.file.read(__dirname + '/etc/VersionInfo.xml');
+    var xml = grunt.file.read(__dirname + '/VersionInfo.xml');
 
     parseString(xml, function(err, result) {
       var versionNumber = result.VersionNumber;

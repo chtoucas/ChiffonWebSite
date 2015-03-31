@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VersionNumber>
   <Major>1</Major>
-  <Minor>15</Minor>
+  <Minor>16</Minor>
   <Build>0</Build>
-  <Revision>6</Revision>
-  <Timestamp>2015-03-28 12:33 +01:00</Timestamp>
 </VersionNumber>

@@ -23,9 +23,9 @@
         //    });
 
 #if SHOWCASE
-        bool _disabled = true;
+        private bool _disabled = true;
 #else
-        bool _disabled = false;
+        private bool _disabled = false;
 #endif
 
         public OntologyFilterAttribute() { }
@@ -110,7 +110,7 @@
         }
 
         [Conditional("DEBUG")]
-        static void __CheckRelationships(Relationships relationships)
+        private static void __CheckRelationships(Relationships relationships)
         {
             // Filtre par filterContext.HttpContext.IsDebuggingEnabled ?
             if (relationships.CanonicalUrl == null) {
@@ -119,7 +119,7 @@
         }
 
         [Conditional("DEBUG")]
-        static void __CheckOpenGraphMetadata(IOpenGraphMetadata metadata)
+        private static void __CheckOpenGraphMetadata(IOpenGraphMetadata metadata)
         {
             // NB: On sait que metadata.Image n'est pas null car cette propriété 
             // est systématiquement initialisé dans ChiffonController.
@@ -129,13 +129,13 @@
         }
 
         [Conditional("DEBUG")]
-        static void __CheckSchemaOrgVocabulary(SchemaOrgVocabulary vocabulary)
+        private static void __CheckSchemaOrgVocabulary(SchemaOrgVocabulary vocabulary)
         {
             ;
         }
 
         [Conditional("DEBUG")]
-        static void __Log(string message)
+        private static void __Log(string message)
         {
             Log.Debug(message);
         }

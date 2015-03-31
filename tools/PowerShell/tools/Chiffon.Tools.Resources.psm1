@@ -13,17 +13,6 @@ function Unpublish-7Zip {
   Get-ToolPath '7za.exe' | Remove-File | Out-Null
 }
 
-#function Publish-GoogleClosureCompiler {
-#  [CmdletBinding()]
-#  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
-#
-#  Copy-ToolFromZip $source 'compiler.jar' (Get-ToolPath 'closure-compiler.jar')
-#}
-
-#function Unpublish-GoogleClosureCompiler {
-#  Get-ToolPath 'closure-compiler.jar' | Remove-File | Out-Null
-#}
-
 function Publish-Node {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
@@ -57,18 +46,6 @@ function Publish-NuGet {
 function Unpublish-NuGet {
   Get-ToolPath 'nuget.exe' | Remove-File | Out-Null
 }
-
-#function Publish-YuiCompressor {
-#  [CmdletBinding()]
-#  param([Parameter(Mandatory = $true, Position = 0)] [string] $source)
-#
-#  Copy-ToolFromZip $source 'yuicompressor-*\build\yuicompressor-*.jar' `
-#    (Get-ToolPath 'yuicompressor.jar')
-#}
-
-#function Unpublish-YuiCompressor {
-#  Get-ToolPath 'yuicompressor.jar' | Remove-File | Out-Null
-#}
 
 # NB: Toutes ces méthodes doivent rester publiques car elles peuvent partie d'un
 # bloc anonyme appelé dans un autre contexte.

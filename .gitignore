@@ -1,11 +1,10 @@
 *.log
 *.suo
 *.user
-_build/
+_artefacts/
 _work/
 bin/
 intern/
 node_modules/
 obj/
 packages/
-tools/

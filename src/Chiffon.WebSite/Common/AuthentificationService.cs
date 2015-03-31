@@ -7,7 +7,7 @@
 
     public class AuthentificationService
     {
-        MemberSession _memberSession;
+        private MemberSession _memberSession;
 
         public AuthentificationService(HttpContextBase httpContext)
         {

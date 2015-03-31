@@ -9,7 +9,7 @@
 
     public class InfrastructureModule : Module
     {
-        readonly ChiffonConfig _config;
+        private readonly ChiffonConfig _config;
 
         public InfrastructureModule(ChiffonConfig config)
         {

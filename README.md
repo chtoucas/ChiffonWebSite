@@ -5,7 +5,7 @@ A multilingual WebSite for a textile design collective.
 Available in French & English.
 
 The result (with a few things disabled) can be seen here:
-[http://vivianedevaux.org/chiffon/](http://vivianedevaux.org/chiffon/).
+[http://vivianedevaux.org/simone/](http://vivianedevaux.org/simone/).
 
 **Status: Stable**
 
@@ -15,9 +15,6 @@ The result (with a few things disabled) can be seen here:
 - Autofac
 - MEF
 - jQuery
-- PowerShell
-- MSBuild
-- PSake
 - Grunt
 
 ### Requirements ###
@@ -26,17 +23,3 @@ The result (with a few things disabled) can be seen here:
 - .NET 4.5.1
 - PowerShell v3
 - Nodejs
-
-### Setup ###
-
-You will need to clone my PowerShell repository
-[Narvalo.PowerShell](https://github.com/chtoucas/Narvalo.PowerShell)
-and add it to your PowerShell module path.
-
-Add the `scripts\modules` directory to your PowerShell module path, then launch
-`RUN_ME_FIRST.ps1` in a PowerShell session. This script will download then
-install the nessary third-party tools, namely:
-
-- 7-Zip
-- NuGet
-- Node packages

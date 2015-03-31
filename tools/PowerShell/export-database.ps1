@@ -33,8 +33,8 @@ $server.SetDefaultInitFields([Microsoft.SqlServer.Management.Smo.StoredProcedure
 $db = New-Object Microsoft.SqlServer.Management.Smo.Database
 $db = $server.Databases[$databaseName]
 
-Write-Output '-> Exporting data.'
-Export-Data -Server $server -Database $db -OutFile ("$outPath\Data.sql")
+#Write-Output '-> Exporting data.'
+#Export-Data -Server $server -Database $db -OutFile ("$outPath\Data.sql")
 Write-Output '-> Exporting tables.'
 Export-Tables -Server $server -Database $db -OutFile ("$outPath\Tables.sql")
 Write-Output '-> Exporting stored procedures.'

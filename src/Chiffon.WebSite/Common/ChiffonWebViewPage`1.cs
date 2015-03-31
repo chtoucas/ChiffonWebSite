@@ -14,8 +14,8 @@
     // Cf. http://stackoverflow.com/questions/14933450/property-injection-into-custom-webviewpage-using-autofac 
     public abstract class ChiffonWebViewPage<TModel> : WebViewPage<TModel>
     {
-        Lazy<ChiffonControllerContext> _chiffonControllerContext;
-        Lazy<String> _followRelation;
+        private Lazy<ChiffonControllerContext> _chiffonControllerContext;
+        private Lazy<String> _followRelation;
 
         protected ChiffonWebViewPage()
         {
@@ -60,10 +60,12 @@
 
         public void RenderWidget(string widgetName, bool localized)
         {
-            if (localized) {
+            if (localized)
+            {
                 Html.RenderAction(widgetName, Constants.ControllerName.Widget, new { language = Language });
             }
-            else {
+            else
+            {
                 Html.RenderAction(widgetName, Constants.ControllerName.Widget);
             }
         }
@@ -76,12 +78,13 @@
             Asset = new AssetHelper(Html);
         }
 
-        static Func<ChiffonControllerContext> GetChiffonControllerContextThunk_(WebViewPage @this)
+        private static Func<ChiffonControllerContext> GetChiffonControllerContextThunk_(WebViewPage @this)
         {
             return () =>
             {
                 var controller = @this.ViewContext.Controller as ChiffonController;
-                if (controller == null) {
+                if (controller == null)
+                {
                     throw new InvalidOperationException(
                         "ChiffonWebViewPage should only be used on views for actions on ChiffonController.");
                 }
@@ -89,7 +92,7 @@
             };
         }
 
-        static Func<String> GetFollowRelationThunk_(WebViewPage @this)
+        private static Func<String> GetFollowRelationThunk_(WebViewPage @this)
         {
             return () =>
             {

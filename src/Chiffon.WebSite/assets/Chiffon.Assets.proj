@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <DeployOnBuild Condition="'$(DeployOnBuild)' != 'true'">false</DeployOnBuild>
+    <DeployOnBuild Condition=" '$(DeployOnBuild)' != 'true' ">false</DeployOnBuild>
 
-    <_CssDir>$(MSBuildProjectDirectory)\css</_CssDir>
-    <_JsDir>$(MSBuildProjectDirectory)\js</_JsDir>
+    <StyleSheetDirectory>$(MSBuildProjectDirectory)\css</StyleSheetDirectory>
+    <JavaScriptDirectory>$(MSBuildProjectDirectory)\js</JavaScriptDirectory>
   </PropertyGroup>
 
   <Target Name="Clean">
     <ItemGroup>
-      <_FilesToRemove Include="$(_CssDir)\_*.css" />
-      <_FilesToRemove Include="$(_JsDir)\_*.js" />
-      <_FilesToRemove Include="$(_JsDir)\_*.map" />
-      <_FilesToRemove Include="$(_JsDir)\_*.d.ts" />
+      <!-- Tous les fichiers commençant par "_" sont considérés comme temporaires -->
+      <_FilesToRemove Include="$(StyleSheetDirectory)\_*.css" />
+      <_FilesToRemove Include="$(JavaScriptDirectory)\_*.js" />
+      <_FilesToRemove Include="$(JavaScriptDirectory)\_*.map" />
     </ItemGroup>
 
     <Delete Files="@(_FilesToRemove)" />
   </Target>
 
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+  <Target Name="Build" DependsOnTargets="_Publish" />
 
-  <PropertyGroup>
-    <BuildDependsOn>
-      _Publish
-    </BuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
+  <Target Name="_Publish"
+          DependsOnTargets="_ValidatePublish"
+          Condition=" '$(DeployOnBuild)' == 'true' ">
     <ItemGroup>
       <!-- On inclut tous les fichiers sauf le fichier de projet -->
       <_SourceFiles Include="$(MSBuildProjectDirectory)\**\*.*"
                     Exclude="$(MSBuildProjectDirectory)\$(MSBuildThisFile);
                       $(MSBuildProjectDirectory)\**\.gitignore;
                       $(MSBuildProjectDirectory)\css\*.less;
-                      $(MSBuildProjectDirectory)\js\old\**\*;
-                      $(MSBuildProjectDirectory)\js\typings\**\*;
                       " />
     </ItemGroup>
 
@@ -42,7 +36,7 @@
           DestinationFiles="@(_SourceFiles->'$(PublishUrl)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
-  <Target Name="_ValidatePublish" BeforeTargets="_Publish" Condition="'$(DeployOnBuild)' == 'true'">
-    <Error Text="The property 'PublishUrl' must be set." Condition="'$(PublishUrl)' == ''"/>
+  <Target Name="_ValidatePublish">
+    <Error Text="The property 'PublishUrl' must be set." Condition=" '$(PublishUrl)' == '' "/>
   </Target>
 </Project>

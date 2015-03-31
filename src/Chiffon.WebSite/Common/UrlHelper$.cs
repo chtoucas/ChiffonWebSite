@@ -132,7 +132,7 @@
         }
 
         // TODO: Quand on passera à un serveur de media séparé il faudra changer ces utilitaires.
-        static string PreviewContent_(UrlHelper urlHelper, DesignerKey designerKey, string reference, string variant, bool absolute)
+        private static string PreviewContent_(UrlHelper urlHelper, DesignerKey designerKey, string reference, string variant, bool absolute)
         {
             Require.NotNull(urlHelper, "urlHelper");
 
