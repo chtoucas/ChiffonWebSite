@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           src: [
             'vendor/yepnope-1.5.4.js',
             'vendor/lodash.custom-<%= pkg.devDependencies["lodash-cli"].replace("~", "").replace("^", "") %>.js',
-            'vendor/fastclick-1.0.3.js',
+            'vendor/fastclick-1.0.6.js',
             'vendor/nprogress-0.1.6.js',
             'chiffon.js',
             'chiffon.views.js',
