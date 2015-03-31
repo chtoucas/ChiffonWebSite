@@ -6,7 +6,7 @@
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
     using Chiffon.Persistence;
-    using Chiffon.Resources;
+    using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Fx;
 
@@ -48,7 +48,7 @@
 
             if (!String.IsNullOrEmpty(password))
             {
-                return VoidOrBreak.Break(SR.MemberService_EmailAlreadyTaken);
+                return VoidOrBreak.Break(Strings_Core.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.

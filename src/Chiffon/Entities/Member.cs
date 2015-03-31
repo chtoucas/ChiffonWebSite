@@ -6,7 +6,7 @@
     using System.Globalization;
     using System.Net.Mail;
 
-    using Chiffon.Resources;
+    using Chiffon.Properties;
 
     /// <summary>
     /// Représente un membre du site.
@@ -33,7 +33,7 @@
                 {
                     _displayName = String.Format(
                         CultureInfo.CurrentUICulture,
-                        SR.MemberDisplayNameFormat, 
+                        Strings_Core.MemberDisplayNameFormat, 
                         FirstName, 
                         LastName);
                 }

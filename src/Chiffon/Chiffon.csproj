@@ -244,10 +244,10 @@
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
     <Compile Include="Services\RegisterMemberRequest.cs" />
-    <Compile Include="Resources\SR.Designer.cs">
+    <Compile Include="Properties\Strings_Core.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SR.resx</DependentUpon>
+      <DependentUpon>Strings_Core.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -256,10 +256,10 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SR.en.resx" />
-    <EmbeddedResource Include="Resources\SR.resx">
+    <EmbeddedResource Include="Properties\Strings_Core.en.resx" />
+    <EmbeddedResource Include="Properties\Strings_Core.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings_Core.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
