@@ -224,7 +224,7 @@ try {
     var major = Int16.Parse(root.Element("Major").Value);
     var minor = Int16.Parse(root.Element("Minor").Value);
     var build = Int16.Parse(root.Element("Build").Value);
-    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}}", major, minor, build);
+    VersionNumber = String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", major, minor, build);
 }
 catch (IOException ex) {
     Log.LogErrorFromException(ex);

@@ -1,9 +1,6 @@
 TODO
 ----
 
-- SQL -> contacts
-  * reffw04
-  * refg10
 - DNS
   * il y a un problème avec www. et /XXX
 - site de démo
