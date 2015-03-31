@@ -1,8 +1,8 @@
 TODO
 ----
 
-- Gandi
-  * DNS, il y a un problème avec www. et /XXX
+- DNS
+  * il y a un problème avec www. et /XXX
   * rediriger le mail contact
 - màj mail et site web pour V ; supprimer les mails et sites web pour les autres    
 - site de démo

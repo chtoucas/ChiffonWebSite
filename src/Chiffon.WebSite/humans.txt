@@ -1,34 +1,15 @@
 # TEAM
 
-    Esther Marti
-    Textile Designer
-    Paris, France
-    www.chicamancha.com
-
     Viviane Devaux
     Textile & Web Designer
     Paris, France
     vivianedevaux.org
-
-    Christine Légeret
-    Textile Designer
-    Paris, France
-    www.christinelegeret.fr
-
-    Laure Roussel
-    Textile Designer
-    Paris, France
-    www.laurerousselmbc.com
 
     Pascal Tran-Ngoc-Bich
     Developer
     Paris, France
     chtoucas [at] narvalo [dot] org
     narvalo.org
-
-# THANKS
-
-    All open source software contributors
 
 # COLOPHON
 

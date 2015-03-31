@@ -6,7 +6,7 @@
 
 :build
 @echo Building...
-MSBuild "%~dp0\..\src\Chiffon.WebSite\Chiffon.WebSite.csproj" /nologo /v:normal /p:Configuration=Debug;MvcBuildViews=true /t:MvcBuildViews /flp:logfile=.\msbuild.log;verbosity=normal;encoding=utf-8
+MSBuild "%~dp0\..\src\Chiffon.WebSite\Chiffon.WebSite.csproj" /nologo /v:normal /p:Configuration=Debug;MvcBuildViews=true /t:MvcBuildViews
 
 @if %errorlevel% NEQ 0 (
   @goto error
