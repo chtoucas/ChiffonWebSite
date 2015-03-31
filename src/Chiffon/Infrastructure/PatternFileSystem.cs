@@ -8,7 +8,7 @@
 
     public class PatternFileSystem
     {
-        readonly ChiffonConfig _config;
+        private readonly ChiffonConfig _config;
 
         public PatternFileSystem(ChiffonConfig config)
         {

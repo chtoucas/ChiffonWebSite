@@ -7,7 +7,7 @@
 
     public class LogConfig
     {
-        readonly ChiffonConfig _config;
+        private readonly ChiffonConfig _config;
 
         public LogConfig(ChiffonConfig config)
         {

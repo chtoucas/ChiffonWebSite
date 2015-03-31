@@ -10,8 +10,8 @@
 
     public class OneDomainPerLanguageSiteMap : ISiteMap
     {
-        readonly Uri _baseUri;
-        readonly ChiffonLanguage _language;
+        private readonly Uri _baseUri;
+        private readonly ChiffonLanguage _language;
 
         public OneDomainPerLanguageSiteMap(ChiffonEnvironment environment)
         {

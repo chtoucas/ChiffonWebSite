@@ -7,7 +7,7 @@
 
     public class Messenger/*Impl*/ : IMessenger
     {
-        readonly IMailMerge _mailMerge;
+        private readonly IMailMerge _mailMerge;
 
         public Messenger(IMailMerge mailMerge)
         {

@@ -15,9 +15,9 @@
     /// </summary>
     public class MemberService/*Impl*/ : IMemberService
     {
-        private const int PasswordLength_ = 7;
-        private const string PasswordLetters_ = "abcdefghijkmnpqrstuvwxyz";
-        private const string PasswordNumbers_ = "23456789";
+        private const int PASSWORD_LENGTH = 7;
+        private const string PASSWORD_LETTERS = "abcdefghijkmnpqrstuvwxyz";
+        private const string PASSWORD_NUMBERS = "23456789";
 
         private readonly IDbCommands _commands;
         private readonly IMessenger _messenger;
@@ -97,23 +97,22 @@
             // Pour le moment, on génére des mots de passe assez faibles mais 
             // cela n'a que peu d'importance car ils ont une durée de vie assez courte.
 
-            var chars = new char[PasswordLength_];
+            var chars = new char[PASSWORD_LENGTH];
             var rd = new Random();
 
             bool useLetter = true;
-            for (int i = 0; i < PasswordLength_; i++)
+            for (int i = 0; i < PASSWORD_LENGTH; i++)
             {
                 if (useLetter)
                 {
-                    chars[i] = PasswordLetters_[rd.Next(0, PasswordLetters_.Length)];
+                    chars[i] = PASSWORD_LETTERS[rd.Next(0, PASSWORD_LETTERS.Length)];
                     useLetter = false;
                 }
                 else
                 {
-                    chars[i] = PasswordNumbers_[rd.Next(0, PasswordNumbers_.Length)];
+                    chars[i] = PASSWORD_NUMBERS[rd.Next(0, PASSWORD_NUMBERS.Length)];
                     useLetter = true;
                 }
-
             }
 
             return new String(chars);

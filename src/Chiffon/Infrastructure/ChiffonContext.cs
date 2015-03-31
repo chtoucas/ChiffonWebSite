@@ -5,15 +5,15 @@
 
     public class ChiffonContext
     {
-        readonly ChiffonEnvironment _environment;
-
-        internal ChiffonContext()
-            : this(ChiffonEnvironmentResolver.DefaultEnvironment) { }
+        private readonly ChiffonEnvironment _environment;
 
         public ChiffonContext(ChiffonEnvironment environment)
         {
             _environment = environment;
         }
+
+        internal ChiffonContext()
+            : this(ChiffonEnvironmentResolver.DefaultEnvironment) { }
 
         // Je n'aime pas utiliser HttpContext.Current !
         // Cf. http://odetocode.com/articles/112.aspx

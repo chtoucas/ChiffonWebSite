@@ -6,7 +6,7 @@
 
     public class MemberCreatedEventArgs : EventArgs
     {
-        readonly Member _member;
+        private readonly Member _member;
 
         public MemberCreatedEventArgs(Member member)
         {
@@ -18,5 +18,4 @@
             get { return _member; }
         }
     }
-
 }

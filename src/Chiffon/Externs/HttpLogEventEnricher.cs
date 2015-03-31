@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Narvalo.Org. All rights reserved. See LICENSE.txt in the project root for license information.
 
-namespace Narvalo.Externs.Serilog
+namespace Narvalo
 {
     using System;
     using System.Web;
 
     using global::Serilog.Core;
     using global::Serilog.Events;
-    using Narvalo;
 
     [CLSCompliant(false)]
     public sealed class HttpLogEventEnricher : ILogEventEnricher

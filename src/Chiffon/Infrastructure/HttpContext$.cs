@@ -7,13 +7,13 @@
 
     public static class HttpContextExtensions
     {
-        static string HttpContextKey_ = "ChiffonContext";
+        private const string HTTP_CONTEXT_KEY = "ChiffonContext";
 
         public static void AddChiffonContext(this HttpContext @this, ChiffonContext context)
         {
             Require.NotNull(@this, "this");
 
-            @this.Items[HttpContextKey_] = context;
+            @this.Items[HTTP_CONTEXT_KEY] = context;
         }
 
         public static ChiffonContext GetChiffonContext(this HttpContext @this)
@@ -21,7 +21,7 @@
             Require.NotNull(@this, "this");
             Contract.Ensures(Contract.Result<ChiffonContext>() != null);
 
-            var result = @this.Items[HttpContextKey_] as ChiffonContext;
+            var result = @this.Items[HTTP_CONTEXT_KEY] as ChiffonContext;
 
             return result ?? new ChiffonContext();
         }

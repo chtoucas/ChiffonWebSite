@@ -5,6 +5,7 @@
     using System.Data.SqlClient;
     using System.Diagnostics.Contracts;
 
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Data;
 
@@ -22,9 +23,9 @@
 
         public string Email { get; private set; }
 
-        protected override string Execute(SqlDataReader reader)
+        protected override string Execute([ValidatedNotNull]SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             if (!reader.Read()) { return null; }
 

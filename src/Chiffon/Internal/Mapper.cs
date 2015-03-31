@@ -5,7 +5,7 @@
 
     using Narvalo;
 
-    static class Mapper
+    internal static class Mapper
     {
         /// <summary />
         public static NewMemberParameters Map(RegisterMemberRequest request, string encryptedPassword)

@@ -1,7 +1,8 @@
-Création d'un package
----------------------
+Mise en production
+------------------
 
-Mettre à jour la version dans AssemblyInfo.Common.cs et PSakefile.ps1.
+1. Mettre à jour la version dans `etc\AssemblyInfo.Common.cs` et `PSakefile.ps1`.
+2. Lancer `scripts\make.ps1 package`
 
 CSS & JavaScript
 ----------------

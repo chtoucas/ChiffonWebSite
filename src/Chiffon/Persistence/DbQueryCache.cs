@@ -11,9 +11,9 @@
 
     public class DbQueryCache : IDbQueryCache
     {
-        private const int CacheExpirationInHours_ = 24;
+        private const int CACHE_EXPIRATION_IN_HOURS = 24;
 
-        private static object Lock_ = new Object();
+        private static readonly object s_Lock = new Object();
 
         private readonly HttpContextBase _context;
 
@@ -39,6 +39,8 @@
 
         public IEnumerable<Designer> GetOrInsertDesigners(CultureInfo culture, Func<CultureInfo, IEnumerable<Designer>> query)
         {
+            Require.NotNull(culture, "culture");
+
             var cacheKey = "Chiffon:Designer:" + culture.ToString();
             return GetOrInsert_(cacheKey, () => query(culture));
         }
@@ -66,13 +68,18 @@
 
             T result = query.Invoke();
 
-            lock (Lock_)
+            lock (s_Lock)
             {
                 if (Cache[cacheKey] == null)
                 {
-                    Cache.Add(cacheKey, result, null,
-                        DateTime.Now.AddHours(CacheExpirationInHours_),
-                        Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                    Cache.Add(
+                        cacheKey, 
+                        result, 
+                        null,
+                        DateTime.Now.AddHours(CACHE_EXPIRATION_IN_HOURS),
+                        Cache.NoSlidingExpiration,
+                        CacheItemPriority.High, 
+                        null);
                 }
             }
 

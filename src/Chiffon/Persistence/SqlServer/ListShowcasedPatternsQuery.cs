@@ -6,7 +6,7 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
-    using Narvalo;
+    using Chiffon.Internal;
     using Narvalo.Data;
 
     public sealed class ListShowcasedPatternsQuery : StoredProcedure<IEnumerable<Pattern>>
@@ -19,7 +19,7 @@
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             var result = new List<Pattern>();
 

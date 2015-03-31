@@ -9,7 +9,7 @@
 
     public class PatternService : IPatternService
     {
-        readonly IDbQueries _queries;
+        private readonly IDbQueries _queries;
 
         public PatternService(IDbQueries queries)
         {

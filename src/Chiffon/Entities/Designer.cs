@@ -111,6 +111,6 @@
         /// <summary>
         /// Assigne ou retourne l'adresse du site web du designer si il existe.
         /// </summary>
-        public Maybe<Uri> WebsiteUrl { get; set; }
+        public Maybe<Uri> WebSiteUrl { get; set; }
     }
 }

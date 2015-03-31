@@ -7,6 +7,7 @@
     using System.Globalization;
 
     using Chiffon.Entities;
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Data;
 
@@ -24,7 +25,7 @@
 
         protected override IEnumerable<Designer> Execute(SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             var designers = new List<Designer>();
 
@@ -41,7 +42,7 @@
                     LastName = reader.GetStringUnsafe("lastname"),
                     Nickname = reader.MayGetStringUnsafe("nickname"),
                     Presentation = reader.GetStringUnsafe("presentation"),
-                    WebsiteUrl = reader.MayGetStringUnsafe("website").Select(_ => new Uri(_)),
+                    WebSiteUrl = reader.MayGetStringUnsafe("website").Select(_ => new Uri(_)),
                 };
 
                 designers.Add(designer);

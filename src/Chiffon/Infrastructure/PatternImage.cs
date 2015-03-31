@@ -9,15 +9,18 @@
 
     public abstract class PatternImage
     {
-        private const string JpegMimeType_ = "image/jpeg";
+        private const string JPEG_MIME_TYPE = "image/jpeg";
 
         private string _relativePath;
 
         protected PatternImage() { }
 
         public string DesignerDirectory { get; private set; }
+
         public string CategoryDirectory { get; private set; }
+
         public string Reference { get; private set; }
+
         public string Version { get; private set; }
 
         public string RelativePath
@@ -36,7 +39,9 @@
         }
 
         public abstract string FileName { get; }
+
         public abstract string MimeType { get; }
+
         public abstract PatternSize Size { get; }
 
         public static PatternImage Create(
@@ -90,7 +95,8 @@
                 }
             }
 
-            public override string MimeType { get { return JpegMimeType_; } }
+            public override string MimeType { get { return JPEG_MIME_TYPE; } }
+
             public override PatternSize Size { get { return PatternSize.Original; } }
         }
 
@@ -113,7 +119,8 @@
                 }
             }
 
-            public override string MimeType { get { return JpegMimeType_; } }
+            public override string MimeType { get { return JPEG_MIME_TYPE; } }
+
             public override PatternSize Size { get { return PatternSize.Preview; } }
         }
     }

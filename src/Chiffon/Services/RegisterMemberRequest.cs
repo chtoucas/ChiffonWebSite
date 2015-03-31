@@ -11,7 +11,7 @@
     [Serializable]
     public class RegisterMemberRequest
     {
-        MessageRecipients _recipients = MessageRecipients.Default;
+        private MessageRecipients _recipients = MessageRecipients.Default;
 
         /// <summary>
         /// Assigne ou retourne le nom de l'agence à laquelle appartient le membre à créer.

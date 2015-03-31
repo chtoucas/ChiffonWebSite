@@ -9,6 +9,7 @@
     -->
     <Unrecognized>
     </Unrecognized>
+    
     <!--
       This is a list of case-insensitive words that do not exist in the dictionary
       but you still want to be considered as recognized by
@@ -34,7 +35,15 @@
 
       <!-- Mots du Web-->
       <Word>Seo</Word>
+      
+      <!-- Clés de configuration -->
+      <Word>BaseUri</Word>
+      <Word>LogMinimumLevel</Word>
+      <Word>LogProfile</Word>
+      <Word>PatternDirectory</Word>
+      <Word>SqlServer</Word>
     </Recognized>
+    
     <Deprecated>
       <!--
         This is a list of deprecated terms with their preferred alternates and is
@@ -44,6 +53,7 @@
       -->
       <!--<Term PreferredAlternate="EnterpriseServices">complus</Term>-->
     </Deprecated>
+    
     <Compound>
       <!--
         This is a list of discrete terms with their compound alternates and is used by
@@ -58,9 +68,15 @@
         compound word (for example 'WhiteSpace') and its discrete alternate (for example
         'Whitespace').
       -->
+      <Term CompoundAlternate="BaseUri">BaseUri</Term>
+      <Term CompoundAlternate="LogMinimumLevel">LogMinimumLevel</Term>
+      <Term CompoundAlternate="LogProfile">LogProfile</Term>
+      <Term CompoundAlternate="PatternDirectory">PatternDirectory</Term>
       <Term CompoundAlternate="PreStart">PreStart</Term>
-      <!--<Term CompoundAlternate="WebSite">WebSite</Term>-->
+      <Term CompoundAlternate="SqlServer">SqlServer</Term>
+      <Term CompoundAlternate="WebSite">WebSite</Term>
     </Compound>
+    
     <DiscreteExceptions>
       <!--
         This is a list of case-insensitive exceptions to the CompoundWordsShouldBeCasedCorrectly
@@ -72,6 +88,7 @@
       -->
     </DiscreteExceptions>
   </Words>
+  
   <Acronyms>
     <CasingExceptions>
       <Acronym>Seo</Acronym>

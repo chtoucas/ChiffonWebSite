@@ -9,9 +9,9 @@
 
 @* Generator: MvcHelper Namespace: Chiffon.Common*@
 
-@helper DesignerWebsiteUrl(Designer designer)
+@helper DesignerWebSiteUrl(Designer designer)
 {
- var url = designer.WebsiteUrl.Select(_ => _.ToString()).ValueOrDefault();
+ var url = designer.WebSiteUrl.Select(_ => _.ToString()).ValueOrDefault();
  if (!String.IsNullOrEmpty(url))
  {
   var website = url.ToString().Replace("http://", String.Empty);

@@ -16,10 +16,10 @@
         private bool _preferred = false;
         private bool _published = true;
 
-        public Pattern(PatternId patternId, string version)
+        public Pattern(PatternId patternId, string variant)
         {
             _patternId = patternId;
-            _variant = version;
+            _variant = variant;
         }
 
         public string CategoryKey { get; set; }
@@ -38,7 +38,11 @@
 
         public bool Preferred
         {
-            get { return _preferred; }
+            get
+            {
+                return _preferred;
+            }
+
             set
             {
                 if (!Published)
@@ -52,7 +56,11 @@
 
         public bool Published
         {
-            get { return _published; }
+            get
+            {
+                return _published;
+            }
+
             set
             {
                 //if (Locked && !value) {
@@ -68,7 +76,11 @@
 
         public bool Showcased
         {
-            get { return _showcased; }
+            get
+            {
+                return _showcased;
+            }
+
             set
             {
                 if (!Published)

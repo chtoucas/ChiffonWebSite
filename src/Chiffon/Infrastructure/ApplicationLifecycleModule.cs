@@ -33,65 +33,6 @@ namespace Chiffon.Infrastructure
         public void Dispose() { }
 
         /// <summary>
-        /// Se produit lorsque l'application est supprimée.
-        /// </summary>
-        private void OnDisposed_(object sender, EventArgs e)
-        {
-            Log.Information("Application disposed.");
-        }
-
-        /// <summary>
-        /// Se produit lorsqu'une exception non gérée est levée.
-        /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
-        /// </summary>
-        private void OnError_(object sender, EventArgs e)
-        {
-            var app = sender as HttpApplication;
-            var server = app.Server;
-
-            var ex = server.GetLastError();
-            if (ex == null)
-            {
-                Log.Fatal("An unhandled error occurred but no exception found.");
-                return;
-            }
-
-            var statusCode = GetStatusCode_(ex);
-
-            switch (statusCode)
-            {
-                case HttpStatusCode.BadRequest:
-                    Log.Warning(ex, ex.Message);
-                    server.ClearError();
-                    app.Response.SetStatusCode(statusCode);
-                    break;
-                case HttpStatusCode.NotFound:
-                    Log.Debug(ex, ex.Message);
-                    break;
-                default:
-                    Log.Fatal(ex, ex.Message);
-                    break;
-            }
-        }
-
-        private void OnPreSendRequestHeaders_(object sender, EventArgs e)
-        {
-            var app = sender as HttpApplication;
-
-            var response = app.Response;
-            if (response == null)
-            {
-                // Peut arriver si "trySkipIisCustomErrors" est égal à "true".
-                return;
-            }
-
-            NameValueCollection headers = response.Headers;
-
-            RemoveUnnecessaryHeaders_(headers);
-            AddSecurityHeaders_(headers);
-        }
-
-        /// <summary>
         /// Ajoute des en-têtes de réponse facultatives mais qui peuvent améliorer
         /// la sécurité de l'application.
         /// </summary>
@@ -192,6 +133,65 @@ namespace Chiffon.Infrastructure
             Contract.Requires(headers != null);
 
             headers.Remove("Server");
+        }
+
+        /// <summary>
+        /// Se produit lorsque l'application est supprimée.
+        /// </summary>
+        private void OnDisposed_(object sender, EventArgs e)
+        {
+            Log.Information("Application disposed.");
+        }
+
+        /// <summary>
+        /// Se produit lorsqu'une exception non gérée est levée.
+        /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
+        /// </summary>
+        private void OnError_(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+            var server = app.Server;
+
+            var ex = server.GetLastError();
+            if (ex == null)
+            {
+                Log.Fatal("An unhandled error occurred but no exception found.");
+                return;
+            }
+
+            var statusCode = GetStatusCode_(ex);
+
+            switch (statusCode)
+            {
+                case HttpStatusCode.BadRequest:
+                    Log.Warning(ex, ex.Message);
+                    server.ClearError();
+                    app.Response.SetStatusCode(statusCode);
+                    break;
+                case HttpStatusCode.NotFound:
+                    Log.Debug(ex, ex.Message);
+                    break;
+                default:
+                    Log.Fatal(ex, ex.Message);
+                    break;
+            }
+        }
+
+        private void OnPreSendRequestHeaders_(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+
+            var response = app.Response;
+            if (response == null)
+            {
+                // Peut arriver si "trySkipIisCustomErrors" est égal à "true".
+                return;
+            }
+
+            NameValueCollection headers = response.Headers;
+
+            RemoveUnnecessaryHeaders_(headers);
+            AddSecurityHeaders_(headers);
         }
     }
 }

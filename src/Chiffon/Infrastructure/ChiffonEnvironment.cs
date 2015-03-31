@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
     using Narvalo;
@@ -29,11 +30,6 @@
 
         public ChiffonLanguage Language { get { return _language; } }
 
-        public bool Equals(ChiffonEnvironment other)
-        {
-            return _language.Equals(other._language);
-        }
-
         public static bool operator ==(ChiffonEnvironment left, ChiffonEnvironment right)
         {
             return left.Equals(right);
@@ -42,6 +38,11 @@
         public static bool operator !=(ChiffonEnvironment left, ChiffonEnvironment right)
         {
             return !left.Equals(right);
+        }
+
+        public bool Equals(ChiffonEnvironment other)
+        {
+            return _language.Equals(other._language);
         }
 
         public override bool Equals(object obj)
@@ -62,6 +63,8 @@
                 ^ _hosting.GetHashCode();
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri MakeAbsoluteUri(string relativePath)
         {
             Contract.Requires(relativePath != null);

@@ -8,7 +8,7 @@
     /// </summary>
     public class DbCommands : IDbCommands
     {
-        readonly string _connectionString;
+        private readonly string _connectionString;
 
         /// <summary>
         /// Initialise un nouvel objet de type <see cref="Chiffon.Persistence.DbCommands"/>.
@@ -37,5 +37,4 @@
             q.Execute(parameters);
         }
     }
-
 }

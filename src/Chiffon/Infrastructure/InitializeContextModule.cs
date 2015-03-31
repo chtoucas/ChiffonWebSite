@@ -15,6 +15,11 @@
     // TODO: Vérifier que ces événements ne sont déclenchés qu'une fois par requête.
     public class InitializeContextModule : IHttpModule
     {
+        public static void Register()
+        {
+            DynamicModuleUtility.RegisterModule(typeof(InitializeContextModule));
+        }
+
         public void Init(HttpApplication context)
         {
             Require.NotNull(context, "context");
@@ -33,9 +38,17 @@
             // Intentionally left blank.
         }
 
-        public static void Register()
+        // WARNING: Cette méthode ne convient pas avec les actions asynchrones 
+        // car on peut changer de Thread.
+        private static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
         {
-            DynamicModuleUtility.RegisterModule(typeof(InitializeContextModule));
+            Contract.Requires(culture != null);
+            Contract.Requires(uiCulture != null);
+
+            // Culture utilisée par System.Globalization.
+            Thread.CurrentThread.CurrentCulture = culture;
+            // Culture utilisée par ResourceManager.
+            Thread.CurrentThread.CurrentUICulture = uiCulture;
         }
 
 #if SHOWCASE
@@ -86,19 +99,6 @@
             {
                 InitializeCulture_(language.GetCultureInfo(), language.GetUICultureInfo());
             }
-        }
-
-        // WARNING: Cette méthode ne convient pas avec les actions asynchrones 
-        // car on peut changer de Thread.
-        private static void InitializeCulture_(CultureInfo culture, CultureInfo uiCulture)
-        {
-            Contract.Requires(culture != null);
-            Contract.Requires(uiCulture != null);
-
-            // Culture utilisée par System.Globalization.
-            Thread.CurrentThread.CurrentCulture = culture;
-            // Culture utilisée par ResourceManager.
-            Thread.CurrentThread.CurrentUICulture = uiCulture;
         }
     }
 }

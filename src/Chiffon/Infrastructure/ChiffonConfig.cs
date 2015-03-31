@@ -15,36 +15,46 @@
 
     public class ChiffonConfig
     {
-        private const string SettingPrefix_ = "chiffon:";
-        private const string SqlConnectionStringName_ = "SqlServer";
+        private const string SETTING_PREFIX = "chiffon:";
+        private const string SQL_CONNECTION_STRING_NAME = "SqlServer";
 
-        private const bool DefaultDebugStyleSheet_ = false;
-        private const bool DefaultDebugJavaScript_ = false;
-        private const bool DefaultEnableClientCache_ = true;
-        private const bool DefaultEnableServerCache_ = true;
+        private const bool DEFAULT_DEBUG_STYLESHEET = false;
+        private const bool DEFAULT_DEBUG_JAVASCRIPT = false;
+        private const bool DEFAULT_ENABLE_CLIENT_CACHE = true;
+        private const bool DEFAULT_ENABLE_SERVER_CACHE = true;
 
-        private static readonly string DefaultGoogleAnalyticsKey_ = String.Empty;
+        private static readonly string s_DefaultGoogleAnalyticsKey = String.Empty;
 
-        private static readonly Version AssemblyVersion_
+        private static readonly Version s_AssemblyVersion
             = Assembly.GetExecutingAssembly().GetName().Version;
 
-        private bool _debugStyleSheet = DefaultDebugStyleSheet_;
-        private bool _debugJavaScript = DefaultDebugJavaScript_;
-        private bool _enableClientCache = DefaultEnableClientCache_;
-        private bool _enableServerCache = DefaultEnableServerCache_;
-        private string _googleAnalyticsKey = DefaultGoogleAnalyticsKey_;
+        private bool _debugStyleSheet = DEFAULT_DEBUG_STYLESHEET;
+        private bool _debugJavaScript = DEFAULT_DEBUG_JAVASCRIPT;
+        private bool _enableClientCache = DEFAULT_ENABLE_CLIENT_CACHE;
+        private bool _enableServerCache = DEFAULT_ENABLE_SERVER_CACHE;
+        private string _googleAnalyticsKey = s_DefaultGoogleAnalyticsKey;
 
         public string CssVersion { get; set; }
+
         public bool DebugStyleSheet { get { return _debugStyleSheet; } set { _debugStyleSheet = value; } }
+
         public bool DebugJavaScript { get { return _debugJavaScript; } set { _debugJavaScript = value; } }
+
         public bool EnableClientCache { get { return _enableClientCache; } set { _enableClientCache = value; } }
+
         public bool EnableServerCache { get { return _enableServerCache; } set { _enableServerCache = value; } }
+
         public string GoogleAnalyticsKey { get { return _googleAnalyticsKey; } set { _googleAnalyticsKey = value; } }
+
         public string JavaScriptVersion { get; set; }
+
         public string LogProfile { get; set; }
+
         [CLSCompliant(false)]
         public LogEventLevel LogMinimumLevel { get; set; }
+
         public string PatternDirectory { get; set; }
+
         public string SqlConnectionString { get; set; }
 
         public static ChiffonConfig FromConfiguration()
@@ -69,7 +79,7 @@
             Contract.Requires(settings != null);
 
             var chiffonKeys = settings.AllKeys
-                .Where(_ => _.StartsWith(SettingPrefix_, StringComparison.OrdinalIgnoreCase));
+                .Where(_ => _.StartsWith(SETTING_PREFIX, StringComparison.OrdinalIgnoreCase));
 
             var chiffonSettings = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
 
@@ -85,12 +95,12 @@
         {
             Contract.Requires(connections != null);
 
-            ConnectionStringSettings connection = connections[SqlConnectionStringName_];
+            ConnectionStringSettings connection = connections[SQL_CONNECTION_STRING_NAME];
 
             if (connection == null)
             {
                 throw new ConfigurationErrorsException(
-                    "The '" + SqlConnectionStringName_ + "' connection is not defined in your config file!");
+                    "The '" + SQL_CONNECTION_STRING_NAME + "' connection is not defined in your config file!");
             }
 
             SqlConnectionString = connection.ConnectionString;
@@ -118,9 +128,9 @@
 
             // > Paramètres optionels <
 
-            var version = AssemblyVersion_.Major.ToString(CultureInfo.InvariantCulture)
-                + "." + AssemblyVersion_.Minor.ToString(CultureInfo.InvariantCulture)
-                + "." + AssemblyVersion_.Build.ToString(CultureInfo.InvariantCulture);
+            var version = s_AssemblyVersion.Major.ToString(CultureInfo.InvariantCulture)
+                + "." + s_AssemblyVersion.Minor.ToString(CultureInfo.InvariantCulture)
+                + "." + s_AssemblyVersion.Build.ToString(CultureInfo.InvariantCulture);
 
             CssVersion = source.MayGetSingle("chiffon:CssVersion").ValueOrElse(version);
 
@@ -128,21 +138,21 @@
 
             DebugStyleSheet = (from _ in source.MayGetSingle("chiffon:DebugStyleSheet")
                                select ParseTo.Boolean(_))
-                               .UnpackOrElse(DefaultDebugStyleSheet_);
+                               .UnpackOrElse(DEFAULT_DEBUG_STYLESHEET);
 
             DebugJavaScript = (from _ in source.MayGetSingle("chiffon:DebugJavaScript")
                                select ParseTo.Boolean(_))
-                               .UnpackOrElse(DefaultDebugJavaScript_);
+                               .UnpackOrElse(DEFAULT_DEBUG_JAVASCRIPT);
 
             EnableClientCache = (from _ in source.MayGetSingle("chiffon:EnableClientCache")
                                  select ParseTo.Boolean(_))
-                                 .UnpackOrElse(DefaultEnableClientCache_);
+                                 .UnpackOrElse(DEFAULT_ENABLE_CLIENT_CACHE);
 
             EnableServerCache = (from _ in source.MayGetSingle("chiffon:EnableServerCache")
                                  select ParseTo.Boolean(_))
-                                 .UnpackOrElse(DefaultEnableServerCache_);
+                                 .UnpackOrElse(DEFAULT_ENABLE_SERVER_CACHE);
 
-            GoogleAnalyticsKey = source.MayGetSingle("chiffon:GoogleAnalyticsKey").ValueOrElse(DefaultGoogleAnalyticsKey_);
+            GoogleAnalyticsKey = source.MayGetSingle("chiffon:GoogleAnalyticsKey").ValueOrElse(s_DefaultGoogleAnalyticsKey);
         }
     }
 }

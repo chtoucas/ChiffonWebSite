@@ -4,16 +4,16 @@
 
     public static class PatternSizeExtensions
     {
-        private static readonly PatternImageSize Original_ = new PatternImageSize(700, 520);
-        private static readonly PatternImageSize Preview_ = new PatternImageSize(200, 160);
+        private static readonly PatternImageSize s_Original = new PatternImageSize(700, 520);
+        private static readonly PatternImageSize s_Preview = new PatternImageSize(200, 160);
 
         public static PatternImageSize GetImageSize(this PatternSize @this)
         {
             switch (@this) {
                 case PatternSize.Preview:
-                    return Preview_;
+                    return s_Preview;
                 case PatternSize.Original:
-                    return Original_;
+                    return s_Original;
                 default:
                     throw new NotSupportedException("The requested size is not supported.");
             }

@@ -62,11 +62,6 @@
             }
         }
 
-        public bool Equals(DesignerKey other)
-        {
-            return _value == other._value;
-        }
-
         public static bool operator ==(DesignerKey left, DesignerKey right)
         {
             return left.Equals(right);
@@ -75,6 +70,11 @@
         public static bool operator !=(DesignerKey left, DesignerKey right)
         {
             return !left.Equals(right);
+        }
+
+        public bool Equals(DesignerKey other)
+        {
+            return _value == other._value;
         }
 
         public override bool Equals(object obj)

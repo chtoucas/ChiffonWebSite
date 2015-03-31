@@ -7,6 +7,7 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Data;
 
@@ -22,9 +23,9 @@
 
         public DesignerKey DesignerKey { get; private set; }
 
-        protected override IEnumerable<Category> Execute(SqlDataReader reader)
+        protected override IEnumerable<Category> Execute([ValidatedNotNull]SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             var categories = new List<Category>();
 

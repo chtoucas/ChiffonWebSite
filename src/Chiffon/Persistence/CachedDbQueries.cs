@@ -9,8 +9,8 @@
 
     public class CachedDbQueries : IDbQueries
     {
-        readonly IDbQueries _inner;
-        readonly IDbQueryCache _cache;
+        private readonly IDbQueries _inner;
+        private readonly IDbQueryCache _cache;
 
         public CachedDbQueries(IDbQueries inner, IDbQueryCache cache)
         {

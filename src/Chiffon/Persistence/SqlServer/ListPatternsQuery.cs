@@ -6,6 +6,7 @@
     using System.Data.SqlClient;
 
     using Chiffon.Entities;
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Data;
 
@@ -20,12 +21,14 @@
         }
 
         public string CategoryKey { get; set; }
+
         public DesignerKey DesignerKey { get; private set; }
+
         public bool? Published { get { return _published; } set { _published = value; } }
 
         protected override IEnumerable<Pattern> Execute(SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             var patterns = new List<Pattern>();
 

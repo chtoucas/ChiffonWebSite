@@ -4,7 +4,7 @@
     using System.ComponentModel.Composition;
     using System.IO;
 
-    using Narvalo.Externs.Serilog;
+    using Narvalo;
     using Serilog;
     using Serilog.Events;
 

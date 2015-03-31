@@ -37,6 +37,7 @@
                         FirstName, 
                         LastName);
                 }
+
                 return _displayName;
             }
         }

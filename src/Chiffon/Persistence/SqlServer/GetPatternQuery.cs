@@ -6,6 +6,7 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
+    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Data;
 
@@ -24,12 +25,14 @@
         }
 
         public DesignerKey DesignerKey { get; private set; }
+
         public string Reference { get; private set; }
+
         public string Variant { get; private set; }
 
-        protected override Pattern Execute(SqlDataReader reader)
+        protected override Pattern Execute([ValidatedNotNull]SqlDataReader reader)
         {
-            Check.NotNull(reader, "The base class guarantees that the parameter is not null.");
+            CheckFor.StoredProcedure.Execute(reader);
 
             if (!reader.Read()) { return null; }
 

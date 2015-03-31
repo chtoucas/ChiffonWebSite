@@ -15,12 +15,8 @@
         }
 
         public DesignerKey DesignerKey { get { return _designerKey; } }
-        public string Reference { get { return _reference; } }
 
-        public bool Equals(PatternId other)
-        {
-            return _designerKey == other._designerKey && _reference == other._reference;
-        }
+        public string Reference { get { return _reference; } }
 
         public static bool operator ==(PatternId left, PatternId right)
         {
@@ -30,6 +26,11 @@
         public static bool operator !=(PatternId left, PatternId right)
         {
             return !left.Equals(right);
+        }
+
+        public bool Equals(PatternId other)
+        {
+            return _designerKey == other._designerKey && _reference == other._reference;
         }
 
         public override bool Equals(object obj)

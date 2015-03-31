@@ -7,7 +7,6 @@
     using Chiffon.Handlers;
     using Chiffon.Infrastructure.Addressing;
     using Narvalo;
-    using Narvalo.Externs.Autofac;
     using Narvalo.Web;
 
     // TODO: I18N.

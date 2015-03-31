@@ -24,8 +24,8 @@
     // & https://github.com/schourode/canonicalize
     public class SingleDomainSiteMap : ISiteMap
     {
-        readonly Uri _baseUri;
-        readonly ChiffonLanguage _language;
+        private readonly Uri _baseUri;
+        private readonly ChiffonLanguage _language;
 
         public SingleDomainSiteMap(ChiffonEnvironment environment)
         {

@@ -14,17 +14,19 @@
 
     public static class ChiffonEnvironmentResolver
     {
-        private const string SessionKey_ = "Language";
+        private const string SESSION_KEY = "Language";
 
 #if SHOWCASE
-        private static readonly ChiffonEnvironment DefaultEnvironment_
+        private static readonly ChiffonEnvironment s_DefaultEnvironment
               = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://vivianedevaux.org"), ChiffonHosting.SingleDomain);
-        private static readonly ChiffonEnvironment EnglishEnvironment_
+
+        private static readonly ChiffonEnvironment s_EnglishEnvironment
               = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://vivianedevaux.org"), ChiffonHosting.SingleDomain);
 #else
-     private   static readonly ChiffonEnvironment DefaultEnvironment_
+     private   static readonly ChiffonEnvironment s_DefaultEnvironment
             = new ChiffonEnvironment(ChiffonLanguage.Default, new Uri("http://pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
-     private   static readonly ChiffonEnvironment EnglishEnvironment_
+  
+     private   static readonly ChiffonEnvironment s_EnglishEnvironment
             = new ChiffonEnvironment(ChiffonLanguage.English, new Uri("http://en.pourquelmotifsimone.com"), ChiffonHosting.OneDomainPerLanguage);
 #endif
 
@@ -37,14 +39,14 @@
             {
                 Contract.Ensures(Contract.Result<IEnumerable<ChiffonEnvironment>>() != null);
 
-                yield return DefaultEnvironment_;
-                yield return EnglishEnvironment_;
+                yield return s_DefaultEnvironment;
+                yield return s_EnglishEnvironment;
             }
         }
 
         public static ChiffonEnvironment DefaultEnvironment
         {
-            get { return DefaultEnvironment_; }
+            get { return s_DefaultEnvironment; }
         }
 
         public static ChiffonEnvironment Resolve(HttpRequest request)
@@ -112,7 +114,7 @@
         {
             Contract.Requires(session != null);
 
-            var value = session[SessionKey_];
+            var value = session[SESSION_KEY];
 
             return value != null ? ConvertTo.Enum<ChiffonLanguage>(value) : null;
         }
@@ -128,7 +130,7 @@
         {
             Contract.Requires(session != null);
 
-            session[SessionKey_] = language;
+            session[SESSION_KEY] = language;
         }
     }
 }
