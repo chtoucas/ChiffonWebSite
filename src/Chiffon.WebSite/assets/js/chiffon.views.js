@@ -482,7 +482,7 @@ Chiffon.Views.Designer = (function(window, undef) {
       var $container = $('#patterns');
       var $loading = $('<li class=loading></li>');
 
-      this.context.require([DEBUG ? 'vendor/jquery.waypoints-3.1.1.js' : 'vendor/jquery.waypoints-3.1.1.min.js'], function () {
+      this.context.require([DEBUG ? 'vendor/jquery.waypoints-3.1.1.js' : 'vendor/jquery.waypoints-3.1.1.min.js'], function() {
         // On cache la pagination.
         $pager.hide();
 

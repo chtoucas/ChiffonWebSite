@@ -48,12 +48,15 @@ Pour les feuilles de style, mettre à jour :
 En détails:    
 - [FastClick](https://github.com/ftlabs/fastclick)
 - [jQuery](https://jquery.com/download/), télécharger et installer les 3 fichiers 
-  jquery.js, jquery.min.js et jquery.min.map.
-- [jQuery.Waypoints](https://github.com/imakewebthings/waypoints)
-- Lo-Dash, la mise à jour se fait via nodejs ; ensuite ne pas oublier de modifier
-  `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
+  .js, .min.js et .min.map.
+- [jQuery.Waypoints](https://github.com/imakewebthings/waypoints), télécharger
+  et installer les 2 fichiers .js et .min.js.
+- [Lo-Dash](https://lodash.com/), la mise à jour se fait via nodejs ; ensuite 
+  ne pas oublier de modifier `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
   et de supprimer les références à l'ancienne version dans VS.
   ATTENTION: La nouvelle version ne sera visible dans VS qu'après avoir exécuté grunt.
+- [Less](http://lesscss.org/), même si la mise à jour principale se fait par nodejs
+  il ne faut pas oublier les copies dans `assets\vendor`.
 
 CSS & JavaScript
 ----------------
