@@ -49,14 +49,20 @@ En détails:
 - [FastClick](https://github.com/ftlabs/fastclick)
 - [jQuery](https://jquery.com/download/), télécharger et installer les 3 fichiers 
   .js, .min.js et .min.map.
+- [jQuery.validate](http://jqueryvalidation.org/)
 - [jQuery.Waypoints](https://github.com/imakewebthings/waypoints), télécharger
   et installer les 2 fichiers .js et .min.js.
 - [Lo-Dash](https://lodash.com/), la mise à jour se fait via nodejs ; ensuite 
   ne pas oublier de modifier `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
   et de supprimer les références à l'ancienne version dans VS.
   ATTENTION: La nouvelle version ne sera visible dans VS qu'après avoir exécuté grunt.
-- [Less](http://lesscss.org/), même si la mise à jour principale se fait par nodejs
+- [less.js](http://lesscss.org/), même si la mise à jour principale se fait par nodejs
   il ne faut pas oublier les copies dans `assets\vendor`.
+- [normalize.css](http://necolas.github.io/normalize.css/)
+- [NProgress](http://ricostacruz.com/nprogress/), attention il faut mettre à jour le js et le css.
+- [yepnope](http://yepnopejs.com/), plus de mises à jour.
+- [H5BP](https://github.com/h5bp/html5-boilerplate), internalisé à partir de la version 4.3.
+- jquery.microdata, internalisé (je ne retrouve pas la référence).
 
 CSS & JavaScript
 ----------------
