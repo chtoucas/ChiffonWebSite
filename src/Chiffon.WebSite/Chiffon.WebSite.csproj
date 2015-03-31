@@ -376,6 +376,7 @@
     <Content Include="Errors\InternalServerError.aspx" />
     <Content Include="Errors\NotFound.aspx" />
     <Content Include="Errors\ServiceUnavailable.aspx" />
+    <Content Include="1x1.png" />
     <Content Include="ViewModels\Resources\ResourceNames.tt" />
     <Content Include="Errors\Error.Master" />
     <None Include="Scripts\_references.js" />

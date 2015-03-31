@@ -58,8 +58,11 @@
 #if SHOWCASE // Seules les images publiques et celles de Vivi sont visibles.
             if (!pattern.Showcased && query.DesignerKey != DesignerKey.VivianeDevaux)
             {
-                response.SetStatusCode(HttpStatusCode.NoContent);
+                // Renvoyer une réponse no-content aurait été plus simple
+                // mais cela donne une icone cassée dans Chrome.
+                response.SetStatusCode(HttpStatusCode.OK);
                 response.PrivatelyCacheFor(s_PrivateCacheTimeSpan);
+                response.TransmitFile("~/1x1.png");
                 return;
             }
 #endif
