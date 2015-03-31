@@ -85,6 +85,17 @@
         /// <summary />
         public Maybe<Member> MayLogOn(string email, string password)
         {
+#if SHOWCASE
+            if (email == "DEMO@vivianedevaux.org")
+            {
+                return Maybe.Of(new Member {
+                    Email = String.Empty,
+                    FirstName = String.Empty,
+                    LastName = String.Empty
+                });
+            }
+#endif
+
             // TODO: Enregistrer l'événement avec context.Request.UserHostAddress.
             return Maybe.Of(_queries.GetMember(email, password));
         }

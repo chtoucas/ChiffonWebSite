@@ -6,7 +6,7 @@ TODO
   * rediriger le mail contact
 - màj mail et site web pour V ; supprimer les mails et sites web pour les autres    
 - site de démo
-  * supprimer entièrement les liens en HTTP 204      
+  * supprimer entièrement les images en HTTP 204?      
   * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement
   * supprimer SHOWCASE et déterminer via la configuration si on est dans un répertoire virtuel
   * changer "virtualdirectory" en "simone" (chemins dans httpErrors) 
