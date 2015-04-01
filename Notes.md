@@ -1,70 +1,73 @@
 TODO
 ----
 
-- DNS
-  * il y a un problème avec www. et /XXX
-- site de démo
+En priorité,
+- revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
   * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement
   * changer "virtualdirectory" en "simone" (chemins dans httpErrors)
   * supprimer SHOWCASE et déterminer via la configuration si on est dans un répertoire virtuel
     + inscription / login auto
-- multi-langues
-  * VSModuleContext (activer en localhost) + session lang
-  * Use CurrentCulture instead of CurrentUICulture for localization
+- ré-activer la gestion des langues multiples :
+  * VSModuleContext (activer en localhost) + session lang ;
+  * Use CurrentCulture instead of CurrentUICulture for localization.
+- DNS, il y a un problème avec www. et /XXX
 
-- ré-activer robots.txt
-- utiliser plutôt Attribute Routing
-- finir MailMerge
-- rajouter aux package les scripts de déploiement
-- encrypter les chaînes de connection
-- utiliser des tableaux de caractères plutôt qu'une chaîne de caractères pour le mdp
+Travail de fond :
+- réduire le nombre des espaces de noms ;
+- ré-activer robots.txt ;
+- utiliser Attribute Routing ;
+- finir `MailMerge` ;
+- rajouter les scripts de déploiement aux packages ;
+- encrypter les chaînes de connection ;
+- utiliser des tableaux de caractères plutôt qu'une chaîne de caractères pour le mdp.
 
-Mise en production
-------------------
+Création d'un package
+---------------------
 
-1. Mettre à jour la version dans `src\AssemblyInfo.Common.cs` et `VersionInfo.xml`.
-2. Lancer `build.cmd`.
+1. mettre à jour la version dans `src\AssemblyInfo.Common.cs` et `VersionInfo.xml` ;
+2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts`.
 
 Mise à jour des librairies JavaScript
 -------------------------------------
 
 Màj des dépendances nodejs:
-- `tools\npm-check-updates` pour vérifier la disponibilité de nouvelles versions
+- `tools\npm-check-updates` pour vérifier la disponibilité de nouvelles versions ;
 - `tools\npm-check-updates -u` pour mettre à jour le fichier `package.json`
-  ou utiliser `npm update --save-dev`
+  puis `npm install --save-dev`. On peut aussi utiliser `npm update --save-dev`.
 
-À chaque nouvelle version d'une librairie JavaScript, mettre à jour :
-- `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
-- `src\Chiffon.WebSite\Views\Component\JavaScript.Release.cshtml`
-- `Gruntfile.js`
-- `src\assets\js\chiffon.js`
-- `src\assets\js\chiffon.views.js`
-
-Pour les feuilles de style, mettre à jour :
-- `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`
+À chaque nouvelle version d'une librairie JavaScript, si nécessaire, mettre à jour :
+- `Gruntfile.js` ;
+- `src\assets\js\chiffon.js` ;
+- `src\assets\js\chiffon.views.js` ;
+- `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml` ;
+- `src\Chiffon.WebSite\Views\Component\JavaScript.Release.cshtml` ;
+et pour les feuilles de style, on fera attention à :
+- `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`.
+Après coup, aller dans Visual Studio, supprimer les anciennes version et
+référencer les nouvelles.
 
 En détails:
-- [FastClick](https://github.com/ftlabs/fastclick)
+- [FastClick](https://github.com/ftlabs/fastclick), uniquement le .js.
 - [jQuery](https://jquery.com/download/), télécharger et installer les 3 fichiers
   .js, .min.js et .min.map.
 - [jQuery.validate](http://jqueryvalidation.org/)
 - [jQuery.Waypoints](https://github.com/imakewebthings/waypoints), télécharger
   et installer les 2 fichiers .js et .min.js.
-- [Lo-Dash](https://lodash.com/), la mise à jour se fait via nodejs ; ensuite
-  ne pas oublier de modifier `src\Chiffon.WebSite\Views\Component\JavaScript.Debug.cshtml`
-  et de supprimer les références à l'ancienne version dans VS.
-  ATTENTION: La nouvelle version ne sera visible dans VS qu'après avoir exécuté grunt.
-- [less.js](http://lesscss.org/), même si la mise à jour principale se fait par nodejs
-  il ne faut pas oublier les copies dans `assets\vendor`.
+- [Lo-Dash](https://lodash.com/), la mise à jour se fait via nodejs ;
+  Attention, la nouvelle version ne sera disponible qu'après avoir exécuté grunt.
+- [less.js](http://lesscss.org/), même si la mise à jour principale se fait via nodejs,
+  il ne faut pas oublier de faire une copie des fichiers dans `assets\vendor`.
 - [normalize.css](http://necolas.github.io/normalize.css/)
-- [NProgress](http://ricostacruz.com/nprogress/), attention il faut mettre à jour le js et le css.
-- [yepnope](http://yepnopejs.com/), plus de mises à jour.
+- [NProgress](http://ricostacruz.com/nprogress/). Attention, il faut mettre
+  à jour le js et le css.
+- [yepnope](http://yepnopejs.com/), plus de mises à jour disponibles.
 - [H5BP](https://github.com/h5bp/html5-boilerplate), internalisé à partir de la version 4.3.
 - jquery.microdata, internalisé (je ne retrouve pas la référence).
 
 CSS & JavaScript
 ----------------
 
+Quelques recommandations :
 - n'utiliser que des classes dans les CSS, éviter les IDs autant que faire se peut ;
 - utiliser uniquement des IDs dans les sélecteurs jQuery.
 
