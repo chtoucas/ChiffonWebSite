@@ -30,7 +30,7 @@
                 {
                     _displayName = String.Format(
                         CultureInfo.CurrentUICulture,
-                        Strings_Core.MemberDisplayNameFormat, 
+                        Strings.MemberDisplayNameFormat, 
                         FirstName, 
                         LastName);
                 }

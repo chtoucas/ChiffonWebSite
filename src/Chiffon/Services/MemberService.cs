@@ -46,7 +46,7 @@
 
             if (!String.IsNullOrEmpty(password))
             {
-                return VoidOrBreak.Break(Strings_Core.MemberService_EmailAlreadyTaken);
+                return VoidOrBreak.Break(Strings.MemberService_EmailAlreadyTaken);
             }
 
             // 2. Génération d'un nouveau mot de passe.
@@ -136,16 +136,6 @@
             return password;
         }
 
-        private void OnMemberCreated_(MemberCreatedEventArgs e)
-        {
-            EventHandler<MemberCreatedEventArgs> localHandler = MemberCreated;
-
-            if (localHandler != null)
-            {
-                localHandler(this, e);
-            }
-        }
-
         private static NewMemberParameters MapMember_(RegisterMemberRequest request, string encryptedPassword)
         {
             Require.NotNull(request, "query");
@@ -159,6 +149,16 @@
                 LastName = request.LastName,
                 NewsletterChecked = request.NewsletterChecked,
             };
+        }
+
+        private void OnMemberCreated_(MemberCreatedEventArgs e)
+        {
+            EventHandler<MemberCreatedEventArgs> localHandler = MemberCreated;
+
+            if (localHandler != null)
+            {
+                localHandler(this, e);
+            }
         }
     }
 }

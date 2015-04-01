@@ -2,7 +2,6 @@
 {
     using System.Net.Mail;
 
-
     public interface IMailMerge
     {
         MailMessage WelcomeMail(NewMemberMessage message);

@@ -175,44 +175,6 @@
     <Compile Include="..\AssemblyInfo.Common.cs">
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
-    <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="App_Start\ApplicationLifecycleModule.cs" />
-    <Compile Include="App_Start\InitializeContextModule.cs" />
-    <Compile Include="App_Start\InitializeVSContextModule.cs" />
-    <Compile Include="Common\AutofacRouteHandler`1.cs" />
-    <Compile Include="App_Start\ContainerBuilder%24.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\PersistenceModule.cs" />
-    <Compile Include="App_Start\ServicesModule.cs" />
-    <Compile Include="App_Start\InfrastructureModule.cs" />
-    <Compile Include="App_Start\AspNetMvcModule.cs" />
-    <Compile Include="Common\AuthentificationService.cs" />
-    <Compile Include="Common\ChiffonWebViewPage.cs" />
-    <Compile Include="Common\ChiffonWebViewPage`1.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\CssUtility.cs" />
-    <Compile Include="Common\DesignerKeyConstraint.cs" />
-    <Compile Include="Common\DesignerKeyModelBinder.cs" />
-    <Compile Include="Common\EnrichedWebViewPage.cs" />
-    <Compile Include="Common\EnrichedWebViewPage`1.cs" />
-    <Compile Include="Common\FormUtility.cs" />
-    <Compile Include="Common\ImageGeometry.cs" />
-    <Compile Include="Common\List`1%24.cs" />
-    <Compile Include="Common\MailMerge.cs" />
-    <Compile Include="Common\MemberSession.cs" />
-    <Compile Include="Common\OntologyFilterAttribute.cs" />
-    <Compile Include="Common\RouteConfigurator.cs" />
-    <Compile Include="Common\UrlHelper%24.cs" />
-    <Compile Include="Common\ViewUtility.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChiffonControlerContext.cs" />
-    <Compile Include="Controllers\ChiffonController.cs" />
-    <Compile Include="Controllers\ComponentController.cs" />
-    <Compile Include="Controllers\DesignerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MailMergeController.cs" />
-    <Compile Include="Controllers\ObjectMapper.cs" />
-    <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Errors\BadRequest.aspx.cs">
       <DependentUpon>BadRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,87 +217,19 @@
     <Compile Include="Errors\ServiceUnavailable.aspx.designer.cs">
       <DependentUpon>ServiceUnavailable.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\LogOffHandler.cs" />
-    <Compile Include="Handlers\LogOnHandler.cs" />
-    <Compile Include="Handlers\LogOnQuery.cs" />
-    <Compile Include="Handlers\LogOnQueryBinder.cs" />
-    <Compile Include="Handlers\PatternImageHandler.cs" />
-    <Compile Include="Handlers\PatternImageQuery.cs" />
-    <Compile Include="Handlers\PatternImageQueryBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\MailResources.Designer.cs">
-      <DependentUpon>MailResources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\MailResources.en.Designer.cs">
-      <DependentUpon>MailResources.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\SR.en.Designer.cs">
-      <DependentUpon>SR.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\SR.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SR.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\VR.en.Designer.cs">
+    <Compile Include="Properties\VR.en.Designer.cs">
       <DependentUpon>VR.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\VR.Designer.cs">
+    <Compile Include="Properties\VR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VR.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CategoryViewItem.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
-    <Compile Include="ViewModels\CommonStylesheetViewModel.cs" />
-    <Compile Include="ViewModels\ContactViewModel.cs" />
-    <Compile Include="ViewModels\DesignerViewItem.cs" />
-    <Compile Include="ViewModels\DesignerViewModel.cs" />
-    <Compile Include="ViewModels\LayoutViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\PatternViewItem.cs" />
-    <Compile Include="ViewModels\PatternViewModel.cs" />
-    <Compile Include="ViewModels\RegisterFailureViewModel.cs" />
-    <Compile Include="ViewModels\RegisterSuccessViewModel.cs" />
-    <Compile Include="ViewModels\RegisterViewModel.cs" />
-    <Compile Include="ViewModels\Resources\SR.Designer.cs">
-      <DependentUpon>SR.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ViewModels\Resources\SR.en.Designer.cs">
-      <DependentUpon>SR.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ViewModels\Resources\SRNames.cs">
-      <DependentUpon>SRNames.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
-      <Link>Properties\CodeAnalysisDictionary.xml</Link>
-    </CodeAnalysisDictionary>
     <Content Include="apple-touch-icon-114x114-precomposed.png" />
     <Content Include="apple-touch-icon-144x144-precomposed.png" />
     <Content Include="apple-touch-icon-57x57-precomposed.png" />
@@ -386,27 +280,11 @@
     <Content Include="Errors\ServiceUnavailable.aspx" />
     <Content Include="1x1.png" />
     <Content Include="Errors\Error.Master" />
-    <EmbeddedResource Include="ViewModels\Resources\SR.en.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewModels\Resources\SR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="Scripts\_references.js" />
     <Content Include="crossdomain.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="humans.txt" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Mail\NewContactNotificationBody.txt" />
-    <EmbeddedResource Include="Resources\Mail\NewMemberNotificationBody.txt" />
-    <Content Include="Resources\Mail\WelcomeMailBody_English.txt" />
-    <Content Include="Resources\Mail\WelcomeMailBody.txt" />
     <Content Include="robots.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -434,11 +312,6 @@
     </Content>
     <Content Include="Views\Home\ContactSuccess.cshtml" />
     <Content Include="Views\MailMerge\ForgottenPassword.cshtml" />
-    <Content Include="ViewModels\Resources\ResourceNames.tt" />
-    <Content Include="ViewModels\Resources\SRNames.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SRNames.cs</LastGenOutput>
-    </Content>
     <None Include="Views\MailMerge\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -526,28 +399,12 @@
     <Content Include="Views\Component\LanguageMenu.en.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MailResources.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MailResources.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MailResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MailResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SR.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SR.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\VR.en.resx">
+    <EmbeddedResource Include="Properties\VR.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VR.en.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\VR.resx">
+    <EmbeddedResource Include="Properties\VR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VR.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

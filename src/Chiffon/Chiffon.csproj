@@ -41,7 +41,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Chiffon.snk</AssemblyOriginatorKeyFile>
@@ -102,6 +102,15 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.StringTemplate">
+      <HintPath>..\..\packages\Antlr4.StringTemplate.4.0.6.9004\lib\net35\Antlr4.StringTemplate.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\..\packages\Autofac.Mvc5.3.3.3\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -161,11 +170,57 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs">
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
+    <Compile Include="AppActivator.cs" />
+    <Compile Include="ApplicationLifecycleModule.cs" />
+    <Compile Include="AspNetMvcModule.cs" />
+    <Compile Include="Common\AuthentificationService.cs" />
+    <Compile Include="Common\AutofacRouteHandler`1.cs" />
+    <Compile Include="Common\ChiffonWebViewPage.cs" />
+    <Compile Include="Common\ChiffonWebViewPage`1.cs" />
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\CssUtility.cs" />
+    <Compile Include="Common\DesignerKeyConstraint.cs" />
+    <Compile Include="Common\DesignerKeyModelBinder.cs" />
+    <Compile Include="Common\EnrichedWebViewPage.cs" />
+    <Compile Include="Common\EnrichedWebViewPage`1.cs" />
+    <Compile Include="Common\FormUtility.cs" />
+    <Compile Include="Common\ImageGeometry.cs" />
+    <Compile Include="Common\List`1%24.cs" />
+    <Compile Include="Common\MailMerge.cs" />
+    <Compile Include="Common\MemberSession.cs" />
+    <Compile Include="Common\OntologyFilterAttribute.cs" />
+    <Compile Include="Common\RouteConfigurator.cs" />
+    <Compile Include="Common\UrlHelper%24.cs" />
+    <Compile Include="Common\ViewUtility.cs" />
+    <Compile Include="ContainerBuilder%24.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChiffonControlerContext.cs" />
+    <Compile Include="Controllers\ChiffonController.cs" />
+    <Compile Include="Controllers\ComponentController.cs" />
+    <Compile Include="Controllers\DesignerController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailMergeController.cs" />
+    <Compile Include="Controllers\ObjectMapper.cs" />
+    <Compile Include="Controllers\WidgetController.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Handlers\LogOffHandler.cs" />
+    <Compile Include="Handlers\LogOnHandler.cs" />
+    <Compile Include="Handlers\LogOnQuery.cs" />
+    <Compile Include="Handlers\LogOnQueryBinder.cs" />
+    <Compile Include="Handlers\PatternImageHandler.cs" />
+    <Compile Include="Handlers\PatternImageQuery.cs" />
+    <Compile Include="Handlers\PatternImageQueryBinder.cs" />
+    <Compile Include="InfrastructureModule.cs" />
+    <Compile Include="InitializeContextModule.cs" />
+    <Compile Include="InitializeVSContextModule.cs" />
     <Compile Include="Internal\ConvertTo.cs" />
     <Compile Include="Infrastructure\HttpLogEventEnricher.cs" />
     <Compile Include="Common\OneDomainPerLanguageSiteMap.cs" />
@@ -173,6 +228,7 @@
     <Compile Include="Infrastructure\ChiffonHosting.cs" />
     <Compile Include="Infrastructure\LocalAssetProvider.cs" />
     <Compile Include="Internal\CheckFor.cs" />
+    <Compile Include="PersistenceModule.cs" />
     <Compile Include="Persistence\CachedDbQueries.cs" />
     <Compile Include="Persistence\SqlServer\NewMemberCommand.cs" />
     <Compile Include="Persistence\IDbCommands.cs" />
@@ -223,6 +279,12 @@
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\Enumerable`1%24.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ServicesModule.cs" />
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\IPatternService.cs" />
     <Compile Include="Services\MemberCreatedEventArgs.cs" />
@@ -231,30 +293,78 @@
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
     <Compile Include="Services\RegisterMemberRequest.cs" />
-    <Compile Include="Properties\Strings_Core.Designer.cs">
+    <Compile Include="Properties\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings_Core.resx</DependentUpon>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CategoryViewItem.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
+    <Compile Include="ViewModels\CommonStylesheetViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
+    <Compile Include="ViewModels\DesignerViewItem.cs" />
+    <Compile Include="ViewModels\DesignerViewModel.cs" />
+    <Compile Include="ViewModels\LayoutViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\PatternViewItem.cs" />
+    <Compile Include="ViewModels\PatternViewModel.cs" />
+    <Compile Include="ViewModels\RegisterFailureViewModel.cs" />
+    <Compile Include="ViewModels\RegisterSuccessViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\Resources\SR.Designer.cs">
+      <DependentUpon>SR.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ViewModels\Resources\SR.en.Designer.cs">
+      <DependentUpon>SR.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ViewModels\Resources\SRNames.cs">
+      <DependentUpon>SRNames.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
-      <Link>Properties\CodeAnalysisDictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Strings_Core.en.resx" />
-    <EmbeddedResource Include="Properties\Strings_Core.resx">
+    <EmbeddedResource Include="Properties\Strings.en.resx" />
+    <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings_Core.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModels\Resources\SR.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModels\Resources\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
+    <EmbeddedResource Include="Resources\Mail\NewContactNotificationBody.txt" />
+    <EmbeddedResource Include="Resources\Mail\NewMemberNotificationBody.txt" />
+    <Content Include="Properties\CodeAnalysisDictionary.xml" />
+    <Content Include="Resources\Mail\WelcomeMailBody.txt" />
+    <Content Include="Resources\Mail\WelcomeMailBody_English.txt" />
+    <Content Include="ViewModels\Resources\ResourceNames.tt" />
+    <Content Include="ViewModels\Resources\SRNames.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SRNames.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
