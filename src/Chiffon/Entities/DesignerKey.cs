@@ -5,7 +5,6 @@
 
     using Narvalo.Fx;
 
-    [Serializable]
     public struct DesignerKey : IEquatable<DesignerKey>
     {
         public static readonly DesignerKey ChristineLégeret = new DesignerKey("petroleum-blue");

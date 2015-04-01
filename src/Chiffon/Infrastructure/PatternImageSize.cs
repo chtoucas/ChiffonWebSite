@@ -2,7 +2,6 @@
 {
     using System;
 
-    [Serializable]
     public struct PatternImageSize : IEquatable<PatternImageSize>
     {
         private int _width;

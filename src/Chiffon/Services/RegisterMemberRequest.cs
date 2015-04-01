@@ -1,14 +1,11 @@
 ﻿namespace Chiffon.Services
 {
-    using System;
-
     using Chiffon.Infrastructure.Messaging;
 
     /// <summary>
     /// Représente une demande d'inscription associée à la méthode
     /// <see cref="Chiffon.Services.IMemberService.RegisterMember"/>.
     /// </summary>
-    [Serializable]
     public class RegisterMemberRequest
     {
         private MessageRecipients _recipients = MessageRecipients.Default;

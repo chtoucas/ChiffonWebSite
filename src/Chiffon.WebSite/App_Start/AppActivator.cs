@@ -46,7 +46,7 @@ namespace Chiffon
             ApplicationLifecycleModule.Register();
             InitializeContextModule.Register();
 
-            // Supprime l'en-tête "X-AspNetMvc-Version".
+            // Suppression de l'en-tête "X-AspNetMvc-Version".
             MvcHandler.DisableMvcResponseHeader = true;
 
             // Optimisation du contenu HTML (ASP.NET WebForm).
@@ -57,16 +57,20 @@ namespace Chiffon
         {
             Log.Information("Application starting.");
 
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
+
+            // NB: La gestion des erreurs est déléguée à customErrors pour avoir un contrôle
+            // plus fin des codes HTTP de réponse et du message affiché (en anglais ou en français).
+            // Si on réactive le filtre HandleError, il faut aussi créer une vue ~/Views/Shared/Error.cshml.
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             ResetViewEngines_();
         }
 
         public static void PostStart()
         {
-            ;
+            // Laissé vide intentionnellement.
         }
 
         public static void End()
@@ -79,18 +83,14 @@ namespace Chiffon
         /// </summary>
         public static void Shutdown()
         {
-            // Intentionally left blank.
+            // Laissé vide intentionnellement.
         }
 
-        #region Méthodes privées
-
-        static void ResetViewEngines_()
+        private static void ResetViewEngines_()
         {
             // On ne garde que Razor.
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
         }
-
-        #endregion
     }
 }

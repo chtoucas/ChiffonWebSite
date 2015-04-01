@@ -11,12 +11,9 @@
     /// <summary>
     /// Représente un membre du site.
     /// </summary>
-    [Serializable]
     public class Member
     {
-        [NonSerialized]
         private string _displayName;
-        [NonSerialized]
         private MailAddress _emailAddress;
 
         /// <summary>

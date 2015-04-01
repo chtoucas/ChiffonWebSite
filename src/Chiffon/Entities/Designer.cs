@@ -10,14 +10,11 @@
     /// <summary>
     /// Représente un designer.
     /// </summary>
-    [Serializable]
     public class Designer
     {
         private readonly DesignerKey _key;
 
-        [NonSerialized]
         private string _displayName;
-        [NonSerialized]
         private MailAddress _emailAddress;
 
         /// <summary>

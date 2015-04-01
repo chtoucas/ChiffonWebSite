@@ -1,10 +1,7 @@
 ﻿namespace Chiffon.Entities
 {
-    using System;
-
     using Narvalo;
 
-    [Serializable]
     public class Category
     {
         private readonly DesignerKey _designerKey;

@@ -2,7 +2,6 @@
 {
     using System;
 
-    [Serializable]
     public struct PatternId : IEquatable<PatternId>
     {
         private readonly DesignerKey _designerKey;

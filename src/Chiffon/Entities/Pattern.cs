@@ -4,9 +4,7 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Infrastructure;
-    using Narvalo;
 
-    [Serializable]
     public class Pattern
     {
         private readonly PatternId _patternId;

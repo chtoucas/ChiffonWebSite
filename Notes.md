@@ -31,8 +31,8 @@ Création d'un package
 2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts` ;
 3. tagger la nouvelle version.
 
-Mise à jour des librairies JavaScript
--------------------------------------
+Mise à jour des librairies JavaScript & CSS
+-------------------------------------------
 
 À chaque nouvelle version d'une librairie JavaScript, si nécessaire, mettre à jour :
 - `Gruntfile.js` ;
