@@ -1,4 +1,4 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Common
 {
     using System;
     using System.Collections.Specialized;

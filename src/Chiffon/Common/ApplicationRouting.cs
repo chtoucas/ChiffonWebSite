@@ -1,4 +1,4 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Common
 {
     using System;
     using System.Web.Mvc;
@@ -90,7 +90,7 @@
                 "mail/mot-de-passe-oublié",
                new { controller = Constants.ControllerName.MailMerge, action = Constants.ActionName.MailMerge.ForgottenPassword });
 
-            _routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
+            _routes.MapChildOnlyActionRoutesFrom(typeof(Application).Assembly);
 
             RegisterHandlerRoutes_();
         }

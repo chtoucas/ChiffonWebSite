@@ -7,7 +7,7 @@
     using Serilog.Events;
 
     [Export("Production", typeof(ILogService))]
-    public sealed class ProductionLogService : ILogService
+    public sealed class LogServiceForProduction : ILogService
     {
         [CLSCompliant(false)]
         public ILogger GetLogger(LogEventLevel minimumLevel)

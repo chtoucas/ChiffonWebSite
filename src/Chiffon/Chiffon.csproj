@@ -179,20 +179,20 @@
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
     <Compile Include="ApplicationActivator.cs" />
-    <Compile Include="ApplicationLifecycleModule.cs" />
+    <Compile Include="Common\ApplicationLifecycleModule.cs" />
     <Compile Include="Common\AuthenticationService.cs" />
     <Compile Include="Internal\AutofacRouteHandler`1.cs" />
     <Compile Include="Views\ChiffonWebViewPage.cs" />
     <Compile Include="Views\ChiffonWebViewPage`1.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="DesignerKeyConstraint.cs" />
+    <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Controllers\DesignerKeyModelBinder.cs" />
     <Compile Include="Views\EnrichedWebViewPage.cs" />
     <Compile Include="Views\EnrichedWebViewPage`1.cs" />
     <Compile Include="Common\MailMerge.cs" />
     <Compile Include="Common\MemberSession.cs" />
     <Compile Include="Controllers\OntologyFilterAttribute.cs" />
-    <Compile Include="ApplicationRouting.cs" />
+    <Compile Include="Common\ApplicationRouting.cs" />
     <Compile Include="Common\UrlHelper%24.cs" />
     <Compile Include="Views\ViewUtility.cs" />
     <Compile Include="Internal\ContainerBuilder%24.cs" />
@@ -205,7 +205,7 @@
     <Compile Include="Controllers\MailMergeController.cs" />
     <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
-    <Compile Include="Global.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="Handlers\LogOffHandler.cs" />
     <Compile Include="Handlers\LogOnHandler.cs" />
     <Compile Include="Handlers\LogOnQuery.cs" />
@@ -213,13 +213,13 @@
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
     <Compile Include="Handlers\PatternImageQueryBinder.cs" />
-    <Compile Include="ApplicationContainer.cs" />
-    <Compile Include="InitializeContextModule.cs" />
-    <Compile Include="InitializeVSContextModule.cs" />
+    <Compile Include="Common\ApplicationContainer.cs" />
+    <Compile Include="Common\InitializeContextModule.cs" />
+    <Compile Include="Common\InitializeVSContextModule.cs" />
     <Compile Include="Common\HttpLogEventEnricher.cs" />
     <Compile Include="Common\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Common\ChiffonHosting.cs" />
-    <Compile Include="LocalAssetProvider.cs" />
+    <Compile Include="Common\LocalAssetProvider.cs" />
     <Compile Include="Internal\CheckFor.cs" />
     <Compile Include="Persistence\CachedDbQueries.cs" />
     <Compile Include="Persistence\SqlServer\NewMemberCommand.cs" />
@@ -245,7 +245,7 @@
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
     <Compile Include="Common\SingleDomainSiteMap.cs" />
-    <Compile Include="Common\DefaultSiteMapFactory.cs" />
+    <Compile Include="Common\SiteMapFactory.cs" />
     <Compile Include="Common\ISiteMap.cs" />
     <Compile Include="Common\ISiteMapFactory.cs" />
     <Compile Include="Common\ChiffonConfig.cs" />
@@ -253,19 +253,19 @@
     <Compile Include="Common\ChiffonEnvironmentResolver.cs" />
     <Compile Include="Common\ChiffonLanguage.cs" />
     <Compile Include="Common\ChiffonContext.cs" />
-    <Compile Include="Common\DevelopmentLogService.cs" />
+    <Compile Include="Common\LogServiceForDevelopment.cs" />
     <Compile Include="Common\HttpContext%24.cs" />
     <Compile Include="Common\ILogService.cs" />
     <Compile Include="Common\IMailMerge.cs" />
     <Compile Include="Common\IMessenger.cs" />
-    <Compile Include="Common\LogConfig.cs" />
+    <Compile Include="Common\ApplicationLogging.cs" />
     <Compile Include="Common\Messenger.cs" />
     <Compile Include="Common\NewContactMessage.cs" />
     <Compile Include="Common\NewMemberMessage.cs" />
     <Compile Include="Common\MessageRecipients.cs" />
     <Compile Include="Entities\PatternImage.cs" />
     <Compile Include="Entities\PatternSize.cs" />
-    <Compile Include="Common\ProductionLogService.cs" />
+    <Compile Include="Common\LogServiceForProduction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

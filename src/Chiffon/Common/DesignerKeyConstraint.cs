@@ -1,4 +1,4 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Common
 {
     using System.Web;
     using System.Web.Routing;

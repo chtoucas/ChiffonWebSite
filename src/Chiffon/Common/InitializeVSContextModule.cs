@@ -1,10 +1,9 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Common
 {
     using System;
     using System.Web;
     using System.Web.SessionState;
 
-    using Chiffon.Common;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 

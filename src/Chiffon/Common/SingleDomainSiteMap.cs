@@ -7,20 +7,6 @@
 
     using Chiffon.Entities;
 
-    //<configuration>
-    //  <uri>
-    //  <idn enabled="All" />
-    //  <iriParsing enabled="true" />
-    //  </uri>
-    //</configuration>
-    // Check UriBuilder
-    // TODO: ajouter la possibilité de supprimer le préfixe http:
-    // - change base path, depending on anonymous / member
-    // http://stackoverflow.com/questions/829080/how-to-build-a-query-string-for-a-url-in-c
-    // VirtualPathUtility
-    // NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-    // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
-    // & https://github.com/schourode/canonicalize
     public sealed class SingleDomainSiteMap : ISiteMap
     {
         private readonly Uri _baseUri;

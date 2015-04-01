@@ -1,10 +1,9 @@
-﻿namespace Chiffon
+﻿namespace Chiffon.Common
 {
     using System.Diagnostics.CodeAnalysis;
 
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Chiffon.Common;
     using Chiffon.Internal;
     using Chiffon.Persistence;
     using Chiffon.Services;
@@ -31,7 +30,7 @@
             builder.RegisterType<MailMerge>().As<IMailMerge>().InstancePerRequest();
             builder.RegisterType<Messenger>().As<IMessenger>().InstancePerRequest();
 
-            builder.RegisterType<DefaultSiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
+            builder.RegisterType<SiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // FIXME: Pour les HttpHandlers, je n'arrive pas à voir pour le moment pourquoi
             // on ne récupère pas la bonne valeur de ChiffonEnvironment et donc de SiteMap, même
             // en précisant IsReusable = false. Peut-être en précisant InstancePerHttpRequest()
@@ -62,8 +61,8 @@
             builder.RegisterType<PatternService>().As<IPatternService>().InstancePerRequest();
 
             // Composants Asp.Net MVC.
-            builder.RegisterControllers(typeof(Global).Assembly);
-            builder.RegisterHandlers(typeof(Global).Assembly);
+            builder.RegisterControllers(typeof(Application).Assembly);
+            builder.RegisterHandlers(typeof(Application).Assembly);
             // FIXME: Je n'arrive pas à faire fonctionner la ligne suivante...
             //builder.RegisterSource(new ViewRegistrationSource());
         }

@@ -29,17 +29,17 @@ namespace Chiffon
             // Chargement de la configuration.
             var config = ChiffonConfig.FromConfiguration();
 
-            // Résolution des dépendances (Autofac).
+            // Configuration d'Autofac.
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ApplicationContainer(config));
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            // Configuration du logger (Serilog).
-            (new LogConfig(config)).Configure();
+            // Configuration de Serilog.
+            new ApplicationLogging(config).Configure();
 
-            // Modules HTTP.
+            // Enregistrement des modules HTTP.
             ApplicationLifecycleModule.Register();
             InitializeContextModule.Register();
 

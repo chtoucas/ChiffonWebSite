@@ -5,11 +5,11 @@
     using Narvalo;
     using Serilog;
 
-    public sealed class LogConfig
+    public sealed class ApplicationLogging
     {
         private readonly ChiffonConfig _config;
 
-        public LogConfig(ChiffonConfig config)
+        public ApplicationLogging(ChiffonConfig config)
         {
             Require.NotNull(config, "config");
 
@@ -25,7 +25,7 @@
         {
             ILogService svc;
 
-            using (var catalog = new AssemblyCatalog(typeof(LogConfig).Assembly)) {
+            using (var catalog = new AssemblyCatalog(typeof(ApplicationLogging).Assembly)) {
                 using (var container = new CompositionContainer(catalog)) {
                     svc = container.GetExportedValue<ILogService>(_config.LogProfile);
                 }

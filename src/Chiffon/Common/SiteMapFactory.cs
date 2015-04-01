@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Common
 {
-    public sealed class DefaultSiteMapFactory : ISiteMapFactory
+    public sealed class SiteMapFactory : ISiteMapFactory
     {
         public ISiteMap CreateMap(ChiffonEnvironment environment)
         {
