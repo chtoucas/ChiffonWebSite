@@ -5,7 +5,6 @@
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Persistence;
-    using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Fx;
 

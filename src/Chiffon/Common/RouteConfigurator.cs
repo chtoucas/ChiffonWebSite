@@ -5,7 +5,6 @@
     using System.Web.Routing;
 
     using Chiffon.Handlers;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Web;
 

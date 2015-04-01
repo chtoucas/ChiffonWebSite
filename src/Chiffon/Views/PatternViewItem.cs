@@ -5,7 +5,6 @@
 
     using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Properties;
     using Narvalo;
 
     public sealed class PatternViewItem

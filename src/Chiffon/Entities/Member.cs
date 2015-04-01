@@ -6,7 +6,6 @@
     using System.Globalization;
     using System.Net.Mail;
 
-    using Chiffon.Properties;
 
     /// <summary>
     /// Représente un membre du site.

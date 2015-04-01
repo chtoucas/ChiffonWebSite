@@ -10,7 +10,6 @@
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.Persistence;
-    using Chiffon.Properties;
     using Chiffon.Services;
     using Chiffon.Views;
     using Narvalo;

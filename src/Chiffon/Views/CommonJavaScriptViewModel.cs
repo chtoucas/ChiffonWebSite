@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Views
 {
-    using System;
 
     public sealed class CommonJavaScriptViewModel
     {

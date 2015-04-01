@@ -7,7 +7,6 @@
 
     using Chiffon.Controllers;
     using Chiffon.Infrastructure;
-    using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Web.Semantic;
     using Narvalo.Web.UI.Assets;
