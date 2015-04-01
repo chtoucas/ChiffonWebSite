@@ -1,5 +1,8 @@
-TODO
-----
+Notes de développement
+======================
+
+Tâches
+------
 
 En priorité,
 - revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
