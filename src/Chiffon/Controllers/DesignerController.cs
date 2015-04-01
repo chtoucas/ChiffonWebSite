@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
@@ -36,6 +37,7 @@
         {
             Require.NotNull(queries, "queries");
             Require.NotNull(patternService, "patternService");
+            Contract.Requires(siteMap != null);
 
             _queries = queries;
             _patternService = patternService;

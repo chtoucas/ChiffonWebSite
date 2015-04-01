@@ -18,8 +18,6 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Promise.NotNull(builder, "The base class guarantees that this parameter is not null.");
-
             builder.Register(_ => _config).AsSelf().SingleInstance();
 
             // FIXME: Réactiver l'injection de ISmtpClient.

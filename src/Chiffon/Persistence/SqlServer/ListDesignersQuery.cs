@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
 
     using Chiffon.Entities;
@@ -19,6 +20,8 @@
             : base(connectionString, "usp_ListDesigners")
         {
             Require.NotNull(culture, "culture");
+            Contract.Requires(connectionString != null);
+            Contract.Requires(connectionString.Length != 0);
 
             _culture = culture;
         }

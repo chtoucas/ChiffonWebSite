@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
     using System.Net.Mail;
@@ -24,6 +25,7 @@
         {
             Require.NotNull(messenger, "messenger");
             Require.NotNull(queries, "queries");
+            Contract.Requires(siteMap != null);
 
             _messenger = messenger;
             _queries = queries;

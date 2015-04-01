@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.Contracts;
     using System.Web;
     using System.Web.Mvc;
 
@@ -119,6 +120,8 @@
         [Conditional("DEBUG")]
         private static void __CheckRelationships(Relationships relationships)
         {
+            Contract.Requires(relationships != null);
+
             // Filtre par filterContext.HttpContext.IsDebuggingEnabled ?
             if (relationships.CanonicalUrl == null)
             {
@@ -129,6 +132,8 @@
         [Conditional("DEBUG")]
         private static void __CheckOpenGraphMetadata(IOpenGraphMetadata metadata)
         {
+            Contract.Requires(metadata != null);
+
             // NB: On sait que metadata.Image n'est pas null car cette propriété 
             // est systématiquement initialisé dans ChiffonController.
             if (metadata.Image.Url == null)

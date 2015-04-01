@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
     using System.Web;
     using System.Web.Mvc;
 
@@ -19,6 +20,7 @@
             : base(environment, siteMap)
         {
             Require.NotNull(memberService, "memberService");
+            Contract.Requires(siteMap != null);
 
             _memberService = memberService;
         }

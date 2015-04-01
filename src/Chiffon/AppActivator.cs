@@ -60,7 +60,7 @@ namespace Chiffon
             new RouteConfigurator(RouteTable.Routes).Configure();
             ModelBinders.Binders.Add(typeof(DesignerKey), new DesignerKeyModelBinder());
 
-            // NB: La gestion des erreurs est déléguée à customErrors pour avoir un contrôle
+            // La gestion des erreurs est déléguée à customErrors pour avoir un contrôle
             // plus fin des codes HTTP de réponse et du message affiché (en anglais ou en français).
             // Si on réactive le filtre HandleError, il faut aussi créer une vue ~/Views/Shared/Error.cshml.
             //GlobalFilters.Filters.Add(new HandleErrorAttribute());

@@ -20,7 +20,7 @@
         private readonly Ontology _ontology;
         private readonly ISiteMap _siteMap;
 
-        private Lazy<MemberSession> _memberSesssion;
+        private readonly Lazy<MemberSession> _memberSesssion;
 
         protected ChiffonController(ChiffonEnvironment environment, ISiteMap siteMap)
         {

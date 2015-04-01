@@ -3,6 +3,7 @@
     using System;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
 
     using Chiffon.Entities;
@@ -18,7 +19,8 @@
         public GetDesignerQuery(string connectionString, DesignerKey designerKey, CultureInfo culture)
             : base(connectionString, "usp_GetDesigner")
         {
-            Require.NotNull(culture, "culture");
+            Contract.Requires(connectionString != null);
+            Contract.Requires(connectionString.Length != 0);
 
             _designerKey = designerKey;
             _culture = culture;

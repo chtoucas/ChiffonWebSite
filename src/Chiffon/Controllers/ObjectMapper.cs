@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     using Chiffon.Entities;
@@ -23,6 +24,7 @@
         public static DesignerViewItem Map(Designer designer, IEnumerable<Category> categories, string categoryKey)
         {
             Require.NotNull(designer, "designer");
+            Contract.Requires(categories != null);
 
             return new DesignerViewItem {
                 Categories = from _ in categories select Map(_),

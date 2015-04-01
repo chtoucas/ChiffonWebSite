@@ -71,6 +71,7 @@
       <Term CompoundAlternate="LogMinimumLevel">LogMinimumLevel</Term>
       <Term CompoundAlternate="LogProfile">LogProfile</Term>
       <Term CompoundAlternate="PatternDirectory">PatternDirectory</Term>
+      <Term CompoundAlternate="PreStart">Prestart</Term>
       <Term CompoundAlternate="SqlServer">SqlServer</Term>
       <Term CompoundAlternate="WebSite">Website</Term>
     </Compound>

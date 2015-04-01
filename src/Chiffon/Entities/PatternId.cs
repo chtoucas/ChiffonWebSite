@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Narvalo;
+
     public struct PatternId : IEquatable<PatternId>
     {
         private readonly DesignerKey _designerKey;
@@ -9,6 +11,8 @@
 
         public PatternId(DesignerKey designerKey, string reference)
         {
+            Require.NotNullOrEmpty(reference, "reference");
+
             _designerKey = designerKey;
             _reference = reference;
         }

@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Common
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
 
@@ -44,6 +45,8 @@
 
         public void RenderActionResource(string resourceName)
         {
+            Contract.Requires(resourceName != null);
+
             Html.RenderAction(ViewUtility.Localize(resourceName, Language), LayoutViewModel.ControllerName);
         }
 
@@ -54,6 +57,8 @@
 
         public void RenderPartialResource(string resourceName)
         {
+            Contract.Requires(resourceName != null);
+
             Html.RenderPartial(ViewUtility.Localize(resourceName, Language));
         }
 

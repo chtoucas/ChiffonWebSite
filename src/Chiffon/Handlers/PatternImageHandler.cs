@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Net;
     using System.Web;
     using System.Web.Mvc;
@@ -116,6 +117,8 @@
         // TODO: Il faut revoir les en-têtes de cache.
         private static void CacheResponse_(HttpResponse response, PatternVisibility visibility)
         {
+            Contract.Requires(response != null);
+
             if (visibility == PatternVisibility.Public)
             {
                 response.PubliclyCacheFor(s_PublicCacheTimeSpan);

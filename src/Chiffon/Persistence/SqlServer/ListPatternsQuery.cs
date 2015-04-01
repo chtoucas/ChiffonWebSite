@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Diagnostics.Contracts;
 
     using Chiffon.Entities;
     using Chiffon.Internal;
@@ -17,6 +18,9 @@
         public ListPatternsQuery(string connectionString, DesignerKey designerKey)
             : base(connectionString, "usp_ListPatterns")
         {
+            Contract.Requires(connectionString != null);
+            Contract.Requires(connectionString.Length != 0);
+
             DesignerKey = designerKey;
         }
 

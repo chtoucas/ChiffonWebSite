@@ -10,8 +10,6 @@
 
         protected override void Load(ContainerBuilder builder)
         {
-            Promise.NotNull(builder, "The base class guarantees that this parameter is not null.");
-
             // Composants Asp.Net MVC.
             builder.RegisterControllers(typeof(Global).Assembly);
             builder.RegisterHandlers(typeof(Global).Assembly);

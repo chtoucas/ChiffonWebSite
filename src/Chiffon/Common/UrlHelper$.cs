@@ -14,6 +14,8 @@
 
         public static string Designer(this UrlHelper @this, DesignerKey designerKey, int pageIndex)
         {
+            Acknowledge.Object(@this);
+
             object routeValues;
             if (pageIndex > 1)
             {
@@ -29,6 +31,8 @@
 
         public static string Category(this UrlHelper @this, DesignerKey designerKey, string categoryKey, int pageIndex)
         {
+            Acknowledge.Object(@this);
+
             object routeValues;
             if (pageIndex > 1)
             {
@@ -44,6 +48,8 @@
 
         public static string Pattern(this UrlHelper @this, DesignerKey designerKey, string categoryKey, string reference, int pageIndex)
         {
+            Acknowledge.Object(@this);
+
             object routeValues;
             if (pageIndex > 1)
             {

@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Handlers
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
@@ -55,11 +56,17 @@
 
         private static Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
         {
+            Contract.Requires(targetUrl != null);
+            Contract.Requires(siteMap != null);
+
             return targetUrl.Select(_ => environment.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
         }
 
         private static Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
         {
+            Contract.Requires(targetUrl != null);
+            Contract.Requires(siteMap != null);
+
             return targetUrl.Select(_ => siteMap.Login(_)).ValueOrElse(siteMap.Login());
         }
     }

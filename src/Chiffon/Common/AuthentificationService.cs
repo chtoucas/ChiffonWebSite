@@ -8,7 +8,7 @@
 
     public sealed class AuthentificationService
     {
-        private MemberSession _memberSession;
+        private readonly MemberSession _memberSession;
 
         public AuthentificationService(HttpContextBase httpContext)
         {
