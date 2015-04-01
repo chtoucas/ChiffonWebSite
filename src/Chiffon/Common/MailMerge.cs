@@ -33,6 +33,8 @@ namespace Chiffon.Common
 
         public MailMessage WelcomeMail(NewMemberMessage message)
         {
+            Require.NotNull(message, "message");
+
             // FIXME: C'est un peu pourri ! À refaire ! Utiliser CultureInfo.DefaultThreadCurrentUICulture ?
             String template;
             if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr")
@@ -60,6 +62,8 @@ namespace Chiffon.Common
 
         public MailMessage NewContactNotification(NewContactMessage message)
         {
+            Require.NotNull(message, "message");
+
             var tpl = new Template(Resources.NewContactNotificationBody);
             tpl.Add("Message", message);
 
@@ -78,6 +82,8 @@ namespace Chiffon.Common
 
         public MailMessage NewMemberNotification(NewMemberMessage message)
         {
+            Require.NotNull(message, "message");
+
             var tpl = new Template(Resources.NewMemberNotificationBody);
             tpl.Add("Message", message);
 

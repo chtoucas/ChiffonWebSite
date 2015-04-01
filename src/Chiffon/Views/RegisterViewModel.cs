@@ -1,11 +1,11 @@
-﻿namespace Chiffon.ViewModels
+﻿namespace Chiffon.Views
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
-    using Chiffon.ViewModels.Resources;
+    using Chiffon.Properties;
 
     // Attribut DataType pour Email
     // Attribut Display
@@ -19,11 +19,11 @@
         private string _lastName;
 
         [Required(
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.CompanyName_Required)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.CompanyName_Required)]
         [StringLength(100, MinimumLength = 2,
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.CompanyName_StringLength)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.CompanyName_StringLength)]
         public string CompanyName
         {
             get { return _companyName; }
@@ -31,14 +31,14 @@
         }
 
         [Required(
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.Email_Required)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.Email_Required)]
         [StringLength(200, MinimumLength = 5,
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.Email_StringLength)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.Email_StringLength)]
         [EmailAddress(
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.Email_DataType)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.Email_DataType)]
         public string Email
         {
             get
@@ -56,11 +56,11 @@
         }
 
         [Required(
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.FirstName_Required)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.FirstName_Required)]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.FirstName_StringLength)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.FirstName_StringLength)]
         public string FirstName
         {
             get { return _firstName; }
@@ -68,11 +68,11 @@
         }
 
         [Required(
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.LastName_Required)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.LastName_Required)]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceType = typeof(SR),
-            ErrorMessageResourceName = SRNames.LastName_StringLength)]
+            ErrorMessageResourceType = typeof(Strings_Views),
+            ErrorMessageResourceName = Strings_Names.LastName_StringLength)]
         public string LastName
         {
             get { return _lastName; }

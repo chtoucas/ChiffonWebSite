@@ -1,6 +1,7 @@
-﻿namespace Chiffon.ViewModels.Resources 
+﻿
+namespace Chiffon.Properties
 {
-    internal static class SRNames 
+    internal static class Strings_Names
     {
         public const string CompanyName_Required = "CompanyName_Required";
         public const string CompanyName_StringLength = "CompanyName_StringLength";

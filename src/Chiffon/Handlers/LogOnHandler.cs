@@ -53,12 +53,12 @@
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }
 
-        private Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
+        private static Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
         {
             return targetUrl.Select(_ => environment.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
         }
 
-        private Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
+        private static Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
         {
             return targetUrl.Select(_ => siteMap.Login(_)).ValueOrElse(siteMap.Login());
         }

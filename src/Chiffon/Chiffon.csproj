@@ -293,44 +293,44 @@
     <Compile Include="Services\PatternService.cs" />
     <Compile Include="Services\PreviewPagedList.cs" />
     <Compile Include="Services\RegisterMemberRequest.cs" />
-    <Compile Include="Properties\Strings.Designer.cs">
+    <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CategoryViewItem.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\CommonJavaScriptViewModel.cs" />
-    <Compile Include="ViewModels\CommonStylesheetViewModel.cs" />
-    <Compile Include="ViewModels\ContactViewModel.cs" />
-    <Compile Include="ViewModels\DesignerViewItem.cs" />
-    <Compile Include="ViewModels\DesignerViewModel.cs" />
-    <Compile Include="ViewModels\LayoutViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\PatternViewItem.cs" />
-    <Compile Include="ViewModels\PatternViewModel.cs" />
-    <Compile Include="ViewModels\RegisterFailureViewModel.cs" />
-    <Compile Include="ViewModels\RegisterSuccessViewModel.cs" />
-    <Compile Include="ViewModels\RegisterViewModel.cs" />
-    <Compile Include="ViewModels\Resources\SR.Designer.cs">
-      <DependentUpon>SR.resx</DependentUpon>
+    <Compile Include="Views\CategoryViewItem.cs" />
+    <Compile Include="Views\CategoryViewModel.cs" />
+    <Compile Include="Views\CommonJavaScriptViewModel.cs" />
+    <Compile Include="Views\CommonStylesheetViewModel.cs" />
+    <Compile Include="Views\ContactViewModel.cs" />
+    <Compile Include="Views\DesignerViewItem.cs" />
+    <Compile Include="Views\DesignerViewModel.cs" />
+    <Compile Include="Views\LayoutViewModel.cs" />
+    <Compile Include="Views\LoginViewModel.cs" />
+    <Compile Include="Views\PatternViewItem.cs" />
+    <Compile Include="Views\PatternViewModel.cs" />
+    <Compile Include="Views\RegisterFailureViewModel.cs" />
+    <Compile Include="Views\RegisterSuccessViewModel.cs" />
+    <Compile Include="Views\RegisterViewModel.cs" />
+    <Compile Include="Strings_Views.Designer.cs">
+      <DependentUpon>Strings_Views.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ViewModels\Resources\SR.en.Designer.cs">
-      <DependentUpon>SR.en.resx</DependentUpon>
+    <Compile Include="Strings_Views.en.Designer.cs">
+      <DependentUpon>Strings_Views.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ViewModels\Resources\SRNames.cs">
-      <DependentUpon>SRNames.tt</DependentUpon>
+    <Compile Include="Strings_Names.g.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Strings_Names.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Strings.en.resx" />
-    <EmbeddedResource Include="Properties\Strings.resx">
+    <EmbeddedResource Include="Strings.en.resx" />
+    <EmbeddedResource Include="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -338,13 +338,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewModels\Resources\SR.en.resx">
+    <EmbeddedResource Include="Strings_Views.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.en.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings_Views.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewModels\Resources\SR.resx">
+    <EmbeddedResource Include="Strings_Views.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings_Views.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -353,13 +353,13 @@
     <None Include="Settings.StyleCop" />
     <EmbeddedResource Include="Resources\Mail\NewContactNotificationBody.txt" />
     <EmbeddedResource Include="Resources\Mail\NewMemberNotificationBody.txt" />
-    <Content Include="Properties\CodeAnalysisDictionary.xml" />
+    <CodeAnalysisDictionary Include="Properties\CodeAnalysisDictionary.xml" />
     <Content Include="Resources\Mail\WelcomeMailBody.txt" />
     <Content Include="Resources\Mail\WelcomeMailBody_English.txt" />
-    <Content Include="ViewModels\Resources\ResourceNames.tt" />
-    <Content Include="ViewModels\Resources\SRNames.tt">
+    <Content Include="ResourceNames.tt" />
+    <Content Include="Strings_Names.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SRNames.cs</LastGenOutput>
+      <LastGenOutput>Strings_Names.g.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

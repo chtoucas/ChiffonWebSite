@@ -8,6 +8,7 @@
 
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
+    using Chiffon.Internal;
     using Chiffon.Persistence;
     using Narvalo;
     using Narvalo.Web;
@@ -44,8 +45,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
-            Check.NotNull(query, "The base class guarantees that the parameter is not null.");
+            CheckFor.PatternImageHandler.ProcessRequestCore(context);
+            CheckFor.PatternImageHandler.ProcessRequestCore(query);
 
             var response = context.Response;
 

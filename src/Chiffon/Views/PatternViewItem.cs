@@ -1,4 +1,4 @@
-﻿namespace Chiffon.ViewModels
+﻿namespace Chiffon.Views
 {
     using System;
     using System.Web;
@@ -31,7 +31,7 @@
                     ? new HtmlString(Format.CurrentCulture(Strings.PatternDescriptionFormat, Reference, DesignerName))
                     : new HtmlString(String.Empty);
 #else
-                return new HtmlString(Format.CurrentCulture(SR.PatternDescriptionFormat, Reference, DesignerName));
+                return new HtmlString(Format.CurrentCulture(Strings.PatternDescriptionFormat, Reference, DesignerName));
 #endif
             }
         }

@@ -4,7 +4,7 @@
     using System.Linq;
 
     using Chiffon.Entities;
-    using Chiffon.ViewModels;
+    using Chiffon.Views;
     using Narvalo;
 
     public static class ObjectMapper

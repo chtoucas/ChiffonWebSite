@@ -7,9 +7,8 @@
 
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Properties;
     using Chiffon.Services;
-    using Chiffon.ViewModels;
+    using Chiffon.Views;
     using Narvalo;
 
     public sealed class AccountController : ChiffonController

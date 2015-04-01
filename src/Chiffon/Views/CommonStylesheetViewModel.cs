@@ -1,4 +1,4 @@
-﻿namespace Chiffon.ViewModels
+﻿namespace Chiffon.Views
 {
     public sealed class CommonStyleSheetViewModel
     {

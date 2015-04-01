@@ -1,7 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using Chiffon.Infrastructure;
-    using Chiffon.ViewModels;
+    using Chiffon.Views;
     using Narvalo.Web.Semantic;
 
     public sealed class ChiffonControllerContext

@@ -1,4 +1,4 @@
-﻿namespace Chiffon.ViewModels
+﻿namespace Chiffon.Views
 {
     using System.Collections.Generic;
     using System.Linq;

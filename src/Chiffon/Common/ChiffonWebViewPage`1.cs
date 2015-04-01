@@ -6,7 +6,7 @@
 
     using Chiffon.Controllers;
     using Chiffon.Infrastructure;
-    using Chiffon.ViewModels;
+    using Chiffon.Views;
     using Narvalo.Web.Html;
     using Narvalo.Web.Semantic;
 

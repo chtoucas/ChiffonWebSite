@@ -1,0 +1,4 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".g.cs" #>
+<#@ include file=".\ResourceNames.tt" #>
+<# ResourceNamesTemplate(); #>

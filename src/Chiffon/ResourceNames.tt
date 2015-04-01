@@ -5,12 +5,12 @@
     public void ResourceNamesTemplate()
     {
 #>
-namespace Chiffon.ViewModels.Resources 
+namespace Chiffon.Properties
 {
-    internal static class SRNames 
+    internal static class Strings_Names
     {
 <#+
-        var reader = XmlReader.Create(Host.ResolvePath("SR.resx"));
+        var reader = XmlReader.Create(Host.ResolvePath("Strings_Views.resx"));
         var document = new XPathDocument(reader);
         foreach (XPathNavigator item in document.CreateNavigator().Select("/root/data")) {
             string name = item.GetAttribute("name", String.Empty);

@@ -11,7 +11,7 @@
     using Chiffon.Infrastructure;
     using Chiffon.Persistence;
     using Chiffon.Properties;
-    using Chiffon.ViewModels;
+    using Chiffon.Views;
     using Narvalo;
     using Narvalo.Web.Semantic;
 

@@ -1,16 +1,12 @@
-﻿namespace Chiffon.ViewModels
+﻿namespace Chiffon.Views
 {
     using System.Collections.Generic;
 
-    public sealed class PatternViewModel
+    public sealed class CategoryViewModel
     {
         public CategoryViewItem Category { get; set; }
 
         public DesignerViewItem Designer { get; set; }
-
-        public string Reference { get; set; }
-
-        public IEnumerable<PatternViewItem> PatternViews { get; set; }
 
         public IEnumerable<PatternViewItem> Previews { get; set; }
 
