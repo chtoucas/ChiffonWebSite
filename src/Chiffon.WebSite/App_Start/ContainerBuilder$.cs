@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Infrastructure
+﻿namespace Chiffon
 {
     using System;
     using System.Reflection;

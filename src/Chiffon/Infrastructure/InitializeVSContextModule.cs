@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.SessionState;
 
+    using Chiffon.Internal;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 

@@ -176,6 +176,8 @@
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="Common\AutofacRouteHandler`1.cs" />
+    <Compile Include="App_Start\ContainerBuilder%24.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\PersistenceModule.cs" />
     <Compile Include="App_Start\ServicesModule.cs" />

@@ -3,6 +3,8 @@
     using System.Diagnostics.Contracts;
     using System.Web;
 
+    using Chiffon.Internal;
+
     public class ChiffonContext
     {
         private readonly ChiffonEnvironment _environment;

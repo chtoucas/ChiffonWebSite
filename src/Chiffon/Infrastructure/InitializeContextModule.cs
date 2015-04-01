@@ -9,6 +9,7 @@
     using System.Web.SessionState;
 #endif
 
+    using Chiffon.Internal;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 
