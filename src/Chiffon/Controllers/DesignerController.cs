@@ -8,7 +8,6 @@
 
     using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Chiffon.Persistence;
     using Chiffon.Services;
     using Chiffon.Views;
@@ -72,7 +71,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Designer(designerKey, p));
-            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = ViewUtility.DesignerClass(designerKey);
 
             return View(Constants.ViewName.Designer.Index, model);
         }
@@ -116,7 +115,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerCategory(designerKey, categoryKey, p));
-            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = ViewUtility.DesignerClass(designerKey);
             LayoutViewModel.MainHeading = category.DisplayName;
 
             return View(Constants.ViewName.Designer.Category, model);
@@ -167,7 +166,7 @@
 
             // LayoutViewModel.
             LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.DesignerPattern(designerKey, categoryKey, reference, p));
-            LayoutViewModel.DesignerMenuCssClass = CssUtility.DesignerClass(designerKey);
+            LayoutViewModel.DesignerMenuCssClass = ViewUtility.DesignerClass(designerKey);
             LayoutViewModel.MainHeading = String.Format(
                 CultureInfo.CurrentUICulture,
                 Strings.Designer_Pattern_MainHeadingFormat, 
@@ -192,8 +191,8 @@
         {
             var imageUrl = new Uri(Url.PreviewContent(designerKey, reference, variant, true /* absolute */));
             Ontology.OpenGraph.Image = new OpenGraphJpeg(imageUrl) {
-                Height = ImageGeometry.PreviewHeight,
-                Width = ImageGeometry.PreviewWidth,
+                Height = Constants.ImageGeometry.PreviewHeight,
+                Width = Constants.ImageGeometry.PreviewWidth,
             };
         }
     }

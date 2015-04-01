@@ -5,7 +5,6 @@
     using System.Linq;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
 
     public sealed class LayoutViewModel
     {

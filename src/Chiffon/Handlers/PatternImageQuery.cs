@@ -2,8 +2,8 @@ namespace Chiffon.Handlers
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
 
     public class PatternImageQuery
     {

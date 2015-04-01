@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
@@ -9,7 +10,6 @@
     using System.Web.Mvc;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Chiffon.Persistence;
     using Chiffon.Views;
     using Narvalo;
@@ -41,7 +41,7 @@
                          join d in designers on p.DesignerKey equals d.Key
                          select ObjectMapper.Map(p, d.DisplayName)).ToList();
 
-            model.Shuffle();
+            ShuffleList_(model);
 
             // Ontologie.
             Ontology.Title = Strings.Home_Index_Title;
@@ -153,6 +153,23 @@
             LayoutViewModel.MainMenuCssClass = "contact";
 
             return View(Constants.ViewName.Home.ContactSuccess);
+        }
+
+        // Cf. http://stackoverflow.com/questions/273313/randomize-a-listt-in-c-sharp
+        private static void ShuffleList_<T>(IList<T> list)
+        {
+            Require.NotNull(list, "list");
+
+            var rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

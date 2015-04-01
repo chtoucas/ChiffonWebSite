@@ -6,7 +6,6 @@
     using System.Web.Mvc;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Chiffon.Services;
     using Chiffon.Views;
     using Narvalo;
@@ -110,7 +109,7 @@
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                NewsletterChecked = FormUtility.IsCheckBoxOn(model.Newsletter),
+                NewsletterChecked = IsCheckBoxOn_(model.Newsletter),
             });
 
             if (result.IsBreak)
@@ -163,6 +162,11 @@
             LayoutViewModel.MainMenuCssClass = "newsletter";
 
             return View(Constants.ViewName.Account.Newsletter);
+        }
+
+        private static bool IsCheckBoxOn_(string value)
+        {
+            return String.IsNullOrEmpty(value) ? false : (value == "on");
         }
     }
 }

@@ -3,7 +3,6 @@
     using System;
 
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
 
     public interface ISiteMap
     {

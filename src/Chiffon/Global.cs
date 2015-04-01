@@ -9,13 +9,13 @@
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         protected void Application_Start()
         {
-            AppActivator.Start();
+            ApplicationActivator.Start();
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         protected void Application_End(object sender, EventArgs e)
         {
-            AppActivator.End();
+            ApplicationActivator.End();
         }
     }
 }

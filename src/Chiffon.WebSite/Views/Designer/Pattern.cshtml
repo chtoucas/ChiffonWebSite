@@ -21,7 +21,7 @@
  @foreach (var view in Model.PatternViews) {
   var version = viewCount == 1 || String.IsNullOrWhiteSpace(view.Variant) ? "" : " (" + view.Variant + ")";
   <li id="@view.Variant">
-   <img src="@Url.PatternContent(view.DesignerKey, view.Reference, view.Variant)" alt="@view.Description" width=@ImageGeometry.PatternWidth height=@ImageGeometry.PatternHeight /><div class=watermark><span>@VR.Pattern_Ref @Model.Reference @version</span></div>
+   <img src="@Url.PatternContent(view.DesignerKey, view.Reference, view.Variant)" alt="@view.Description" width=@Constants.ImageGeometry.PatternWidth height=@Constants.ImageGeometry.PatternHeight /><div class=watermark><span>@VR.Pattern_Ref @Model.Reference @version</span></div>
   </li>
  }
 </ul>
@@ -46,13 +46,13 @@
  @foreach (var preview in Model.Previews) {
   if (preview.Reference == Model.Reference) {
    <li class=current>
-    <img class=vignette src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight />
+    <img class=vignette src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@Constants.ImageGeometry.PreviewWidth height=@Constants.ImageGeometry.PreviewHeight />
    </li>
   }
   else {
    <li>
     <a href="@Url.Pattern(preview.DesignerKey, preview.CategoryKey, preview.Reference, Model.PageIndex)" class=vignette>
-     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@ImageGeometry.PreviewWidth height=@ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference</span></div>
+     <img src="@Url.PreviewContent(preview.DesignerKey, preview.Reference, preview.Variant)" alt="@preview.Description" width=@Constants.ImageGeometry.PreviewWidth height=@Constants.ImageGeometry.PreviewHeight /><div class="overlay"></div><div class=watermark><span>@preview.Reference</span></div>
     </a>
    </li>
   }

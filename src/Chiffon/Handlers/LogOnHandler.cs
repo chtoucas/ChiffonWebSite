@@ -7,7 +7,6 @@
     using System.Web.SessionState;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Fx;

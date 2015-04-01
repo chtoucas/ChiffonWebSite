@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
-    using Chiffon.Infrastructure;
+    using Chiffon.Common;
     using Chiffon.Views;
     using Narvalo.Web.Semantic;
 

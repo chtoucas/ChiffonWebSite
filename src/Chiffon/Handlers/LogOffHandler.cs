@@ -5,7 +5,6 @@
     using System.Web.SessionState;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Web;
 

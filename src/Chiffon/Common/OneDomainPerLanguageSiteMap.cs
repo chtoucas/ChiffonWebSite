@@ -6,7 +6,6 @@
     using System.Web;
 
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
 
     public sealed class OneDomainPerLanguageSiteMap : ISiteMap
     {
@@ -28,25 +27,25 @@
 
         public Uri Home() { return MakeAbsoluteUri_(String.Empty); }
 
-        public Uri About() { return MakeAbsoluteUri_(Routes.About); }
+        public Uri About() { return MakeAbsoluteUri_(Constants.RoutePath.About); }
 
-        public Uri Contact() { return MakeAbsoluteUri_(Routes.Contact); }
+        public Uri Contact() { return MakeAbsoluteUri_(Constants.RoutePath.Contact); }
 
-        public Uri Newsletter() { return MakeAbsoluteUri_(Routes.Newsletter); }
+        public Uri Newsletter() { return MakeAbsoluteUri_(Constants.RoutePath.Newsletter); }
 
-        public Uri Login() { return MakeAbsoluteUri_(Routes.Login); }
+        public Uri Login() { return MakeAbsoluteUri_(Constants.RoutePath.Login); }
 
         public Uri Login(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Routes.Login);
+            var uri = MakeAbsoluteUri_(Constants.RoutePath.Login);
             return AddReturnUrl_(uri, returnUrl);
         }
 
-        public Uri Register() { return MakeAbsoluteUri_(Routes.Register); }
+        public Uri Register() { return MakeAbsoluteUri_(Constants.RoutePath.Register); }
 
         public Uri Register(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Routes.Register);
+            var uri = MakeAbsoluteUri_(Constants.RoutePath.Register);
             return AddReturnUrl_(uri, returnUrl);
         }
 
@@ -75,7 +74,7 @@
             if (pageIndex > 1)
             {
                 var builder = new UriBuilder(uri) {
-                    Query = SiteMapConstants.PageKey + "=" + pageIndex.ToString(CultureInfo.InvariantCulture)
+                    Query = Constants.SiteMap.PageKey + "=" + pageIndex.ToString(CultureInfo.InvariantCulture)
                 };
 
                 return builder.Uri;
@@ -93,7 +92,7 @@
             Contract.Requires(returnUrl != null);
 
             var builder = new UriBuilder(uri) {
-                Query = SiteMapConstants.ReturnUrl + "=" + returnUrl.ToString()
+                Query = Constants.SiteMap.ReturnUrl + "=" + returnUrl.ToString()
             };
 
             return builder.Uri;

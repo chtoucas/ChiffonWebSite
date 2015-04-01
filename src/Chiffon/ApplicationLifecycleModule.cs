@@ -23,9 +23,9 @@
         {
             Require.NotNull(context, "context");
 
-            context.Error += OnError_;
-            context.Disposed += OnDisposed_;
-            context.PreSendRequestHeaders += OnPreSendRequestHeaders_;
+            context.Error += Application_OnError_;
+            context.Disposed += Application_OnDisposed_;
+            context.PreSendRequestHeaders += Application_OnPreSendRequestHeaders_;
         }
 
         public void Dispose() { }
@@ -136,7 +136,7 @@
         /// <summary>
         /// Se produit lorsque l'application est supprimée.
         /// </summary>
-        private void OnDisposed_(object sender, EventArgs e)
+        private void Application_OnDisposed_(object sender, EventArgs e)
         {
             Log.Information("Application disposed.");
         }
@@ -145,7 +145,7 @@
         /// Se produit lorsqu'une exception non gérée est levée.
         /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
         /// </summary>
-        private void OnError_(object sender, EventArgs e)
+        private void Application_OnError_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
             var server = app.Server;
@@ -175,7 +175,7 @@
             }
         }
 
-        private void OnPreSendRequestHeaders_(object sender, EventArgs e)
+        private void Application_OnPreSendRequestHeaders_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
 

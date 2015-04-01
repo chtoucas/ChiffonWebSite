@@ -10,7 +10,6 @@
 #endif
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 

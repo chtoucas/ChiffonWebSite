@@ -3,7 +3,6 @@
     using System.Diagnostics.Contracts;
     using System.Web;
 
-    using Chiffon.Infrastructure;
     using Narvalo;
 
     public static class HttpContextExtensions

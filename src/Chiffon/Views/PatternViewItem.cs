@@ -19,7 +19,7 @@
 
         public string Variant { get; set; }
 
-        public string CssClass { get { return CssUtility.DesignerClass(DesignerKey); } }
+        public string CssClass { get { return ViewUtility.DesignerClass(DesignerKey); } }
 
         public IHtmlString Description
         {

@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
 
-    using Chiffon.Infrastructure;
+    using Chiffon.Common;
     using Narvalo;
 
     public sealed class Pattern

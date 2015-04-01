@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Dictionary>
   <Words>
-    <Unrecognized>
-    </Unrecognized>
-    
     <Recognized>
       <!-- Les noms de famille des designers -->
       <Word>Devaux</Word>
@@ -13,34 +10,17 @@
 
       <!-- Autofac, Serilog,... -->
       <Word>Autofac</Word>
-      <Word>Configurator</Word>
       <Word>Enricher</Word>
       <Word>Mvc</Word>
       <Word>Serilog</Word>
 
-      <!-- Mots du Web -->
-      <Word>Seo</Word>
-      
       <!-- La pagination -->
       <Word>p</Word>
     </Recognized>
-    
-    <Deprecated>
-      <Term PreferredAlternate="Login">LogOn</Term>
-    </Deprecated>
     
     <Compound>
       <Term CompoundAlternate="PreStart">prestart</Term>
       <Term CompoundAlternate="WebSite">website</Term>
     </Compound>
-    
-    <DiscreteExceptions>
-    </DiscreteExceptions>
   </Words>
-  
-  <Acronyms>
-    <CasingExceptions>
-      <Acronym>Seo</Acronym>
-    </CasingExceptions>
-  </Acronyms>
 </Dictionary>

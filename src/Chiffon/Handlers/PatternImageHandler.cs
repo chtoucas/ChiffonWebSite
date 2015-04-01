@@ -2,13 +2,14 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.IO;
     using System.Net;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
 
+    using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Chiffon.Internal;
     using Chiffon.Persistence;
     using Narvalo;
@@ -23,7 +24,6 @@
         private static readonly TimeSpan s_PrivateCacheTimeSpan = new TimeSpan(1, 0, 0, 0);
 
         private readonly ChiffonConfig _config;
-        private readonly PatternFileSystem _fileSystem;
         private readonly IDbQueries _queries;
 
         public PatternImageHandler(ChiffonConfig config, IDbQueries queries)
@@ -34,8 +34,6 @@
 
             _config = config;
             _queries = queries;
-
-            _fileSystem = new PatternFileSystem(config);
         }
 
         // TODO: Pour le moment il n'est pas opportun de réutiliser ce gestionnaire car IDbQueries 
@@ -111,7 +109,7 @@
             }
 
             response.ContentType = image.MimeType;
-            response.TransmitFile(_fileSystem.GetPath(image));
+            response.TransmitFile(GetPath_(image));
         }
 
         // TODO: Il faut revoir les en-têtes de cache.
@@ -127,6 +125,14 @@
             {
                 response.PrivatelyCacheFor(s_PrivateCacheTimeSpan);
             }
+        }
+
+        private string GetPath_(PatternImage image)
+        {
+            Require.NotNull(image, "image");
+            Contract.Ensures(Contract.Result<string>() != null);
+
+            return Path.Combine(_config.PatternDirectory, image.RelativePath);
         }
     }
 }

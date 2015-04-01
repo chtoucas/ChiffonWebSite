@@ -3,8 +3,8 @@
     using System;
     using System.Web;
 
+    using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;

@@ -9,8 +9,6 @@
 
     public static class UrlHelperExtensions
     {
-        #region Designer controller.
-
         public static string Designer(this UrlHelper @this, DesignerKey designerKey, int pageIndex)
         {
             Acknowledge.Object(@this);
@@ -61,8 +59,6 @@
 
             return SecureAction(@this, Constants.ActionName.Designer.Pattern, Constants.ControllerName.Designer, routeValues);
         }
-
-        #endregion
 
         public static string PreviewContent(this UrlHelper @this, DesignerKey designerKey, string reference, string variant)
         {
@@ -132,7 +128,6 @@
             }
         }
 
-        // TODO: Quand on passera à un serveur de media séparé il faudra changer ces utilitaires.
         private static string PreviewContent_(UrlHelper urlHelper, DesignerKey designerKey, string reference, string variant, bool absolute)
         {
             Require.NotNull(urlHelper, "urlHelper");

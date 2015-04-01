@@ -4,7 +4,6 @@
     using System.Web.Mvc;
 
     using Chiffon.Common;
-    using Chiffon.Infrastructure;
     using Chiffon.Views;
     using Narvalo;
     using Narvalo.Web;
