@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Infrastructure
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
     using Narvalo;
@@ -63,8 +62,6 @@
                 ^ _hosting.GetHashCode();
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads")]
-        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri MakeAbsoluteUri(string relativePath)
         {
             Contract.Requires(relativePath != null);

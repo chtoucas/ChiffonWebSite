@@ -1,10 +1,11 @@
 ﻿namespace Chiffon.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     using Chiffon.Entities;
-    using Chiffon.Internal;
     using Chiffon.Persistence;
     using Narvalo;
 
@@ -39,7 +40,7 @@
             // On ne garde que les motifs ayant un aperçu dont on prend le préféré.
             var previews = _queries.ListPatterns(designerKey).Where(_ => _.HasPreview && _.Preferred);
 
-            var pageCount = previews.PageCount(pageSize);
+            var pageCount = CountPage_(previews, pageSize);
             if (pageIndex > pageCount) { return null; }
 
             var slice = previews
@@ -65,7 +66,7 @@
             // On ne garde que les motifs ayant un aperçu et on ne garde que le préféré.
             var previews = _queries.ListPatterns(designerKey, categoryKey).Where(_ => _.HasPreview && _.Preferred);
 
-            var pageCount = previews.PageCount(pageSize);
+            var pageCount = CountPage_(previews, pageSize);
             if (pageIndex > pageCount) { return null; }
 
             var slice = previews
@@ -79,6 +80,13 @@
                 PageIndex = pageIndex,
                 Previews = slice
             };
+        }
+
+        private static int CountPage_<T>(IEnumerable<T> @this, int pageSize)
+        {
+            Contract.Requires(@this != null);
+
+            return (int)Math.Ceiling((decimal)@this.Count() / pageSize);
         }
     }
 }

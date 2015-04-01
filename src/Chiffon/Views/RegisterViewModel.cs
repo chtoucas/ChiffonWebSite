@@ -28,6 +28,7 @@
             set { _companyName = NormalizeName_(value); }
         }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [Required(
             ErrorMessageResourceType = typeof(Strings_Views),
             ErrorMessageResourceName = Strings_Names.Email_Required)]
@@ -81,9 +82,9 @@
         public string Newsletter { get; set; }
 
         // NB: On n'impose pas de contrainte sur ce champs car il sera traité manuellement.
-        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string ReturnUrl { get; set; }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         private static string NormalizeName_(string value)
         {
             if (String.IsNullOrWhiteSpace(value))
@@ -93,7 +94,6 @@
 
             // NB: La méthode ToTitleCase() ne touche pas les mots entièrement en majuscule,
             // on passe donc d'abord ces derniers en minuscules.
-
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLowerInvariant());
         }
 

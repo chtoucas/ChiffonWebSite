@@ -6,18 +6,18 @@
     using Chiffon.Entities;
     using Narvalo;
 
-    public sealed class AuthentificationService
+    public sealed class AuthenticationService
     {
         private readonly MemberSession _memberSession;
 
-        public AuthentificationService(HttpContextBase httpContext)
+        public AuthenticationService(HttpContextBase httpContext)
         {
             Require.NotNull(httpContext, "httpContext");
 
             _memberSession = new MemberSession(httpContext.Session);
         }
 
-        public AuthentificationService(HttpContext httpContext) : this(new HttpContextWrapper(httpContext)) { }
+        public AuthenticationService(HttpContext httpContext) : this(new HttpContextWrapper(httpContext)) { }
 
         public void SignIn(Member member)
         {

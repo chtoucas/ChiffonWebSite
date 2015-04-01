@@ -1,7 +1,5 @@
 ﻿namespace Chiffon.Common
 {
-    using System.Diagnostics.CodeAnalysis;
-
     public static class Constants
     {
 #if SHOWCASE
@@ -10,11 +8,9 @@
         public static readonly string ContactAddress = "contact@pourquelmotifsimone.com";
 #endif
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ActionName
         {
             // ComponentController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Component
             {
                 public const string CommonJavaScript = "CommonJavaScript";
@@ -22,10 +18,8 @@
             }
 
             // ContactController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Contact
             {
-                [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "Login";
                 public const string Newsletter = "Newsletter";
                 public const string Register = "Register";
@@ -33,7 +27,6 @@
             }
 
             // DesignerController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Designer
             {
                 public const string Index = "Index";
@@ -42,7 +35,6 @@
             }
 
             // HomeController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Home
             {
                 public const string Index = "Index";
@@ -52,7 +44,6 @@
             }
 
             // MailMergeController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class MailMerge
             {
                 public const string ForgottenPassword = "ForgottenPassword";
@@ -60,7 +51,6 @@
             }
 
             // WidgetController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Widget
             {
                 public const string AuthorsRights = "AuthorsRights";
@@ -72,7 +62,6 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ControllerName
         {
             public const string Account = "Account";
@@ -83,7 +72,6 @@
             public const string Widget = "Widget";
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class CssClassName
         {
             public const string EstherMarthi = "em";
@@ -92,14 +80,11 @@
             public const string ChristineLégeret = "cl";
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class RouteName
         {
             // AccountController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Account
             {
-                [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "Contact/Login";
                 public const string Newsletter = "Contact/Newsletter";
                 public const string Register = "Contact/Register";
@@ -107,7 +92,6 @@
             }
 
             // DesignerController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Designer
             {
                 public const string Category = "Designer/Category";
@@ -116,7 +100,6 @@
             }
 
             // HomeController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Home
             {
                 public const string About = "Home/About";
@@ -126,7 +109,6 @@
             }
 
             // DesignerController.
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class MailMerge
             {
                 public const string ForgottenPassword = "MailMerge/ForgottenPassword";
@@ -134,16 +116,13 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public static class ViewName
         {
             public const string DesignerInfo = "~/Views/Shared/_DesignerInfo.cshtml";
             public const string UserMenu = "~/Views/Shared/_UserMenu.cshtml";
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Account
             {
-                [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
                 public const string Login = "~/Views/Account/Login.cshtml";
                 public const string Register = "~/Views/Account/Register.cshtml";
                 public const string RegisterSuccess = "~/Views/Account/RegisterSuccess.cshtml";
@@ -151,7 +130,6 @@
                 public const string Newsletter = "~/Views/Account/Newsletter.cshtml";
             }
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Component
             {
                 public const string CommonJavaScriptDebug = "~/Views/Component/JavaScript.Debug.cshtml";
@@ -159,7 +137,6 @@
                 public const string LanguageMenu = "~/Views/Component/LanguageMenu.cshtml";
             }
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Designer
             {
                 public const string Index = "~/Views/Designer/Index.cshtml";
@@ -167,7 +144,6 @@
                 public const string Pattern = "~/Views/Designer/Pattern.cshtml";
             }
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Home
             {
                 public const string Index = "~/Views/Home/Index.cshtml";
@@ -177,14 +153,12 @@
                 public const string ContactSuccess = "~/Views/Home/ContactSuccess.cshtml";
             }
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class MailMerge
             {
                 public const string ForgottenPassword = "~/Views/MailMerge/ForgottenPassword.cshtml";
                 public const string Welcome = "~/Views/MailMerge/Welcome.cshtml";
             }
 
-            [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
             public static class Widget
             {
                 public const string AuthorsRights = "~/Views/Widget/AuthorsRights.cshtml";

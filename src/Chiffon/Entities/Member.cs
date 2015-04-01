@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Net.Mail;
@@ -40,8 +39,6 @@
         /// <summary>
         /// Assigne ou retourne l'adresse e-mail du membre.
         /// </summary>
-        [SuppressMessage("Microsoft.Contracts", "Suggestion-17-0",
-            Justification = "[Ignore] Unrecognized postcondition by CCCheck.")]
         public string Email { get; set; }
 
         /// <summary>

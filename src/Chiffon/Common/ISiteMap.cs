@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Common
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
@@ -18,10 +17,8 @@
 
         Uri Newsletter();
 
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         Uri Login();
 
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         Uri Login(Uri returnUrl);
 
         Uri Register();

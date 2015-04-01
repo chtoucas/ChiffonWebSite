@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Entities
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
 
@@ -68,8 +67,6 @@
         /// Retourne l'adresse électronique du designer construite à partir de l'e-mail
         /// et du nom du membre.
         /// </summary>
-        [SuppressMessage("Microsoft.Contracts", "Suggestion-17-0",
-            Justification = "[Ignore] Unrecognized postcondition by CCCheck.")]
         public MailAddress EmailAddress
         {
             get

@@ -2,7 +2,6 @@
 {
     using Autofac;
     using Chiffon.Services;
-    using Narvalo;
 
     public class ServicesModule : Module
     {

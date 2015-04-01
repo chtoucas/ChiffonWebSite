@@ -41,7 +41,7 @@
             if (controller == null)
             {
                 throw new InvalidOperationException(
-                    "OntologyFilterAttribute should only be applied to ChiffonController.");
+                    "The OntologyFilter attribute should only be applied to ChiffonController.");
             }
 
             var controllerContext = controller.ChiffonControllerContext;
@@ -90,7 +90,7 @@
             if (controller == null)
             {
                 throw new InvalidOperationException(
-                    "OntologyFilterAttribute should only applied to ChiffonController.");
+                    "The OntologyFilter attribute should only applied to ChiffonController.");
             }
 
             var ontology = controller.ChiffonControllerContext.Ontology;

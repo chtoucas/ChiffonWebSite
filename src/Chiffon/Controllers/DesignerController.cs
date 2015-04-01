@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
@@ -44,8 +43,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Index(DesignerKey designerKey, int p = 1)
         {
             // Modèle.
@@ -81,8 +78,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Category(DesignerKey designerKey, string categoryKey, int p = 1)
         {
             // Modèle.
@@ -128,8 +123,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "p")]
         public ActionResult Pattern(DesignerKey designerKey, string categoryKey, string reference, int p = 1)
         {
             // Modèle.

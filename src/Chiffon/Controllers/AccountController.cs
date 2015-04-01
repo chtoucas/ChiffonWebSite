@@ -1,7 +1,6 @@
 ﻿namespace Chiffon.Controllers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Web;
     using System.Web.Mvc;
@@ -26,8 +25,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         public ActionResult Login(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -52,7 +49,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         public ActionResult Register(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -106,7 +102,7 @@
 
             _memberService.MemberCreated += (sender, e) =>
             {
-                (new AuthentificationService(HttpContext)).SignIn(e.Member);
+                (new AuthenticationService(HttpContext)).SignIn(e.Member);
             };
 
             var result = _memberService.RegisterMember(new RegisterMemberRequest {
@@ -135,7 +131,6 @@
         [HttpGet]
         [Authorize]
         [OntologyFilter(Disabled = true)]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         public ActionResult RegisterSuccess(string returnUrl)
         {
             if (!User.Identity.IsAuthenticated)

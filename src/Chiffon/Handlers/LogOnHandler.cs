@@ -45,7 +45,7 @@
             var member = _memberService
                 .MayLogOn(query.Email, query.Password);
 
-            member.OnSome(_ => (new AuthentificationService(context)).SignIn(_));
+            member.OnSome(_ => (new AuthenticationService(context)).SignIn(_));
 
             var nextUrl = member
                 .Select(_ => GetNextUri_(query.TargetUrl, siteMap, environment))

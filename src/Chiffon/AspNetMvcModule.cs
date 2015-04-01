@@ -2,7 +2,6 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Narvalo;
 
     public class AspNetMvcModule : Module
     {

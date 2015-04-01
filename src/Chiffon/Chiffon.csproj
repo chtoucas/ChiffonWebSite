@@ -24,7 +24,7 @@
     <DefineConstants>TRACE;DEBUG;SHOWCASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Chiffon.ruleset</CodeAnalysisRuleSet>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -37,7 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Chiffon.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
@@ -54,7 +54,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Chiffon.ruleset</CodeAnalysisRuleSet>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -117,15 +117,15 @@
     </Reference>
     <Reference Include="Narvalo.Common, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.23.0-T24304121\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.23.0-T24307867\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Core, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.23.0-T24304121\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.23.0-T24307867\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Web, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.23.0-T24304121\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.23.0-T24307867\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -181,7 +181,7 @@
     <Compile Include="AppActivator.cs" />
     <Compile Include="ApplicationLifecycleModule.cs" />
     <Compile Include="AspNetMvcModule.cs" />
-    <Compile Include="Common\AuthentificationService.cs" />
+    <Compile Include="Common\AuthenticationService.cs" />
     <Compile Include="Common\AutofacRouteHandler`1.cs" />
     <Compile Include="Common\ChiffonWebViewPage.cs" />
     <Compile Include="Common\ChiffonWebViewPage`1.cs" />
@@ -221,7 +221,6 @@
     <Compile Include="InfrastructureModule.cs" />
     <Compile Include="InitializeContextModule.cs" />
     <Compile Include="InitializeVSContextModule.cs" />
-    <Compile Include="Internal\ConvertTo.cs" />
     <Compile Include="Infrastructure\HttpLogEventEnricher.cs" />
     <Compile Include="Common\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Common\Routes.cs" />
@@ -278,7 +277,6 @@
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\Enumerable`1%24.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -353,7 +351,7 @@
     <None Include="Settings.StyleCop" />
     <EmbeddedResource Include="Resources\Mail\NewContactNotificationBody.txt" />
     <EmbeddedResource Include="Resources\Mail\NewMemberNotificationBody.txt" />
-    <CodeAnalysisDictionary Include="Properties\CodeAnalysisDictionary.xml" />
+    <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
     <Content Include="Resources\Mail\WelcomeMailBody.txt" />
     <Content Include="Resources\Mail\WelcomeMailBody_English.txt" />
     <Content Include="ResourceNames.tt" />

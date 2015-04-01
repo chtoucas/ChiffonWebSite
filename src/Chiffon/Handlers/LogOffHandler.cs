@@ -30,7 +30,7 @@
         {
             Check.NotNull(context, "The base class guarantees that the parameter is not null.");
 
-            (new AuthentificationService(context)).SignOut();
+            (new AuthenticationService(context)).SignOut();
 
             var nextUrl = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment).Home().AbsoluteUri;
 

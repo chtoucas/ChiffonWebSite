@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Common
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using System.Web.Routing;
 
@@ -110,7 +109,6 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
         public static string SecureUrl(this UrlHelper @this, string routeName, object routeValues)
         {
             Require.Object(@this);
@@ -118,7 +116,6 @@
             return @this.SecureUrl(routeName, new RouteValueDictionary(routeValues));
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
         public static string SecureUrl(this UrlHelper @this, string routeName, RouteValueDictionary routeValues)
         {
             Require.Object(@this);

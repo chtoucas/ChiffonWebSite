@@ -7,7 +7,6 @@
     using System.Web;
     using System.Web.SessionState;
 
-    using Chiffon.Internal;
     using Narvalo;
     using Narvalo.Collections;
     using Narvalo.Fx;
@@ -117,7 +116,21 @@
 
             var value = session[SESSION_KEY];
 
-            return value != null ? ConvertTo.Enum<ChiffonLanguage>(value) : null;
+            if (value == null)
+            {
+                return null;
+            }
+
+            var type = typeof(ChiffonLanguage);
+
+            if (Enum.IsDefined(type, value))
+            {
+                return (ChiffonLanguage)Enum.ToObject(type, value);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static ChiffonEnvironment ResolveFromHost_(string host)

@@ -5,7 +5,6 @@
 
     using Autofac;
     using Autofac.Integration.Mvc;
-    using Narvalo;
 
     // Cf. https://groups.google.com/forum/#!msg/autofac/BkY4s4tusUc/micDCB0YiN8J
     public sealed class AutofacRouteHandler<THandler> : IRouteHandler where THandler : IHttpHandler

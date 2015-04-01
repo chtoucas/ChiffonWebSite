@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using Chiffon.Common;
@@ -33,7 +32,6 @@
 
         public string MainHeading { get { return _mainHeading; } set { _mainHeading = value; } }
 
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public IEnumerable<KeyValuePair<ChiffonLanguage, Uri>> AlternateUrls { get; set; }
 
         public string MainMenuCssClass { get { return _mainMenuCssClass; } set { _mainMenuCssClass = value; } }
