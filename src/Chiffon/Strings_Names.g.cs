@@ -1,5 +1,5 @@
 ﻿
-namespace Chiffon.Properties
+namespace Chiffon
 {
     internal static class Strings_Names
     {

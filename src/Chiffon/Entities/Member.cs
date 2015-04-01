@@ -6,7 +6,6 @@
     using System.Globalization;
     using System.Net.Mail;
 
-
     /// <summary>
     /// Représente un membre du site.
     /// </summary>

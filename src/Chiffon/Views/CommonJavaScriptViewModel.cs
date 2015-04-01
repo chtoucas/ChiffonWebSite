@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Views
 {
-
     public sealed class CommonJavaScriptViewModel
     {
         public string ActionName { get; set; }

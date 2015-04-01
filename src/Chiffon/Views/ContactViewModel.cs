@@ -2,8 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using Chiffon.Properties;
-
     public sealed class ContactViewModel
     {
         [Required(

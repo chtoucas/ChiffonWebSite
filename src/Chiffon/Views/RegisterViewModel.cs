@@ -5,8 +5,6 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
-    using Chiffon.Properties;
-
     // Attribut DataType pour Email
     // Attribut Display
     // LabelFor
