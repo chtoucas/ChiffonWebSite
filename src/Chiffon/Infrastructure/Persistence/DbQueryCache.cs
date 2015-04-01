@@ -9,6 +9,7 @@
     using Chiffon.Entities;
     using Narvalo;
 
+    // REVIEW: Utiliser plutôt des références "faibles" ?
     public class DbQueryCache : IDbQueryCache
     {
         private const int CACHE_EXPIRATION_IN_HOURS = 24;

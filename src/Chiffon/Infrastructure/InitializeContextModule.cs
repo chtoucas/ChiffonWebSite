@@ -35,7 +35,7 @@
 
         public void Dispose()
         {
-            // Intentionally left blank.
+            // Laissé vide intentionnellement.
         }
 
         // WARNING: Cette méthode ne convient pas avec les actions asynchrones 

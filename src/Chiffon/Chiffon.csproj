@@ -27,6 +27,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -97,6 +99,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -171,9 +174,10 @@
     <Compile Include="..\AssemblyInfo.Common.cs">
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
-    <Compile Include="Externs\AutofacRouteHandler`1.cs" />
-    <Compile Include="Externs\ContainerBuilder%24.cs" />
-    <Compile Include="Externs\ConvertTo.cs" />
+    <Compile Include="Infrastructure\AutofacRouteHandler`1.cs" />
+    <Compile Include="Infrastructure\ContainerBuilder%24.cs" />
+    <Compile Include="Infrastructure\InitializeVSContextModule.cs" />
+    <Compile Include="Internal\ConvertTo.cs" />
     <Compile Include="Infrastructure\HttpLogEventEnricher.cs" />
     <Compile Include="Infrastructure\Addressing\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\Routes.cs" />

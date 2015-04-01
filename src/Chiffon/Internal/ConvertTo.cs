@@ -1,6 +1,4 @@
-﻿// Copyright (c) Narvalo.Org. All rights reserved. See LICENSE.txt in the project root for license information.
-
-namespace Chiffon.Infrastructure
+﻿namespace Chiffon.Internal
 {
     using System.Diagnostics.CodeAnalysis;
 
