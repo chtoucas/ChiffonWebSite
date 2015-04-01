@@ -44,6 +44,7 @@ Màj des dépendances nodejs:
 
 et pour les feuilles de style, on fera attention à :
 - `src\Chiffon.WebSite\Views\Widget\StyleSheet.Debug.cshtml`.
+
 Après coup, aller dans Visual Studio, supprimer les anciennes version et
 référencer les nouvelles.
 
@@ -51,22 +52,23 @@ Mises à jour via nodejs :
 - [Lo-Dash](https://lodash.com/). Attention, la nouvelle version ne sera
   disponible qu'après avoir exécuté grunt.
 - [less.js](http://lesscss.org/). Attention, il ne faut pas oublier de faire
-  une copie des fichiers dans `assets\vendor`.
+  une copie des fichiers dans `src\Chiffon.WebSite\assets\vendor`.
 
 Mises à jour manuelles :
-- [FastClick](https://github.com/ftlabs/fastclick), uniquement le js.
-- [jQuery](https://jquery.com/download/), js, min.js et min.map.
-- [jQuery.validate](http://jqueryvalidation.org/), js, min.js et
-  les fichiers de langue.
-- [jQuery.Waypoints](https://github.com/imakewebthings/waypoints), js et min.js.
-- [normalize.css](http://necolas.github.io/normalize.css/)
+- [FastClick](https://github.com/ftlabs/fastclick), uniquement le js ;
+- [jQuery](https://jquery.com/download/), les trois fichiers js, min.js et min.map ;
+- [jQuery.validate](http://jqueryvalidation.org/), les deux fichiers js, min.js
+  ainsi que les fichiers de langue ;
 - [NProgress](http://ricostacruz.com/nprogress/). Attention, il faut mettre
-  à jour js et css.
+  à jour le js et le css ;
+- [jQuery.Waypoints](https://github.com/imakewebthings/waypoints), les deux
+  fichiers js et min.js ;
+- [normalize.css](http://necolas.github.io/normalize.css/).
 
 Pas de mises à jour nécessaires :
-- [yepnope](http://yepnopejs.com/), _plus de mises à jour disponibles_.
-- [H5BP](https://github.com/h5bp/html5-boilerplate), internalisé à partir de la version 4.3.
-- jquery.microdata, internalisé (je ne retrouve même pas la référence d'origine).
+- [yepnope](http://yepnopejs.com/), _plus de mises à jour disponibles_ ;
+- [H5BP](https://github.com/h5bp/html5-boilerplate), internalisé à partir de la version 4.3 ;
+- jquery.microdata, internalisé (je ne retrouve même plus la référence d'origine).
 
 CSS & JavaScript
 ----------------
@@ -83,7 +85,7 @@ Analyse des performances en conditions réelles :
 - PageSpeed Extension
 - [PageSpeed Insights](http://developers.google.com/speed/pagespeed/insights/)
 
-Interface :
+Tester l'interface avec des navigateurs désués :
 - [Modern IE](http://www.modern.ie/)
 - [IE Tester](http://my-debugbar.com/wiki/IETester/HomePage)
 - [Windows XP Mode](http://windows.microsoft.com/en-us/windows7/products/features/windows-xp-mode)
