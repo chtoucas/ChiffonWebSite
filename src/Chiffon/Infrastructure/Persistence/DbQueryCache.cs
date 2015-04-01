@@ -10,7 +10,7 @@
     using Narvalo;
 
     // REVIEW: Utiliser plutôt des références "faibles" ?
-    public class DbQueryCache : IDbQueryCache
+    public sealed class DbQueryCache : IDbQueryCache
     {
         private const int CACHE_EXPIRATION_IN_HOURS = 24;
 
@@ -29,8 +29,6 @@
 
             _context = context;
         }
-
-        protected Cache Cache { get { return _context.Cache; } }
 
         public IEnumerable<Category> GetOrInsertCategories(DesignerKey designerKey, Func<DesignerKey, IEnumerable<Category>> query)
         {
@@ -60,7 +58,7 @@
 
         private T GetOrInsert_<T>(string cacheKey, Func<T> query) where T : class
         {
-            var cachedValue = Cache[cacheKey];
+            var cachedValue = _context.Cache[cacheKey];
 
             if (cachedValue != null)
             {
@@ -71,9 +69,9 @@
 
             lock (s_Lock)
             {
-                if (Cache[cacheKey] == null)
+                if (_context.Cache[cacheKey] == null)
                 {
-                    Cache.Add(
+                    _context.Cache.Add(
                         cacheKey, 
                         result, 
                         null,

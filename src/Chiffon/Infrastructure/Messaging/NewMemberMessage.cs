@@ -2,7 +2,7 @@
 {
     using System.Net.Mail;
 
-    public class NewMemberMessage
+    public sealed class NewMemberMessage
     {
         public string CompanyName { get; set; }
 

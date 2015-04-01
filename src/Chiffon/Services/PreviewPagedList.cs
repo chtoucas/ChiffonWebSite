@@ -4,7 +4,7 @@
 
     using Chiffon.Entities;
 
-    public class PreviewPagedList
+    public sealed class PreviewPagedList
     {
         public bool IsFirstPage { get { return PageIndex == 1; } }
 

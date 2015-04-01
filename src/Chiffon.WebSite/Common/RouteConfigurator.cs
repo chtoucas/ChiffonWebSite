@@ -11,7 +11,7 @@
     using Narvalo.Web;
 
     // TODO: I18N.
-    public class RouteConfigurator
+    public sealed class RouteConfigurator
     {
         private readonly RouteCollection _routes;
 

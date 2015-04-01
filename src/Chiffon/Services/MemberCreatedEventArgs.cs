@@ -4,7 +4,7 @@
 
     using Chiffon.Entities;
 
-    public class MemberCreatedEventArgs : EventArgs
+    public sealed class MemberCreatedEventArgs : EventArgs
     {
         private readonly Member _member;
 

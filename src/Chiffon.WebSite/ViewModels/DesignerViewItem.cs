@@ -2,17 +2,23 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+
     using Chiffon.Entities;
 
-    public class DesignerViewItem
+    public sealed class DesignerViewItem
     {
         int? _patternCount;
 
         public IEnumerable<CategoryViewItem> Categories { get; set; }
+
         public string CurrentCategoryKey { get; set; }
+
         public string DisplayName { get; set; }
+
         public string Email { get; set; }
+
         public DesignerKey Key { get; set; }
+
         public string Presentation { get; set; }
 
         public int PatternCount

@@ -22,7 +22,7 @@
     // NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
     // Cf. http://stackoverflow.com/questions/3797182/how-to-correctly-canonicalize-a-url-in-an-asp-net-mvc-application
     // & https://github.com/schourode/canonicalize
-    public class SingleDomainSiteMap : ISiteMap
+    public sealed class SingleDomainSiteMap : ISiteMap
     {
         private readonly Uri _baseUri;
         private readonly ChiffonLanguage _language;

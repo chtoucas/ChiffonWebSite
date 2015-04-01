@@ -2,7 +2,7 @@
 {
     using System.Net.Mail;
 
-    public class NewContactMessage
+    public sealed class NewContactMessage
     {
         public MailAddress EmailAddress { get; set; }
 

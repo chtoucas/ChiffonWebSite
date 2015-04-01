@@ -4,7 +4,7 @@
     /// Représente les paramètres nécessaires à la création d'un membre et utilisés par
     /// <see cref="Chiffon.Infrastructure.Persistence.IDbCommands.NewMember"/>.
     /// </summary>
-    public class NewMemberParameters
+    public sealed class NewMemberParameters
     {
         /// <summary>
         /// Assigne ou retourne le nom de l'agence à laquelle le membre appartient.

@@ -5,7 +5,7 @@
     using Narvalo;
     using Serilog;
 
-    public class LogConfig
+    public sealed class LogConfig
     {
         private readonly ChiffonConfig _config;
 

@@ -4,7 +4,7 @@
 
     using Chiffon.Common;
 
-    public class MailMergeController : Controller
+    public sealed class MailMergeController : Controller
     {
         public ActionResult ForgottenPassword()
         {

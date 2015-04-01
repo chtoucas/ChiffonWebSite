@@ -8,10 +8,8 @@
     using Serilog.Events;
 
     [Export("Development", typeof(ILogService))]
-    public class DevelopmentLogService : ILogService
+    public sealed class DevelopmentLogService : ILogService
     {
-        #region ILogService
-
         [CLSCompliant(false)]
         public ILogger GetLogger(LogEventLevel minimumLevel)
         {
@@ -32,7 +30,5 @@
                 .Enrich.With<HttpLogEventEnricher>()
                 .CreateLogger();
         }
-
-        #endregion
     }
 }

@@ -14,7 +14,7 @@
     using Narvalo;
 
     // TODO: Vérifier que ces événements ne sont déclenchés qu'une fois par requête.
-    public class InitializeContextModule : IHttpModule
+    public sealed class InitializeContextModule : IHttpModule
     {
         public static void Register()
         {

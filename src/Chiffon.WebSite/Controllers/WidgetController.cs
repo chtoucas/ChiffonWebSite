@@ -10,7 +10,7 @@
     using Narvalo.Web;
 
     // WARNING: Tous les résultats de ces actions sont mis en cache.
-    public class WidgetController : Controller
+    public sealed class WidgetController : Controller
     {
         readonly ChiffonConfig _config;
 

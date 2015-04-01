@@ -6,7 +6,7 @@
     using Chiffon.Entities;
     using Narvalo;
 
-    public class AuthentificationService
+    public sealed class AuthentificationService
     {
         private MemberSession _memberSession;
 

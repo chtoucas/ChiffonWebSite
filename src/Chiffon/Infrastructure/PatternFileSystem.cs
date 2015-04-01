@@ -5,7 +5,7 @@
 
     using Narvalo;
 
-    public class PatternFileSystem
+    public sealed class PatternFileSystem
     {
         private readonly ChiffonConfig _config;
 

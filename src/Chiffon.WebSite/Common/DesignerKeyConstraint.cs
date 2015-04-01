@@ -4,7 +4,7 @@
     using System.Web.Routing;
     using Narvalo;
 
-    public class DesignerKeyConstraint : IRouteConstraint
+    public sealed class DesignerKeyConstraint : IRouteConstraint
     {
         public bool Match(
             HttpContextBase httpContext, 

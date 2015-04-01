@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Handlers
 {
-    public class GoQuery
+    public sealed class GoQuery
     {
         public string Token { get; set; }
     }

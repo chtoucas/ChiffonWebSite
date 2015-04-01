@@ -8,7 +8,7 @@
 
     using Chiffon.Entities;
 
-    public class OneDomainPerLanguageSiteMap : ISiteMap
+    public sealed class OneDomainPerLanguageSiteMap : ISiteMap
     {
         private readonly Uri _baseUri;
         private readonly ChiffonLanguage _language;

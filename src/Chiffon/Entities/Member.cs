@@ -11,7 +11,7 @@
     /// <summary>
     /// Représente un membre du site.
     /// </summary>
-    public class Member
+    public sealed class Member
     {
         private string _displayName;
         private MailAddress _emailAddress;

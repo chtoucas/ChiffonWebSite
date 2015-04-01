@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
@@ -13,7 +14,7 @@
     using Narvalo.Web;
     using Narvalo.Web.Security;
 
-    public class GoHandler : HttpHandlerBase<GoQuery>, IRequiresSessionState
+    public sealed class GoHandler : HttpHandlerBase<GoQuery>, IRequiresSessionState
     {
         //readonly ChiffonConfig _config;
         readonly IMemberService _memberService;
@@ -56,8 +57,8 @@
 
         protected override void ProcessRequestCore(HttpContext context, GoQuery query)
         {
-            Requires.NotNull(context, "context");
-            Requires.NotNull(query, "query");
+            Require.NotNull(context, "context");
+            Require.NotNull(query, "query");
 
             var userName = _memberService.LogOn(query.Token);
 

@@ -2,7 +2,7 @@
 {
     using Narvalo;
 
-    public class Category
+    public sealed class Category
     {
         private readonly DesignerKey _designerKey;
         private readonly string _key;

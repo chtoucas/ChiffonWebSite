@@ -13,7 +13,7 @@
     /// <summary>
     /// Implémentation standard de <see cref="Chiffon.Services.IMemberService"/>.
     /// </summary>
-    public class MemberService/*Impl*/ : IMemberService
+    public sealed class MemberService/*Impl*/ : IMemberService
     {
         private const int PASSWORD_LENGTH = 7;
         private const string PASSWORD_LETTERS = "abcdefghijkmnpqrstuvwxyz";

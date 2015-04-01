@@ -23,7 +23,7 @@ namespace Chiffon.Common
     // - utiliser Quoted-Printable
     // - vérifier SPF, DKIM
     // - beacon
-    public class MailMerge : IMailMerge
+    public sealed class MailMerge : IMailMerge
     {
         private static readonly CultureInfo FrenchCultureInfo_ = new CultureInfo("fr-FR");
 

@@ -4,7 +4,7 @@
     using Chiffon.ViewModels;
     using Narvalo.Web.Semantic;
 
-    public class ChiffonControllerContext
+    public sealed class ChiffonControllerContext
     {
         public ChiffonLanguage Language { get; internal set; }
 

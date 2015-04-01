@@ -4,18 +4,19 @@
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+
     using Chiffon.ViewModels.Resources;
 
     // Attribut DataType pour Email
     // Attribut Display
     // LabelFor
-    [MetadataType(typeof(UIMetadata))]
-    public class RegisterViewModel
+    [MetadataType(typeof(UIMetadata_))]
+    public sealed class RegisterViewModel
     {
-        string _companyName;
-        string _email;
-        string _firstName;
-        string _lastName;
+        private string _companyName;
+        private string _email;
+        private string _firstName;
+        private string _lastName;
 
         [Required(
             ErrorMessageResourceType = typeof(SR),
@@ -43,7 +44,8 @@
             get { return _email; }
             set
             {
-                if (!String.IsNullOrWhiteSpace(value)) {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
                     _email = value.ToLowerInvariant();
                 }
             }
@@ -80,13 +82,14 @@
         [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string ReturnUrl { get; set; }
 
-        class UIMetadata
+        private class UIMetadata_
         {
         }
 
-        static string NormalizeName_(string value)
+        private static string NormalizeName_(string value)
         {
-            if (String.IsNullOrWhiteSpace(value)) {
+            if (String.IsNullOrWhiteSpace(value))
+            {
                 return value;
             }
 

@@ -13,7 +13,7 @@
     using Chiffon.ViewModels;
     using Narvalo;
 
-    public class AccountController : ChiffonController
+    public sealed class AccountController : ChiffonController
     {
         readonly IMemberService _memberService;
 

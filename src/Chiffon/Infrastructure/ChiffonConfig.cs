@@ -13,7 +13,7 @@
     using Narvalo.Fx;
     using Serilog.Events;
 
-    public class ChiffonConfig
+    public sealed class ChiffonConfig
     {
         private const string SETTING_PREFIX = "chiffon:";
         private const string SQL_CONNECTION_STRING_NAME = "SqlServer";

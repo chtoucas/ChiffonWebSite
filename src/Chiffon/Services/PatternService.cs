@@ -8,7 +8,7 @@
     using Chiffon.Internal;
     using Narvalo;
 
-    public class PatternService/*Impl*/ : IPatternService
+    public sealed class PatternService/*Impl*/ : IPatternService
     {
         private readonly IDbQueries _queries;
 

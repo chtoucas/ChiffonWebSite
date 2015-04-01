@@ -6,7 +6,7 @@
     using Chiffon.Infrastructure;
     using Narvalo;
 
-    public class Pattern
+    public sealed class Pattern
     {
         private readonly PatternId _patternId;
         private readonly string _variant;

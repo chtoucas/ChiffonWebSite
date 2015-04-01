@@ -6,7 +6,7 @@
 
     // WARNING: Pour le moment, si l'AppPool est recyclé on perd la session car on utilise
     // le mode de fonctionnement "InProc".
-    public class MemberSession
+    public sealed class MemberSession
     {
         private const string HTTP_SESSION_KEY = "member";
 

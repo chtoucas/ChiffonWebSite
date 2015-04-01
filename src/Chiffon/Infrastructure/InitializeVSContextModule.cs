@@ -8,7 +8,7 @@
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 
-    public class InitializeVSContextModule : IHttpModule
+    public sealed class InitializeVSContextModule : IHttpModule
     {
         public static void Register()
         {

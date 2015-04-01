@@ -7,7 +7,7 @@
     using Chiffon.Entities;
     using Narvalo;
 
-    public class CachedDbQueries : IDbQueries
+    public sealed class CachedDbQueries : IDbQueries
     {
         private readonly IDbQueries _inner;
         private readonly IDbQueryCache _cache;

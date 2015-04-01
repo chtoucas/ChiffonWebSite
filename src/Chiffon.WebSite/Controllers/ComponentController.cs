@@ -13,7 +13,7 @@
     using Narvalo.Web;
     using Narvalo.Web.UI.Assets;
 
-    public class ComponentController : Controller
+    public sealed class ComponentController : Controller
     {
         readonly ChiffonConfig _config;
 

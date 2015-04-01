@@ -17,7 +17,7 @@
     using Narvalo;
     using Narvalo.Web.Semantic;
 
-    public class HomeController : ChiffonController
+    public sealed class HomeController : ChiffonController
     {
         readonly IMessenger _messenger;
         readonly IDbQueries _queries;

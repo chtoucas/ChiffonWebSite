@@ -5,7 +5,7 @@
 
     using Chiffon.Internal;
 
-    public class ChiffonContext
+    public sealed class ChiffonContext
     {
         private readonly ChiffonEnvironment _environment;
 

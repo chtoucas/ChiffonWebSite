@@ -5,7 +5,7 @@
     using Narvalo;
     using Serilog;
 
-    public class Messenger/*Impl*/ : IMessenger
+    public sealed class Messenger/*Impl*/ : IMessenger
     {
         private readonly IMailMerge _mailMerge;
 
@@ -15,8 +15,6 @@
 
             _mailMerge = mailMerge;
         }
-
-        #region IMessenger
 
         /// <summary>
         /// Envoi des notifications lors de l'inscription d'un nouveau membre.
@@ -80,7 +78,5 @@
                 }
             }
         }
-
-        #endregion
     }
 }

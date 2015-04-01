@@ -18,7 +18,7 @@
     using Narvalo.Web.Semantic;
 
     [Authorize]
-    public class DesignerController : ChiffonController
+    public sealed class DesignerController : ChiffonController
     {
         public const string AllCategoryKey = "ALL";
 

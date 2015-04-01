@@ -10,7 +10,7 @@
     /// <summary>
     /// Représente un designer.
     /// </summary>
-    public class Designer
+    public sealed class Designer
     {
         private readonly DesignerKey _key;
 

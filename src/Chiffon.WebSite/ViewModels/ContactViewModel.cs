@@ -1,9 +1,10 @@
 ﻿namespace Chiffon.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
+
     using Chiffon.ViewModels.Resources;
 
-    public class ContactViewModel
+    public sealed class ContactViewModel
     {
         [Required(
             ErrorMessageResourceType = typeof(SR),

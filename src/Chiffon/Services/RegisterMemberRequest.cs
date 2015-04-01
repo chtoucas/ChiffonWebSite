@@ -6,7 +6,7 @@
     /// Représente une demande d'inscription associée à la méthode
     /// <see cref="Chiffon.Services.IMemberService.RegisterMember"/>.
     /// </summary>
-    public class RegisterMemberRequest
+    public sealed class RegisterMemberRequest
     {
         private MessageRecipients _recipients = MessageRecipients.Default;
 

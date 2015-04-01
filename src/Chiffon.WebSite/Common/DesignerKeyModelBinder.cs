@@ -4,7 +4,7 @@
     using Chiffon.Entities;
     using Narvalo;
 
-    public class DesignerKeyModelBinder : IModelBinder
+    public sealed class DesignerKeyModelBinder : IModelBinder
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {

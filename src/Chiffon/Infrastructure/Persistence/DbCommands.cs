@@ -6,8 +6,11 @@
     /// <summary>
     /// Implémentation standard de <see cref="Chiffon.Infrastructure.Persistence.IDbCommands"/>.
     /// </summary>
-    public class DbCommands : IDbCommands
+    public sealed class DbCommands : IDbCommands
     {
+        /// <summary>
+        /// Chaîne de connexion à la base de données tel que spécifiée lors de la création de l'objet.
+        /// </summary>
         private readonly string _connectionString;
 
         /// <summary>
@@ -22,18 +25,11 @@
 
             _connectionString = connectionString;
         }
-
-        /// <summary>
-        /// Retourne la chaîne de connexion à la base de données tel que spécifiée
-        /// lors de la création de l'objet.
-        /// </summary>
-        protected string ConnectionString { get { return _connectionString; } }
-
         public void NewMember(NewMemberParameters parameters)
         {
             Require.NotNull(parameters, "parameters");
 
-            var q = new NewMemberCommand(ConnectionString);
+            var q = new NewMemberCommand(_connectionString);
             q.Execute(parameters);
         }
     }
