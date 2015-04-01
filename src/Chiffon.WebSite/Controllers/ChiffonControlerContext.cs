@@ -7,7 +7,9 @@
     public class ChiffonControllerContext
     {
         public ChiffonLanguage Language { get; internal set; }
+
         public LayoutViewModel LayoutViewModel { get; internal set; }
+
         public Ontology Ontology { get; internal set; }
     }
 }

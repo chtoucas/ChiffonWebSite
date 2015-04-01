@@ -5,11 +5,12 @@
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+
     using Chiffon.Common;
-    using Chiffon.Persistence;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
+    using Chiffon.Infrastructure.Persistence;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;
@@ -19,7 +20,7 @@
     [Authorize]
     public class DesignerController : ChiffonController
     {
-        public const string AllCategoryKey = "ALL";
+        public const string ALL_CATEGORY_KEY = "ALL";
 
         // On limite le nombre d'aperçus à 30 = 5 * 6. En effet, suivant la taille de l'écran 
         // de l'internaute, on peut avoir de 2 à 3 colonnes, on choisit donc un multiple de 6.
@@ -51,7 +52,7 @@
             var pagedList = _patternService.ListPreviews(designerKey, p, PreviewsPageSize_);
             if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            var designer = GetDesigner_(designerKey, AllCategoryKey);
+            var designer = GetDesigner_(designerKey, ALL_CATEGORY_KEY);
 
             var model = new DesignerViewModel {
                 Designer = designer,
@@ -171,8 +172,6 @@
             return View(Constants.ViewName.Designer.Pattern, model);
         }
 
-        #region Utilitaires.
-
         // On suppose que designerKey est toujours valide (une contrainte sur la route doit
         // assurer qu'on se retrouve dans cette configuration).
 
@@ -192,7 +191,5 @@
                 Width = ImageGeometry.PreviewWidth,
             };
         }
-
-        #endregion
     }
 }

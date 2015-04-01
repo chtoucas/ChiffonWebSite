@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Controllers
 {
     using System.Web.Mvc;
+
     using Chiffon.Common;
 
     public class MailMergeController : Controller

@@ -1,10 +1,10 @@
-﻿namespace Chiffon.Persistence
+﻿namespace Chiffon.Infrastructure.Persistence
 {
     using System;
 
     /// <summary>
     /// Représente les paramètres nécessaires à la création d'un membre et utilisés par
-    /// <see cref="Chiffon.Persistence.IDbCommands.NewMember"/>.
+    /// <see cref="Chiffon.Infrastructure.Persistence.IDbCommands.NewMember"/>.
     /// </summary>
     [Serializable]
     public class NewMemberParameters

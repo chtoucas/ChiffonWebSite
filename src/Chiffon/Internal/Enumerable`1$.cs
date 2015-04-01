@@ -1,11 +1,11 @@
-﻿namespace Chiffon.Services
+﻿namespace Chiffon.Internal
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
 
-    public static class EnumerableExtensions
+    internal static class EnumerableExtensions
     {
         public static int PageCount<T>(this IEnumerable<T> @this, int pageSize)
         {

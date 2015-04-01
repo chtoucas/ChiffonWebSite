@@ -4,7 +4,8 @@
     using System.Linq;
 
     using Chiffon.Entities;
-    using Chiffon.Persistence;
+    using Chiffon.Internal;
+    using Chiffon.Infrastructure.Persistence;
     using Narvalo;
 
     public class PatternService : IPatternService

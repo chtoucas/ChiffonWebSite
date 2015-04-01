@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Common
 {
     using System.Web.Mvc;
+
     using Narvalo.Web.Html;
 
     public abstract class EnrichedWebViewPage<TModel> : WebViewPage<TModel>

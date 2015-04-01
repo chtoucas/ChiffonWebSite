@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Persistence
+﻿namespace Chiffon.Infrastructure.Persistence
 {
     using System.Collections.Generic;
     using System.Globalization;

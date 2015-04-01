@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+
     using Chiffon.Entities;
     using Chiffon.ViewModels;
     using Narvalo;

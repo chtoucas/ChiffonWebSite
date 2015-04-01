@@ -1,6 +1,7 @@
 ﻿namespace Chiffon.Common
 {
     using System;
+
     using Chiffon.Infrastructure;
     using Narvalo;
 

@@ -1,7 +1,7 @@
 ﻿namespace Chiffon
 {
     using Autofac;
-    using Chiffon.Persistence;
+    using Chiffon.Infrastructure.Persistence;
     using Chiffon.Infrastructure;
     using Narvalo;
 
@@ -32,19 +32,19 @@
             builder.Register(ResolveCommands_).As<IDbCommands>().SingleInstance();
         }
 
-        static IDbQueries ResolveQueries_(IComponentContext context)
+        private static IDbQueries ResolveQueries_(IComponentContext context)
         {
             return new CachedDbQueries(
                 new DbQueries(context.Resolve<ChiffonConfig>().SqlConnectionString),
                 context.Resolve<IDbQueryCache>());
         }
 
-        static IDbQueries ResolveQueriesNoCache_(IComponentContext context)
+        private static IDbQueries ResolveQueriesNoCache_(IComponentContext context)
         {
             return new DbQueries(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }
 
-        static IDbCommands ResolveCommands_(IComponentContext context)
+        private static IDbCommands ResolveCommands_(IComponentContext context)
         {
             return new DbCommands(context.Resolve<ChiffonConfig>().SqlConnectionString);
         }

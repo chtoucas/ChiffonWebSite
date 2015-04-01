@@ -5,7 +5,7 @@
     using Chiffon.Entities;
     using Chiffon.Infrastructure.Messaging;
     using Chiffon.Internal;
-    using Chiffon.Persistence;
+    using Chiffon.Infrastructure.Persistence;
     using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Fx;

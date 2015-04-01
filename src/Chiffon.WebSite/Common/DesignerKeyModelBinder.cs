@@ -6,8 +6,6 @@
 
     public class DesignerKeyModelBinder : IModelBinder
     {
-        #region IModelBinder
-
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             Require.NotNull(controllerContext, "controllerContext");
@@ -19,7 +17,5 @@
 
             return DesignerKey.Parse((string)value);
         }
-
-        #endregion
     }
 }

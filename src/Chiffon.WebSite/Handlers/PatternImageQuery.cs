@@ -1,6 +1,7 @@
 namespace Chiffon.Handlers
 {
     using System.ComponentModel.DataAnnotations;
+
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
 

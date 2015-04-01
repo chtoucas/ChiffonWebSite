@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Narvalo.Org. All rights reserved. See LICENSE.txt in the project root for license information.
 
-namespace Narvalo
+namespace Chiffon.Infrastructure
 {
     using System;
     using System.Web;
 
-    using global::Serilog.Core;
-    using global::Serilog.Events;
+    using Narvalo;
+    using Serilog.Core;
+    using Serilog.Events;
 
     [CLSCompliant(false)]
     public sealed class HttpLogEventEnricher : ILogEventEnricher

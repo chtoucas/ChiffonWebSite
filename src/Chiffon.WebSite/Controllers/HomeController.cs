@@ -6,11 +6,12 @@
     using System.Net.Mail;
     using System.Web;
     using System.Web.Mvc;
+
     using Chiffon.Common;
     using Chiffon.Infrastructure;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;
-    using Chiffon.Persistence;
+    using Chiffon.Infrastructure.Persistence;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;

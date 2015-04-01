@@ -5,6 +5,7 @@ namespace Chiffon.Common
     using System.Net.Mail;
     using System.Net.Mime;
     using System.Text;
+
     using Antlr4.StringTemplate;
     using Chiffon.Infrastructure.Addressing;
     using Chiffon.Infrastructure.Messaging;

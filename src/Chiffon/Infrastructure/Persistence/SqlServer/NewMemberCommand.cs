@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Persistence.SqlServer
+﻿namespace Chiffon.Infrastructure.Persistence.SqlServer
 {
     using System;
     using System.Data;
@@ -14,7 +14,7 @@
     public sealed class NewMemberCommand : NonQueryStoredProcedure<NewMemberParameters>
     {
         /// <summary>
-        /// Initialise un nouvel objet de type <see cref="Chiffon.Persistence.SqlServer.NewMemberCommand"/>.
+        /// Initialise un nouvel objet de type <see cref="Chiffon.Infrastructure.Persistence.SqlServer.NewMemberCommand"/>.
         /// </summary>
         /// <param name="connectionString">Chaîne de connexion à la base de données.</param>
         /// <exception cref="System.ArgumentNullException">connectionString est null.</exception>
