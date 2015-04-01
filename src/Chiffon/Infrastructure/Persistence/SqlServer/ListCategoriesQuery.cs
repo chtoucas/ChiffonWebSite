@@ -23,7 +23,7 @@
 
         public DesignerKey DesignerKey { get; private set; }
 
-        protected override IEnumerable<Category> Execute([ValidatedNotNull]SqlDataReader reader)
+        protected override IEnumerable<Category> Execute(SqlDataReader reader)
         {
             CheckFor.StoredProcedure.Execute(reader);
 

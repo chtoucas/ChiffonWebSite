@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics.Contracts;
-    using System.Globalization;
     using System.IO;
 
     using Narvalo;
@@ -58,29 +57,30 @@
             switch (size)
             {
                 case PatternSize.Preview:
-                    return new Preview {
+                    return new Preview_ {
                         CategoryDirectory = categoryDirectory,
                         DesignerDirectory = designerDirectory,
                         Reference = reference,
                         Version = version,
                     };
                 case PatternSize.Original:
-                    return new Original {
+                    return new Original_ {
                         CategoryDirectory = categoryDirectory,
                         DesignerDirectory = designerDirectory,
                         Reference = reference,
                         Version = version,
                     };
                 default:
-                    throw new InvalidOperationException();
+                    throw Acknowledge.Unreachable(
+                        "The pattern size '" + size.ToString() + "' is not yet handled.");
             }
         }
 
-        private class Original : PatternImage
+        private sealed class Original_ : PatternImage
         {
             private string _fileName;
 
-            public Original() : base() { }
+            public Original_() : base() { }
 
             public override string FileName
             {
@@ -100,11 +100,11 @@
             public override PatternSize Size { get { return PatternSize.Original; } }
         }
 
-        private class Preview : PatternImage
+        private sealed class Preview_ : PatternImage
         {
             private string _filename;
 
-            public Preview() : base() { }
+            public Preview_() : base() { }
 
             public override string FileName
             {

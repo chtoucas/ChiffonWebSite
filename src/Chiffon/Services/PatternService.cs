@@ -4,11 +4,11 @@
     using System.Linq;
 
     using Chiffon.Entities;
-    using Chiffon.Internal;
     using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Internal;
     using Narvalo;
 
-    public class PatternService : IPatternService
+    public class PatternService/*Impl*/ : IPatternService
     {
         private readonly IDbQueries _queries;
 

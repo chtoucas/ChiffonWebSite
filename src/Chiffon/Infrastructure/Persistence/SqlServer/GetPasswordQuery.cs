@@ -23,7 +23,7 @@
 
         public string Email { get; private set; }
 
-        protected override string Execute([ValidatedNotNull]SqlDataReader reader)
+        protected override string Execute(SqlDataReader reader)
         {
             CheckFor.StoredProcedure.Execute(reader);
 

@@ -20,7 +20,7 @@
     [Authorize]
     public class DesignerController : ChiffonController
     {
-        public const string ALL_CATEGORY_KEY = "ALL";
+        public const string AllCategoryKey = "ALL";
 
         // On limite le nombre d'aperçus à 30 = 5 * 6. En effet, suivant la taille de l'écran 
         // de l'internaute, on peut avoir de 2 à 3 colonnes, on choisit donc un multiple de 6.
@@ -52,7 +52,7 @@
             var pagedList = _patternService.ListPreviews(designerKey, p, PreviewsPageSize_);
             if (pagedList == null) { return new HttpNotFoundResult(); }
 
-            var designer = GetDesigner_(designerKey, ALL_CATEGORY_KEY);
+            var designer = GetDesigner_(designerKey, AllCategoryKey);
 
             var model = new DesignerViewModel {
                 Designer = designer,

@@ -4,8 +4,8 @@
 
     public struct PatternImageSize : IEquatable<PatternImageSize>
     {
-        private int _width;
-        private int _height;
+        private readonly int _width;
+        private readonly int _height;
 
         public PatternImageSize(int width, int height)
         {

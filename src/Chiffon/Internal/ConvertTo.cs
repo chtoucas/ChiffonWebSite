@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.CodeAnalysis;
 
-    public static class ConvertTo
+    internal static class ConvertTo
     {
         /// <remarks>
         /// WARNING: Does not work consistently for Flags enums:

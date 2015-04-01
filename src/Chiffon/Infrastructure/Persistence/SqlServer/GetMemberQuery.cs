@@ -27,16 +27,17 @@
 
         public string Password { get; private set; }
 
-        protected override Member Execute([ValidatedNotNull]SqlDataReader reader)
+        protected override Member Execute(SqlDataReader reader)
         {
             CheckFor.StoredProcedure.Execute(reader);
 
             if (!reader.Read()) { return null; }
 
-            return MemberFactory.NewMember(
-                Email, 
-                reader.GetStringUnsafe("firstname"),
-                reader.GetStringUnsafe("lastname"));
+            return new Member {
+                Email = Email, 
+                FirstName = reader.GetStringUnsafe("firstname"),
+                LastName = reader.GetStringUnsafe("lastname")
+            };
         }
 
         protected override void PrepareParameters(SqlParameterCollection parameters)

@@ -30,7 +30,7 @@
 
         public string Variant { get; private set; }
 
-        protected override Pattern Execute([ValidatedNotNull]SqlDataReader reader)
+        protected override Pattern Execute(SqlDataReader reader)
         {
             CheckFor.StoredProcedure.Execute(reader);
 

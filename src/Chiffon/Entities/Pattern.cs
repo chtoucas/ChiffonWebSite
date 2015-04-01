@@ -4,6 +4,7 @@
     using System.Diagnostics.Contracts;
 
     using Chiffon.Infrastructure;
+    using Narvalo;
 
     public class Pattern
     {
@@ -110,7 +111,7 @@
                             ? PatternVisibility.Public
                             : PatternVisibility.Members;
                     default:
-                        throw new NotSupportedException(
+                        throw Acknowledge.Unreachable(
                             "The pattern size '" + size.ToString() + "' is not yet handled.");
                 }
             }

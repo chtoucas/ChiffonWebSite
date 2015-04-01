@@ -4,8 +4,8 @@
 
     using Chiffon.Entities;
     using Chiffon.Infrastructure.Messaging;
-    using Chiffon.Internal;
     using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Internal;
     using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Fx;
@@ -61,7 +61,11 @@
 
             _commands.NewMember(cmdParameters);
 
-            var member = MemberFactory.NewMember(request.Email, request.FirstName, request.LastName);
+            var member = new Member {
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            };
 
             // 4. On enclenche tout de suite l'événement (au cas où les opérations suivantes échouent).
 

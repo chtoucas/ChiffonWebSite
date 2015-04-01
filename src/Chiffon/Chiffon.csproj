@@ -205,7 +205,6 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Designer.cs" />
     <Compile Include="Entities\DesignerKey.cs" />
-    <Compile Include="Entities\MemberFactory.cs" />
     <Compile Include="Entities\Pattern.cs" />
     <Compile Include="Entities\PatternId.cs" />
     <Compile Include="Entities\PatternVisibility.cs" />
@@ -233,7 +232,6 @@
     <Compile Include="Infrastructure\PatternFileSystem.cs" />
     <Compile Include="Infrastructure\PatternImage.cs" />
     <Compile Include="Infrastructure\PatternImageSize.cs" />
-    <Compile Include="Infrastructure\PatternSize%24.cs" />
     <Compile Include="Infrastructure\PatternSize.cs" />
     <Compile Include="Infrastructure\ProductionLogService.cs" />
     <Compile Include="Internal\Mapper.cs" />
