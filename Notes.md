@@ -3,13 +3,13 @@ TODO
 
 En priorité,
 - revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
-  * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement
-  * changer "virtualdirectory" en "simone" (chemins dans httpErrors)
-  * supprimer SHOWCASE et déterminer via la configuration si on est dans un répertoire virtuel
-    + inscription / login auto
+  * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement ;
+  * changer "virtualdirectory" en "simone" ;
+  * supprimer SHOWCASE et changer le conmportement du site en fonction d'un
+    paramètre de configuration.
 - ré-activer la gestion des langues multiples :
-  * VSModuleContext (activer en localhost) + session lang ;
-  * Use CurrentCulture instead of CurrentUICulture for localization.
+  * VSModuleContext (activer en localhost) + session ;
+  * utiliser `CurrentCulture` plutôt que `CurrentUICulture`.
 - DNS, il y a un problème avec www. et /XXX
 
 Travail de fond :
@@ -24,16 +24,12 @@ Travail de fond :
 Création d'un package
 ---------------------
 
-1. mettre à jour la version dans `src\AssemblyInfo.Common.cs` et `VersionInfo.xml` ;
-2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts`.
+1. changer le numéro de version dans `src\AssemblyInfo.Common.cs` et `VersionInfo.xml` ;
+2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts` ;
+3. tagger la nouvelle version.
 
 Mise à jour des librairies JavaScript
 -------------------------------------
-
-Màj des dépendances nodejs:
-- `tools\npm-check-updates` pour vérifier la disponibilité de nouvelles versions ;
-- `tools\npm-check-updates -u` pour mettre à jour le fichier `package.json`
-  puis `npm install --save-dev`. On peut aussi utiliser `npm update --save-dev`.
 
 À chaque nouvelle version d'une librairie JavaScript, si nécessaire, mettre à jour :
 - `Gruntfile.js` ;
@@ -48,13 +44,20 @@ et pour les feuilles de style, on fera attention à :
 Après coup, aller dans Visual Studio, supprimer les anciennes version et
 référencer les nouvelles.
 
-Mises à jour via nodejs :
+En ce qui concerne nodejs :
+- lancer `tools\npm-check-updates` pour vérifier la disponibilité de nouvelles versions ;
+- puis `tools\npm-check-updates -u` pour mettre à jour le fichier `package.json`
+- et enfin `npm install` pour la mise à jour effective.
+
+On peut aussi utiliser `npm update --save-dev`.
+
+Dépendances mises à jour via nodejs :
 - [Lo-Dash](https://lodash.com/). Attention, la nouvelle version ne sera
   disponible qu'après avoir exécuté grunt.
 - [less.js](http://lesscss.org/). Attention, il ne faut pas oublier de faire
   une copie des fichiers dans `src\Chiffon.WebSite\assets\vendor`.
 
-Mises à jour manuelles :
+Dépendances mises à jour manuellement :
 - [FastClick](https://github.com/ftlabs/fastclick), uniquement le js ;
 - [jQuery](https://jquery.com/download/), les trois fichiers js, min.js et min.map ;
 - [jQuery.validate](http://jqueryvalidation.org/), les deux fichiers js, min.js
@@ -65,7 +68,7 @@ Mises à jour manuelles :
   fichiers js et min.js ;
 - [normalize.css](http://necolas.github.io/normalize.css/).
 
-Pas de mises à jour nécessaires :
+Dépendances ne nécessitant pas de mises à jour :
 - [yepnope](http://yepnopejs.com/), _plus de mises à jour disponibles_ ;
 - [H5BP](https://github.com/h5bp/html5-boilerplate), internalisé à partir de la version 4.3 ;
 - jquery.microdata, internalisé (je ne retrouve même plus la référence d'origine).

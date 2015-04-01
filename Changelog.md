@@ -1,14 +1,28 @@
 CHANGELOG
 =========
 
-[2014-10-17] Release 1.13
--------------------------
+### 2014-10-17 - Version 1.17
 
-* Maintenant DefaultSiteMap prend correctement en compte le répertoire
+Reprise du projet après la dissolution du collectif.
+
+* Migration vers le nouveau nom de domaine.
+* Désactivation des images pour trois des designers.
+* Mise à jour des coordonnées des membres du collectif.
+* Changement du titre du site afin de bien mettre en évidence que, pour le moment,
+  il s'agit d'un site de démonstration.
+* Désactivation de la gestion des langues multiples.
+
+Changements d'ordre technique :
+* Simplification des scripts de l'infrastructure MSBuild. Abandon de PSake.
+* Mise à jour de toutes les dépendances JavaScript et NuGet.
+* Mutiples optimisations rapides du code C#.
+
+### 2014-10-17 - Version 1.13
+
+* Maintenant `DefaultSiteMap` prend correctement en compte le répertoire
   virtuel de l'application.
 
-[2014-10-16] Release 1.12
--------------------------
+### 2014-10-16 - Version 1.12
 
 * On n'utilise plus une version locale de nodejs/npm.
 * Mise à jour de nodejs & npm.
@@ -16,17 +30,15 @@ CHANGELOG
 * Désactivation de l'indexation Google et des données SEO.
 * Suppression de (presque) toutes les références à pourquelmotifsimone.
 * Désactivation de la version multilangue (trop de bugs...).
-  Il faudrait revoir ISiteMap (ajouter un paramètre langue à chaque méthode),
-  ChiffonEnvironmentResolver et LayoutViewModel (voir les FIXME).
+  Il faudrait revoir `ISiteMap` (ajouter un paramètre langue à chaque méthode),
+  `ChiffonEnvironmentResolver` et `LayoutViewModel` (voir les FIXME).
 
-[2013-12-22] Infrastructure
----------------------------
+### 2013-12-22 - Infrastructure
 
 On configure tous les AppPools pour qu'ils ne se recyclent qu'en fonction de la mémoire.
 On supprime aussi les timeout qui forcent le redémarrage des AppPools.
 
-[2013-12-07] Release 1.7
-------------------------
+### 2013-12-07 - Version 1.7
 
 * Désactivation des modales sauf pour le lien de connexion.
 * Dans la page "motif", on enlève la liste des aperçus des motifs dans la même catégorie.
@@ -37,7 +49,7 @@ On supprime aussi les timeout qui forcent le redémarrage des AppPools.
   navigateurs ne les voient pas.
 
 Changements d'ordre technique :
-* Internalisation de MvcMailer (en cours).
+* Internalisation de `MvcMailer` (en cours).
 * Réécriture complète de ChiffonContext (l'ancienne version était incorrecte).
 * Multiple corrections relatives à FxCop.
 * Mise à jour de tous les projets vers .NET 4.5.1 et VS 2013.
@@ -45,19 +57,16 @@ Changements d'ordre technique :
 * Lorsqu'on travaille dans VS, on garde le choix de la langue en session.
 * On scinde le fichier less.
 
-[2013-12-02] Infrastructure
----------------------------
+### 2013-12-02 - Infrastructure
 
 Installation en production de .NET 4.5.1
 
-[2013-11-28] Release 1.6.0.1
-----------------------------
+### 2013-11-28 - Version 1.6.0.1
 
 * Mise en avant du motif en cours de consultation.
 * Affichage de la référence lorsqu'on passe la souris au-dessus d'un motif.
 
-[2013-11-27] Release 1.5.0.1
-----------------------------
+### 2013-11-27 - Version 1.5.0.1
 
 * On affiche un indicateur visuel afin de signaler le chargement de la page suivante dans
   une pagination infinie.
@@ -65,8 +74,7 @@ Installation en production de .NET 4.5.1
 Changements d'ordre technique :
 * Intégration de fastclick.js pour améliorer le temps de réaction des tablettes lors d'un "clic".
 
-[2013-11-26] Release 1.4.0.3
-----------------------------
+### 2013-11-26 - Version 1.4.0.3
 
 * Réactivation des modales pour les tablettes.
 * Nouvelles traductions.
@@ -79,14 +87,12 @@ Changements d'ordre technique :
 * On utilise NProgress pour signaler le début et la fin des appels Ajax.
 * Pour les petits écrans, on adapte le fonctionnement des modales.
 
-[2013-11-25] Release 1.3.0.1
-----------------------------
+### 2013-11-25 - Version 1.3.0.1
 
 * Version stable de la feuille de style pour un site web adaptatif.
 * Désactivation de la gestion du bloc info en JavaScript.
 
-[2013-11-21] Release 1.2.0.1
-----------------------------
+### 2013-11-21 - Version 1.2.0.1
 
 * Version minimale du site en Responsive Design.
 
@@ -99,8 +105,7 @@ Correctifs :
   du bloc conteneur, ce qui est l'inverse de ce qu'on souhaite.
 * nprogress.css n'était pas inclus dans le build.
 
-[2013-11-19] Release 1.1.1.1
-----------------------------
+### 2013-11-19 - Version 1.1.1.1
 
 * Nouvelle page d'inscription.
 * Utilisation d'un texte différent par langue pour le bouton de connexion.
@@ -120,8 +125,7 @@ Correctifs :
 * La couleur utilisée dans les paginations était la couleur par défaut (gris).
 * Suppression du package source avant la mise à jour d'un outil.
 
-[2013-11-18] Release 1.1.0.23
------------------------------
+### 2013-11-18 - Version 1.1.0.23
 
 * Ajout d'un lien de connexion dans le menu principal.
 * Envoi d'un mail de confirmation à la création d'un compte (sous forme texte pour le moment).
@@ -146,8 +150,7 @@ Changements d'ordre technique :
 * Utilitaire de déploiement.
 * Utilitaire de sauvegarde de la base de données.
 
-[2013-09-19] Release 1.0.26
----------------------------
+### 2013-09-19 - Version 1.0.26
 
 * Au lieu de préciser manuellement le numéro de version des JS et des CSS, on utilise par défaut
   le numéro de version de l'assemblée.
@@ -157,14 +160,12 @@ Correctifs :
 * La minification du HTML était trop agressive, vu qu'elle remplacer certains espaces blancs
   par une chaîne vide.
 
-[2013-08-22]
-------------
+### 2013-08-22
 
 * Création d'un fichier humantxt.
 * On n'utilise plus les ViewHelpers pour Google Analytics.
 
-[2013-08-21]
-------------
+### 2013-08-21
 
 * Code JavaScript permettant à IE de reconnaite les éléments HTML5.
 * Utilisation de l'encodeur AntiXSS qui en plus ne pourrit pas les attributs en UTF-8.
@@ -172,8 +173,7 @@ Correctifs :
 * Activation de Google Analytics en production.
 * Via l'outil d'administration de IIS, création d'une machineKey.
 
-[2013-08-21] Infrastructure
----------------------------
+### 2013-08-21 Infrastructure
 
 * Déclaration du sous-domaine anglais.
 * Configuration de Google Webmaster Tools.
