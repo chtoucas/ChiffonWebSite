@@ -193,7 +193,7 @@
     <Compile Include="Common\MemberSession.cs" />
     <Compile Include="Controllers\OntologyFilterAttribute.cs" />
     <Compile Include="Common\ApplicationRouting.cs" />
-    <Compile Include="Common\UrlHelper%24.cs" />
+    <Compile Include="Views\UrlHelper%24.cs" />
     <Compile Include="Views\ViewUtility.cs" />
     <Compile Include="Internal\ContainerBuilder%24.cs" />
     <Compile Include="Controllers\AccountController.cs" />

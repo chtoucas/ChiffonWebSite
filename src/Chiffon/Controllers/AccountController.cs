@@ -101,7 +101,7 @@
 
             _memberService.MemberCreated += (sender, e) =>
             {
-                (new AuthenticationService(HttpContext)).SignIn(e.Member);
+                new AuthenticationService(HttpContext).SignIn(e.Member);
             };
 
             var result = _memberService.RegisterMember(new RegisterMemberRequest {

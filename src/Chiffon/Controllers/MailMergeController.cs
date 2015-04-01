@@ -2,8 +2,6 @@
 {
     using System.Web.Mvc;
 
-    using Chiffon.Common;
-
     public sealed class MailMergeController : Controller
     {
         public ActionResult ForgottenPassword()

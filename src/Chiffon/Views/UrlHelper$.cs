@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon.Views
 {
     using System.Web.Mvc;
     using System.Web.Routing;
