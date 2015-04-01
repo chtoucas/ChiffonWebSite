@@ -1,6 +1,5 @@
 ﻿namespace Chiffon.Infrastructure
 {
-    using System;
     using System.Diagnostics.Contracts;
     using System.IO;
 

@@ -1,7 +1,5 @@
 ﻿namespace Chiffon.Infrastructure
 {
-    using System;
-
     using Narvalo;
 
     public enum PatternSize
