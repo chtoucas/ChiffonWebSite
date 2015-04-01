@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="12.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Define common MSBuild project options. -->
+  <!-- Options MSBuild standards. -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
@@ -8,45 +8,43 @@
     <BuildInParallel Condition="'$(BuildInParallel)' == ''">false</BuildInParallel>
   </PropertyGroup>
 
-  <!-- Define Chiffon options. -->
+  <!-- Options spécifiques au projet. -->
   <PropertyGroup>
-    <!-- Valeurs possibles : Production, Integration. -->
+    <!-- Valeurs possibles : Production et Integration. -->
     <PackageTarget Condition="'$(PackageTarget)' == ''">Production</PackageTarget>
   </PropertyGroup>
 
-  <!-- Define Chiffon properties. -->
+  <!-- Propriétés spécifiques au projet. -->
   <PropertyGroup>
-    <RepositoryDir>$(MSBuildThisFileDirectory)..\</RepositoryDir>
-    <SourceDir>$(RepositoryDir)src\</SourceDir>
-    <PackagesDir>$(RepositoryDir)packages\</PackagesDir>
-    <ToolsDir>$(RepositoryDir)tools\</ToolsDir>
-    <PublishProfileDir>$(MSBuildThisFileDirectory)</PublishProfileDir>
-
+    <RepositoryDirectory>$(MSBuildThisFileDirectory)..\</RepositoryDirectory>
+    <SourceDirectory>$(RepositoryDirectory)src\</SourceDirectory>
+    <ToolsDirectory>$(RepositoryDirectory)tools\</ToolsDirectory>
     <!-- Répertoires temporaires créés au cours de la compilation. -->
-    <ArtefactsDir>$(RepositoryDir)_artefacts\</ArtefactsDir>
-    <WorkDir>$(RepositoryDir)_work\</WorkDir>
-    <OutDir>$(WorkDir)bin\$(Configuration)\</OutDir>
-    <BaseIntermediateOutDir>$(WorkDir)obj\</BaseIntermediateOutDir>
-    <StageDir>$(WorkDir)stage\</StageDir>
+    <ArtefactsDirectory>$(RepositoryDirectory)_artefacts\</ArtefactsDirectory>
+    <WorkDirectory>$(RepositoryDirectory)_work\</WorkDirectory>
+    <StagingDirectory>$(WorkDirectory)stage\</StagingDirectory>
 
+    <!-- Répertoires MSBuild. -->
+    <OutDir>$(WorkDirectory)bin\$(Configuration)\</OutDir>
+    <BaseIntermediateOutDir>$(WorkDirectory)obj\</BaseIntermediateOutDir>
     <!-- WARNING: Ce répertoires n'est pas inclus dans l'entrepôt Git maître
          car il contient toutes les données confidentielles. -->
-    <TransformsDir>$(RepositoryDir)intern\transforms\</TransformsDir>
+    <TransformsDir>$(RepositoryDirectory)intern\transforms\</TransformsDir>
 
-    <BuildTimeFile>$(WorkDir).buildTime</BuildTimeFile>
+    <VerifyBuildSentinel>$(WorkDirectory).buildTime</VerifyBuildSentinel>
   </PropertyGroup>
 
   <!-- Outils locaux (exe). -->
   <ItemGroup>
-    <_NuGetExe Include="$(PackagesDir)NuGet.CommandLine.*\tools\nuget.exe" />
+    <_NuGetExe Include="$(RepositoryDirectory)packages\NuGet.CommandLine.*\tools\nuget.exe" />
   </ItemGroup>
   <PropertyGroup>
-    <GruntCmd>$(ToolsDir)grunt.cmd</GruntCmd>
+    <GruntCmd>$(ToolsDirectory)grunt.cmd</GruntCmd>
     <NuGetExe>@(_NuGetExe)</NuGetExe>
-    <SevenZipExe>$(ToolsDir)7za.exe</SevenZipExe>
+    <SevenZipExe>$(ToolsDirectory)7za.exe</SevenZipExe>
   </PropertyGroup>
 
-  <!-- Define the BuildProperties property. -->
+  <!-- Propriété BuildProperties. -->
   <PropertyGroup>
     <BuildProperties>
       Configuration=$(Configuration);
@@ -65,30 +63,29 @@
     </BuildProperties>
   </PropertyGroup>
 
-  <!-- Define the ProjectsToPackage items. -->
+  <!-- Liste ProjectsToBuild. -->
   <ItemGroup>
-    <ProjectsToPackage Include="$(SourceDir)Chiffon\Chiffon.csproj">
+    <ProjectsToBuild Include="$(SourceDirectory)Chiffon\Chiffon.csproj">
       <AdditionalProperties>
         $(BuildProperties)
       </AdditionalProperties>
-    </ProjectsToPackage>
+    </ProjectsToBuild>
 
-    <ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj">
+    <ProjectsToBuild Include="$(SourceDirectory)Chiffon.WebSite\assets\Chiffon.Assets.proj">
       <AdditionalProperties>
+        <!-- On déploie automatiquement après compilation du projet. -->
         DeployOnBuild=true;
-        PublishUrl=$(StageDir)wznw.org_chiffon\
+        PublishUrl=$(StagingDirectory)wznw.org_chiffon\
       </AdditionalProperties>
-    </ProjectsToPackage>
+    </ProjectsToBuild>
 
-    <ProjectsToPackage Include="$(SourceDir)Chiffon.WebSite\Chiffon.WebSite.csproj">
+    <ProjectsToBuild Include="$(SourceDirectory)Chiffon.WebSite\Chiffon.WebSite.csproj">
       <AdditionalProperties>
         $(BuildProperties);
         TransformsDir=$(TransformsDir);
         PackageTarget=$(PackageTarget);
-        <!-- Configuration de MSBuild. -->
+        <!-- On déploie automatiquement après compilation du projet. -->
         DeployOnBuild=true;
-
-        <!-- Configuration commune à tous les profils. -->
         WebPublishMethod=FileSystem;
         DebugSymbols=true;
         DeleteAppCodeCompiledFiles=true;
@@ -102,87 +99,92 @@
         UseMerge=true;
         WDPMergeOption=MergeAllOutputsToASingleAssembly;
 
-        PublishUrl=$(StageDir)vivianedevaux.org_simone\;
-        PublishProfile=$(PublishProfileDir)Chiffon.WebSite.pubxml
+        PublishUrl=$(StagingDirectory)vivianedevaux.org_simone\;
+        PublishProfile=$(MSBuildThisFileDirectory)Chiffon.WebSite.pubxml
       </AdditionalProperties>
-    </ProjectsToPackage>
+    </ProjectsToBuild>
 
   </ItemGroup>
 
-  <!-- Clean target -->
+  <!-- Cible Clean. -->
   <Target Name="Clean">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Clean" />
+  </Target>
+
+  <!-- Cible FullClean. -->
+  <Target Name="FullClean">
     <ItemGroup>
-      <_FilesToRemove Include="$(WorkDir)**\*"/>
+      <_FilesToRemove Include="$(WorkDirectory)**\*"/>
     </ItemGroup>
 
     <Delete Files="@(_FilesToRemove)" />
-    <RemoveDir Directories="$(WorkDir)" Condition="Exists($(WorkDir))" />
+    <RemoveDir Directories="$(WorkDirectory)" Condition="Exists($(WorkDirectory))" />
 
-    <MSBuild Projects="$(SourceDir)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
+    <MSBuild Projects="$(SourceDirectory)Chiffon.WebSite\assets\Chiffon.Assets.proj" Targets="Clean" />
   </Target>
 
-  <!-- Grunt target -->
+  <!-- Cible Grunt. -->
   <Target Name="Grunt">
     <Message Text="Building assets with Grunt..." Importance="high" />
 
     <Exec Command="$(GruntCmd) build >> build.log" ContinueOnError="false"  />
   </Target>
 
-  <!-- Build target -->
+  <!-- Cible Build. -->
   <Target Name="Build">
     <Message Text="Restoring NuGet packages..." Importance="high" />
-    <Exec Command="&quot;$(NuGetExe)&quot; restore &quot;$(RepositoryDir)Chiffon.sln&quot; -Verbosity quiet" />
+    <Exec Command="&quot;$(NuGetExe)&quot; restore &quot;$(RepositoryDirectory)Chiffon.sln&quot; -Verbosity quiet" />
 
     <Message Text="Building projects..." Importance="high" />
-    <MSBuild Projects="@(ProjectsToPackage)" Targets="Build">
+    <MSBuild Projects="@(ProjectsToBuild)" Targets="Build">
       <Output ItemName="_BuildOutputs" TaskParameter="TargetOutputs" />
     </MSBuild>
   </Target>
 
-  <!-- Package target -->
-  <Target Name="Package" DependsOnTargets="Grunt;Build;_VerifyBuildOutputs;_VerifyAspNetMergeOutputs">
+  <!-- Cible Package. -->
+  <Target Name="Package" DependsOnTargets="FullClean;Grunt;Build;_VerifyBuildOutputs;_VerifyAspNetMergeOutputs">
     <!-- Récupération du numéro de version des assemblées .NET. -->
-    <GetVersionNumber VersionInfoXml="$(RepositoryDir)VersionInfo.xml">
+    <GetVersionNumber VersionInfoXml="$(RepositoryDirectory)VersionInfo.xml">
       <Output TaskParameter="VersionNumber" PropertyName="_VersionNumber" />
     </GetVersionNumber>
 
     <PropertyGroup>
-      <_PackageFile>$(ArtefactsDir)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
+      <_PackageFile>$(ArtefactsDirectory)chiffon-$(_VersionNumber)-$(PackageTarget).7z</_PackageFile>
     </PropertyGroup>
 
     <Message Text="Creating package..." Importance="high" />
-    <MakeDir Directories="$(ArtefactsDir)" Condition="!Exists($(ArtefactsDir))" />
+    <MakeDir Directories="$(ArtefactsDirectory)" Condition="!Exists($(ArtefactsDirectory))" />
     <Delete Files="$(_PackageFile)" />
 
-    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(StageDir)* >> build.log" ContinueOnError="false"/>
+    <Exec Command="$(SevenZipExe) -mx9 a $(_PackageFile) $(StagingDirectory)* >> build.log" ContinueOnError="false"/>
   </Target>
 
-  <!-- _GetPEVerify target -->
+  <!-- Cible _GetPEVerify. -->
   <Target Name="_GetPEVerify">
     <PropertyGroup>
       <PEVerifyExe>&quot;$(SDK40ToolsPath)peverify.exe&quot;</PEVerifyExe>
     </PropertyGroup>
   </Target>
 
-  <!-- _VerifyBuildOutputs target -->
+  <!-- Cible _VerifyBuildOutputs. -->
   <Target Name="_VerifyBuildOutputs" DependsOnTargets="_GetPEVerify"
           Inputs="@(_BuildOutputs)"
-          Outputs="$(BuildTimeFile)">
+          Outputs="$(VerifyBuildSentinel)">
     <Message Text="Verifying build outputs with PEVerify." Importance="Low" />
 
     <Exec Command="$(PEVerifyExe) &quot;%(_BuildOutputs.FullPath)&quot; /nologo /md /il /unique"
           ContinueOnError="false" />
 
     <!-- NB: Garder cette commande à la fin de cible au cas où une vérification échoue. -->
-    <Touch Files="$(BuildTimeFile)" AlwaysCreate="true" />
+    <Touch Files="$(VerifyBuildSentinel)" AlwaysCreate="true" />
   </Target>
 
-  <!-- _VerifyAspNetMergeOutputs target -->
+  <!-- Cible _VerifyAspNetMergeOutputs. -->
   <Target Name="_VerifyAspNetMergeOutputs" DependsOnTargets="_GetPEVerify">
     <Message Text="Verifying 'aspnet_merge' outputs with PEVerify." Importance="Low" />
 
     <ItemGroup>
-      <_AspNetMergeOutputs Include="$(StageDir)**\Chiffon.*.AspNet.dll" />
+      <_AspNetMergeOutputs Include="$(StagingDirectory)**\Chiffon.*.AspNet.dll" />
     </ItemGroup>
 
     <!-- NB: On ne vérifie pas les metadonnées car "aspnet_merge.exe" peut produire des assemblées
@@ -191,7 +193,7 @@
           ContinueOnError="false" />
   </Target>
 
-  <!-- GetVersionNumber task -->
+  <!-- Tâche GetVersionNumber. -->
   <UsingTask TaskName="GetVersionNumber" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
       <VersionInfoXml ParameterType="System.String" Required="true" />
@@ -219,7 +221,7 @@ try {
     using (var reader = new StreamReader(VersionInfoXml)) {
         xdoc = XDocument.Load(reader);
     }
-    
+
     var root = xdoc.Root;
     var major = Int16.Parse(root.Element("Major").Value);
     var minor = Int16.Parse(root.Element("Minor").Value);
