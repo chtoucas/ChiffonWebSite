@@ -1,10 +1,6 @@
 ﻿namespace Chiffon.Infrastructure.Persistence
 {
     using System.Collections.Generic;
-#if CONTRACTS_FULL // Using directive.
-    using System.Diagnostics.Contracts;
-    using System.Linq;
-#endif
     using System.Globalization;
 
     using Chiffon.Entities;
@@ -36,8 +32,18 @@
 
         IEnumerable<Pattern> ListShowcasedPatterns();
     }
-    
+}
+
 #if CONTRACTS_FULL // Contract Class and Object Invariants.
+
+namespace Chiffon.Infrastructure.Persistence
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Globalization;
+    using System.Linq;
+
+    using Chiffon.Entities;
 
     [ContractClass(typeof(IDbQueriesContract))]
     public partial interface IDbQueries { }
@@ -114,6 +120,6 @@
             return Enumerable.Empty<Pattern>();
         }
     }
+}
 
 #endif
-}

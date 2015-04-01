@@ -1,10 +1,6 @@
 ﻿namespace Chiffon.Services
 {
     using System.Collections.Generic;
-#if CONTRACTS_FULL // Using directive.
-    using System.Diagnostics.Contracts;
-    using System.Linq;
-#endif
 
     using Chiffon.Entities;
 
@@ -16,8 +12,17 @@
 
         PreviewPagedList ListPreviews(DesignerKey designerKey, string categoryKey, int pageIndex, int pageSize);
     }
-    
+}
+
 #if CONTRACTS_FULL // Contract Class and Object Invariants.
+
+namespace Chiffon.Services
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+
+    using Chiffon.Entities;
 
     [ContractClass(typeof(IPatternServiceContract))]
     public partial interface IPatternService { }
@@ -42,6 +47,6 @@
             return default(PreviewPagedList);
         }
     }
+}
 
 #endif
-}

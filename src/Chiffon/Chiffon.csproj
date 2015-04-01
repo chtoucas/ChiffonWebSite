@@ -175,7 +175,6 @@
     <Compile Include="Externs\ContainerBuilder%24.cs" />
     <Compile Include="Externs\ConvertTo.cs" />
     <Compile Include="Infrastructure\HttpLogEventEnricher.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Infrastructure\Addressing\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Infrastructure\Addressing\Routes.cs" />
     <Compile Include="Infrastructure\ApplicationLifecycleModule.cs" />
