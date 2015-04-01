@@ -20,10 +20,10 @@
         {
             switch (@this) {
                 case ChiffonLanguage.English:
-                    return new CultureInfo("en-US");
+                    return new CultureInfo("en");
                 case ChiffonLanguage.Default:
                 default:
-                    return new CultureInfo("fr-FR");
+                    return new CultureInfo("fr");
             }
         }
 
@@ -31,10 +31,10 @@
         {
             switch (@this) {
                 case ChiffonLanguage.English:
-                    return new CultureInfo("en-US");
+                    return new CultureInfo("en");
                 case ChiffonLanguage.Default:
                 default:
-                    return new CultureInfo("fr-FR");
+                    return new CultureInfo("fr");
             }
         }
     }

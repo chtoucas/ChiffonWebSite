@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Chiffon")]
 
 [assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("fr-FR")]
+[assembly: NeutralResourcesLanguage("fr")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
