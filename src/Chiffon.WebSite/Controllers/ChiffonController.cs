@@ -6,7 +6,6 @@
 
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.ViewModels;
     using Narvalo;
     using Narvalo.Web.Semantic;

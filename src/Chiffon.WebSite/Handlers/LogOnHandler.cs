@@ -7,7 +7,6 @@
 
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Fx;
@@ -54,12 +53,12 @@
             context.Response.Redirect(nextUrl.AbsoluteUri);
         }
 
-        Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
+        private Uri GetNextUri_(Maybe<Uri> targetUrl, ISiteMap siteMap, ChiffonEnvironment environment)
         {
             return targetUrl.Select(_ => environment.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
         }
 
-        Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
+        private Uri GetLoginUri_(Maybe<Uri> targetUrl, ISiteMap siteMap)
         {
             return targetUrl.Select(_ => siteMap.Login(_)).ValueOrElse(siteMap.Login());
         }

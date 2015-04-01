@@ -58,7 +58,7 @@
             return ResolveFromHost_(uri.Host);
         }
 
-        internal static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
+        public static ChiffonEnvironment Resolve(HttpRequest request, HttpSessionState session)
         {
             Require.NotNull(request, "request");
 

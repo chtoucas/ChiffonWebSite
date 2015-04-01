@@ -2,10 +2,9 @@
 {
     using System;
 
+    using Chiffon.Common;
     using Chiffon.Entities;
-    using Chiffon.Infrastructure.Messaging;
-    using Chiffon.Infrastructure.Persistence;
-    using Chiffon.Internal;
+    using Chiffon.Persistence;
     using Chiffon.Properties;
     using Narvalo;
     using Narvalo.Fx;
@@ -36,7 +35,6 @@
 
         public event EventHandler<MemberCreatedEventArgs> MemberCreated;
 
-        /// <summary />
         public VoidOrBreak RegisterMember(RegisterMemberRequest request)
         {
             Require.NotNull(request, "request");
@@ -57,7 +55,7 @@
 
             // 3. Création du compte en base de données.
 
-            var cmdParameters = Mapper.Map(request, EncryptPassword_(password));
+            var cmdParameters = MapMember_(request, EncryptPassword_(password));
 
             _commands.NewMember(cmdParameters);
 
@@ -86,7 +84,6 @@
             return VoidOrBreak.Void;
         }
 
-        /// <summary />
         public Maybe<Member> MayLogOn(string email, string password)
         {
 #if SHOWCASE
@@ -147,6 +144,21 @@
             {
                 localHandler(this, e);
             }
+        }
+
+        private static NewMemberParameters MapMember_(RegisterMemberRequest request, string encryptedPassword)
+        {
+            Require.NotNull(request, "query");
+            Require.NotNullOrEmpty(encryptedPassword, "encryptedPassword");
+
+            return new NewMemberParameters {
+                CompanyName = request.CompanyName,
+                Email = request.Email,
+                EncryptedPassword = encryptedPassword,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                NewsletterChecked = request.NewsletterChecked,
+            };
         }
     }
 }

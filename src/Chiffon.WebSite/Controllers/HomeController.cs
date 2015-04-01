@@ -9,9 +9,7 @@
 
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Infrastructure.Messaging;
-    using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Persistence;
     using Chiffon.Resources;
     using Chiffon.ViewModels;
     using Narvalo;

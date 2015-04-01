@@ -3,8 +3,6 @@
     using Autofac;
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Infrastructure.Messaging;
     using Narvalo;
 
     public class InfrastructureModule : Module

@@ -1,7 +1,7 @@
 ﻿namespace Chiffon
 {
     using Autofac;
-    using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Persistence;
     using Chiffon.Infrastructure;
     using Narvalo;
 

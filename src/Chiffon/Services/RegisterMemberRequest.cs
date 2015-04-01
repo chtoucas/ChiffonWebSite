@@ -1,6 +1,6 @@
 ﻿namespace Chiffon.Services
 {
-    using Chiffon.Infrastructure.Messaging;
+    using Chiffon.Common;
 
     /// <summary>
     /// Représente une demande d'inscription associée à la méthode

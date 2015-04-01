@@ -8,7 +8,7 @@
 
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Persistence;
     using Narvalo;
     using Narvalo.Web;
 

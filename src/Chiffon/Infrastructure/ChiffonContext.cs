@@ -3,7 +3,7 @@
     using System.Diagnostics.Contracts;
     using System.Web;
 
-    using Chiffon.Internal;
+    using Chiffon.Common;
 
     public sealed class ChiffonContext
     {

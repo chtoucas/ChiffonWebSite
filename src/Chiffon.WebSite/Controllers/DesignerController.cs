@@ -9,8 +9,7 @@
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
-    using Chiffon.Infrastructure.Persistence;
+    using Chiffon.Persistence;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;

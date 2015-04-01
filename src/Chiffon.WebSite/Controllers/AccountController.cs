@@ -7,7 +7,6 @@
 
     using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Chiffon.Resources;
     using Chiffon.Services;
     using Chiffon.ViewModels;

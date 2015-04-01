@@ -6,7 +6,6 @@
 
     using Chiffon.Handlers;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
     using Narvalo;
     using Narvalo.Web;
 

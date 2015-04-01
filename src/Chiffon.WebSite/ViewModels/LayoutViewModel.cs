@@ -5,8 +5,8 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using Chiffon.Common;
     using Chiffon.Infrastructure;
-    using Chiffon.Infrastructure.Addressing;
 
     public sealed class LayoutViewModel
     {
