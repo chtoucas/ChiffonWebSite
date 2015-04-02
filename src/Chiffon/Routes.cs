@@ -76,6 +76,7 @@
             routes.Add(new Route(Constants.RoutePath.Pattern, new AutofacRouteHandler<PatternImageHandler>()));
             routes.Add(new Route(Constants.RoutePath.LogOn, new AutofacRouteHandler<LogOnHandler>()));
             routes.Add(new Route(Constants.RoutePath.LogOff, new AutofacRouteHandler<LogOffHandler>()));
+            routes.Add(new Route(Constants.RoutePath.Go, new AutofacRouteHandler<GoHandler>()));
         }
 
         private sealed class DesignerKeyConstraint_ : IRouteConstraint

@@ -115,6 +115,7 @@
             public const string DesignerCategory = "{designerKey}/{categoryKey}";
             public const string DesignerPattern = "{designerKey}/{categoryKey}/{reference}";
 
+            public const string Go = "go";
             public const string LogOff = "disconnecte";
             public const string LogOn = "connecte";
             public const string Pattern = "motif";

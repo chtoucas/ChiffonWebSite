@@ -180,6 +180,8 @@
     </Compile>
     <Compile Include="ApplicationLifecycle.cs" />
     <Compile Include="ApplicationLifecycleModule.cs" />
+    <Compile Include="Handlers\GoHandler.cs" />
+    <Compile Include="Handlers\GoQueryBinder.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Internal\AutofacRouteHandler`1.cs" />
     <Compile Include="Views\ChiffonWebViewPage.cs" />
