@@ -307,18 +307,7 @@
     <Content Include="Views\Widget\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\MailMerge\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\Home\ContactSuccess.cshtml" />
-    <Content Include="Views\MailMerge\ForgottenPassword.cshtml" />
-    <None Include="Views\MailMerge\Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Views\MailMerge\Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Shared\_UserMenu.cshtml" />
     <Content Include="Views\Component\Web.config">
       <SubType>Designer</SubType>
@@ -383,8 +372,6 @@
     <Content Include="Views\Home\Resources\_AboutContent.en.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.cshtml" />
     <Content Include="Views\Widget\AuthorsRights.en.cshtml" />
-    <Content Include="Views\MailMerge\_Layout.cshtml" />
-    <Content Include="Views\MailMerge\Welcome.cshtml" />
     <Content Include="Views\Widget\Copyright.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
