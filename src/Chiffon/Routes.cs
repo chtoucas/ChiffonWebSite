@@ -43,19 +43,19 @@
             routes.MapRoute(
                 Constants.RouteName.Account.Register,
                 Constants.RoutePath.Register,
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Register });
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.Register });
             routes.MapRoute(
                 Constants.RouteName.Account.RegisterSuccess,
                 "inscription-confirmation",
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.RegisterSuccess });
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.RegisterSuccess });
             routes.MapRoute(
                 Constants.RouteName.Account.Login,
                 Constants.RoutePath.Login,
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Login });
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.Login });
             routes.MapRoute(
                 Constants.RouteName.Account.Newsletter,
                 Constants.RoutePath.Newsletter,
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Contact.Newsletter });
+                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.Newsletter });
 
             // DesignerController.
             routes.MapRoute(

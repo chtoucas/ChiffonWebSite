@@ -6,20 +6,20 @@
 
         public static class ActionName
         {
-            // ComponentController.
-            public static class Component
-            {
-                public const string CommonJavaScript = "CommonJavaScript";
-                public const string LanguageMenu = "LanguageMenu";
-            }
-
-            // ContactController.
-            public static class Contact
+            // AccountController.
+            public static class Account
             {
                 public const string Login = "Login";
                 public const string Newsletter = "Newsletter";
                 public const string Register = "Register";
                 public const string RegisterSuccess = "RegisterSuccess";
+            }
+
+            // ComponentController.
+            public static class Component
+            {
+                public const string CommonJavaScript = "CommonJavaScript";
+                public const string LanguageMenu = "LanguageMenu";
             }
 
             // DesignerController.
