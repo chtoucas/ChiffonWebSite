@@ -16,7 +16,7 @@ En priorité,
 - DNS, il y a un problème avec www. et /XXX
 
 Travail de fond :
-- réduire le nombre des espaces de noms ;
+- utiliser MEF pour ISiteMap et supprimer ISiteMapFactory ;
 - ré-activer robots.txt ;
 - utiliser Attribute Routing ;
 - finir `MailMerge` ;

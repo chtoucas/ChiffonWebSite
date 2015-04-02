@@ -18,17 +18,22 @@
             }
         }
 
-        public static class PatternImageHandler
+        public static class HttpHandlerBase
         {
-            [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "reader")]
+            [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context")]
             public static void ProcessRequestCore([ValidatedNotNull]HttpContext context)
             {
                 Check.NotNull(context, "The base class 'HttpHandlerBase' guarantees that 'context' is never null.");
             }
 
-            [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "reader")]
-            public static void ProcessRequestCore([ValidatedNotNull]PatternImageQuery query)
+            [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context")]
+            [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "query")]
+            public static void ProcessRequestCore<TQuery>(
+                [ValidatedNotNull]HttpContext context,
+                [ValidatedNotNull]TQuery query)
+                where TQuery : class
             {
+                Check.NotNull(context, "The base class 'HttpHandlerBase' guarantees that 'context' is never null.");
                 Check.NotNull(query, "The base class 'HttpHandlerBase' guarantees that 'query' is never null.");
             }
         }

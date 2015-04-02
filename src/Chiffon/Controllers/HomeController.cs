@@ -39,7 +39,7 @@
             var patterns = _queries.ListShowcasedPatterns();
             var model = (from p in patterns
                          join d in designers on p.DesignerKey equals d.Key
-                         select ObjectMapper.Map(p, d.DisplayName)).ToList();
+                         select PatternViewItem.Of(p, d.DisplayName)).ToList();
 
             ShuffleList_(model);
 

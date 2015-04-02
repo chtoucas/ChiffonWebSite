@@ -39,13 +39,6 @@
                 public const string ContactSuccess = "ContactSuccess";
             }
 
-            // MailMergeController.
-            public static class MailMerge
-            {
-                public const string ForgottenPassword = "ForgottenPassword";
-                public const string Welcome = "Welcome";
-            }
-
             // WidgetController.
             public static class Widget
             {
@@ -64,7 +57,6 @@
             public const string Component = "Component";
             public const string Designer = "Designer";
             public const string Home = "Home";
-            public const string MailMerge = "MailMerge";
             public const string Widget = "Widget";
         }
 
@@ -110,13 +102,6 @@
                 public const string Contact = "Home/Contact";
                 public const string ContactSuccess = "Home/ContactConfimation";
                 public const string Index = "Home/";
-            }
-
-            // DesignerController.
-            public static class MailMerge
-            {
-                public const string ForgottenPassword = "MailMerge/ForgottenPassword";
-                public const string Welcome = "MailMerge/Welcome";
             }
         }
 
@@ -179,12 +164,6 @@
                 public const string AboutContent = "~/Views/Home/Resources/_AboutContent.cshtml";
                 public const string Contact = "~/Views/Home/Contact.cshtml";
                 public const string ContactSuccess = "~/Views/Home/ContactSuccess.cshtml";
-            }
-
-            public static class MailMerge
-            {
-                public const string ForgottenPassword = "~/Views/MailMerge/ForgottenPassword.cshtml";
-                public const string Welcome = "~/Views/MailMerge/Welcome.cshtml";
             }
 
             public static class Widget

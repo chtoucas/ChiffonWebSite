@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon
 {
     using System;
     using System.Collections.Specialized;
@@ -24,32 +24,12 @@
             Require.NotNull(context, "context");
 
             context.Error += Application_OnError_;
-            context.Disposed += Application_OnDisposed_;
             context.PreSendRequestHeaders += Application_OnPreSendRequestHeaders_;
         }
 
-        public void Dispose() { }
-
-        /// <summary>
-        /// Ajoute des en-têtes de réponse facultatives mais qui peuvent améliorer
-        /// la sécurité de l'application.
-        /// </summary>
-        /// <remarks>
-        /// Toutes ces en-têtes pourraient être rajoutées via "Web.config".
-        /// </remarks>
-        /// <param name="headers">Collection d'en-têtes de réponse.</param>
-        private static void AddSecurityHeaders_(NameValueCollection headers)
+        public void Dispose()
         {
-            Contract.Requires(headers != null);
-
-            // Cf. http://www.html5rocks.com/en/tutorials/security/content-security-policy/
-            //headers.Add("Content-Security-Policy", "");
-
-            // Habituellement on essaie de prévenir l'inclusion d'une page du site dans une "frame"
-            // via javascript. Malheureusement cela ne suffit pas et il existe toujours des
-            // solutions pour contrer les techniques basées sur javascript.
-            // Cf. http://en.wikipedia.org/wiki/Framekiller
-            headers.Add("X-Frame-Options", "DENY");
+            // Laissé vide intentionnellement.
         }
 
         private static HttpStatusCode GetStatusCode_(Exception exception)
@@ -77,6 +57,42 @@
         }
 
         /// <summary>
+        /// Se produit lorsqu'une exception non gérée est levée.
+        /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
+        /// </summary>
+        private void Application_OnError_(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+            var server = app.Server;
+
+            var ex = server.GetLastError();
+            if (ex == null)
+            {
+                Log.Fatal("An unhandled error occurred but no exception found.");
+                return;
+            }
+
+            var statusCode = GetStatusCode_(ex);
+
+            switch (statusCode)
+            {
+                case HttpStatusCode.BadRequest:
+                    Log.Warning(ex, ex.Message);
+                    server.ClearError();
+                    app.Response.SetStatusCode(statusCode);
+                    break;
+                case HttpStatusCode.NotFound:
+                    Log.Debug(ex, ex.Message);
+                    break;
+                default:
+                    Log.Fatal(ex, ex.Message);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Ajoute des en-têtes de réponse facultatives mais qui peuvent améliorer
+        /// la sécurité de l'application (Ces en-têtes pourraient être rajoutées via "Web.config").
         /// Si on ne fait pas gaffe, IIS et ASP.NET créent de nombreuses en-têtes inutiles :
         /// - Server, rajouté par IIS ;
         /// - X-AspNet-Version ;
@@ -87,7 +103,7 @@
         /// Cette méthode supprime l'en-tête "Server".
         ///
         /// Pour une discution détaillée, se référer à
-        /// <see cref="!:http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"/>
+        /// <seealso cref="!:http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"/>
         /// </summary>
         /// <remarks>
         /// Pour supprimer l'en-tête " X-AspNet-Version", modifier "Web.config" comme suit :
@@ -126,55 +142,6 @@
         /// On peut aussi configurer IIS pour qu'il n'émette pas cette en-tête.
         /// </remarks>
         /// <param name="headers">Collection d'en-têtes de réponse.</param>
-        private static void RemoveUnnecessaryHeaders_(NameValueCollection headers)
-        {
-            Contract.Requires(headers != null);
-
-            headers.Remove("Server");
-        }
-
-        /// <summary>
-        /// Se produit lorsque l'application est supprimée.
-        /// </summary>
-        private void Application_OnDisposed_(object sender, EventArgs e)
-        {
-            Log.Information("Application disposed.");
-        }
-
-        /// <summary>
-        /// Se produit lorsqu'une exception non gérée est levée.
-        /// NB: Cet événement peut être déclenché à tout moment du cycle de vie de l'application.
-        /// </summary>
-        private void Application_OnError_(object sender, EventArgs e)
-        {
-            var app = sender as HttpApplication;
-            var server = app.Server;
-
-            var ex = server.GetLastError();
-            if (ex == null)
-            {
-                Log.Fatal("An unhandled error occurred but no exception found.");
-                return;
-            }
-
-            var statusCode = GetStatusCode_(ex);
-
-            switch (statusCode)
-            {
-                case HttpStatusCode.BadRequest:
-                    Log.Warning(ex, ex.Message);
-                    server.ClearError();
-                    app.Response.SetStatusCode(statusCode);
-                    break;
-                case HttpStatusCode.NotFound:
-                    Log.Debug(ex, ex.Message);
-                    break;
-                default:
-                    Log.Fatal(ex, ex.Message);
-                    break;
-            }
-        }
-
         private void Application_OnPreSendRequestHeaders_(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
@@ -182,14 +149,22 @@
             var response = app.Response;
             if (response == null)
             {
-                // Peut arriver si "trySkipIisCustomErrors" est égal à "true".
+                // Peut se produire si "trySkipIisCustomErrors" est égal à "true".
                 return;
             }
 
-            NameValueCollection headers = response.Headers;
+            var headers = response.Headers;
 
-            RemoveUnnecessaryHeaders_(headers);
-            AddSecurityHeaders_(headers);
+            headers.Remove("Server");
+
+            // Cf. http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+            //headers.Add("Content-Security-Policy", "");
+
+            // Habituellement on essaie de prévenir l'inclusion d'une page du site dans une "frame"
+            // via javascript. Malheureusement cela ne suffit pas et il existe toujours des
+            // solutions pour contrer les techniques basées sur javascript.
+            // Cf. http://en.wikipedia.org/wiki/Framekiller
+            headers.Add("X-Frame-Options", "DENY");
         }
     }
 }

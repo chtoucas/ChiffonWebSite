@@ -6,7 +6,7 @@
     using Serilog.Events;
 
     [CLSCompliant(false)]
-    public interface ILogService
+    public interface ILoggerProvider
     {
         ILogger GetLogger(LogEventLevel minimumLevel);
     }

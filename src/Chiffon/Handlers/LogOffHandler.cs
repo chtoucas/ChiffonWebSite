@@ -5,6 +5,8 @@
     using System.Web.SessionState;
 
     using Chiffon.Common;
+    using Chiffon.Internal;
+    using Chiffon.Services;
     using Narvalo;
     using Narvalo.Web;
 
@@ -19,15 +21,15 @@
             Require.NotNull(siteMapFactory, "siteMapFactory");
 
             _siteMapFactory = siteMapFactory;
+
+            IsReusable = true;
         }
 
-        public override bool IsReusable { get { return true; } }
-
-        protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
+        public override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
 
         protected override void ProcessRequestCore(HttpContext context)
         {
-            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
+            CheckFor.HttpHandlerBase.ProcessRequestCore(context);
 
             new AuthenticationService(context).SignOut();
 

@@ -3,7 +3,6 @@
     using System;
     using System.Web;
 
-    using Chiffon.Common;
     using Chiffon.Entities;
     using Narvalo;
 
@@ -33,6 +32,19 @@
                 return new HtmlString(Format.CurrentCulture(Strings.PatternDescriptionFormat, Reference, DesignerName));
 #endif
             }
+        }
+
+        public static PatternViewItem Of(Pattern pattern, string designerName)
+        {
+            Require.NotNull(pattern, "pattern");
+
+            return new PatternViewItem {
+                CategoryKey = pattern.CategoryKey,
+                DesignerKey = pattern.DesignerKey,
+                DesignerName = designerName,
+                Reference = pattern.Reference,
+                Variant = pattern.Variant,
+            };
         }
     }
 }

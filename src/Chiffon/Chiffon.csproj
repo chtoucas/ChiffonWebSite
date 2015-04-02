@@ -117,15 +117,15 @@
     </Reference>
     <Reference Include="Narvalo.Common, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.23.0-T24307867\lib\net45\Narvalo.Common.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Common.EDGE.0.23.0-T24423065\lib\net45\Narvalo.Common.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Core, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.23.0-T24307867\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Core.EDGE.0.23.0-T24423065\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Narvalo.Core.dll</HintPath>
     </Reference>
     <Reference Include="Narvalo.Web, Version=0.23.0.0, Culture=neutral, PublicKeyToken=e3c64fceb1bc8b20, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.23.0-T24307867\lib\net45\Narvalo.Web.dll</HintPath>
+      <HintPath>..\..\packages\Narvalo.Web.EDGE.0.23.0-T24423065\lib\net45\Narvalo.Web.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -178,21 +178,20 @@
     <Compile Include="..\AssemblyInfo.Common.cs">
       <Link>Properties\AssemblyInfo.Common.cs</Link>
     </Compile>
-    <Compile Include="ApplicationActivator.cs" />
-    <Compile Include="Common\ApplicationLifecycleModule.cs" />
-    <Compile Include="Common\AuthenticationService.cs" />
+    <Compile Include="ApplicationLifecycle.cs" />
+    <Compile Include="ApplicationLifecycleModule.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Internal\AutofacRouteHandler`1.cs" />
     <Compile Include="Views\ChiffonWebViewPage.cs" />
     <Compile Include="Views\ChiffonWebViewPage`1.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Common\DesignerKeyConstraint.cs" />
     <Compile Include="Controllers\DesignerKeyModelBinder.cs" />
     <Compile Include="Views\EnrichedWebViewPage.cs" />
     <Compile Include="Views\EnrichedWebViewPage`1.cs" />
     <Compile Include="Common\MailMerge.cs" />
     <Compile Include="Common\MemberSession.cs" />
     <Compile Include="Controllers\OntologyFilterAttribute.cs" />
-    <Compile Include="Common\ApplicationRouting.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Views\UrlHelper%24.cs" />
     <Compile Include="Views\ViewUtility.cs" />
     <Compile Include="Internal\ContainerBuilder%24.cs" />
@@ -202,10 +201,8 @@
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Controllers\DesignerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MailMergeController.cs" />
-    <Compile Include="Controllers\ObjectMapper.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
-    <Compile Include="Application.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Handlers\LogOffHandler.cs" />
     <Compile Include="Handlers\LogOnHandler.cs" />
     <Compile Include="Handlers\LogOnQuery.cs" />
@@ -213,9 +210,9 @@
     <Compile Include="Handlers\PatternImageHandler.cs" />
     <Compile Include="Handlers\PatternImageQuery.cs" />
     <Compile Include="Handlers\PatternImageQueryBinder.cs" />
-    <Compile Include="Common\ApplicationContainer.cs" />
-    <Compile Include="Common\InitializeContextModule.cs" />
-    <Compile Include="Common\InitializeVSContextModule.cs" />
+    <Compile Include="Dependencies.cs" />
+    <Compile Include="InitializeContextModule.cs" />
+    <Compile Include="InitializeVSContextModule.cs" />
     <Compile Include="Common\HttpLogEventEnricher.cs" />
     <Compile Include="Common\OneDomainPerLanguageSiteMap.cs" />
     <Compile Include="Common\ChiffonHosting.cs" />
@@ -253,19 +250,18 @@
     <Compile Include="Common\ChiffonEnvironmentResolver.cs" />
     <Compile Include="Common\ChiffonLanguage.cs" />
     <Compile Include="Common\ChiffonContext.cs" />
-    <Compile Include="Common\LogServiceForDevelopment.cs" />
+    <Compile Include="Common\LoggerProviderForDevelopment.cs" />
     <Compile Include="Common\HttpContext%24.cs" />
-    <Compile Include="Common\ILogService.cs" />
+    <Compile Include="Common\ILoggerProvider.cs" />
     <Compile Include="Common\IMailMerge.cs" />
     <Compile Include="Common\IMessenger.cs" />
-    <Compile Include="Common\ApplicationLogging.cs" />
     <Compile Include="Common\Messenger.cs" />
     <Compile Include="Common\NewContactMessage.cs" />
     <Compile Include="Common\NewMemberMessage.cs" />
     <Compile Include="Common\MessageRecipients.cs" />
     <Compile Include="Entities\PatternImage.cs" />
     <Compile Include="Entities\PatternSize.cs" />
-    <Compile Include="Common\LogServiceForProduction.cs" />
+    <Compile Include="Common\LoggerProviderForProduction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

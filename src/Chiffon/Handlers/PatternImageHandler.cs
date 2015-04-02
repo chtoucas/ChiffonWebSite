@@ -40,12 +40,11 @@
         // peut avoir des dépendances vis à vis de la requête en cours.
         //public override bool IsReusable { get { return true; } }
 
-        protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
+        public override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Get; } }
 
         protected override void ProcessRequestCore(HttpContext context, PatternImageQuery query)
         {
-            CheckFor.PatternImageHandler.ProcessRequestCore(context);
-            CheckFor.PatternImageHandler.ProcessRequestCore(query);
+            CheckFor.HttpHandlerBase.ProcessRequestCore(context, query);
 
             var response = context.Response;
 

@@ -1,9 +1,11 @@
 ﻿namespace Chiffon.Views
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     using Chiffon.Entities;
+    using Narvalo;
 
     public sealed class DesignerViewItem
     {
@@ -32,6 +34,21 @@
 
                 return _patternCount.Value;
             }
+        }
+
+        public static DesignerViewItem Of(Designer designer, IEnumerable<Category> categories, string categoryKey)
+        {
+            Require.NotNull(designer, "designer");
+            Contract.Requires(categories != null);
+
+            return new DesignerViewItem {
+                Categories = from _ in categories select CategoryViewItem.Of(_),
+                CurrentCategoryKey = categoryKey,
+                DisplayName = designer.DisplayName,
+                Email = designer.Email,
+                Key = designer.Key,
+                Presentation = designer.Presentation,
+            };
         }
     }
 }

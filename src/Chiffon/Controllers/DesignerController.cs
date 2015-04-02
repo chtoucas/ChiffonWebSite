@@ -56,7 +56,7 @@
                 IsLastPage = pagedList.IsLastPage,
                 PageCount = pagedList.PageCount,
                 PageIndex = pagedList.PageIndex,
-                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+                Previews = from _ in pagedList.Previews select PatternViewItem.Of(_, designer.DisplayName)
             };
 
             // Ontologie.
@@ -93,7 +93,7 @@
                 IsLastPage = pagedList.IsLastPage,
                 PageCount = pagedList.PageCount,
                 PageIndex = pagedList.PageIndex,
-                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+                Previews = from _ in pagedList.Previews select PatternViewItem.Of(_, designer.DisplayName)
             };
 
             // Ontologie.
@@ -137,25 +137,25 @@
             var model = new PatternViewModel {
                 Category = category,
                 Designer = designer,
-                PatternViews = from _ in views select ObjectMapper.Map(_, designer.DisplayName),
+                PatternViews = from _ in views select PatternViewItem.Of(_, designer.DisplayName),
                 Reference = reference,
                 IsFirstPage = pagedList.IsFirstPage,
                 IsLastPage = pagedList.IsLastPage,
                 PageCount = pagedList.PageCount,
                 PageIndex = pagedList.PageIndex,
-                Previews = from _ in pagedList.Previews select ObjectMapper.Map(_, designer.DisplayName)
+                Previews = from _ in pagedList.Previews select PatternViewItem.Of(_, designer.DisplayName)
             };
 
             // Ontologie.
             Ontology.Title = String.Format(
-                CultureInfo.CurrentUICulture, 
+                CultureInfo.CurrentUICulture,
                 Strings.Designer_Pattern_TitleFormat,
-                reference, 
+                reference,
                 model.Designer.DisplayName);
             Ontology.Description = String.Format(
                 CultureInfo.CurrentUICulture,
                 Strings.Designer_Pattern_DescriptionFormat,
-                reference, 
+                reference,
                 model.Designer.DisplayName,
                 category.DisplayName);
             //Ontology.SchemaOrg.ItemType = SchemaOrgType.ItemPage;
@@ -169,8 +169,8 @@
             LayoutViewModel.DesignerMenuCssClass = ViewUtility.DesignerClass(designerKey);
             LayoutViewModel.MainHeading = String.Format(
                 CultureInfo.CurrentUICulture,
-                Strings.Designer_Pattern_MainHeadingFormat, 
-                category.DisplayName, 
+                Strings.Designer_Pattern_MainHeadingFormat,
+                category.DisplayName,
                 reference.ToUpperInvariant());
 
             return View(Constants.ViewName.Designer.Pattern, model);
@@ -184,7 +184,7 @@
             var designer = _queries.GetDesigner(designerKey, CultureInfo.CurrentUICulture);
             var categories = _queries.ListCategories(designerKey);
 
-            return ObjectMapper.Map(designer, categories, categoryKey);
+            return DesignerViewItem.Of(designer, categories, categoryKey);
         }
 
         private void SetOpenGraphImage_(DesignerKey designerKey, string reference, string variant)

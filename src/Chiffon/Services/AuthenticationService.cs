@@ -1,8 +1,9 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon.Services
 {
     using System.Web;
     using System.Web.Security;
 
+    using Chiffon.Common;
     using Chiffon.Entities;
     using Narvalo;
 

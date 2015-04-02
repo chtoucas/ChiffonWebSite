@@ -1,39 +1,51 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon
 {
-    using System.Diagnostics.CodeAnalysis;
+    using System;
+    using System.ComponentModel.Composition.Hosting;
 
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Chiffon.Common;
     using Chiffon.Internal;
     using Chiffon.Persistence;
     using Chiffon.Services;
     using Narvalo;
+    using Serilog;
 
-    public class ApplicationContainer : Module
+    public static class Dependencies
     {
-        private readonly ChiffonConfig _config;
-
-        public ApplicationContainer(ChiffonConfig config)
+        [CLSCompliant(false)]
+        public static ILogger GetLogger(ChiffonConfig config)
         {
             Require.NotNull(config, "config");
 
-            _config = config;
+            ILoggerProvider provider;
+
+            using (var catalog = new AssemblyCatalog(typeof(ApplicationLifecycle).Assembly))
+            {
+                using (var container = new CompositionContainer(catalog))
+                {
+                    provider = container.GetExportedValue<ILoggerProvider>(config.LogProfile);
+                }
+            }
+
+            return provider.GetLogger(config.LogMinimumLevel);
         }
 
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-        protected override void Load(ContainerBuilder builder)
+        public static void Load(ContainerBuilder builder, ChiffonConfig config)
         {
-            builder.Register(_ => _config).AsSelf().SingleInstance();
+            Require.NotNull(builder, "builder");
+            Require.NotNull(config, "config");
 
-            // FIXME: Réactiver l'injection de ISmtpClient.
-            //builder.RegisterType<SmtpClientProxy>().As<ISmtpClient>().InstancePerHttpRequest();
+            builder.Register(_ => config).AsSelf().SingleInstance();
+
             builder.RegisterType<MailMerge>().As<IMailMerge>().InstancePerRequest();
             builder.RegisterType<Messenger>().As<IMessenger>().InstancePerRequest();
 
             builder.RegisterType<SiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // FIXME: Pour les HttpHandlers, je n'arrive pas à voir pour le moment pourquoi
             // on ne récupère pas la bonne valeur de ChiffonEnvironment et donc de SiteMap, même
-            // en précisant IsReusable = false. Peut-être en précisant InstancePerHttpRequest()
+            // en précisant IsReusable = false. Peut-être faut-il utiliser InstancePerHttpRequest()
             // au niveau de RegisterHandlers() dans AspNetMvcModule ?
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerRequest();
@@ -42,9 +54,16 @@
             // Cf. aussi les commentaires dans la classe ChiffonContext.
             builder.Register(_ => ChiffonContext.Current.Environment).AsSelf().InstancePerRequest();
 
+            RegisterPersistenceTypes_(builder, config.EnableServerCache);
+            RegisterServiceTypes_(builder);
+            RegisterAspNetMvcTypes_(builder);
+        }
+
+        private static void RegisterPersistenceTypes_(ContainerBuilder builder, bool enableServerCache)
+        {
             builder.RegisterType<DbQueryCache>().As<IDbQueryCache>().InstancePerRequest();
 
-            if (_config.EnableServerCache)
+            if (enableServerCache)
             {
                 builder.Register(ResolveQueries_).As<IDbQueries>().InstancePerRequest();
             }
@@ -54,15 +73,21 @@
             }
 
             builder.Register(ResolveCommands_).As<IDbCommands>().SingleInstance();
+        }
 
+        private static void RegisterServiceTypes_(ContainerBuilder builder)
+        {
             // NB: On utilise InstancePerHttpRequest car MemberService dépend d'ISiteMap.
             builder.RegisterType<MemberService>().As<IMemberService>().InstancePerRequest();
             // NB: On utilise InstancePerHttpRequest car PatternService dépend d'IDbQueries.
             builder.RegisterType<PatternService>().As<IPatternService>().InstancePerRequest();
+        }
 
+        private static void RegisterAspNetMvcTypes_(ContainerBuilder builder)
+        {
             // Composants Asp.Net MVC.
-            builder.RegisterControllers(typeof(Application).Assembly);
-            builder.RegisterHandlers(typeof(Application).Assembly);
+            builder.RegisterControllers(typeof(ApplicationLifecycle).Assembly);
+            builder.RegisterHandlers(typeof(ApplicationLifecycle).Assembly);
             // FIXME: Je n'arrive pas à faire fonctionner la ligne suivante...
             //builder.RegisterSource(new ViewRegistrationSource());
         }

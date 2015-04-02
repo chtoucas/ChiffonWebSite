@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Common
+﻿namespace Chiffon
 {
     using System;
     using System.Diagnostics.Contracts;
@@ -9,6 +9,7 @@
     using System.Web.SessionState;
 #endif
 
+    using Chiffon.Common;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Narvalo;
 

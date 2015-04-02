@@ -7,6 +7,7 @@
     using System.Web.SessionState;
 
     using Chiffon.Common;
+    using Chiffon.Internal;
     using Chiffon.Services;
     using Narvalo;
     using Narvalo.Fx;
@@ -27,16 +28,15 @@
 
             _memberService = memberService;
             _siteMapFactory = siteMapFactory;
+
+            IsReusable = true;
         }
 
-        public override bool IsReusable { get { return true; } }
-
-        protected override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
+        public override HttpVerbs AcceptedVerbs { get { return HttpVerbs.Post; } }
 
         protected override void ProcessRequestCore(HttpContext context, LogOnQuery query)
         {
-            Check.NotNull(context, "The base class guarantees that the parameter is not null.");
-            Check.NotNull(query, "The base class guarantees that the parameter is not null.");
+            CheckFor.HttpHandlerBase.ProcessRequestCore(context, query);
 
             var environment = ChiffonContext.Current.Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);
