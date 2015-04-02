@@ -33,7 +33,7 @@
 
             new AuthenticationService(context).SignOut();
 
-            var nextUrl = _siteMapFactory.CreateMap(ChiffonContext.Current.Environment).Home().AbsoluteUri;
+            var nextUrl = _siteMapFactory.CreateMap(ChiffonContext.Resolve(HttpContext.Current).Environment).Home().AbsoluteUri;
 
             context.Response.Redirect(nextUrl);
         }

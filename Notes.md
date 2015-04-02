@@ -17,6 +17,9 @@ En priorité,
 
 Travail de fond :
 - utiliser MEF pour ISiteMap et supprimer ISiteMapFactory ;
+- Eviter HttpContext.Current. Cf. http://odetocode.com/articles/112.aspx
+- renommer Login -> Connect ;
+- nettoyer OntologyFilter ;
 - ré-activer robots.txt ;
 - utiliser Attribute Routing ;
 - finir `MailMerge` ;

@@ -72,7 +72,7 @@
 
             var environment = ChiffonEnvironmentResolver.Resolve(request, app.Session);
 
-            context.AddChiffonContext(new ChiffonContext(environment));
+            new ChiffonContext(environment).Register(context);
         }
 #else
         private void OnBeginRequest_(object sender, EventArgs e)
@@ -82,7 +82,7 @@
 
             var environment = ChiffonEnvironmentResolver.Resolve(context.Request);
 
-            context.AddChiffonContext(new ChiffonContext(environment));
+            new ChiffonContext(environment).Register(context);
         }
 #endif
 
@@ -92,7 +92,7 @@
         {
             var app = sender as HttpApplication;
 
-            var environment = app.Context.GetChiffonContext().Environment;
+            var environment = ChiffonContext.Resolve(app.Context).Environment;
 
             var language = environment.Language;
 

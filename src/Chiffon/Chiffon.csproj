@@ -251,7 +251,6 @@
     <Compile Include="Common\ChiffonLanguage.cs" />
     <Compile Include="Common\ChiffonContext.cs" />
     <Compile Include="Common\LoggerProviderForDevelopment.cs" />
-    <Compile Include="Common\HttpContext%24.cs" />
     <Compile Include="Common\ILoggerProvider.cs" />
     <Compile Include="Common\IMailMerge.cs" />
     <Compile Include="Common\IMessenger.cs" />

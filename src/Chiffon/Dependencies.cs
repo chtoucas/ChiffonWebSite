@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.Composition.Hosting;
+    using System.Web;
 
     using Autofac;
     using Autofac.Integration.Mvc;
@@ -52,7 +53,7 @@
 
             // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
             // Cf. aussi les commentaires dans la classe ChiffonContext.
-            builder.Register(_ => ChiffonContext.Current.Environment).AsSelf().InstancePerRequest();
+            builder.Register(_ => ChiffonContext.Resolve(HttpContext.Current).Environment).AsSelf().InstancePerRequest();
 
             RegisterPersistenceTypes_(builder, config.EnableServerCache);
             RegisterServiceTypes_(builder);

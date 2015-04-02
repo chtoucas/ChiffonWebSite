@@ -38,7 +38,7 @@
         {
             CheckFor.HttpHandlerBase.ProcessRequestCore(context, query);
 
-            var environment = ChiffonContext.Current.Environment;
+            var environment = ChiffonContext.Resolve(HttpContext.Current).Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);
 
             var member = _memberService

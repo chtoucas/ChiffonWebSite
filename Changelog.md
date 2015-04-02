@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+### XXXX-XX-XX - Version 1.18
+
+Changements d'ordre technique :
+* Réduction du nombre d'espaces de noms.
+* Simplifications drastiques.
+
 ### 2014-10-17 - Version 1.17
 
 Reprise du projet après la dissolution du collectif.

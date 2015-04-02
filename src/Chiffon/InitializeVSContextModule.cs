@@ -53,7 +53,7 @@
 
             var environment = ChiffonEnvironmentResolver.Resolve(request, app.Session);
 
-            context.AddChiffonContext(new ChiffonContext(environment));
+            new ChiffonContext(environment).Register(context);
         }
     }
 }
