@@ -43,6 +43,10 @@
             builder.RegisterType<MailMerge>().As<IMailMerge>().InstancePerRequest();
             builder.RegisterType<Messenger>().As<IMessenger>().InstancePerRequest();
 
+            // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
+            // Cf. aussi les commentaires dans la classe ChiffonContext.
+            builder.Register(_ => ChiffonContext.Resolve(HttpContext.Current).Environment).AsSelf().InstancePerRequest();
+
             builder.RegisterType<SiteMapFactory>().As<ISiteMapFactory>().SingleInstance();
             // FIXME: Pour les HttpHandlers, je n'arrive pas à voir pour le moment pourquoi
             // on ne récupère pas la bonne valeur de ChiffonEnvironment et donc de SiteMap, même
@@ -50,10 +54,6 @@
             // au niveau de RegisterHandlers() dans AspNetMvcModule ?
             // IMPORTANT: ISiteMap est entièrement résolue à l'exécution.
             builder.Register(ResolveSiteMap_).As<ISiteMap>().InstancePerRequest();
-
-            // IMPORTANT: ChiffonEnvironment est entièrement résolue à l'exécution.
-            // Cf. aussi les commentaires dans la classe ChiffonContext.
-            builder.Register(_ => ChiffonContext.Resolve(HttpContext.Current).Environment).AsSelf().InstancePerRequest();
 
             RegisterPersistenceTypes_(builder, config.EnableServerCache);
             RegisterServiceTypes_(builder);

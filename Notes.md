@@ -7,7 +7,6 @@ Tâches
 En priorité,
 - revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
   * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement ;
-  * changer "virtualdirectory" en "simone" ;
   * supprimer SHOWCASE et changer le conmportement du site en fonction d'un
     paramètre de configuration.
 - ré-activer la gestion des langues multiples :
@@ -16,10 +15,10 @@ En priorité,
 - DNS, il y a un problème avec www. et /XXX
 
 Travail de fond :
-- utiliser MEF pour ISiteMap et supprimer ISiteMapFactory ;
+- refaire entièrement ChiffonEnv... et SiteMap.
 - Eviter HttpContext.Current. Cf. http://odetocode.com/articles/112.aspx
 - renommer Login -> Connect ;
-- nettoyer OntologyFilter ;
+- revoir OntologyFilter ;
 - ré-activer robots.txt ;
 - utiliser Attribute Routing ;
 - finir `MailMerge` ;

@@ -37,7 +37,7 @@
 
         public Uri Login(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Constants.RoutePath.Login);
+            var uri = Login();
             return AddReturnUrl_(uri, returnUrl);
         }
 
@@ -45,7 +45,7 @@
 
         public Uri Register(Uri returnUrl)
         {
-            var uri = MakeAbsoluteUri_(Constants.RoutePath.Register);
+            var uri = Register();
             return AddReturnUrl_(uri, returnUrl);
         }
 

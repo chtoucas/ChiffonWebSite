@@ -178,7 +178,6 @@
 
         // On suppose que designerKey est toujours valide (une contrainte sur la route doit
         // assurer qu'on se retrouve dans cette configuration).
-
         private DesignerViewItem GetDesigner_(DesignerKey designerKey, string categoryKey)
         {
             var designer = _queries.GetDesigner(designerKey, CultureInfo.CurrentUICulture);
