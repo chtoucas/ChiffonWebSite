@@ -40,14 +40,14 @@
 
         public abstract string MimeType { get; }
 
-        public abstract PatternSize Size { get; }
+        public abstract PatternImageSize Size { get; }
 
         public static PatternImage Create(
             string designerDirectory,
             string categoryDirectory,
             string reference,
             string version,
-            PatternSize size)
+            PatternImageSize size)
         {
             Require.NotNullOrEmpty(designerDirectory, "directory");
             Require.NotNullOrEmpty(reference, "reference");
@@ -55,14 +55,14 @@
 
             switch (size)
             {
-                case PatternSize.Preview:
+                case PatternImageSize.Preview:
                     return new Preview_ {
                         CategoryDirectory = categoryDirectory,
                         DesignerDirectory = designerDirectory,
                         Reference = reference,
                         Version = version,
                     };
-                case PatternSize.Original:
+                case PatternImageSize.Original:
                     return new Original_ {
                         CategoryDirectory = categoryDirectory,
                         DesignerDirectory = designerDirectory,
@@ -96,7 +96,7 @@
 
             public override string MimeType { get { return JPEG_MIME_TYPE; } }
 
-            public override PatternSize Size { get { return PatternSize.Original; } }
+            public override PatternImageSize Size { get { return PatternImageSize.Original; } }
         }
 
         private sealed class Preview_ : PatternImage
@@ -120,7 +120,7 @@
 
             public override string MimeType { get { return JPEG_MIME_TYPE; } }
 
-            public override PatternSize Size { get { return PatternSize.Preview; } }
+            public override PatternImageSize Size { get { return PatternImageSize.Preview; } }
         }
     }
 }

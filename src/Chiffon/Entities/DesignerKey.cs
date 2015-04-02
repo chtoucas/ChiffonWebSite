@@ -88,12 +88,12 @@
 
         public override int GetHashCode()
         {
-            return _value.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public override string ToString()
         {
-            return _value;
+            return Value;
         }
     }
 }

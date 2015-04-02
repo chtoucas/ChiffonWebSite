@@ -56,10 +56,11 @@
 
         public override int GetHashCode()
         {
-            // TODO: Dubious.
-            return _language.GetHashCode()
-                ^ _baseUri.GetHashCode()
-                ^ _hosting.GetHashCode();
+            int hash = 17;
+            hash = (23 * hash) + Language.GetHashCode();
+            hash = (23 * hash) + BaseUri.GetHashCode();
+            hash = (23 * hash) + Hosting.GetHashCode();
+            return hash;
         }
 
         public Uri MakeAbsoluteUri(string relativePath)

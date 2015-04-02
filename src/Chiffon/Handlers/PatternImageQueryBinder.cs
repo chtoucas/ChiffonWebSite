@@ -23,7 +23,7 @@
                     Maybe.Flatten(nvc.MayGetSingle("designerKey").Select(_ => DesignerKey.MayParse(_)))
                 from reference in nvc.MayGetSingle("reference")
                 from size in
-                    (from _ in nvc.MayGetSingle("size") select ParseTo.Enum<PatternSize>(_))
+                    (from _ in nvc.MayGetSingle("size") select ParseTo.Enum<PatternImageSize>(_))
                 let variant = nvc.MayGetSingle("variant")
                 where size.HasValue
                 select new PatternImageQuery {

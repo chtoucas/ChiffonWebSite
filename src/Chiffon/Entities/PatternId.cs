@@ -48,7 +48,10 @@
 
         public override int GetHashCode()
         {
-            return _designerKey.GetHashCode() ^ _reference.GetHashCode();
+            int hash = 17;
+            hash = (23 * hash) + DesignerKey.GetHashCode();
+            hash = (23 * hash) + Reference.GetHashCode();
+            return hash;
         }
     }
 }

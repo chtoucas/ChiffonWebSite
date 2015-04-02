@@ -70,7 +70,7 @@
             var size = query.Size;
 
             // FIXME
-            if (size == PatternSize.Preview && !pattern.HasPreview)
+            if (size == PatternImageSize.Preview && !pattern.HasPreview)
             {
                 response.SetStatusCode(HttpStatusCode.NotFound);
                 return;

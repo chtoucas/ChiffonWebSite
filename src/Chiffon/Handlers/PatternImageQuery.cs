@@ -15,7 +15,7 @@ namespace Chiffon.Handlers
         public string Reference { get; set; }
 
         [Required]
-        public PatternSize Size { get; set; }
+        public PatternImageSize Size { get; set; }
 
         public string Variant { get; set; }
     }

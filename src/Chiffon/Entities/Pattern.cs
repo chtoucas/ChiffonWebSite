@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics.Contracts;
 
-    using Chiffon.Common;
     using Narvalo;
 
     public sealed class Pattern
@@ -62,9 +61,6 @@
 
             set
             {
-                //if (Locked && !value) {
-                //    throw new InvalidOperationException("First, you must unlock the pattern.");
-                //}
                 _published = value;
             }
         }
@@ -91,22 +87,22 @@
             }
         }
 
-        public PatternImage GetImage(PatternSize size)
+        public PatternImage GetImage(PatternImageSize size)
         {
             Contract.Ensures(Contract.Result<PatternImage>() != null);
 
             return PatternImage.Create(DesignerKey.ToString(), CategoryKey.ToString(), Reference, Variant, size);
         }
 
-        public PatternVisibility GetVisibility(PatternSize size)
+        public PatternVisibility GetVisibility(PatternImageSize size)
         {
             if (Published)
             {
                 switch (size)
                 {
-                    case PatternSize.Original:
+                    case PatternImageSize.Original:
                         return PatternVisibility.Members;
-                    case PatternSize.Preview:
+                    case PatternImageSize.Preview:
                         return (Preferred || Showcased)
                             ? PatternVisibility.Public
                             : PatternVisibility.Members;
