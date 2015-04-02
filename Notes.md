@@ -8,9 +8,10 @@ En priorité,
 - revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
   * supprimer SHOWCASE et changer le conmportement du site en fonction d'un
     paramètre de configuration.
-- DNS, il y a un problème avec www. et /XXX
+- DNS, il y a un problème avec www. et /simone/XXX
 
 Travail de fond :
+- basculer vers Owin.
 - harmoniser les constantes dans HttpHandler, Views, Controllers.
 - revoir toute la gestion des langues multiples :
   * VSModuleContext (activer en localhost) + session ;
@@ -33,7 +34,7 @@ Création d'un package
 2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts` ;
 3. tagger la nouvelle version :
 ```
-git tag -a 1.18.0 -m 'Version 1.18.0' 9fceb02
+git tag -a 1.18.0 -m 'Version 1.18.0' 33e07eceba5a56cde7b0dc753aed0fa5d0e101dc
 git push origin --tags
 ```
 

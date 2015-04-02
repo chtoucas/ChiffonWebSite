@@ -2,15 +2,16 @@
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Xml.XPath" #>
 <#+
-    public void ResourceNamesTemplate()
+    public void ResourceNamesTemplate(string resourcePath)
     {
+        var className = System.IO.Path.GetFileNameWithoutExtension(Host.TemplateFile);
 #>
 namespace Chiffon
 {
-    internal static class Strings_Names
+    internal static class <#= className #>
     {
 <#+
-        var reader = XmlReader.Create(Host.ResolvePath("Strings_Views.resx"));
+        var reader = XmlReader.Create(Host.ResolvePath(resourcePath));
         var document = new XPathDocument(reader);
         foreach (XPathNavigator item in document.CreateNavigator().Select("/root/data")) {
             string name = item.GetAttribute("name", String.Empty);

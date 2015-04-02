@@ -10,8 +10,16 @@
     /// </summary>
     public sealed class Member
     {
+        private static readonly Member s_Anonymous = new Member {
+            Email = String.Empty,
+            FirstName = String.Empty,
+            LastName = String.Empty
+        };
+
         private string _displayName;
         private MailAddress _emailAddress;
+
+        public static Member Anonymous { get { return s_Anonymous; } }
 
         /// <summary>
         /// Retourne le nom du membre adapté à la culture en cours d'utilisation :
@@ -21,14 +29,14 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<string>() != null); 
-                
+                Contract.Ensures(Contract.Result<string>() != null);
+
                 if (_displayName == null)
                 {
                     _displayName = String.Format(
                         CultureInfo.CurrentUICulture,
-                        Strings.MemberDisplayNameFormat, 
-                        FirstName, 
+                        Strings.MemberDisplayNameFormat,
+                        FirstName,
                         LastName);
                 }
 
@@ -49,8 +57,8 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<MailAddress>() != null); 
-                
+                Contract.Ensures(Contract.Result<MailAddress>() != null);
+
                 if (_emailAddress == null)
                 {
                     // XXX: Doit-on préciser l'encodage du nom ?

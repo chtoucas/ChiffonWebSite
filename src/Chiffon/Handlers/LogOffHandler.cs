@@ -6,7 +6,6 @@
 
     using Chiffon.Common;
     using Chiffon.Internal;
-    using Chiffon.Services;
     using Narvalo;
     using Narvalo.Web;
 

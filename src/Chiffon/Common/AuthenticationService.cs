@@ -1,4 +1,4 @@
-﻿namespace Chiffon.Services
+﻿namespace Chiffon.Common
 {
     using System.Web;
     using System.Web.Security;

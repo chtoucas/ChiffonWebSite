@@ -8,7 +8,6 @@
     using Chiffon.Common;
     using Chiffon.Entities;
     using Chiffon.Internal;
-    using Chiffon.Services;
     using Narvalo;
     using Narvalo.Fx;
     using Narvalo.Web;
@@ -16,16 +15,13 @@
     public sealed class GoHandler
         : HttpHandlerBase<Maybe<Uri>, GoQueryBinder>, IRequiresSessionState
     {
-        private readonly IMemberService _memberService;
         private readonly ISiteMapFactory _siteMapFactory;
 
-        public GoHandler(IMemberService memberService, ISiteMapFactory siteMapFactory)
+        public GoHandler(ISiteMapFactory siteMapFactory)
             : base()
         {
-            Require.NotNull(memberService, "memberService");
             Require.NotNull(siteMapFactory, "siteMapFactory");
 
-            _memberService = memberService;
             _siteMapFactory = siteMapFactory;
 
             IsReusable = true;
@@ -40,13 +36,7 @@
             var environment = ChiffonContext.Resolve(HttpContext.Current).Environment;
             var siteMap = _siteMapFactory.CreateMap(environment);
 
-            var member = new Member {
-                Email = String.Empty,
-                FirstName = String.Empty,
-                LastName = String.Empty
-            };
-
-            new AuthenticationService(context).SignIn(member);
+            new AuthenticationService(context).SignIn(Member.Anonymous);
 
             var nextUrl = query.Select(_ => environment.MakeAbsoluteUri(_)).ValueOrElse(siteMap.Home());
 

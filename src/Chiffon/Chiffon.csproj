@@ -182,7 +182,7 @@
     <Compile Include="ApplicationLifecycleModule.cs" />
     <Compile Include="Handlers\GoHandler.cs" />
     <Compile Include="Handlers\GoQueryBinder.cs" />
-    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Common\AuthenticationService.cs" />
     <Compile Include="Internal\AutofacRouteHandler`1.cs" />
     <Compile Include="Views\ChiffonWebViewPage.cs" />
     <Compile Include="Views\ChiffonWebViewPage`1.cs" />
@@ -338,7 +338,7 @@
     <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
     <Content Include="Resources\Mail\WelcomeMailBody.txt" />
     <Content Include="Resources\Mail\WelcomeMailBody_English.txt" />
-    <Content Include="ResourceNames.tt" />
+    <Content Include="CodeTemplates\ResourceNames.tt" />
     <Content Include="Strings_Names.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Strings_Names.g.cs</LastGenOutput>
