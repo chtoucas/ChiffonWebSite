@@ -367,7 +367,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ViewHelpers.cshtml" />
-    <Content Include="Views\Account\Newsletter.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Designer\Category.cshtml" />
     <Content Include="Views\Shared\_DesignerInfo.cshtml" />

@@ -10,7 +10,6 @@
             public static class Account
             {
                 public const string Login = "Login";
-                public const string Newsletter = "Newsletter";
                 public const string Register = "Register";
                 public const string RegisterSuccess = "RegisterSuccess";
             }
@@ -81,10 +80,9 @@
             // AccountController.
             public static class Account
             {
-                public const string Login = "Contact/Login";
-                public const string Newsletter = "Contact/Newsletter";
-                public const string Register = "Contact/Register";
-                public const string RegisterSuccess = "Contact/RegisterSuccess";
+                public const string Login = "Account/Login";
+                public const string Register = "Account/Register";
+                public const string RegisterSuccess = "Account/RegisterSuccess";
             }
 
             // DesignerController.
@@ -109,7 +107,6 @@
         {
             public const string About = "informations";
             public const string Contact = "contact";
-            public const string Newsletter = "newsletter";
             public const string Login = "connexion";
             public const string Register = "inscription";
 
@@ -140,7 +137,6 @@
                 public const string Register = "~/Views/Account/Register.cshtml";
                 public const string RegisterSuccess = "~/Views/Account/RegisterSuccess.cshtml";
                 public const string RegisterFailure = "~/Views/Account/RegisterFailure.cshtml";
-                public const string Newsletter = "~/Views/Account/Newsletter.cshtml";
             }
 
             public static class Component

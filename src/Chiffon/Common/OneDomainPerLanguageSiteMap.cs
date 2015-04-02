@@ -31,8 +31,6 @@
 
         public Uri Contact() { return MakeAbsoluteUri_(Constants.RoutePath.Contact); }
 
-        public Uri Newsletter() { return MakeAbsoluteUri_(Constants.RoutePath.Newsletter); }
-
         public Uri Login() { return MakeAbsoluteUri_(Constants.RoutePath.Login); }
 
         public Uri Login(Uri returnUrl)

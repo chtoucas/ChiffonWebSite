@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chiffon
-{
-
-
+namespace Chiffon {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -84,33 +84,6 @@ namespace Chiffon
         internal static string Account_Login_Title {
             get {
                 return ResourceManager.GetString("Account_Login_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to La newsletter des Simone ?.
-        /// </summary>
-        internal static string Account_Newsletter_Description {
-            get {
-                return ResourceManager.GetString("Account_Newsletter_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abonnez-vous à la newsletter.
-        /// </summary>
-        internal static string Account_Newsletter_MainHeading {
-            get {
-                return ResourceManager.GetString("Account_Newsletter_MainHeading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Newsletter - Pour quel motif, Simone ?.
-        /// </summary>
-        internal static string Account_Newsletter_Title {
-            get {
-                return ResourceManager.GetString("Account_Newsletter_Title", resourceCulture);
             }
         }
         

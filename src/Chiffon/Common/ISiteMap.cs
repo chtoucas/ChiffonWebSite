@@ -14,8 +14,6 @@
 
         Uri Contact();
 
-        Uri Newsletter();
-
         Uri Login();
 
         Uri Login(Uri returnUrl);

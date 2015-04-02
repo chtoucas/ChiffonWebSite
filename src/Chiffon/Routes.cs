@@ -52,10 +52,6 @@
                 Constants.RouteName.Account.Login,
                 Constants.RoutePath.Login,
                 new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.Login });
-            routes.MapRoute(
-                Constants.RouteName.Account.Newsletter,
-                Constants.RoutePath.Newsletter,
-                new { controller = Constants.ControllerName.Account, action = Constants.ActionName.Account.Newsletter });
 
             // DesignerController.
             routes.MapRoute(

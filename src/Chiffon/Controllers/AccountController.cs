@@ -148,22 +148,6 @@
             return View(Constants.ViewName.Account.RegisterSuccess, new RegisterSuccessViewModel { NextUrl = nextUrl });
         }
 
-        [HttpGet]
-        public ActionResult Newsletter()
-        {
-            // Ontologie.
-            Ontology.Title = Strings.Account_Newsletter_Title;
-            Ontology.Description = Strings.Account_Newsletter_Description;
-            Ontology.Relationships.CanonicalUrl = SiteMap.Newsletter();
-
-            // LayoutViewModel.
-            LayoutViewModel.AddAlternateUrls(Environment.Language, _ => _.Newsletter());
-            LayoutViewModel.MainHeading = Strings.Account_Newsletter_MainHeading;
-            LayoutViewModel.MainMenuCssClass = "newsletter";
-
-            return View(Constants.ViewName.Account.Newsletter);
-        }
-
         private static bool IsCheckBoxOn_(string value)
         {
             return String.IsNullOrEmpty(value) ? false : (value == "on");
