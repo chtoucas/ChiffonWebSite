@@ -70,7 +70,7 @@
                 new { controller = Constants.ControllerName.Designer, action = Constants.ActionName.Designer.Pattern },
                 new { designerKey = new DesignerKeyConstraint_() });
 
-            routes.MapChildOnlyActionRoutesFrom(typeof(Global).Assembly);
+            routes.MapChildOnlyActionRoutesFrom(typeof(ApplicationLifecycle).Assembly);
 
             // Gestionnaires HTTP.
             routes.Add(new Route(Constants.RoutePath.Pattern, new AutofacRouteHandler<PatternImageHandler>()));

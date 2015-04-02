@@ -9,12 +9,13 @@ En priorité,
   * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement ;
   * supprimer SHOWCASE et changer le conmportement du site en fonction d'un
     paramètre de configuration.
-- ré-activer la gestion des langues multiples :
-  * VSModuleContext (activer en localhost) + session ;
-  * utiliser `CurrentCulture` plutôt que `CurrentUICulture`.
 - DNS, il y a un problème avec www. et /XXX
 
 Travail de fond :
+- harmoniser les constantes dans HttpHandler, Views, Controllers.
+- revoir toute la gestion des langues multiples :
+  * VSModuleContext (activer en localhost) + session ;
+  * utiliser `CurrentCulture` plutôt que `CurrentUICulture`.
 - refaire entièrement ChiffonEnv... et SiteMap.
 - Eviter HttpContext.Current. Cf. http://odetocode.com/articles/112.aspx
 - renommer Login -> Connect ;

@@ -125,6 +125,7 @@
         {
             public const string PageKey = "p";
             public const string ReturnUrl = "returnUrl";
+            public const string TargetUrl = "targetUrl";
         }
 
         public static class ViewName

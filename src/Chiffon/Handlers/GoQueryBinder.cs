@@ -14,7 +14,11 @@
 
         protected override Maybe<Maybe<Uri>> BindCore(HttpRequest request)
         {
-            return Maybe.Of(request.Form.MayGetSingle("targeturl").Bind(_ => ParseTo.Uri(_, UriKind.Relative)));
+            var targetUrl = request.QueryString
+                .MayGetSingle(Constants.SiteMap.TargetUrl)
+                .Bind(_ => ParseTo.Uri(_, UriKind.Relative));
+
+            return Maybe.Of(targetUrl);
         }
     }
 }

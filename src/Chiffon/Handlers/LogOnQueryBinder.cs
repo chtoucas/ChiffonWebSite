@@ -19,7 +19,7 @@
             return
                 from email in form.MayGetSingle("email")
                 from password in form.MayGetSingle("password")
-                let targetUrl = form.MayGetSingle("targeturl").Bind(_ => ParseTo.Uri(_, UriKind.Relative))
+                let targetUrl = form.MayGetSingle(Constants.SiteMap.TargetUrl).Bind(_ => ParseTo.Uri(_, UriKind.Relative))
                 select new LogOnQuery {
                     Email = email,
                     Password = password,

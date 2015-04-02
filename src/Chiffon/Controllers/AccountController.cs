@@ -31,6 +31,9 @@
                 return RedirectToHome();
             }
 
+#if SHOWCASE
+            return Redirect("~/go?targetUrl=" + returnUrl);
+#else
             // Modèle.
             var model = new LoginViewModel { ReturnUrl = returnUrl };
 
@@ -45,6 +48,7 @@
             LayoutViewModel.MainMenuCssClass = "login";
 
             return View(Constants.ViewName.Account.Login, model);
+#endif
         }
 
         [HttpGet]
@@ -54,7 +58,10 @@
             {
                 return RedirectToHome();
             }
-
+            
+#if SHOWCASE
+            return Redirect("~/go?targetUrl=" + returnUrl);
+#else
             // Modèle.
             var model = new RegisterViewModel {
                 ReturnUrl = returnUrl,
@@ -71,6 +78,7 @@
             LayoutViewModel.MainMenuCssClass = "register";
 
             return View(Constants.ViewName.Account.Register, model);
+#endif
         }
 
         [HttpPost]

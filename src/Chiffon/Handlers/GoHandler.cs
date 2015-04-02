@@ -13,7 +13,6 @@
     using Narvalo.Fx;
     using Narvalo.Web;
 
-    // TODO: ValidateAntiForgeryToken.
     public sealed class GoHandler
         : HttpHandlerBase<Maybe<Uri>, GoQueryBinder>, IRequiresSessionState
     {
