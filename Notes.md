@@ -6,7 +6,6 @@ Tâches
 
 En priorité,
 - revoir les bidouilles effectuées spécialement pour la mise en place du site de démo
-  * désactiver l'inscription, l'envoi de mail. Authentifier automatiquement ;
   * supprimer SHOWCASE et changer le conmportement du site en fonction d'un
     paramètre de configuration.
 - DNS, il y a un problème avec www. et /XXX
