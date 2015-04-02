@@ -1,13 +1,15 @@
 CHANGELOG
 =========
 
-### XXXX-XX-XX - Version 1.18
+### 2015-04-02 - Version 1.18
+
+* Désactivation complète de l'authentification.
 
 Changements d'ordre technique :
 * Réduction du nombre d'espaces de noms.
 * Simplifications drastiques.
 
-### 2014-10-17 - Version 1.17
+### 2015-03-31 - Version 1.17
 
 Reprise du projet après la dissolution du collectif.
 

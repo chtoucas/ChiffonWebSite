@@ -31,7 +31,11 @@ Création d'un package
 
 1. changer le numéro de version dans `src\AssemblyInfo.Common.cs` et `VersionInfo.xml` ;
 2. lancer `build.cmd`. Le package sera créé dans le répertoire `artefacts` ;
-3. tagger la nouvelle version.
+3. tagger la nouvelle version :
+```
+git tag -a 1.18.0 -m 'Version 1.18.0' 9fceb02
+git push origin --tags
+```
 
 Mise à jour des librairies JavaScript & CSS
 -------------------------------------------
@@ -80,6 +84,9 @@ Dépendances ne nécessitant pas de mises à jour :
 
 CSS & JavaScript
 ----------------
+
+Pour compiler les CSS et JS, lancer `tools\grunt.cmd`.
+Supprimer après coup les anciennes versions dans `src\assets`.
 
 Quelques recommandations :
 - n'utiliser que des classes dans les CSS, éviter les IDs autant que faire se peut ;
