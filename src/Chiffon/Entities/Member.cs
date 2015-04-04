@@ -10,14 +10,23 @@
     /// </summary>
     public sealed class Member
     {
-        private static readonly Member s_Anonymous = new Member {
+        private static readonly Member s_Anonymous = new Member(true) {
             Email = String.Empty,
             FirstName = String.Empty,
             LastName = String.Empty
         };
 
+        private readonly bool _anonymous;
+
         private string _displayName;
         private MailAddress _emailAddress;
+
+        public Member() : this(false) { }
+
+        private Member(bool anonymous)
+        {
+            _anonymous = anonymous;
+        }
 
         public static Member Anonymous { get { return s_Anonymous; } }
 
@@ -33,11 +42,13 @@
 
                 if (_displayName == null)
                 {
-                    _displayName = String.Format(
-                        CultureInfo.CurrentUICulture,
-                        Strings.MemberDisplayNameFormat,
-                        FirstName,
-                        LastName);
+                    _displayName = _anonymous
+                        ? Strings.Member_DisplayName_Anonymous
+                        : String.Format(
+                            CultureInfo.CurrentUICulture,
+                            Strings.Member_DisplayName_Format,
+                            FirstName,
+                            LastName);
                 }
 
                 return _displayName;
@@ -58,6 +69,11 @@
             get
             {
                 Contract.Ensures(Contract.Result<MailAddress>() != null);
+
+                if (_anonymous)
+                {
+                    throw new NotSupportedException("An anonymous user does not have an email address.");
+                }
 
                 if (_emailAddress == null)
                 {

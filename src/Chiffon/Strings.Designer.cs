@@ -304,11 +304,20 @@ namespace Chiffon {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anonyme.
+        /// </summary>
+        internal static string Member_DisplayName_Anonymous {
+            get {
+                return ResourceManager.GetString("Member_DisplayName_Anonymous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1}.
         /// </summary>
-        internal static string MemberDisplayNameFormat {
+        internal static string Member_DisplayName_Format {
             get {
-                return ResourceManager.GetString("MemberDisplayNameFormat", resourceCulture);
+                return ResourceManager.GetString("Member_DisplayName_Format", resourceCulture);
             }
         }
         

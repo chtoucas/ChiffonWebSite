@@ -9,7 +9,7 @@
     using Chiffon.Common;
     using Narvalo;
     using Narvalo.Web.Semantic;
-    using Narvalo.Web.UI.Assets;
+    using Narvalo.Web.UI;
     using Serilog;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]

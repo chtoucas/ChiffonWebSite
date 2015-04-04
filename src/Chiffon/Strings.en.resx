@@ -204,6 +204,9 @@
   <data name="MemberService_EmailAlreadyTaken" xml:space="preserve">
     <value>We are sorry but the email address you tried to register with is already taken.</value>
   </data>
+  <data name="Member_DisplayName_Anonymous" xml:space="preserve">
+    <value>Anonymous</value>
+  </data>
   <data name="PatternDescriptionFormat" xml:space="preserve">
     <value>Textile pattern n°{0} by {1}</value>
   </data>

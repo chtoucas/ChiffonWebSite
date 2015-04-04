@@ -3,7 +3,6 @@
     using System.Web;
     using System.Web.Security;
 
-    using Chiffon.Common;
     using Chiffon.Entities;
     using Narvalo;
 
@@ -24,7 +23,7 @@
         {
             Require.NotNull(member, "member");
 
-            FormsAuthentication.SetAuthCookie(member.DisplayName, false /* createPersistentCookie */);
+            FormsAuthentication.SetAuthCookie(member.DisplayName, createPersistentCookie: false);
             _memberSession.Value = member;
         }
 

@@ -9,7 +9,7 @@
     using Chiffon.Views;
     using Narvalo;
     using Narvalo.Web;
-    using Narvalo.Web.UI.Assets;
+    using Narvalo.Web.UI;
 
     public sealed class ComponentController : Controller
     {

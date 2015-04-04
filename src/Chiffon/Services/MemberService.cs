@@ -40,7 +40,6 @@
 
             // 1. On vérifie que l'addresse email n'est pas déjà prise.
 
-            // FIXME: Utiliser un tableau de caractères.
             var password = _queries.GetPassword(request.Email);
 
             if (!String.IsNullOrEmpty(password))
@@ -89,6 +88,8 @@
             return Maybe.Of(_queries.GetMember(email, password));
         }
 
+        // FIXME: Encrypter le mot de passe. 
+        // FIXME: Utiliser un tableau de caractères.
         // Cf. http://madskristensen.net/post/Generate-random-password-in-C.aspx
         // Cf. http://stackoverflow.com/questions/54991/generating-random-passwords
         private static string CreatePassword_()
