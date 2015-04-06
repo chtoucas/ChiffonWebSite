@@ -62,7 +62,7 @@
             // Par défaut, on utilise le logo comme image.
             // QUICKFIX: On veut une URL absolue.
             var environment = ChiffonContext.Resolve(HttpContext.Current).Environment;
-            var logoUri = environment.MakeAbsoluteUri(AssetManager.GetImage("logo.png"));
+            var logoUri = environment.MakeAbsoluteUri(AssetManager.GetImageUri("logo.png"));
 
             ontology.OpenGraph.Image = new OpenGraphPng(logoUri) {
                 Height = 144,

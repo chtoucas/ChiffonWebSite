@@ -7,7 +7,6 @@
 
     using Chiffon.Common;
     using Chiffon.Controllers;
-    using Narvalo.Web.Html;
     using Narvalo.Web.Semantic;
 
     // TODO: Utiliser l'injection de dépendance ?
@@ -39,8 +38,6 @@
         protected LayoutViewModel LayoutViewModel { get { return ChiffonControllerContext.LayoutViewModel; } }
 
         protected Ontology Ontology { get { return ChiffonControllerContext.Ontology; } }
-
-        protected AssetHelper Asset { get; private set; }
 
         public void RenderActionResource(string resourceName)
         {
@@ -76,14 +73,6 @@
             {
                 Html.RenderAction(widgetName, Constants.ControllerName.Widget);
             }
-        }
-
-        public override void InitHelpers()
-        {
-            base.InitHelpers();
-
-            // TODO: Charger Asset uniquement à la demande ?
-            Asset = new AssetHelper(Html);
         }
 
         private static Func<ChiffonControllerContext> GetChiffonControllerContextThunk_(WebViewPage @this)
